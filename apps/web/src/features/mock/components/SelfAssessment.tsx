@@ -12,7 +12,7 @@
  */
 import { ESSAY_CRITERIA, ESSAY_CRITERION_LABELS } from '@gsat/shared';
 import { ExternalLink, Minus, Plus } from 'lucide-react';
-import { useId, useState } from 'react';
+import { useId, useState, type ReactNode } from 'react';
 import { Link } from 'react-router';
 import type { Exam } from '../../../data/exams';
 import { useFeatures } from '../../../lib/api';
@@ -476,6 +476,7 @@ export function SelfAssessment({
   details,
   onChange,
   bank,
+  writingHandoff,
 }: {
   exam: Exam;
   items: readonly OpenItemResult[];
@@ -484,6 +485,11 @@ export function SelfAssessment({
   onChange: SelfChange;
   /** 本站自組卷的對照資料（見檔頭）。 */
   bank?: BankSelfData;
+  /**
+   * 中譯英、作文清單下方的「先送 AI 批改，再問學習助手」（docs/design/learning-assistant.md §1.4.1）；
+   * 學習助手的開關關著時回 null，畫面不變。
+   */
+  writingHandoff?: (kind: 'translation' | 'composition') => ReactNode;
 }) {
   const id = useId();
   // 自組卷的混合題填充、簡答已經自動判分（判分理由在檢討試卷），不列在自評裡。
@@ -560,6 +566,7 @@ export function SelfAssessment({
               />
             ))}
           </ul>
+          {writingHandoff?.('translation')}
         </>
       )}
       {composition.length > 0 && (
@@ -577,6 +584,7 @@ export function SelfAssessment({
               />
             ))}
           </ul>
+          {writingHandoff?.('composition')}
         </>
       )}
     </section>

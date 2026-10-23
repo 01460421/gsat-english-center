@@ -7,7 +7,7 @@ import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { App } from './App';
-import { APP_NAME, NAV_GROUPS, PAGES, documentTitle, isDevPage } from './modules';
+import { APP_NAME, NAV_GROUPS, PAGES, documentTitle, isDevPage, isPageEnabled } from './modules';
 
 function renderAt(path: string) {
   return render(
@@ -56,9 +56,11 @@ describe('版面', () => {
     // 側邊欄與手機底部導覽都叫「主要導覽」（同時只會顯示一個，靠 CSS 切換）；第一個是側邊欄。
     const [sidebar] = screen.getAllByRole('navigation', { name: '主要導覽' });
     if (!sidebar) throw new Error('找不到側邊欄');
-    for (const page of PAGES) {
+    for (const page of PAGES.filter((p) => isPageEnabled(p, { assistant: false }))) {
       expect(within(sidebar).getByRole('link', { name: page.navLabel })).toHaveAttribute('href', page.path);
     }
+    // 學習助手的開關關著（沒有 Provider＝功能全關）：導覽不列它（docs/design/learning-assistant.md §5.1）。
+    expect(within(sidebar).queryByRole('link', { name: '學習助手' })).not.toBeInTheDocument();
     expect(within(sidebar).getByRole('link', { name: '綜合測驗' })).toHaveAttribute('aria-current', 'page');
   });
 
@@ -67,7 +69,7 @@ describe('版面', () => {
     expect(await screen.findByRole('heading', { level: 1, name: APP_NAME })).toBeInTheDocument();
     let cards = 0;
     for (const group of NAV_GROUPS) {
-      const pages = PAGES.filter((p) => p.group === group.id && p.isStudyModule);
+      const pages = PAGES.filter((p) => p.group === group.id && p.isStudyModule && isPageEnabled(p, { assistant: false }));
       if (!group.label || pages.length === 0) continue;
       const region = screen.getByRole('region', { name: group.label });
       for (const page of pages) {
@@ -78,7 +80,8 @@ describe('版面', () => {
         cards += 1;
       }
     }
-    expect(cards).toBe(PAGES.filter((p) => p.isStudyModule).length);
+    expect(cards).toBe(PAGES.filter((p) => p.isStudyModule && isPageEnabled(p, { assistant: false })).length);
+    expect(screen.queryByRole('link', { name: /學習助手/ })).not.toBeInTheDocument();
   });
 
   it('手機的「更多」面板：開啟後列出全部頁面，Esc 關閉並把焦點還給按鈕', async () => {

@@ -28,6 +28,7 @@ const PAGE_COMPONENTS: Record<PagePath, ComponentType> = {
   '/writing': lazy(() => import('./features/writing/WritingHomePage')),
   '/exams': lazy(() => import('./pages/ExamsPage')),
   '/mock': lazy(() => import('./pages/MockExamPage')),
+  '/assistant': lazy(() => import('./features/assistant/AssistantHomePage')),
   '/settings': lazy(() => import('./pages/SettingsPage')),
   '/about': lazy(() => import('./pages/AboutPage')),
 };
@@ -71,6 +72,16 @@ const BankEssayAttemptPage = lazy(() => import('./features/writing/bank/BankEssa
  * （歷屆考卷的 id 是 gsat-115、ast-110、ref-115 這類，不可能是 custom）。
  */
 const CustomEssayAttemptPage = lazy(() => import('./features/writing/custom/CustomEssayAttemptPage'));
+/**
+ * 學習助手的子頁（docs/design/learning-assistant.md §5.1）：錯題與疑點、確認頁、貼上題目、案例（解析與追問）。
+ * 學習報告（/assistant/report、/assistant/report/:version；WP-C）。開關關著時：首頁、案例、學習報告對已登入的人是唯讀模式
+ * （看與刪除之前的紀錄），其他頁與沒登入只顯示「學習助手暫停使用中」，不打學習助手的 API（AssistGate）。
+ */
+const AssistantMistakesPage = lazy(() => import('./features/assistant/MistakesPage'));
+const AssistantAskPage = lazy(() => import('./features/assistant/AskPage'));
+const AssistantNewQuestionPage = lazy(() => import('./features/assistant/NewQuestionPage'));
+const AssistantCasePage = lazy(() => import('./features/assistant/CasePage'));
+const AssistantReportPage = lazy(() => import('./features/assistant/ReportPage'));
 
 export function App() {
   return (
@@ -104,6 +115,12 @@ export function App() {
         <Route path="writing/essay/:examId" element={<EssayAttemptPage />} />
         <Route path="writing/submissions/:id" element={<SubmissionResultPage />} />
         <Route path="practice/:section/:tier" element={<PracticeSessionPage />} />
+        <Route path="assistant/mistakes" element={<AssistantMistakesPage />} />
+        <Route path="assistant/ask" element={<AssistantAskPage />} />
+        <Route path="assistant/new" element={<AssistantNewQuestionPage />} />
+        <Route path="assistant/case/:id" element={<AssistantCasePage />} />
+        <Route path="assistant/report" element={<AssistantReportPage />} />
+        <Route path="assistant/report/:version" element={<AssistantReportPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>

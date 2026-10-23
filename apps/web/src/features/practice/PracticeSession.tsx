@@ -6,11 +6,12 @@
  * 練習才有的東西（提示、解析卡、AI 標示、證據句、自己畫的圖表、填充與簡答的自動判分）用 QuestionExtrasContext 插進題目元件。
  * 計分在 scoring.ts：選擇題沿用歷屆試題的規則，混合題的填充、簡答依 SPEC §4.6 自動判分。
  */
-import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore, type RefObject } from 'react';
+import { Link } from 'react-router';
 import { groupKey, type PracticeFigure, type PracticeGroupFile } from '../../data/bank';
 import type { Question } from '../../data/exams';
 import { AttemptContext } from '../exams/AttemptContext';
-import { AttemptStore, createAttempt, loadAttempt } from '../exams/attempt';
+import { AttemptStore, createAttempt, loadAttempt, type AttemptPersistence, type AttemptState } from '../exams/attempt';
 import { ExamToolbar } from '../exams/components/ExamToolbar';
 import { GroupView } from '../exams/components/Paper';
 import { groupHasStimulus } from '../exams/components/Passage';
@@ -31,6 +32,40 @@ import { PRACTICE_SECTION_LABELS, READING_OPTION_CODE_LABELS, TIER_LABELS, displ
 import { NO_PRACTICE_MISTAKES, recordPracticeMistakes, type PracticeMistakeResult } from './mistakes';
 import { practiceAttemptId, practiceExam } from './practiceExam';
 import { freezeGrades, needsWordIndex, scorePractice, useWordLookup, type PracticeScore } from './scoring';
+import { AskAssistantButton } from '../assistant/components/AskAssistantButton';
+import { AskEntry } from '../assistant/components/AskEntry';
+import { recordOutcomesOnce } from '../assistant/entries';
+import { practiceOutcomes } from '../assistant/outcomeBuilders';
+import { okFromRatio } from '../assistant/outcomes';
+import { formatPoints, isAnswered } from '../exams/scoring';
+import { formatDateTime } from '../mock/format';
+
+/** 學習助手的入口（交卷後每題解析卡下方；docs/design/learning-assistant.md §1.4）：開關關著時 render null。 */
+function AskFor({ file, q, answer, score }: { file: PracticeGroupFile; q: Question; answer: AnswerValue | undefined; score: PracticeScore | null }) {
+  const outcome = score?.outcomes[q.label];
+  if (!outcome) return null;
+  return (
+    <AskEntry
+      ask={{ src: 'bank', ref: groupKey(file), labels: [q.label] }}
+      q={q}
+      state={{ ok: okFromRatio(outcome.earned, outcome.max), answered: answer !== undefined && isAnswered(answer) }}
+    />
+  );
+}
+
+/** 交卷結果下方一行：這組有錯題或疑點（用了提示）時，整組帶去確認頁。 */
+function AskGroupLink({ file, score, answers, hinted }: { file: PracticeGroupFile; score: PracticeScore; answers: Readonly<Record<string, AnswerValue>>; hinted: readonly string[] }) {
+  const labels = file.group.questions
+    .filter((q) => {
+      const o = score.outcomes[q.label];
+      if (!o) return false;
+      const wrong = okFromRatio(o.earned, o.max) < 1 || !isAnswered(answers[q.label] ?? '');
+      return wrong || hinted.includes(q.label);
+    })
+    .map((q) => q.label);
+  if (labels.length === 0) return null;
+  return <AskAssistantButton ask={{ src: 'bank', ref: groupKey(file), labels }} variant="primary" target="這一組的錯題與疑點" />;
+}
 
 const NO_EVIDENCE: readonly string[] = [];
 
@@ -140,6 +175,45 @@ function BankHints({ file }: { file: PracticeGroupFile }) {
 
 const scrollPageToTop = () => window.scrollTo({ top: 0 });
 
+/**
+ * 唯讀檢視（PracticeReview.tsx：學習助手錯題清單的「本站解析（免費）」，docs/design/learning-assistant.md §5.9）：
+ * 交卷時的作答（按了「再一組」之後從本機作答紀錄還原）。只顯示解析，不能作答，也不寫練習紀錄與作答紀錄。
+ */
+export interface PracticeReviewInput {
+  answers: Readonly<Record<string, AnswerValue>>;
+  /** 交卷時間（ISO）。 */
+  submittedAt: string;
+  /** 「再做一次這一組」的連結。 */
+  again: string;
+}
+
+/** 唯讀檢視的作答不存檔（不覆蓋這一組正在進行的作答紀錄）。 */
+const NO_SAVE: AttemptPersistence = { save: () => true };
+
+function reviewState(file: PracticeGroupFile, review: PracticeReviewInput): AttemptState {
+  const base = createAttempt(practiceAttemptId(file), 'exam', null, new Date(review.submittedAt));
+  return { ...base, answers: { ...review.answers }, submittedAt: review.submittedAt, submitReason: 'manual' };
+}
+
+/** 唯讀檢視的頁首：哪一次交卷、答對幾題，「再做一次這一組」。 */
+function ReviewPanel({ review, score, headingRef }: { review: PracticeReviewInput; score: PracticeScore; headingRef: RefObject<HTMLHeadingElement | null> }) {
+  const partial = Object.values(score.outcomes).filter((o) => o.earned > 0 && o.earned < o.max).length;
+  return (
+    <section aria-labelledby="practice-review-title" className="rounded-2xl border-2 border-primary bg-surface p-5 lg:p-6">
+      <h2 id="practice-review-title" ref={headingRef} tabIndex={-1} className="text-xl font-bold">
+        你之前的作答
+      </h2>
+      <p className="mt-2">
+        這是你 {formatDateTime(review.submittedAt)} 交卷的作答，只能看解析、不能修改：答對 {score.correct}／{score.total} 題
+        {partial > 0 ? `，另有 ${partial} 題部分給分` : ''}（得分 {formatPoints(score.earned)}／{formatPoints(score.max)} 分）。
+      </p>
+      <Link to={review.again} className="mt-3 inline-flex min-h-11 items-center rounded-full border border-line px-4 text-sm font-medium hover:border-primary">
+        再做一次這一組
+      </Link>
+    </section>
+  );
+}
+
 export function GroupSession({
   file,
   notice,
@@ -147,6 +221,7 @@ export function GroupSession({
   onNext,
   embedded = false,
   scrollToStart = scrollPageToTop,
+  review = null,
 }: {
   file: PracticeGroupFile;
   /** 開頭的說明（接續上次、這一格都做過了）。 */
@@ -161,11 +236,14 @@ export function GroupSession({
   embedded?: boolean;
   /** 交卷後捲回練習區頂端看成績：作答頁捲到頁面頂端，題型頁捲到練習區（上面還有頁首與說明）。 */
   scrollToStart?: () => void;
+  /** 唯讀檢視（見 PracticeReviewInput）；onNext 不會被呼叫。 */
+  review?: PracticeReviewInput | null;
 }) {
   const key = groupKey(file);
   const exam = useMemo(() => practiceExam(file), [file]);
   // 有作答紀錄就接續；沒有就建立新的（第一次作答時才寫進 localStorage）。考試模式＝交卷前不顯示答案；不限時。
   const [store] = useState(() => {
+    if (review) return new AttemptStore(reviewState(file, review), true, NO_SAVE);
     const saved = loadAttempt(practiceAttemptId(file));
     return new AttemptStore(saved ?? createAttempt(practiceAttemptId(file), 'exam', null));
   });
@@ -190,10 +268,16 @@ export function GroupSession({
   }, [file, submittedAnswers, lookup, lookupReady, frozen]);
   const needsFreeze = needsWordIndex(file);
   useEffect(() => {
-    if (!score || frozen || submittedAt === null || !needsFreeze) return;
+    if (review || !score || frozen || submittedAt === null || !needsFreeze) return;
     updatePracticeHistory((h) => recordGraded(h, key, { submittedAt, ...freezeGrades(score) }));
-  }, [score, frozen, submittedAt, needsFreeze, key]);
+  }, [review, score, frozen, submittedAt, needsFreeze, key]);
   const hintsForGroup = history.value.hints[key];
+  // 學習助手的本機作答紀錄：判分好（填充題等單字索引）之後寫一次，同一次交卷不重複寫（docs/design/learning-assistant.md §5.4）。
+  useEffect(() => {
+    if (review || !score || submittedAt === null || !submittedAnswers || (needsFreeze && !frozen)) return;
+    const at = Date.parse(submittedAt);
+    recordOutcomesOnce('bank', { r: key }, at, () => practiceOutcomes(file, submittedAnswers, { score, hints: hintsForGroup ?? {}, at }));
+  }, [review, score, submittedAt, submittedAnswers, needsFreeze, frozen, key, file, hintsForGroup]);
   const hinted = useMemo(
     () => file.group.questions.filter((q) => (hintsForGroup?.[q.label] ?? 0) > 0).map((q) => q.label),
     [file, hintsForGroup],
@@ -288,8 +372,18 @@ export function GroupSession({
           title={q.mode === 'fill_in_blank' || q.mode === 'short_answer' ? `第 ${q.label} 題提示` : undefined}
         />
       ),
-      renderAfterFeedback: (q, answer) => <CardFor file={file} q={q} answer={answer} onLocate={onLocate} />,
-      renderOpenFeedback: (q, answer) => <OpenFor file={file} q={q} answer={answer} score={score} onLocate={onLocate} />,
+      renderAfterFeedback: (q, answer) => (
+        <>
+          <CardFor file={file} q={q} answer={answer} onLocate={onLocate} />
+          <AskFor file={file} q={q} answer={answer} score={score} />
+        </>
+      ),
+      renderOpenFeedback: (q, answer) => (
+        <>
+          <OpenFor file={file} q={q} answer={answer} score={score} onLocate={onLocate} />
+          <AskFor file={file} q={q} answer={answer} score={score} />
+        </>
+      ),
       openAnswerNote,
       renderFigure: (figure) => renderPracticeFigure(figure as PracticeFigure, figureEvidence),
       passageFooter: (
@@ -344,9 +438,10 @@ export function GroupSession({
               </p>
             )}
             {/* 題型頁打開就抽好一組：只是來看說明、或分頁開著沒動，不能算進用時，第一次作答才開始計時。 */}
-            <ExamToolbar exam={exam} modeLabel="題庫練習" waitForFirstAnswer={embedded} />
+            {!review && <ExamToolbar exam={exam} modeLabel="題庫練習" waitForFirstAnswer={embedded} />}
             {submitted && !score && <GradingPanel headingRef={resultHeadingRef} />}
-            {submitted && score && (
+            {review && score && <ReviewPanel review={review} score={score} headingRef={resultHeadingRef} />}
+            {!review && submitted && score && (
               <ResultPanel
                 file={file}
                 score={score}
@@ -358,6 +453,7 @@ export function GroupSession({
                 embedded={embedded}
               />
             )}
+            {submitted && score && submittedAnswers && <AskGroupLink file={file} score={score} answers={submittedAnswers} hinted={hinted} />}
             {submitted && elimination && file.group.options_bank && (
               <EliminationTable
                 elimination={elimination}
@@ -378,7 +474,7 @@ export function GroupSession({
                 {submitted && translation && <TranslationDetails text={translation} />}
               </div>
             )}
-            {submitted && (
+            {submitted && !review && (
               <div className="flex flex-wrap items-center gap-2 border-t border-line pt-4">
                 <button type="button" onClick={onNext} className="inline-flex min-h-11 items-center rounded-full bg-primary px-5 font-semibold text-on-primary">
                   再一組

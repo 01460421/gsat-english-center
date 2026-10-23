@@ -13,3 +13,15 @@ export * from './writing';
 export * from './writing-mechanics';
 // 英文作文自訂題目的輸入規則與文案：同樣直接轉匯出、不經 writing.ts（只有自訂題頁用到；docs/design/custom-essay.md §2.2）。
 export * from './custom-essay';
+// 計分、走訪考卷、自組卷的題號重編與字母交換、題庫題組檔的代號與守衛：網站與 Worker（學習助手）共用的純函式
+// （docs/design/learning-assistant.md §4.2、§4.5）。
+export * from './exam-scoring';
+export * from './exam-iterate';
+export * from './bank-mock-text';
+export * from './bank-practice-file';
+// 學習助手的型別、代碼清單與檢查（同樣直接轉匯出、不經 writing.ts：只有學習助手的頁面與入口用到）。
+export * from './assist-codes';
+export * from './assist';
+// 學習報告：方法庫、計畫骨架、facts 與報告內容的型別（docs/design/learning-assistant.md §3）。
+export * from './assist-methods';
+export * from './assist-report';

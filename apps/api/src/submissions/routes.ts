@@ -9,7 +9,8 @@
  *                                           帶 custom_prompt 時只限自訂題、要 AI 已核准，題目列的 rev 加 1）
  *   DELETE /api/submissions/:id             204（連同暫存照片與批改；批改進行中 409）
  *   POST   /api/submissions/:id/photos?ord=1|2  multipart，一次一張，欄位 `photo`（JPEG／PNG／WebP、≤1.2 MB、長邊 ≤1600 px）
- *                                           → PhotoUploadResponse（存檔前剝除 EXIF 等中繼資料；結構不認得或讀不到寬高就拒絕）
+ *                                           → PhotoUploadResponse（存檔前剝除 EXIF 等中繼資料；結構不認得或讀不到寬高就拒絕；
+ *                                           讀取與檢查在 photoUpload.ts，學習助手的題目照片共用）
  *                                           （requireAiApproved；每次上傳先刪掉所有超過 24 小時的暫存照片，以及同一人
  *                                           其他提交〔不在辨識中〕的暫存照片；每人最多暫存 PHOTO_TEMP_MAX_PER_USER 張）
  *   DELETE /api/submissions/:id/photos      PhotoUploadResponse（學生自己刪全部照片）
@@ -30,8 +31,6 @@ import {
   CUSTOM_PROMPT_NOT_FOUND_MESSAGE,
   CUSTOM_PROMPT_PROBLEM_MESSAGES,
   PHOTO_MAX_AGE_HOURS,
-  PHOTO_MAX_BYTES,
-  PHOTO_MIMES,
   SUBMISSION_KINDS,
   WRITING_UNKNOWN_GROUP_MESSAGE,
   countEnglishWords,
@@ -39,7 +38,6 @@ import {
   isCustomEssayGroupId,
   type CustomPromptValue,
   type EssayBody,
-  type PhotoMime,
   type PhotoUploadResponse,
   type SubmissionKind,
   type SubmissionListResponse,
@@ -47,7 +45,7 @@ import {
 } from '@gsat/shared';
 import { Hono, type Context } from 'hono';
 import * as z from 'zod/v4';
-import { readBodyBytes, readJsonBody } from '../account/validate';
+import { readJsonBody } from '../account/validate';
 import { getWritingGroup, ensureItemGroupStatement, type WritingGroup } from '../ai/bank';
 import { sanitizeStudentText } from '../ai/filter';
 import { userRefFor } from '../ai/ledger';
@@ -59,7 +57,7 @@ import type { AppEnv } from '../env';
 import { ApiError } from '../errors';
 import { nowSeconds } from '../time';
 import { groupForSubmission, insertCustomPromptStatement, requireCustomEssayAvailable, updateCustomPromptStatement, validateCustomPrompt } from './custom';
-import { imageDimensions, PHOTO_SERVER_MAX_EDGE_PX, processImageMetadata, sha256Hex, sniffImageType } from './images';
+import { photoBlob, photoOrd, readPhotoFile } from './photoUpload';
 import { LIST_SUBMISSIONS, listPhotoMeta, parseJson, requireSubmission, toDetail, toSummary, type SubmissionRow } from './repo';
 import { bodyJson, normalizeEssayBody, normalizeSelfAssess, normalizeTranslationBody } from './validate';
 
@@ -77,8 +75,6 @@ const PAGE_SIZE = 20;
  * 符號，64 KB 綽綽有餘。
  */
 export const SUBMISSION_JSON_MAX_BYTES = 64 * 1024;
-/** multipart 的邊界與標頭另外留的空間。 */
-const MULTIPART_OVERHEAD_BYTES = 64 * 1024;
 /**
  * 每人同時暫存的照片上限：一份正在辨識的（同時任務最多 2 個，各 2 張）以外，其他提交的照片在上傳新照片時
  * 就會被刪掉，所以正常情況最多 4 張（4.8 MB）。
@@ -324,43 +320,12 @@ submissionRoutes.post('/:id/photos', requireAiApproved, async (c) => {
   const user = await sessionUser(c);
   const db = c.env.DB;
   if (!loadConfig(c.env).ai.configured) throw new ApiError(503, 'not_configured', AI_ERROR_MESSAGES.not_configured);
-  const ord = Number(c.req.query('ord'));
-  if (ord !== 1 && ord !== 2) throw new ApiError(400, 'bad_request', 'ord 必須是 1 或 2');
-  // 本體大小先看 Content-Length（multipart 的邊界與標頭另外留 64 KB）；沒有 Content-Length 時下面邊讀邊數。
-  const maxBody = PHOTO_MAX_BYTES + MULTIPART_OVERHEAD_BYTES;
-  const declared = Number(c.req.header('Content-Length') ?? '0');
-  if (declared > maxBody) throw new ApiError(413, 'payload_too_large', '每張照片最多 1.2 MB');
+  // ord 與 Content-Length 先檢查（不讀本體）；本體的讀取與檢查在 photoUpload.ts（學習助手的題目照片共用）。
+  const ord = photoOrd(c);
   const sub = await requireSubmission(db, user.id, c.req.param('id'));
   if (sub.kind !== 'essay' || sub.input_mode !== 'photo') throw new ApiError(409, 'conflict', '只有手寫作文可以上傳照片');
   if (sub.status !== 'draft' && sub.status !== 'failed') throw new ApiError(409, 'conflict', '這份提交目前不能上傳照片');
-
-  const contentType = c.req.header('Content-Type') ?? '';
-  if (!/^multipart\/form-data\s*;/i.test(contentType)) throw new ApiError(400, 'bad_request', '請用 multipart/form-data 上傳，欄位名稱 photo');
-  const raw = await readBodyBytes(c, maxBody, '每張照片最多 1.2 MB');
-  let file: unknown;
-  try {
-    file = (await new Response(raw as Uint8Array<ArrayBuffer>, { headers: { 'Content-Type': contentType } }).formData()).get('photo');
-  } catch {
-    throw new ApiError(400, 'bad_request', '請用 multipart/form-data 上傳，欄位名稱 photo');
-  }
-  if (!(file instanceof Blob)) throw new ApiError(400, 'bad_request', '缺少欄位 photo');
-  if (file.size > PHOTO_MAX_BYTES) throw new ApiError(413, 'payload_too_large', '每張照片最多 1.2 MB');
-  if (file.size === 0) throw new ApiError(400, 'bad_request', '照片是空的');
-  const declaredType = file.type.split(';')[0]?.trim().toLowerCase() ?? '';
-  if (!(PHOTO_MIMES as readonly string[]).includes(declaredType)) throw new ApiError(400, 'bad_request', '只接受 JPEG、PNG、WebP 照片');
-  const original = new Uint8Array(await file.arrayBuffer());
-  const sniffed = sniffImageType(original);
-  if (sniffed !== declaredType) throw new ApiError(400, 'bad_request', '檔案內容和宣告的格式不符');
-  const mime = sniffed as PhotoMime;
-  // 中繼資料剝不掉（結構不認得）或讀不到寬高就拒絕（ARCHITECTURE §7「不合格就拒絕」）。
-  const stripped = processImageMetadata(original, mime);
-  if (!stripped.ok) throw new ApiError(400, 'bad_request', '無法處理這張照片的檔案格式，請重新拍照，或存成 JPEG 後再上傳');
-  const bytes = stripped.bytes;
-  const dims = imageDimensions(bytes, mime);
-  if (!dims || dims.width <= 0 || dims.height <= 0) throw new ApiError(400, 'bad_request', '讀不到照片的寬高，請重新拍照，或存成 JPEG 後再上傳');
-  if (Math.max(dims.width, dims.height) > PHOTO_SERVER_MAX_EDGE_PX) {
-    throw new ApiError(400, 'bad_request', `照片尺寸太大（長邊最多 ${PHOTO_SERVER_MAX_EDGE_PX} 像素），請縮小後再上傳`);
-  }
+  const photo = await readPhotoFile(c);
   // 同一個交易裡：
   //   1. 兜底清除所有超過 24 小時的暫存照片（不分使用者）；
   //   2. 刪掉同一人其他提交（不在辨識中）的暫存照片——MVP 一次只辨識一份，丟著不用的照片不必等 24 小時；
@@ -387,12 +352,12 @@ submissionRoutes.post('/:id/photos', requireAiApproved, async (c) => {
         sub.id,
         user.id,
         ord,
-        mime,
-        bytes.length,
-        dims.width,
-        dims.height,
-        await sha256Hex(bytes),
-        bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength),
+        photo.mime,
+        photo.bytes.length,
+        photo.width,
+        photo.height,
+        photo.sha256,
+        photoBlob(photo.bytes),
         now,
         now + PHOTO_MAX_AGE_HOURS * 3600,
         PHOTO_TEMP_MAX_PER_USER,

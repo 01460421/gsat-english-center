@@ -15,7 +15,8 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { afterEach, describe, expect, it } from 'vitest';
-import { BankDataError, PRACTICE_SCHEMA, buildBankData, practiceGroupPath } from './bank-data.mjs';
+import { isAssistSkillCode, skillCodesOf } from '@gsat/shared';
+import { BankDataError, PRACTICE_SCHEMA, buildBankData, groupSkills, practiceGroupPath } from './bank-data.mjs';
 
 const WEB_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const FIXTURE_BANK = path.join(WEB_DIR, 'tests', 'fixtures', 'bank', 'v1');
@@ -97,7 +98,7 @@ describe('範例題庫的輸出與 golden 一致', () => {
     expect(result.skipped).toEqual([]);
   });
 
-  it('index 每組有 uid、version、題型、難度、主題、題數、課綱', () => {
+  it('index 每組有 uid、version、題型、難度、主題、題數、課綱、技能代碼', () => {
     const wb = result.entries.find((e) => e.uid === 'ai.wb.0a1b2c');
     expect(wb).toEqual({
       uid: 'ai.wb.0a1b2c',
@@ -108,9 +109,38 @@ describe('範例題庫的輸出與 golden 一致', () => {
       topic: 'history of the umbrella',
       question_count: 10,
       curriculum: [{ code: '3-V-12', weight: 'primary' }],
+      skills: [
+        'ct:cause_effect',
+        'ct:collocation',
+        'ct:contrast',
+        'ct:definition_restatement',
+        'ct:lexical_link',
+        'ct:situational',
+        'sn:core',
+        'tp:collocation',
+        'tp:phrase',
+        'tp:word_meaning',
+      ],
     });
     // 詞彙題沒有選文主題。
     expect(result.entries.find((e) => e.section_type === 'vocabulary')?.topic).toBeNull();
+  });
+
+  it('index 的 skills 和 shared 的 skillCodesOf 逐題取聯集相同（學習助手推薦用；docs/design/learning-assistant.md §5.6）', () => {
+    for (const entry of result.entries) {
+      const file = result.groups.find((g) => g.uid === entry.uid) as Json;
+      const group = file.group as { questions: Array<{ label: string; tags?: Json | null }> };
+      const items = (file.annotations as { explanations: { items: Record<string, Json> } }).explanations.items;
+      const expected = new Set(group.questions.flatMap((q) => skillCodesOf({ tags: q.tags as never, explanation: (items[q.label] ?? null) as never })));
+      expect(entry.skills, entry.uid).toEqual([...expected].sort());
+      for (const code of entry.skills) expect(isAssistSkillCode(code), code).toBe(true);
+      expect(entry.skills.length, entry.uid).toBeGreaterThan(0);
+    }
+  });
+
+  it('標註的值不像代號時不輸出（不讓題庫的任意字串進索引）', () => {
+    const groupFile = { uid: 'x', version: 1, section_type: 'reading', tier: 'basic', group: { questions: [{ label: '1', tags: { item_type: 'Detail <b>', test_point: 'word_meaning' } }] }, annotations: {} };
+    expect(groupSkills(groupFile as never)).toEqual(['tp:word_meaning']);
   });
 
   it('不輸出生成、驗證細節與內部欄位，只有 auto_verified 旗標', () => {
@@ -461,6 +491,7 @@ describe('閱讀、混合題', () => {
         { code: 'B-V-12', weight: 'secondary' },
         { code: '3-V-12', weight: 'secondary' },
       ],
+      skills: ['it:chart_reading', 'it:detail', 'it:main_idea', 'it:vocab_in_context'],
     });
     expect(result.entries.find((e) => e.uid === 'ai.mx.0f1a2b')?.question_count).toBe(4);
   });

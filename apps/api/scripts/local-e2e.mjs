@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 /**
- * 本機端對端測試：wrangler dev（本機 D1＋Queue）＋假 Google＋假 Anthropic，跑完「登入 → 同意 → AI 批改 → 後台核准 →
- * 額度用完 → 登出所有裝置」的完整流程。負責：整合者（docs/design/ai-auth-mvp.md §10「整合」）。
+ * 本機端對端測試：wrangler dev（本機 D1＋Queue）＋假 Google＋假 Anthropic＋假網站題目檔，跑完「登入 → 同意 → AI 批改 →
+ * 學習助手（建立案例 → 解析 → 追問；拍照 → 轉錄 → 確認；學習報告）→ 後台核准 → 額度用完 → 登出所有裝置」的完整流程。
+ * 負責：整合者（docs/design/ai-auth-mvp.md §10「整合」）；學習助手的部分：WP-A2、拍照的部分 WP-A3、學習報告 WP-C
+ * （docs/design/learning-assistant.md §6.2）。
  *
  * 用法：npm run test:local-e2e -w @gsat/api（或在 apps/api 下 node scripts/local-e2e.mjs；E2E_VERBOSE=1 會同步印出 wrangler 的輸出）。
  *
@@ -11,6 +13,11 @@
  *   - 假 Anthropic（本機 HTTP）：/v1/messages 依請求內容回 SSE 串流的結構化輸出（系統提示判斷任務與評分框架、
  *     <student_text> 取學生文字）；可以排一次 429（SDK 自動重試）與一次拒答；同時檢查 ARCHITECTURE §6.2 的呼叫規則
  *     與「送出的內容不含 email、暱稱、帳號 id」。
+ *   - 假網站題目檔（本機 HTTP，SITE_DATA_ORIGIN 指過來）：只提供 /data/bank/groups/ 的一個本站文意選填題組，
+ *     學習助手的 Worker 從這裡讀題目、答案與本站解析（APP_ORIGIN 照舊是 Worker 自己）；學習報告另外讀題庫、
+ *     寫作題庫與歷屆試題的三份索引（重建推薦候選的標題）。學習助手照 wrangler.toml 的 AI_ASSISTANT、AI_ASSISTANT_PHOTO
+ *     （2026-10-23 上線後都是 on；緊急時可能是 admin）：由管理員帳號走這段流程（on、admin 兩種模式管理員都能用；off 時這段會失敗），
+ *     /api/features 與核准後學生的 /api/ai/quota 照開關檢查。
  *   - 機密用暫存的 env 檔（--env-file，權限 600，結束時刪除）、端點與允許來源用 --var 傳給 wrangler dev。
  *     有 --env-file 時 wrangler 不讀 apps/api/.dev.vars，站主本機的真金鑰不會被用到。
  *   - D1 與 Queue 的本機狀態放在暫存目錄（--persist-to）：每次都是全新的資料庫，結束時刪除；不動 .wrangler/state。
@@ -27,7 +34,7 @@ import { createServer as createNetServer } from 'node:net';
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { customEssayExpected, customEssayVarFrom } from '../../../.github/scripts/deploy-summary.mjs';
+import { assistantMode, assistantVarsFrom, customEssayExpected, customEssayVarFrom } from '../../../.github/scripts/deploy-summary.mjs';
 
 const API_DIR = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const require = createRequire(import.meta.url);
@@ -109,6 +116,176 @@ const ESSAY_EXCERPTS = ['feel lonely after work', 'raise a dog instead'];
 /** 點數（AI_TASK_POINTS）與預設額度（wrangler.toml）。 */
 const POINTS = { translation_grade: 3, essay_grade: 7, essay_ocr: 2 };
 const STUDENT_DAY_LIMIT = 30;
+
+// ───────────────────────── 學習助手：假網站題目檔（本站自己寫的練習題） ─────────────────────────
+
+/** 本站題庫的文意選填題組（格式同 public/data/bank/groups/*.json；4 格 6 個選項，答案 A、B、C、D）。 */
+const ASSIST_WB_REF = 'ai.wb.e2e001@1';
+const ASSIST_WB_SENTENCES = [
+  'Mina wanted to [[1]] her old bicycle before buying a new one.',
+  'She posted a short ad, and a neighbor [[2]] to take a look that evening.',
+  'He was so [[3]] with the smooth brakes that he paid her right away.',
+  'With the money, Mina could finally [[4]] the camping trip she had planned for months.',
+];
+const ASSIST_WB_GROUP = {
+  schema: 'gsat-bank-practice/v1',
+  uid: 'ai.wb.e2e001',
+  version: 1,
+  section_type: 'word_bank',
+  format_version: 'word_bank-4x6',
+  tier: 'advanced',
+  auto_verified: true,
+  group: {
+    id: 'g1',
+    passage: ASSIST_WB_SENTENCES.join(' '),
+    passage_parts: null,
+    figures: [],
+    options_bank: { A: 'sell', B: 'offered', C: 'pleased', D: 'afford', E: 'pleasant', F: 'refused' },
+    questions: [1, 2, 3, 4].map((no) => ({
+      no,
+      label: String(no),
+      mode: 'bank_choice',
+      stem: null,
+      options: null,
+      answer: ['A', 'B', 'C', 'D'][no - 1],
+      accepted_answers: null,
+      points: 1,
+      stats: null,
+      tags: { test_point: no === 3 ? 'word_meaning' : 'collocation', answer_pos: 'verb' },
+    })),
+    tags: null,
+  },
+  annotations: {
+    explanations: {
+      items: Object.fromEntries(
+        [1, 2, 3, 4].map((no) => [
+          String(no),
+          {
+            explanation_zh: `第 ${no} 格要看前後文的線索。`,
+            evidence: [ASSIST_WB_SENTENCES[no - 1]],
+            blank_pos: no === 3 ? 'adjective' : 'verb',
+            clue_type: no === 3 ? 'cause_effect' : 'collocation',
+            sense: 'core',
+            option_notes_zh: { E: 'pleasant 是「令人愉快的」，修飾事物，不修飾人的感受。', F: 'refused 和後面 to take a look 的意思相反。' },
+            strategy_zh: '先判斷詞性，再看語意。',
+            hints: ['先看空格前後的詞性。', '再看這句的因果關係。'],
+          },
+        ]),
+      ),
+    },
+    translation_zh: { text: '整合測試用的中譯。' },
+    elimination: { feasible: { 1: ['A'], 2: ['B', 'F'], 3: ['C', 'E'], 4: ['D'] }, perfect_matchings: 1 },
+  },
+  curriculum: [],
+  provenance: { license: 'original-ai', derivation: 'original', attribution_text: '本文由 AI 撰寫', sources: [], references: [] },
+};
+/** 學習助手的案例：第 2、3 格答錯（2 題 → 解析 8 點）；追問 3 點。 */
+const ASSIST_LABELS = ['2', '3'];
+const ASSIST_ANSWERS = { 1: 'A', 2: 'F', 3: 'E', 4: 'D' };
+const ASSIST_POINTS = { analyze: 8, followup: 3, ocr: 2 };
+const ASSIST_FOLLOWUP_TEXT = '整合測試：那 offer 後面為什麼接不定詞？';
+/** 學習報告（WP-C）：10 點；學生的回饋（不能出現在日誌裡）。 */
+const ASSIST_REPORT_POINTS = 10;
+const ASSIST_REPORT_FEEDBACK = '整合測試：最近閱讀比較穩，作文常寫不完。';
+/** 假網站的三份索引（報告的推薦候選由伺服器依 ref 從這裡重建標題）。 */
+const ASSIST_INDEX_FILES = {
+  'bank/index.json': {
+    version: 'e2e',
+    count: 1,
+    groups: [{ uid: 'ai.wb.e2e001', version: 1, section_type: 'word_bank', tier: 'advanced', topic: '二手腳踏車', skills: ['tp:collocation'] }],
+  },
+  'writing/bank/index.json': {
+    version: 'e2e',
+    count: 1,
+    groups: [{ uid: 'ai.tr.e2e002', version: 1, section_type: 'translation', tier: 'advanced', topic: '校園生活', skills: ['ts:PERF'] }],
+  },
+  'exams/index.json': { version: 'e2e', count: 1, exams: [{ id: 'gsat-115', exam: 'gsat', year: 115, session: 'regular', title: '115 學測英文' }] },
+};
+
+/** 假的解析輸出（站內題：答案由程式從題目檔決定；證據句要在選文裡找得到）。 */
+function assistItemOutput(labels) {
+  return {
+    section: 'word_bank',
+    skill_codes: ['tp:collocation', 'ct:cause_effect'],
+    tested_zh: '這組在考詞性判斷與搭配詞。',
+    structure_zh: '全篇依時間順序：想賣車 → 鄰居來看 → 滿意付錢 → 有錢去露營。',
+    items: labels.map((label) => ({
+      label,
+      answer: { text: '', certainty: 'sure' },
+      diagnosis: { error_codes: ['word_form'], summary_zh: `第 ${label} 格的詞性判斷錯了。`, detail_zh: '空格前是主詞，後面是不定詞，需要動詞。' },
+      option_contrast_zh: '',
+      hints_zh: ['先看空格前後。', '這裡需要什麼詞性？'],
+      solution_steps: [{ text_zh: '先找出主詞與後面的不定詞。', quote: 'a neighbor [[2]] to take a look' }],
+      traps: [],
+    })),
+    knowledge: [{ kind: 'collocation', title_zh: 'offer to V', explain_zh: 'offer 後面接不定詞，表示主動提出要做某事。', examples: [{ en: 'He offered to help me.', zh: '他主動說要幫我。' }] }],
+    method: { title_zh: '文意選填四步驟', steps_zh: ['先分詞性。', '看前後文。', '刪去已用的選項。'] },
+    score_tips_zh: ['每週練一組文意選填。', '交卷前檢查有沒有重複用同一個選項。'],
+    doubt_replies: [],
+    practice_focus: { section: 'word_bank', skill_codes: ['tp:collocation'] },
+    followup_chips_zh: ['offer 和 suggest 差在哪？'],
+    key_concern_zh: '',
+    off_topic: false,
+    safety_flag: 'none',
+  };
+}
+
+/**
+ * 學習助手的拍照轉錄（WP-A3）：假的轉錄輸出（本站為測試自己寫的句子）。第 7 題是要問的題；文章裡一處看不清（[[?]]），
+ * 說明區塊有「姓名：」欄位（存檔前要遮掉）。
+ */
+const ASSIST_OCR_PASSAGE = 'Mina folded a paper boat for the [[?]] race on Sunday.';
+const ASSIST_OCR_BLOCKS = [
+  { kind: 'instructions', label: '', text: '整合測試講義 姓名：測試生', unclear: [] },
+  { kind: 'passage', label: '', text: ASSIST_OCR_PASSAGE, unclear: [{ candidates: ['spring', 'string'] }] },
+  { kind: 'question', label: '7', text: 'What did Mina make for the race on Sunday?', unclear: [] },
+  { kind: 'options', label: '7', text: '(A) A paper boat\n(B) A kite\n(C) A cake\n(D) A poster', unclear: [] },
+];
+
+function assistOcrOutput() {
+  return { status: 'ok', blocks: ASSIST_OCR_BLOCKS, student_answer_seen: '7: B', omitted: ['answer_key'] };
+}
+
+function assistFollowupOutput() {
+  return {
+    reply_zh: '想一想：offer 表示「主動提出要做」，後面要接哪一種動詞形式？',
+    points: [{ text_zh: 'offer to V', example_en: 'She offered to drive.' }],
+    mode_used: 'explain',
+    new_error_codes: ['collocation'],
+    understood_check_zh: '那 suggest 後面可以接 to V 嗎？',
+    followup_chips_zh: [],
+    off_topic: false,
+    safety_flag: 'none',
+  };
+}
+
+/**
+ * 學習報告（WP-C）：假的報告輸出。phases 照 <task> 列的階段（id 從請求裡取），其他欄位是本站為測試寫的句子；
+ * overview_zh 故意帶一句預測級分，程式要拿掉並記在 notices。
+ */
+function assistReportOutput(userText) {
+  const phaseIds = [...userText.matchAll(/\{"id":"(\w+)","weeks"/g)].map((m) => m[1]);
+  return {
+    overview_zh: '文意選填的詞性判斷是目前最需要補的地方。你有望達到 13 級分。',
+    strengths: [],
+    weaknesses: [{ area: 'word_bank', error_codes: ['word_form'], evidence_zh: '文意選填錯在詞性。', explain_zh: '空格前後的結構沒有先看。', priority: 1 }],
+    error_patterns: [{ code: 'word_form', explain_zh: '詞性判斷錯。', case_refs: ['c1'], fix_zh: '先分詞性再選。' }],
+    doubts: [],
+    section_notes: [{ section: 'word_bank', note_zh: '先把選項分成名詞、動詞、形容詞。' }],
+    score_plan: [
+      { priority: 1, section: 'word_bank', action_zh: '每週兩組文意選填，先分詞性。', why_zh: '錯因集中在詞性。', gain_level: 'high' },
+      { priority: 2, section: 'reading', action_zh: '每週三篇閱讀，找證據句。', why_zh: '閱讀配分最高。', gain_level: 'medium' },
+      { priority: 3, section: 'translation', action_zh: '每週一題中譯英送 AI 批改。', why_zh: '還沒有批改紀錄。', gain_level: 'low' },
+    ],
+    phases: phaseIds.map((id) => ({ phase_id: id, focus_zh: '依本站的方法練習。', routine: [{ kind: 'bank_practice', section: 'word_bank', weight: 3, detail_zh: '先分詞性' }] })),
+    milestones: [],
+    recommendations: [{ ref: ASSIST_WB_REF, why_zh: '練詞性判斷。' }],
+    changes_zh: [],
+    questions_zh: ['你每週哪幾天比較有時間？'],
+    data_notes_zh: '資料只來自這台裝置。',
+    safety_flag: 'none',
+  };
+}
 
 /** 最小的合法 JPEG（含 APP1／EXIF 區段，伺服器存檔前要剝掉；長邊 1600 px）。 */
 function tinyJpeg(width, height, fill) {
@@ -512,13 +689,22 @@ async function startFakeAnthropic({ apiKey }) {
       const userText = typeof content === 'string' ? content : Array.isArray(content) ? content.filter((b) => b.type === 'text').map((b) => b.text).join('\n') : '';
       const images = Array.isArray(content) ? content.filter((b) => b.type === 'image') : [];
       const task = system.includes('careful transcriber')
-        ? 'ocr'
-        : system.includes('Chinese-to-English translation')
-          ? 'translation'
-          : system.includes('English essay')
-            ? 'essay'
-            : 'unknown';
-      const framework = task === 'ocr' ? 'ocr' : system.includes('independent second grader') ? 'holistic' : 'analytic';
+        ? system.includes('exam-style English questions')
+          ? 'assist_ocr'
+          : 'ocr'
+        : system.startsWith('You are an English tutor')
+          ? system.includes('Follow-up questions:')
+            ? 'assist_followup'
+            : 'assist_analyze'
+          : system.startsWith('You are a study advisor')
+            ? 'assist_report'
+            : system.includes('Chinese-to-English translation')
+            ? 'translation'
+            : system.includes('English essay')
+              ? 'essay'
+              : 'unknown';
+      const assist = task.startsWith('assist_');
+      const framework = task === 'ocr' || task === 'assist_ocr' ? 'ocr' : assist ? 'tutor' : system.includes('independent second grader') ? 'holistic' : 'analytic';
       const info = { task, framework, images: images.length, maxTokens: body.max_tokens, effort: body.output_config?.effort };
       state.requests.push(info);
 
@@ -532,15 +718,39 @@ async function startFakeAnthropic({ apiKey }) {
       if (body.stream !== true) p('不是串流請求');
       for (const k of ['temperature', 'top_p', 'top_k', 'thinking', 'tool_choice', 'tools', 'metadata']) if (k in body) p(`不該送 ${k}`);
       if (!Number.isInteger(body.max_tokens) || body.max_tokens <= 0) p('max_tokens 不合法');
-      if (body.output_config?.effort !== (task === 'ocr' ? 'low' : 'medium')) p(`effort=${body.output_config?.effort}`);
+      // effort：批改與解析 medium、轉錄與追問 low（wrangler.toml 的 AI_EFFORT_*）。
+      if (body.output_config?.effort !== (task === 'ocr' || task === 'assist_ocr' || task === 'assist_followup' ? 'low' : 'medium')) p(`effort=${body.output_config?.effort}`);
       if (body.output_config?.format?.type !== 'json_schema' || typeof body.output_config?.format?.schema !== 'object') p('沒有 json_schema 結構化輸出');
       if (body.fallbacks !== 'default') p('沒有 fallbacks: default');
       if (!Array.isArray(body.messages) || body.messages.length !== 1 || body.messages[0].role !== 'user') p('messages 必須只有一則 user');
       if (body.system?.[0]?.cache_control?.type !== 'ephemeral') p('系統提示沒有 cache_control');
+      // 學習助手的系統提示所有學生共用：1 小時快取；批改照舊 5 分鐘（沒有 ttl）。
+      if ((body.system?.[0]?.cache_control?.ttl ?? '5m') !== (assist ? '1h' : '5m')) p(`系統提示的快取時間 ${body.system?.[0]?.cache_control?.ttl ?? '5m'}`);
+      const marks = [...(Array.isArray(body.system) ? body.system : []), ...(Array.isArray(content) ? content : [])].filter((b) => b.cache_control);
+      if (marks.length > 4) p(`cache_control 斷點 ${marks.length} 個（上限 4）`);
+      if (marks.some((b) => b.type !== 'text')) p('cache_control 只能放在 system 與 text block');
+      const ttls = marks.map((b) => b.cache_control.ttl ?? '5m');
+      if (ttls.indexOf('5m') >= 0 && ttls.slice(ttls.indexOf('5m')).includes('1h')) p('1 小時的快取斷點要在 5 分鐘的前面');
       if (task === 'unknown') p('認不出是哪個任務');
-      if (task !== 'ocr' && !userText.includes('<student_text')) p('學生文字沒有包在 <student_text>');
+      if (task === 'assist_analyze') {
+        // 站內題、沒有自由輸入的疑問：可以共用快取，請求裡不能有學生的文字與錯因歷史。
+        if (userText.includes('<student_text') || userText.includes('<student_patterns>')) p('可以進快取的解析請求含有學生的文字');
+        if (!userText.includes('<question>') || !userText.includes('<site_explanation>')) p('解析請求沒有 <question> 或 <site_explanation>');
+      } else if (task === 'assist_followup') {
+        if (!Array.isArray(content) || content.length !== 3 || content[0].cache_control?.type !== 'ephemeral') p('追問的 content 應該是 3 個 block、第一個帶 cache_control');
+        if (!userText.includes('<student_text role="question">')) p('追問的問題沒有包在 <student_text role="question">');
+        if (!userText.includes('<analysis_digest>') || !userText.includes('<conversation>')) p('追問沒有帶解析摘要或對話');
+      } else if (task === 'assist_ocr') {
+        // 拍照轉錄：照片＋固定的 <task>，這時還沒有任何學生文字。
+        if (userText.includes('<student_text')) p('轉錄請求不該有學生文字');
+      } else if (task === 'assist_report') {
+        // 學習報告：程式算的數字在 <history_facts>、代表案例用短代號、回饋在 <student_text role="feedback">。
+        for (const tag of ['<history_facts>', '<case_digests>', '<practice_candidates>', '<student_text role="feedback">']) if (!userText.includes(tag)) p(`報告請求沒有 ${tag}`);
+        if (!/\nc1 \| /.test(userText)) p('報告請求的代表案例沒有用短代號');
+        if (!userText.includes(`${ASSIST_WB_REF} | word_bank`)) p('報告請求的候選沒有由伺服器重建');
+      } else if (task !== 'ocr' && !userText.includes('<student_text')) p('學生文字沒有包在 <student_text>');
       for (const s of state.forbidden) if (raw.includes(s)) p(`請求含有身分資訊（${s.slice(0, 3)}…）`);
-      if (task === 'ocr') {
+      if (task === 'ocr' || task === 'assist_ocr') {
         if (images.length === 0) p('OCR 沒有附照片');
         for (const img of images) {
           if (img.source?.type !== 'base64' || img.source?.media_type !== 'image/jpeg') p('照片格式不對');
@@ -574,6 +784,14 @@ async function startFakeAnthropic({ apiKey }) {
         output = essayOutput(framework, studentTexts(userText)[0] ?? '');
       } else if (task === 'ocr') {
         output = ocrOutput();
+      } else if (task === 'assist_ocr') {
+        output = assistOcrOutput();
+      } else if (task === 'assist_analyze') {
+        output = assistItemOutput(ASSIST_LABELS);
+      } else if (task === 'assist_followup') {
+        output = assistFollowupOutput();
+      } else if (task === 'assist_report') {
+        output = assistReportOutput(userText);
       } else {
         output = {};
       }
@@ -583,6 +801,27 @@ async function startFakeAnthropic({ apiKey }) {
       state.problems.push(`假 Anthropic 處理失敗：${err.message}`);
       res.writeHead(500, { 'content-type': 'application/json' }).end(JSON.stringify({ type: 'error', error: { type: 'api_error', message: 'e2e fake failed' } }));
     }
+  });
+  const port = await listen(server);
+  state.base = `http://127.0.0.1:${port}`;
+  return { server, state };
+}
+
+// ───────────────────────── 假網站題目檔 ─────────────────────────
+
+/** 假的網站題目檔（SITE_DATA_ORIGIN）：GET /data/<path>；其他路徑 404。記下每個請求的路徑。 */
+async function startFakeSite(files) {
+  const state = { requests: [], base: '' };
+  const server = createServer((req, res) => {
+    const url = new URL(req.url, 'http://127.0.0.1');
+    state.requests.push(`${req.method} ${url.pathname}`);
+    const path = url.pathname.startsWith('/data/') ? url.pathname.slice('/data/'.length) : null;
+    const body = req.method === 'GET' && path !== null ? files[decodeURIComponent(path)] : undefined;
+    if (body === undefined) {
+      res.writeHead(404, { 'content-type': 'text/plain' }).end('not found');
+      return;
+    }
+    res.writeHead(200, { 'content-type': 'application/json' }).end(JSON.stringify(body));
   });
   const port = await listen(server);
   state.base = `http://127.0.0.1:${port}`;
@@ -756,11 +995,14 @@ async function step(name, fn) {
 
 async function main() {
   const t0 = Date.now();
-  console.log('== 本機端對端測試（wrangler dev＋假 Google＋假 Anthropic）==');
+  console.log('== 本機端對端測試（wrangler dev＋假 Google＋假 Anthropic＋假網站題目檔）==');
 
   // 題目庫（Worker 打包用；和 npm 的 predev 一樣）。
   const prompts = spawnSync(process.execPath, ['scripts/build-writing-prompts.mjs'], { cwd: API_DIR, encoding: 'utf8' });
   if (prompts.status !== 0) throw new Error(`產生題目庫失敗：${prompts.stderr || prompts.stdout}`);
+  // 學習報告的目標資料（和 npm 的 predev 一樣）。
+  const targets = spawnSync(process.execPath, ['scripts/build-assist-data.mjs'], { cwd: API_DIR, encoding: 'utf8' });
+  if (targets.status !== 0) throw new Error(`產生報告的目標資料失敗：${targets.stderr || targets.stdout}`);
 
   // 每次執行都用新的隨機機密（假的；只寫進權限 600 的暫存 env 檔，不出現在指令列與輸出）。
   const secrets = {
@@ -781,6 +1023,8 @@ async function main() {
   cleanupTasks.push(() => closeServer(google.server));
   const anthropic = await startFakeAnthropic({ apiKey: secrets.ANTHROPIC_API_KEY });
   cleanupTasks.push(() => closeServer(anthropic.server));
+  const site = await startFakeSite({ [`bank/groups/${ASSIST_WB_REF}.json`]: ASSIST_WB_GROUP, ...ASSIST_INDEX_FILES });
+  cleanupTasks.push(() => closeServer(site.server));
   for (const s of [ADMIN.email, ADMIN.name, STUDENT.email, STUDENT.name, STUDENT.nickname]) anthropic.state.forbidden.add(s);
 
   const port = await freePort();
@@ -814,6 +1058,7 @@ async function main() {
           GOOGLE_TOKEN_URL: `${google.state.base}/token`,
           GOOGLE_USERINFO_URL: `${google.state.base}/userinfo`,
           ANTHROPIC_BASE_URL: anthropic.state.base,
+          SITE_DATA_ORIGIN: site.state.base,
         },
       });
       cleanupTasks.push(async () => {
@@ -830,13 +1075,21 @@ async function main() {
     const admin = new CookieJar();
     const student = new CookieJar();
 
-    // 自訂作文題目跟著 wrangler.toml 的 AI_CUSTOM_ESSAY（wrangler dev 讀同一份 [vars]）。
-    const customEssay = customEssayExpected(customEssayVarFrom(readFileSync(join(API_DIR, 'wrangler.toml'), 'utf8')));
-    await step(`GET /api/features：登入、AI、OCR 都已啟用，自訂作文題目${customEssay ? '已啟用' : '未啟用'}（照 wrangler.toml）`, async () => {
-      const r = await http(BASE, 'GET', '/api/features');
-      expectStatus(r, 200, 'features');
-      same(r.json, { auth: true, ai: true, ocr: true, aiPaused: false, customEssay }, 'features');
-    });
+    // 自訂作文題目與學習助手跟著 wrangler.toml 的 AI_CUSTOM_ESSAY、AI_ASSISTANT、AI_ASSISTANT_PHOTO（wrangler dev 讀同一份 [vars]）。
+    const wranglerToml = readFileSync(join(API_DIR, 'wrangler.toml'), 'utf8');
+    const customEssay = customEssayExpected(customEssayVarFrom(wranglerToml));
+    const assistantVars = assistantVarsFrom(wranglerToml);
+    const assistantOn = assistantMode(assistantVars.assistant) === 'on';
+    const assistantPhotoOn = assistantOn && assistantMode(assistantVars.photo) === 'on';
+    await step(
+      `GET /api/features：登入、AI、OCR 都已啟用，自訂作文題目${customEssay ? '已啟用' : '未啟用'}、學習助手${assistantOn ? `已開放（拍照${assistantPhotoOn ? '也開放' : '未開放'}）` : '不公開'}（照 wrangler.toml）`,
+      async () => {
+        const r = await http(BASE, 'GET', '/api/features');
+        expectStatus(r, 200, 'features');
+        const expected = { auth: true, ai: true, ocr: true, aiPaused: false, customEssay, ...(assistantOn ? { assistant: true } : {}), ...(assistantPhotoOn ? { assistantPhoto: true } : {}) };
+        same(r.json, expected, 'features');
+      },
+    );
 
     await step('GET／POST /auth/probe：多個 Set-Cookie 原樣轉送、1.25 MB 本體、延遲回應（ARCHITECTURE §4.3）', async () => {
       const jar = new CookieJar();
@@ -1096,7 +1349,8 @@ async function main() {
       same([q.json.points.day_used, q.json.points.month_used], [expected, expected], '已用點數');
       same([q.json.essays.day_used, q.json.concurrent.active], [2, 0], '今日作文篇數（退還的不算）與進行中任務');
       check(q.json.points.day_limit >= 100_000_000, '管理員的上限應該是「不限」');
-      same(q.json.task_points, POINTS, 'task_points');
+      // task_points 列出全部任務（含學習助手的四種；AI_TASK_POINTS）。
+      same(q.json.task_points, { ...POINTS, assist_ocr: 2, assist_analyze: 6, assist_followup: 3, assist_report: 10 }, 'task_points');
       return `day_used=${q.json.points.day_used}、essays=${q.json.essays.day_used}、上限 ${q.json.points.day_limit}（不限）`;
     });
 
@@ -1118,6 +1372,173 @@ async function main() {
       same(f2.json.aiPaused, false, '恢復後的 aiPaused');
       const del = await http(BASE, 'DELETE', `/api/submissions/${c.json.id}`, { jar: admin });
       expectStatus(del, 204, '刪掉暫停時建立的草稿');
+    });
+
+    // ── 學習助手（AI_ASSISTANT 是 on 或 admin，管理員都能用）：建立案例 → 解析 → 追問 ──
+    /** 輪詢學習助手的案例，直到 done(case) 成立。 */
+    async function waitForCase(jar, id, done, timeoutMs = 90_000) {
+      const until = Date.now() + timeoutMs;
+      for (;;) {
+        const r = await http(BASE, 'GET', `/api/assist/cases/${id}`, { jar });
+        expectStatus(r, 200, 'GET /api/assist/cases/{id}');
+        if (done(r.json)) return r.json;
+        if (Date.now() > until) throw new Error(`案例逾時：status=${r.json.status}、turns=${JSON.stringify(r.json.turns.map((t) => [t.kind, t.status]))}`);
+        await sleep(500);
+      }
+    }
+
+    await step('學習助手：POST /api/assist/cases（本站題庫題；Worker 從 SITE_DATA_ORIGIN 讀題目檔、判定對錯）', async () => {
+      const r = await http(BASE, 'POST', '/api/assist/cases', {
+        jar: admin,
+        json: { source: { source: 'bank', ref: ASSIST_WB_REF, labels: ASSIST_LABELS, answers: ASSIST_ANSWERS }, doubt_kinds: ['why_not_mine'] },
+      });
+      expectStatus(r, 201, '建立案例');
+      same([r.json.source, r.json.kind, r.json.trust, r.json.status, r.json.verdict, r.json.item_count, r.json.wrong_count], ['bank', 'item', 'site', 'ready', 'wrong', 2, 2], '案例');
+      same(r.json.question.targets.map((t) => [t.label, t.accepted, t.student_answer, t.verdict]), [['2', ['B'], 'F', 'wrong'], ['3', ['C'], 'E', 'wrong']], '程式判定的對錯');
+      check(site.state.requests.includes(`GET /data/bank/groups/${ASSIST_WB_REF}.json`), `Worker 沒有向假網站讀題目檔：${site.state.requests.join('、')}`);
+      const again = await http(BASE, 'POST', '/api/assist/cases', {
+        jar: admin,
+        json: { source: { source: 'bank', ref: ASSIST_WB_REF, labels: ASSIST_LABELS, answers: ASSIST_ANSWERS }, doubt_kinds: ['why_not_mine'] },
+      });
+      same([again.status, again.json.id], [200, r.json.id], '同一題同樣作答再建一次：回原本的案例');
+      S.assistCase = r.json.id;
+      return `${r.json.title}（${r.json.id.slice(0, 8)}…）`;
+    });
+
+    await step(`學習助手：POST …/analyze → 202（${ASSIST_POINTS.analyze} 點）→ 輪詢到 analyzed；答案用題目檔的、證據句在選文裡定位`, async () => {
+      const r = await http(BASE, 'POST', `/api/assist/cases/${S.assistCase}/analyze`, { jar: admin, json: {} });
+      expectStatus(r, 202, 'analyze');
+      same([r.json.status, r.json.points], ['queued', ASSIST_POINTS.analyze], '送出解析');
+      const c = await waitForCase(admin, S.assistCase, (x) => x.status === 'analyzed' || x.status === 'failed');
+      same(c.status, 'analyzed', '案例狀態');
+      const a = c.turns[0].analysis;
+      same(a.items.map((it) => [it.label, it.answer_key]), [['2', { from: 'site', accepted: ['B'] }], ['3', { from: 'site', accepted: ['C'] }]], '答案用題目檔的');
+      same(a.items[0].solution_steps[0].range?.where, 'passage', '證據句在選文裡找到位置');
+      same([c.error_codes, a.cache_hit], [['word_form'], false], '錯因與快取');
+      const op = await http(BASE, 'GET', `/api/ai/ops/${r.json.op_id}`, { jar: admin });
+      same([op.json.status, op.json.points_charged], ['settled', ASSIST_POINTS.analyze], 'ai_ops');
+      return `${a.items.length} 題的解析、扣 ${op.json.points_charged} 點`;
+    });
+
+    await step(`學習助手：POST …/followups（提示模式，${ASSIST_POINTS.followup} 點）→ 回覆以請求的模式為準、錯因併進案例`, async () => {
+      const r = await http(BASE, 'POST', `/api/assist/cases/${S.assistCase}/followups`, { jar: admin, json: { text: ASSIST_FOLLOWUP_TEXT, mode: 'hint', label: '2' } });
+      expectStatus(r, 202, 'followups');
+      same(r.json.points, ASSIST_POINTS.followup, '追問點數');
+      const c = await waitForCase(admin, S.assistCase, (x) => x.turns.some((t) => t.kind === 'followup' && (t.status === 'done' || t.status === 'failed')));
+      const turn = c.turns.find((t) => t.kind === 'followup');
+      same([turn.status, turn.reply?.mode_used, c.followups], ['done', 'hint', 1], '追問');
+      same(c.error_codes, ['word_form', 'collocation'], '追問發現的錯因併進案例');
+      const list = await http(BASE, 'GET', '/api/assist/cases', { jar: admin });
+      same(list.json.cases.map((x) => x.id), [S.assistCase], '案例列表');
+      return `回覆 ${turn.reply.reply_zh.length} 字；案例錯因 ${c.error_codes.join('、')}`;
+    });
+
+    // ── 學習助手的拍照（AI_ASSISTANT_PHOTO 是 on 或 admin）：空案例 → 照片 → 轉錄 → 確認（WP-A3）──
+    await step('學習助手拍照：建立空案例 → 上傳照片（multipart）→ POST …/ocr（2 點）→ 輪詢到 ocr_ready（照片已刪、個資已遮）', async () => {
+      const r = await http(BASE, 'POST', '/api/assist/cases', { jar: admin, json: { source: { source: 'photo' }, hint_first: true } });
+      expectStatus(r, 201, '建立拍照案例');
+      same([r.json.source, r.json.status, r.json.question], ['photo', 'draft', null], '拍照案例');
+      S.photoCase = r.json.id;
+      const jpeg = tinyJpeg(1200, 1600, 0x51);
+      const form = new FormData();
+      form.append('photo', new Blob([jpeg], { type: 'image/jpeg' }), 'question.jpg');
+      const up = await http(BASE, 'POST', `/api/assist/cases/${S.photoCase}/photos?ord=1`, { jar: admin, raw: form });
+      expectStatus(up, 200, '上傳題目照片');
+      check(up.json.photos.length === 1 && up.json.photos[0].bytes < jpeg.length, '題目照片的中繼資料沒有被剝除');
+      const o = await http(BASE, 'POST', `/api/assist/cases/${S.photoCase}/ocr`, { jar: admin, json: {} });
+      expectStatus(o, 202, 'ocr');
+      same(o.json.points, ASSIST_POINTS.ocr, '轉錄點數');
+      const c = await waitForCase(admin, S.photoCase, (x) => x.status === 'ocr_ready' || (x.pending === null && x.status === 'draft'));
+      same(c.status, 'ocr_ready', '案例狀態');
+      const ocr = c.turns[0].ocr;
+      same(ocr.blocks.map((b) => [b.kind, b.label, b.hidden]), [['instructions', null, null], ['passage', null, null], ['question', '7', null], ['options', '7', null]], '轉錄區塊');
+      same(ocr.blocks[0].text, '整合測試講義 姓名:［已隱藏］', '「姓名：」欄位已遮');
+      same(ocr.blocks[1].unclear, [{ candidates: ['spring', 'string'] }], '看不清的候選字');
+      const op = await http(BASE, 'GET', `/api/ai/ops/${o.json.op_id}`, { jar: admin });
+      same([op.json.status, op.json.points_charged], ['settled', ASSIST_POINTS.ocr], 'ai_ops');
+      const req = anthropic.state.requests.filter((x) => x.task === 'assist_ocr');
+      same([req.length, req[0]?.images, req[0]?.effort], [1, 1, 'low'], '轉錄請求（張數、effort）');
+      return `${ocr.blocks.length} 個區塊、1 處 [[?]]、照片已刪`;
+    });
+
+    await step('學習助手拍照：PUT …/question（要問的題還有 [[?]] 時 400；其他區塊換成 [unclear]）→ ready，轉錄文字只留統計', async () => {
+      const blocks = ASSIST_OCR_BLOCKS.map((b) => ({ kind: b.kind, label: b.label === '' ? null : b.label, text: b.text }));
+      const bad = await http(BASE, 'PUT', `/api/assist/cases/${S.photoCase}/question`, {
+        jar: admin,
+        json: { question: { blocks: blocks.map((b, i) => (i === 2 ? { ...b, text: 'What did Mina [[?]] for the race?' } : b)), target_labels: ['7'], student_answer: 'B' } },
+      });
+      expectError(bad, 400, 'assist_input_invalid', '要問的題還有 [[?]]');
+      same(bad.json.error.reason, 'unresolved_target', '拒收原因');
+      const ok = await http(BASE, 'PUT', `/api/assist/cases/${S.photoCase}/question`, { jar: admin, json: { question: { blocks, target_labels: ['7'], student_answer: 'B' } } });
+      expectStatus(ok, 200, '確認轉錄');
+      same([ok.json.status, ok.json.question.origin_label, ok.json.question.blocks[1].text], ['ready', '你拍的題目', ASSIST_OCR_PASSAGE.replace('[[?]]', '[unclear]')], '確認後的題目');
+      same(ok.json.turns[0].ocr.blocks, [], '轉錄文字已清掉');
+      same(ok.json.turns[0].ocr.stats, { blocks: 4, unresolved: 1, edited: 0, unclear_kept: 1 }, '只留統計');
+      return ok.json.title;
+    });
+
+    // ── 學習報告（WP-C）：數字由程式算、AI 只寫分析與菜單；每週份量由程式依骨架排 ──
+    await step(`學習報告：POST /api/assist/reports → 202（${ASSIST_REPORT_POINTS} 點）→ 輪詢到 done；數字來自 facts、預測句被拿掉、候選由伺服器重建`, async () => {
+      // 考試日放在 10 週後（台灣日期），骨架一定有模考衝刺與考前調整週。
+      const examDate = new Date(Date.now() + 8 * 3_600_000 + 70 * 86_400_000).toISOString().slice(0, 10);
+      const row = (section, src, n, correct) => ({ section, src, n, correct, first_n: n, first_correct: correct, recent_n: 0, recent_correct: 0, hinted: 0, unanswered: 0 });
+      const summary = {
+        v: 2,
+        generated_at: new Date().toISOString(),
+        range_days: 90,
+        sections: [row('reading', 'official', 30, 15), row('word_bank', 'bank:advanced', 10, 4)],
+        skills: [{ code: 'tp:collocation', n: 8, correct: 3, first_n: 6, first_correct: 2 }],
+        traps: [],
+        bank_groups: [],
+        mocks: [],
+        vocab: { mistakes: 0, by_level: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 }, top: [], srs: null },
+        behaviour: { marked: 0, revealed: 0, fast_wrong: null },
+        plan_progress: null,
+        coverage: { outcomes: 40, first_at: null, devices_note: 'this_device' },
+      };
+      const r = await http(BASE, 'POST', '/api/assist/reports', {
+        jar: admin,
+        json: { summary, target: { standard: 'front' }, weekly: '2to4', school_exam_dates: [], exam_date: examDate, feedback: ASSIST_REPORT_FEEDBACK, candidates: [ASSIST_WB_REF, 'exam:gsat-115'] },
+      });
+      expectStatus(r, 202, '建立報告');
+      same([r.json.version, r.json.status, r.json.points], [1, 'queued', ASSIST_REPORT_POINTS], '送出報告');
+      const until = Date.now() + 90_000;
+      let d;
+      for (;;) {
+        d = await http(BASE, 'GET', `/api/assist/reports/${r.json.report_id}`, { jar: admin });
+        expectStatus(d, 200, 'GET /api/assist/reports/{id}');
+        if (d.json.status === 'done' || d.json.status === 'failed') break;
+        if (Date.now() > until) throw new Error(`報告逾時：status=${d.json.status}`);
+        await sleep(500);
+      }
+      same([d.json.status, d.json.failure, d.json.target_level, d.json.facts.target.level], ['done', null, 11, 11], '報告狀態與目標');
+      const rep = d.json.report;
+      check(!rep.overview_zh.includes('13 級分'), '預測級分的句子沒有被拿掉');
+      check(rep.notices.some((n) => n.kind === 'prediction_removed' && n.field === 'overview_zh'), 'notices 沒有記下拿掉的預測句');
+      same(rep.recommendations.map((x) => [x.ref, x.candidate.title]), [[ASSIST_WB_REF, '文意選填・進階練習・二手腳踏車']], '推薦（候選由伺服器重建）');
+      same(rep.error_patterns[0].cases.map((c) => c.id), [S.assistCase], '代表案例的短代號對回案例 id');
+      same(rep.phases.map((p) => p.phase_id), rep.plan.skeleton.phases.map((p) => p.id), '階段依骨架');
+      const weeks = rep.plan.weeks;
+      check(weeks.length === rep.plan.skeleton.total_weeks, `逐週份量 ${weeks.length} 週，骨架 ${rep.plan.skeleton.total_weeks} 週`);
+      for (const w of weeks) {
+        check(w.planned === w.items.reduce((sum, i) => sum + i.minutes, 0), `第 ${w.week} 週的預計分鐘數不是各項加總`);
+        if (!w.notes.includes('over_budget')) check(w.planned <= w.budget, `第 ${w.week} 週超過預算`);
+      }
+      same(weeks.filter((w) => w.items.some((i) => i.kind === 'mock_exam')).map((w) => w.week), rep.plan.skeleton.mock_weeks, '模考錨點');
+      const op = await http(BASE, 'GET', `/api/ai/ops/${r.json.op_id}`, { jar: admin });
+      same([op.json.status, op.json.points_charged], ['settled', ASSIST_REPORT_POINTS], 'ai_ops');
+      const list = await http(BASE, 'GET', '/api/assist/reports', { jar: admin });
+      same(list.json.reports.map((x) => [x.id, x.version, x.status]), [[r.json.report_id, 1, 'done']], '報告列表');
+      check(site.state.requests.includes('GET /data/bank/index.json') && site.state.requests.includes('GET /data/exams/index.json'), 'Worker 沒有向假網站讀索引');
+      S.report = r.json.report_id;
+      return `${weeks.length} 週、模考 ${rep.plan.skeleton.mock_weeks.length} 次、扣 ${op.json.points_charged} 點`;
+    });
+
+    await step(`學習助手要登入：未登入 401；GET /api/features ${assistantOn ? '有 assistant（on：開放給已核准的學生）' : '沒有 assistant（admin 模式不公開）'}`, async () => {
+      const anon = await http(BASE, 'GET', '/api/assist/cases');
+      expectError(anon, 401, 'unauthorized', '未登入讀案例');
+      const f = await http(BASE, 'GET', '/api/features');
+      same([f.json.assistant === true, f.json.assistantPhoto === true], [assistantOn, assistantPhotoOn], '/api/features 的 assistant、assistantPhoto');
     });
 
     // ── 一般學生：申請 → 管理員核准 → 能用 AI → 額度用完 ──
@@ -1174,7 +1595,12 @@ async function main() {
       same(r.json.user.ai_status, 'approved', '核准後的 ai_status');
       const me = await http(BASE, 'GET', '/api/me', { jar: student });
       same([me.json.user.ai_status, me.json.pending_ai_consents], ['approved', []], '學生看到自己已核准');
-      return `名額 ${list.json.approval.approved}→1／${list.json.approval.cap}`;
+      // 學習助手 on 時對已核准的學生開放：/api/ai/quota 多 assist（報告與拍照轉錄的今日次數）；admin 模式下學生沒有。
+      const q = await http(BASE, 'GET', '/api/ai/quota', { jar: student });
+      expectStatus(q, 200, '核准後學生的 /api/ai/quota');
+      same('assist' in q.json, assistantOn, `學生的 /api/ai/quota ${assistantOn ? '要有' : '不該有'} assist`);
+      check(!('assistant_preview' in me.json), '學生的 /api/me 不該有 assistant_preview');
+      return `名額 ${list.json.approval.approved}→1／${list.json.approval.cap}；學習助手${assistantOn ? '已對學生開放' : '沒有對學生開放'}`;
     });
 
     await step('核准後學生能用 AI（第二位判全部漏譯 → 差距 >2 → Queue 重送補第三位）', async () => {
@@ -1218,9 +1644,14 @@ async function main() {
     await step('後台用量彙總（GET /api/admin/usage）', async () => {
       const u = await http(BASE, 'GET', '/api/admin/usage', { jar: admin });
       expectStatus(u, 200, '/api/admin/usage');
-      same([u.json.totals.ops, u.json.totals.points, u.json.totals.refunded_ops], [15, 19 + STUDENT_DAY_LIMIT, 1], '用量（ops、點數、退還）');
+      // 批改 15 個任務（19＋學生 30 點）＋學習助手的解析、追問、拍照轉錄與學習報告（4 個任務）。
+      same(
+        [u.json.totals.ops, u.json.totals.points, u.json.totals.refunded_ops],
+        [19, 19 + STUDENT_DAY_LIMIT + ASSIST_POINTS.analyze + ASSIST_POINTS.followup + ASSIST_POINTS.ocr + ASSIST_REPORT_POINTS, 1],
+        '用量（ops、點數、退還）',
+      );
       check(u.json.totals.usd_micros > 0 && u.json.budget.today_usd_micros > 0, '實際成本沒有記帳');
-      return `15 個任務、${u.json.totals.points} 點、實際成本 US$${(u.json.totals.usd_micros / 1e6).toFixed(4)}`;
+      return `19 個任務、${u.json.totals.points} 點、實際成本 US$${(u.json.totals.usd_micros / 1e6).toFixed(4)}`;
     });
 
     await step('POST /auth/logout-all 之後舊 cookie 失效（其他帳號不受影響）', async () => {
@@ -1254,7 +1685,11 @@ async function main() {
       const gone = await http(BASE, 'GET', '/api/me', { jar: student });
       same(gone.json, { user: null }, '刪除後的 /api/me');
       const usage = await http(BASE, 'GET', '/api/admin/usage', { jar: admin });
-      same([usage.json.totals.ops, usage.json.totals.points], [15, 19 + STUDENT_DAY_LIMIT], '刪帳號後帳本仍保留（去識別）');
+      same(
+        [usage.json.totals.ops, usage.json.totals.points],
+        [19, 19 + STUDENT_DAY_LIMIT + ASSIST_POINTS.analyze + ASSIST_POINTS.followup + ASSIST_POINTS.ocr + ASSIST_REPORT_POINTS],
+        '刪帳號後帳本仍保留（去識別）',
+      );
       const list = await http(BASE, 'GET', '/api/admin/users', { jar: admin });
       check(!list.json.users.some((u) => u.id === S.studentPublicId), '後台列表還看得到已刪除的帳號');
       return `匯出 ${exp.json.submissions.length} 份提交（${graded.length} 份有批改）；刪除後帳本 ${usage.json.totals.ops} 個任務仍在`;
@@ -1271,6 +1706,7 @@ async function main() {
     await step('假 Anthropic：§6.2 呼叫規則、送出內容不含 email／暱稱／帳號 id', async () => {
       same(anthropic.state.problems, [], '假 Anthropic 發現的問題');
       same(google.state.problems, [], '假 Google 發現的問題');
+      same(['assist_analyze', 'assist_followup', 'assist_ocr', 'assist_report'].map((t) => anthropic.state.requests.filter((r) => r.task === t).length), [1, 1, 1, 1], '學習助手的請求數（解析、追問、拍照轉錄、學習報告）');
       const byTask = {};
       for (const r of anthropic.state.requests) byTask[r.task] = (byTask[r.task] ?? 0) + 1;
       return `共 ${anthropic.state.requests.length} 次請求（${Object.entries(byTask).map(([k, v]) => `${k} ${v}`).join('、')}）；429 ×${anthropic.state.served.rate_limited}、拒答 ×${anthropic.state.served.refusal}`;
@@ -1283,7 +1719,9 @@ async function main() {
         if (name === 'ADMIN_EMAIL') continue;
         check(!log.includes(value), `日誌出現機密 ${name}`);
       }
-      for (const s of [ADMIN.email, STUDENT.email, ADMIN.name, STUDENT.nickname, TRANSLATION_ANSWER[0], 'feel lonely after work']) check(!log.includes(s), `日誌出現身分資訊或學生文字（${s.slice(0, 12)}…）`);
+      for (const s of [ADMIN.email, STUDENT.email, ADMIN.name, STUDENT.nickname, TRANSLATION_ANSWER[0], 'feel lonely after work', ASSIST_FOLLOWUP_TEXT, ASSIST_REPORT_FEEDBACK, ASSIST_WB_SENTENCES[1], ASSIST_OCR_PASSAGE, '測試生']) {
+        check(!log.includes(s), `日誌出現身分資訊、學生文字或題目內容（${s.slice(0, 12)}…）`);
+      }
       check(log.includes('ai_settled'), '日誌沒有 consumer 的結算紀錄');
       check(log.includes('"event":"ai_requeue_third"'), '第三位評分者沒有經過 Queue 重送');
     });
@@ -1303,6 +1741,11 @@ async function main() {
         'SELECT COUNT(*) AS n FROM ai_ops WHERE user_id IS NULL',
         "SELECT COUNT(*) AS n FROM deletion_log WHERE kind = 'account'",
         'SELECT COUNT(*) AS n FROM submissions',
+        "SELECT COUNT(*) AS n, SUM(CASE WHEN status = 'done' THEN 1 ELSE 0 END) AS done FROM assist_turns",
+        'SELECT COUNT(*) AS n FROM ai_shared_cache',
+        "SELECT COUNT(*) AS n FROM assist_photos",
+        "SELECT COUNT(*) AS n FROM assist_turns WHERE kind = 'ocr' AND output_json LIKE '%Mina folded%'",
+        "SELECT COUNT(*) AS n, SUM(CASE WHEN status = 'done' AND lease_until IS NULL THEN 1 ELSE 0 END) AS done FROM assist_reports",
       ];
       const { stdout } = await runWrangler(
         ['d1', 'execute', 'gsat-english', '--local', '--persist-to', persistDir, '--json', '--command', sql.join('; ')],
@@ -1312,7 +1755,7 @@ async function main() {
       const start = stdout.search(/^\[/m);
       check(start >= 0, `d1 execute 沒有輸出 JSON：${stdout.slice(0, 300)}`);
       const rows = JSON.parse(stdout.slice(start)).map((r) => r.results[0]);
-      const [photos, calls, refusals, paused, anonymized, deletions, submissions] = rows;
+      const [photos, calls, refusals, paused, anonymized, deletions, submissions, turns, sharedCache, assistPhotos, ocrText, reports] = rows;
       same(photos.n, 0, 'submission_photo_temp 列數');
       same(calls.hashed, calls.n, 'ai_calls.user_ref 都是 64 碼 HMAC 假名');
       same(refusals.n, 1, 'refusal 安全事件');
@@ -1320,6 +1763,10 @@ async function main() {
       same(anonymized.n, 10, '刪帳號後學生的 ai_ops 去識別保留');
       same(deletions.n, 1, 'deletion_log');
       same(submissions.n, 3, '學生的提交隨帳號刪除（只剩管理員的 3 份）');
+      same([turns.n, turns.done], [3, 3], '學習助手的 turn（解析、追問、拍照轉錄）');
+      same(sharedCache.n, 1, '站內題的解析寫進共用快取');
+      same([assistPhotos.n, ocrText.n], [0, 0], '題目照片已刪、確認後的轉錄只留統計');
+      same([reports.n, reports.done], [1, 1], '學習報告（完成、租約已放掉）');
       return `ai_calls ${calls.n} 列（429 重試後成功的那次只記一列）、照片暫存 0 列、去識別 ai_ops 10 列`;
     });
   } catch (err) {

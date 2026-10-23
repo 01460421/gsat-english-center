@@ -11,6 +11,11 @@ const PREFIX = 'gsat-writing-draft:v1:';
 const OCR_PREFIX = 'gsat-writing-ocr:v1:';
 /** 手寫作文確認文字之後、送批改之前的自評（每份提交一筆）。 */
 const SELF_PREFIX = 'gsat-writing-self:v1:';
+/**
+ * 學習助手的疑問與追問草稿（features/assistant/lib/drafts.ts；docs/design/learning-assistant.md §4.17）：
+ * 一樣是學生自己寫的文字，登出、刪帳號時一起清掉。
+ */
+export const ASSIST_DRAFT_PREFIX = 'gsat-assist:v1:draft:';
 
 export function draftKey(kind: 'translation' | 'essay', groupId: string): string {
   return `${PREFIX}${kind}:${groupId}`;
@@ -33,7 +38,7 @@ export function promptEditDraftKey(submissionId: string): string {
 }
 
 /**
- * 清掉這台裝置上所有寫作暫存（作答草稿、辨識文字的修改、自評）。登出與刪除帳號時呼叫：
+ * 清掉這台裝置上所有寫作暫存（作答草稿、辨識文字的修改、自評、學習助手的疑問與追問草稿）。登出與刪除帳號時呼叫：
  * 學校電腦教室的下一位使用者不該看到上一位的作文全文。localStorage 不能用時安靜略過。
  */
 export function clearLocalWritingData(): void {
@@ -42,7 +47,7 @@ export function clearLocalWritingData(): void {
     const keys: string[] = [];
     for (let i = 0; i < storage.length; i += 1) {
       const key = storage.key(i);
-      if (key && (key.startsWith(PREFIX) || key.startsWith(OCR_PREFIX) || key.startsWith(SELF_PREFIX))) keys.push(key);
+      if (key && (key.startsWith(PREFIX) || key.startsWith(OCR_PREFIX) || key.startsWith(SELF_PREFIX) || key.startsWith(ASSIST_DRAFT_PREFIX))) keys.push(key);
     }
     for (const key of keys) storage.removeItem(key);
   } catch {

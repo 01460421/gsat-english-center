@@ -3,7 +3,8 @@
  *   - 選單：每格幾組、出題中、做過幾組；沒有任何題組時頁面正常；索引載入失敗可以重試；
  *   - 文意選填：作答、逐層看提示、交卷計分、四段式解析卡、證據句加亮、全文中譯、排除法表、「再一組」；
  *   - 詞彙題：卡片內的提示、你選的為什麼錯、答錯的正解字收進單字錯題本；
- *   - 重新開啟後接續同一組、空的格子、網址不對。
+ *   - 重新開啟後接續同一組、空的格子、網址不對；
+ *   - 網址指定題組（?group=）不換掉做到一半的那一組；唯讀檢視交卷過的那一組（?review=，學習助手的「本站解析」）。
  */
 import { act, render, screen, waitFor, within, type RenderResult } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -11,8 +12,9 @@ import { MemoryRouter, Route, Routes } from 'react-router';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { BankIndex } from '../../data/bank';
 import { clearDataCache } from '../../data/client';
-import { attemptStorageKey } from '../exams/attempt';
+import { attemptStorageKey, createAttempt, saveAttempt } from '../exams/attempt';
 import { jsonResponse } from '../exams/testFixtures';
+import { resetOutcomesForTests } from '../assistant/outcomes';
 import { MISTAKES_STORAGE_KEY } from '../vocab/lib/mistakes';
 import { resetVocabStoresForTests } from '../vocab/state';
 import { setDesktopViewport } from '../../test/viewport';
@@ -20,7 +22,7 @@ import { PRACTICE_HISTORY_KEY, resetPracticeHistoryForTests } from './history';
 import { AI_GROUP_LABEL, AI_ITEMS_NOTICE, AI_PASSAGE_NOTICE, AI_REFERENCES_NOTICE } from './labels';
 import PracticeHome from './PracticeHome';
 import PracticeSessionPage from './PracticeSessionPage';
-import { BANK_INDEX, EMPTY_BANK_INDEX, GROUPS, MINI_VOCAB_INDEX } from './testFixtures';
+import { BANK_INDEX, EMPTY_BANK_INDEX, GROUPS, MINI_VOCAB_INDEX, group } from './testFixtures';
 
 let bankIndex: BankIndex = BANK_INDEX;
 let indexStatus = 200;
@@ -38,11 +40,13 @@ beforeEach(() => {
   });
   vi.stubGlobal('fetch', fetchMock);
   resetPracticeHistoryForTests();
+  resetOutcomesForTests();
   resetVocabStoresForTests();
 });
 
 afterEach(() => {
   clearDataCache();
+  resetOutcomesForTests();
 });
 
 async function renderAt(path: string): Promise<RenderResult> {
@@ -350,6 +354,106 @@ describe('文意選填（/practice/word-bank/advanced）', () => {
     expect(await screen.findByRole('heading', { level: 1, name: '文意選填・進階練習' })).toBeInTheDocument();
     expect(screen.queryByText('已接續上次在這一格做的題組。')).not.toBeInTheDocument();
     expect(storedHistory().current).toEqual({ 'word_bank/advanced': 'ai.wb.0a1b2c@1' });
+  });
+});
+
+describe('網址指定題組（?group=）與唯讀檢視（?review=）', () => {
+  const SECOND = 'ai.wb.0a1b2d';
+
+  /** 文意選填・進階練習多一組（同一份題組檔換 uid）。 */
+  function addSecondWordBank() {
+    const entry = BANK_INDEX.groups.find((e) => e.uid === 'ai.wb.0a1b2c');
+    if (!entry) throw new Error('缺少文意選填範例');
+    bankIndex = { ...BANK_INDEX, count: BANK_INDEX.count + 1, groups: [...BANK_INDEX.groups, { ...entry, uid: SECOND }] };
+    const second = { ...group('ai.wb.0a1b2c@1'), uid: SECOND };
+    const base = fetchMock.getMockImplementation() as (url: string) => Promise<Response>;
+    fetchMock.mockImplementation(async (url: string) => (url.endsWith(`/bank/groups/${SECOND}@1.json`) ? jsonResponse(second) : base(url)));
+  }
+
+  /** 這一格正在做 ai.wb.0a1b2c，第 1、2 格已經作答。 */
+  function seedHalfDone() {
+    const state = createAttempt('practice:ai.wb.0a1b2c@1', 'exam', null);
+    saveAttempt({ ...state, answers: { '1': 'E', '2': 'A' } });
+    window.localStorage.setItem(
+      PRACTICE_HISTORY_KEY,
+      JSON.stringify({ v: 1, done: {}, current: { 'word_bank/advanced': 'ai.wb.0a1b2c@1' }, hints: {}, graded: {} }),
+    );
+    resetPracticeHistoryForTests();
+  }
+
+  it('這一格有另一組做到一半：先做指定的這一組，但不換掉做到一半的那一組；「再一組」回到那一組', async () => {
+    addSecondWordBank();
+    seedHalfDone();
+    const user = userEvent.setup();
+    await renderAt(`/practice/word-bank/advanced?group=${SECOND}`);
+    expect(await screen.findByText(/你在這一格還有一組做到一半，這次先做指定的這一組/)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '第 1 題空格，未作答' })).toBeInTheDocument();
+    expect(storedHistory().current).toEqual({ 'word_bank/advanced': 'ai.wb.0a1b2c@1' });
+
+    await submit(user);
+    expect(storedHistory().done[SECOND]).toBeDefined();
+    expect(storedHistory().current).toEqual({ 'word_bank/advanced': 'ai.wb.0a1b2c@1' });
+    // 換到另一組要下載新的題組檔（Suspense）：在 await 的 act 裡按，載入完成後才畫得出來。
+    await act(async () => {
+      (screen.getAllByRole('button', { name: '再一組' })[0] as HTMLElement).click();
+    });
+    // 回到做到一半的那一組，已填的答案都在。
+    expect(await screen.findByRole('button', { name: /^第 1 題空格，已填 \(E\)/ })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /^第 2 題空格，已填 \(A\)/ })).toBeInTheDocument();
+    expect(screen.getByText('已接續上次在這一格做的題組。')).toBeInTheDocument();
+    expect(storedHistory().current).toEqual({ 'word_bank/advanced': 'ai.wb.0a1b2c@1' });
+  });
+
+  it('這一格正在做的那一組還沒作答過：指定的這一組就是這一格正在做的', async () => {
+    addSecondWordBank();
+    window.localStorage.setItem(
+      PRACTICE_HISTORY_KEY,
+      JSON.stringify({ v: 1, done: {}, current: { 'word_bank/advanced': 'ai.wb.0a1b2c@1' }, hints: {}, graded: {} }),
+    );
+    resetPracticeHistoryForTests();
+    await renderAt(`/practice/word-bank/advanced?group=${SECOND}`);
+    await screen.findByRole('heading', { level: 1, name: '文意選填・進階練習' });
+    expect(screen.queryByText(/還有一組做到一半/)).not.toBeInTheDocument();
+    await waitFor(() => expect(storedHistory().current).toEqual({ 'word_bank/advanced': `${SECOND}@1` }));
+  });
+
+  it('?review=：按了「再一組」之後照樣看得到那一次的作答與解析（唯讀，不動練習紀錄與作答）', async () => {
+    const user = userEvent.setup();
+    const first = await renderAt('/practice/word-bank/advanced');
+    await screen.findByRole('heading', { level: 1, name: '文意選填・進階練習' });
+    await user.click(screen.getByRole('button', { name: '第 1 題空格，未作答' }));
+    await user.click(within(screen.getByRole('group', { name: '第 1 題的選項' })).getByRole('button', { name: /^\(E\) colorful/ }));
+    await user.click(screen.getByRole('button', { name: '第 2 題空格，未作答' }));
+    await user.click(within(screen.getByRole('group', { name: '第 2 題的選項' })).getByRole('button', { name: /^\(A\) practical/ }));
+    await submit(user);
+    await user.click(screen.getAllByRole('button', { name: '再一組' })[0] as HTMLElement);
+    expect(await screen.findByRole('button', { name: '第 1 題空格，未作答' })).toBeInTheDocument();
+    first.unmount();
+    const attemptKey = attemptStorageKey('practice:ai.wb.0a1b2c@1');
+    const attemptBefore = window.localStorage.getItem(attemptKey);
+    const historyBefore = window.localStorage.getItem(PRACTICE_HISTORY_KEY);
+
+    await renderAt('/practice/word-bank/advanced?review=ai.wb.0a1b2c%401');
+    expect(await screen.findByRole('heading', { level: 2, name: '你之前的作答' })).toBeInTheDocument();
+    expect(screen.getByText(/只能看解析、不能修改：答對 1／10 題/)).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: '再做一次這一組' })).toHaveAttribute('href', '/practice/word-bank/advanced?group=ai.wb.0a1b2c');
+    expect(screen.queryByRole('button', { name: '交卷' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: '再一組' })).not.toBeInTheDocument();
+    expect(screen.getAllByTestId('explanation-card')).toHaveLength(10);
+    expect(screen.getByRole('region', { name: /第 2 題解析/ })).toHaveTextContent('你選的為什麼錯');
+    expect(screen.getByRole('button', { name: /^第 2 題空格，已填 \(A\)/ })).toBeInTheDocument();
+    // 唯讀：不寫作答、不動練習紀錄（current、做過）。
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 50));
+    });
+    expect(window.localStorage.getItem(attemptKey)).toBe(attemptBefore);
+    expect(window.localStorage.getItem(PRACTICE_HISTORY_KEY)).toBe(historyBefore);
+  });
+
+  it('?review=：這台裝置沒有那一組的作答紀錄', async () => {
+    await renderAt('/practice/word-bank/advanced?review=ai.wb.0a1b2c%401');
+    expect(screen.getByText(/這台裝置沒有這一組的作答紀錄/)).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: '做這一組' })).toHaveAttribute('href', '/practice/word-bank/advanced?group=ai.wb.0a1b2c');
   });
 });
 

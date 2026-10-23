@@ -5,7 +5,7 @@
 import { render, screen, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { PAGES, isDevPage } from '../modules';
+import { PAGES, isDevPage, isPageEnabled } from '../modules';
 import { PRACTICE_HISTORY_KEY, resetPracticeHistoryForTests } from '../features/practice/history';
 import { MISTAKES_STORAGE_KEY, MISTAKES_SCHEMA, MISTAKES_VERSION } from '../features/vocab/lib/mistakes';
 import { SRS_SCHEMA, SRS_STORAGE_KEY, SRS_VERSION, dayKey } from '../features/vocab/lib/srs';
@@ -154,7 +154,9 @@ describe('首頁模組卡片', () => {
   it('「開發中」只掛在 status 為 dev 的模組卡片上', async () => {
     renderHome();
     await progressRegion();
-    for (const page of PAGES.filter((p) => p.isStudyModule)) {
+    // 學習助手的開關關著（沒有 Provider）：沒有它的卡片。
+    expect(screen.getAllByRole('link').some((a) => a.getAttribute('href') === '/assistant')).toBe(false);
+    for (const page of PAGES.filter((p) => p.isStudyModule && isPageEnabled(p, { assistant: false }))) {
       const link = screen.getAllByRole('link').find((a) => a.getAttribute('href') === page.path && a.textContent?.includes(page.summary));
       if (!link) throw new Error(`找不到 ${page.path} 的卡片`);
       if (isDevPage(page)) expect(within(link).getByText('開發中')).toBeInTheDocument();

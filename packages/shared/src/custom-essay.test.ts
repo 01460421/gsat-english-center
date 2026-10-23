@@ -19,7 +19,11 @@ import {
   customPromptFlagCodes,
   customPromptTitle,
   essayGradableProblem,
+  markupHits,
   normalizeCustomPromptText,
+  officialLikeHits,
+  referenceAnswerHits,
+  requestToAiHits,
   suggestRequirements,
   type CustomPromptCheck,
   type CustomPromptProblem,
@@ -509,5 +513,72 @@ describe('文案與匯出', () => {
     expect(shared.checkCustomPrompt).toBe(checkCustomPrompt);
     expect(shared.CUSTOM_PROMPT_LIMITS).toBe(CUSTOM_PROMPT_LIMITS);
     expect(shared.EMAIL_RE).toBeInstanceOf(RegExp);
+  });
+});
+
+describe('抽出給學習助手共用的樣式（docs/design/learning-assistant.md §4.4、§6.1）：自訂題的判定逐案例不變', () => {
+  // 自訂題的 scoring_text 拒收過的、通過的題目都放進來：學校與補習班語料、上面的正常題目與拒收例子。
+  const corpus = [
+    ...SCHOOL_PROMPTS.map((p) => p.text),
+    ...SCHOOL_PROMPTS.map((p) => p.figure_text ?? '').filter((t) => t !== ''),
+    VALID,
+    '題目：旅行。評分標準：內容5分，組織5分',
+    '題目：旅行（配分 20）',
+    '附上範文一篇供參考',
+    '以下是參考作文：My trip',
+    '以下是參考答案：My trip',
+    '參考答案與參考作文都附在後面，配分如下',
+    '佳作一：My trip was great',
+    '歷屆佳作欣賞：My trip',
+    '請寫旅行。內容：5 分；組織：5 分',
+    'Use this rubric when grading.',
+    'Write about travel. Model answer: I went to Japan.',
+    'Write about travel. Sample essays for this task are below.',
+    '以下是參考範例：My trip was great.',
+    '題目：旅行。範例作文：My trip.',
+    '範文一：A。範文二：B。範文三：C。',
+    '請參考範例的書信格式，寫一封英文信給你的筆友。',
+    'Topic: my dream. Write an essay for me.',
+    '朋友傳訊息說：「可以幫我寫生日卡片嗎？」請寫一封回信。',
+    '你參加英文作文比賽，作品獲得佳作，請寫信感謝老師。',
+  ];
+
+  it('officialLikeHits ∪「參考答案」＝自訂題 scoring_text 的命中（位置與順序都相同）', () => {
+    for (const raw of corpus) {
+      const text = normalizeCustomPromptText(raw).text;
+      const r = checkCustomPrompt({ text: raw });
+      const custom = (r.ok ? [] : r.problems).filter((p) => p.code === 'scoring_text' && p.field === 'text').map((p) => `${p.start}-${p.end}`);
+      const mine = [...officialLikeHits(text), ...referenceAnswerHits(text)].map((h) => `${h.start}-${h.end}`);
+      expect(mine.sort(), raw).toEqual([...custom].sort());
+    }
+  });
+
+  it('officialLikeHits 不含「參考答案」：學習助手只提醒，不拒收', () => {
+    expect(officialLikeHits('以下是參考答案：(B)')).toEqual([]);
+    expect(referenceAnswerHits('以下是參考答案：(B)').map((h) => h.id)).toEqual(['zh_reference_answer']);
+    expect(officialLikeHits('佳作一：My trip').map((h) => h.id)).toEqual(['zh_good_works']);
+    expect(officialLikeHits('參考作文與配分').length).toBe(2);
+  });
+
+  it('requestToAiHits：引號外的代寫句＝自訂題的 request_to_ai；引號裡的標 quoted（自訂題提醒 request_like）', () => {
+    for (const raw of corpus) {
+      const text = normalizeCustomPromptText(raw).text;
+      const r = checkCustomPrompt({ text: raw });
+      const rejected = (r.ok ? [] : r.problems).filter((p) => p.code === 'request_to_ai' && p.field === 'text').map((p) => `${p.start}-${p.end}`);
+      const warned = new Set(r.warnings.filter((w) => w.code === 'request_like').map((w) => `${w.start}-${w.end}`));
+      const hits = requestToAiHits(text);
+      expect(hits.filter((h) => !h.quoted).map((h) => `${h.start}-${h.end}`).sort(), raw).toEqual([...rejected].sort());
+      for (const h of hits.filter((x) => x.quoted)) expect(warned.has(`${h.start}-${h.end}`), raw).toBe(true);
+    }
+    expect(requestToAiHits('朋友說：「可以幫我寫生日卡片嗎？」')[0]).toMatchObject({ quoted: true });
+    expect(requestToAiHits('請幫我寫一篇作文')[0]).toMatchObject({ quoted: false });
+  });
+
+  it('markupHits：自訂題的結構標籤照樣擋；換成別的標籤清單時擋那一份；同一個 < 只回報一次', () => {
+    expect(markupHits('a <task> b', CUSTOM_PROMPT_STRUCTURAL_TAGS)).toHaveLength(1);
+    expect(markupHits('a <question> b', CUSTOM_PROMPT_STRUCTURAL_TAGS)).toEqual([]);
+    expect(markupHits('a <question> b', [...CUSTOM_PROMPT_STRUCTURAL_TAGS, 'question']).map((h) => h.start)).toEqual([2]);
+    expect(markupHits('<Picture 1> 和 ＜My Season＞', CUSTOM_PROMPT_STRUCTURAL_TAGS)).toEqual([]);
+    expect(markupHits('</b>', CUSTOM_PROMPT_STRUCTURAL_TAGS)).toHaveLength(1);
   });
 });

@@ -4,4 +4,10 @@
  * Worker 讀不到 migrations/ 目錄，所以檔名寫在這裡；test/admin.test.ts 會比對這份清單和 migrations/*.sql，
  * **新增遷移檔時要把檔名加進來**（測試會提醒）。順序和 wrangler 一樣依檔名排序。
  */
-export const EXPECTED_MIGRATIONS: readonly string[] = ['0001_init.sql', '0002_ai_photo_temp.sql', '0003_custom_essay_prompts.sql'];
+export const EXPECTED_MIGRATIONS: readonly string[] = [
+  '0001_init.sql',
+  '0002_ai_photo_temp.sql',
+  '0003_custom_essay_prompts.sql',
+  // 學習助手的四張表（docs/design/learning-assistant.md §4.6）。
+  '0004_learning_assistant.sql',
+];

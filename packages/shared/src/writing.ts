@@ -581,17 +581,23 @@ export interface EssayGradingResult {
 // ───────────────────────── AI 任務與額度 ─────────────────────────
 
 /**
- * MVP 的 AI 任務代號（ARCHITECTURE §6.1）與點數。
+ * AI 任務代號（ARCHITECTURE §6.1）與點數。
  * 手寫作文在 MVP 是 OCR 2 點＋以確認後的文字走 essay_grade 7 點（照片確認後就刪，批改時不附照片；
  * 附照片的 essay_grade_photo 8 點要等 R2，延後）。
+ * assist_* 是學習助手的四個任務（docs/design/learning-assistant.md §4.7；assist.ts 的 ASSIST_TASKS）：
+ * assist_analyze 這裡是一題的點數，題組依 assistAnalyzePoints（每多一題加 2，最多 14）。
  */
-export const AI_TASKS = ['translation_grade', 'essay_grade', 'essay_ocr'] as const;
+export const AI_TASKS = ['translation_grade', 'essay_grade', 'essay_ocr', 'assist_ocr', 'assist_analyze', 'assist_followup', 'assist_report'] as const;
 export type AiTask = (typeof AI_TASKS)[number];
 
 export const AI_TASK_POINTS = {
   translation_grade: 3,
   essay_grade: 7,
   essay_ocr: 2,
+  assist_ocr: 2,
+  assist_analyze: 6,
+  assist_followup: 3,
+  assist_report: 10,
 } as const satisfies Record<AiTask, number>;
 
 /** 計入「作文每天篇數」的任務家族（AI_ESSAY_USER_DAY，預設 3 篇）。OCR 不算篇數。 */
@@ -654,6 +660,14 @@ export interface AiQuotaResponse {
   /** 下次重置（ISO 8601）。 */
   resets_at: { day: string; month: string };
   task_points: Record<AiTask, number>;
+  /**
+   * 學習助手今天的報告數、拍照轉錄數與每日上限（docs/design/learning-assistant.md §4.7.2）。
+   * 只在學習助手對這位使用者開放時才有（AI_ASSISTANT 是 on，或是 admin 而使用者是管理員）；管理員的上限是不限（同 essays）。
+   */
+  assist?: {
+    reports: { day_used: number; day_limit: number };
+    ocr: { day_used: number; day_limit: number };
+  };
 }
 
 /**

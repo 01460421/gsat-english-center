@@ -25,6 +25,7 @@ export type IconKey =
   | 'writing'
   | 'exams'
   | 'mock'
+  | 'assistant'
   | 'settings'
   | 'about';
 
@@ -54,7 +55,19 @@ export interface PageMeta {
   status: 'dev' | 'ready';
   /** 是否出現在首頁的模組卡片（首頁、設定、關於不算學習模組）。 */
   isStudyModule: boolean;
+  /**
+   * 由功能開關決定要不要出現在導覽與首頁（docs/design/learning-assistant.md §5.1）：開關關著時側邊欄、「更多」選單、
+   * 首頁卡片都過濾掉這一項（畫面和沒有這一頁時完全相同），路由照樣存在（頁面自己顯示「暫停使用中」；學習助手的首頁、
+   * 案例與報告對已登入的人是唯讀模式，從「我的帳號」也連得到）。
+   */
+  feature?: PageFeature;
 }
+
+/** 由功能開關控制的頁面（目前只有學習助手）。 */
+export type PageFeature = 'assistant';
+
+/** 前端目前打開的功能開關（學習助手：features.assistant 或管理員預覽，見 features/assistant/lib/useAssistantEnabled.ts）。 */
+export type PageFeatureFlags = Readonly<Record<PageFeature, boolean>>;
 
 export const PAGES = [
   {
@@ -201,6 +214,19 @@ export const PAGES = [
     isStudyModule: true,
   },
   {
+    // 學習助手（docs/design/learning-assistant.md §5.1）：開關關著時導覽與首頁都不出現（feature）。子頁 /assistant/ask、
+    // /assistant/case/:id 等不在這份清單裡，路由在 App.tsx。說明不能含其他學習模組的標題（modules.test.ts）。
+    path: '/assistant',
+    title: '學習助手',
+    navLabel: '學習助手',
+    summary: '拍照或從錯題送出一題，AI 說明你錯在哪、正確解法與相關觀念，可以追問，並整理成個人學習報告與讀書計畫。',
+    group: 'exam',
+    icon: 'assistant',
+    status: 'ready',
+    isStudyModule: true,
+    feature: 'assistant',
+  },
+  {
     path: '/settings',
     title: '設定',
     navLabel: '設定',
@@ -230,6 +256,16 @@ export type PagePath = (typeof PAGES)[number]['path'];
  */
 export function isDevPage(page: Pick<PageMeta, 'status'>): boolean {
   return page.status === 'dev';
+}
+
+/** 這一頁在目前的功能開關下要不要出現在導覽與首頁（沒有 feature 的頁面一律出現）。 */
+export function isPageEnabled(page: Pick<PageMeta, 'path' | 'feature'>, flags: PageFeatureFlags): boolean {
+  return page.feature === undefined || flags[page.feature];
+}
+
+/** 導覽與首頁要列出的頁面（依 PAGES 的順序，過濾掉開關關著的功能）。 */
+export function navPages(flags: PageFeatureFlags): PageMeta[] {
+  return PAGES.filter((p: PageMeta) => isPageEnabled(p, flags));
 }
 
 /** 依路徑取頁面資料。路徑寫錯時 tsc 會報錯（PagePath 是字面值聯集）。 */

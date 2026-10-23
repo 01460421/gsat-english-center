@@ -35,6 +35,8 @@ import { listOriginBack } from './lib/listOrigin';
 import { AlreadySubmittedError, saveSelfAssessment, startTask, upsertSubmission } from './lib/submit';
 import { checkTranslationSentence, mechanicsMessages } from './lib/text';
 import { useErrorView } from './lib/useErrorView';
+import { HandoffApplied, HandoffOffer } from '../assistant/components/MockWritingHandoff';
+import { useWritingHandoff } from '../assistant/lib/handoff';
 
 export default function TranslationAttemptPage() {
   const { examId = '' } = useParams();
@@ -95,6 +97,10 @@ function TranslationAttempt({ set }: { set: TranslationSet }) {
   const { ok: saved, discard } = useAutosave(key, draft);
   const draftRef = useRef(draft);
   draftRef.current = draft;
+  // 模考的中譯英帶過來（學習助手，docs/design/learning-assistant.md §1.4.1）：沒有草稿就直接填入，有不同的草稿時問要不要換。
+  const handoff = useWritingHandoff({ kind: 'translation', exam_id: set.exam_id }, draft.texts, (texts) =>
+    setDraft((d) => ({ ...d, texts: d.texts.map((_, i) => texts[i] ?? ''), updatedAt: Date.now() })),
+  );
   /**
    * 送出 AI 批改之後：草稿保留文字（想修改再練一次），但下次要建立新的提交；記下送出時間（首頁的「繼續學習」不再把它
    * 當成寫到一半，之後又改過才算）。立刻寫進這台裝置：接著就換頁，等 600ms 的自動儲存來不及。
@@ -172,6 +178,9 @@ function TranslationAttempt({ set }: { set: TranslationSet }) {
         <h1 className="mt-1 text-2xl font-bold tracking-tight lg:text-3xl">{title}</h1>
         {set.instructions && <p className="mt-2 whitespace-pre-line text-[0.95rem]">{set.instructions}</p>}
       </header>
+
+      <HandoffOffer offer={handoff.offer} onAccept={handoff.accept} onDismiss={handoff.dismiss} />
+      <HandoffApplied applied={handoff.applied} />
 
       {set.passage && (
         <section aria-label="題組短文" className={`${card} text-[0.95rem]`}>

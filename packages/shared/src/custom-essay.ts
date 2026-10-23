@@ -248,14 +248,18 @@ const HTML_TAG_NAMES =
  * 題目常用尖括號標題目與圖片（「＜My Favorite Season＞」「<Picture 1>」），這些不是標籤，不擋；只擋：
  *   - 結束標籤（`</x`）；結構標籤（`<task`、`< /student_text`）；
  *   - 常見的 HTML 元素（`<b>`、`<script>`、`<br/>`）、帶屬性的標籤（`<x y=…`）、註解與宣告（`<!--`、`<?xml`）。
+ * 結構標籤的清單是參數：學習助手的提示多了幾個標籤（assist.ts 的 ASSIST_STRUCTURAL_TAGS），規則本身相同。
  */
-const MARKUP_PATTERNS: readonly Pattern[] = [
-  { id: 'markup_close', re: /<\s*\/\s*[A-Za-z_]/g },
-  { id: 'markup_structural', re: new RegExp(String.raw`<\s*(?=(?:${CUSTOM_PROMPT_STRUCTURAL_TAGS.join('|')})\b)[A-Za-z_]`, 'gi') },
-  { id: 'markup_html', re: new RegExp(String.raw`<\s*(?=(?:${HTML_TAG_NAMES})\s*\/?>)[A-Za-z]`, 'gi') },
-  { id: 'markup_attribute', re: /<\s*(?=[A-Za-z_][\w-]{0,40}\s[^<>\n]{0,200}?[\w-]\s*=)[A-Za-z_]/g },
-  { id: 'markup_declaration', re: /<\s*[!?](?=\s*[A-Za-z-])/g },
-];
+function markupPatterns(structuralTags: readonly string[]): readonly Pattern[] {
+  return [
+    { id: 'markup_close', re: /<\s*\/\s*[A-Za-z_]/g },
+    { id: 'markup_structural', re: new RegExp(String.raw`<\s*(?=(?:${structuralTags.join('|')})\b)[A-Za-z_]`, 'gi') },
+    { id: 'markup_html', re: new RegExp(String.raw`<\s*(?=(?:${HTML_TAG_NAMES})\s*\/?>)[A-Za-z]`, 'gi') },
+    { id: 'markup_attribute', re: /<\s*(?=[A-Za-z_][\w-]{0,40}\s[^<>\n]{0,200}?[\w-]\s*=)[A-Za-z_]/g },
+    { id: 'markup_declaration', re: /<\s*[!?](?=\s*[A-Za-z-])/g },
+  ];
+}
+const MARKUP_PATTERNS: readonly Pattern[] = markupPatterns(CUSTOM_PROMPT_STRUCTURAL_TAGS);
 
 /**
  * 引號裡的文字（「」『』“”‘’""；不跨行）：題目常引用別人說的話（朋友傳訊息說：『可以幫我寫生日卡片嗎？』），
@@ -318,6 +322,19 @@ const SCORING_TEXT_PATTERNS: readonly Pattern[] = [
   { id: 'en_rubric', re: /\b(?:rubrics?|scoring\s+(?:guides?|criteria|rules?)|marking\s+(?:scheme|criteria)|band\s+descriptors?|model\s+answers?)\b/gi },
   { id: 'en_model_essay', re: /\b(?:model|sample)\s+(?:essays?|answers?|responses?)\s+(?:for|to)\s+(?:this|the)\s+(?:task|prompt|topic|question)\b/gi },
 ];
+
+/**
+ * 學習助手的 official_like（docs/design/learning-assistant.md §4.4）：SCORING_TEXT_PATTERNS 少了「參考答案」一項，
+ * 其他樣式（佳作、範文、評分原則、閱卷、配分、rubric…）一字不差。貼上的題目常附「參考答案」：那只當成資料、提醒學生，
+ * 不拒收。自訂作文題目的 scoring_text 照舊用完整的 SCORING_TEXT_PATTERNS（＝這份＋REFERENCE_ANSWER_RE），
+ * 拒收結果逐字相同（custom-essay.test.ts 逐案例比對兩邊）。
+ */
+const OFFICIAL_LIKE_PATTERNS: readonly Pattern[] = [
+  { id: 'zh_scoring', re: /評分(?:原則|標準|規準|重點|說明|方式)|閱卷|配分|給分(?:標準|原則|方式)|範文|范文|範例作文|參考作文|得分(?:標準|說明)/g },
+  ...SCORING_TEXT_PATTERNS.filter((p) => p.id !== 'zh_scoring'),
+];
+/** SCORING_TEXT_PATTERNS 的 zh_scoring 裡、official_like 沒有的那一項。 */
+const REFERENCE_ANSWER_RE = /參考答案/g;
 
 /**
  * 提醒：看起來像在要求 AI 改分數或改規則（instruction_text）。送批改時以 `prompt:{id}` 記成注入旗標（§4.5 第 4 層）。
@@ -542,6 +559,64 @@ export function checkCustomPrompt(input: unknown): CustomPromptCheck {
 export function customPromptFlagCodes(value: Pick<CustomEssayPrompt, 'text' | 'figure_text'>): string[] {
   const c = combine(value.text, value.figure_text);
   return [...new Set(patternHits(c, INSTRUCTION_PATTERNS, 'instruction_text').map((h) => h.id))];
+}
+
+// ───────────────────────── 學習助手共用的樣式（docs/design/learning-assistant.md §4.4） ─────────────────────────
+// 學習助手的題目檢查（assist.ts 的 checkAssistQuestion）沿用自訂題的樣式，只是逐欄（逐區塊）比對、規則的取捨不同。
+// 這裡只把樣式包成「一段文字的命中位置」，自訂題的 checkCustomPrompt 不經過它們，行為與 CUSTOM_PROMPT_RULES_VERSION 不變。
+
+/** 一段文字裡的命中位置（UTF-16 索引，[start, end)）與樣式代號。 */
+export interface TextPatternHit {
+  start: number;
+  end: number;
+  id: string;
+}
+
+function textHits(text: string, patterns: readonly Pattern[]): TextPatternHit[] {
+  const out: TextPatternHit[] = [];
+  for (const p of patterns) {
+    for (const m of text.matchAll(p.re)) {
+      if (m[0] === '') continue;
+      out.push({ start: m.index, end: m.index + m[0].length, id: p.id });
+    }
+  }
+  return out.sort((a, b) => a.start - b.start);
+}
+
+/**
+ * 明確要 AI 代寫、代答的句子（自訂題的 request_to_ai 樣式）。quoted：命中處在引號裡（引用別人說的話）；
+ * 自訂題把引號裡的改成提醒，學習助手同樣只拒收引號外的。題目本身的「請寫一篇英文作文」不命中。
+ */
+export function requestToAiHits(text: string): Array<TextPatternHit & { quoted: boolean }> {
+  const quoted = quotedRanges(text);
+  return textHits(text, REQUEST_TO_AI_PATTERNS).map((h) => ({ ...h, quoted: quoted.some(([s, e]) => s < h.start && h.end < e) }));
+}
+
+/** 評分說明、範文、佳作、評分原則、閱卷、配分等樣式（學習助手的 official_like；自訂題 scoring_text 少了「參考答案」）。 */
+export function officialLikeHits(text: string): TextPatternHit[] {
+  return textHits(text, OFFICIAL_LIKE_PATTERNS);
+}
+
+/** 「參考答案」：自訂題的 scoring_text 拒收；學習助手只提醒（答案當成資料，AI 不一定照著它）。 */
+export function referenceAnswerHits(text: string): TextPatternHit[] {
+  return textHits(text, [{ id: 'zh_reference_answer', re: REFERENCE_ANSWER_RE }]);
+}
+
+/**
+ * HTML 或結構標籤（自訂題的 markup 規則；structuralTags 換成呼叫端的提示標籤）。同一個 `<` 只回報一次，依位置排序。
+ */
+export function markupHits(text: string, structuralTags: readonly string[]): TextPatternHit[] {
+  const seen = new Set<number>();
+  return textHits(text, markupPatterns(structuralTags)).filter((h) => {
+    if (seen.has(h.start)) return false;
+    seen.add(h.start);
+    return true;
+  });
+}
+
+/** 第一個不允許的字元（控制字元、變體選擇符補充區、過多的組合記號；自訂題的 bad_characters）；沒有回 null。 */
+export function firstBadCharacter(text: string): { start: number; end: number } | null {
+  return badCharacterAt(text);
 }
 
 // ───────────────────────── 送 AI 前的作文規則（§2.4.6） ─────────────────────────

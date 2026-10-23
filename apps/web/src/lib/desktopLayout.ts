@@ -75,6 +75,15 @@ export const ROUTE_MODES: ReadonlyArray<readonly [pattern: string, mode: WidthMo
   ['/writing/essay/custom', 'workspace'],
   ['/writing/essay/:examId', 'workspace'],
   ['/writing/submissions/:id', 'workspace'],
+  // 學習助手（docs/design/learning-assistant.md §1.9）：首頁與錯題清單放寬、確認頁窄版、貼上題目預設寬度、案例頁是工作區。
+  ['/assistant', 'list'],
+  ['/assistant/mistakes', 'list'],
+  ['/assistant/ask', 'narrow'],
+  ['/assistant/new', 'default'],
+  ['/assistant/case/:id', 'workspace'],
+  // 學習報告：預設寬度；ws 寬度起左側加目錄（報告內容自己排）。
+  ['/assistant/report', 'default'],
+  ['/assistant/report/:version', 'default'],
 ];
 
 /**

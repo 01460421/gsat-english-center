@@ -4,7 +4,7 @@
  * 不要把它加進 READY，並把那個測試改成只排除那一頁。
  */
 import { describe, expect, it } from 'vitest';
-import { PAGES, getPage, isDevPage, type PagePath } from './modules';
+import { NAV_GROUPS, PAGES, getPage, isDevPage, isPageEnabled, navPages, type PagePath } from './modules';
 
 const READY: readonly PagePath[] = [
   '/',
@@ -21,6 +21,7 @@ const READY: readonly PagePath[] = [
   '/writing',
   '/exams',
   '/mock',
+  '/assistant',
   '/settings',
   '/about',
 ];
@@ -46,5 +47,26 @@ describe('modules.ts 的完成狀態', () => {
         if (other.path !== page.path) expect(page.summary, `${page.path} 的說明含「${other.title}」`).not.toContain(other.title);
       }
     }
+  });
+});
+
+describe('由功能開關控制的頁面（學習助手，docs/design/learning-assistant.md §5.1）', () => {
+  it('/assistant 是「實戰」群組的學習模組，排在模擬考之後，由 assistant 開關控制', () => {
+    const page = getPage('/assistant');
+    expect(page).toMatchObject({ group: 'exam', icon: 'assistant', isStudyModule: true, feature: 'assistant', status: 'ready' });
+    const exam = PAGES.filter((p) => p.group === 'exam').map((p) => p.path);
+    expect(exam.indexOf('/assistant')).toBe(exam.indexOf('/mock') + 1);
+    expect(NAV_GROUPS.find((g) => g.id === 'exam')?.label).toBe('實戰');
+    expect(page.summary).not.toMatch(/大考中心|CEEC/);
+  });
+
+  it('開關關著時導覽與首頁不列它，其他頁面不變；打開時才出現', () => {
+    const off = navPages({ assistant: false }).map((p) => p.path);
+    const on = navPages({ assistant: true }).map((p) => p.path);
+    expect(off).not.toContain('/assistant');
+    expect(on).toContain('/assistant');
+    expect(off).toEqual(PAGES.filter((p) => p.path !== '/assistant').map((p) => p.path));
+    expect(on).toEqual(PAGES.map((p) => p.path));
+    expect(isPageEnabled(getPage('/mock'), { assistant: false })).toBe(true);
   });
 });

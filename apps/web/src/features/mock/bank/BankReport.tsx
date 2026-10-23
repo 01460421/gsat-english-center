@@ -50,6 +50,11 @@ import { labelsText, rangeText } from './rangeText';
 import { loadBankPaperStrict, type StrictLoadResult } from './resolve';
 import { paperStatuses, type SlotStatus } from './status';
 import { tierAdvice, weakestSections, sectionLabel } from './tierAdvice';
+import { MockWritingHandoff } from '../../assistant/components/MockWritingHandoff';
+import { UpdateReportLink } from '../../assistant/components/UpdateReportLink';
+import { recordOutcomesOnce } from '../../assistant/entries';
+import { bankPaperOutcomes } from '../../assistant/outcomeBuilders';
+import { bankAttemptPath } from '../../writing/bank/data';
 
 /** 交卷原因（同 MockReportPage 的 REASON_TEXT）。 */
 const REASON_TEXT: Record<NonNullable<MockAttemptRecord['submitReason']>, string> = {
@@ -157,6 +162,29 @@ function ReportBody({ paper, initial }: { paper: BankPaper; initial: MockAttempt
   useEffect(() => {
     void cleanupOrphanSnapshots().catch(() => []);
   }, []);
+  // 學習助手的本機作答紀錄：成績單第一次顯示這份已交卷的紀錄時寫入（同一次交卷不重複寫；docs/design/learning-assistant.md §5.4）。
+  useEffect(() => {
+    if (!record.submittedAt) return;
+    const at = Date.parse(record.submittedAt);
+    recordOutcomesOnce('bank_mock', { p: paper.id }, at, () =>
+      bankPaperOutcomes(paper, record.attempt.answers, { scores, marked: new Set(record.marked), at }),
+    );
+    // 只在打開這份成績單時寫一次。
+  }, [paper.id, record.id]);
+
+  /** 中譯英、作文：先帶進本站寫作題的作答頁送 AI 批改，再從批改結果問學習助手（§1.4.1）。 */
+  const writingHandoff = (kind: 'translation' | 'composition') => {
+    const labels = report.openItems.filter((i) => i.kind === kind).map((i) => i.label);
+    const texts = labels.map((l) => {
+      const v = record.attempt.answers[l];
+      return typeof v === 'string' ? v : '';
+    });
+    const itemId = kind === 'translation' ? Object.values(paper.writing.translationItemIds)[0] : paper.writing.essayItemId;
+    const uid = itemId?.split('@')[0] ?? '';
+    const path = bankAttemptPath(uid);
+    if (!path) return null;
+    return <MockWritingHandoff kind={kind === 'translation' ? 'translation' : 'essay'} bankUid={uid} attemptPath={path} texts={texts} attemptId={record.id} />;
+  };
 
   const onSelf: SelfChange = (itemLabel, score, detail) => {
     const selfScores = { ...record.selfScores };
@@ -229,6 +257,7 @@ function ReportBody({ paper, initial }: { paper: BankPaper; initial: MockAttempt
         )}
         <p className="mt-2 text-sm text-muted">本站自組卷只記原始分數，不換算級分：題型與配分同學測，難度依你選的等級，沒有和正式考試等化。</p>
       </section>
+      <UpdateReportLink />
 
       <section aria-labelledby={`${titleId}-advice`} className="rounded-2xl border border-line bg-surface p-5 lg:p-6">
         <h2 id={`${titleId}-advice`} className="text-lg font-semibold">
@@ -280,7 +309,15 @@ function ReportBody({ paper, initial }: { paper: BankPaper; initial: MockAttempt
         </ul>
       </section>
 
-      <SelfAssessment exam={paper.exam} items={report.openItems} answers={record.attempt.answers} details={record.selfDetail} onChange={onSelf} bank={paper.writing} />
+      <SelfAssessment
+        exam={paper.exam}
+        items={report.openItems}
+        answers={record.attempt.answers}
+        details={record.selfDetail}
+        onChange={onSelf}
+        bank={paper.writing}
+        writingHandoff={writingHandoff}
+      />
 
       <BankReview paper={paper} record={record} scores={scores} />
 

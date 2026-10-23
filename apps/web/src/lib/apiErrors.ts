@@ -33,6 +33,10 @@ export const API_ERROR_MESSAGES: Record<ApiErrorCode, string> = {
   // 自訂作文題目（docs/design/custom-essay.md §6.7）：通用文案；寫作頁依 error.reason 顯示更細的說明。
   custom_prompt_invalid: '題目不符合規則，請依畫面上的說明修改。',
   essay_not_gradable: '這篇作文還不能送 AI 批改，請依畫面上的說明修改。',
+  // 學習助手（docs/design/learning-assistant.md §5.7）：通用文案；學習助手的頁面依 error.reason 顯示更細的說明。
+  assist_input_invalid: '題目或內容不符合規則，請依畫面上的說明修改。',
+  assist_source_unavailable: '暫時讀不到這一題，請稍後再試。',
+  assist_limit: '已經達到學習助手的使用上限。',
 };
 
 /** 錯誤代碼（不是 ApiRequestError 或後端沒給代碼時為 null）。 */

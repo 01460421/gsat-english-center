@@ -72,6 +72,13 @@ export const API_ERROR_CODES = [
   'custom_prompt_invalid',
   /** 自訂題的作文還不能送 AI 批改（400）；error.reason 是 EssayNotGradableReason，error.field 是 'essay'。 */
   'essay_not_gradable',
+  // ── 學習助手（assist.ts；docs/design/learning-assistant.md §4.2）──
+  /** 學習助手的輸入不符合規則（400）；error.reason 是 AssistInputProblem，error.field 是欄位，D8 與 official_like 命中另附 error.ranges。 */
+  'assist_input_invalid',
+  /** 讀不到這一題（409 版本已更新或下架、502 題目檔暫時讀不到、400 這種題目不支援）；error.reason 是 'gone' | 'unreachable' | 'unsupported'。 */
+  'assist_source_unavailable',
+  /** 學習助手的數量上限（429）；error.reason 是 'cases_per_day' | 'cases_live' | 'analyses_per_case' | 'followups_per_case' | 'photos'。 */
+  'assist_limit',
 ] as const;
 export type ApiErrorCode = (typeof API_ERROR_CODES)[number];
 
@@ -80,9 +87,9 @@ export interface ApiErrorBody {
   error: {
     code: ApiErrorCode;
     message: string;
-    /** 選填：更細的原因代碼（目前只有 custom_prompt_invalid、essay_not_gradable 會帶）。 */
+    /** 選填：更細的原因代碼（custom_prompt_invalid、essay_not_gradable、學習助手的三個代碼、daily_limit 會帶）。 */
     reason?: string;
-    /** 選填：出問題的欄位（CustomPromptField 或 'essay'）。 */
+    /** 選填：出問題的欄位（CustomPromptField、'essay'，或學習助手的欄位，例如 'blocks[0].text'）。 */
     field?: string;
     /**
      * 選填：命中處在學生自己文字裡的位置（正規化後的 UTF-16 索引，[start, end)，最多 5 段）。

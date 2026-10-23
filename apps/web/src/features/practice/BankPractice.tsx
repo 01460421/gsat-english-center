@@ -6,6 +6,7 @@
  *     題組標題是 <h2>，頁面標題維持題型名稱。
  *
  * 抽到哪一組記在練習紀錄的 current：重新整理或離開再回來，接著做同一組；交卷後按「再一組」才換。
+ * 作答頁網址指定題組（?group=，學習助手的連結）而這一格有另一組做到一半時，先做指定的那一組、current 不換。
  * 切換難度只是換一格：每一格各自記著正在做的那一組與作答紀錄（exams/attempt.ts），切回來就接著做。
  *
  * 載入失敗分兩層：題庫索引失敗時整個練習區顯示錯誤與「再試一次」；某一組題組載入失敗時只有作答區顯示錯誤，
@@ -158,8 +159,12 @@ export function attemptActivity(key: string): string | null {
   return state.submittedAt !== null || Object.keys(state.answers).length > 0 ? state.updatedAt : null;
 }
 
-/** 題組開頭的說明；where 是 scopeLabel（作答頁「這一格」、題型頁難度名稱）。 */
-function noticeFor(pick: Pick, total: number, resumedWork: boolean, where: string): string | null {
+/**
+ * 題組開頭的說明；where 是 scopeLabel（作答頁「這一格」、題型頁難度名稱）。
+ * keptOther：網址指定了另一組，這一格做到一半的那一組沒有換掉（見 CellSession）。
+ */
+function noticeFor(pick: Pick, total: number, resumedWork: boolean, where: string, keptOther = false): string | null {
+  if (keptOther) return `你在${where}還有一組做到一半，這次先做指定的這一組；做完按「再一組」，或之後直接打開${where}，就會回到做到一半的那一組。`;
   if (pick.reason === 'repeat') return `${where}的 ${total} 組你都做過了，這是比較早做的一組，再練一次。`;
   // 接續的那一組還沒作答過（只是打開過）就不必說「接續」：看起來就和第一次打開一樣。
   if (pick.reason === 'resume' && resumedWork) return `已接續上次在${where}做的題組。`;
@@ -179,29 +184,47 @@ function CellSession({
   tier,
   embedded,
   scrollToStart,
+  preferUid = null,
 }: {
   index: BankIndex;
   section: PracticeSectionType;
   tier: Tier;
   embedded: boolean;
   scrollToStart: () => void;
+  /** 指定的題組（作答頁網址的 ?group=）。 */
+  preferUid?: string | null;
 }) {
   const candidates = useMemo(() => cellEntries(index.groups, section, tier), [index, section, tier]);
   const cell = cellKey(section, tier);
   // 第一次抽題時順便判斷：接續的那一組有沒有作答過（之後作答了也不會突然冒出「已接續」）。
+  // 網址指定的題組（?group=）不是這一格做到一半（已經作答過）的那一組時，先做指定的這一組，
+  // 但不把它記成這一格正在做的（keepCurrent）：做到一半的那一組不會被換掉，作答也不會變成找不回來的孤兒。
   const [initial] = useState(() => {
-    const first = pickGroup(candidates, getPracticeHistory(), section, tier);
-    return { pick: first, resumedWork: first?.reason === 'resume' && attemptActivity(groupKey(first.entry)) !== null };
+    const history = getPracticeHistory();
+    const first = pickGroup(candidates, history, section, tier, { prefer: preferUid });
+    const currentKey = history.current[cell];
+    const keepCurrent =
+      first !== null &&
+      first.entry.uid === preferUid &&
+      currentKey !== undefined &&
+      currentKey !== groupKey(first.entry) &&
+      candidates.some((e) => groupKey(e) === currentKey) &&
+      attemptActivity(currentKey) !== null;
+    return { pick: first, resumedWork: first?.reason === 'resume' && attemptActivity(groupKey(first.entry)) !== null, keepCurrent };
   });
   const [pick, setPick] = useState<Pick | null>(initial.pick);
   // 第幾次抽題：「再一組」抽到同一組（這一格只有一組）時，也要整個重新掛載、從空白的作答開始。
   const [run, setRun] = useState(0);
+  // 「再一組」回到做到一半的那一組（keepCurrent 時）也說「已接續」。
+  const [resumedWork, setResumedWork] = useState(initial.resumedWork);
+  const keepCurrent = run === 0 && initial.keepCurrent;
   const history = usePracticeHistory().value;
 
   // 記住這一格正在做哪一組（重新整理後接著做）。
   useEffect(() => {
+    if (keepCurrent) return;
     updatePracticeHistory((h) => setCurrent(h, cell, pick ? groupKey(pick.entry) : null));
-  }, [cell, pick]);
+  }, [cell, pick, keepCurrent]);
 
   const groupPromise = useMemo(() => (pick ? loadPracticeGroup(pick.entry.uid, pick.entry.version) : null), [pick]);
 
@@ -215,9 +238,12 @@ function CellSession({
 
   const next = () => {
     // 換下一組：清掉這一組的作答紀錄、提示紀錄與固定下來的判分（成績已經記在「做過」裡），再抽一組。
+    // 這一格記著的是別組（指定題組時沒有換掉做到一半的那一組）就不清：接著抽到的就是那一組。
     clearAttempt(practiceAttemptId(pick.entry));
-    updatePracticeHistory((h) => clearGroupRecords(setCurrent(h, cell, null), finishedKey));
-    setPick(pickGroup(candidates, getPracticeHistory(), section, tier, { exclude: finishedKey }));
+    updatePracticeHistory((h) => clearGroupRecords(h.current[cell] === finishedKey ? setCurrent(h, cell, null) : h, finishedKey));
+    const following = pickGroup(candidates, getPracticeHistory(), section, tier, { exclude: finishedKey });
+    setPick(following);
+    setResumedWork(following?.reason === 'resume' && attemptActivity(groupKey(following.entry)) !== null);
     setRun((n) => n + 1);
     scrollToStart();
   };
@@ -227,7 +253,7 @@ function CellSession({
       <GroupLoader
         key={run}
         promise={groupPromise}
-        notice={noticeFor(pick, candidates.length, run === 0 && initial.resumedWork, where)}
+        notice={noticeFor(pick, candidates.length, resumedWork, where, keepCurrent)}
         repeatNotice={repeatNotice}
         onNext={next}
         embedded={embedded}
@@ -295,11 +321,13 @@ function IndexedPractice({
   section,
   tier,
   embed,
+  preferUid,
 }: {
   indexPromise: Promise<BankIndex>;
   section: PracticeSectionType;
   tier: Tier | null;
   embed: PracticeEmbed | undefined;
+  preferUid: string | null;
 }) {
   const index = use(indexPromise);
   const embedded = embed !== undefined;
@@ -331,7 +359,15 @@ function IndexedPractice({
       {/* scroll-mt：手機頂端固定的站名列（h-14）不蓋住題組標題。 */}
       <div ref={topRef} className="scroll-mt-16 lg:scroll-mt-4">
         <DataErrorBoundary key={`${section}/${active}:${groupRetry}`} onRetry={retryGroup}>
-          <CellSession key={`${section}/${active}`} index={index} section={section} tier={active} embedded={embedded} scrollToStart={scrollToStart} />
+          <CellSession
+            key={`${section}/${active}`}
+            index={index}
+            section={section}
+            tier={active}
+            embedded={embedded}
+            scrollToStart={scrollToStart}
+            preferUid={preferUid}
+          />
         </DataErrorBoundary>
       </div>
     </div>
@@ -344,9 +380,11 @@ export interface SectionBankPracticeProps {
   tier: Tier | null;
   /** 題型頁內嵌時才給（見 PracticeEmbed）；作答頁不給。 */
   embed?: PracticeEmbed;
+  /** 作答頁網址的 ?group=：這一格有這一組時就做這一組（學習助手的推薦練習）。 */
+  preferUid?: string | null;
 }
 
-export function SectionBankPractice({ section, tier, embed }: SectionBankPracticeProps) {
+export function SectionBankPractice({ section, tier, embed, preferUid = null }: SectionBankPracticeProps) {
   const [retry, setRetry] = useState(0);
   // 失敗的請求留在 data/client.ts 的快取裡；「再試一次」先 forgetFailedLoads() 再換 retry 才會重新下載。
   const indexPromise = useMemo(() => loadBankIndex(), [retry]);
@@ -357,7 +395,7 @@ export function SectionBankPractice({ section, tier, embed }: SectionBankPractic
   return (
     <DataErrorBoundary key={retry} onRetry={handleRetry}>
       <Suspense fallback={<Loading text="題庫載入中…" embedded={embed !== undefined} />}>
-        <IndexedPractice indexPromise={indexPromise} section={section} tier={tier} embed={embed} />
+        <IndexedPractice indexPromise={indexPromise} section={section} tier={tier} embed={embed} preferUid={preferUid} />
       </Suspense>
     </DataErrorBoundary>
   );

@@ -12,7 +12,7 @@
  * 對存下來的題目重跑規則與 D8、作文規則（essayGradableProblem，只在批改）、題目的注入旗標（prompt: 開頭的代號）；
  * 送出的條件式 UPDATE 另外確認題目列的 rev 沒變（S7）。被擋下的請求不扣點數、不佔同時任務名額。
  *
- *   GET  /api/ai/quota                AiQuotaResponse（requireUser）
+ *   GET  /api/ai/quota                AiQuotaResponse（requireUser；學習助手對這位使用者開放時多 assist：報告與拍照轉錄的今日次數）
  *   POST /api/ai/translation-grade    AiTaskRequest → 202 AiTaskAccepted（requireAiApproved；3 點）
  *   POST /api/ai/essay-grade          AiTaskRequest → 202（打字，或已確認的 OCR 文字；7 點）
  *   POST /api/ai/essay-ocr            AiTaskRequest → 202（需已上傳照片；2 點）
@@ -34,7 +34,6 @@ import {
   essayGradableProblem,
   type AiOpResponse,
   type AiQuotaResponse,
-  type AiReserveErrorCode,
   type AiTask,
   type AiTaskAccepted,
   type EssayBody,
@@ -49,33 +48,23 @@ import { getSessionUser, requireAiApproved, requireUser, type SessionUser } from
 import { loadConfig, type AppConfig } from '../config';
 import type { AppEnv } from '../env';
 import { ApiError } from '../errors';
+import { assistantAccess } from '../features';
 import { groupForSubmission, requireCustomEssayAvailable, storedPromptInput, validateCustomPrompt } from '../submissions/custom';
 import { findSubmission, parseJson, requireSubmission, type SubmissionRow } from '../submissions/repo';
 import { nowSeconds } from '../time';
 import type { WritingGroup } from './bank';
 import { detectInjection, sanitizeStudentText } from './filter';
-import { AI_REFUNDS_PER_DAY, refundOp, reserveOp, siteLimitsMicros, UNLIMITED, usageSnapshot, userLimits, type ReserveFailureCode } from './guard';
+import { refundOp, reserveOp, siteLimitsMicros, UNLIMITED, usageSnapshot, userLimits } from './guard';
 import { reclaimStaleOps } from './housekeeping';
 import { opsEvent, userRefFor } from './ledger';
-import { reserveMicros, taskConfig, taskModelsPriced } from './tasks';
+import { reserveFailure } from './reserveErrors';
+import { ASSIST_OCR_FAMILY, ASSIST_REPORT_FAMILY, reserveMicros, taskConfig, taskModelsPriced } from './tasks';
 
 export const aiRoutes = new Hono<AppEnv>();
-
-/** 預扣失敗代碼 → HTTP 狀態（個人 429、全站 503；設計文件 §2.2）。 */
-const RESERVE_STATUS: Record<AiReserveErrorCode, 429 | 503> = {
-  quota_day: 429,
-  quota_month: 429,
-  daily_limit: 429,
-  busy: 429,
-  ai_paused: 503,
-  site_budget: 503,
-};
 
 /** AI 任務請求本體的上限（只有 submission_id）。 */
 const TASK_REQUEST_MAX_BYTES = 4 * 1024;
 const taskRequestSchema = z.object({ submission_id: z.string().min(1).max(64) });
-
-const REFUND_LIMIT_MESSAGE = `今天 AI 無法完成的次數太多了（照片看不出是作文、AI 無法批改等，每天最多 ${AI_REFUNDS_PER_DAY} 次），請明天再試`;
 
 async function sessionUser(c: Context<AppEnv>): Promise<SessionUser> {
   const user = await getSessionUser(c);
@@ -86,21 +75,6 @@ async function sessionUser(c: Context<AppEnv>): Promise<SessionUser> {
 /** 讀 { submission_id }（只收 application/json、最多 4 KB；邊讀邊數，不會把超大本體整個讀進記憶體）。 */
 async function readSubmissionId(c: Context<AppEnv>): Promise<string> {
   return (await readJsonBody(c, taskRequestSchema, TASK_REQUEST_MAX_BYTES)).submission_id;
-}
-
-/** 預扣失敗 → 錯誤回應。每日退還上限第一次擋下時寫 ops_events（同一人同一天只寫一次）。 */
-async function reserveFailure(db: D1Database, code: ReserveFailureCode, ref: string | null, task: AiTask, nowMs: number): Promise<ApiError> {
-  if (code !== 'refund_limit') return new ApiError(RESERVE_STATUS[code], code, AI_ERROR_MESSAGES[code]);
-  const since = nowSeconds(nowMs) - 86_400;
-  const seen = ref
-    ? await db
-        .prepare(`SELECT 1 AS x FROM ops_events WHERE kind = 'ai_refund_limit' AND created_at > ?1 AND json_extract(detail_json, '$.user_ref') = ?2 LIMIT 1`)
-        .bind(since, ref)
-        .first<{ x: number }>()
-        .catch(() => null)
-    : null;
-  if (!seen) await opsEvent(db, 'ai_refund_limit', 'warn', { user_ref: ref, task, limit: AI_REFUNDS_PER_DAY });
-  return new ApiError(429, 'rate_limited', REFUND_LIMIT_MESSAGE);
 }
 
 /** 下次重置時間（台灣 00:00，ISO 8601 帶 +08:00）。 */
@@ -359,13 +333,21 @@ aiRoutes.get('/quota', requireUser(), async (c) => {
   const nowMs = Date.now();
   const limits = userLimits(config, user);
   // 名額的算法只有一份（A1 的 approvalSummary：只算學生、刪除中的不算）。
-  const [snap, approval] = await Promise.all([usageSnapshot(c.env.DB, user.id, ESSAY_FAMILY_TASKS, nowMs), approvalSummary(c.env, config)]);
+  // 學習助手的報告與拍照轉錄的今日次數：只在學習助手對這位使用者開放時才查、才回（關著時回應不變）。
+  const assist = assistantAccess(config, user.role).enabled;
+  const [snap, approval, reports, ocr] = await Promise.all([
+    usageSnapshot(c.env.DB, user.id, ESSAY_FAMILY_TASKS, nowMs),
+    approvalSummary(c.env, config),
+    assist ? usageSnapshot(c.env.DB, user.id, ASSIST_REPORT_FAMILY.tasks, nowMs) : null,
+    assist ? usageSnapshot(c.env.DB, user.id, ASSIST_OCR_FAMILY.tasks, nowMs) : null,
+  ]);
   const site = siteLimitsMicros(config);
+  const dayLimit = (cap: number) => (cap === 0 ? UNLIMITED : cap);
   const body: AiQuotaResponse = {
     ai_status: user.aiStatus,
     tier: user.aiTier,
     points: { day_used: snap.dayPoints, day_limit: limits.capDay, month_used: snap.monthPoints, month_limit: limits.capMonth },
-    essays: { day_used: snap.familyToday, day_limit: limits.familyCap === 0 ? UNLIMITED : limits.familyCap },
+    essays: { day_used: snap.familyToday, day_limit: dayLimit(limits.familyCaps.essay) },
     concurrent: { active: snap.active, limit: limits.capConc },
     site: {
       paused: snap.paused,
@@ -374,6 +356,14 @@ aiRoutes.get('/quota', requireUser(), async (c) => {
     approval,
     resets_at: resetsAt(nowMs),
     task_points: { ...AI_TASK_POINTS },
+    ...(reports && ocr
+      ? {
+          assist: {
+            reports: { day_used: reports.familyToday, day_limit: dayLimit(limits.familyCaps.assist_report) },
+            ocr: { day_used: ocr.familyToday, day_limit: dayLimit(limits.familyCaps.assist_ocr) },
+          },
+        }
+      : {}),
   };
   return c.json(body);
 });

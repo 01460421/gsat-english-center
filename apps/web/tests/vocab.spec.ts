@@ -110,6 +110,32 @@ test('每日學習：翻卡、評分，重新整理後進度還在', async ({ pa
   expect(errors).toEqual([]);
 });
 
+test('錯題本：學習助手打開時，320px 寬、清單裡有最長的字也沒有水平捲動', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'mobile', '只在手機版面檢查');
+  const errors = collectErrors(page);
+  // 學習助手的開關打開（/api/features 的 assistant；其他 AI 功能照樣關著）。
+  await page.route('**/api/features', (route) => route.fulfill({ json: { auth: false, ai: false, ocr: false, aiPaused: false, assistant: true } }));
+  await page.addInitScript(() => {
+    const now = Date.now();
+    const item = (entry_id: string, word: string, wrong_count: number) => ({ entry_id, word, wrong_count, last_wrong_at: now, last_mode: 'en2zh' });
+    window.localStorage.setItem(
+      'gsat-vocab-mistakes',
+      JSON.stringify({
+        schema: 'gsat-vocab-mistakes',
+        version: 1,
+        updated_at: now,
+        items: { 'telecommunications|n.|6': item('telecommunications|n.|6', 'telecommunications', 3), 'abandon|v.|4': item('abandon|v.|4', 'abandon', 1) },
+      }),
+    );
+  });
+  await page.setViewportSize({ width: 320, height: 667 });
+  await page.goto('/words?tab=mistakes');
+  await expect(page.getByRole('link', { name: '問學習助手：telecommunications' })).toBeVisible();
+  await page.waitForLoadState('networkidle');
+  await expectNoHorizontalOverflow(page);
+  expect(errors).toEqual([]);
+});
+
 test('各分頁在手機最窄寬度（320px）沒有水平捲動', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'mobile', '只在手機版面檢查');
   const errors = collectErrors(page);

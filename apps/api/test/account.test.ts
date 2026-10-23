@@ -9,6 +9,7 @@ import { requireAiApproved } from '../src/auth/session';
 import type { AppEnv } from '../src/env';
 import { handleError } from '../src/errors';
 import { VERSIONS, authEnv, call, cookieFor, insertUser, nowSec, setCookies, type TestEnv } from './helpers/auth';
+import { seedAssistCase, seedAssistPhoto, seedAssistReport, seedAssistTurn } from './helpers/assist';
 import { CUSTOM_TASK, seedCustomSubmission } from './helpers/customEssay';
 
 let env: TestEnv;
@@ -259,6 +260,73 @@ describe('匯出與刪除帳號：要 10 分鐘內登入過', () => {
     const log = q(env, 'SELECT rows_json FROM deletion_log') as Array<Record<string, string>>;
     expect(JSON.parse(log[0]!['rows_json']!)).toMatchObject({ submissions: 2, submission_custom_prompts: 1 });
     expect(JSON.stringify(log)).not.toContain('無手機日');
+  });
+
+  it('學習助手（docs/design/learning-assistant.md §4.17）：匯出含案例（題目、疑問、全部解析與追問）與報告，不含照片與內部欄位；只含自己的', async () => {
+    const u = insertUser(env.DB, { aiStatus: 'approved' });
+    const caseId = seedAssistCase(env.DB, u.id, { questionText: 'My exported passage.' });
+    seedAssistTurn(env.DB, u.id, caseId, { seq: 1, kind: 'analyze', status: 'done', opId: 'op-analyze' });
+    seedAssistTurn(env.DB, u.id, caseId, { seq: 2, kind: 'followup', status: 'done', opId: 'op-followup' });
+    seedAssistPhoto(env.DB, u.id, caseId);
+    seedAssistReport(env.DB, u.id, { version: 1 });
+    const other = insertUser(env.DB);
+    const otherCase = seedAssistCase(env.DB, other.id, { questionText: 'Someone else passage.' });
+    seedAssistReport(env.DB, other.id, { version: 1, id: 'report-other' });
+
+    const data = (await (await call(env, 'GET', '/api/me/export', { cookie: await cookieFor(u) })).json()) as MeExport;
+    expect(data.assist?.cases).toHaveLength(1);
+    const exported = data.assist!.cases[0] as Record<string, unknown>;
+    expect(exported).toMatchObject({
+      id: caseId,
+      source: 'bank',
+      ref: { source: 'bank', ref: 'ai.rd.0a1b2c@1' },
+      question: { passage: 'My exported passage.' },
+      doubt_kinds: ['why_not_mine'],
+      doubt_text: '為什麼不是 (C)',
+      errors: ['over_inference'],
+    });
+    const turns = exported['turns'] as Array<Record<string, unknown>>;
+    expect(turns.map((t) => [t['seq'], t['kind']])).toEqual([
+      [1, 'analyze'],
+      [2, 'followup'],
+    ]);
+    expect(turns[0]!['output']).toEqual({ kind: 'item', tested_zh: '推論題' });
+    expect(turns[1]!['input_text']).toBe('那 (B) 呢？');
+    expect(data.assist?.reports).toHaveLength(1);
+    expect(data.assist!.reports[0]).toMatchObject({ version: 1, target: { standard: 'front' }, input: { facts: { data_level: 'some' } }, report: { overview_zh: '總覽' } });
+    // 內部欄位與照片不匯出；別人的不匯出。
+    const text = JSON.stringify(data.assist);
+    for (const internal of ['cache-key-secret', 'dedupe-', 'injection_flag', 'lease_until', 'op-analyze', 'tries', 'secret-meta', 'case_id', '"data"', 'sha256', 'image/jpeg']) {
+      expect(text, internal).not.toContain(internal);
+    }
+    expect(text).not.toContain(otherCase);
+    expect(text).not.toContain('report-other');
+  });
+
+  it('學習助手：沒有任何資料時匯出不帶 assist（和學習助手上線前相同）；刪帳號時四張表一起刪、刪除證明有各表列數', async () => {
+    const empty = insertUser(env.DB);
+    const plain = (await (await call(env, 'GET', '/api/me/export', { cookie: await cookieFor(empty) })).json()) as MeExport;
+    expect(plain).not.toHaveProperty('assist');
+
+    const u = insertUser(env.DB, { aiStatus: 'approved' });
+    const a = seedAssistCase(env.DB, u.id);
+    const b = seedAssistCase(env.DB, u.id);
+    seedAssistTurn(env.DB, u.id, a, { seq: 1 });
+    seedAssistTurn(env.DB, u.id, a, { seq: 2, kind: 'followup' });
+    seedAssistTurn(env.DB, u.id, b, { seq: 1 });
+    seedAssistPhoto(env.DB, u.id, b);
+    seedAssistReport(env.DB, u.id, { version: 1 });
+    seedAssistReport(env.DB, u.id, { version: 2 });
+    const other = insertUser(env.DB);
+    seedAssistCase(env.DB, other.id);
+    const cookie = await cookieFor(u);
+    expect((await call(env, 'DELETE', '/api/me', { cookie, json: { confirm: DELETE_ACCOUNT_CONFIRM } })).status).toBe(204);
+    for (const table of ['assist_cases', 'assist_turns', 'assist_photos', 'assist_reports']) {
+      expect(q(env, `SELECT COUNT(*) AS n FROM ${table} WHERE user_id = ?`, u.id), table).toEqual([{ n: 0 }]);
+    }
+    expect(q(env, 'SELECT COUNT(*) AS n FROM assist_cases WHERE user_id = ?', other.id)).toEqual([{ n: 1 }]);
+    const log = q(env, 'SELECT rows_json FROM deletion_log') as Array<Record<string, string>>;
+    expect(JSON.parse(log[0]!['rows_json']!)).toMatchObject({ assist_cases: 2, assist_turns: 3, assist_photos: 1, assist_reports: 2 });
   });
 
   it('同意未完成也可以匯出與刪除（個資權利不受新條款影響）', async () => {

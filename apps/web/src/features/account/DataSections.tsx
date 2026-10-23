@@ -56,7 +56,7 @@ export function ExportSection({ reauthNext = '/account' }: { reauthNext?: string
     <section className={cardCls}>
       <h2 className={sectionTitleCls}>匯出我的資料</h2>
       <p className="mt-2 text-[0.95rem]">
-        下載一份 JSON 檔，包含帳號資料、同意紀錄、寫作與批改紀錄。手寫照片在辨識後就已刪除，不在其中。
+        下載一份 JSON 檔，包含帳號資料、同意紀錄、寫作與批改紀錄，以及學習助手的題目、解析與學習報告。手寫作文與題目照片在辨識後就已刪除，不在其中。
       </p>
       <p className="mt-1 text-sm text-muted">{SENSITIVE_HINT}</p>
       <button type="button" onClick={onExport} disabled={busy} className={`${btnSecondary} mt-3`}>
@@ -111,7 +111,7 @@ export function DeleteSection({ onDeleted, reauthNext = '/account' }: { onDelete
     <section className="rounded-2xl border border-bad/40 bg-surface p-4 sm:p-5 lg:p-6">
       <h2 className={sectionTitleCls}>刪除帳號</h2>
       <p className="mt-2 text-[0.95rem]">
-        刪除後，你的帳號、寫作與批改紀錄都會刪除，而且無法復原；所有裝置會立即登出，這台裝置上的寫作草稿也會清除。需要的話，請先匯出資料。
+        刪除後，你的帳號、寫作與批改紀錄、學習助手的題目與報告都會刪除，而且無法復原；所有裝置會立即登出，這台裝置上的寫作草稿也會清除。需要的話，請先匯出資料。
       </p>
       <p className="mt-1 text-sm text-muted">{SENSITIVE_HINT}</p>
       <form onSubmit={onSubmit} className="mt-3 space-y-3">

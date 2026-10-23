@@ -14,6 +14,7 @@
  *
  * 2／1／0 原則用本站自己的話說明（不轉載官方評分原則）：完全正確 2 分；選對了字，但字形變化或拼字有誤 1 分；錯誤或空白 0 分。
  */
+import { normalizeOpenAnswer, normalizeOpenAnswerCased } from '@gsat/shared';
 import type { Question } from '../../data/exams';
 import type { AnswerValue } from '../exams/scoring';
 
@@ -24,28 +25,9 @@ export function isOpenQuestion(q: Question): q is OpenQuestion {
   return q.mode === 'fill_in_blank' || q.mode === 'short_answer';
 }
 
-const CIRCLED_DIGITS: Record<string, string> = { '❶': '1', '❷': '2', '❸': '3', '❹': '4', '❺': '5', '❻': '6', '❼': '7' };
-
-/**
- * 比對用的正規化（保留大小寫）：去頭尾空白、壓縮空白、彎引號換直引號、句尾句點不計、❶–❼ 視同 1–7。
- * 全形英數字也換成半形（中文輸入法容易打成全形）。
- */
-export function normalizeOpenAnswerCased(text: string): string {
-  return text
-    .normalize('NFKC')
-    .replace(/[❶-❼]/g, (c) => CIRCLED_DIGITS[c] ?? c)
-    .replace(/[’‘`´]/g, "'")
-    .replace(/[“”]/g, '"')
-    .trim()
-    .replace(/[.。]+$/, '')
-    .replace(/\s+/g, ' ')
-    .trim();
-}
-
-/** 比對用的正規化：同 normalizeOpenAnswerCased，再不計大小寫。 */
-export function normalizeOpenAnswer(text: string): string {
-  return normalizeOpenAnswerCased(text).toLowerCase();
-}
+// 比對用的正規化（normalizeOpenAnswerCased、normalizeOpenAnswer）搬到 @gsat/shared 的 exam-scoring.ts：學習助手判定歷屆題的
+// 填充、簡答用同一支（docs/design/learning-assistant.md §4.5.3）。這裡轉匯出，原本的匯入路徑不變。
+export { normalizeOpenAnswer, normalizeOpenAnswerCased };
 
 /** 編輯距離（Levenshtein；單字很短，O(nm) 就夠）。 */
 export function editDistance(a: string, b: string): number {

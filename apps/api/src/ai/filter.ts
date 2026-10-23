@@ -14,9 +14,11 @@ import { EMAIL_RE, PHONE_RE } from '@gsat/shared';
 /**
  * f3（docs/design/custom-essay.md §4.4，安全審查 S9）：結構標籤多了 student_provided_task；中和與 tag_breakout 允許 `<` 後面
  * 有空白（`< /task>`、`<\n/task>`）。歷屆題與本站題的文字沒有這些寫法，中和不改變任何字元（快照測試證明）。
- * 版本寫進每一份批改的 judgments.meta.filter_version（S16）。
+ * f4（docs/design/learning-assistant.md §4.9）：結構標籤多了學習助手的 12 個（question、student_provided_question、
+ * site_explanation…）；既有批改的提示與 prompt_version 逐位元不變（system_sha256 快照）。
+ * 版本寫進每一份批改的 judgments.meta.filter_version（S16），也在學習助手共用快取的鍵裡（§4.7.4）。
  */
-export const FILTER_VERSION = 'f3';
+export const FILTER_VERSION = 'f4';
 
 /** 被擋下時學生看到的文案（SPEC §8.4）。 */
 export const FILTERED_PLACEHOLDER = '這段回饋暫時無法顯示，已通報管理員';
@@ -42,6 +44,19 @@ export const STRUCTURAL_TAGS = [
   'student_text',
   'essay_stats',
   'student_provided_task',
+  // 學習助手（docs/design/learning-assistant.md §4.9）：解析、追問與報告的資料區塊。
+  'question',
+  'student_provided_question',
+  'site_explanation',
+  'exam_stats',
+  'student_answer',
+  'student_patterns',
+  'analysis_digest',
+  'conversation',
+  'history_facts',
+  'case_digests',
+  'previous_report',
+  'practice_candidates',
 ] as const;
 /** `<` 與 `/`、`/` 與標籤名稱之間都可以有空白（含換行）。 */
 const TAG_RE = new RegExp(`<\\s*(\\/?)\\s*(${STRUCTURAL_TAGS.join('|')})\\b`, 'gi');
@@ -118,4 +133,21 @@ export class OutputFilter {
     if (typeof input !== 'string') return '';
     return input.length > maxLength ? input.slice(0, maxLength) : input;
   }
+}
+
+/**
+ * 考試單位的名稱（新文案一律不寫；設計文件 custom-essay.md S17、learning-assistant.md §4.10）：AI 的中文說明裡出現時換成「官方」。
+ * 自訂作文題目的輸出限制（scoring.ts）與學習助手的輸出後處理（assist/output.ts）共用。
+ */
+export const EXAM_BOARD_RE = /大學入學考試中心|大考中心|CEEC/gi;
+export const EXAM_BOARD_REPLACEMENT = '官方';
+
+/** 把考試單位的名稱換成「官方」，回傳換了幾處。 */
+export function replaceExamBoard(text: string): { text: string; replaced: number } {
+  let replaced = 0;
+  const out = text.replace(EXAM_BOARD_RE, () => {
+    replaced += 1;
+    return EXAM_BOARD_REPLACEMENT;
+  });
+  return { text: out, replaced };
 }

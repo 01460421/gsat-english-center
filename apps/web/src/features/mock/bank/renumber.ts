@@ -19,6 +19,7 @@
  * 遇到指向題組外的 [[x]]（舊題號不在這個題組裡）就丟出錯誤：建置時已經把這種題組排除（ex: 'marker'），正常不會發生。
  * 「第 n 格」的 n 不在題組裡時保留原文（只出現在解析文字裡，不影響作答與計分）。refers_to 是文字，不受影響。
  */
+import { RenumberError, replaceBlankRefs, replaceMarkers } from '@gsat/shared';
 import type { ChartSpec, ExplanationItem, PracticeGroupFile } from '../../../data/bank';
 import type { CompositionQuestion, Figure, OptionLetter, QuestionGroup, QuestionTags, TranslationQuestion } from '../../../data/exams';
 import type { BankEssayPromptFile, BankFigure, BankTranslationPromptFile } from '../../writing/bank/data';
@@ -31,12 +32,9 @@ export interface BankExamFigure extends Figure {
   svg?: string | null;
 }
 
-export class RenumberError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = 'RenumberError';
-  }
-}
+// RenumberError、replaceMarkers、replaceBlankRefs 搬到 @gsat/shared 的 bank-mock-text.ts（學習助手的 Worker 把題組換成
+// 學生卷面上的題號，docs/design/learning-assistant.md §4.5.2）；這裡轉匯出，原本的匯入路徑不變。
+export { RenumberError, replaceBlankRefs, replaceMarkers };
 
 export interface RenumberedGroup {
   group: QuestionGroup;
@@ -46,23 +44,6 @@ export interface RenumberedGroup {
   elimination: Record<string, OptionLetter[]>;
   /** 舊題號 → 新題號。 */
   numbers: ReadonlyMap<number, number>;
-}
-
-/** 把字串裡的 [[n]] 換成新題號；舊題號不在對照表裡就丟出錯誤。 */
-export function replaceMarkers(text: string, numbers: ReadonlyMap<number, number>, where = ''): string {
-  return text.replace(/\[\[(\d+)\]\]/g, (_, n: string) => {
-    const to = numbers.get(Number(n));
-    if (to === undefined) throw new RenumberError(`${where}有指向題組外的空格記號 [[${n}]]`);
-    return `[[${to}]]`;
-  });
-}
-
-/** 把字串裡的「第 n 格」換成新題號（n 可以是全形數字，換完一律寫半形）；n 不在對照表裡就保留原文。 */
-export function replaceBlankRefs(text: string, numbers: ReadonlyMap<number, number>): string {
-  return text.replace(/(第\s*)([0-9０-９]+)(\s*格)/g, (m: string, head: string, n: string, tail: string) => {
-    const to = numbers.get(Number(n.replace(/[０-９]/g, (d) => String(d.charCodeAt(0) - 0xff10))));
-    return to === undefined ? m : `${head}${to}${tail}`;
-  });
 }
 
 /** 深層走訪，對每個字串套用 fn（陣列與物件都複製一份，不改原物件）。 */

@@ -10,7 +10,7 @@
  * 否則後端一出問題前端的 CI 就跟著紅（05 文件 §3.5 第 7 點）。
  */
 import { expect, test, type Page } from '@playwright/test';
-import { APP_NAME, BOTTOM_NAV_PATHS, PAGES, documentTitle, getPage, isDevPage } from '../src/modules';
+import { APP_NAME, BOTTOM_NAV_PATHS, PAGES, documentTitle, getPage, isDevPage, isPageEnabled } from '../src/modules';
 
 const HEALTH = { ok: true, service: 'gsat-english-api', version: '0.0.0-smoke', time: '2026-10-07T00:00:00.000Z' };
 
@@ -173,7 +173,8 @@ test('手機導覽：底部導覽每一項都能點，「更多」面板列出�
   await nav.getByRole('button', { name: '更多' }).click();
   const dialog = page.getByRole('dialog', { name: '全部功能' });
   await expect(dialog).toBeVisible();
-  for (const meta of PAGES) await expect(dialog.getByRole('link', { name: meta.navLabel })).toHaveCount(1);
+  // 功能開關關著（這裡的假後端全關）：學習助手不在面板裡（docs/design/learning-assistant.md §5.1）。
+  for (const meta of PAGES) await expect(dialog.getByRole('link', { name: meta.navLabel })).toHaveCount(isPageEnabled(meta, { assistant: false }) ? 1 : 0);
   // 最後一項在矮螢幕（667px）上要捲動面板才看得到；Playwright 點擊前會自動捲入視窗，點不到代表面板沒辦法捲動。
   const last = PAGES[PAGES.length - 1];
   if (!last) throw new Error('PAGES 是空的');

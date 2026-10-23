@@ -15,7 +15,11 @@
  * 429 enforced_spend_limit_reached：不重試、立即全站暫停（今天的 ai_budget_daily.paused）並寫 ops_events。
  * 全站暫停時還沒開始的任務（沒有任何 ai_calls）直接退還（SPEC §8.3）；已經開始的讓它完成。
  *
- * ai-tasks-dlq：重試用完的訊息 → 對應操作退還點數、status='failed'、寫 ops_events(severity='error')。
+ * 學習助手的任務（assist_*；docs/design/learning-assistant.md §4.8）：讀到操作、確認還是 reserved 之後先看任務，交給
+ * src/assist/consumer.ts 的 handleAssistMessage（對象是 assist_turns／assist_reports，不走提交）。呼叫政策（callWithPolicy 等）
+ * 在 callPolicy.ts，兩邊共用；租約記住在哪一張表（LeaseHeld.table），預期外的錯誤依表別放掉。
+ *
+ * ai-tasks-dlq：重試用完的訊息 → 對應操作依任務退還點數（提交或 turn、報告改 failed）、寫 ops_events(severity='error')。
  *   逐則處理：其中一則失敗只重送那一則（不讓整批重試、用完次數後整批丟掉）；真的丟掉了由 housekeeping 6 小時後回收。
  * 每一批訊息處理完之後跑 housekeeping（清過期照片、回收卡住的預扣；src/ai/housekeeping.ts）。
  *
@@ -31,6 +35,7 @@ import {
   AI_TASKS,
   CUSTOM_PROMPT_RULES_VERSION,
   countEnglishWords,
+  isAssistTask,
   isCustomEssayGroupId,
   type AiTask,
   type EssayBody,
@@ -38,6 +43,7 @@ import {
   type RaterRole,
   type TranslationBody,
 } from '@gsat/shared';
+import { handleAssistMessage } from '../assist/consumer';
 import { loadConfig } from '../config';
 import type { AiQueueMessage, Env } from '../env';
 import { groupForSubmission } from '../submissions/custom';
@@ -45,12 +51,26 @@ import { combineGradingRows, findSubmission, loadGradingRows, parseJson, type Su
 import { blobToBytes } from '../submissions/images';
 import { nowSeconds, taiwanDay } from '../time';
 import type { WritingGroup } from './bank';
-import { buildClaudeRequest, callDeadlineMs, createAnthropicClient, executeClaudeCall, ModelNotAllowedError, type ClaudeCallInput } from './client';
+import {
+  actionForFailures,
+  callWithPolicy,
+  CONTENT_REFUND_REASONS,
+  contentRefundAlert,
+  log,
+  recordFiltered,
+  releaseLeaseStatement,
+  type Action,
+  type CallContext,
+  type CallResult,
+  type ConsumerDeps,
+  type LeaseHeld,
+  type OpRow,
+} from './callPolicy';
 import { d8Fingerprints } from './d8';
 import { FILTER_VERSION, OutputFilter, sanitizeStudentText } from './filter';
-import { refundWithSubmission, settleOp, setPausedStatement } from './guard';
+import { refundForOp, refundWithSubmission, settleOp, setPausedStatement } from './guard';
 import { runHousekeeping } from './housekeeping';
-import { opsEvent, opsEventStatement, recordCall, safetyEventStatement, userRefFor } from './ledger';
+import { opsEvent, opsEventStatement, userRefFor } from './ledger';
 import { ESSAY_RUBRIC_VERSION, type EssayAnalyticOutput, type EssayHolisticOutput } from './prompts/essay';
 import type { OcrModelOutput } from './prompts/ocr';
 import { TRANSLATION_RUBRIC_VERSION, type TranslationModelOutput } from './prompts/translation';
@@ -66,73 +86,23 @@ import {
   translationOutputProblem,
   type EssayContext,
 } from './scoring';
-import { LEASE_SECONDS, QUEUE_MAX_DELIVERIES, taskConfig, type CallRole, type TaskConfig } from './tasks';
+import { LEASE_SECONDS, QUEUE_MAX_DELIVERIES, taskConfig } from './tasks';
 
-/**
- * 一次 consumer 呼叫的牆鐘預算（Queue consumer 上限 15 分鐘，留 1 分鐘給 D1 與結算）。截斷或格式不符時，
- * 剩下的時間不夠再跑一次完整呼叫，就不在這次裡重試，改讓 Queue 重送（重送時只補這一位）。
- */
-export const CONSUMER_WALL_BUDGET_MS = 14 * 60_000;
+// 牆鐘預算與注入用的型別搬到 callPolicy.ts（學習助手共用）；這裡轉匯出，原本的匯入路徑不變。
+export { CONSUMER_WALL_BUDGET_MS } from './callPolicy';
+export type { ConsumerDeps } from './callPolicy';
 
 export const AI_TASKS_QUEUE = 'ai-tasks';
 export const AI_TASKS_DLQ = 'ai-tasks-dlq';
 
-/** 內容造成的退還（拒答、輸出格式不符、截斷）：點數退還、成本照算；自訂題比較容易誘發（S12）。 */
-const CONTENT_REFUND_REASONS = new Set(['refusal', 'invalid_output', 'max_tokens']);
-/** 自訂題內容退還的告警（設計值，§5.3；上線後依實際數字調整）：同一人 7 天內第幾次起告警。 */
-export const CUSTOM_CONTENT_REFUND_ALERT = { windowSeconds: 7 * 86_400, threshold: 3 } as const;
+// 內容造成的退還（拒答、輸出格式不符、截斷）與告警的門檻搬到 callPolicy.ts（學習助手共用）；這裡轉匯出，原本的匯入路徑不變。
+export { CONTENT_REFUND_ALERT as CUSTOM_CONTENT_REFUND_ALERT } from './callPolicy';
 
-type FetchLike = (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
-
-/** 測試注入：假的 Anthropic 回應與時間。 */
-export interface ConsumerDeps {
-  fetch?: FetchLike;
-  now?: () => number;
-}
-
-/** 這次投遞搶到的租約（預期外錯誤時由外層放掉）。 */
-interface LeaseHeld {
-  held: { submissionId: string; userId: number; opId: string } | null;
-}
-
-interface OpRow {
-  id: string;
-  user_id: number | null;
-  task: string;
-  ref_id: string | null;
-  status: 'reserved' | 'settled' | 'refunded';
-}
-
-/** 一位評分者（或 OCR）的呼叫結果。 */
-type CallResult =
-  | { ok: true }
-  | { ok: false; retryable: boolean; reason: string; spendLimit?: boolean; configProblem?: boolean };
-
-/** 一則訊息處理完要做什麼。 */
-type Action =
-  | { kind: 'done' }
-  | { kind: 'requeue' }
-  | { kind: 'retry'; reason: string }
-  | { kind: 'refund'; reason: string; spendLimit?: boolean; configProblem?: boolean };
-
-interface Ctx {
-  env: Env;
-  db: D1Database;
-  deps: ConsumerDeps;
-  now: () => number;
-  op: OpRow & { user_id: number; task: AiTask };
-  /** 這次投遞開始處理的時間（毫秒）。 */
-  startedAt: number;
+/** 寫作批改的處理脈絡：共用的呼叫脈絡＋提交與題組。 */
+type Ctx = CallContext & {
   sub: SubmissionRow;
   group: WritingGroup;
-  tc: TaskConfig;
-  userRef: string | null;
-  callInput: (role: CallRole) => ClaudeCallInput;
-}
-
-function log(event: string, fields: Record<string, unknown>): void {
-  console.log(JSON.stringify({ event, ...fields }));
-}
+};
 
 export function createQueueHandler(deps: ConsumerDeps = {}) {
   async function processBatch(batch: MessageBatch<AiQueueMessage>, env: Env): Promise<void> {
@@ -154,12 +124,10 @@ export function createQueueHandler(deps: ConsumerDeps = {}) {
         await handleMessage(env, msg, deps, lease);
       } catch (err) {
         // 預期外的錯誤（例如 D1 暫時失敗）：讓 Queue 重送；用完次數後進死信佇列，由 DLQ 退還。
-        // 這次搶到的租約先放掉，重送時才不會被自己的租約擋住、白白用掉投遞次數。
+        // 這次搶到的租約先放掉（依表別：提交、學習助手的 turn 或報告），重送時才不會被自己的租約擋住、白白用掉投遞次數。
         console.error('AI 任務處理失敗（預期外）', msg.body?.op_id, err);
         if (lease.held) {
-          const h = lease.held;
-          await env.DB.prepare('UPDATE submissions SET lease_until = NULL WHERE id = ?1 AND user_id = ?2 AND op_id = ?3')
-            .bind(h.submissionId, h.userId, h.opId)
+          await releaseLeaseStatement(env.DB, lease.held)
             .run()
             .catch(() => undefined);
         }
@@ -189,7 +157,8 @@ async function handleDeadLetter(env: Env, msg: Message<AiQueueMessage>, deps: Co
   if (typeof opId === 'string') {
     const op = await loadOp(env.DB, opId);
     if (op && op.status === 'reserved') {
-      const refunded = await refundWithSubmission(env.DB, op, 'api_error', now());
+      // 依任務退還：學習助手的 turn、報告改 failed；其他照舊改提交（guard.ts 的 refundForOp）。
+      const refunded = await refundForOp(env.DB, op, 'api_error', now());
       if (refunded) {
         await opsEvent(env.DB, 'ai_dlq', 'error', { op_id: op.id, task: op.task, attempts: msg.attempts });
         log('ai_dlq_refund', { op_id: op.id, task: op.task });
@@ -214,6 +183,8 @@ async function handleMessage(env: Env, msg: Message<AiQueueMessage>, deps: Consu
     msg.ack();
     return;
   }
+  // 學習助手的任務：對象是 assist_turns／assist_reports，不找提交（docs/design/learning-assistant.md §4.8）。
+  if (isAssistTask(op.task)) return handleAssistMessage(env, msg, deps, lease, op);
   const config = loadConfig(env);
   /** 讀到提交之後才知道是不是自訂題（內容退還的告警只算自訂題）。 */
   let customEssay = false;
@@ -263,7 +234,7 @@ async function handleMessage(env: Env, msg: Message<AiQueueMessage>, deps: Consu
     msg.retry({ delaySeconds: wait });
     return;
   }
-  lease.held = { submissionId: sub.id, userId: sub.user_id, opId: op.id };
+  lease.held = { table: 'submissions', id: sub.id, userId: sub.user_id, opId: op.id };
 
   // 全站暫停：還沒開始（沒有任何 ai_calls）的任務直接退還。
   const started = await db.prepare('SELECT COUNT(*) AS n FROM ai_calls WHERE op_id = ?1').bind(op.id).first<{ n: number }>();
@@ -337,85 +308,6 @@ async function handleMessage(env: Env, msg: Message<AiQueueMessage>, deps: Consu
       }
       return fail(action.reason);
   }
-}
-
-/**
- * 呼叫一位評分者（或 OCR）：stop_reason='max_tokens' 與輸出格式不符各重試一次（§6.2 第 4 條、SPEC §8.3）；
- * 每一次呼叫都寫 ai_calls。成功時交給 onSuccess 處理（計分、寫 gradings）；onSuccess 回傳字串＝語意檢查不通過。
- */
-async function callWithPolicy(ctx: Ctx, input: ClaudeCallInput, onSuccess: (data: unknown, callId: number | null, model: string, promptVersion: string) => Promise<string | null>): Promise<CallResult> {
-  let built;
-  try {
-    built = await buildClaudeRequest(input);
-  } catch (err) {
-    if (err instanceof ModelNotAllowedError) return { ok: false, retryable: false, reason: 'internal', configProblem: true };
-    throw err;
-  }
-  const config = loadConfig(ctx.env);
-  const client = createAnthropicClient({ apiKey: config.ai.apiKey ?? '', baseURL: config.ai.baseUrl, ...(ctx.deps.fetch ? { fetchImpl: ctx.deps.fetch } : {}) });
-  const day = taiwanDay(ctx.now());
-  /** 同一次呼叫裡還來得及再跑一次完整呼叫嗎（否則交給 Queue 重送）。 */
-  const canRetryHere = () => ctx.now() - ctx.startedAt + callDeadlineMs(input) <= CONSUMER_WALL_BUDGET_MS;
-  for (let attempt = 0; attempt < 2; attempt++) {
-    const outcome = await executeClaudeCall(client, input, built, ctx.now);
-    const callId = await recordCall(ctx.db, ctx.op.id, outcome.record, ctx.userRef, day);
-    log('ai_call', {
-      op_id: ctx.op.id,
-      task: ctx.op.task,
-      role: input.spec.role,
-      outcome: outcome.kind,
-      stop_reason: outcome.record.stopReason,
-      cost_micros: outcome.record.costMicros,
-      latency_ms: outcome.record.latencyMs,
-    });
-    if (outcome.record.pricePending) {
-      await opsEvent(ctx.db, 'price_pending', 'warn', { op_id: ctx.op.id, served_model: outcome.record.servedModel });
-    }
-    switch (outcome.kind) {
-      case 'ok': {
-        const problem = await onSuccess(outcome.data, callId, outcome.record.servedModel ?? input.spec.model, built.promptVersion);
-        if (problem === null) return { ok: true };
-        log('ai_invalid_output', { op_id: ctx.op.id, role: input.spec.role, attempt });
-        if (attempt === 0) {
-          if (canRetryHere()) continue;
-          return { ok: false, retryable: true, reason: 'invalid_output' };
-        }
-        return { ok: false, retryable: false, reason: 'invalid_output' };
-      }
-      case 'invalid':
-        log('ai_invalid_output', { op_id: ctx.op.id, role: input.spec.role, attempt });
-        if (attempt === 0) {
-          if (canRetryHere()) continue;
-          return { ok: false, retryable: true, reason: 'invalid_output' };
-        }
-        return { ok: false, retryable: false, reason: 'invalid_output' };
-      case 'max_tokens':
-        if (attempt === 0) {
-          if (canRetryHere()) continue;
-          return { ok: false, retryable: true, reason: 'max_tokens' };
-        }
-        return { ok: false, retryable: false, reason: 'max_tokens' };
-      case 'refusal':
-        await safetyEventStatement(ctx.db, ctx.op.id, 'refusal', outcome.category, ctx.userRef).run();
-        return { ok: false, retryable: false, reason: 'refusal' };
-      case 'error':
-        return { ok: false, retryable: outcome.retryable, reason: outcome.reason, spendLimit: outcome.spendLimit, configProblem: outcome.configProblem };
-    }
-  }
-  return { ok: false, retryable: false, reason: 'internal' };
-}
-
-/** 失敗結果 → 處理動作（不可重試優先：任何一位不可重試就退還）。 */
-function actionForFailures(failures: Array<Extract<CallResult, { ok: false }>>): Action {
-  const fatal = failures.find((f) => !f.retryable);
-  if (fatal) return { kind: 'refund', reason: fatal.reason, ...(fatal.spendLimit ? { spendLimit: true } : {}), ...(fatal.configProblem ? { configProblem: true } : {}) };
-  return { kind: 'retry', reason: failures[0]?.reason ?? 'api_error' };
-}
-
-/** 輸出過濾擋下的類別寫進安全事件。 */
-async function recordFiltered(ctx: Ctx, filter: OutputFilter): Promise<void> {
-  if (filter.blockedCategories.size === 0) return;
-  await ctx.db.batch([...filter.blockedCategories].map((c) => safetyEventStatement(ctx.db, ctx.op.id, 'output_filtered', c, ctx.userRef)));
 }
 
 async function writeGrading(
@@ -626,34 +518,7 @@ export const CUSTOM_CONTENT_REFUND_MARK = 'custom_essay_content_refund';
  * ops_events 與 ai_ops 都不會隨提交刪除。
  */
 async function customContentRefundAlert(db: D1Database, op: OpRow, salt: string | null, nowMs: number): Promise<void> {
-  if (op.user_id === null) return;
-  try {
-    const now = nowSeconds(nowMs);
-    await db
-      .prepare(`INSERT INTO ops_events (kind, severity, detail_json, created_at, acked_at) VALUES (?1, 'info', ?2, ?3, ?3)`)
-      .bind(CUSTOM_CONTENT_REFUND_MARK, JSON.stringify({ op_id: op.id }), now)
-      .run();
-    const row = await db
-      .prepare(
-        `SELECT COUNT(DISTINCT o.id) AS n FROM ops_events e JOIN ai_ops o ON o.id = json_extract(e.detail_json, '$.op_id')
-          WHERE e.kind = ?3 AND e.created_at > ?2 AND o.user_id = ?1 AND o.status = 'refunded'
-            AND o.refund_reason IN ('refusal', 'invalid_output', 'max_tokens')`,
-      )
-      .bind(op.user_id, now - CUSTOM_CONTENT_REFUND_ALERT.windowSeconds, CUSTOM_CONTENT_REFUND_MARK)
-      .first<{ n: number }>();
-    const count = row?.n ?? 0;
-    if (count < CUSTOM_CONTENT_REFUND_ALERT.threshold) return;
-    const ref = await userRefFor(salt, op.user_id);
-    const seen = ref
-      ? await db
-          .prepare(`SELECT 1 AS x FROM ops_events WHERE kind = 'custom_essay_content_refunds' AND created_at > ?1 AND json_extract(detail_json, '$.user_ref') = ?2 LIMIT 1`)
-          .bind(now - 86_400, ref)
-          .first<{ x: number }>()
-      : null;
-    if (!seen) await opsEvent(db, 'custom_essay_content_refunds', 'warn', { user_ref: ref, count });
-  } catch (err) {
-    console.error('自訂題內容退還的告警失敗（不影響退還）', op.id, err);
-  }
+  await contentRefundAlert(db, op, salt, nowMs, { mark: CUSTOM_CONTENT_REFUND_MARK, alertKind: 'custom_essay_content_refunds', label: '自訂題' });
 }
 
 // ───────────────────────── OCR ─────────────────────────

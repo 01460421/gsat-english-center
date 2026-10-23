@@ -2,7 +2,9 @@
  * 閱讀的答案位置調整（設計文件 §5.3、§10.1）：交換時一起改的欄位、正確選項的文字不變、確定性、
  * 不是 ABCD 排列或 sw 是空的篇章不動，以及寫死結果的黃金測試（規則一改就失敗，要換成 bk2）。
  */
+import { swapAnswerLetters, type PracticeGroupFileCore } from '@gsat/shared';
 import { describe, expect, it } from 'vitest';
+import type { PracticeGroupFile } from '../../../data/bank';
 import type { ChoiceQuestion, OptionLetter } from '../../../data/exams';
 import { adjustReadingLetters, applyLetterSwap, isAbcdPermutation, letterSwapFor } from './letters';
 import { fakeGroupFile } from './testFixtures';
@@ -102,4 +104,46 @@ describe('黃金測試（bk1 的規則；改了就要換成 bk2）', () => {
       expect(answers(r.file)).toBe(c.answers);
     });
   }
+});
+
+describe('@gsat/shared 的 swapAnswerLetters（學習助手的 Worker 用；docs/design/learning-assistant.md §4.5.2）和 applyLetterSwap 是同一個規則', () => {
+  // 各種答案排列的閱讀題組 × 全部 12 個 (q, r)：能交換的組合，兩邊換出來的題目與解析逐欄相同；不能交換的兩邊都原樣。
+  const answerSets: OptionLetter[][] = [
+    ['B', 'C', 'A', 'D'],
+    ['A', 'B', 'C', 'D'],
+    ['D', 'C', 'B', 'A'],
+    ['A', 'A', 'B', 'C'],
+  ];
+  it('每一組 (q, r)：題目（選項、答案、accepted_answers）與解析的 option_notes_zh、option_codes、option_evidence 相同', () => {
+    let swapped = 0;
+    for (const answers of answerSets) {
+      const file = fakeGroupFile('reading', 'ai.rd.0c1d2e', 1, { answers });
+      for (const [qNo, rNo] of ALL_PAIRS) {
+        const viaWeb = applyLetterSwap(file, [qNo, rNo]);
+        const q = question(file, qNo);
+        const r = question(file, rNo);
+        const viaShared = swapAnswerLetters(q, file.annotations.explanations.items[String(qNo)], q.answer, r.answer);
+        expect(viaShared.question).toEqual(question(viaWeb, qNo));
+        expect(viaShared.explanation).toEqual(viaWeb.annotations.explanations.items[String(qNo)]);
+        if (viaWeb !== file) swapped += 1;
+      }
+    }
+    // 確認真的比對到有交換的情況（不是全部原樣回傳）。
+    expect(swapped).toBeGreaterThan(20);
+  });
+
+  it('accepted_answers 裡的字母也照換', () => {
+    const file = fakeGroupFile('reading', 'ai.rd.0c1d2e');
+    const q: ChoiceQuestion = { ...question(file, 3), accepted_answers: ['A', 'B'] };
+    const out = swapAnswerLetters(q, undefined, 'A', 'C');
+    expect(out.question.answer).toBe('C');
+    expect(out.question.accepted_answers).toEqual(['C', 'B']);
+    expect(out.explanation).toBeUndefined();
+  });
+
+  it('web 的完整 PracticeGroupFile 可以指派給 Worker 用的 PracticeGroupFileCore（型別檢查）', () => {
+    const file: PracticeGroupFile = fakeGroupFile('reading', 'ai.rd.0c1d2e');
+    const core: PracticeGroupFileCore = file;
+    expect(core.group.questions).toHaveLength(4);
+  });
 });

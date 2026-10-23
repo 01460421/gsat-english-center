@@ -11,6 +11,7 @@ import {
   House,
   Info,
   Languages,
+  MessageCircleQuestionMark,
   Newspaper,
   NotebookPen,
   PenLine,
@@ -39,6 +40,7 @@ const ICONS: Record<IconKey, LucideIcon> = {
   writing: PenLine,
   exams: Archive,
   mock: Timer,
+  assistant: MessageCircleQuestionMark,
   settings: Settings,
   about: Info,
 };

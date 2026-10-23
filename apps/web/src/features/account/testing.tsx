@@ -14,7 +14,7 @@ export const FEATURES_ON: FeaturesResponse = { auth: true, ai: true, ocr: true, 
 export const FEATURES_AUTH_ONLY: FeaturesResponse = { auth: true, ai: false, ocr: false, aiPaused: false };
 export const FEATURES_OFF_RESPONSE: FeaturesResponse = { auth: false, ai: false, ocr: false, aiPaused: false };
 
-export const VERSIONS = { privacy: '2026-10-18', terms: '2026-10-08', ai: '2026-10-08' };
+export const VERSIONS = { privacy: '2026-10-23', terms: '2026-10-23', ai: '2026-10-23' };
 
 export function signedInMe(
   overrides: Partial<Omit<MeResponseSignedIn, 'user'>> & { user?: Partial<PublicUser> } = {},

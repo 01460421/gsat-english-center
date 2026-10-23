@@ -31,7 +31,8 @@ import {
   useViewportNarrowerThan,
   type SidebarState,
 } from '../lib/media';
-import { APP_NAME, BOTTOM_NAV_PATHS, NAV_GROUPS, PAGES, type PageMeta } from '../modules';
+import { usePageFeatureFlags } from '../features/assistant/lib/useAssistantEnabled';
+import { APP_NAME, BOTTOM_NAV_PATHS, NAV_GROUPS, PAGES, isPageEnabled, type PageMeta } from '../modules';
 import { OpenShortcutHelpContext } from './desktop/shortcutHelpContext';
 import { Tooltip, useTooltipTarget } from './desktop/Tooltip';
 import { PageIcon } from './icons';
@@ -93,6 +94,8 @@ function SidebarList({ collapsed, activePath, onScroll }: { collapsed: boolean; 
   const endRef = useRef<HTMLDivElement>(null);
   const [overflow, setOverflow] = useState(false);
   const isDesktop = useIsDesktop();
+  // 由功能開關控制的頁面（學習助手）：開關關著時不出現（docs/design/learning-assistant.md §5.1）。
+  const flags = usePageFeatureFlags();
 
   useLayoutEffect(() => {
     const list = listRef.current;
@@ -137,7 +140,7 @@ function SidebarList({ collapsed, activePath, onScroll }: { collapsed: boolean; 
       className="min-h-0 flex-1 overflow-y-auto px-1.5 py-1 lg:data-overflow:[mask-image:linear-gradient(to_bottom,black_calc(100%-2rem),transparent)]"
     >
       {NAV_GROUPS.filter((group) => group.id !== 'system').map((group) => {
-        const pages = PAGES.filter((p) => p.group === group.id);
+        const pages = PAGES.filter((p) => p.group === group.id && isPageEnabled(p, flags));
         return (
           <div key={group.id}>
             {group.label &&
@@ -397,6 +400,7 @@ function BottomNav({
 function MoreMenu({ onDismiss, onNavigate }: { onDismiss: () => void; onNavigate: () => void }) {
   const titleId = useId();
   const closeRef = useRef<HTMLButtonElement>(null);
+  const flags = usePageFeatureFlags();
 
   useEffect(() => {
     // 開啟時把焦點移進面板，讀螢幕軟體才會從面板開始唸；背景不能捲動，避免手指滑動時底下的頁面跟著動。
@@ -437,7 +441,7 @@ function MoreMenu({ onDismiss, onNavigate }: { onDismiss: () => void; onNavigate
           </button>
         </div>
         {NAV_GROUPS.map((group) => {
-          const pages = PAGES.filter((p) => p.group === group.id);
+          const pages = PAGES.filter((p) => p.group === group.id && isPageEnabled(p, flags));
           return (
             <section key={group.id} className="mt-3">
               {group.label && <h3 className="pb-1 text-xs font-semibold tracking-wide text-muted">{group.label}</h3>}

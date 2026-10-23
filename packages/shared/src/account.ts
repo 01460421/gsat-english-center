@@ -132,6 +132,12 @@ export interface MeResponseSignedIn {
    * 後端一定會帶；宣告成選填只是為了讓舊的測試假資料不必改。
    */
   pending_ai_consents?: ConsentKind[];
+  /**
+   * 學習助手的管理員預覽（docs/design/learning-assistant.md §4.14）：AI_ASSISTANT 是 admin（或拍照開關是 admin）、
+   * 使用者是管理員、AI 已設定時才有；photo 是拍照問題目對這位管理員開不開。其他人、其他模式都沒有這個欄位
+   * （開關是 on 時看公開的 /api/features）。前端的開關判斷：features.assistant === true || me.assistant_preview != null。
+   */
+  assistant_preview?: { photo: boolean };
 }
 
 export type MeResponse = MeResponseAnonymous | MeResponseSignedIn;
@@ -187,6 +193,12 @@ export interface MeExport {
    * 其他題目是 null（docs/design/custom-essay.md §3.6；格式 gsat-export/v1 只加欄位、不改既有欄位）。
    */
   submissions: unknown[];
+  /**
+   * 學習助手（docs/design/learning-assistant.md §4.17）：cases 是每個案例的題目、疑問、筆記、全部解析與追問
+   * （*_json 已解析成物件；turns 依 seq 排序）；reports 是每一版報告（facts、逐週計畫與內容）。照片不匯出；
+   * 內部欄位（租約、重試次數、op_id、快取鍵、注入旗標）不匯出。舊版 Worker 沒有這個欄位。
+   */
+  assist?: { cases: unknown[]; reports: unknown[] };
 }
 
 /**
@@ -352,6 +364,13 @@ export function isMeResponse(value: unknown): value is MeResponse {
     (USER_ROLES as readonly unknown[]).includes(user['role']) &&
     (AI_STATUSES as readonly unknown[]).includes(user['ai_status']) &&
     Array.isArray(v['pending_consents']) &&
-    typeof v['onboarded'] === 'boolean'
+    typeof v['onboarded'] === 'boolean' &&
+    isAssistantPreview(v['assistant_preview'])
   );
+}
+
+/** assistant_preview 選填；有的話必須是 { photo: boolean }（形狀不對就當成整個回應不可信，不顯示預覽入口）。 */
+function isAssistantPreview(value: unknown): boolean {
+  if (value === undefined) return true;
+  return typeof value === 'object' && value !== null && typeof (value as Record<string, unknown>)['photo'] === 'boolean';
 }

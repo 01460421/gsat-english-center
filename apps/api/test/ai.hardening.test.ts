@@ -5,10 +5,22 @@
  */
 import { describe, expect, it } from 'vitest';
 import { app } from '../src/app';
+import { ASSIST_TASKS } from '@gsat/shared';
+import { releaseLeaseStatement } from '../src/ai/callPolicy';
 import { CONSUMER_WALL_BUDGET_MS, createQueueHandler } from '../src/ai/consumer';
-import { AI_REFUNDS_PER_DAY, refundWithSubmission } from '../src/ai/guard';
-import { purgeExpiredPhotos, reclaimStaleOps, STALE_RESERVE_HARD_SECONDS, STALE_RESERVE_SECONDS } from '../src/ai/housekeeping';
+import { AI_REFUNDS_PER_DAY, refundForOp, refundWithSubmission } from '../src/ai/guard';
+import {
+  purgeExpiredAssist,
+  purgeExpiredPhotos,
+  reclaimStaleOps,
+  STALE_ASSIST_OPS_SQL,
+  STALE_OPS_SQL,
+  STALE_RESERVE_HARD_SECONDS,
+  STALE_RESERVE_SECONDS,
+} from '../src/ai/housekeeping';
+import { refundWithAssistRef } from '../src/assist/refund';
 import { LEASE_SECONDS } from '../src/ai/tasks';
+import { nowS, seedAssistCase, seedAssistOp, seedAssistPhoto, seedAssistReport, seedAssistTurn } from './helpers/assist';
 import { errorResponse, FakeAnthropic, frameworkOf, type Responder } from './helpers/anthropic';
 import {
   ESSAY_GROUP,
@@ -576,5 +588,248 @@ describe('發現 12：被排除的評分者的說明不會配上另一組分數'
     expect(detail.body.grading.explanations_from_excluded_rater).toBe(true);
     expect(detail.body.grading.criteria.content.explanation_zh).toBe('');
     expect(detail.body.grading.top_improvements).toEqual([]);
+  });
+});
+
+describe('學習助手的租約、回收與退還（docs/design/learning-assistant.md §4.8）', () => {
+  const MIN31 = 31 * 60;
+
+  /** 一個「進行中」的學習助手操作：案例 analyzing、turn running（有效租約、處理過一次）、31 分鐘前預扣。 */
+  function runningAnalyze(env: TestEnv, user: User, opts: { lease?: number | null; tries?: number; age?: number; status?: 'queued' | 'running' } = {}) {
+    const caseId = seedAssistCase(env.DB, user.id, { status: 'analyzing', analyses: 0 });
+    const turnId = crypto.randomUUID();
+    const opId = seedAssistOp(env.DB, user.id, 'assist_analyze', turnId, { createdAt: nowS() - (opts.age ?? MIN31) });
+    seedAssistTurn(env.DB, user.id, caseId, {
+      id: turnId,
+      status: opts.status ?? 'running',
+      opId,
+      leaseUntil: opts.lease === undefined ? nowS() + 600 : opts.lease,
+      tries: opts.tries ?? 1,
+    });
+    return { caseId, turnId, opId };
+  }
+
+  it('回歸：處理中（有效租約）的學習助手解析在 31 分鐘時不會被回收；舊的 STALE_OPS_SQL 沒有排除時會被誤認', async () => {
+    const env = makeEnv();
+    const user = seedUser(env.DB);
+    const { turnId, opId } = runningAnalyze(env, user);
+    expect(await quiet(() => reclaimStaleOps(env.DB, Date.now()))).toBe(0);
+    expect(row(env, 'SELECT status FROM ai_ops WHERE id = ?', opId).status).toBe('reserved');
+    expect(row(env, 'SELECT status, lease_until FROM assist_turns WHERE id = ?', turnId).status).toBe('running');
+    // 兩條查詢各自確認：提交版本排除了學習助手的任務（沒有排除時它找不到提交、會被當成卡住）；學習助手版本看得到有效租約。
+    const now = nowS();
+    const args = (tasks: string) => [now - STALE_RESERVE_SECONDS, now - STALE_RESERVE_HARD_SECONDS, now, 20, tasks] as const;
+    expect(env.DB.sqlite.prepare(STALE_OPS_SQL).all(...args('[]')).map((r) => (r as { id: string }).id)).toEqual([opId]);
+    expect(env.DB.sqlite.prepare(STALE_OPS_SQL).all(...args(JSON.stringify(ASSIST_TASKS)))).toEqual([]);
+    expect(env.DB.sqlite.prepare(STALE_ASSIST_OPS_SQL).all(...args(JSON.stringify(ASSIST_TASKS)))).toEqual([]);
+  });
+
+  it('回歸：處理中的報告（有效租約）在 31 分鐘時不會被回收', async () => {
+    const env = makeEnv();
+    const user = seedUser(env.DB);
+    const reportId = crypto.randomUUID();
+    const opId = seedAssistOp(env.DB, user.id, 'assist_report', reportId, { createdAt: nowS() - MIN31, points: 10 });
+    seedAssistReport(env.DB, user.id, { id: reportId, status: 'running', opId, leaseUntil: nowS() + 600, tries: 1 });
+    expect(await quiet(() => reclaimStaleOps(env.DB, Date.now()))).toBe(0);
+    expect(row(env, 'SELECT status FROM ai_ops WHERE id = ?', opId).status).toBe('reserved');
+    expect(row(env, 'SELECT status FROM assist_reports WHERE id = ?', reportId).status).toBe('running');
+  });
+
+  it('沒有 turn 的預扣（寫 turn 前 isolate 被終止）30 分鐘後被回收；29 分鐘時還不會', async () => {
+    const env = makeEnv();
+    const user = seedUser(env.DB);
+    const young = seedAssistOp(env.DB, user.id, 'assist_analyze', crypto.randomUUID(), { createdAt: nowS() - 29 * 60 });
+    const old = seedAssistOp(env.DB, user.id, 'assist_followup', crypto.randomUUID(), { createdAt: nowS() - MIN31 });
+    expect(await quiet(() => reclaimStaleOps(env.DB, Date.now()))).toBe(1);
+    expect(row(env, 'SELECT status FROM ai_ops WHERE id = ?', young).status).toBe('reserved');
+    expect(row(env, 'SELECT status, refund_reason, points_charged FROM ai_ops WHERE id = ?', old)).toEqual({ status: 'refunded', refund_reason: 'expired', points_charged: 0 });
+    expect(row(env, "SELECT COUNT(*) AS n FROM ops_events WHERE kind = 'ai_reserve_reclaimed'").n).toBe(1);
+  });
+
+  it('排隊太久（沒處理過、沒有租約）的解析 30 分鐘後被回收：turn failed、沒有成功過的案例 failed；處理過但租約到期的要 6 小時', async () => {
+    const env = makeEnv();
+    const user = seedUser(env.DB);
+    const never = runningAnalyze(env, user, { status: 'queued', lease: null, tries: 0 });
+    const retried = runningAnalyze(env, user, { lease: nowS() - 10, tries: 1 });
+    expect(await quiet(() => reclaimStaleOps(env.DB, Date.now()))).toBe(1);
+    expect(row(env, 'SELECT status, refund_reason FROM ai_ops WHERE id = ?', never.opId)).toEqual({ status: 'refunded', refund_reason: 'expired' });
+    expect(row(env, 'SELECT status, failure, lease_until FROM assist_turns WHERE id = ?', never.turnId)).toEqual({ status: 'failed', failure: 'expired', lease_until: null });
+    expect(row(env, 'SELECT status FROM assist_cases WHERE id = ?', never.caseId).status).toBe('failed');
+    expect(row(env, 'SELECT status FROM ai_ops WHERE id = ?', retried.opId).status).toBe('reserved');
+    env.DB.sqlite.prepare('UPDATE ai_ops SET created_at = ? WHERE id = ?').run(nowS() - STALE_RESERVE_HARD_SECONDS - 60, retried.opId);
+    expect(await quiet(() => reclaimStaleOps(env.DB, Date.now()))).toBe(1);
+    expect(row(env, 'SELECT status FROM assist_turns WHERE id = ?', retried.turnId).status).toBe('failed');
+  });
+
+  it('turn 指向別的操作、或已經不在進行中：回收（不讓預扣卡住）', async () => {
+    const env = makeEnv();
+    const user = seedUser(env.DB);
+    const caseId = seedAssistCase(env.DB, user.id);
+    const turnId = crypto.randomUUID();
+    const opId = seedAssistOp(env.DB, user.id, 'assist_analyze', turnId, { createdAt: nowS() - MIN31 });
+    seedAssistTurn(env.DB, user.id, caseId, { id: turnId, status: 'done', opId });
+    expect(await quiet(() => reclaimStaleOps(env.DB, Date.now()))).toBe(1);
+    expect(row(env, 'SELECT status FROM ai_ops WHERE id = ?', opId).status).toBe('refunded');
+    // 已完成的 turn 不被改成 failed（只改還在進行中的）。
+    expect(row(env, 'SELECT status FROM assist_turns WHERE id = ?', turnId).status).toBe('done');
+  });
+
+  it('FINISH_UNLEASED_SQL：turn 或報告有有效租約時，回收的退還不成立（提交的操作不受影響）', async () => {
+    const env = makeEnv();
+    const user = seedUser(env.DB);
+    const { turnId, opId } = runningAnalyze(env, user);
+    const op = { id: opId, user_id: user.id, task: 'assist_analyze', ref_id: turnId };
+    expect(await refundForOp(env.DB, op, 'expired', Date.now(), { onlyIfUnleased: true })).toBe(false);
+    expect(row(env, 'SELECT status FROM ai_ops WHERE id = ?', opId).status).toBe('reserved');
+    env.DB.sqlite.prepare('UPDATE assist_turns SET lease_until = ? WHERE id = ?').run(nowS() - 1, turnId);
+    expect(await refundForOp(env.DB, op, 'expired', Date.now(), { onlyIfUnleased: true })).toBe(true);
+    // 寫作批改的操作照舊（找不到 turn 或報告，NOT EXISTS 成立）。
+    const { id, opId: subOp } = await queueTranslation(env, user);
+    expect(await refundWithSubmission(env.DB, { id: subOp, user_id: user.id, task: 'translation_grade', ref_id: id }, 'expired', Date.now(), { onlyIfUnleased: true })).toBe(true);
+  });
+
+  it('死信佇列依任務退還：學習助手的 turn 改 failed、不碰提交；寫作批改照舊', async () => {
+    const env = makeEnv();
+    const user = seedUser(env.DB);
+    const assist = runningAnalyze(env, user, { lease: null, age: 60 });
+    const writing = await queueTranslation(env, user);
+    const ma = makeMessage({ op_id: assist.opId }, 4);
+    const mw = makeMessage({ op_id: writing.opId }, 4);
+    const fake = newFake(() => () => errorResponse(500, 'api_error', 'x'));
+    await quiet(() => createQueueHandler({ fetch: fake.fetch })(batchOf('ai-tasks-dlq', [ma, mw]), env, noopCtx));
+    expect(ma.acked && mw.acked).toBe(true);
+    expect(row(env, 'SELECT status, refund_reason FROM ai_ops WHERE id = ?', assist.opId)).toEqual({ status: 'refunded', refund_reason: 'api_error' });
+    expect(row(env, 'SELECT status, failure FROM assist_turns WHERE id = ?', assist.turnId)).toEqual({ status: 'failed', failure: 'api_error' });
+    expect(row(env, 'SELECT status FROM assist_cases WHERE id = ?', assist.caseId).status).toBe('failed');
+    expect(row(env, 'SELECT status FROM submissions WHERE id = ?', writing.id).status).toBe('failed');
+    expect(fake.requests).toHaveLength(0);
+  });
+
+  it('consumer 分流：學習助手的任務不找提交；題目資料不完整（這裡的案例只有一段選文）時不呼叫 Claude，以 internal 退還並放掉租約', async () => {
+    const env = makeEnv();
+    const user = seedUser(env.DB);
+    const { turnId, opId, caseId } = runningAnalyze(env, user, { status: 'queued', lease: null, tries: 0, age: 5 });
+    const fake = newFake(() => () => {
+      throw new Error('不應呼叫 Claude');
+    });
+    const msg = await run(env, fake, opId);
+    expect(msg.acked).toBe(true);
+    expect(fake.requests).toHaveLength(0);
+    expect(row(env, 'SELECT status, refund_reason FROM ai_ops WHERE id = ?', opId)).toEqual({ status: 'refunded', refund_reason: 'internal' });
+    expect(row(env, 'SELECT status, failure, lease_until, tries FROM assist_turns WHERE id = ?', turnId)).toEqual({ status: 'failed', failure: 'internal', lease_until: null, tries: 1 });
+    expect(row(env, 'SELECT status FROM assist_cases WHERE id = ?', caseId).status).toBe('failed');
+    // 讀不到 turn（帳號刪除的 CASCADE）：一樣退還 internal、ack。
+    const orphan = seedAssistOp(env.DB, user.id, 'assist_report', crypto.randomUUID(), { createdAt: nowS() - 5 });
+    const m2 = await run(env, fake, orphan);
+    expect(m2.acked).toBe(true);
+    expect(row(env, 'SELECT status, refund_reason FROM ai_ops WHERE id = ?', orphan)).toEqual({ status: 'refunded', refund_reason: 'internal' });
+  });
+
+  it('LeaseHeld 依表別放掉租約：搶到 turn 的租約後 D1 丟錯 → 外層放掉 assist_turns 的租約，下一次投遞立刻處理（不被自己的 15 分鐘租約擋住）', async () => {
+    const env = makeEnv();
+    const user = seedUser(env.DB);
+    const { turnId, opId } = runningAnalyze(env, user, { status: 'queued', lease: null, tries: 0, age: 5 });
+    const original = env.DB.batch.bind(env.DB);
+    let failOnce = true;
+    env.DB.batch = (async (statements: Array<{ sql: string }>) => {
+      if (failOnce && statements.some((st) => st.sql.includes("UPDATE assist_turns SET status = 'failed'"))) {
+        failOnce = false;
+        throw new Error('D1_ERROR: Network connection lost');
+      }
+      return original(statements as never);
+    }) as unknown as typeof env.DB.batch;
+    const fake = newFake(() => () => {
+      throw new Error('不應呼叫 Claude');
+    });
+    const first = await run(env, fake, opId);
+    expect(first.acked).toBe(false);
+    expect(first.retried).toEqual({ delaySeconds: 30 });
+    expect(row(env, 'SELECT status, lease_until, tries FROM assist_turns WHERE id = ?', turnId)).toEqual({ status: 'running', lease_until: null, tries: 1 });
+    expect(row(env, 'SELECT status FROM ai_ops WHERE id = ?', opId).status).toBe('reserved');
+    const second = await run(env, fake, opId, 2);
+    env.DB.batch = original;
+    expect(second.acked).toBe(true);
+    expect(row(env, 'SELECT status, tries FROM assist_turns WHERE id = ?', turnId)).toEqual({ status: 'failed', tries: 2 });
+    expect(row(env, 'SELECT status FROM ai_ops WHERE id = ?', opId).status).toBe('refunded');
+  });
+
+  it('releaseLeaseStatement：三張表各一句固定的 SQL，只放掉還指向這個操作的那一列', async () => {
+    const env = makeEnv();
+    const user = seedUser(env.DB);
+    const { turnId, opId } = runningAnalyze(env, user);
+    const reportId = crypto.randomUUID();
+    seedAssistReport(env.DB, user.id, { id: reportId, status: 'running', opId: 'op-report', leaseUntil: nowS() + 600 });
+    await releaseLeaseStatement(env.DB, { table: 'assist_turns', id: turnId, userId: user.id, opId: 'other-op' }).run();
+    expect(row(env, 'SELECT lease_until FROM assist_turns WHERE id = ?', turnId).lease_until).not.toBeNull();
+    await releaseLeaseStatement(env.DB, { table: 'assist_turns', id: turnId, userId: user.id, opId }).run();
+    expect(row(env, 'SELECT lease_until FROM assist_turns WHERE id = ?', turnId).lease_until).toBeNull();
+    await releaseLeaseStatement(env.DB, { table: 'assist_reports', id: reportId, userId: user.id, opId: 'op-report' }).run();
+    expect(row(env, 'SELECT lease_until FROM assist_reports WHERE id = ?', reportId).lease_until).toBeNull();
+    const { id, opId: subOp } = await queueTranslation(env, user);
+    env.DB.sqlite.prepare('UPDATE submissions SET lease_until = ? WHERE id = ?').run(nowS() + 600, id);
+    await releaseLeaseStatement(env.DB, { table: 'submissions', id, userId: user.id, opId: subOp }).run();
+    expect(row(env, 'SELECT lease_until FROM submissions WHERE id = ?', id).lease_until).toBeNull();
+  });
+
+  it('refundWithAssistRef：解析失敗時有成功過的案例維持 analyzed；轉錄的內容退還刪照片、系統原因保留；報告改 failed；重送不重複', async () => {
+    const env = makeEnv();
+    const user = seedUser(env.DB);
+    const analyzed = seedAssistCase(env.DB, user.id, { status: 'analyzing', analyses: 1 });
+    const t1 = crypto.randomUUID();
+    const o1 = seedAssistOp(env.DB, user.id, 'assist_analyze', t1);
+    seedAssistTurn(env.DB, user.id, analyzed, { id: t1, seq: 2, status: 'running', opId: o1 });
+    const op1 = { id: o1, user_id: user.id, task: 'assist_analyze', ref_id: t1 };
+    expect(await refundWithAssistRef(env.DB, op1, 'refusal', Date.now())).toBe(true);
+    expect(await refundWithAssistRef(env.DB, op1, 'refusal', Date.now())).toBe(false);
+    expect(row(env, 'SELECT status FROM assist_cases WHERE id = ?', analyzed).status).toBe('analyzed');
+
+    const photo = (reason: string) => {
+      const caseId = seedAssistCase(env.DB, user.id, { status: 'ocr_queued', source: 'photo', analyses: 0 });
+      seedAssistPhoto(env.DB, user.id, caseId);
+      const t = crypto.randomUUID();
+      const o = seedAssistOp(env.DB, user.id, 'assist_ocr', t, { points: 2 });
+      seedAssistTurn(env.DB, user.id, caseId, { id: t, kind: 'ocr', status: 'running', opId: o });
+      return { caseId, op: { id: o, user_id: user.id, task: 'assist_ocr', ref_id: t }, reason };
+    };
+    for (const p of [photo('invalid_output'), photo('timeout')]) {
+      expect(await refundWithAssistRef(env.DB, p.op, p.reason, Date.now())).toBe(true);
+      expect(row(env, 'SELECT status FROM assist_cases WHERE id = ?', p.caseId).status).toBe('draft');
+      expect(row(env, 'SELECT COUNT(*) AS n FROM assist_photos WHERE case_id = ?', p.caseId).n).toBe(p.reason === 'invalid_output' ? 0 : 1);
+    }
+
+    const reportId = crypto.randomUUID();
+    const o3 = seedAssistOp(env.DB, user.id, 'assist_report', reportId, { points: 10 });
+    seedAssistReport(env.DB, user.id, { id: reportId, status: 'queued', opId: o3 });
+    expect(await refundWithAssistRef(env.DB, { id: o3, user_id: user.id, task: 'assist_report', ref_id: reportId }, 'api_error', Date.now())).toBe(true);
+    expect(row(env, 'SELECT status, failure FROM assist_reports WHERE id = ?', reportId)).toEqual({ status: 'failed', failure: 'api_error' });
+  });
+
+  it('purgeExpiredAssist：過期的照片、案例（CASCADE turn）、報告、共用快取；進行中的案例與報告不刪；沒過期的不動', async () => {
+    const env = makeEnv();
+    const user = seedUser(env.DB);
+    const past = nowS() - 10;
+    const created = nowS() - 200 * 86_400;
+    const expired = seedAssistCase(env.DB, user.id, { createdAt: created, expiresAt: past });
+    seedAssistTurn(env.DB, user.id, expired, { seq: 1 });
+    const inflight = seedAssistCase(env.DB, user.id, { createdAt: created, expiresAt: past, status: 'analyzing' });
+    seedAssistTurn(env.DB, user.id, inflight, { seq: 1, status: 'running', opId: 'op-x' });
+    const fresh = seedAssistCase(env.DB, user.id);
+    seedAssistPhoto(env.DB, user.id, fresh, { createdAt: nowS() - 2 * 86_400, expiresAt: nowS() - 86_400 });
+    seedAssistPhoto(env.DB, user.id, fresh, { ord: 2 });
+    seedAssistReport(env.DB, user.id, { version: 1, createdAt: created, expiresAt: past });
+    seedAssistReport(env.DB, user.id, { version: 2, createdAt: created, expiresAt: past, status: 'running' });
+    seedAssistReport(env.DB, user.id, { version: 3 });
+    env.DB.sqlite
+      .prepare(`INSERT INTO ai_shared_cache (cache_key, kind, ref_id, prompt_version, model, result_json, expires_at) VALUES (?, 'explain_template', 'r', 'p', 'm', '{}', ?)`)
+      .run('old', past);
+    env.DB.sqlite
+      .prepare(`INSERT INTO ai_shared_cache (cache_key, kind, ref_id, prompt_version, model, result_json, expires_at) VALUES (?, 'explain_template', 'r', 'p', 'm', '{}', ?)`)
+      .run('new', nowS() + 86_400);
+    expect(await purgeExpiredAssist(env.DB, Date.now())).toEqual({ photos: 1, ocr: 0, cases: 1, reports: 1, cache: 1 });
+    expect(env.DB.sqlite.prepare('SELECT id FROM assist_cases ORDER BY created_at').all().map((r) => (r as { id: string }).id).sort()).toEqual([inflight, fresh].sort());
+    expect(row(env, 'SELECT COUNT(*) AS n FROM assist_turns WHERE case_id = ?', expired).n).toBe(0);
+    expect(row(env, 'SELECT COUNT(*) AS n FROM assist_photos').n).toBe(1);
+    expect(env.DB.sqlite.prepare('SELECT version FROM assist_reports ORDER BY version').all()).toEqual([{ version: 2 }, { version: 3 }]);
+    expect(env.DB.sqlite.prepare('SELECT cache_key FROM ai_shared_cache').all()).toEqual([{ cache_key: 'new' }]);
   });
 });

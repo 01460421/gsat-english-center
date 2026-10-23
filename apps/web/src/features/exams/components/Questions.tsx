@@ -245,6 +245,7 @@ function OpenFeedbackFor({ q }: { q: Question }) {
       {/* 多題併在一起時標出是哪一題的回饋。 */}
       <p className="mt-3 text-sm font-semibold">{questionTitle(q.label)}</p>
       {extras?.renderOpenFeedback ? extras.renderOpenFeedback(q, answer) : <OpenFeedback q={q} answer={answer} />}
+      {extras?.renderAfterOpenFeedback?.(q, answer)}
     </div>
   );
 }
@@ -316,6 +317,7 @@ export function TextAnswerBlock({ q, multiline }: { q: Question; multiline: bool
       <RevealButton labels={[q.label]}>{translation ? '看說明' : '看參考答案'}</RevealButton>
       {showFeedback &&
         (!translation && extras?.renderOpenFeedback ? extras.renderOpenFeedback(q, answer) : <OpenFeedback q={q} answer={answer} />)}
+      {showFeedback && !translation && extras?.renderAfterOpenFeedback?.(q, answer)}
     </div>
   );
 }

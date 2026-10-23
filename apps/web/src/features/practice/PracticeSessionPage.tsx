@@ -1,12 +1,15 @@
 /**
  * 題庫練習的作答頁（/practice/:section/:tier）：題組標題是頁面的 <h1> 與 <title>，上方有回到題庫練習的連結。
  * 抽題、載入、作答、「再一組」都在 BankPractice.tsx（題型頁 /cloze 等內嵌的練習也用同一份、同一份練習紀錄）。
+ * ?review=uid@v 是唯讀檢視交卷過的那一組（PracticeReview.tsx）。
  */
+import { GROUP_KEY_PATTERN } from '@gsat/shared';
 import { ChevronLeft } from 'lucide-react';
-import { Link, useParams } from 'react-router';
+import { Link, useParams, useSearchParams } from 'react-router';
 import { APP_NAME } from '../../modules';
 import { SectionBankPractice } from './BankPractice';
 import { sectionFromSlug, tierFromParam } from './labels';
+import { PracticeReview } from './PracticeReview';
 
 function BackLink() {
   return (
@@ -30,14 +33,29 @@ function NotFound() {
   );
 }
 
+/** ?group=：指定題組的 uid（學習助手的推薦練習、確認頁的「做新版本」；docs/design/learning-assistant.md §2.4）。 */
+const UID_RE = /^ai\.(vo|cz|wb|st|rd|mx)\.[0-9a-f]{6}$/;
+
 export default function PracticeSessionPage() {
   const params = useParams();
+  const [search] = useSearchParams();
   const section = sectionFromSlug(params['section']);
   const tier = tierFromParam(params['tier']);
+  const group = search.get('group');
+  const preferUid = group && UID_RE.test(group) ? group : null;
+  // ?review=uid@v：唯讀檢視交卷過的那一組（錯題清單的「本站解析（免費）」，§5.9）。
+  const review = search.get('review');
+  const reviewKey = review && GROUP_KEY_PATTERN.test(review) ? review : null;
   return (
     <article>
       <BackLink />
-      {section && tier ? <SectionBankPractice section={section} tier={tier} /> : <NotFound />}
+      {!section || !tier ? (
+        <NotFound />
+      ) : reviewKey ? (
+        <PracticeReview key={reviewKey} reviewKey={reviewKey} section={section} tier={tier} />
+      ) : (
+        <SectionBankPractice key={preferUid ?? ''} section={section} tier={tier} preferUid={preferUid} />
+      )}
     </article>
   );
 }

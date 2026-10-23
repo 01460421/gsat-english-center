@@ -3,8 +3,8 @@
  *
  * 路由與業務邏輯一律呼叫 loadConfig(c.env)，不直接讀 c.env 的設定值。
  * 預設值與 wrangler.toml 的 [vars] 相同（§6.3「正式開放」的值）；wrangler.toml 是給站主看的「實際部署值」，
- * 這裡的預設值是 [vars] 漏設時的保險。兩邊一致由 test/skeleton.test.ts 檢查（例外：AI_CUSTOM_ESSAY 這裡固定是 off，
- * 實際開關看 wrangler.toml）。
+ * 這裡的預設值是 [vars] 漏設時的保險。兩邊一致由 test/skeleton.test.ts 檢查（例外：AI_CUSTOM_ESSAY、AI_ASSISTANT、
+ * AI_ASSISTANT_PHOTO 這裡固定是 off，實際開關看 wrangler.toml）。
  *
  * 機密只回「有沒有設」與值本身（給需要的模組用），**絕不放進任何回應**；/api/features、/api/admin/health 只回布林。
  */
@@ -16,16 +16,22 @@ export type AiEffort = (typeof AI_EFFORTS)[number];
 
 /** 預設值（字串形式與 wrangler.toml 的 [vars] 對照）。 */
 export const CONFIG_DEFAULTS = {
-  PRIVACY_POLICY_VERSION: '2026-10-18',
-  TERMS_VERSION: '2026-10-08',
-  AI_CONSENT_VERSION: '2026-10-08',
+  PRIVACY_POLICY_VERSION: '2026-10-23',
+  TERMS_VERSION: '2026-10-23',
+  AI_CONSENT_VERSION: '2026-10-23',
   AI_MODEL_DEFAULT: 'claude-opus-5-5',
   AI_MODEL_SECOND_RATER: 'claude-opus-5-5',
   AI_EFFORT_GRADE: 'medium',
   AI_EFFORT_OCR: 'low',
+  // 學習助手（docs/design/learning-assistant.md §4.14）：解析與報告 medium、追問 low。
+  AI_EFFORT_ASSIST: 'medium',
+  AI_EFFORT_CHAT: 'low',
   // 自訂作文題目的總開關：程式的預設固定是 off（[vars] 漏設時偏向關，S5）。實際開關是 wrangler.toml 的那一行，
   // 評分對照（docs/design/custom-essay.md §7.8）達標後只改那一行；這裡不跟著改（test/skeleton.test.ts）。
   AI_CUSTOM_ESSAY: 'off',
+  // 學習助手與它的拍照問題目的開關：同上，程式的預設固定是 off（fail closed）；開放、緊急關閉都只改 wrangler.toml 那兩行。
+  AI_ASSISTANT: 'off',
+  AI_ASSISTANT_PHOTO: 'off',
   AI_POINTS_USER_DAY: 30,
   AI_POINTS_USER_MONTH: 300,
   AI_POINTS_TRIAL_DAY: 10,
@@ -63,12 +69,21 @@ export function autoApprovalCap(siteMonthUsd: number, pointsPerUserMonth: number
   return Math.floor(siteMonthUsd / perUser);
 }
 
+/**
+ * 學習助手的開關模式（docs/design/learning-assistant.md §4.14）：off 關；admin 只有管理員能用（緊急時在正式站查問題，
+ * 公開的 /api/features 不透露）；on 開放給已核准的學生。
+ */
+export const ASSISTANT_MODES = ['off', 'admin', 'on'] as const;
+export type AssistantMode = (typeof ASSISTANT_MODES)[number];
+
 export interface AppConfig {
   urls: {
     /** 前端網址；未設定時為 null（登入流程視為 not_configured）。 */
     appOrigin: string | null;
     /** OAuth 回呼與 cookie 的基準；未設定時同 appOrigin。 */
     publicApiOrigin: string | null;
+    /** 學習助手讀公開題目檔的來源（SITE_DATA_ORIGIN）；未設定時同 appOrigin。 */
+    siteDataOrigin: string | null;
   };
   auth: {
     /** GOOGLE_CLIENT_ID、GOOGLE_CLIENT_SECRET、SESSION_SECRET、APP_ORIGIN 都有設。 */
@@ -88,12 +103,19 @@ export interface AppConfig {
     apiKey: string | null;
     baseUrl: string;
     models: { default: string; secondRater: string };
-    effort: { grade: AiEffort; ocr: AiEffort };
+    effort: { grade: AiEffort; ocr: AiEffort; assist: AiEffort; chat: AiEffort };
     /**
      * 英文作文自訂題目的總開關（AI_CUSTOM_ESSAY；fail closed，見 customEssaySwitch）。關閉時新的自訂題建立、修改題目、
      * 送辨識、送批改都回 503；已經排入 Queue 的照常完成，結果頁照常顯示。
      */
     customEssay: boolean;
+    /**
+     * 學習助手的總開關（AI_ASSISTANT；fail closed，見 assistantSwitch）。對某位使用者開不開由 features.ts 的
+     * assistantAccess 判斷（admin 模式只有管理員）。關閉時新的建立、解析、追問、報告回 503；已經排入 Queue 的照常完成。
+     */
+    assistant: AssistantMode;
+    /** 學習助手的拍照問題目（AI_ASSISTANT_PHOTO；規則同上）。另外要學習助手本身對這位使用者開放。 */
+    assistantPhoto: AssistantMode;
     limits: {
       pointsUserDay: number;
       pointsUserMonth: number;
@@ -154,6 +176,18 @@ export function customEssaySwitch(value: string | undefined, fallback: string = 
   return false;
 }
 
+/**
+ * 學習助手的開關（AI_ASSISTANT、AI_ASSISTANT_PHOTO）：沒設定（或只有空白）時用預設值；去頭尾空白、轉小寫後只認
+ * on、admin，其他任何值（off、true、打錯的字）一律當成關，不是 off 的另外寫 log。同 customEssaySwitch 的 fail closed：
+ * 這是緊急關閉學習助手的唯一開關，打錯字時要偏向關。
+ */
+export function assistantSwitch(name: 'AI_ASSISTANT' | 'AI_ASSISTANT_PHOTO', value: string | undefined, fallback: string = CONFIG_DEFAULTS[name]): AssistantMode {
+  const v = (str(value) ?? fallback).toLowerCase();
+  if (v === 'on' || v === 'admin') return v;
+  if (v !== 'off') console.warn(`設定 ${name}=${JSON.stringify(value)} 不是 on、admin 或 off，當成關閉（off）`);
+  return 'off';
+}
+
 function origin(value: string | undefined): string | null {
   const v = str(value);
   return v ? v.replace(/\/+$/, '') : null;
@@ -164,6 +198,7 @@ export function loadConfig(env: Env): AppConfig {
   const D = CONFIG_DEFAULTS;
   const appOrigin = origin(env.APP_ORIGIN);
   const publicApiOrigin = origin(env.PUBLIC_API_ORIGIN) ?? appOrigin;
+  const siteDataOrigin = origin(env.SITE_DATA_ORIGIN) ?? appOrigin;
   const googleClientId = str(env.GOOGLE_CLIENT_ID);
   const googleClientSecret = str(env.GOOGLE_CLIENT_SECRET);
   const sessionSecret = str(env.SESSION_SECRET);
@@ -176,7 +211,7 @@ export function loadConfig(env: Env): AppConfig {
   const approvalCap = capOverride === null ? autoApprovalCap(siteUsdMonth, pointsUserMonth) : Math.floor(num('AI_APPROVAL_CAP', capOverride, 0));
 
   return {
-    urls: { appOrigin, publicApiOrigin },
+    urls: { appOrigin, publicApiOrigin, siteDataOrigin },
     auth: {
       configured: authConfigured,
       googleClientId,
@@ -206,8 +241,12 @@ export function loadConfig(env: Env): AppConfig {
       effort: {
         grade: effort('AI_EFFORT_GRADE', env.AI_EFFORT_GRADE, D.AI_EFFORT_GRADE),
         ocr: effort('AI_EFFORT_OCR', env.AI_EFFORT_OCR, D.AI_EFFORT_OCR),
+        assist: effort('AI_EFFORT_ASSIST', env.AI_EFFORT_ASSIST, D.AI_EFFORT_ASSIST),
+        chat: effort('AI_EFFORT_CHAT', env.AI_EFFORT_CHAT, D.AI_EFFORT_CHAT),
       },
       customEssay: customEssaySwitch(env.AI_CUSTOM_ESSAY),
+      assistant: assistantSwitch('AI_ASSISTANT', env.AI_ASSISTANT),
+      assistantPhoto: assistantSwitch('AI_ASSISTANT_PHOTO', env.AI_ASSISTANT_PHOTO),
       limits: {
         pointsUserDay: num('AI_POINTS_USER_DAY', env.AI_POINTS_USER_DAY, D.AI_POINTS_USER_DAY),
         pointsUserMonth,

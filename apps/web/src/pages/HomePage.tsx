@@ -11,14 +11,15 @@
  * HomePage 打包在主程式裡，不能把寫作、模擬考、練習的模組拉進來（那些都在儀表板的 chunk）。
  */
 import { ChevronRight } from 'lucide-react';
-import { Component, Suspense, lazy, type ErrorInfo, type ReactNode } from 'react';
+import { Component, Suspense, lazy, useMemo, type ErrorInfo, type ReactNode } from 'react';
 import { Link } from 'react-router';
 import { BackendStatus } from '../components/BackendStatus';
 import { PageIcon } from '../components/icons';
 import { DevBadge } from '../components/ModulePage';
 import { signedIn, useMe } from '../lib/api';
 import { useMainTier } from '../lib/media';
-import { APP_NAME, NAV_GROUPS, PAGES, documentTitle, getPage, isDevPage } from '../modules';
+import { usePageFeatureFlags } from '../features/assistant/lib/useAssistantEnabled';
+import { APP_NAME, NAV_GROUPS, documentTitle, getPage, isDevPage, navPages, type PageMeta } from '../modules';
 
 const home = getPage('/');
 
@@ -58,27 +59,40 @@ function ProgressPlaceholder() {
   );
 }
 
-/** 有群組標題、而且有學習模組的群組（首頁卡片與「全部功能」共用）。 */
-const HOME_GROUPS = NAV_GROUPS.filter((g) => g.label && PAGES.some((p) => p.group === g.id && p.isStudyModule));
+/**
+ * 有群組標題、而且有學習模組的群組，以及每個群組的學習模組（首頁卡片與「全部功能」共用）。
+ * 在元件裡依功能開關算（docs/design/learning-assistant.md §5.1）：學習助手的開關關著時不列它，畫面和沒有這一頁時相同。
+ */
+function useHomeGroups(): { id: string; label: string; pages: PageMeta[] }[] {
+  const flags = usePageFeatureFlags();
+  return useMemo(() => {
+    const modules = navPages(flags).filter((p) => p.isStudyModule);
+    return NAV_GROUPS.flatMap((g) => {
+      const pages = modules.filter((p) => p.group === g.id);
+      return g.label && pages.length > 0 ? [{ id: g.id, label: g.label, pages }] : [];
+    });
+  }, [flags.assistant]);
+}
 
 /**
  * 儀表板左欄的「全部功能」：依群組排的精簡列表（32px 圖示＋標題＋一行說明，完整說明放 title；連結的可存取名稱和卡片相同）。
  * CSS 多欄（columns-2，群組不拆開）照 DOM 順序自然分成兩欄；wide 寬度（main ≥ 80rem）一個群組一欄。
  */
 function AllFeatures() {
+  const groups = useHomeGroups();
   return (
     <section aria-labelledby="all-features-heading">
       <h2 id="all-features-heading" className="mb-3 text-lg font-semibold">
         全部功能
       </h2>
       <div className="columns-2 gap-x-6 @wide/main:grid @wide/main:grid-cols-4 @wide/main:gap-x-4">
-        {HOME_GROUPS.map((group) => (
+        {groups.map((group) => (
           <section key={group.id} aria-labelledby={`group-${group.id}`} className="mb-4 break-inside-avoid">
             <h3 id={`group-${group.id}`} className="mb-1 px-2 text-sm font-semibold text-muted">
               {group.label}
             </h3>
             <ul>
-              {PAGES.filter((p) => p.group === group.id && p.isStudyModule).map((page) => (
+              {group.pages.map((page) => (
                 <li key={page.path} className="min-w-0">
                   <Link to={page.path} title={page.summary} className="group flex items-center gap-3 rounded-xl px-2 py-1.5 hover:bg-surface-2">
                     <span className="inline-flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary-soft text-primary">
@@ -171,6 +185,7 @@ export default function HomePage() {
 
 /** 原本的首頁（手機、平板、不到 ws 寬度的桌機）。 */
 function HomeCards() {
+  const groups = useHomeGroups();
   return (
     <div className="space-y-8">
       <title>{documentTitle(home)}</title>
@@ -198,13 +213,13 @@ function HomeCards() {
         </ProgressBoundary>
       </section>
 
-      {HOME_GROUPS.map((group) => (
+      {groups.map((group) => (
         <section key={group.id} aria-labelledby={`group-${group.id}`}>
           <h2 id={`group-${group.id}`} className="mb-3 text-lg font-semibold">
             {group.label}
           </h2>
           <ul className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-            {PAGES.filter((p) => p.group === group.id && p.isStudyModule).map((page) => (
+            {group.pages.map((page) => (
               <li key={page.path} className="min-w-0">
                 <Link
                   to={page.path}

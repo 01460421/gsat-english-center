@@ -2,8 +2,10 @@
  * 批改進度的輪詢（ARCHITECTURE §3.4 最後一行）：每 2 秒問一次 GET /api/submissions/{id}，最多 3 分鐘；
  * 之後改成每 15 秒，並提示「可以先離開，完成後回來看」。狀態離開 ocr_queued／queued／grading 就停。
  *
- * 寫成不依賴 React 的小型狀態機（SubmissionPoller），計時器與時鐘可以注入，單元測試用假計時器逐步推進；
+ * 寫成不依賴 React 的小型狀態機，計時器與時鐘可以注入，單元測試用假計時器逐步推進；
  * 頁面用 useSubmissionPoller（hooks.ts）接上 React。
+ * 狀態機是泛型的 Poller<T>（docs/design/learning-assistant.md §5.2）：fetch（load）與 isPending 由呼叫端給；
+ * SubmissionPoller 是 Poller<SubmissionDetail>＋「狀態還在 ocr_queued／queued／grading」，學習助手的案例與報告用同一個泛型。
  *
  * 錯誤處理：
  *   - 第一次就失敗 → phase 'error'（畫面給「再試一次」）。
@@ -55,9 +57,9 @@ export function isFatalPollError(error: unknown): boolean {
  *   idle      狀態已經不需要輪詢（graded、ocr_ready、failed…）
  *   error     停止（第一次就失敗，或遇到不會自己恢復的錯誤）
  */
-export interface PollSnapshot {
+export interface PollSnapshot<T = SubmissionDetail> {
   phase: 'loading' | 'polling' | 'idle' | 'error';
-  detail: SubmissionDetail | null;
+  detail: T | null;
   speed: PollSpeed;
   /** 最近一次失敗的錯誤；成功後清掉。 */
   error: unknown;
@@ -75,29 +77,36 @@ const realTimers: PollTimers = {
   clearTimeout: (handle) => globalThis.clearTimeout(handle as ReturnType<typeof globalThis.setTimeout>),
 };
 
-export interface PollerOptions {
-  load: (signal: AbortSignal) => Promise<SubmissionDetail>;
-  onChange: (snapshot: PollSnapshot) => void;
+export interface PollerOptions<T = SubmissionDetail> {
+  load: (signal: AbortSignal) => Promise<T>;
+  onChange: (snapshot: PollSnapshot<T>) => void;
   timers?: PollTimers;
 }
 
-export class SubmissionPoller {
-  private readonly load: PollerOptions['load'];
-  private readonly onChange: PollerOptions['onChange'];
+export interface GenericPollerOptions<T> extends PollerOptions<T> {
+  /** 這份資料還要不要繼續輪詢（例如提交還在批改中、學習助手的案例還有進行中的任務）。 */
+  isPending: (detail: T) => boolean;
+}
+
+export class Poller<T> {
+  private readonly load: GenericPollerOptions<T>['load'];
+  private readonly onChange: GenericPollerOptions<T>['onChange'];
+  private readonly isPending: GenericPollerOptions<T>['isPending'];
   private readonly timers: PollTimers;
-  private snapshot: PollSnapshot = { phase: 'loading', detail: null, speed: 'fast', error: null };
+  private snapshot: PollSnapshot<T> = { phase: 'loading', detail: null, speed: 'fast', error: null };
   private startedAt = 0;
   private timer: unknown = null;
   private controller: AbortController | null = null;
   private stopped = true;
 
-  constructor(options: PollerOptions) {
+  constructor(options: GenericPollerOptions<T>) {
     this.load = options.load;
     this.onChange = options.onChange;
+    this.isPending = options.isPending;
     this.timers = options.timers ?? realTimers;
   }
 
-  get current(): PollSnapshot {
+  get current(): PollSnapshot<T> {
     return this.snapshot;
   }
 
@@ -111,15 +120,15 @@ export class SubmissionPoller {
   }
 
   /** 學生送出新的 AI 任務（或手動重試）後呼叫：重設 3 分鐘的快速期。 */
-  restart(detail?: SubmissionDetail): void {
+  restart(detail?: T): void {
     if (detail) this.snapshot = { ...this.snapshot, detail };
     this.start();
   }
 
   /** 直接套用剛從其他請求拿到的最新內容（例如 PUT confirm 的回應），需要時接著輪詢。 */
-  accept(detail: SubmissionDetail): void {
+  accept(detail: T): void {
     this.cancelPending();
-    if (isPendingStatus(detail.status)) {
+    if (this.isPending(detail)) {
       this.snapshot = { ...this.snapshot, detail };
       this.start();
       return;
@@ -139,7 +148,7 @@ export class SubmissionPoller {
     this.controller = null;
   }
 
-  private update(patch: Partial<PollSnapshot>): void {
+  private update(patch: Partial<PollSnapshot<T>>): void {
     this.snapshot = { ...this.snapshot, ...patch };
     this.onChange(this.snapshot);
   }
@@ -156,7 +165,7 @@ export class SubmissionPoller {
     if (this.stopped) return;
     const controller = new AbortController();
     this.controller = controller;
-    let detail: SubmissionDetail;
+    let detail: T;
     try {
       detail = await this.load(controller.signal);
     } catch (error) {
@@ -173,11 +182,18 @@ export class SubmissionPoller {
     }
     if (controller.signal.aborted || this.stopped) return;
     this.controller = null;
-    if (isPendingStatus(detail.status)) {
+    if (this.isPending(detail)) {
       this.update({ detail, phase: 'polling', error: null, speed: pollSpeed(this.timers.now() - this.startedAt) });
       this.schedule();
     } else {
       this.update({ detail, phase: 'idle', error: null });
     }
+  }
+}
+
+/** 寫作批改的提交：狀態還在 ocr_queued／queued／grading 就繼續問（行為同泛型化之前）。 */
+export class SubmissionPoller extends Poller<SubmissionDetail> {
+  constructor(options: PollerOptions<SubmissionDetail>) {
+    super({ ...options, isPending: (detail) => isPendingStatus(detail.status) });
   }
 }

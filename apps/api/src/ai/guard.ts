@@ -14,10 +14,12 @@
  *   超過就不再預扣（429 rate_limited），否則可以零成本反覆呼叫 Claude、耗光全站預算。系統原因的退還
  *   （API 錯誤、逾時、暫停、排隊太久、內部錯誤）不算。
  */
-import type { AiReserveErrorCode, AiTask } from '@gsat/shared';
+import { isAssistTask, type AiReserveErrorCode, type AiTask } from '@gsat/shared';
+import { refundWithAssistRef } from '../assist/refund';
 import type { SessionUser } from '../auth/session';
 import type { AppConfig } from '../config';
 import { nowSeconds, taiwanDay, taiwanMonth } from '../time';
+import { ASSIST_FAMILY_DAY_CAPS, type FamilyCapKey, type TaskFamily } from './tasks';
 
 /** 「不限」的上限值（SQLite INTEGER 放得下、遠大於任何實際用量）。 */
 export const UNLIMITED = 1_000_000_000;
@@ -34,8 +36,11 @@ export const COUNTED_REFUND_REASONS = ['refusal', 'invalid_output', 'max_tokens'
 export interface UserLimits {
   capDay: number;
   capMonth: number;
-  /** 作文家族每日篇數；0＝不限。 */
-  familyCap: number;
+  /**
+   * 任務家族的每日上限；0＝不限（docs/design/learning-assistant.md §4.7.2）：作文篇數（AI_ESSAY_USER_DAY）、
+   * 學習報告份數、拍照轉錄次數（ASSIST_LIMITS）。RESERVE_SQL 一個字都不改，只是依任務傳不同的清單與上限。
+   */
+  familyCaps: Record<FamilyCapKey, number>;
   capConc: number;
   unlimited: boolean;
   /** 每日「內容造成的退還」上限（沒給＝AI_REFUNDS_PER_DAY）。 */
@@ -46,12 +51,21 @@ export interface UserLimits {
 export function userLimits(config: AppConfig, user: Pick<SessionUser, 'role' | 'aiTier' | 'aiPointsDay' | 'aiPointsMonth'>): UserLimits {
   const l = config.ai.limits;
   const unlimited = user.role === 'admin' || user.aiTier === 'unlimited';
-  if (unlimited) return { capDay: UNLIMITED, capMonth: UNLIMITED, familyCap: 0, capConc: Math.max(1, l.concurrentUser), unlimited, refundCap: UNLIMITED };
+  if (unlimited) {
+    return {
+      capDay: UNLIMITED,
+      capMonth: UNLIMITED,
+      familyCaps: { essay: 0, assist_report: 0, assist_ocr: 0 },
+      capConc: Math.max(1, l.concurrentUser),
+      unlimited,
+      refundCap: UNLIMITED,
+    };
+  }
   const dayDefault = user.aiTier === 'trial' ? l.pointsTrialDay : l.pointsUserDay;
   return {
     capDay: user.aiPointsDay ?? dayDefault,
     capMonth: user.aiPointsMonth ?? l.pointsUserMonth,
-    familyCap: Math.max(0, Math.floor(l.essayUserDay)),
+    familyCaps: { essay: Math.max(0, Math.floor(l.essayUserDay)), ...ASSIST_FAMILY_DAY_CAPS },
     capConc: Math.max(1, Math.floor(l.concurrentUser)),
     unlimited,
     refundCap: AI_REFUNDS_PER_DAY,
@@ -70,7 +84,7 @@ export interface ReserveInput {
   refId: string;
   points: number;
   usdMicros: number;
-  family: readonly AiTask[] | null;
+  family: TaskFamily | null;
   limits: UserLimits;
   site: { day: number; month: number };
   nowMs: number;
@@ -108,7 +122,7 @@ export type ReserveResult = { ok: true } | { ok: false; code: ReserveFailureCode
 export async function reserveOp(db: D1Database, input: ReserveInput): Promise<ReserveResult> {
   const day = taiwanDay(input.nowMs);
   const month = taiwanMonth(input.nowMs);
-  const familyCap = input.family && input.family.includes(input.task) ? input.limits.familyCap : 0;
+  const familyCap = familyCapOf(input);
   const res = await db
     .prepare(RESERVE_SQL)
     .bind(
@@ -124,7 +138,7 @@ export async function reserveOp(db: D1Database, input: ReserveInput): Promise<Re
       input.limits.capDay,
       input.limits.capMonth,
       familyCap,
-      JSON.stringify(input.family ?? []),
+      JSON.stringify(input.family?.tasks ?? []),
       input.limits.capConc,
       input.site.day,
       input.site.month,
@@ -137,6 +151,11 @@ export async function reserveOp(db: D1Database, input: ReserveInput): Promise<Re
 
 function refundCapOf(limits: UserLimits): number {
   return limits.refundCap ?? AI_REFUNDS_PER_DAY;
+}
+
+/** 這次預扣適用的家族上限：任務在家族清單裡才算（0＝不限）。 */
+function familyCapOf(input: Pick<ReserveInput, 'family' | 'task' | 'limits'>): number {
+  return input.family && input.family.tasks.includes(input.task) ? input.limits.familyCaps[input.family.capKey] : 0;
 }
 
 export interface UsageSnapshot {
@@ -191,11 +210,11 @@ export async function usageSnapshot(db: D1Database, userId: number, family: read
 
 /** 預扣失敗後判斷原因（全站暫停優先；其次是個人的點數、篇數、同時任務、退還次數；最後是全站預算）。 */
 export async function diagnoseReserveFailure(db: D1Database, input: ReserveInput): Promise<ReserveFailureCode> {
-  const s = await usageSnapshot(db, input.userId, input.family ?? [], input.nowMs);
+  const s = await usageSnapshot(db, input.userId, input.family?.tasks ?? [], input.nowMs);
   if (s.paused) return 'ai_paused';
   if (s.dayPoints + input.points > input.limits.capDay) return 'quota_day';
   if (s.monthPoints + input.points > input.limits.capMonth) return 'quota_month';
-  const familyCap = input.family && input.family.includes(input.task) ? input.limits.familyCap : 0;
+  const familyCap = familyCapOf(input);
   if (familyCap > 0 && s.familyToday >= familyCap) return 'daily_limit';
   if (s.active >= input.limits.capConc) return 'busy';
   if (s.refundsToday >= refundCapOf(input.limits)) return 'refund_limit';
@@ -215,8 +234,8 @@ export interface FinishInput {
   /** 依這次的 settle_token 產生附帶語句（例如更新提交）；每一句都要以 token 當條件才會冪等。 */
   extra?: (token: string) => D1PreparedStatement[];
   /**
-   * 只在「對應的提交沒有有效租約」時才結算或退還（回收卡住的預扣用）：consumer 已經搶到租約、正在處理的操作
-   * 不會被回收退還；反過來 consumer 搶租約時也要求操作仍是 reserved，兩邊互斥（D1 的寫入是序列化的）。
+   * 只在「對應的提交（或學習助手的 turn、報告）沒有有效租約」時才結算或退還（回收卡住的預扣用）：consumer 已經搶到租約、
+   * 正在處理的操作不會被回收退還；反過來 consumer 搶租約時也要求操作仍是 reserved，兩邊互斥（D1 的寫入是序列化的）。
    */
   onlyIfUnleased?: boolean;
 }
@@ -232,7 +251,9 @@ const FINISH_UNLEASED_SQL = `UPDATE ai_ops SET status = ?1,
      usd_actual_micros = (SELECT COALESCE(SUM(cost_micros), 0) FROM ai_calls WHERE op_id = ?2),
      settle_token = ?3, refund_reason = ?4, settled_at = ?5
    WHERE id = ?2 AND status = 'reserved'
-     AND NOT EXISTS (SELECT 1 FROM submissions s WHERE s.id = ai_ops.ref_id AND s.op_id = ?2 AND s.lease_until IS NOT NULL AND s.lease_until > ?5)`;
+     AND NOT EXISTS (SELECT 1 FROM submissions s WHERE s.id = ai_ops.ref_id AND s.op_id = ?2 AND s.lease_until IS NOT NULL AND s.lease_until > ?5)
+     AND NOT EXISTS (SELECT 1 FROM assist_turns t WHERE t.id = ai_ops.ref_id AND t.op_id = ?2 AND t.lease_until IS NOT NULL AND t.lease_until > ?5)
+     AND NOT EXISTS (SELECT 1 FROM assist_reports r WHERE r.id = ai_ops.ref_id AND r.op_id = ?2 AND r.lease_until IS NOT NULL AND r.lease_until > ?5)`;
 
 async function finishOp(db: D1Database, input: FinishInput, outcome: { status: 'settled' } | { status: 'refunded'; reason: string }): Promise<boolean> {
   const token = settleToken();
@@ -310,6 +331,14 @@ export async function refundWithSubmission(db: D1Database, op: OpRef, reason: st
       return statements;
     },
   });
+}
+
+/**
+ * 依任務退還（死信佇列、回收卡住的預扣共用；docs/design/learning-assistant.md §4.8）：學習助手的任務退還並把 turn 或報告
+ * 標成 failed（assist/refund.ts 的 refundWithAssistRef），其他任務照舊 refundWithSubmission。
+ */
+export function refundForOp(db: D1Database, op: OpRef, reason: string, nowMs: number, options: { onlyIfUnleased?: boolean } = {}): Promise<boolean> {
+  return isAssistTask(op.task) ? refundWithAssistRef(db, op, reason, nowMs, options) : refundWithSubmission(db, op, reason, nowMs, options);
 }
 
 /** 全站暫停或恢復（今天的 ai_budget_daily.paused；一天一列，隔天自動恢復）。 */

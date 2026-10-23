@@ -38,6 +38,11 @@ export interface QuestionExtras {
    */
   renderOpenFeedback?: (q: Question, answer: AnswerValue | undefined) => ReactNode;
   /**
+   * 填充、簡答看答案後，接在回饋（預設的 OpenFeedback 或 renderOpenFeedback）下方的內容，例如學習助手的入口按鈕
+   * （docs/design/learning-assistant.md §1.4）。不取代回饋本身；中譯英、作文不畫。
+   */
+  renderAfterOpenFeedback?: (q: Question, answer: AnswerValue | undefined) => ReactNode;
+  /**
    * 填充每格限一個單詞（現制混合題）：輸入了空白就即時提示（SPEC §4.1 OpenInput）。
    * 歷屆試題頁不開：早期試卷有要寫片語的填充題。
    */

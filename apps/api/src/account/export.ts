@@ -4,6 +4,9 @@
  * 匯出：帳號（含 email）、同意紀錄、寫作提交與各評分者的批改、自訂作文題目（每份提交的 custom_prompt：自訂題是物件、
  * 顯示時重查 D8 命中就隱藏；其他題目是 null；docs/design/custom-essay.md §3.6）。照片不匯出（暫存、用完即刪）；
  * 內部欄位（租約、重試次數、op_id、注入旗標）不匯出。所有查詢都帶 user_id = ?（防 IDOR）。
+ * 學習助手（docs/design/learning-assistant.md §4.17）：assist.cases 是每個案例的題目、疑問、筆記、全部解析與追問（turns），
+ * assist.reports 是每一版報告（facts、逐週計畫與內容）。照片不匯出；租約、重試次數、op_id、快取鍵、去重鍵、注入旗標、
+ * 提示版本與 meta 不匯出。沒有任何學習助手資料時不帶 assist（回應和學習助手上線前相同）。
  * MVP 還沒有作答、複習、偏好等資料，Phase 2 加上對應的表時在這裡補。
  */
 import type { ConsentKind, ConsentRecord, MeExport } from '@gsat/shared';
@@ -26,7 +29,7 @@ interface SubmissionExportRow {
 }
 
 export async function buildExport(db: D1Database, userId: number): Promise<MeExport> {
-  const [users, consents, submissions, gradings, customPrompts] = await db.batch([
+  const [users, consents, submissions, gradings, customPrompts, assistCases, assistTurns, assistReports] = await db.batch([
     db.prepare(`SELECT ${USER_COLUMNS} FROM users WHERE id = ?`).bind(userId),
     db.prepare('SELECT kind, version, granted, created_at FROM consents WHERE user_id = ? ORDER BY id').bind(userId),
     db
@@ -47,6 +50,27 @@ export async function buildExport(db: D1Database, userId: number): Promise<MeExp
       .prepare(
         `SELECT submission_id, prompt_text, figure_text, paragraphs, min_words, max_words, rev, created_at, updated_at
          FROM submission_custom_prompts WHERE user_id = ? ORDER BY created_at, submission_id`,
+      )
+      .bind(userId),
+    db
+      .prepare(
+        `SELECT id, source, kind, ref_json, trust, section, title, item_count, wrong_count, question_json, doubt_kinds_json, torn_with,
+                doubt_text, hint_first, signals_json, status, verdict, skills_json, errors_json, understood, rating, note_text,
+                analyses, followups, d8_hidden, safety_flag, created_at, updated_at, expires_at
+         FROM assist_cases WHERE user_id = ? ORDER BY created_at, id`,
+      )
+      .bind(userId),
+    db
+      .prepare(
+        `SELECT case_id, id, seq, kind, status, input_text, label, mode, output_json, failure, cache_hit, created_at, updated_at
+         FROM assist_turns WHERE user_id = ? ORDER BY case_id, seq`,
+      )
+      .bind(userId),
+    db
+      .prepare(
+        `SELECT id, version, based_on, status, target_json, exam_date, feedback_text, input_json, report_json, failure,
+                created_at, updated_at, expires_at
+         FROM assist_reports WHERE user_id = ? ORDER BY version`,
       )
       .bind(userId),
   ]);
@@ -88,6 +112,25 @@ export async function buildExport(db: D1Database, userId: number): Promise<MeExp
     return out;
   });
 
+  // 學習助手：turn 依案例併進去（case_id 是內部的對應，不重複匯出）；*_json 一樣轉回物件。
+  const jsonColumns = (row: Record<string, unknown>): Record<string, unknown> => {
+    const out: Record<string, unknown> = {};
+    for (const [column, value] of Object.entries(row)) {
+      if (column.endsWith('_json')) out[column.slice(0, -'_json'.length)] = parseJson(value);
+      else out[column] = value;
+    }
+    return out;
+  };
+  const turnsByCase = new Map<string, unknown[]>();
+  for (const t of (assistTurns?.results ?? []) as Array<Record<string, unknown>>) {
+    const { case_id: caseId, ...turn } = t;
+    const list = turnsByCase.get(String(caseId)) ?? [];
+    list.push(jsonColumns(turn));
+    turnsByCase.set(String(caseId), list);
+  }
+  const cases = ((assistCases?.results ?? []) as Array<Record<string, unknown>>).map((c) => ({ ...jsonColumns(c), turns: turnsByCase.get(String(c['id'])) ?? [] }));
+  const reports = ((assistReports?.results ?? []) as Array<Record<string, unknown>>).map(jsonColumns);
+
   return {
     format: 'gsat-export/v1',
     exported_at: new Date().toISOString(),
@@ -106,5 +149,6 @@ export async function buildExport(db: D1Database, userId: number): Promise<MeExp
       (r): ConsentRecord => ({ kind: r.kind, version: r.version, granted: r.granted === 1, created_at: r.created_at }),
     ),
     submissions: exportedSubmissions,
+    ...(cases.length > 0 || reports.length > 0 ? { assist: { cases, reports } } : {}),
   };
 }

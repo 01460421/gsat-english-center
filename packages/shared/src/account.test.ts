@@ -72,6 +72,14 @@ describe('isMeResponse', () => {
     expect(isMeResponse(signedIn)).toBe(true);
   });
 
+  it('assistant_preview 選填（只有管理員預覽時才有）；有的話必須是 { photo: boolean }（docs/design/learning-assistant.md §4.14）', () => {
+    expect(isMeResponse({ ...signedIn, assistant_preview: { photo: false } })).toBe(true);
+    expect(isMeResponse({ ...signedIn, assistant_preview: { photo: true } })).toBe(true);
+    expect(isMeResponse({ ...signedIn, assistant_preview: null })).toBe(false);
+    expect(isMeResponse({ ...signedIn, assistant_preview: true })).toBe(false);
+    expect(isMeResponse({ ...signedIn, assistant_preview: { photo: 'on' } })).toBe(false);
+  });
+
   it('拒絕其他形狀', () => {
     expect(isMeResponse({})).toBe(false);
     expect(isMeResponse({ user: { ...signedIn.user, role: 'root' }, pending_consents: [], onboarded: true })).toBe(false);

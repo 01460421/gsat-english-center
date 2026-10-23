@@ -53,6 +53,10 @@ export const AI_TASK_LABELS: Record<AiTask, string> = {
   translation_grade: '中譯英批改',
   essay_grade: '英文作文批改',
   essay_ocr: '手寫作文照片辨識',
+  assist_ocr: '學習助手拍照轉錄',
+  assist_analyze: '學習助手解析',
+  assist_followup: '學習助手追問',
+  assist_report: '學習報告',
 };
 
 /** /auth/google/callback 失敗時帶回 /account?auth_error=<代碼>。 */

@@ -5,7 +5,7 @@
 import type { SubmissionSummary } from '@gsat/shared';
 import { screen, waitFor, within } from '@testing-library/react';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { APP_NAME, PAGES } from '../../modules';
+import { APP_NAME, PAGES, isPageEnabled } from '../../modules';
 import HomePage from '../../pages/HomePage';
 import { setDesktopViewport } from '../../test/viewport';
 import { attemptStorageKey, createAttempt } from '../exams/attempt';
@@ -46,7 +46,9 @@ describe('首頁儀表板', () => {
     expect(within(resume).getByRole('link', { name: /115 學測/ })).toHaveTextContent('練習模式・已答 1 題');
 
     const all = screen.getByRole('region', { name: '全部功能' });
-    for (const page of PAGES.filter((p) => p.isStudyModule)) {
+    // 學習助手的開關關著：「全部功能」不列它（docs/design/learning-assistant.md §5.1）。
+    expect(within(all).queryByRole('link', { name: /^學習助手/ })).not.toBeInTheDocument();
+    for (const page of PAGES.filter((p) => p.isStudyModule && isPageEnabled(p, { assistant: false }))) {
       const link = within(all).getByRole('link', { name: new RegExp(`^${page.title}`) });
       expect(link).toHaveAttribute('href', page.path);
       // 可存取名稱和手機的卡片一樣含完整說明（畫面上只顯示一行，全文也放在 title）。
@@ -98,5 +100,22 @@ describe('首頁儀表板', () => {
       '/writing/submissions/e-2',
       '/writing',
     ]);
+  });
+
+  it('學習助手的開關打開（或管理員預覽）：「實戰」群組多一張學習助手的卡片；關著時沒有（docs/design/learning-assistant.md §5.1）', async () => {
+    setDesktopViewport();
+    renderPage('/', baseRoutes({ ...FEATURES_ON, assistant: true }), { '/': <HomePage /> });
+    await screen.findByRole('heading', { name: '全部功能' }, { timeout: 5000 });
+    const all = screen.getByRole('region', { name: '全部功能' });
+    await waitFor(() => expect(within(all).getByRole('link', { name: /^學習助手/ })).toHaveAttribute('href', '/assistant'));
+    const exam = within(all).getByRole('region', { name: '實戰' });
+    expect(within(exam).getByRole('link', { name: /^學習助手/ })).toBeInTheDocument();
+  });
+
+  it('手機的首頁卡片：管理員預覽（/api/me 有 assistant_preview）時出現在「實戰」，一般學生沒有', async () => {
+    const admin = { ...meWith('approved'), assistant_preview: { photo: false } };
+    renderPage('/', baseRoutes(FEATURES_ON, { ...admin, user: { ...admin.user, role: 'admin' } }), { '/': <HomePage /> });
+    const exam = await screen.findByRole('region', { name: '實戰' });
+    await waitFor(() => expect(within(exam).getByRole('link', { name: /學習助手/ })).toHaveAttribute('href', '/assistant'));
   });
 });

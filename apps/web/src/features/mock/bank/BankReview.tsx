@@ -23,6 +23,9 @@ import { MultiSelectCard, OpenAnswerFeedback } from '../../practice/components/M
 import { evidenceHighlights } from '../../practice/evidence';
 import { READING_OPTION_CODE_LABELS } from '../../practice/labels';
 import { MarkedBadge } from '../components/MarkToggle';
+import { AskEntry, choiceState } from '../../assistant/components/AskEntry';
+import { okFromRatio } from '../../assistant/outcomes';
+import { isAnswered } from '../../exams/scoring';
 import type { MockAttemptRecord } from '../storage';
 import { bankFigureRenderer } from './bankFigure';
 import type { BankOpenScores } from './bankScore';
@@ -123,28 +126,43 @@ export function BankReview({ paper, record, scores }: { paper: BankPaper; record
       noOfficialStats: true,
       renderHeadingAccessory: (labels) => <MarkedBadge labels={labels} marked={marked} />,
       renderFigure: bankFigureRenderer(evidence),
-      renderAfterFeedback: (q, answer) => <ReviewCard q={q} answer={answer} item={paper.explanations[q.label]} at={byLabel.get(q.label)} onLocate={onLocate} />,
+      renderAfterFeedback: (q, answer) => (
+        <>
+          <ReviewCard q={q} answer={answer} item={paper.explanations[q.label]} at={byLabel.get(q.label)} onLocate={onLocate} />
+          {/* 學習助手的入口（開關關著時 render null；卷面題號，docs/design/learning-assistant.md §1.4）。 */}
+          <AskEntry ask={{ src: 'bankmock', attempt: record.id, labels: [q.label] }} q={q} state={choiceState(q, answer)} marked={marked.has(q.label)} />
+        </>
+      ),
       renderOpenFeedback: (q, answer) => {
         const at = byLabel.get(q.label);
         if (!at || (q.mode !== 'fill_in_blank' && q.mode !== 'short_answer')) return null;
         const pair = scores.swapped.find((p) => p.includes(q.label));
+        const outcome = scores.outcomes.get(q.label);
         return (
-          <OpenAnswerFeedback
-            q={q}
-            answer={answer}
-            outcome={scores.outcomes.get(q.label)}
-            item={paper.explanations[q.label]}
-            group={at.group}
-            swappedWith={pair ? (pair[0] === q.label ? pair[1] : pair[0]) : null}
-            hintsUsed={0}
-            onLocateEvidence={onLocate}
-          />
+          <>
+            <OpenAnswerFeedback
+              q={q}
+              answer={answer}
+              outcome={outcome}
+              item={paper.explanations[q.label]}
+              group={at.group}
+              swappedWith={pair ? (pair[0] === q.label ? pair[1] : pair[0]) : null}
+              hintsUsed={0}
+              onLocateEvidence={onLocate}
+            />
+            <AskEntry
+              ask={{ src: 'bankmock', attempt: record.id, labels: [q.label] }}
+              q={q}
+              state={{ ok: outcome ? okFromRatio(outcome.earned, outcome.max) : null, answered: answer !== undefined && isAnswered(answer) }}
+              marked={marked.has(q.label)}
+            />
+          </>
         );
       },
       extraHighlights: (group) => evidenceHighlights(group, itemsByGroup.get(group.id) ?? {}, active),
       locateRequest: locate,
     }),
-    [marked, evidence, paper.explanations, byLabel, onLocate, scores, itemsByGroup, active, locate],
+    [marked, evidence, paper.explanations, byLabel, onLocate, scores, itemsByGroup, active, locate, record.id],
   );
 
   return (

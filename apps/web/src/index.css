@@ -191,3 +191,55 @@
     }
   }
 }
+
+/*
+ * 學習報告的列印／存成 PDF（docs/design/learning-assistant.md §3.5）：只在報告頁生效（頁面上有 [data-report-print]），
+ * 其他頁的列印完全不變。
+ *   - 一律印成淺色（深色模式的變數在 :root:not([data-theme='light']) 與 [data-theme='dark']，這裡用 :root:root 蓋過）。
+ *   - 隱藏 main 以外的導覽、側邊欄、頁首頁尾，以及畫面專用的按鈕、目錄（.report-screen-only）。
+ *   - 收合的區塊全部展開（.report-expand；ReportView 另在 beforeprint 把 details 打開）。
+ *   - 逐週清單的勾選框印成 □／☑（.report-print-only 的字元；勾選框本身不印）。
+ *   - 每一段盡量不跨頁（.report-avoid-break）。用瀏覽器內建字型，不會缺字。
+ */
+.report-print-only {
+  display: none;
+}
+
+@media print {
+  :root:root:has([data-report-print]) {
+    color-scheme: light;
+    --bg: #ffffff;
+    --surface: #ffffff;
+    --surface-2: #f2f4f7;
+    --fg: #000000;
+    --muted: #3d4651;
+    --line: #a3abb6;
+    --primary: #1f327f;
+    --primary-soft: #eef1fb;
+    --on-primary: #ffffff;
+    --ok: #1b7a3d;
+    --bad: #b42318;
+  }
+
+  :root:has([data-report-print]) :is(header, nav, aside, footer):not(main *),
+  :root:has([data-report-print]) .report-screen-only {
+    display: none !important;
+  }
+
+  :root:has([data-report-print]) .report-print-only {
+    display: inline;
+  }
+
+  :root:has([data-report-print]) input.report-check {
+    display: none;
+  }
+
+  :root:has([data-report-print]) details.report-expand::details-content {
+    content-visibility: visible;
+    display: block;
+  }
+
+  :root:has([data-report-print]) .report-avoid-break {
+    break-inside: avoid;
+  }
+}

@@ -224,3 +224,45 @@ export function officialMaterialHits(
   const inFigure = figureText ? d8Ranges(figureText, fp) : [];
   return inFigure.length > 0 ? { field: 'figure_text', ranges: inFigure } : null;
 }
+
+// ───────────────────────── 學習助手（docs/design/learning-assistant.md §4.5.2、§4.10、§4.11） ─────────────────────────
+
+/** 一段文字的全部命中位置（合併，不限段數；遮罩與覆蓋率用）。 */
+function allD8Ranges(text: string, fp: Pick<D8Fingerprints, 'han' | 'en'>): Array<[number, number]> {
+  const hits: Array<[number, number]> = [];
+  for (const w of d8HanWindows(text)) if (fp.han.has(d8Hash('han', w.window))) hits.push([w.start, w.end]);
+  for (const w of d8EnglishWindows(text)) if (fp.en.has(d8Hash('en', w.window))) hits.push([w.start, w.end]);
+  return mergeRanges(hits, Number.POSITIVE_INFINITY);
+}
+
+/** 輸出比對：這段文字有沒有任何一個窗口命中指紋（AI 輸出的每一個字串都跑一次，§4.11 第 8 步）。 */
+export function d8Hit(text: string, fp: Pick<D8Fingerprints, 'han' | 'en'>): boolean {
+  if (text === '') return false;
+  for (const w of d8EnglishWindows(text)) if (fp.en.has(d8Hash('en', w.window))) return true;
+  for (const w of d8HanWindows(text)) if (fp.han.has(d8Hash('han', w.window))) return true;
+  return false;
+}
+
+/**
+ * 英文窗口的命中覆蓋率（寫作提交的學生文字用，§2.6）：命中指紋的 7 字窗口數 ÷ 全部英文窗口數。
+ * 正確的譯文本來就常和參考譯文有 7 個連續字相同，所以不拒收；覆蓋率 ≥ 80%（等於整篇貼上官方譯文）時才遮。
+ */
+export function d8EnglishCoverage(text: string, fp: Pick<D8Fingerprints, 'en'>): { windows: number; hits: number; ratio: number } {
+  const windows = d8EnglishWindows(text);
+  const hits = windows.filter((w) => fp.en.has(d8Hash('en', w.window))).length;
+  return { windows: windows.length, hits, ratio: windows.length === 0 ? 0 : hits / windows.length };
+}
+
+/** 把命中的位置換成固定字樣（只用在送給模型的副本，不改存檔的文字）；回傳換了幾段。 */
+export function maskD8(text: string, fp: Pick<D8Fingerprints, 'han' | 'en'>, replacement: string): { text: string; masked: number } {
+  const nfkc = text.normalize('NFKC');
+  const ranges = allD8Ranges(nfkc, fp);
+  if (ranges.length === 0) return { text, masked: 0 };
+  let out = '';
+  let at = 0;
+  for (const [s, e] of ranges) {
+    out += nfkc.slice(at, s) + replacement;
+    at = e;
+  }
+  return { text: out + nfkc.slice(at), masked: ranges.length };
+}

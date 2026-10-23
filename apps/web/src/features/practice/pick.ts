@@ -24,16 +24,23 @@ export function cellEntries(entries: readonly BankIndexEntry[], section: Practic
 /**
  * @param exclude 「再一組」：剛交卷的那一組（uid@version），不接續、也排在重練順序的最後。
  * @param random 0–1 的亂數（測試時傳固定值）。
+ * @param prefer 指定的題組 uid（網址的 ?group=，學習助手的推薦練習；docs/design/learning-assistant.md §2.4）：
+ *               這一格有這一組時就做這一組（正在做的就是它時算接續）。這一格另有做到一半的題組時，
+ *               呼叫端不把指定的這一組記成 current（BankPractice.tsx 的 keepCurrent），做到一半的那一組不會被換掉。
  */
 export function pickGroup(
   candidates: readonly BankIndexEntry[],
   history: PracticeHistory,
   section: PracticeSectionType,
   tier: Tier,
-  { exclude = null, random = Math.random }: { exclude?: string | null; random?: () => number } = {},
+  { exclude = null, random = Math.random, prefer = null }: { exclude?: string | null; random?: () => number; prefer?: string | null } = {},
 ): Pick | null {
   if (candidates.length === 0) return null;
   const currentKey = history.current[cellKey(section, tier)];
+  if (prefer) {
+    const wanted = candidates.find((e) => e.uid === prefer);
+    if (wanted && groupKey(wanted) !== exclude) return { entry: wanted, reason: currentKey === groupKey(wanted) ? 'resume' : 'new' };
+  }
   if (currentKey !== undefined && currentKey !== exclude) {
     const current = candidates.find((e) => groupKey(e) === currentKey);
     if (current) return { entry: current, reason: 'resume' };

@@ -5,6 +5,7 @@
 import { act, render, screen, within, type RenderResult } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Route, Routes } from 'react-router';
+import { SessionProvider } from '../../lib/api';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { clearDataCache } from '../../data/client';
 import ExamsPage from '../../pages/ExamsPage';
@@ -241,5 +242,55 @@ describe('列表與找不到考卷', () => {
 
     await user.click(screen.getByRole('radio', { name: /^指考/ }));
     expect(screen.getByText('沒有符合條件的考卷。')).toBeInTheDocument();
+  });
+});
+
+describe('學習助手的開關', () => {
+  it('開關晚一點才確定是打開的：考卷不重新掛載，作答中的焦點還在原處', async () => {
+    let releaseFeatures: () => void = () => {};
+    const featuresReady = new Promise<void>((resolve) => (releaseFeatures = resolve));
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async (input: RequestInfo | URL) => {
+        const url = typeof input === 'string' ? input : input instanceof URL ? input.href : input.url;
+        if (url.endsWith('/exams/index.json')) return jsonResponse(MINI_INDEX);
+        if (url.endsWith('/exams/gsat-115.json')) return jsonResponse(MINI_EXAM);
+        if (url.endsWith('/api/features')) {
+          await featuresReady;
+          return jsonResponse({ auth: false, ai: false, ocr: false, aiPaused: false, assistant: true });
+        }
+        return new Response('not found', { status: 404 });
+      }),
+    );
+    const user = userEvent.setup();
+    await act(async () => {
+      render(
+        <MemoryRouter initialEntries={['/exams/gsat-115']}>
+          <SessionProvider>
+            <Routes>
+              <Route path="/exams/:examId" element={<ExamPaperPage />} />
+            </Routes>
+          </SessionProvider>
+        </MemoryRouter>,
+      );
+    });
+    await user.click(await screen.findByRole('button', { name: '開始作答' }));
+    const card = questionCard('1');
+    card.setAttribute('data-test-marker', 'same-node');
+    const radio = within(card).getByRole('radio', { name: /\(A\) hasty/ });
+    radio.focus();
+    expect(document.activeElement).toBe(radio);
+
+    await act(async () => {
+      releaseFeatures();
+      await featuresReady;
+    });
+    expect(questionCard('1')).toBe(card);
+    expect(document.activeElement).toBe(radio);
+    // 開關打開了（看過答案後才有入口按鈕）；同一個題目節點、焦點沒有掉到 body。
+    await user.click(within(questionCard('1')).getByRole('button', { name: '看答案' }));
+    expect(within(questionCard('1')).getByRole('link', { name: /第 1 題/ })).toBeInTheDocument();
+    expect(questionCard('1')).toBe(card);
+    expect(card).toHaveAttribute('data-test-marker', 'same-node');
   });
 });
