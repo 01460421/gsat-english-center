@@ -18,6 +18,7 @@ import { AiGroupBadge } from '../../practice/components/AiGroupBadge';
 import { displayTopic } from '../../practice/labels';
 import { AiAccessNotice, QuotaSummary, taskPoints } from '../components/AiAccessPanel';
 import { PhotoPicker, type PickedPhoto } from '../components/PhotoPicker';
+import { SubmitConfirm, essaySubmitWarnings, useSubmitGuard } from '../components/SubmitGuard';
 import { AiNotice, BackLink, ConfirmButton, DataError, ErrorMessage, Loading, Notice, card, englishInputProps, primaryButton, secondaryButton, textInput } from '../components/ui';
 import { useAiAccess } from '../lib/access';
 import { completeEssayScores, draftKey, saveDraft } from '../lib/drafts';
@@ -225,6 +226,9 @@ function BankEssayAttempt({ entry, index, prompt }: { entry: WritingBankEntry; i
   const ocrPoints = taskPoints(quota, 'essay_ocr');
   const gradePoints = taskPoints(quota, 'essay_grade');
   const revealLabel = '寫好了，看評分規準與範文';
+  // 桌機：字數或段數有提醒時，送出前先確認（components/SubmitGuard.tsx）。對照之後作答鎖定、改不了，取消時焦點回到送出按鈕。
+  const warnings = essaySubmitWarnings(length);
+  const guard = useSubmitGuard({ warnings, onSubmit: () => void submitTyped(), returnFocusId: revealed ? 'bank-essay-submit' : 'bank-essay-text' });
   const revealButtonClass = revealed ? secondaryButton : primaryButton;
 
   return (
@@ -313,33 +317,43 @@ function BankEssayAttempt({ entry, index, prompt }: { entry: WritingBankEntry; i
             {saved ? '草稿會自動存在這台裝置。' : '這個瀏覽器無法儲存草稿（可能是無痕模式），離開頁面後內容會遺失。'}
           </p>
 
-          <div className="flex flex-wrap items-center gap-2">
-            {!revealed && !length.empty && length.words < ESSAY_SHORT_WORDS ? (
-              <ConfirmButton
-                label={revealLabel}
-                question={`你的作文只有 ${length.words} 個單詞（少於 ${ESSAY_SHORT_WORDS} 個會扣分）。對照後作答會鎖定，確定要看評分規準與範文嗎？`}
-                confirmLabel="確定對照"
-                onConfirm={reveal}
-                triggerClassName={revealButtonClass}
-              />
-            ) : (
-              <button type="button" className={revealButtonClass} disabled={!revealed && length.empty} aria-expanded={revealed} aria-controls="bank-reveal" onClick={reveal}>
-                {revealed ? (
-                  <>
-                    <Lock aria-hidden="true" className="size-4" />
-                    看評分規準與範文
-                  </>
-                ) : (
-                  revealLabel
-                )}
-              </button>
-            )}
-            {access.state === 'ready' && (
-              <button type="button" className={revealed ? primaryButton : secondaryButton} disabled={busy !== null || length.empty || length.tooLong} onClick={submitTyped}>
-                {busy ?? `送出 AI 批改（${gradePoints} 點）`}
-              </button>
-            )}
-          </div>
+          {guard.confirming ? (
+            <SubmitConfirm guard={guard} warnings={warnings} points={gradePoints} quota={quota} cancelLabel={revealed ? '取消' : '再改一下'} />
+          ) : (
+            <div className="flex flex-wrap items-center gap-2">
+              {!revealed && !length.empty && length.words < ESSAY_SHORT_WORDS ? (
+                <ConfirmButton
+                  label={revealLabel}
+                  question={`你的作文只有 ${length.words} 個單詞（少於 ${ESSAY_SHORT_WORDS} 個會扣分）。對照後作答會鎖定，確定要看評分規準與範文嗎？`}
+                  confirmLabel="確定對照"
+                  onConfirm={reveal}
+                  triggerClassName={revealButtonClass}
+                />
+              ) : (
+                <button type="button" className={revealButtonClass} disabled={!revealed && length.empty} aria-expanded={revealed} aria-controls="bank-reveal" onClick={reveal}>
+                  {revealed ? (
+                    <>
+                      <Lock aria-hidden="true" className="size-4" />
+                      看評分規準與範文
+                    </>
+                  ) : (
+                    revealLabel
+                  )}
+                </button>
+              )}
+              {access.state === 'ready' && (
+                <button
+                  id="bank-essay-submit"
+                  type="button"
+                  className={revealed ? primaryButton : secondaryButton}
+                  disabled={busy !== null || length.empty || length.tooLong}
+                  onClick={guard.request}
+                >
+                  {busy ?? `送出 AI 批改（${gradePoints} 點）`}
+                </button>
+              )}
+            </div>
+          )}
           {!revealed && length.empty && <p className="text-sm text-muted">寫了內容才能看評分規準與範文（對照後作答會鎖定，不能再修改）。</p>}
           {access.state === 'ready' ? (
             <>

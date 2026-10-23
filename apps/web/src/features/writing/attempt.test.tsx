@@ -3,6 +3,7 @@ import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { clearDataCache } from '../../data/client';
+import { setDesktopViewport } from '../../test/viewport';
 import EssayAttemptPage from './EssayAttemptPage';
 import TranslationAttemptPage from './TranslationAttemptPage';
 import { draftKey } from './lib/drafts';
@@ -351,6 +352,93 @@ describe('EssayAttemptPage', () => {
     const saved = JSON.parse(window.localStorage.getItem(draftKey('essay', 'gsat-115.s8g1@1')) ?? 'null') as Record<string, unknown>;
     expect(saved).toMatchObject({ submissionId: null, aiSubmittedAt: expect.any(Number) });
     expect(saved['text']).not.toBe('');
+  });
+
+  describe('送出前的確認（docs/design/desktop-polish.md §3.12）', () => {
+    const routes = () => ({
+      ...baseRoutes(FEATURES_ON, meWith()),
+      'POST /api/submissions': () => jsonResponse(essaySubmission({ id: 'e-2', status: 'draft', grading: null }), 201),
+      'POST /api/ai/essay-grade': () => jsonResponse({ op_id: 'op', submission_id: 'e-2', status: 'queued' }, 202),
+    });
+    const posted = (fetch: { calls: { method: string; path: string }[] }) => fetch.calls.some((c) => c.method === 'POST' && c.path === '/api/submissions');
+
+    it('桌機、字數與段數有提醒：按送出先出現確認列（點數、提醒），焦點在「再改一下」，沒有送出；再改一下回到作答框', async () => {
+      setDesktopViewport();
+      const user = userEvent.setup();
+      const { fetch } = renderPage('/writing/essay/gsat-115', routes(), ePages);
+      const box = await screen.findByRole('textbox', { name: /你的作文/ });
+      fireEvent.change(box, { target: { value: words(90) } });
+      await user.click(await screen.findByRole('button', { name: '送出 AI 批改（7 點）' }));
+      const confirm = screen.getByRole('group', { name: '送出 AI 批改會用 7 點，今天剩 20 點。確定要送出嗎？' });
+      expect(within(confirm).getByText('只有 90 個單詞，少於 100 個會扣總分 1 分')).toBeInTheDocument();
+      expect(within(confirm).getByText('只有 1 段（未分段會扣 1 分）')).toBeInTheDocument();
+      expect(within(confirm).getByRole('button', { name: '再改一下' })).toHaveFocus();
+      // 連按 Enter：只會收起確認列、回到作答框，不會送出。
+      await user.keyboard('{Enter}');
+      expect(screen.queryByRole('group', { name: /送出 AI 批改會用/ })).not.toBeInTheDocument();
+      expect(box).toHaveFocus();
+      expect(posted(fetch)).toBe(false);
+
+      await user.click(screen.getByRole('button', { name: '送出 AI 批改（7 點）' }));
+      await user.keyboard('{Escape}');
+      expect(box).toHaveFocus();
+      expect(posted(fetch)).toBe(false);
+
+      await user.click(screen.getByRole('button', { name: '送出 AI 批改（7 點）' }));
+      await user.click(screen.getByRole('button', { name: '確定送出' }));
+      await waitFor(() => expect(screen.getByTestId('location')).toHaveTextContent('/writing/submissions/e-2'));
+      expect(posted(fetch)).toBe(true);
+    });
+
+    it('桌機、108 個單詞、2 段：只提醒字數（少於 120）', async () => {
+      setDesktopViewport();
+      const user = userEvent.setup();
+      renderPage('/writing/essay/gsat-115', routes(), ePages);
+      const box = await screen.findByRole('textbox', { name: /你的作文/ });
+      fireEvent.change(box, { target: { value: `${words(54)}\n${words(54)}` } });
+      await user.click(await screen.findByRole('button', { name: '送出 AI 批改（7 點）' }));
+      const confirm = screen.getByRole('group', { name: /送出 AI 批改會用 7 點/ });
+      expect(within(confirm).getAllByRole('listitem').map((li) => li.textContent)).toEqual(['只有 108 個單詞，少於 120（少於 100 會扣 1 分）']);
+    });
+
+    it('桌機、確認列開著時把作文補到沒有提醒：確認列收起、換回送出按鈕；之後再刪字也不會自己跳出來', async () => {
+      setDesktopViewport();
+      const user = userEvent.setup();
+      const { fetch } = renderPage('/writing/essay/gsat-115', routes(), ePages);
+      const box = await screen.findByRole('textbox', { name: /你的作文/ });
+      fireEvent.change(box, { target: { value: `${words(54)}\n${words(54)}` } });
+      await user.click(await screen.findByRole('button', { name: '送出 AI 批改（7 點）' }));
+      expect(screen.getByRole('group', { name: /送出 AI 批改會用 7 點/ })).toBeInTheDocument();
+      fireEvent.change(box, { target: { value: `${words(65)}\n${words(65)}` } });
+      expect(screen.queryByRole('group', { name: /送出 AI 批改會用/ })).not.toBeInTheDocument();
+      expect(screen.getByRole('button', { name: '送出 AI 批改（7 點）' })).toBeInTheDocument();
+      fireEvent.change(box, { target: { value: `${words(54)}\n${words(54)}` } });
+      expect(screen.queryByRole('group', { name: /送出 AI 批改會用/ })).not.toBeInTheDocument();
+      expect(posted(fetch)).toBe(false);
+    });
+
+    it('桌機、沒有提醒（130 個單詞、2 段）：直接送出（和原本一樣）', async () => {
+      setDesktopViewport();
+      const user = userEvent.setup();
+      const { fetch } = renderPage('/writing/essay/gsat-115', routes(), ePages);
+      const box = await screen.findByRole('textbox', { name: /你的作文/ });
+      fireEvent.change(box, { target: { value: `${words(65)}\n${words(65)}` } });
+      await user.click(await screen.findByRole('button', { name: '送出 AI 批改（7 點）' }));
+      expect(screen.queryByRole('group', { name: /送出 AI 批改會用/ })).not.toBeInTheDocument();
+      await waitFor(() => expect(screen.getByTestId('location')).toHaveTextContent('/writing/submissions/e-2'));
+      expect(posted(fetch)).toBe(true);
+    });
+
+    it('手機：有提醒也直接送出（不確認，行為不變）', async () => {
+      const user = userEvent.setup();
+      const { fetch } = renderPage('/writing/essay/gsat-115', routes(), ePages);
+      const box = await screen.findByRole('textbox', { name: /你的作文/ });
+      fireEvent.change(box, { target: { value: words(90) } });
+      await user.click(await screen.findByRole('button', { name: '送出 AI 批改（7 點）' }));
+      expect(screen.queryByRole('group', { name: /送出 AI 批改會用/ })).not.toBeInTheDocument();
+      await waitFor(() => expect(screen.getByTestId('location')).toHaveTextContent('/writing/submissions/e-2'));
+      expect(posted(fetch)).toBe(true);
+    });
   });
 
   it('分段提醒和後端計分一致：寫 3 段只提醒段數、不說會扣分；只有 1 段才說會扣 1 分', async () => {

@@ -13,14 +13,30 @@
  * 頁面元件是按需載入的，Suspense 與錯誤邊界只包住內容區：載入中或載入失敗時導覽列仍可操作。
  */
 import { ArrowUp, Ellipsis, Info, Keyboard, PanelLeftClose, PanelLeftOpen, Settings, X } from 'lucide-react';
-import { Component, lazy, Suspense, useCallback, useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type ErrorInfo, type ReactNode, type RefObject } from 'react';
-import { Link, NavLink, Outlet, useLocation } from 'react-router';
+import {
+  Component,
+  lazy,
+  Suspense,
+  useCallback,
+  useEffect,
+  useId,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+  type ErrorInfo,
+  type MouseEvent,
+  type ReactNode,
+  type RefObject,
+} from 'react';
+import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router';
 import { LoginButton } from '../features/account/LoginButton';
 import { OnboardingRedirect } from '../features/account/RequireAccount';
 import { signedIn, useFeatures, useMe } from '../lib/api';
 import { FOOTER_MODE_CLASSES, MODE_CLASSES, desktopWidthMode, resolveSidebarState, sidebarActivePath, type WidthMode } from '../lib/desktopLayout';
 import { useDesktopPref, type SidebarPref } from '../lib/desktopPrefs';
 import { useHotkeys, type HotkeyDef } from '../lib/hotkeys';
+import { TimedSessionContext, createTimedSessionRegistry } from '../lib/timedSession';
 import {
   MQ,
   MainWidthProvider,
@@ -33,6 +49,7 @@ import {
 } from '../lib/media';
 import { usePageFeatureFlags } from '../features/assistant/lib/useAssistantEnabled';
 import { APP_NAME, BOTTOM_NAV_PATHS, NAV_GROUPS, PAGES, isPageEnabled, type PageMeta } from '../modules';
+import { LeaveSessionDialog, type LeavePrompt } from './desktop/LeaveSessionDialog';
 import { OpenShortcutHelpContext } from './desktop/shortcutHelpContext';
 import { Tooltip, useTooltipTarget } from './desktop/Tooltip';
 import { PageIcon } from './icons';
@@ -141,18 +158,25 @@ function SidebarList({ collapsed, activePath, onScroll }: { collapsed: boolean; 
     >
       {NAV_GROUPS.filter((group) => group.id !== 'system').map((group) => {
         const pages = PAGES.filter((p) => p.group === group.id && isPageEnabled(p, flags));
+        // 每個清單都有名稱（讀屏聽到「清單，選擇題型，7 項」；docs/design/desktop-polish.md §3.1）：有分組標題的指向標題，
+        // 第一組（只有首頁）沒有標題，給「開始」。側邊欄只在 ≥ lg 顯示，這些屬性不影響手機。
+        const labelId = `nav-group-${group.id}`;
         return (
           <div key={group.id}>
             {group.label &&
               (collapsed ? (
                 <>
-                  <p className="sr-only">{group.label}</p>
+                  <p id={labelId} className="sr-only">
+                    {group.label}
+                  </p>
                   <div aria-hidden="true" className="mx-3 my-1 border-t border-line" />
                 </>
               ) : (
-                <p className="px-3 pt-1 pb-0.5 text-xs leading-4 font-semibold tracking-wide text-muted">{group.label}</p>
+                <p id={labelId} className="px-3 pt-1 pb-0.5 text-xs leading-4 font-semibold tracking-wide text-muted">
+                  {group.label}
+                </p>
               ))}
-            <ul>
+            <ul {...(group.label ? { 'aria-labelledby': labelId } : { 'aria-label': '開始' })}>
               {pages.map((page) => (
                 <li key={page.path}>
                   <SidebarLink page={page} active={activePath === page.path} collapsed={collapsed} />
@@ -254,12 +278,15 @@ function Sidebar({
   onToggle,
   activePath,
   onOpenHelp,
+  onLinkClickCapture,
 }: {
   sidebar: SidebarState;
   canCollapse: boolean;
   onToggle: () => void;
   activePath: string | null;
   onOpenHelp: () => void;
+  /** 計時中離開確認（≥ lg）：側邊欄與帳號選單裡的站內連結先經過這裡。 */
+  onLinkClickCapture: (e: MouseEvent) => void;
 }) {
   const isDesktop = useIsDesktop();
   const collapsed = sidebar === 'collapsed';
@@ -275,6 +302,7 @@ function Sidebar({
     <aside
       data-sidebar={sidebar}
       className={`fixed inset-y-0 left-0 z-20 hidden ${collapsed ? 'w-16' : 'w-64'} flex-col border-r border-line bg-surface lg:flex`}
+      onClickCapture={onLinkClickCapture}
       {...tip.handlers}
     >
       <div className={`flex h-12 shrink-0 items-center ${collapsed ? 'justify-center' : 'justify-between gap-2 pr-1.5 pl-4'}`}>
@@ -479,10 +507,11 @@ function MoreMenu({ onDismiss, onNavigate }: { onDismiss: () => void; onNavigate
  * 桌機（≥ lg）：寬度與左右內距和內容容器相同、框線移到裡面的 nav，左右和內容卡片對齊；另外多一個「鍵盤快捷鍵」。
  * 放寬的列表頁（mode 'list'）：nav 用 bleed，和頁面放寬的區塊同寬、同一條左緣。
  */
-function SiteFooter({ mode, onOpenHelp }: { mode: WidthMode; onOpenHelp: () => void }) {
+function SiteFooter({ mode, onOpenHelp, onLinkClickCapture }: { mode: WidthMode; onOpenHelp: () => void; onLinkClickCapture: (e: MouseEvent) => void }) {
   const linkCls = 'inline-flex min-h-11 items-center underline-offset-2 hover:text-fg hover:underline';
   return (
     <footer
+      onClickCapture={onLinkClickCapture}
       className={`mx-auto max-w-5xl border-t border-line px-4 py-2 text-sm text-muted lg:w-full lg:border-t-0 lg:px-(--page-px) lg:pt-0 ${FOOTER_MODE_CLASSES[mode]}`}
     >
       <nav aria-label="網站資訊" className={`flex flex-wrap gap-x-5 lg:border-t lg:border-line ${mode === 'list' ? 'lg:bleed' : ''}`}>
@@ -638,10 +667,42 @@ export function Layout() {
   const [helpOpen, setHelpOpen] = useState(false);
   const openHelp = useCallback(() => setHelpOpen(true), []);
   const closeHelp = useCallback(() => setHelpOpen(false), []);
+  // 計時中離開確認（lib/timedSession.ts）：作答頁登記剩餘時間，這裡在 ≥ lg 攔截側邊欄、帳號選單與頁尾的站內連結。
+  const navigate = useNavigate();
+  const [timedSessions] = useState(createTimedSessionRegistry);
+  const [leavePrompt, setLeavePrompt] = useState<LeavePrompt | null>(null);
+  const interceptLeave = useCallback(
+    (e: MouseEvent) => {
+      const info = timedSessions.current();
+      if (!isDesktop || !info) return;
+      // 新分頁、新視窗、下載（Ctrl／⌘／Shift＋點、中鍵）不會離開這一頁，照常開。
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      const link = e.target instanceof Element ? e.target.closest<HTMLAnchorElement>('a[href]') : null;
+      if (!link || (link.target !== '' && link.target !== '_self') || link.hasAttribute('download')) return;
+      const url = new URL(link.href, window.location.href);
+      // 同一頁（網址相同）不算離開；比的是路由的目前位置。
+      if (url.origin !== window.location.origin || (url.pathname === location.pathname && url.search === location.search)) return;
+      const remainingSec = info.remainingSec();
+      if (remainingSec === null) return;
+      // 只 preventDefault（不 stopPropagation）：react-router 的 Link 看到 defaultPrevented 就不換頁，帳號選單照樣收起來。
+      e.preventDefault();
+      setLeavePrompt({ to: `${url.pathname}${url.search}${url.hash}`, remainingSec, leaveNote: info.leaveNote, opener: link });
+    },
+    [isDesktop, timedSessions, location.pathname, location.search],
+  );
+  const stay = useCallback(() => setLeavePrompt(null), []);
+  const leave = useCallback(() => {
+    const to = leavePrompt?.to;
+    setLeavePrompt(null);
+    if (to) navigate(to);
+  }, [leavePrompt, navigate]);
   // 縮到 < lg 時說明對話框跟著卸載（只在桌機 render），卸載不會發 close 事件：這裡把狀態也關掉，
-  // 否則放大回桌機時對話框會自己跳出來。
+  // 否則放大回桌機時對話框會自己跳出來。離開確認也一樣（手機不攔，縮小之後就當作沒按）。
   useEffect(() => {
-    if (!isDesktop) setHelpOpen(false);
+    if (!isDesktop) {
+      setHelpOpen(false);
+      setLeavePrompt(null);
+    }
   }, [isDesktop]);
 
   // 換頁後回到頂端：SPA 換頁不會自動捲動，停在上一頁的位置會讓人以為沒換頁。
@@ -683,6 +744,7 @@ export function Layout() {
         onToggle={toggleSidebar}
         activePath={sidebarActivePath(location.pathname)}
         onOpenHelp={openHelp}
+        onLinkClickCapture={interceptLeave}
       />
       <TopBar />
       {/*
@@ -700,17 +762,20 @@ export function Layout() {
             <RouteErrorBoundary key={location.pathname}>
               <Suspense fallback={<PageLoading />}>
                 <OpenShortcutHelpContext.Provider value={openHelp}>
-                  <Outlet />
+                  <TimedSessionContext value={timedSessions}>
+                    <Outlet />
+                  </TimedSessionContext>
                 </OpenShortcutHelpContext.Provider>
               </Suspense>
             </RouteErrorBoundary>
           </div>
-          <SiteFooter mode={mode} onOpenHelp={openHelp} />
+          <SiteFooter mode={mode} onOpenHelp={openHelp} onLinkClickCapture={interceptLeave} />
         </MainWidthProvider>
       </main>
       <BottomNav menuOpen={menuOpen} onOpenMenu={() => setMenuOpen(true)} moreButtonRef={moreButtonRef} />
       {menuOpen && <MoreMenu onDismiss={dismissMenu} onNavigate={closeMenuAfterNavigate} />}
       {isDesktop && <BackToTop />}
+      {isDesktop && leavePrompt && <LeaveSessionDialog prompt={leavePrompt} onStay={stay} onLeave={leave} />}
       {isDesktop && helpOpen && (
         <ShortcutHelpBoundary onClose={closeHelp}>
           <Suspense fallback={null}>

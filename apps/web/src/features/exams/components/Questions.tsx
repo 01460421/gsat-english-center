@@ -131,7 +131,7 @@ export function ChoiceQuestionBlock({
             labels={[q.label]}
             extra={multi ? <span className="rounded-full bg-primary-soft px-2 text-xs font-semibold text-primary">多選</span> : null}
           />
-          {q.stem && <RichText text={q.stem} variant="inline" className="mt-1 block break-words" />}
+          {q.stem && <RichText text={q.stem} variant="inline" className="mt-1 block break-words" lang="en" />}
           <ErratumNote text={questionErratum(exam.id, q.label)} />
           {multi && (
             <span className="mt-1 block text-sm text-muted">
@@ -163,7 +163,7 @@ export function ChoiceQuestionBlock({
                 />
                 <span className="min-w-0 flex-1 wrap-anywhere">
                   <span className="font-semibold">({letter})</span>{' '}
-                  <RichText text={options?.[letter] ?? ''} variant="inline" className="inline" />
+                  <RichText text={options?.[letter] ?? ''} variant="inline" className="inline" lang="en" />
                 </span>
                 {showFeedback && (isCorrect || checked) && (
                   <span className={`shrink-0 text-xs font-semibold ${isCorrect ? 'text-ok' : 'text-bad'}`}>
@@ -262,6 +262,7 @@ export function FillClusterBlock({ stem, questions }: { stem: string; questions:
       <div className="mt-2 break-words leading-loose">
         <RichText
           text={stem}
+          lang="en"
           renderBlank={(token) => {
             const q = resolveBlankQuestion(token, questions);
             return q ? <InlineBlankInput q={q} /> : undefined;
@@ -293,7 +294,7 @@ export function TextAnswerBlock({ q, multiline }: { q: Question; multiline: bool
       <QuestionHeading title={questionTitle(q.label)} points={q.points} labels={[q.label]} />
       {q.stem && (
         <div className="mt-2 break-words">
-          <RichText text={q.stem} />
+          <RichText text={q.stem} lang="en" />
         </div>
       )}
       <label htmlFor={id} className="mt-3 block text-sm text-muted">
@@ -339,7 +340,7 @@ export function CompositionBlock({ q }: { q: Question }) {
       <QuestionHeading title={questionTitle(q.label)} points={q.points} labels={[q.label]} />
       {q.stem && (
         <div className="mt-2 break-words">
-          <RichText text={q.stem} />
+          <RichText text={q.stem} lang="en" />
         </div>
       )}
       {(requirement || q.tags.paragraphs) && (
@@ -387,7 +388,7 @@ export function TableAnswerBlock({ q, group }: { q: Question; group: QuestionGro
       <QuestionHeading title={questionTitle(q.label)} points={q.points} labels={[q.label]} />
       {q.stem && (
         <div className="mt-2 break-words">
-          <RichText text={q.stem} />
+          <RichText text={q.stem} lang="en" />
         </div>
       )}
       <div className="mt-3 overflow-x-auto rounded-lg border border-line" tabIndex={0} role="region" aria-label="作答表格">

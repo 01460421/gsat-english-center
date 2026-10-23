@@ -187,3 +187,28 @@ export function questionRangeTitle(labels: readonly string[]): string {
   if (first === last) return questionTitle(first);
   return /^\d+[A-Z]?$/.test(first) && /^\d+[A-Z]?$/.test(last) ? `第 ${first}–${last} 題` : `${first}–${last}`;
 }
+
+// ───────────────────────── 語言標記（lang）─────────────────────────
+//
+// 選文、題幹、選項是英文，頁面是 zh-Hant-TW：沒有標 lang="en" 時，螢幕閱讀器用中文語音念英文（docs/design/desktop-polish.md §3.5）。
+// 但同一個欄位不一定全是英文：混合題的題幹常是「中文說明＋英文句子」兩行，中譯英、作文的題目是中文，看圖題的選項是中文的圖片描述。
+// 所以依內容判斷：一行（段）以英文字母為主才標 en。英文行裡夾的中文（「（簡答，2分）」）不另外拆出來標 zh-Hant-TW：
+// 拆成另一個元素會讓瀏覽器分段排版、字的位置差不到 1 px，手機就不再逐像素不變（desktop-polish.md §8.1）。
+
+/** 頁面的語言（index.html 的 <html lang>）。 */
+export const PAGE_LANG = 'zh-Hant-TW';
+
+const LATIN = /[A-Za-z]/g;
+const HAN = /[㐀-鿿豈-﫿]/g;
+/** 這一行（段）是不是以英文為主：有英文字母，而且英文字母比漢字多兩倍以上。 */
+export function isEnglishText(text: string): boolean {
+  const latin = text.match(LATIN)?.length ?? 0;
+  if (latin === 0) return false;
+  const han = text.match(HAN)?.length ?? 0;
+  return latin > han * 2;
+}
+
+/** 節點的純文字（判斷語言用；空格記號不算）。 */
+export function nodesText(nodes: readonly RichNode[]): string {
+  return nodes.map((n) => (n.kind === 'text' ? n.text : n.kind === 'mark' ? nodesText(n.children) : '')).join('');
+}

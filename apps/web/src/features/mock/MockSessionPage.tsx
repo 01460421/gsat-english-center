@@ -12,6 +12,7 @@ import { Link, useNavigate, useParams } from 'react-router';
 import { forgetFailedLoads } from '../../data/client';
 import { loadExam, type Exam } from '../../data/exams';
 import { loadScoreScales, scaleForYear, type ScoreScales } from '../../data/scoreScales';
+import { useTimedSession } from '../../lib/timedSession';
 import { APP_NAME } from '../../modules';
 import { AttemptContext, useAttemptSelector } from '../exams/AttemptContext';
 import { ExamContext } from '../exams/ExamContext';
@@ -228,6 +229,8 @@ function ActiveExamBody({ exam, paper, session, resumed, onSubmitted, onAbandon,
   const submitRef = useRef<HTMLButtonElement>(null);
   const paperRef = useRef<HTMLDivElement>(null);
   const [resumedAt] = useState(() => (resumed ? remainingSec(session.getMeta(), Date.now()) : null));
+  // 計時中離開確認（桌機的側邊欄、頁尾、帳號選單；docs/design/desktop-polish.md §4.7）：模擬考離開之後時間照樣倒數。
+  useTimedSession(!readOnly, () => remainingSec(session.getMeta(), Date.now()), '離開之後時間照樣倒數，時間到就以最後存檔的作答交卷。');
 
   const sectionPos = index.sections.findIndex((s) => s.id === activeSectionId);
   const current = index.sections[sectionPos] ?? index.sections[0];
