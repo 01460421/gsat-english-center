@@ -61,7 +61,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, w
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { gzipSync } from 'node:zlib';
-import { FONTS_DIR, bankPrintableCoverage, checkFontCoverage } from './font-coverage.mjs';
+import { FONTS_DIR, bankPrintableCoverage, checkFontCoverage, vocabPrintableCoverage } from './font-coverage.mjs';
 import { BANK_SELECT_SCRIPT, BankSelectError, OFFICIAL_RUN_WORDS, readUnpublish, wordRuns } from '../../../packages/shared/scripts/bank-select.mjs';
 import { BANK_DATA_SCRIPT, BankDataError, SKIP_REASON_LABELS, buildBankData, practiceGroupPath } from './lib/bank-data.mjs';
 import { BANK_MOCK_LETTERS_SCRIPT } from './lib/bank-mock-letters.mjs';
@@ -218,7 +218,7 @@ function isExamFile(rel) {
  * @typedef {{ level: string, source: string }} LexCefr
  * @typedef {{
  *   entry_id: string, word: string, level: number, pos: string[], variants: string[], raw: string,
- *   forms: Record<string, string>, ipa: string | null, zh: LexZhLine[], variant_info?: LexVariantInfo[],
+ *   forms: Record<string, string>, ipa: string | null, ipa_source?: { source: string } | null, zh: LexZhLine[], variant_info?: LexVariantInfo[],
  *   en_def: string | null, wordnet: LexWordnet | null, family: LexFamilyMember[], examples: LexExample[],
  *   cefr: LexCefr | null, cambridge_url: string
  * }} LexEntry
@@ -454,6 +454,9 @@ function vocabEntry(e, freq) {
     raw: e.raw,
     variants: e.variants,
     ipa: e.ipa ?? null,
+    // 音標大多來自 ECDICT（MIT）；少數（14 筆）來自 Open English WordNet（CC BY 4.0，data/vocab/CREDITS.md §3）。
+    // 只有 OEWN 的才標，講義印到這些音標時要附 OEWN 的出處（docs/design/vocab-handout.md 實作備註）。
+    ...(e.ipa && e.ipa_source?.source === 'oewn' ? { ipa_source: 'oewn' } : {}),
     forms: e.forms,
     zh: e.zh.map((z) => ({ pos: z.pos ?? null, text: z.text, match: z.match, ...(z.domain ? { domain: z.domain } : {}) })),
     ...(e.variant_info && e.variant_info.length > 0
@@ -861,10 +864,15 @@ function buildExams() {
 
 /**
  * PDF 字型缺字檢查（scripts/font-coverage.mjs）：輸出的試題字串都要有字形。
+ * 單字講義（docs/design/vocab-handout.md §7.2）：條目會印的字串缺字也是錯誤；例句缺字只警告（講義不採用那一句）。
  * @param {ReturnType<typeof examDetail>[]} details
+ * @param {{ entries: unknown[] }[]} vocabLevels  各級的完整條目（同 public/data/vocab/L*.json）
  */
-function assertFontCoverage(details) {
+function assertFontCoverage(details, vocabLevels) {
   const result = checkFontCoverage(details.map((d) => ({ id: String(d.id), exam: d })));
+  const vocab = vocabPrintableCoverage(vocabLevels);
+  result.errors.push(...vocab.errors);
+  result.warnings.push(...vocab.warnings);
   for (const w of result.warnings) console.warn(`[build-data] 注意：${w}`);
   check(
     result.errors.length === 0,
@@ -1033,7 +1041,7 @@ function main() {
   assertNoOfficialTranslations(outputs, exams.officialTextsById);
   // D8 第 4 道（docs/design/bank-writing.md §6）：寫作檔的禁止鍵、答案提前外流、官方文字（和選題同一支比對函式）、未清理的 SVG。
   assertWritingBankOutputs(outputs, writingBank.corpus);
-  const fontStats = assertFontCoverage(exams.details);
+  const fontStats = assertFontCoverage(exams.details, [...vocab.byLevel.values()].map((entries) => ({ entries })));
 
   /** @type {Record<string, { bytes: number, gzip_bytes: number }>} */
   const fileSizes = {};

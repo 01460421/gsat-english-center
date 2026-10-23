@@ -7,13 +7,15 @@
  *
  * 鍵盤：空白鍵或 Enter 翻卡、1–4 評分（只有這個分頁顯示中、而且焦點不在輸入框時才生效）。
  */
-import { Flame, Undo2 } from 'lucide-react';
+import { FileText, Flame, Undo2 } from 'lucide-react';
 import { useEffect, useEffectEvent, useId, useMemo, useRef, useState, type ReactNode, type RefObject } from 'react';
+import { Link } from 'react-router';
 import { Rating, type Grade } from 'ts-fsrs';
 import { forgetFailedLoads } from '../../../data/client';
 import { levelFromEntryId, VOCAB_TIERS, type VocabEntry, type VocabLevel } from '../../../data/vocab';
 import { isFormControlTarget, isModalOpen, useHotkeys, type HotkeyDef } from '../../../lib/hotkeys';
 import { useIsDesktop } from '../../../lib/media';
+import { pdfDownloadVisible } from '../../pdf/index';
 import { buildFormMap } from '../lib/forms';
 import { feedbackExample } from '../lib/quiz';
 import {
@@ -30,6 +32,7 @@ import {
 } from '../lib/srs';
 import { formatCount, posText, zhSenseLabel } from '../lib/text';
 import { entriesById, fetchIndex, fetchLevels, peekIndex } from '../lib/vocabData';
+import { handoutLink } from '../navigation';
 import { getSrsStore, useSrs } from '../state';
 import { EmptyState, ErrorBlock, LevelBadge, LoadingBlock, SpeakButton, StorageNotice, WordLink } from '../ui/common';
 import { ExampleSentence } from '../ui/ExampleSentence';
@@ -265,6 +268,10 @@ export function StudyView({ active }: { active: boolean }) {
   );
   const summary = studySummary(srs.value, candidates, now);
   const queueLength = summary.dueNow + summary.newToday;
+  // 做成講義（docs/design/vocab-handout.md §5.1）：加入過每日學習的字；沒有卡片時不顯示。
+  const [pdfVisible] = useState(pdfDownloadVisible);
+  const hasCards = Object.keys(srs.value.cards).length > 0;
+  const handout = handoutLink('study', { kind: 'study', which: 'all' });
 
   const start = async () => {
     const t = Date.now();
@@ -403,6 +410,12 @@ export function StudyView({ active }: { active: boolean }) {
           )}
         </div>
       </section>
+      {pdfVisible && hasCards && (
+        <Link to={handout.to} state={handout.state} className={btnText}>
+          <FileText aria-hidden="true" className="size-4" />
+          把加入學習的字做成講義
+        </Link>
+      )}
       <StorageNotice mode={srs.mode} saveFailed={srs.saveFailed} />
       <StudySettings candidates={candidates} />
     </div>

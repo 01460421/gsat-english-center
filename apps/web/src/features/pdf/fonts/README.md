@@ -1,21 +1,23 @@
 # PDF 字型（子集）
 
-下載的考試格式 PDF 用這些字型排版，並把用到的字形嵌入 PDF（文字可選取、搜尋）。
+下載的考試格式 PDF 與單字講義 PDF 用這些字型排版，並把用到的字形嵌入 PDF（文字可選取、搜尋）。
 字型只在按下「下載 PDF」時才下載；Vite 會把檔案複製到 `/assets/`（檔名帶內容雜湊、一年 immutable 快取）。
-設計理由見 `docs/design/mock-exam-pdf.md` §3。
+設計理由見 `docs/design/mock-exam-pdf.md` §3；單字講義補字見 `docs/design/vocab-handout.md` §7。
 
 | 檔案 | 用途 | 原始字型 | 版本 | 字元數 | TTF | gzip |
 |---|---|---|---|---|---|---|
-| `NotoSerifTC-Regular.subset.ttf.gz` | 中文內文、全形標點 | Noto Serif TC Regular | 2.003-H1 | 5,083 | 2,289 KB | 1,402 KB |
-| `NotoSerifTC-Bold.subset.ttf.gz` | 中文標題 | Noto Serif TC Bold | 2.003-H1 | 466 | 139 KB | 91 KB |
-| `Tinos-Regular.subset.ttf.gz` | 英文內文（與 Times New Roman 等寬） | Tinos Regular | 1.340 | 363 | 25 KB | 16 KB |
-| `Tinos-Bold.subset.ttf.gz` | 英文粗體（題目的 `<b>`、標題裡的數字） | Tinos Bold | 1.340 | 363 | 25 KB | 16 KB |
-| `Tinos-Italic.subset.ttf.gz` | 英文斜體（保留給書名、外來語） | Tinos Italic | 1.340 | 363 | 26 KB | 17 KB |
+| `NotoSerifTC-Regular.subset.ttf.gz` | 中文內文、全形標點 | Noto Serif TC Regular | 2.003-H1 | 5,219 | 2,355 KB | 1,441 KB |
+| `NotoSerifTC-Bold.subset.ttf.gz` | 中文標題 | Noto Serif TC Bold | 2.003-H1 | 494 | 151 KB | 99 KB |
+| `Tinos-Regular.subset.ttf.gz` | 英文內文（與 Times New Roman 等寬）、國際音標 | Tinos Regular | 1.340 | 467 | 37 KB | 22 KB |
+| `Tinos-Bold.subset.ttf.gz` | 英文粗體（題目的 `<b>`、標題裡的數字、講義的字頭） | Tinos Bold | 1.340 | 467 | 37 KB | 22 KB |
+| `Tinos-Italic.subset.ttf.gz` | 英文斜體（書名、外來語、講義的詞性） | Tinos Italic | 1.340 | 467 | 38 KB | 24 KB |
 | `NotoEmoji-Regular.subset.ttf.gz` | 單色表情符號（112 學測混合題） | Noto Emoji | 3.006 | 127 | 64 KB | 36 KB |
 | `metrics.json` | 實際涵蓋的字元範圍、Tinos 字寬表、中文與粗體中文字集、各檔雜湊 | — | — | — | — | — |
 
-合計約 **1.54 MB（gzip）**，另有 PDF 引擎 pdfmake 約 0.36 MB（gzip）。2026-10-20 本站自組模擬考（`docs/design/bank-mock.md` §7.6）
-補進題庫會印的字：中文多 91 字（+23 KB gzip）、粗體多 62 字（+15 KB gzip）。
+合計約 **1.61 MB（gzip）**，另有 PDF 引擎 pdfmake 約 0.36 MB（gzip）。2026-10-20 本站自組模擬考（`docs/design/bank-mock.md` §7.6）
+補進題庫會印的字：中文多 91 字（+23 KB gzip）、粗體多 62 字（+15 KB gzip）。2026-10-23 單字講義（`docs/design/vocab-handout.md` §7）
+補進單字資料會印的字：中文多 136 字（+39 KB gzip）、粗體多 28 字（+8 KB gzip）、Tinos 三個字重各多 104 字（國際音標等，各約 +6–7 KB gzip）。
+只加字元：原本就有的字元選到的字型、字寬都不變，所以歷屆卷、模擬考、自組卷的版面不變（`pdf-render-check.mjs` 的頁數相同）。
 
 ## 授權
 
@@ -45,19 +47,26 @@ GitHub 上的原始發行檔（Adobe 的 OTF）在開發環境的網路代理下
   由 `node apps/web/scripts/font-coverage.mjs --print-bank-chars` 依字型檢查的同一套規則取出；不含 SVG、全文中譯與閱讀圖表的文字描述）
   ＋ `apps/web/src/**/*.ts(x)` 的所有字元（介面文字）＋ `@gsat/shared` 的 `tiers.ts`、`writing.ts` 的字串常值（難度名稱、作文評分項目名稱）
   ＋教育部「常用國字標準字體表」4,808 字（`scripts/fonts/moe-common-4808.txt`）＋常用全形標點、圈號數字、全形英數。
-  拉丁字母與表情符號不放（交給 Tinos、Noto Emoji）。`metrics.json` 的 `regularCjk` 列出實際涵蓋的字，自組卷的解析用它判斷能不能印（`fontRuns.ts` 的 `missingGlyphs`）。
+  ＋單字資料會印進講義的字（`public/data/vocab/L1–L6.json` 的字頭、釋義、變化形、同詞族、例句與中文翻譯、譯者名稱，
+  由 `node apps/web/scripts/font-coverage.mjs --print-vocab-chars` 依字型檢查的同一套規則取出；講義正規化時刪掉的零寬字元與細空白不收）。
+  拉丁字母與表情符號不放（交給 Tinos、Noto Emoji）。`metrics.json` 的 `regularCjk` 列出實際涵蓋的字，自組卷的解析與講義的例句用它判斷能不能印（`fontRuns.ts` 的 `missingGlyphs`）。
 - **Noto Serif TC Bold**：所有考卷的大題／部分標題、`scripts/fonts/bold-extra.txt`（封面、答題卷、答案頁的標題用字）、
   PDF 固定文字檔 `src/features/pdf/layout/strings.ts` 與 `attribution.ts` 裡的中文、自組卷的粗體字串（`strings.ts` 的 `SITE_PAPER_BOLD`）
-  與藍圖的大題標題（`src/features/mock/bank/blueprint.ts`）。缺字時 PDF 改用一般粗細的同一個字（`fontRuns.ts` 的 `hasBoldGlyph`），不會變成方框；
-  `SITE_PAPER_BOLD` 與藍圖標題缺粗體字則是字型檢查的錯誤。
-- Noto Serif TC 本身沒有的字（目前只有題庫參考資料標題裡的日文字形「産」「禄」）：子集化時會列出警告；PDF 印資料來源與解析時
-  先套用 `strings.ts` 的 `GLYPH_SUBSTITUTES` 換成正體字，字型檢查也把這些字當成有字形。
-- **Tinos**：ASCII、Latin-1、Latin Extended-A、常用標點（連字號、破折號、彎引號、刪節號、‰、′″）、€、™、箭頭 ←↑→↓↔、減號。
+  與藍圖的大題標題（`src/features/mock/bank/blueprint.ts`）、單字講義的粗體字串（`layout/vocab/strings.ts` 的 `VOCAB_PDF_BOLD`）。
+  缺字時 PDF 改用一般粗細的同一個字（`fontRuns.ts` 的 `hasBoldGlyph`），不會變成方框；
+  `SITE_PAPER_BOLD`、`VOCAB_PDF_BOLD` 與藍圖標題缺粗體字則是字型檢查的錯誤。
+- Noto Serif TC 本身沒有的字（題庫參考資料標題裡的日文字形「産」「禄」；單字例句裡的 ☭ 與擴充 B 區的兩個字）：子集化時會列出警告。
+  PDF 印資料來源與解析時先套用 `strings.ts` 的 `GLYPH_SUBSTITUTES` 換成正體字，字型檢查也把這些字當成有字形；
+  含這些字的單字例句（Tatoeba #1257568、#2806272）講義不採用，字型檢查只警告。
+- **Tinos**：ASCII、Latin-1、Latin Extended-A、常用標點（連字號、破折號、彎引號、刪節號、‰、′″）、€、™、箭頭 ←↑→↓↔、減號；
+  單字講義的國際音標：IPA Extensions（U+0250–02AF）、重音記號 ˈ ˌ、長音 ː ˑ、θ，以及單字資料裡其他 Tinos 有字形的非中文字（ǎ、α、β）。
+  三個字重收同一組字元，Tinos 的某個字重沒有的字不收。
 - **Noto Emoji**：Emoticons 區塊（U+1F600–1F64F）與 U+1F910–1F92F、U+1F970–1F97A、❤、👍👎、🎉。
 
 ## 對原始字型的修改
 
 1. 子集化（fontTools 4.66.1）：只留上述字元；去掉 hinting、`vhea`／`vmtx`／`BASE`／`STAT`／`DSIG` 表；OpenType 功能只留 `kern`、`palt`（中文）或 `kern`、`liga`（英文）。
+   `head` 的修改時間沿用原始字型（不寫入產生的時間），同樣的輸入每次產生的檔案位元組都相同。
 2. **統一行高度量**：每個字型的 `hhea` 與 `OS/2` typo 上緣改為 0.891 em、下緣 0.216 em、行距 0（Times New Roman／Tinos 的比例）。
    PDF 引擎用字型的上下緣算行高；不改的話含中文的行（Noto 原本 1.437 em）會比純英文的行（1.107 em）高，同一段落的行距忽大忽小。
 3. 版本字串（name ID 5）加上「; subset for gsat-english-center PDF」。字型名稱不變。
@@ -76,7 +85,7 @@ PDF 引擎 pdfmake 透過 pdfkit／fontkit 嵌入字型，需要原始的 `glyf`
 ## 什麼時候要重新產生、怎麼做
 
 `npm run build`（`build:data`）會檢查試題資料的每個字元都有字形（`apps/web/scripts/font-coverage.mjs`），缺字就讓建置失敗並列出缺的字。
-通常是新的試題資料用到 4,808 常用字以外的罕用字，或 `src/features/pdf/layout/strings.ts`（PDF 固定文字）、
+通常是新的試題資料用到 4,808 常用字以外的罕用字，或單字資料改版（條目欄位缺字是錯誤，例句缺字只警告、講義不採用那一句），或 `src/features/pdf/layout/strings.ts`、`layout/vocab/strings.ts`（PDF 固定文字）、
 `font-coverage.mjs` 的 `PDF_DYNAMIC_FILES`（模擬考與自組卷 PDF 的卷別、藍圖、難度名稱…）新增了常用字以外的字。
 
 題庫（本站自組模擬考）不讓建置失敗：題本會印的字缺字時，那一組帶排除原因 `glyph`、不能用來組新卷（建置紀錄有警告，題庫練習照樣能用）；
@@ -91,6 +100,6 @@ npm run check:fonts -w @gsat/web
 ```
 
 `--download` 會下載上表固定版本的原始字型（雜湊不符就停止）；`--src` 請放在 repo 外，原始字型（每個約 10 MB）不進版控。
-子集化工具會呼叫 `node apps/web/scripts/font-coverage.mjs --print-bank-chars`，所以要先跑過 `build:data`。
+子集化工具會呼叫 `node apps/web/scripts/font-coverage.mjs --print-bank-chars` 與 `--print-vocab-chars`，所以要先跑過 `build:data`。
 字型檔與 `metrics.json` 是資料版本（`contentVersion`）的輸入：重跑子集化後，組卷池會重新判斷哪些題組因缺字不能組新卷。
 重跑後 `metrics.json` 與 `.ttf.gz` 會一起更新，連同 PR 提交即可。換字型或版本時，更新 `SOURCES`、本文件與 `LICENSE-OFL.txt`。

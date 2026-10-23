@@ -21,11 +21,24 @@
  *   - 雙面版：答題卷、答案、解析各段的第一頁是單數頁，補的空白頁印「（本頁空白）」；教師卷第 1 頁不是題本；
  *   - 學生卷 14–24 頁；字型全部嵌入子集；印出解析改印替代說明的題數（題庫補字後應為 0）。
  *
+ * 單字講義（docs/design/vocab-handout.md §9.2）：用講義頁同一套程式（handout/selection.ts、assemble.ts）組資料、
+ * layout/vocab/ 排版，讀 public/data/vocab/。固定產生 L1 第 1 份 100 字的四種類型、L4 第 3 份的講義版雙面列印、
+ * L6 全部（取前 600 字）的講義版、L5 全部 600 字的背誦版，另加兩種選項組合（L3 講義版兩欄、L3 句意填空卷附中文與字母數），
+ * 以及最重的兩份：L1 前 600 字講義版開全部選項＋雙面（例句最多、頁數最多，時間的最壞情況）、L1 前 600 字測驗卷。檢查：
+ *   - %PDF- 開頭；頁數在 handout/estimate.ts 估計的 ±25%（至少容許 1 頁）內；
+ *   - 每一頁都有詞彙表出處與講義代號；全文與文件屬性除了那一句出處，沒有官方考試機構的名稱或英文縮寫；
+ *   - 每個字頭、音標（和資料一致，沒有缺字）、每題題號與 Tatoeba 編號都取得到；
+ *   - 句意填空每題那一段文字裡找不到答案字（整字、不分大小寫），答案頁找得到；
+ *   - 答案從新的一頁開始，頁碼另起；雙面列印時練習、資料來源、答案都從單數頁開始，空白頁只印「（本頁空白）」；
+ *   - pdftotext -bbox：沒有任何字超出版心的左右邊界（「黏在一起」的片段量錯寬度時會超出右邊界）；
+ *   - pdffonts：全部嵌入子集；印出每份的組資料與排版時間、頁數。
+ *
  * 用法（在 repo 根目錄，先跑過 npm run build:data -w @gsat/web）：
- *   node apps/web/scripts/pdf-render-check.mjs --out /tmp/gsat-pdfs              # 66 份全部＋三份自組卷
+ *   node apps/web/scripts/pdf-render-check.mjs --out /tmp/gsat-pdfs              # 66 份全部＋三份自組卷＋單字講義
  *   node apps/web/scripts/pdf-render-check.mjs --out /tmp/gsat-pdfs --ids gsat-115,gsat-85 --png /tmp/gsat-png
  *   node apps/web/scripts/pdf-render-check.mjs --out /tmp/gsat-pdfs --ids bank   # 只跑自組卷（--ids 裡有 bank 才跑自組卷）
  *   node apps/web/scripts/pdf-render-check.mjs --out /tmp/gsat-pdfs --ids bank --bank-ids bk1-b-…,bk1-t-…
+ *   node apps/web/scripts/pdf-render-check.mjs --out /tmp/gsat-pdfs --ids vocab  # 只跑單字講義（--ids 裡有 vocab 才跑）
  * 需要 poppler-utils（pdftotext、pdffonts；--png 另需 pdftoppm）。沒有安裝時只做第 1 項並提示。
  * 不在 CI 的 npm test 裡跑（要讀 data/、要 poppler，66 份約 40 秒）；版面有改動時手動跑，結果寫在 PR。
  */
@@ -214,7 +227,8 @@ async function main() {
   pdfmake.setLocalAccessPolicy(() => false);
 
   const runBank = !opts.ids || opts.ids.includes('bank');
-  const ids = (opts.ids?.filter((id) => id !== 'bank') ?? readdirSync(EXAMS_DIR).filter((f) => f.endsWith('.json') && f !== 'index.json' && f !== 'score-scales.json').map((f) => f.replace(/\.json$/, ''))).sort();
+  const runVocab = !opts.ids || opts.ids.includes('vocab');
+  const ids = (opts.ids?.filter((id) => id !== 'bank' && id !== 'vocab') ?? readdirSync(EXAMS_DIR).filter((f) => f.endsWith('.json') && f !== 'index.json' && f !== 'score-scales.json').map((f) => f.replace(/\.json$/, ''))).sort();
   /** @type {string[]} */
   const failures = [];
   /** @type {string[]} */
@@ -328,8 +342,14 @@ async function main() {
     bankCount = bank.papers;
     totalMs += bank.ms;
   }
+  let vocabCount = 0;
+  if (runVocab) {
+    const vocab = await checkVocabHandouts({ opts, config, pdfmake, poppler, failures, rows });
+    vocabCount = vocab.handouts;
+    totalMs += vocab.ms;
+  }
   console.log(rows.join('\n'));
-  console.log(`[pdf-check] ${ids.length} 份考卷、${bankCount} 份自組卷、${rows.length} 個 PDF，排版共 ${(totalMs / 1000).toFixed(1)} 秒；輸出在 ${opts.out}`);
+  console.log(`[pdf-check] ${ids.length} 份考卷、${bankCount} 份自組卷、${vocabCount} 份單字講義、${rows.length} 個 PDF，排版共 ${(totalMs / 1000).toFixed(1)} 秒；輸出在 ${opts.out}`);
   if (failures.length > 0) {
     console.error(`[pdf-check] ${failures.length} 個問題：\n${failures.map((f) => `  - ${f}`).join('\n')}`);
     process.exit(1);
@@ -573,5 +593,262 @@ async function checkBankPapers(ctx) {
 
 /** 頁首右側的「英文考科」（空白頁檢查時當成頁首文字去掉）。 */
 const PDF_SUBJECT = '英文考科';
+
+// ---------------------------------------------------------------------------
+// 單字講義（docs/design/vocab-handout.md §9.2）
+// ---------------------------------------------------------------------------
+
+/**
+ * @typedef {{ name: string, kind: 'notes' | 'recite' | 'cloze' | 'quiz', levels: number[], range: { by: 'all' } | { by: 'part', size: 50 | 100, part: number }, options?: Record<string, unknown> }} VocabCase
+ */
+
+/** @type {VocabCase[]} */
+const VOCAB_CASES = [
+  { name: 'L1-p1-notes', kind: 'notes', levels: [1], range: { by: 'part', size: 100, part: 1 } },
+  { name: 'L1-p1-recite', kind: 'recite', levels: [1], range: { by: 'part', size: 100, part: 1 } },
+  { name: 'L1-p1-cloze', kind: 'cloze', levels: [1], range: { by: 'part', size: 100, part: 1 } },
+  { name: 'L1-p1-quiz', kind: 'quiz', levels: [1], range: { by: 'part', size: 100, part: 1 } },
+  { name: 'L4-p3-notes-duplex', kind: 'notes', levels: [4], range: { by: 'part', size: 100, part: 3 }, options: { duplex: true } },
+  { name: 'L6-all-notes', kind: 'notes', levels: [6], range: { by: 'all' } },
+  { name: 'L5-all-recite', kind: 'recite', levels: [5], range: { by: 'all' } },
+  // 選項組合：兩欄講義版（不附例句）；句意填空卷附中文翻譯、首字母＋字母數。
+  { name: 'L3-p2-notes-2col', kind: 'notes', levels: [3], range: { by: 'part', size: 100, part: 2 }, options: { columns: 2 } },
+  { name: 'L3-p2-cloze-zh', kind: 'cloze', levels: [3], range: { by: 'part', size: 100, part: 2 }, options: { clozeZh: true, letterCount: true } },
+  // 最重的情況（時間與記憶體的最壞情況，設計文件實作備註）：L1 幾乎每個字都有例句，600 字講義版開全部選項＋雙面約 116 頁，
+  // 比 L6 前 600 字（很多字沒有例句，85 頁）重得多。
+  {
+    name: 'L1-600-notes-full',
+    kind: 'notes',
+    levels: [1],
+    range: { by: 'all' },
+    options: { fullSenses: true, synonyms: true, clozeZh: true, letterCount: true, duplex: true },
+  },
+  { name: 'L1-600-quiz', kind: 'quiz', levels: [1], range: { by: 'all' } },
+];
+
+/** A4 寬度與講義版心的左右邊界（pt，layout/vocab/metrics.ts 的 VOCAB_MARGINS）；容許 0.5 pt 的量測誤差。 */
+const VOCAB_PAGE_WIDTH = 595.28;
+const VOCAB_SIDE_MARGIN = 50;
+
+/** 正規表示式的特殊字元跳脫。 @param {string} s */
+const escapeRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+/**
+ * 講義的四種類型與上面幾種組合：產生、存檔、用 poppler 檢查。
+ * @param {{ opts: ReturnType<typeof parseArgs>, config: object, pdfmake: PdfMake, poppler: boolean, failures: string[], rows: string[] }} ctx
+ */
+async function checkVocabHandouts(ctx) {
+  const { opts, config, pdfmake, poppler, failures, rows } = ctx;
+  const VOCAB_DIR = path.join(DATA_DIR, 'vocab');
+  if (!existsSync(path.join(VOCAB_DIR, 'L6.json'))) {
+    failures.push('單字講義：找不到 public/data/vocab/L6.json，請先執行 npm run build:data -w @gsat/web');
+    return { handouts: 0, ms: 0 };
+  }
+  /** @param {string} rel */
+  const load = async (rel) => /** @type {any} */ ((await runnerImport(path.join(WEB_DIR, rel), /** @type {any} */ (config))).module);
+  const assemble = await load('src/features/vocab/handout/assemble.ts');
+  const selection = await load('src/features/vocab/handout/selection.ts');
+  const labels = await load('src/features/vocab/handout/labels.ts');
+  const handoutOptions = await load('src/features/vocab/handout/options.ts');
+  const estimate = await load('src/features/vocab/handout/estimate.ts');
+  const layout = await load('src/features/pdf/layout/vocab/buildVocabHandoutDocDefinition.ts');
+  const strings = await load('src/features/pdf/layout/vocab/strings.ts');
+  const chrome = await load('src/features/pdf/layout/vocab/chrome.ts');
+  const vocabData = await load('src/data/vocab.ts');
+  const T = strings.VOCAB_PDF_TEXT;
+  const B = strings.VOCAB_PDF_BOLD;
+  const wordlist = norm(vocabData.VOCAB_CREDITS.wordlist);
+
+  const index = readData('vocab/index.json');
+  /** @type {Map<number, { entries: any[] }>} */
+  const levels = new Map([1, 2, 3, 4, 5, 6].map((l) => [l, readData(`vocab/L${l}.json`)]));
+  const byId = new Map([...levels.values()].flatMap((f) => f.entries.map((/** @type {any} */ e) => [e.id, e])));
+  const selectionContext = { index: index.entries, mistakes: { schema: 'gsat-vocab-mistakes', version: 1, updated_at: 0, items: {} }, srs: { cards: {} }, now: Date.now() };
+
+  let ms = 0;
+  let count = 0;
+  for (const c of VOCAB_CASES) {
+    const fail = (/** @type {string} */ msg) => failures.push(`單字講義 ${c.name}：${msg}`);
+    const source = { kind: 'levels', levels: c.levels, range: c.range };
+    const picked = selection.selectHandoutEntries(source, selectionContext);
+    const entries = picked.entries.map((/** @type {{ id: string }} */ e) => byId.get(e.id));
+    const pool = picked.levels.flatMap((/** @type {number} */ l) => levels.get(l)?.entries ?? []);
+    const options = { ...handoutOptions.DEFAULT_HANDOUT_OPTIONS, answerKey: true, ...c.options };
+    const rangeTotal = selection.levelEntries(index.entries, c.levels).length;
+    const title = labels.sourceTitle(source, entries.length, rangeTotal, picked.total);
+    const t0 = performance.now();
+    const { data } = assemble.assembleHandout({ kind: c.kind, entries, pool, options, title, dataVersion: index.version, reroll: 0, now: new Date(), lookup: (/** @type {string} */ id) => byId.get(id) });
+    const t1 = performance.now();
+    /** @type {Buffer} */
+    let buf;
+    try {
+      buf = await pdfmake.createPdf(layout.buildVocabHandoutDocDefinition(data)).getBuffer();
+    } catch (err) {
+      fail(`產生失敗：${err instanceof Error ? (err.stack ?? err.message) : String(err)}`);
+      continue;
+    }
+    const t2 = performance.now();
+    const assembleMs = Math.round(t1 - t0);
+    const layoutMs = Math.round(t2 - t1);
+    ms += layoutMs;
+    count += 1;
+    const file = path.join(opts.out, `vocab-${c.name}.pdf`);
+    writeFileSync(file, buf);
+    if (buf.subarray(0, 5).toString('latin1') !== '%PDF-' || buf.length < 20_000) fail(`檔案不像 PDF（${buf.length} bytes）`);
+    const pageCount = (buf.toString('latin1').match(/\/Type \/Page\b/g) ?? []).length;
+    const est = estimate.estimatePages(data).total;
+    if (Math.abs(pageCount - est) > Math.max(1, est * 0.25)) fail(`${pageCount} 頁，和估計的 ${est} 頁差超過 25%`);
+    const row = `vocab ${c.name.padEnd(20)} ${String(pageCount).padStart(3)} 頁（估 ${String(est).padStart(3)}）${String(Math.round(buf.length / 1024)).padStart(5)} KB 組資料 ${String(assembleMs).padStart(4)} ms 排版 ${String(layoutMs).padStart(5)} ms｜${entries.length} 字、句意填空 ${data.cloze.length}、拼字 ${data.spelling.length}、英選中 ${data.choice.length}、代號 ${data.code}`;
+    if (!poppler) {
+      rows.push(row);
+      continue;
+    }
+
+    // 文件屬性
+    const info = execFileSync('pdfinfo', ['-enc', 'UTF-8', file], { encoding: 'utf8' });
+    const docTitle = /^Title:\s*(.*)$/m.exec(info)?.[1] ?? '';
+    const subject = /^Subject:\s*(.*)$/m.exec(info)?.[1] ?? '';
+    for (const banned of BANNED) if (`${docTitle}${subject}`.toLowerCase().includes(banned)) fail(`文件屬性有「${banned}」：${docTitle}｜${subject}`);
+
+    const text = execFileSync('pdftotext', ['-layout', '-enc', 'UTF-8', file, '-'], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
+    const pages = text.split('\f').slice(0, pageCount);
+    const all = norm(text);
+    // 2. 每頁的出處與講義代號；除了出處那一句沒有機構名稱。
+    const code = norm(T.codeLabel(data.code));
+    pages.forEach((p, i) => {
+      const t = norm(p);
+      if (!t.includes(wordlist) || !t.includes(code)) fail(`第 ${i + 1} 頁的頁尾沒有詞彙表出處或講義代號`);
+    });
+    const withoutCredit = all.split(wordlist).join('');
+    for (const banned of BANNED) if (withoutCredit.includes(banned)) fail(`除了詞彙表出處，內文還有「${banned}」`);
+
+    // 每一頁屬於哪一段：本體（標題區、條目、背誦表）、練習、資料來源、答案、空白頁。
+    const blankMark = norm(T.blankPage);
+    const keyHeader = norm(T.keyHeader(data.code));
+    const exerciseMark = norm(T.clozeInstructions(data.options.hint.firstLetter, data.options.hint.letterCount)).slice(0, 16);
+    const sourcesMark = norm(T.sourcesIntro);
+    /** @type {('body' | 'exercise' | 'sources' | 'key' | 'blank')[]} */
+    const seg = [];
+    let current = /** @type {'body' | 'exercise' | 'sources' | 'key'} */ (c.kind === 'cloze' || c.kind === 'quiz' ? 'exercise' : 'body');
+    pages.forEach((p) => {
+      const t = norm(p);
+      if (t.includes(blankMark)) {
+        seg.push('blank');
+        return;
+      }
+      if (t.includes(keyHeader)) current = 'key';
+      else if (t.includes(sourcesMark)) current = 'sources';
+      else if (current === 'body' && t.includes(exerciseMark)) current = 'exercise';
+      seg.push(current);
+    });
+    const firstOf = (/** @type {string} */ s) => seg.indexOf(/** @type {any} */ (s)) + 1;
+    for (const s of ['exercise', 'sources', 'key']) if (firstOf(s) === 0) fail(`找不到${{ exercise: '句意填空', sources: '資料來源頁', key: '答案' }[s]}`);
+    // 使用方式的「句意填空起始頁：N」（講義版、背誦版不勾雙面列印時）：頁碼要等於練習實際的起始頁，不能留下 pdfmake 的佔位字。
+    if ((c.kind === 'notes' || c.kind === 'recite') && !data.options.duplex && !norm(pages[0] ?? '').includes(norm(`${T.exercisePage}${firstOf('exercise')}`))) {
+      fail(`第 1 頁的「${T.exercisePage}」不是 ${firstOf('exercise')}`);
+    }
+    if (/(^|[^\d#])00000($|\D)/m.test(text)) fail('有沒替換的頁碼佔位字 00000');
+    // 5. 答案另起一頁、頁碼另起；雙面列印時段落開頭在單數頁。
+    const keyPages = seg.filter((s) => s === 'key').length;
+    const firstKey = firstOf('key');
+    if (firstKey > 0) {
+      const first = norm(pages[firstKey - 1] ?? '');
+      if (!first.includes(norm(T.keyPageOf(1, keyPages)))) fail(`答案第 1 頁沒有「${T.keyPageOf(1, keyPages)}」`);
+      if (!first.includes(norm(B.keyQuick))) fail('答案第 1 頁不是從速查表開始');
+      if (seg.slice(firstKey - 1).some((s) => s !== 'key')) fail('答案後面還有其他內容');
+    }
+    if (data.options.duplex) {
+      for (const s of c.kind === 'notes' || c.kind === 'recite' ? ['exercise', 'sources', 'key'] : ['sources', 'key']) {
+        const first = firstOf(s);
+        if (first > 0 && first % 2 === 0) fail(`雙面列印：${s} 從第 ${first} 頁（雙數頁）開始`);
+      }
+      seg.forEach((s, i) => {
+        if (s !== 'blank') return;
+        let rest = norm(pages[i] ?? '').replace(blankMark, '').split(wordlist).join('');
+        for (const line of chrome.footerLines(data)) rest = rest.replace(norm(line), '');
+        if (rest.length > 0) fail(`第 ${i + 1} 頁是補的空白頁，卻有其他內容：${rest.slice(0, 40)}`);
+      });
+    } else if (seg.includes('blank')) fail('沒有勾雙面列印卻有空白頁');
+
+    // 3. 字頭、音標、題號、Tatoeba 編號。
+    const pageText = (/** @type {string} */ which) => pages.filter((_, i) => seg[i] === which).join('\n');
+    const bodyText = norm(pageText('body'));
+    for (const g of data.groups) {
+      for (const w of g.words) {
+        if (!bodyText.includes(norm(w.word))) fail(`取不到字頭 ${w.word}`);
+        if (c.kind === 'notes' && data.options.ipa && w.ipa && !bodyText.includes(norm(`/${w.ipa}/`))) fail(`取不到 ${w.word} 的音標 /${w.ipa}/`);
+      }
+    }
+    // 練習的每一題：去掉頁首頁尾的行，依「題號.」切出每題的文字。
+    const chromeLine = (/** @type {string} */ line) => {
+      const t = norm(line);
+      return t.includes(wordlist) || t.includes(code) || /第\d+頁／共\d+頁/u.test(t);
+    };
+    const exerciseLines = pageText('exercise')
+      .split('\n')
+      .filter((l) => !chromeLine(l));
+    const keyText = pageText('key');
+    /** @type {Map<number, string>} */
+    const windows = new Map();
+    for (const line of exerciseLines) {
+      // 句意填空一欄，每題從行首的「題號.」開始，接著的行（換行的句子、中文翻譯）都屬於這一題；
+      // 拼字兩欄一行有兩題，那一部分只需要題號。
+      const lead = /^\s*(\d{1,3})\.\s/.exec(line);
+      const key = lead ? Number(lead[1]) : null;
+      if (key !== null && !windows.has(key)) windows.set(key, '');
+      const last = key ?? [...windows.keys()].at(-1);
+      if (last !== undefined) windows.set(last, `${windows.get(last) ?? ''} ${line}`);
+    }
+    const numbers = new Set(exerciseLines.join('\n').match(/\d{1,3}(?=\.\s)/g)?.map(Number) ?? []);
+    const exerciseNorm = norm(exerciseLines.join('\n'));
+    for (const item of data.cloze) {
+      if (!numbers.has(item.no)) fail(`取不到句意填空第 ${item.no} 題的題號`);
+      const id = /#(\d+)/.exec(item.enAttribution)?.[1] ?? '';
+      if (!exerciseNorm.includes(`tatoeba#${id}`)) fail(`取不到第 ${item.no} 題的 Tatoeba #${id}`);
+      // 4. 洩漏：那一題的文字（去掉 Tatoeba 標示）裡沒有答案字；答案頁有。
+      const win = (windows.get(item.no) ?? '').replace(/(中文\s)?Tatoeba\s#\d+(\sby\s\S+)?/g, ' ');
+      const re = new RegExp(`(^|[^A-Za-z'’-])${escapeRe(item.answer)}($|[^A-Za-z'’-])`, 'i');
+      if (!win.trim()) fail(`切不出第 ${item.no} 題的文字`);
+      else if (re.test(win)) fail(`第 ${item.no} 題的題目文字裡有答案 ${item.answer}：${win.replace(/\s+/g, ' ').slice(0, 120)}`);
+      if (!re.test(keyText)) fail(`答案頁取不到第 ${item.no} 題的答案 ${item.answer}`);
+    }
+    for (const item of data.spelling) {
+      if (!numbers.has(item.no)) fail(`取不到拼字第 ${item.no} 題的題號`);
+      if (!new RegExp(`(^|[^A-Za-z])${escapeRe(item.answer)}($|[^A-Za-z])`, 'i').test(keyText)) fail(`答案頁取不到拼字第 ${item.no} 題的答案 ${item.answer}`);
+    }
+    for (const item of data.choice) {
+      if (!numbers.has(item.no)) fail(`取不到英選中第 ${item.no} 題的題號`);
+      if (!exerciseNorm.includes(norm(item.word))) fail(`取不到英選中第 ${item.no} 題的字 ${item.word}`);
+    }
+    // 6. 字型全部嵌入子集。
+    const fonts = execFileSync('pdffonts', [file], { encoding: 'utf8' }).split('\n').slice(2).filter((l) => l.trim() !== '');
+    for (const line of fonts) {
+      const cols = line.trim().split(/\s+/);
+      const [emb, sub] = cols.slice(-5, -3);
+      if (emb !== 'yes' || sub !== 'yes') fail(`字型沒有嵌入子集：${line.trim()}`);
+    }
+    // 7. 沒有字超出版心的左右邊界（pdftotext -bbox 的每個字的 xMin、xMax）。
+    const bbox = execFileSync('pdftotext', ['-bbox', '-enc', 'UTF-8', file, '-'], { encoding: 'utf8', maxBuffer: 256 * 1024 * 1024 });
+    let bboxPage = 0;
+    /** @type {string[]} */
+    const outside = [];
+    for (const line of bbox.split('\n')) {
+      if (line.includes('<page ')) bboxPage += 1;
+      const m = /<word xMin="([\d.]+)" yMin="[\d.]+" xMax="([\d.]+)" yMax="[\d.]+">([^<]*)<\/word>/.exec(line);
+      if (!m) continue;
+      const [xMin, xMax] = [Number(m[1]), Number(m[2])];
+      if (xMax > VOCAB_PAGE_WIDTH - VOCAB_SIDE_MARGIN + 0.5 || xMin < VOCAB_SIDE_MARGIN - 0.5) outside.push(`第 ${bboxPage} 頁「${m[3]}」x=${xMin.toFixed(1)}–${xMax.toFixed(1)}`);
+    }
+    if (outside.length > 0) fail(`${outside.length} 個字超出版心左右邊界：${outside.slice(0, 5).join('；')}`);
+    const parts = /** @type {const} */ (['body', 'exercise', 'sources', 'key', 'blank'])
+      .filter((k) => seg.includes(k))
+      .map((k) => `${{ body: c.kind === 'recite' ? '背誦表' : '條目', exercise: '練習', sources: '資料來源', key: '答案', blank: '空白' }[k]} ${seg.filter((s) => s === k).length}`);
+    rows.push(`${row}（${parts.join('、')}；${fonts.length} 字型）`);
+    if (opts.png && (!opts.pngIds || opts.pngIds.includes('vocab'))) {
+      execFileSync('pdftoppm', ['-r', '60', '-png', file, path.join(opts.png, `vocab-${c.name}`)]);
+    }
+  }
+  return { handouts: count, ms };
+}
 
 await main();

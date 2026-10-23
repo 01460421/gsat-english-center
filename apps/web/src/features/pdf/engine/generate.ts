@@ -1,10 +1,14 @@
 /**
  * 實際產生 PDF（Worker 裡執行；瀏覽器不支援 Worker 時主執行緒也用這個）。
+ * 考卷與單字講義共用 pdfmake 與字型的載入、進度階段（engine → fonts → layout → done）。
  */
 import type { Exam } from '../../../data/exams';
 import { buildExamDocDefinition, type PdfLayoutOptions } from '../layout/buildDocDefinition';
+import { buildVocabHandoutDocDefinition } from '../layout/vocab/buildVocabHandoutDocDefinition';
 import { FONT_FILES } from '../fonts';
 import { PdfError, type ExamPdfOptions, type PdfProgress } from '../types';
+import type { VocabHandoutPdfData } from '../vocabTypes';
+import type { PdfDocDefinition } from './docTypes';
 import { loadPdfMake } from './pdfmakeApi';
 
 const FONT_COUNT = Object.keys(FONT_FILES).length;
@@ -23,12 +27,8 @@ export function onlineUrlFor(exam: Pick<Exam, 'id'>, options: Pick<ExamPdfOption
 /** 自組卷網址的「從 PDF 進來」標記（同 features/mock/bank/code.ts 的 PDF_SUFFIX；PDF 模組不匯入組卷程式）。 */
 export const SITE_PAPER_URL_SUFFIX = '.p';
 
-export async function generateExamPdf(
-  exam: Exam,
-  options: PdfLayoutOptions,
-  onProgress: (p: PdfProgress) => void = () => {},
-  signal?: AbortSignal,
-): Promise<Blob> {
+/** 載入引擎與字型（回報進度），再把文件定義排成 PDF。build 在字型載完之後才呼叫（排版前的計算也算在「排版中」）。 */
+async function generate(build: () => PdfDocDefinition, errorMessage: string, onProgress: (p: PdfProgress) => void, signal?: AbortSignal): Promise<Blob> {
   let fonts = 0;
   onProgress({ phase: 'engine' });
   const pdfMake = await loadPdfMake({
@@ -42,10 +42,18 @@ export async function generateExamPdf(
   if (signal?.aborted) throw new PdfError('aborted', '已取消');
   onProgress({ phase: 'layout' });
   try {
-    const blob = await pdfMake.createPdf(buildExamDocDefinition(exam, options)).getBlob();
+    const blob = await pdfMake.createPdf(build()).getBlob();
     onProgress({ phase: 'done', ratio: 1 });
     return blob;
   } catch (err) {
-    throw new PdfError('render', 'PDF 排版時發生錯誤，請回報給我們（附上考卷名稱）。', { cause: err });
+    throw new PdfError('render', errorMessage, { cause: err });
   }
+}
+
+export function generateExamPdf(exam: Exam, options: PdfLayoutOptions, onProgress: (p: PdfProgress) => void = () => {}, signal?: AbortSignal): Promise<Blob> {
+  return generate(() => buildExamDocDefinition(exam, options), 'PDF 排版時發生錯誤，請回報給我們（附上考卷名稱）。', onProgress, signal);
+}
+
+export function generateVocabHandoutPdf(data: VocabHandoutPdfData, onProgress: (p: PdfProgress) => void = () => {}, signal?: AbortSignal): Promise<Blob> {
+  return generate(() => buildVocabHandoutDocDefinition(data), 'PDF 排版時發生錯誤，請回報給我們（附上講義代號）。', onProgress, signal);
 }

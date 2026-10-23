@@ -35,6 +35,8 @@ export interface PdfTextStyle {
 export interface PdfInline extends PdfTextStyle {
   text: string | PdfInline[];
   link?: string;
+  /** 換成某個節點（id）所在的頁碼（單字講義的「第 9 頁起的句意填空」）。 */
+  pageReference?: string;
 }
 
 interface PdfNodeBase extends PdfTextStyle {
