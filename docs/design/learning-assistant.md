@@ -2836,3 +2836,4 @@ interface AssistHistorySummary {
   - 參考：只有字串欄位的扁平物件，60 個欄位通過、90 個被拒；6 個陣列各 5 個欄位通過、10 個被拒。之後加欄位要注意這個量級。
 - **修正**：`client.ts` 的 `inlineJsonSchemaRefs()`；學習助手的四個任務送出攤開後的 schema（內容不變），批改任務維持 SDK 原樣（請求逐位元不變）。`ai.rules.test.ts` 檢查學習助手的 schema 不帶 `$ref`；學習助手各 schema 的快照雜湊更新。
 - **可觀測性**：AI 呼叫失敗時記下 Anthropic 的錯誤說明（HTTP 狀態、錯誤類型與 message，截到 300 字；不含提示詞）：`ai_call` log 的 `error_detail`、`anthropic_config` 事件的 `detail`；重送用完仍是 `api_error` 時另寫 `anthropic_error` 事件。學習助手評測工具失敗時也印出這段說明。
+- **修正後的真模型實測**（同一天，GitHub Actions、預算 US$3、時間上限 15 分鐘）：解析 29 題（題庫三種難度的六種大題、文意選填 2／3／5 格、篇章與閱讀題組、111–115 歷屆題）全部成功，schema 驗證 29／29、拒答 0、max_tokens 0、輸出 D8 命中 0、站內題和答案矛盾 0、陷阱代碼一致 100%；每點美元中位數 US$0.0101、延遲 p90 單題 32 秒、題組 52 秒；花費 US$2.04。報告與追問這次沒跑到，它們的 schema 在探測時已確認能通過。
