@@ -41,24 +41,15 @@ function noDesc(schema: J): J {
 }
 
 const item = outgoingJsonSchema(assistItemSchema) as J;
+const report = outgoingJsonSchema(assistReportSchema) as J;
 const cases: Array<[string, J]> = [
-  ['essayAnalytic (works in prod)', outgoingJsonSchema(essayAnalyticSchema) as J],
-  ['assistOcr', outgoingJsonSchema(assistOcrSchema) as J],
-  ['assistFollowup', outgoingJsonSchema(assistFollowupSchema) as J],
-  ['assistVocab', outgoingJsonSchema(assistVocabSchema) as J],
-  ['assistWriting', outgoingJsonSchema(assistWritingSchema) as J],
-  ['assistItem', item],
-  ['assistItem inlined', inline(item)],
-  ['assistItem no descriptions', noDesc(item)],
-  ['assistItem inlined+no descriptions', noDesc(inline(item))],
-  ['assistReport', outgoingJsonSchema(assistReportSchema) as J],
-  ['flat 30', flat(30)],
-  ['flat 45', flat(45)],
-  ['flat 60', flat(60)],
-  ['flat 90', flat(90)],
-  ['nested 4x5', nested(4, 5)],
-  ['nested 6x5', nested(6, 5)],
-  ['nested 10x5', nested(10, 5)],
+  ['assistItem inlined (repeat)', inline(item)],
+  ['assistReport inlined', inline(report)],
+  ['assistWriting inlined', inline(outgoingJsonSchema(assistWritingSchema) as J)],
+  ['assistVocab inlined', inline(outgoingJsonSchema(assistVocabSchema) as J)],
+  ['assistFollowup inlined', inline(outgoingJsonSchema(assistFollowupSchema) as J)],
+  ['assistOcr inlined', inline(outgoingJsonSchema(assistOcrSchema) as J)],
+  ['essayAnalytic inlined', inline(outgoingJsonSchema(essayAnalyticSchema) as J)],
 ];
 
 for (const [name, schema] of cases) {
