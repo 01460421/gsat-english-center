@@ -32,7 +32,7 @@ import type {
   BetaMessage,
   BetaMessageStreamParams,
 } from '@anthropic-ai/sdk/resources/beta/messages/messages';
-import type { AiRefundReason, AiTask } from '@gsat/shared';
+import { isAssistTask, type AiRefundReason, type AiTask } from '@gsat/shared';
 import type * as z from 'zod/v4';
 import { promptVersionOf } from './prompts/common';
 import { costOfUsage, PRICING_VERSION, pricingOf, type UsageEntry } from './pricing';
@@ -73,9 +73,37 @@ export class ModelNotAllowedError extends Error {
   }
 }
 
-/** 送出的 JSON schema（SDK 的轉換結果）。 */
-export function outgoingJsonSchema(schema: z.ZodType): Record<string, unknown> {
-  return betaZodOutputFormat(schema).schema as Record<string, unknown>;
+/**
+ * 把 $defs／$ref 全部攤開成直接寫出的子 schema（內容不變；我們的 schema 沒有遞迴）。
+ * Anthropic 編譯 grammar 時 $ref 會讓規模變大：2026-10-23 實測，學習助手解析的 schema 帶 $ref 時被拒
+ * （400「The compiled grammar is too large」），同一份攤開後就通過；拿掉 description 則沒有差別。
+ */
+export function inlineJsonSchemaRefs(schema: Record<string, unknown>): Record<string, unknown> {
+  const defs = (schema['$defs'] ?? {}) as Record<string, unknown>;
+  const walk = (node: unknown, seen: readonly string[]): unknown => {
+    if (Array.isArray(node)) return node.map((n) => walk(n, seen));
+    if (node === null || typeof node !== 'object') return node;
+    const obj = node as Record<string, unknown>;
+    const ref = obj['$ref'];
+    if (typeof ref === 'string') {
+      const name = ref.startsWith('#/$defs/') ? ref.slice('#/$defs/'.length) : null;
+      if (name === null || !(name in defs)) throw new Error(`無法攤開的 $ref：${ref}`);
+      if (seen.includes(name)) throw new Error(`遞迴的 $ref：${ref}`);
+      const { $ref: _ref, ...siblings } = obj;
+      return { ...(walk(defs[name], [...seen, name]) as Record<string, unknown>), ...(walk(siblings, seen) as Record<string, unknown>) };
+    }
+    return Object.fromEntries(Object.entries(obj).filter(([k]) => k !== '$defs').map(([k, v]) => [k, walk(v, seen)]));
+  };
+  return walk(schema, []) as Record<string, unknown>;
+}
+
+/**
+ * 送出的 JSON schema（SDK 的轉換結果）。inlineRefs：學習助手的任務攤開 $ref（見 inlineJsonSchemaRefs）；
+ * 批改任務維持原樣（正式站一直正常，請求逐位元不變）。
+ */
+export function outgoingJsonSchema(schema: z.ZodType, opts: { inlineRefs?: boolean } = {}): Record<string, unknown> {
+  const raw = betaZodOutputFormat(schema).schema as Record<string, unknown>;
+  return opts.inlineRefs ? inlineJsonSchemaRefs(raw) : raw;
 }
 
 /** 建構請求（純函式，除了 prompt_version 的雜湊）。所有 Claude 呼叫都必須經過這裡。 */
@@ -83,7 +111,7 @@ export async function buildClaudeRequest(input: ClaudeCallInput): Promise<BuiltR
   const { spec } = input;
   const pricing = pricingOf(spec.model);
   if (!pricing) throw new ModelNotAllowedError(spec.model);
-  const jsonSchema = outgoingJsonSchema(input.schema);
+  const jsonSchema = outgoingJsonSchema(input.schema, { inlineRefs: isAssistTask(input.task) });
   const promptVersion = await promptVersionOf([input.system, JSON.stringify(jsonSchema), input.templateVersion, spec.framework]);
   const images = Array.isArray(input.content) ? input.content.filter((b) => b.type === 'image').length : 0;
   const params: BetaMessageStreamParams = {

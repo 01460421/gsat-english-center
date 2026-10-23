@@ -5,7 +5,7 @@
  * 學習助手（docs/design/learning-assistant.md §6.2）：解析（單題、題組 5 題、寫作、單字）、追問與拍照轉錄也逐條掃描；
  * cache_control 斷點 ≤ 4、只在 system 與 text block、1 小時的在 5 分鐘的前面；逾時、max_tokens、輸入估計與預扣釘住。
  */
-import { AI_TASK_POINTS, type AssistAnalysisView, type AssistQuestionTarget, type AssistQuestionView } from '@gsat/shared';
+import { AI_TASK_POINTS, isAssistTask, type AssistAnalysisView, type AssistQuestionTarget, type AssistQuestionView } from '@gsat/shared';
 import { describe, expect, it } from 'vitest';
 import { getWritingGroup, type WritingGroup } from '../src/ai/bank';
 import {
@@ -273,7 +273,9 @@ describe.each(cases)('§6.2 呼叫規則：%s', (name, input) => {
     });
     expect(nullable).toBeLessThanOrEqual(24);
     expect(unions).toBeLessThanOrEqual(16);
-    expect(format.schema).toEqual(outgoingJsonSchema(input.schema));
+    expect(format.schema).toEqual(outgoingJsonSchema(input.schema, { inlineRefs: isAssistTask(input.task) }));
+    // 學習助手的 schema 不帶 $ref（攤開才不會超過 Anthropic 的 grammar 上限）；批改維持 SDK 原樣。
+    if (isAssistTask(input.task)) expect(JSON.stringify(format.schema)).not.toContain('$ref');
   });
 
   it('第 6 條：schema 欄位名稱沒有 reasoning 類字樣；說明欄位叫 explanation_zh（或其他 _zh）', async () => {

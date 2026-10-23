@@ -79,21 +79,21 @@ describe('系統提示（§4.9）', () => {
     const snap = SNAPSHOT[`analyze/${kind}`]!;
     expect(ASSIST_ANALYZE_TEMPLATE_VERSIONS[kind]).toBe(snap.template_version);
     expect(await sha256(assistAnalyzeSystemText(kind))).toBe(snap.system_sha256);
-    expect(await sha256(JSON.stringify(outgoingJsonSchema(assistAnalyzeSchema(kind))))).toBe(snap.schema_sha256);
+    expect(await sha256(JSON.stringify(outgoingJsonSchema(assistAnalyzeSchema(kind), { inlineRefs: true })))).toBe(snap.schema_sha256);
   });
 
   it('追問：系統提示與 schema 的快照、範本版本', async () => {
     const snap = SNAPSHOT['followup']!;
     expect(ASSIST_FOLLOWUP_TEMPLATE_VERSION).toBe(snap.template_version);
     expect(await sha256(assistFollowupSystemText())).toBe(snap.system_sha256);
-    expect(await sha256(JSON.stringify(outgoingJsonSchema(assistFollowupOutputSchema)))).toBe(snap.schema_sha256);
+    expect(await sha256(JSON.stringify(outgoingJsonSchema(assistFollowupOutputSchema, { inlineRefs: true })))).toBe(snap.schema_sha256);
   });
 
   it('報告：系統提示與 schema 的快照、範本版本（WP-C）', async () => {
     const snap = SNAPSHOT['report']!;
     expect(ASSIST_REPORT_TEMPLATE_VERSION).toBe(snap.template_version);
     expect(await sha256(assistReportSystemText())).toBe(snap.system_sha256);
-    expect(await sha256(JSON.stringify(outgoingJsonSchema(assistReportOutputSchema)))).toBe(snap.schema_sha256);
+    expect(await sha256(JSON.stringify(outgoingJsonSchema(assistReportOutputSchema, { inlineRefs: true })))).toBe(snap.schema_sha256);
   });
 
   it('「Length limits」段逐行和 ASSIST_FIELD_LIMITS 一致，而且就在系統提示裡', () => {

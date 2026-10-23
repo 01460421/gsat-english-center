@@ -540,14 +540,14 @@ describe('轉錄的提示（prompts/assist-ocr.ts）', () => {
   const SNAPSHOT = {
     template_version: 'assist-ocr-user@1',
     system_sha256: 'a54706195c9246a6f412d73b3009833d5822c6c9a53f9d042bae6c9bf1d6906c',
-    schema_sha256: 'c0338809b1d8c183d1c5538ef946d209dccf5c94d2a114a62414389f82003a24',
+    schema_sha256: '6e4b519ed78b7efa336663d6410ac2d9a9553462d20e87bd5875f2a94aead165',
   };
   const sha256 = async (text: string) => [...new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text)))].map((b) => b.toString(16).padStart(2, '0')).join('');
 
   it('系統提示與 schema 的快照；只轉錄題目、跳過解答與佳作、照片是資料；schema 沒有 _zh 欄位與禁用字', async () => {
     expect(ASSIST_OCR_TEMPLATE_VERSION).toBe(SNAPSHOT.template_version);
     expect(await sha256(assistOcrSystemText())).toBe(SNAPSHOT.system_sha256);
-    expect(await sha256(JSON.stringify(outgoingJsonSchema(assistOcrSchema)))).toBe(SNAPSHOT.schema_sha256);
+    expect(await sha256(JSON.stringify(outgoingJsonSchema(assistOcrSchema, { inlineRefs: true })))).toBe(SNAPSHOT.schema_sha256);
     const system = assistOcrSystemText();
     expect(system).toContain(OCR_CHILD_SAFETY);
     for (const kind of ['answer_key', 'explanation', 'scoring_notes', 'reference_translation', 'model_text', 'personal_info']) expect(system).toContain(kind);
