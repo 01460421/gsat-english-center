@@ -26,9 +26,16 @@ jobs:
           npm run build:data -w @gsat/web
           npm run prompts -w @gsat/api
           cd apps/api && node scripts/build-assist-data.mjs
-      - name: 探測 schema（真模型，每題 64 tokens）
+      - name: 用修好的程式跑幾題（真模型，上限 US$3）
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_PARITY_API_KEY || secrets.ANTHROPIC_API_KEY }}
+          PARITY_BUDGET_USD: '3'
+          PARITY_TIME_LIMIT_MINUTES: '15'
         run: |
           if [ -z "$ANTHROPIC_API_KEY" ]; then echo "::error::沒有金鑰"; exit 1; fi
-          cd apps/api && npx tsx scripts/tmp-schema-probe.ts 2>&1 | grep "\[probe\]" || true
+          npm run parity:assist -w @gsat/api > diag.log 2>&1 || true
+          grep -E "\[assist-eval\]" diag.log | head -60
+          echo "----- 彙總 -----"
+          cat apps/api/test/parity/.results/assist.md 2>/dev/null | head -80 || true
+          echo "----- 每題 -----"
+          node -e "const r=require('./apps/api/test/parity/.results/assist.json'); for (const [k,v] of Object.entries(r.cases)) console.log(k, v.ok, v.failure ?? '', JSON.stringify(v.checks ?? {}), (v.calls||[]).map(c=>c.stop_reason+':'+c.output_tokens+'tok:'+Math.round(c.latency_ms/1000)+'s').join(' '))" 2>/dev/null || true
