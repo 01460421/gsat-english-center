@@ -7,6 +7,7 @@
  * QR code（放大、容錯 M）與完整網址；不印官方網址。
  */
 import type { Exam } from '../../../data/exams';
+import { missingGlyphs } from '../fontRuns';
 import type { PdfContent, PdfNode } from '../engine/docTypes';
 import type { MockPdfMeta, SitePaperPdfMeta } from '../types';
 import { hasNationalRates } from './answerKey';
@@ -14,7 +15,7 @@ import { NON_OFFICIAL_NOTICE, officialPaperUrl, sourceLine } from './attribution
 import { CONTENT_WIDTH } from './metrics';
 import { boxLayout, boxed, fieldRow } from './nodes';
 import { plainInline, spacedInline, urlInline } from './richInline';
-import { PDF_TEXT, SITE_PAPER_TEXT } from './strings';
+import { PDF_TEXT, SITE_PAPER_TEXT, WEAK_PAPER_TEXT, substituteGlyphs } from './strings';
 
 export interface CoverOptions {
   includeAnswerSheet: boolean;
@@ -38,6 +39,21 @@ function hasMultiSelect(exam: Pick<Exam, 'sections'>): boolean {
 
 function hasChoice(exam: Pick<Exam, 'sections'>): boolean {
   return exam.sections.some((s) => s.groups.some((g) => g.questions.some((q) => q.mode === 'single_choice' || q.mode === 'bank_choice')));
+}
+
+/** 答題卷的選擇題答案卡會印的題目（混合題以外的選擇題，同 answerSheet.ts 的 choiceCardItems）。 */
+function hasCardQuestions(exam: Pick<Exam, 'sections'>): boolean {
+  return exam.sections.some((s) => s.type !== 'mixed' && s.groups.some((g) => g.questions.some((q) => q.mode === 'single_choice' || q.mode === 'bank_choice' || q.mode === 'multi_select')));
+}
+
+/** 寫在答題卷作答區的題目：混合題，以及選擇題以外的題目（中譯英、作文…）。 */
+function hasOpenQuestions(exam: Pick<Exam, 'sections'>): boolean {
+  return exam.sections.some((s) => s.type === 'mixed' || s.groups.some((g) => g.questions.some((q) => q.mode !== 'single_choice' && q.mode !== 'bank_choice' && q.mode !== 'multi_select')));
+}
+
+/** 線上會自動計分的題目（選擇題與混合題）。 */
+function hasAutoScored(exam: Pick<Exam, 'sections'>): boolean {
+  return exam.sections.some((s) => s.groups.some((g) => g.questions.some((q) => q.mode !== 'translation' && q.mode !== 'composition')));
 }
 
 /** 「倒扣」但不是「不倒扣」。 */
@@ -72,8 +88,13 @@ function noticeBox(exam: Exam, options: CoverOptions, site?: SitePaperPdfMeta): 
     stack.push({ text: plainInline(PDF_TEXT.timeLine(minutes)), fontSize: BODY, lineHeight: BODY_LINE, margin: [0, 0, 0, 4] });
   }
   stack.push({ text: plainInline(PDF_TEXT.howTitle), fontSize: BODY, lineHeight: BODY_LINE });
-  for (const line of options.includeAnswerSheet ? PDF_TEXT.howWithSheet : PDF_TEXT.howWithoutSheet) stack.push(bullet(line));
-  stack.push(bullet(site ? SITE_PAPER_TEXT.howOnline : PDF_TEXT.howOnline(hasNationalRates(exam))));
+  const how = options.includeAnswerSheet ? PDF_TEXT.howWithSheet : PDF_TEXT.howWithoutSheet;
+  // 學習助手加強卷可以只有部分大題（docs/design/weak-paper.md §9.5）：沒有答案卡的題目就不寫答案卡那一條，
+  // 沒有混合題與非選擇題就不寫作答區那一條；全部是中譯英與作文時線上作答不自動計分。自組模擬考照舊。
+  const lines = site?.paperKind ? how.filter((_, i) => (i === 0 ? hasCardQuestions(exam) : hasOpenQuestions(exam))) : how;
+  for (const line of lines) stack.push(bullet(line));
+  const online = site ? (site.paperKind && !hasAutoScored(exam) ? WEAK_PAPER_TEXT.howOnlineWritten : SITE_PAPER_TEXT.howOnline) : PDF_TEXT.howOnline(hasNationalRates(exam));
+  stack.push(bullet(online));
   if (hasChoice(exam) || hasMultiSelect(exam)) {
     stack.push({ text: plainInline(PDF_TEXT.scoringTitle), fontSize: BODY, lineHeight: BODY_LINE, margin: [0, 4, 0, 0] });
     if (hasChoice(exam)) stack.push(bullet(hasPenaltyScoring(exam) ? PDF_TEXT.scoringPenaltyNote : PDF_TEXT.scoringSingle));
@@ -198,7 +219,9 @@ function siteSourceBlock(site: SitePaperPdfMeta, onlineUrl: string | null | unde
   const small = { fontSize: 8.5, lineHeight: 1.3, color: '#333333' };
   const texts: PdfContent[] = [
     { text: plainInline(`${SITE_PAPER_TEXT.assembledOn(site.assembledOn)}　${SITE_PAPER_TEXT.dataVersion(site.dataVersion)}`), ...small },
-    { text: plainInline(site.aiNotice), ...small },
+    // 全部是出版社題的卷子不印 AI 出題聲明；有出版社題組時另印題目來源（docs/design/weak-paper.md §9.5）。
+    ...(site.footerKind === 'publisher' ? [] : [{ text: plainInline(site.aiNotice), ...small }]),
+    ...(site.sourceLines ?? []).map((line): PdfContent => ({ text: plainInline(line), ...small })),
     { text: plainInline(SITE_PAPER_TEXT.coverFigureNote), ...small, margin: [0, 0, 0, 4] },
   ];
   if (onlineUrl) {
@@ -220,15 +243,32 @@ function siteSourceBlock(site: SitePaperPdfMeta, onlineUrl: string | null | unde
   return { columns, columnGap: QR_GAP, margin: [0, 6, 0, 0] };
 }
 
-/** 本站自組卷的封面。 */
+/**
+ * 加強卷封面的「本卷針對」一行（docs/design/weak-paper.md §3.5、§9.5）：均衡加強卷寫「這次不是針對弱點…」；
+ * 弱點名稱含 PDF 字型沒有的字（替代之後仍有）時那一項不印，全部不能印就整行不印。
+ */
+export function targetsLine(targets: SitePaperPdfMeta['targets']): string | null {
+  if (!targets) return null;
+  if (targets.balanced) return WEAK_PAPER_TEXT.targetsBalanced;
+  const labels = targets.labels.map((l) => substituteGlyphs(l.trim())).filter((l) => l !== '' && missingGlyphs(l).length === 0);
+  return labels.length > 0 ? WEAK_PAPER_TEXT.targets(labels) : null;
+}
+
+/** 本站自組卷的封面。學習助手加強卷（site.paperKind）的卷別說明、橫條與「本卷針對」另外寫（§9.5）。 */
 export function siteCoverContent(exam: Exam, meta: MockPdfMeta, site: SitePaperPdfMeta, options: CoverOptions): PdfContent[] {
+  const kind = site.paperKind;
+  const targets = kind ? targetsLine(site.targets) : null;
   const content: PdfContent[] = [
     { text: spacedInline(meta.title.trim(), { spacing: 2 }), fontSize: 12, alignment: 'center', color: '#333333', margin: [0, 14, 0, 12] },
     { text: plainInline(meta.paperLabel.trim()), fontSize: 18, alignment: 'center', margin: [0, 0, 0, 4] },
-    { text: plainInline(SITE_PAPER_TEXT.coverFormat), fontSize: 11, alignment: 'center', color: '#333333', margin: [0, 0, 0, 8] },
+    { text: plainInline(kind ? WEAK_PAPER_TEXT.coverFormat(kind) : SITE_PAPER_TEXT.coverFormat), fontSize: 11, alignment: 'center', color: '#333333', margin: [0, 0, 0, targets ? 2 : 8] },
+    ...(targets ? [{ text: plainInline(targets), fontSize: 10, lineHeight: 1.3, alignment: 'center' as const, color: '#333333', margin: [0, 0, 0, 8] as [number, number, number, number] }] : []),
     { text: spacedInline(PDF_TEXT.subject, { bold: true, spacing: 8 }), fontSize: 26, alignment: 'center', margin: [0, 0, 0, 12] },
     {
-      table: { widths: ['*'], body: [[{ text: plainInline(SITE_PAPER_TEXT.coverBand, { bold: true }), fontSize: 12, alignment: 'center', fillColor: '#e3e3e3' }]] },
+      table: {
+        widths: ['*'],
+        body: [[{ text: plainInline(kind ? WEAK_PAPER_TEXT.coverBand(site.footerKind) : SITE_PAPER_TEXT.coverBand, { bold: true }), fontSize: 12, alignment: 'center', fillColor: '#e3e3e3' }]],
+      },
       layout: { hLineWidth: () => 0, vLineWidth: () => 0, paddingTop: () => 4, paddingBottom: () => 4, paddingLeft: () => 4, paddingRight: () => 4 },
       margin: [0, 0, 0, 14],
     },

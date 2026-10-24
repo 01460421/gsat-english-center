@@ -240,6 +240,24 @@ export function skillCodesOf(fields: SkillSourceFields): AssistSkillCode[] {
   return ASSIST_SKILL_CODES.filter((code) => out.has(code));
 }
 
+/**
+ * 一題的技能代碼（docs/design/weak-paper.md §6.2、§9.4）：作答紀錄的 k、組卷用的 paper-skills.json 的 q、
+ * 成績單「這次的弱點表現」的逐題清單都用這一支，選題依據和回流的紀錄才一定對得上。
+ * 題組檔帶了每一題的 skills（出版社題在建置時算好，鍵是題組裡的原始題號）就讀它；沒有就從題目標註與本站解析算（skillCodesOf）。
+ * 回傳的代碼都在封閉清單裡、去重、依 ASSIST_SKILL_CODES 的順序（未正規化；正規化見 skill-aliases.ts 的 canonicalSkills）。
+ */
+export function skillsOfQuestion(
+  fileSkills: Readonly<Record<string, readonly string[]>> | null | undefined,
+  label: string,
+  fields: SkillSourceFields,
+): AssistSkillCode[] {
+  if (fileSkills) {
+    const own = new Set((fileSkills[label] ?? []).filter(isAssistSkillCode));
+    return ASSIST_SKILL_CODES.filter((code) => own.has(code));
+  }
+  return skillCodesOf(fields);
+}
+
 // ───────────────────────── 錯因代碼 ─────────────────────────
 
 /** 錯因代碼（報告的「錯誤樣態」以它為單位；順序就是系統提示列出的順序）。 */

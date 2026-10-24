@@ -1,7 +1,7 @@
 /**
  * 題庫練習的中文名稱、網址代號與難度說明。
  */
-import { TIER_LABELS, TIERS, type BlankPos, type ClueType, type FillTransform, type SenseKind, type Tier } from '@gsat/shared';
+import { TIER_LABELS, TIERS, type BlankPos, type ClueType, type FillTransform, type ItemGroupSource, type SenseKind, type Tier } from '@gsat/shared';
 import { PRACTICE_SECTION_TYPES, type PracticeSectionType } from '../../data/bank';
 
 export { TIER_LABELS, TIERS };
@@ -107,6 +107,24 @@ export const AI_PASSAGE_NOTICE = '本文由 AI 撰寫，非原文轉載；AI 撰
 export const AI_REFERENCES_NOTICE = '本文由 AI 參考下列資料撰寫，非原文轉載；AI 撰寫的事實陳述可能有誤，請以參考資料為準';
 /** 詞彙題沒有選文，題目下方改標這一句。 */
 export const AI_ITEMS_NOTICE = '本組題目由 AI 撰寫；AI 撰寫的內容可能有誤';
+
+/**
+ * 出版社題組（docs/design/weak-paper.md §8.7）：題組上方的出處取代 AI_GROUP_LABEL，選文下方的聲明取代 AI 聲明。
+ * 出處句是站主提供的逐字句（沒提供時是預設格式「本題出自{出版社}《{書名}》，經授權使用」），在建置時寫進題組檔的 source。
+ */
+export function sourceLabelOf(file: { source?: Pick<ItemGroupSource, 'attribution_zh' | 'ref_text'> | undefined }): string {
+  const s = file.source;
+  if (!s) return AI_GROUP_LABEL;
+  return `出處：${s.attribution_zh}${s.ref_text ? `（${s.ref_text}）` : ''}`;
+}
+/** 出版社題組選文（或題目）下方的聲明。 */
+export const PUBLISHER_NOTICE = '本組題目經出版社授權使用，不得另行轉載';
+/** 出版社題組沒有出版社解析時（交卷後解析卡的位置）。 */
+export const PUBLISHER_NO_EXPLANATION = '這組沒有解析';
+/** 出版社題組有解析時，解析卡上方的標示：「解析：測試出版提供」。 */
+export const publisherExplanationBy = (label: string) => `解析：${label}提供`;
+/** 出版社的授權已經結束（停用或過了到期日）：題目不再顯示（§7.6）。 */
+export const PUBLISHER_SOURCE_ENDED = '這一組的出版社授權已經結束，題目不再顯示。';
 
 /** 主題（group.tags.topic）只在含中文字時顯示：舊題組的主題是英文短語（給出題與檢查工具用的 slug），學生看不懂也不需要。 */
 export function displayTopic(topic: string | null | undefined): string | null {

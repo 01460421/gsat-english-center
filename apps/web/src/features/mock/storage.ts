@@ -14,12 +14,24 @@
  * 讀寫一律包 try/catch（無痕模式、空間滿、被封鎖的網站資料會丟例外）：存不進去仍然可以作答，只是不能續作。
  */
 import { createAttempt, loadAttempt, parseAttempt, type AttemptState } from '../exams/attempt';
-import { MOCK_DURATION_SEC, type MockPaper } from './papers';
+import { bk2KindOf } from './bank/paperId';
+import { MOCK_DURATION_MIN, type MockPaper } from './papers';
 
 export const MOCK_STORAGE_PREFIX = 'gsat-mock:v1:';
 export const HISTORY_KEY = `${MOCK_STORAGE_PREFIX}history`;
 /** 歷史最多保留幾筆；超過時連同最舊的完整紀錄一起刪掉。 */
 export const HISTORY_LIMIT = 30;
+/** 練習性卷子（加強卷的 w、r、f）在歷史裡最多幾筆（docs/design/weak-paper.md §7.7）。 */
+export const PRACTICE_HISTORY_LIMIT = 15;
+
+/**
+ * 練習性卷子：加強卷的弱點加強卷 w、隨機抽題卷 r、偏重弱點的模考格式卷 f。它們常常是 20–40 分鐘的短卷，
+ * 不能擠掉歷屆模考的紀錄；中性模考格式卷 m 和自組模擬考一樣算模考。
+ */
+export function isPracticePaperId(paperId: string): boolean {
+  const kind = bk2KindOf(paperId);
+  return kind === 'w' || kind === 'r' || kind === 'f';
+}
 
 /**
  * 同一個分頁裡改了 gsat-mock:v1:*、畫面上的列表要跟著更新時發出的事件（例如 /mock 的自組卷區塊把逾期的作答交卷、
@@ -346,13 +358,24 @@ export function loadHistory(): MockHistoryEntry[] {
 /**
  * 新增或更新一筆歷史（同 id 取代）。超過 HISTORY_LIMIT 時刪掉最舊的幾筆，連同完整紀錄一起刪，
  * localStorage 才不會越積越多（每筆完整紀錄 5–15 KB）。
+ * 淘汰順序（docs/design/weak-paper.md §7.7）：練習性卷子（加強卷的 w、r、f）最多 15 筆；超過 30 筆時先刪最舊的練習性卷子，
+ * 再刪其他。沒有練習性卷子時和原本一樣（刪最舊的）。
  */
 export function upsertHistory(entry: MockHistoryEntry): boolean {
   const others = loadHistory().filter((e) => e.id !== entry.id);
   const all = [entry, ...others].sort((a, b) => Date.parse(b.submittedAt) - Date.parse(a.submittedAt));
-  const kept = all.slice(0, HISTORY_LIMIT);
-  for (const dropped of all.slice(HISTORY_LIMIT)) removeRecord(dropped.id);
-  return writeJson(HISTORY_KEY, kept);
+  const drop = new Set(all.filter((e) => isPracticePaperId(e.paperId)).slice(PRACTICE_HISTORY_LIMIT).map((e) => e.id));
+  let remaining = all.filter((e) => !drop.has(e.id));
+  if (remaining.length > HISTORY_LIMIT) {
+    const overflow = remaining.length - HISTORY_LIMIT;
+    // 最舊的在後面：先從練習性卷子裡挑，不夠再挑其他。
+    const oldestFirst = [...remaining].reverse();
+    const victims = [...oldestFirst.filter((e) => isPracticePaperId(e.paperId)), ...oldestFirst.filter((e) => !isPracticePaperId(e.paperId))].slice(0, overflow);
+    for (const v of victims) drop.add(v.id);
+    remaining = remaining.filter((e) => !drop.has(e.id));
+  }
+  for (const dropped of all) if (drop.has(dropped.id)) removeRecord(dropped.id);
+  return writeJson(HISTORY_KEY, remaining);
 }
 
 // ---------------------------------------------------------------------------
@@ -375,6 +398,8 @@ export function createRecord(
   now = new Date(),
 ): MockAttemptRecord {
   const startedAt = now.toISOString();
+  // 作答時間：加強卷依版面（例如 40 分鐘，docs/design/weak-paper.md §7.2）；其他卷子 100 分鐘。
+  const durationSec = (paper.bank?.durationMinutes ?? MOCK_DURATION_MIN) * 60;
   return {
     v: 1,
     id: newId(),
@@ -382,8 +407,8 @@ export function createRecord(
     strict: options.strict,
     predictedScore: options.predictedScore,
     startedAt,
-    deadlineAt: new Date(now.getTime() + MOCK_DURATION_SEC * 1000).toISOString(),
-    durationSec: MOCK_DURATION_SEC,
+    deadlineAt: new Date(now.getTime() + durationSec * 1000).toISOString(),
+    durationSec,
     status: 'in_progress',
     submittedAt: null,
     submitReason: null,
@@ -394,7 +419,7 @@ export function createRecord(
     selfScores: {},
     selfDetail: {},
     scaleYear: paper.scaleYear,
-    attempt: createAttempt(paper.examId, 'exam', MOCK_DURATION_SEC, now),
+    attempt: createAttempt(paper.examId, 'exam', durationSec, now),
   };
 }
 

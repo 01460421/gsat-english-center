@@ -139,7 +139,9 @@ export function groupOutcomeRows(entries: readonly OutcomeEntry[], source: Outco
 }
 
 /** 一組作答紀錄 → 錯題清單一列的數字部分（標題與網址由各轉接器補）。 */
-export function rowStats(entries: readonly OutcomeEntry[]): Pick<MistakeRow, 'labels' | 'wrong' | 'partial' | 'unanswered' | 'doubts' | 'kind' | 'at' | 'skills' | 'nationalRate' | 'fiveGroups'> {
+export function rowStats(
+  entries: readonly OutcomeEntry[],
+): Pick<MistakeRow, 'labels' | 'wrong' | 'partial' | 'unanswered' | 'doubts' | 'kind' | 'at' | 'skills' | 'questionSkills' | 'nationalRate' | 'fiveGroups'> {
   const problems = entries.filter((e) => e.ok < 1 || isDoubtEntry(e));
   const wrongish = entries.filter((e) => e.ok < 1);
   const wrong = wrongish.filter((e) => e.a !== null && e.ok === 0).length;
@@ -157,6 +159,7 @@ export function rowStats(entries: readonly OutcomeEntry[]): Pick<MistakeRow, 'la
     kind: wrongish.length > 0 ? 'mistake' : 'doubt',
     at: Math.max(...entries.map((e) => e.at)),
     skills: [...new Set(wrongish.flatMap((e) => e.k))],
+    questionSkills: wrongish.map((e) => [...e.k]),
     nationalRate: rated?.np ?? null,
     fiveGroups: rated?.g5 ?? null,
   };

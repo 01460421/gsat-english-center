@@ -12,7 +12,11 @@
 import {
   ASSIST_DOUBT_LABELS,
   ASSIST_LIMITS,
+  PRACTICE_ITEM_UID_PATTERN,
+  PUBLISHER_ASSIST_ENDED_TEXT,
+  PUBLISHER_ASSIST_NO_SCOPE_TEXT,
   assistAnalyzePoints,
+  namespaceOf,
   parseAskParams,
   type AskRef,
   type AssistCaseDetail,
@@ -40,6 +44,7 @@ import { practicePath } from '../practice/labels';
 import { isPracticeSectionType } from '../../data/bank';
 import { getOutcomes } from './outcomes';
 import { BankPaperChangedError } from './sources/bankMock';
+import { PublisherSourceError } from './sources/publisher';
 import { compareLabels } from './sources/common';
 import { resolveAsk, type ResolvedAsk } from './sources';
 
@@ -101,6 +106,17 @@ function NoRecord() {
 }
 
 function LoadError({ error, ask, onRetry }: { error: unknown; ask: AskRef; onRetry: () => void }) {
+  // 出版社題組：授權結束或不含 AI 解析（docs/design/weak-paper.md §7.6、§9.6）；授權結束、網站重建後題組檔不在了（404）也是這一句。
+  const publisherGone = error instanceof DataLoadError && error.kind === 'not_found' && ask.src === 'bank' && namespaceOf(ask.ref.split('@')[0] ?? '') === 'pb';
+  if (error instanceof PublisherSourceError || publisherGone) {
+    const ended = !(error instanceof PublisherSourceError) || error.reason === 'ended';
+    return (
+      <div role="alert" className="space-y-2 rounded-2xl border border-line bg-surface p-5" data-testid="publisher-blocked">
+        <p className="font-semibold">{ended ? PUBLISHER_ASSIST_ENDED_TEXT : PUBLISHER_ASSIST_NO_SCOPE_TEXT}</p>
+        <p className="text-muted">{ended ? '你的作答紀錄還在，錯題清單照樣列出這一組。' : '可以在檢討試卷或題庫練習看這一組的答案與解析。'}（沒有扣點）</p>
+      </div>
+    );
+  }
   if (error instanceof BankPaperChangedError) {
     return (
       <div role="alert" className="space-y-2 rounded-2xl border border-line bg-surface p-5">
@@ -110,8 +126,9 @@ function LoadError({ error, ask, onRetry }: { error: unknown; ask: AskRef; onRet
     );
   }
   if (error instanceof DataLoadError && error.kind === 'not_found') {
-    const m = ask.src === 'bank' ? /^ai\.(vo|cz|wb|st|rd|mx)\./.exec(ask.ref) : null;
-    const section = m ? ({ vo: 'vocabulary', cz: 'cloze', wb: 'word_bank', st: 'structure', rd: 'reading', mx: 'mixed' } as const)[m[1] as 'vo'] : null;
+    // 本站題庫（ai.）與出版社題組（pb.，docs/design/weak-paper.md §8.2）的 uid 都收。
+    const m = ask.src === 'bank' ? PRACTICE_ITEM_UID_PATTERN.exec(ask.ref.split('@')[0] ?? '') : null;
+    const section = m ? ({ vo: 'vocabulary', cz: 'cloze', wb: 'word_bank', st: 'structure', rd: 'reading', mx: 'mixed' } as const)[m[2] as 'vo'] : null;
     return (
       <div role="alert" className="space-y-2 rounded-2xl border border-line bg-surface p-5">
         <p className="font-semibold">這一題已經改版，舊版無法解析</p>

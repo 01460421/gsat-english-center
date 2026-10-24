@@ -5,6 +5,8 @@ import type { PdfContent, PdfNode, PdfSection } from '../engine/docTypes';
 import { sitePdfOptions } from '../index';
 import { buildExamDocDefinition } from './buildDocDefinition';
 import { SITE_QR, siteQrNode } from './cover';
+import { BANK_UID_CODES, type BankSectionType } from '@gsat/shared';
+import { BK2_MAX_GROUPS, QR_MAX_URL_CHARS, encodeBk2, paperUrl, type Bk2Slot } from '../../mock/bank/code2';
 import { findNodes, sitePaperFixture } from './testUtils';
 
 const fx = sitePaperFixture();
@@ -44,5 +46,25 @@ describe('自組卷的 QR code', () => {
       const below = items[1]?.margin as [number, number, number, number] | undefined;
       expect(below?.[1]).toBeGreaterThanOrEqual(4 * module);
     }
+  });
+});
+
+describe('加強卷最長的代號（12 組，docs/design/weak-paper.md §7.1）', () => {
+  // 12 組：詞彙 2、綜合測驗 2、文意選填 1、篇章結構 1、閱讀 4、混合題 1、中譯英 1（選擇與混合題 64 題）。
+  const sections: BankSectionType[] = ['vocabulary', 'vocabulary', 'cloze', 'cloze', 'word_bank', 'structure', 'reading', 'reading', 'reading', 'reading', 'mixed', 'translation'];
+  const slots: Bk2Slot[] = sections.map((section, i) => ({ ns: 'ai', section, tier: 'top', uid: `ai.${BANK_UID_CODES[section]}.fff${String(i).padStart(3, '0')}`, v: 31 }));
+  const url = paperUrl(encodeBk2('r', slots));
+
+  it('網址 136 個字元，不超過 QR code 的上限；一般寫法每格仍有 2 pt', () => {
+    expect(slots).toHaveLength(BK2_MAX_GROUPS);
+    expect(url).toHaveLength(136);
+    expect(url.length).toBeLessThanOrEqual(QR_MAX_URL_CHARS);
+    const { size, module } = measured(siteQrNode(url));
+    expect(module).toBeGreaterThanOrEqual(2);
+    expect(size).toBeLessThanOrEqual(SITE_QR.fit);
+  });
+
+  it('改成大寫（英數模式）時每格也至少 2 pt', () => {
+    expect(measured({ ...siteQrNode(url), qr: url.toUpperCase() }).module).toBeGreaterThanOrEqual(2);
   });
 });

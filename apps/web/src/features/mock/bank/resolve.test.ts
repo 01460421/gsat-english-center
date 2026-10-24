@@ -456,3 +456,47 @@ describe('快照與清單的一致性', () => {
     expect(other.ok && other.paper.exam).toEqual(r.paper.exam);
   });
 });
+
+describe('組卷池含出版社題組（ex: ns）時，自組模擬考（bk1）的組卷與換題不變（docs/design/weak-paper.md §6.2、A9）', () => {
+  /** 每個大題加 2 組出版社題組（主題鍵和本站題衝突、閱讀有圖表），題組檔也照樣供應。 */
+  function withPublisher(from: MockPool): MockPool {
+    const next = structuredClone(from);
+    const codes: Record<string, string> = { vocabulary: 'vo', cloze: 'cz', word_bank: 'wb', structure: 'st', reading: 'rd', mixed: 'mx' };
+    for (const [s, code] of Object.entries(codes)) {
+      const list = next.tiers.basic[s as keyof typeof next.tiers.basic] as MockPoolEntry[];
+      for (let i = 0; i < 2; i += 1) {
+        const uid = `pb.${code}.f0000${i}`;
+        const base = { uid, v: 1, theme: [...(list[0]?.theme ?? [])], k: [...(list[0]?.k ?? [])], ex: 'ns', src: 'pub-test' };
+        list.push((s === 'reading' ? { ...base, fig: 'chart', form: 'mixed', sw: [] } : base) as MockPoolEntry);
+      }
+    }
+    return next;
+  }
+
+  it('組一份新卷：同一個種子、空的「做過」得到同一份卷子', async () => {
+    const plain = await assembleNewPaper('basic', { seed: 99 });
+    window.localStorage.clear();
+    setSnapshotStoreForTests(createMemorySnapshotStore());
+    deploy(withPublisher(pool));
+    const mixed = await assembleNewPaper('basic', { seed: 99 });
+    if (!plain.ok || !mixed.ok) throw new Error('組卷失敗');
+    expect(mixed.paper.id).toBe(plain.paper.id);
+    expect(decodePaperId(mixed.paper.id)?.slots.every((s) => s.uid.startsWith('ai.'))).toBe(true);
+  });
+
+  it('下架換題：同一個舊代號換到同一個新代號，替代題組一定是本站題', async () => {
+    const id = shareCode(pool, 3);
+    const removed = slotUid(id, 5);
+    deploy(withoutUid(pool, removed));
+    const a = await resolveBankPaper(id);
+    clearDataCache();
+    window.localStorage.clear();
+    setSnapshotStoreForTests(createMemorySnapshotStore());
+    deploy(withPublisher(withoutUid(pool, removed)));
+    const b = await resolveBankPaper(id);
+    if (!a.ok || !b.ok) throw new Error('解析失敗');
+    expect(b.paper.id).toBe(a.paper.id);
+    expect(b.paper.id).not.toBe(id);
+    expect(slotUid(b.paper.id, 5).startsWith('ai.')).toBe(true);
+  });
+});

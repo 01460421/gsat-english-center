@@ -12,8 +12,18 @@
  *   - isolate 內快取（Map，最多 24 個檔、10 分鐘）：同一個 isolate 處理同一份考卷的多題時不重抓。
  *   - 404 → SiteDataError('gone')（題庫題已改版、舊版不再發布）；其他錯誤 → 'unreachable'。路由換成 409／502。
  *   - 報告（WP-C）另外讀三份索引重建推薦候選：bank/index.json、writing/bank/index.json、exams/index.json。
+ *   - 出版社題（pb.…，docs/design/weak-paper.md §9.6）：題組檔一定帶 source（守衛在 shared）；授權狀態讀 bank/sources.json
+ *     （同樣的快取；到期日由呼叫端每次和今天比，所以就算靜態站沒有重建，過了 ends_on 也會停用）。
  */
-import { EXAM_ID_PATTERN, GROUP_KEY_PATTERN, isPracticeGroupFileCore, type PracticeGroupFileCore } from '@gsat/shared';
+import {
+  EXAM_ID_PATTERN,
+  GROUP_KEY_PATTERN,
+  isPracticeGroupFileCore,
+  isSourceRegistry,
+  type PracticeGroupFileCore,
+  type SourceRegistry,
+} from '@gsat/shared';
+import { ApiError } from '../errors';
 
 /** 讀不到題目檔的原因：gone＝404（改版或下架）；unreachable＝網路、逾時、太大、格式不對。 */
 export class SiteDataError extends Error {
@@ -24,6 +34,13 @@ export class SiteDataError extends Error {
     super(message);
     this.name = 'SiteDataError';
   }
+}
+
+/** 讀不到題目檔 → 409 gone（改版或下架）或 502 unreachable（不扣點、不建立案例）。 */
+export function siteDataFailure(err: SiteDataError): ApiError {
+  return err.reason === 'gone'
+    ? new ApiError(409, 'assist_source_unavailable', '這一題已經改版，舊版無法解析', { reason: 'gone' })
+    : new ApiError(502, 'assist_source_unavailable', '暫時讀不到題目，請稍後再試', { reason: 'unreachable' });
 }
 
 export const SITE_DATA_TIMEOUT_MS = 5_000;
@@ -108,6 +125,8 @@ export interface SiteBankIndexEntry {
   tier: string;
   topic: string | null;
   skills?: unknown;
+  /** 出版社題組的來源 id（bank/sources.json；本站題沒有）。 */
+  src?: unknown;
 }
 
 /** 本站寫作題庫索引的一筆（writing/bank/index.json）。 */
@@ -138,6 +157,8 @@ export interface SiteData {
   bankIndex(): Promise<SiteBankIndexEntry[]>;
   writingBankIndex(): Promise<SiteWritingIndexEntry[]>;
   examsIndex(): Promise<SiteExamSummary[]>;
+  /** 公開的來源登記（bank/sources.json；出版社題的授權狀態）。 */
+  sourceRegistry(): Promise<SourceRegistry>;
 }
 
 export interface SiteDataOptions {
@@ -280,6 +301,9 @@ export function createSiteData(options: SiteDataOptions): SiteData {
     },
     async examsIndex() {
       return (await getJson('exams/index.json', isExamsIndex)).exams;
+    },
+    async sourceRegistry() {
+      return getJson('bank/sources.json', isSourceRegistry);
     },
   };
 }

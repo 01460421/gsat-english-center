@@ -7,7 +7,7 @@
  *   localOverview / sinceOverview   產生面板的「資料概況」與「上一版之後」。
  */
 import { ASSIST_MC_SECTIONS, type AssistHistorySummary, type AssistReportDetail, type AssistSection, type Tier } from '@gsat/shared';
-import { loadBankIndex } from '../../data/bank';
+import { loadPracticeIndex } from '../../data/bank';
 import { loadExamIndex } from '../../data/exams';
 import { loadUsedGroups } from '../mock/bank/used';
 import { loadHistory } from '../mock/storage';
@@ -45,7 +45,7 @@ export function focusSectionsOf(summary: Pick<AssistHistorySummary, 'sections'>)
 
 /** 推薦候選的 ref（索引讀不到時回空陣列：報告照樣產生，只是沒有推薦）。 */
 export async function collectCandidates(summary: AssistHistorySummary, tier: Tier): Promise<string[]> {
-  const [bank, exams] = await Promise.all([loadBankIndex().catch(() => null), loadExamIndex().catch(() => null)]);
+  const [bank, exams] = await Promise.all([loadPracticeIndex().catch(() => null), loadExamIndex().catch(() => null)]);
   const done = new Set([...loadUsedGroups().keys(), ...Object.keys(getPracticeHistory().done)]);
   const lastAt = new Map<string, number>();
   for (const e of getOutcomes().items) if (e.s === 'exam' || e.s === 'mock') lastAt.set(e.r, Math.max(lastAt.get(e.r) ?? 0, e.at));

@@ -23,9 +23,10 @@
  * 載入用 memoizeAsync 快取，成功的結果在分頁存活期間不會更新。網站更新後舊的題組檔會從部署移除，
  * 照舊池子組卷就會拿到 404，所以另外提供 reloadMockPool()：丟掉成功的快取、重抓一次（§4.7 第 (6) 部分）。
  */
-import { AI_SECTION_TYPES, TIERS, type BankSectionType, type Tier } from '@gsat/shared';
+import { AI_BANK_SOURCE_ID, AI_SECTION_TYPES, TIERS, type BankSectionType, type Tier } from '@gsat/shared';
 import { fetchDataFile, isRecord, memoizeAsync } from '../../../data/client';
 import { BLUEPRINT_ID } from './blueprint';
+import { BK2_MAX_VERSION } from './code2';
 
 export const MOCK_POOL_PATH = 'bank/mock-pool.json';
 
@@ -35,9 +36,11 @@ export const MOCK_POOL_PATH = 'bank/mock-pool.json';
  *   uid      uid 格式不符或題型代碼和 section_type 不一致（無法編進代號）
  *   version  版本大於 63（無法編進代號）
  *   marker   題組裡有指向題組外的 [[n]]
+ *   shape    題組的形狀（題數、作答方式、配分）和學測格式不同：只進題庫練習，兩種代號都不收（docs/design/weak-paper.md §8.5）
+ *   ns       出版社題組（pb.）：bk1 一律略過；加強卷（bk2）在請求的來源包含它時才收（isSelectableBk2，§6.2）
  * 建置端之後可能加新的原因，前端只看「有沒有」，所以型別保留 string。
  */
-export type MockPoolExclusion = 'glyph' | 'uid' | 'version' | 'marker' | (string & {});
+export type MockPoolExclusion = 'glyph' | 'uid' | 'version' | 'marker' | 'shape' | 'ns' | (string & {});
 
 /**
  * 組卷池的一個題組（所有題型共用的欄位）。建置端的格式在 scripts/lib/bank-mock-pool.mjs；
@@ -57,6 +60,8 @@ export interface MockPoolEntry {
   k: string[];
   /** 這個 uid 較舊的 verified 版本的 k（鍵是版本號）；只有改過版的 uid 才有。 */
   prev?: Record<string, string[]>;
+  /** 來源登記檔的 id（出版社題組才有；沒有就是本站題庫，weak-paper.md §8.9）。 */
+  src?: string;
   /** 不能組新卷的原因；沒有這個欄位就是可以用。 */
   ex?: MockPoolExclusion;
 }
@@ -100,6 +105,8 @@ function isEntry(v: unknown, reading: boolean): boolean {
   if (prev != null && !(isRecord(prev) && Object.values(prev).every(isStringArray))) return false;
   const ex = v['ex'];
   if (ex != null && typeof ex !== 'string') return false;
+  const src = v['src'];
+  if (src != null && typeof src !== 'string') return false;
   if (!reading) return true;
   const fig = v['fig'];
   if (fig !== null && fig !== 'chart' && fig !== 'table') return false;
@@ -158,7 +165,23 @@ export function findPoolEntry(pool: MockPool, tier: Tier, section: BankSectionTy
   return (pool.tiers[tier][section] as readonly MockPoolEntry[]).find((e) => e.uid === uid) ?? null;
 }
 
-/** 可以組新卷的題組（沒有排除原因）。 */
+/** 可以組新卷的題組（沒有排除原因）。自組模擬考（bk1）只用這一支：出版社題組帶 ex: 'ns'，一律不是候選。 */
 export function isSelectable(entry: MockPoolEntry): boolean {
   return entry.ex == null;
+}
+
+/** 題組的來源 id（沒有 src 就是本站題庫）。 */
+export function sourceOfEntry(entry: Pick<MockPoolEntry, 'src'>): string {
+  return entry.src ?? AI_BANK_SOURCE_ID;
+}
+
+/**
+ * 加強卷（bk2）的候選（weak-paper.md §6.2）：版本 ≤ 31（代號每組只有 5 位元版本），來源在 usableSources 裡
+ * （請求勾選、有效、授權包含網站與 PDF，見 shared 的 usablePaperSources），而且沒有排除原因，
+ * 或排除原因只是「出版社題組」（ex: 'ns'）。其他排除原因（含 shape）兩種代號都不收。
+ */
+export function isSelectableBk2(entry: MockPoolEntry, usableSources: ReadonlySet<string>): boolean {
+  if (entry.v > BK2_MAX_VERSION) return false;
+  if (!usableSources.has(sourceOfEntry(entry))) return false;
+  return entry.ex == null || (entry.ex === 'ns' && entry.src != null);
 }

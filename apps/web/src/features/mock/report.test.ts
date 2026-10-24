@@ -159,6 +159,12 @@ describe('computeReport：原得總分＝自動計分＋非選擇題（自動、
     expect(composition).toMatchObject({ earned: 0, pendingMax: 20, suggestedSec: 25 * 60 });
   });
 
+  it('各大題的建議時間：加強卷依版面（sectionMinutes）；沒有的大題用 SUGGESTED_MINUTES（docs/design/weak-paper.md §7.2）', () => {
+    const report = computeReport(MINI_EXAM, submittedRecord(MINI_EXAM, ANSWERS), { sectionMinutes: { mixed: 20 } });
+    expect(report.sections.find((s) => s.sectionId === 's5')?.suggestedSec).toBe(1200);
+    expect(report.sections.find((s) => s.sectionId === 's7')?.suggestedSec).toBe(25 * 60);
+  });
+
   it('自評之後總分即時更新；自評分數覆蓋程式的建議分數，超過配分的值會被限制', () => {
     const record = submittedRecord(MINI_EXAM, ANSWERS, { selfScores: { '47': 2, 中譯英1: 3, 英文作文: 25 } });
     const report = computeReport(MINI_EXAM, record);

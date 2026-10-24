@@ -216,3 +216,28 @@ describe('本站自組卷的圖（bank-mock §7.3）', () => {
     expect(text).not.toContain(PDF_TEXT.figureNote);
   });
 });
+
+describe('出版社題組的出處（groupSources，docs/design/weak-paper.md §9.5）', () => {
+  const g = group({ id: 's5g1', passage: 'A passage.', questions: [q(35), q(36)] });
+  const line = '本題出自測試出版《模擬試題》，經授權使用';
+
+  it('有 groupSources 時印在題組標示下一行、選文之前，和選文綁在同一塊（不會落在頁底）', () => {
+    const blocks = groupBlocks(section('reading'), g, { site: true, groupSources: { s5g1: line } });
+    const text = allText(blocks[0]?.node);
+    const label = text.indexOf('第 35 至 36 題為題組');
+    expect(label).toBeGreaterThanOrEqual(0);
+    expect(text.indexOf(line)).toBeGreaterThan(label);
+    expect(text.indexOf('A passage.')).toBeGreaterThan(text.indexOf(line));
+    // 選文很長、不能整組綁在一起時，出處那一塊自己標 keepWithNext（和下一塊放在同一頁）。
+    const long = groupBlocks(section('reading'), { ...g, passage: Array.from({ length: 40 }, () => 'A long passage line that keeps going.').join('\n') }, { site: true, groupSources: { s5g1: line } });
+    const at = long.findIndex((b) => allText(b.node) === line);
+    expect(at).toBeGreaterThan(0);
+    expect(long[at]?.keepWithNext).toBe(true);
+  });
+
+  it('沒有 groupSources（歷屆卷、只用本站題的自組卷）時不印；別的題組的出處也不印', () => {
+    expect(blockTexts(groupBlocks(section('reading'), g)).join('|')).not.toContain(line);
+    expect(blockTexts(groupBlocks(section('reading'), g, { site: true })).join('|')).not.toContain(line);
+    expect(blockTexts(groupBlocks(section('reading'), g, { site: true, groupSources: { s5g2: line } })).join('|')).not.toContain(line);
+  });
+});

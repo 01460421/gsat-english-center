@@ -5,7 +5,7 @@
  */
 import type { Exam } from '../../../data/exams';
 import type { SitePaperPdfMeta } from '../types';
-import { SITE_PAPER_TEXT } from './strings';
+import { SITE_PAPER_TEXT, WEAK_PAPER_TEXT } from './strings';
 
 export const NON_OFFICIAL_NOTICE = '本 PDF 由學測英文中心依大考中心公開試題重新排版，非官方文件';
 
@@ -31,6 +31,16 @@ export function officialScoringUrl(exam: Pick<Exam, 'official_files'>): string |
  * 本站自組卷的頁尾（docs/design/bank-mock.md §7.2）：「學測英文中心自組模擬考　卷號 A-3KD9W」與「題目由 AI 撰寫…非官方試題」。
  * 題目是本站的 AI 題，不寫試題來源機構，也沒有官方試題 PDF 可以指。
  */
-export function siteAttribution(site: Pick<SitePaperPdfMeta, 'code'>): { source: string; notice: string } {
-  return { source: SITE_PAPER_TEXT.footerSource(site.code), notice: SITE_PAPER_TEXT.footerNotice };
+export function siteAttribution(site: Pick<SitePaperPdfMeta, 'code' | 'footerKind' | 'paperKind'>): { source: string; notice: string } {
+  // 卷子裡有出版社題組時聲明改寫（docs/design/weak-paper.md §8.7）；沒有 footerKind（自組模擬考）照舊。
+  const notice =
+    site.footerKind === 'publisher' ? SITE_PAPER_TEXT.footerNoticePublisher : site.footerKind === 'mixed' ? SITE_PAPER_TEXT.footerNoticeMixed : SITE_PAPER_TEXT.footerNotice;
+  // 學習助手加強卷的出處寫加強卷的卷名（§9.5）；自組模擬考照舊。
+  const source = site.paperKind ? WEAK_PAPER_TEXT.footerSource(site.code) : SITE_PAPER_TEXT.footerSource(site.code);
+  return { source, notice };
+}
+
+/** 加強卷的卷別名稱（「弱點加強卷」「模考格式卷（進階練習）」）；自組模擬考是 null。頁首、各節標題與文件屬性用。 */
+export function weakKindLabel(site: Pick<SitePaperPdfMeta, 'paperKind' | 'tierLabel'>): string | null {
+  return site.paperKind ? WEAK_PAPER_TEXT.kindLabel(site.paperKind, site.tierLabel) : null;
 }

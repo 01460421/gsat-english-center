@@ -20,6 +20,12 @@
  *
  * avoid 只在換題時用（§4.7 第 (4) 部分）：固定其他位置的題組，只替空著的位置挑題；固定的題組照樣參加主題與圖表的比對，
  * 位置不重新排序。
+ *
+ * options（docs/design/weak-paper.md §6.4，加強卷的模考格式卷與中性卷用；自組模擬考不傳，輸出逐位元不變，bk1Golden.test.ts）：
+ *   priority    在「沒做過」那一層裡先依優先序分 4 段（最高分的 ¾ 以上、½–¾、¼–½、其餘），同一段維持種子洗牌的順序；
+ *               負數＝「盡量避開」（排在沒做過那一層的最後）。做過的那一層不受影響，所以「只有不夠的大題才用做過的」不變。
+ *   selectable  取代 isSelectable（加強卷傳 isSelectableBk2：收請求的來源裡的出版社題組）。
+ *   filter      額外的篩選（例如來源）。
  */
 import type { BankSectionType } from '@gsat/shared';
 import { BLUEPRINT_SLOTS, READING_SLOTS, SECTION_GROUP_COUNTS, SELECTION_ORDER, SLOT_COUNT } from './blueprint';
@@ -43,6 +49,13 @@ export interface AvoidSpec {
 }
 
 export type Relaxation = 'theme' | 'figure';
+
+/** 加強卷用的選填參數（見檔頭）。 */
+export interface AssembleOptions {
+  priority?: (entry: MockPoolEntry, section: BankSectionType) => number;
+  selectable?: (entry: MockPoolEntry) => boolean;
+  filter?: (entry: MockPoolEntry, section: BankSectionType) => boolean;
+}
 
 export type AssembleSelectionResult =
   | {
@@ -70,8 +83,10 @@ const isContinuous = (e: AnyEntry): boolean => !hasFigure(e) && !isMultiText(e);
 
 const byUid = (a: AnyEntry, b: AnyEntry): number => (a.uid < b.uid ? -1 : a.uid > b.uid ? 1 : 0);
 
-function sectionEntries(pool: MockPoolTier, section: BankSectionType): AnyEntry[] {
-  return (pool[section] as readonly AnyEntry[]).filter(isSelectable).sort(byUid);
+function sectionEntries(pool: MockPoolTier, section: BankSectionType, options?: AssembleOptions): AnyEntry[] {
+  const selectable = options?.selectable ?? isSelectable;
+  const filter = options?.filter;
+  return (pool[section] as readonly AnyEntry[]).filter((e) => selectable(e) && (!filter || filter(e, section))).sort(byUid);
 }
 
 /**
@@ -143,6 +158,8 @@ interface Context {
   used: UsedMap;
   /** 沒做過的候選不夠的大題（§4.2 第 2 步）。 */
   short: ReadonlySet<BankSectionType>;
+  /** 優先序（加強卷；沒有就是 bk1 的原始規則）。 */
+  priority?: AssembleOptions['priority'];
 }
 
 interface Relax {
@@ -153,10 +170,32 @@ interface Relax {
 
 type RoundResult = { ok: true; picks: AnyEntry[]; usedFlags: boolean[] } | { ok: false; section: BankSectionType };
 
-/** 洗牌後的候選，排成「沒做過（洗牌順序）→ 做過（最後使用時間由舊到新，同時間照洗牌順序）」。 */
-function rankCandidates(entries: readonly AnyEntry[], used: UsedMap, rng: Rng): Candidate[] {
+/** 優先序的段（0 最先）：最高分的 ¾ 以上、½–¾、¼–½、其餘；負數（盡量避開）排最後；最高分 ≤ 0 時不分段。 */
+function priorityBand(p: number, max: number): number {
+  if (p < 0) return 4;
+  if (max <= 0) return 0;
+  if (p >= 0.75 * max) return 0;
+  if (p >= 0.5 * max) return 1;
+  if (p >= 0.25 * max) return 2;
+  return 3;
+}
+
+/**
+ * 洗牌後的候選，排成「沒做過（洗牌順序）→ 做過（最後使用時間由舊到新，同時間照洗牌順序）」。
+ * 有優先序時，沒做過的那一層先依段排（穩定排序，同一段維持洗牌順序）；亂數的用法和沒有優先序時相同。
+ */
+function rankCandidates(entries: readonly AnyEntry[], used: UsedMap, rng: Rng, section: BankSectionType, priority?: AssembleOptions['priority']): Candidate[] {
   const order = shuffled(entries, rng);
-  const fresh = order.filter((e) => !used.has(e.uid)).map((entry) => ({ entry, used: false }));
+  let freshEntries = order.filter((e) => !used.has(e.uid));
+  if (priority) {
+    const scored = freshEntries.map((entry, i) => ({ entry, i, p: priority(entry, section) }));
+    const max = Math.max(0, ...scored.map((x) => x.p));
+    freshEntries = scored
+      .map((x) => ({ ...x, band: priorityBand(x.p, max) }))
+      .sort((a, b) => a.band - b.band || a.i - b.i)
+      .map((x) => x.entry);
+  }
+  const fresh = freshEntries.map((entry) => ({ entry, used: false }));
   const old = order
     .map((entry, i) => ({ entry, i, at: used.get(entry.uid) }))
     .filter((x) => x.at !== undefined)
@@ -231,7 +270,7 @@ function runRound(ctx: Context, rng: Rng, relax: Relax): RoundResult {
     const slots = ctx.openSlots[section];
     if (slots.length === 0) continue;
     const allowUsed = ctx.short.has(section) || relax.openUsed.has(section);
-    const ranked = rankCandidates(ctx.candidates[section], ctx.used, rng).filter((c) => allowUsed || !c.used);
+    const ranked = rankCandidates(ctx.candidates[section], ctx.used, rng, section, ctx.priority).filter((c) => allowUsed || !c.used);
     for (const slot of slots) {
       const chosen = choose(section, ranked, picks, themes, relax);
       if (!chosen) return { ok: false, section };
@@ -243,8 +282,8 @@ function runRound(ctx: Context, rng: Rng, relax: Relax): RoundResult {
   return { ok: true, picks: picks as AnyEntry[], usedFlags };
 }
 
-/** 從一種難度的組卷池挑一份卷子的 11 個題組（§4.1）。 */
-export function assembleSelection(pool: MockPoolTier, seed: number, used: UsedMap, avoid?: AvoidSpec): AssembleSelectionResult {
+/** 從一種難度的組卷池挑一份卷子的 11 個題組（§4.1）。options 見檔頭（自組模擬考不傳）。 */
+export function assembleSelection(pool: MockPoolTier, seed: number, used: UsedMap, avoid?: AvoidSpec, options?: AssembleOptions): AssembleSelectionResult {
   const fixed: (AnyEntry | null)[] = avoid ? [...avoid.fixed] : Array.from({ length: SLOT_COUNT }, () => null);
   if (fixed.length !== SLOT_COUNT) throw new Error(`avoid.fixed 要有 ${SLOT_COUNT} 個位置`);
   const fixedUids = new Set(fixed.filter((e): e is AnyEntry => e !== null).map((e) => e.uid));
@@ -254,7 +293,7 @@ export function assembleSelection(pool: MockPoolTier, seed: number, used: UsedMa
   const short = new Set<BankSectionType>();
   for (const section of SELECTION_ORDER) {
     openSlots[section] = BLUEPRINT_SLOTS.filter((s) => s.section === section && fixed[s.index] === null).map((s) => s.index);
-    candidates[section] = sectionEntries(pool, section).filter((e) => !fixedUids.has(e.uid));
+    candidates[section] = sectionEntries(pool, section, options).filter((e) => !fixedUids.has(e.uid));
     const need = openSlots[section].length;
     if (need === 0) continue;
     // 第 7 步：題庫本身不夠。
@@ -264,7 +303,7 @@ export function assembleSelection(pool: MockPoolTier, seed: number, used: UsedMa
     const enough = need === SECTION_GROUP_COUNTS[section] ? capacity(section, unused) >= 1 : unused.length >= need;
     if (!enough) short.add(section);
   }
-  const ctx: Context = { fixed, openSlots, candidates, used, short };
+  const ctx: Context = { fixed, openSlots, candidates, used, short, ...(options?.priority ? { priority: options.priority } : {}) };
 
   let round = 0;
   const failures = new Map<BankSectionType, number>();

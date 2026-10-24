@@ -137,8 +137,8 @@ describe('buildBankPaper', () => {
   it('寫作題：答案檔與 item_id 的對照', () => {
     const trKey = input.slots[9]?.key ?? '';
     const cpKey = input.slots[10]?.key ?? '';
-    expect(paper.writing.translation.group_id).toBe(trKey);
-    expect(paper.writing.composition.group_id).toBe(cpKey);
+    expect(paper.writing.translation?.group_id).toBe(trKey);
+    expect(paper.writing.composition?.group_id).toBe(cpKey);
     expect(paper.writing.translationItemIds).toEqual({ 中譯英1: `${trKey}#1`, 中譯英2: `${trKey}#2` });
     expect(paper.writing.essayItemId).toBe(`${cpKey}#1`);
   });

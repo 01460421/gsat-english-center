@@ -43,14 +43,14 @@ export type SelfChange = (label: string, score: number | null, detail?: SelfDeta
 
 /** 本站自組卷的中譯英、作文對照資料（BankPaper.writing）。 */
 export interface BankSelfData {
-  /** 本站參考譯文、每句 4 部分評分重點（items 的 label 是題組內的原始標籤）。 */
-  translation: BankTranslationAnswersFile;
-  /** 作文的評分重點、扣分說明、AI 範文。 */
-  composition: BankEssayAnswersFile;
+  /** 本站參考譯文、每句 4 部分評分重點（items 的 label 是題組內的原始標籤）。加強卷沒有中譯英時是 null。 */
+  translation: BankTranslationAnswersFile | null;
+  /** 作文的評分重點、扣分說明、AI 範文。加強卷沒有作文時是 null。 */
+  composition: BankEssayAnswersFile | null;
   /** 卷子的標籤（中譯英1）→ 寫作題庫的 item_id（{uid}@{v}#{原始標籤}）。 */
   translationItemIds: Readonly<Record<string, string>>;
-  /** 作文的 item_id（{uid}@{v}#…）。 */
-  essayItemId: string;
+  /** 作文的 item_id（{uid}@{v}#…）；沒有作文時是 null。 */
+  essayItemId: string | null;
 }
 
 /** item_id（ai.tr.0b1c2d@1#1）→ uid。 */
@@ -62,7 +62,7 @@ function uidOfItem(itemId: string | undefined): string | null {
 /** 卷子標籤 → 那一句的本站答案（item_id 的 # 後面是原始標籤）。 */
 function bankTranslationItem(bank: BankSelfData, label: string): BankTranslationAnswerItem | undefined {
   const original = bank.translationItemIds[label]?.split('#')[1];
-  return original === undefined ? undefined : bank.translation.items.find((i) => i.label === original);
+  return original === undefined ? undefined : bank.translation?.items.find((i) => i.label === original);
 }
 
 const CIRCLED = ['①', '②', '③', '④'];
@@ -580,7 +580,7 @@ export function SelfAssessment({
                 answer={answers[item.label]}
                 detail={detailOf(item.label, 'composition')}
                 onChange={onChange}
-                {...(bank ? { bankAnswers: bank.composition } : {})}
+                {...(bank?.composition ? { bankAnswers: bank.composition } : {})}
               />
             ))}
           </ul>
@@ -595,7 +595,7 @@ export function SelfAssessment({
 function bankAiLinks(bank: BankSelfData, hasTranslation: boolean, hasComposition: boolean): { to: string; label: string }[] {
   const out: { to: string; label: string }[] = [];
   const tr = hasTranslation ? bankAttemptPath(uidOfItem(Object.values(bank.translationItemIds)[0]) ?? '') : null;
-  const cp = hasComposition ? bankAttemptPath(uidOfItem(bank.essayItemId) ?? '') : null;
+  const cp = hasComposition ? bankAttemptPath(uidOfItem(bank.essayItemId ?? undefined) ?? '') : null;
   if (tr) out.push({ to: tr, label: '本卷的中譯英' });
   if (cp) out.push({ to: cp, label: '本卷的英文作文' });
   return out;

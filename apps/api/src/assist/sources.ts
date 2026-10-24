@@ -2,10 +2,12 @@
  * 各來源 → 案例的題目（AssistQuestionView，存進 assist_cases.question_json）與列表欄位（docs/design/learning-assistant.md §4.4、§4.5）。
  *
  * 前端只送「哪幾題、學生答了什麼」（AssistSourceRef）；題目文字一律由這裡取得：
- *   bank       題庫練習：讀公開的題組檔（siteData.bankGroup），本站解析只放這次問的題。
+ *   bank       題庫練習：讀公開的題組檔（siteData.bankGroup），本站解析只放這次問的題。出版社題（pb.…）先查授權
+ *              （publisher.ts：有效、包含 ai_assist），出處寫出版社與書名，ref_json 另記來源 id（docs/design/weak-paper.md §9.6）。
  *   bank_mock  本站自組模擬考：同一份題組檔，再換成學生卷面上的題號（replaceMarkers、replaceBlankRefs）與字母
  *              （swap 不是 null 時用 swapAnswerLetters；x、y 由程式依兩題的答案字母算，不採用前端給的字母）。
- *              label_map 的值只收 1–50、不重複的數字（會換進提示，§4.4）。
+ *              label_map 的值只收 1–80、不重複的數字（會換進提示，§4.4；學習助手加強卷最多 80 題，docs/design/weak-paper.md §9.6）。
+ *              卷號收自組模擬考（bk1）與學習助手加強卷（bk2）；加強卷的出處寫「學習助手加強卷・{難度}」。
  *   exam       歷屆試題、真題模考：讀公開的考卷檔（siteData.exam），用 iterateQuestions 找題號與所屬題組，帶全國統計。
  *              中譯英、作文的題號回 400 unsupported：寫作要先送批改，再從批改結果問。
  *   vocab      單字錯題本：讀單字索引（siteData.vocabIndex），1–8 個條目。
@@ -32,8 +34,11 @@ import {
   iterateQuestions,
   normalizeAssistText,
   replaceBlankRefs,
+  publisherOriginLabel,
   replaceMarkers,
   skillCodesOf,
+  skillsOfQuestion,
+  sourceTitle,
   swapAnswerLetters,
   type AnswerValue,
   type AssistCaseKind,
@@ -61,7 +66,8 @@ import { ApiError } from '../errors';
 import { groupForSubmission } from '../submissions/custom';
 import { findSubmission, loadGrading, parseJson } from '../submissions/repo';
 import { sha256Text } from './hash';
-import { SiteDataError, type SiteData, type SiteExamQuestion } from './siteData';
+import { assertPublisherAssist } from './publisher';
+import { SiteDataError, siteDataFailure, type SiteData, type SiteExamQuestion } from './siteData';
 
 /** 建立案例需要的全部欄位（路由寫進 assist_cases）。 */
 export interface BuiltCase {
@@ -115,13 +121,6 @@ function unsupported(message: string): ApiError {
 
 function inputInvalid(reason: string, message: string, field?: string): ApiError {
   return new ApiError(400, 'assist_input_invalid', message, { reason, ...(field ? { field } : {}) });
-}
-
-/** 讀不到題目檔 → 409 gone（改版或下架）或 502 unreachable（不扣點、不建立案例）。 */
-export function siteDataFailure(err: SiteDataError): ApiError {
-  return err.reason === 'gone'
-    ? new ApiError(409, 'assist_source_unavailable', '這一題已經改版，舊版無法解析', { reason: 'gone' })
-    : new ApiError(502, 'assist_source_unavailable', '暫時讀不到題目，請稍後再試', { reason: 'unreachable' });
 }
 
 async function fromSite<T>(load: () => Promise<T>): Promise<T> {
@@ -402,15 +401,23 @@ interface BankRefInput {
 
 /** 自組卷的卷號（同 web 的 PAPER_ID_PATTERN：bk1-難度-66 碼）。 */
 const BANK_PAPER_ID_PATTERN = /^bk1-[bat]-[0-9a-hjkmnp-tv-z]{66}$/;
+/** 學習助手加強卷的卷號（同 web 的 BK2_ID_PATTERN：bk2-卷別-每組 7 碼 × 1–12 組，docs/design/weak-paper.md §7.1）。 */
+const WEAK_PAPER_ID_PATTERN = /^bk2-[wfrm]-(?:[0-9a-hjkmnp-tv-z]{7}){1,12}$/;
+/** 卷面題號的上限（加強卷選擇與混合題最多 80 題，§4.4）。 */
+const MAX_PAPER_LABEL = 80;
 
 async function buildBank(input: BankRefInput, ctx: SourceContext): Promise<BuiltCase> {
   const ref = typeof input.ref === 'string' ? input.ref : '';
   if (!GROUP_KEY_PATTERN.test(ref)) throw badRequest('題組代號格式不對');
   const mock = input.source === 'bank_mock';
-  if (mock && (typeof input.paper_id !== 'string' || !BANK_PAPER_ID_PATTERN.test(input.paper_id))) throw badRequest('卷號格式不對');
+  if (mock && (typeof input.paper_id !== 'string' || !(BANK_PAPER_ID_PATTERN.test(input.paper_id) || WEAK_PAPER_ID_PATTERN.test(input.paper_id)))) throw badRequest('卷號格式不對');
+  const weakPaper = mock && typeof input.paper_id === 'string' && WEAK_PAPER_ID_PATTERN.test(input.paper_id);
   const file = await fromSite(() => ctx.siteData.bankGroup(ref));
   const section = sectionOf(file.section_type);
   if (section === 'translation' || section === 'composition' || section === 'other') throw unsupported('中譯英與作文請先送 AI 批改，再從批改結果問學習助手');
+  // 出版社題組（pb.…；題組檔的守衛保證一定帶 source）：授權要包含 ai_assist、而且還有效（§9.6）。
+  const publisher = file.source;
+  await assertPublisherAssist(ctx.siteData, publisher);
   const questions = bankQuestions(file.group.questions);
   const groupLabels = new Set(questions.map((q) => q.label));
   const vocabulary = section === 'vocabulary';
@@ -423,6 +430,8 @@ async function buildBank(input: BankRefInput, ctx: SourceContext): Promise<Built
   const clientStatus = vocabulary ? onlyLabels(status, labels) : status;
   const explanations = file.annotations.explanations.items;
   const explanationOf = (q: BankQuestion): ExplanationItem | undefined => explanations[String(q.no)] ?? explanations[q.label];
+  // 出版社題沒有解析時，解析列只有計分欄位、explanation_zh 是空字串（§8.4）：計分照用，送給模型與畫面的解析當成沒有。
+  const shownExplanation = (e: ExplanationItem | undefined): ExplanationItem | undefined => (e && e.explanation_zh.trim() === '' ? undefined : e);
 
   // 自組卷：題號與字母換成學生卷面上的（§4.5.2）。
   let display = new Map(questions.map((q) => [q.label, q.label]));
@@ -438,7 +447,7 @@ async function buildBank(input: BankRefInput, ctx: SourceContext): Promise<Built
     const ok =
       keys.length === groupLabels.size &&
       keys.every((k) => groupLabels.has(k)) &&
-      values.every((v) => typeof v === 'string' && /^[1-9][0-9]?$/.test(v) && Number(v) <= 50) &&
+      values.every((v) => typeof v === 'string' && /^[1-9][0-9]?$/.test(v) && Number(v) <= MAX_PAPER_LABEL) &&
       new Set(values).size === values.length;
     if (!ok) throw inputInvalid('bad_label_map', '這份卷子的題號對不上，請重新整理成績單再試一次', 'label_map');
     labelMap = Object.fromEntries(keys.sort().map((k) => [k, map[k] as string]));
@@ -490,13 +499,22 @@ async function buildBank(input: BankRefInput, ctx: SourceContext): Promise<Built
       student_answer: answers[label] ?? null,
       verdict: v.verdict,
       verdict_basis: v.basis,
-      explanation: fixExplanation(explanation),
+      explanation: fixExplanation(shownExplanation(explanation)),
       stats: null,
       tags: tagsOf(q.tags),
     };
   });
   const tier = file.tier as Tier;
-  const origin = mock ? `本站自組模擬考・${TIER_LABELS[tier] ?? tier}` : `本站題庫・${TIER_LABELS[tier] ?? tier}`;
+  const tierLabel = TIER_LABELS[tier] ?? tier;
+  // 出處（§8.7）：出版社題寫「{出版社}《{書名}》・{難度}・經授權使用」，標題用「{出版社}《{書名}》・{難度}」。
+  const origin = publisher
+    ? publisherOriginLabel(publisher, tierLabel)
+    : weakPaper
+      ? `學習助手加強卷・${tierLabel}`
+      : mock
+        ? `本站自組模擬考・${tierLabel}`
+        : `本站題庫・${tierLabel}`;
+  const titleOrigin = publisher ? `${sourceTitle(publisher)}・${tierLabel}` : origin;
   const groupAnswers = Object.fromEntries(Object.entries(answers).filter(([k]) => !labels.includes(k)));
   const feasible = file.annotations.elimination?.feasible ?? null;
   const view: AssistQuestionView = {
@@ -516,17 +534,26 @@ async function buildBank(input: BankRefInput, ctx: SourceContext): Promise<Built
     elimination: feasible ? Object.fromEntries(Object.entries(feasible).map(([k, v]) => [display.get(k) ?? k, v])) : null,
     tier,
   };
+  // 出版社題另外記下來源 id（讀案例時查授權狀態用，不必再讀題組檔；§9.6）。本站題的 ref_json 不變。
+  const srcField = publisher ? { src: publisher.id } : {};
   const refValue = mock
-    ? { source: 'bank_mock', paper_id: input.paper_id, ref, labels, label_map: labelMap, swap, answers, ...(Object.keys(clientStatus).length > 0 ? { client_status: clientStatus } : {}) }
-    : { source: 'bank', ref, labels, answers, ...(Object.keys(clientStatus).length > 0 ? { client_status: clientStatus } : {}) };
+    ? { source: 'bank_mock', paper_id: input.paper_id, ref, ...srcField, labels, label_map: labelMap, swap, answers, ...(Object.keys(clientStatus).length > 0 ? { client_status: clientStatus } : {}) }
+    : { source: 'bank', ref, ...srcField, labels, answers, ...(Object.keys(clientStatus).length > 0 ? { client_status: clientStatus } : {}) };
   const { verdict, wrongCount } = summarize(targets);
-  const skills = [...new Set(labels.flatMap((l) => skillCodesOf({ tags: tagsOf(questions.find((q) => q.label === l)?.tags) ?? null, explanation: explanationOf(questions.find((q) => q.label === l)!) ?? null })))];
+  // 技能代碼：出版社題讀題組檔的 skills（建置時算好），本站題從標註與解析算（同一支 skillsOfQuestion，作答紀錄的 k 也用它）。
+  const skills = [
+    ...new Set(
+      labels.flatMap((l) =>
+        skillsOfQuestion(file.skills, l, { tags: tagsOf(questions.find((q) => q.label === l)?.tags) ?? null, explanation: explanationOf(questions.find((q) => q.label === l)!) ?? null }),
+      ),
+    ),
+  ];
   return {
     source: input.source,
     kind: 'item',
     trust: 'site',
     section,
-    title: title(`${origin}・${ASSIST_SECTION_LABELS[section]}：${labelsText(section, targets.map((t) => t.display_label))}`),
+    title: title(`${titleOrigin}・${ASSIST_SECTION_LABELS[section]}：${labelsText(section, targets.map((t) => t.display_label))}`),
     refJson: JSON.stringify(refValue),
     dedupeKey: await sha256Text(canonical(refValue)),
     itemCount: targets.length,

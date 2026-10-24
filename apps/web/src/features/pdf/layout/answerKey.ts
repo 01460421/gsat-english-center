@@ -142,6 +142,17 @@ function sectionQuestions(section: ExamSection): Question[] {
 function siteOpenList(questions: readonly Question[], site: SitePaperPdfMeta): PdfContent[] {
   return questions.map((q) => {
     const number = questionNumberText(q) || `${q.label}.`;
+    if (site.answers.ended?.includes(q.label)) {
+      // 出版社授權結束的題組：答案文字是題目內容的一部分，不印（§7.6）。
+      return {
+        columns: [
+          { width: 34, text: plainInline(number), fontSize: 10.5 },
+          { width: '*', text: plainInline(SITE_PAPER_TEXT.answerEnded), fontSize: 10.5 },
+        ],
+        columnGap: 0,
+        margin: [0, 0, 0, 3],
+      };
+    }
     const forms = site.answers.partialCredit?.[q.label] ?? [];
     const answer = printableSiteText(openAnswerText(q));
     const partial = forms.length > 0 ? printableSiteText(SITE_PAPER_TEXT.partialCredit(forms)) : '';

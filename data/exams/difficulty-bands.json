@@ -6587,6 +6587,36 @@
    ],
    "model": "最小平方線性迴歸 Pg = c0 + c1·P + c2·Ph + c3·Pl（g = c, b, a），以推估的 Pc、Pb 套用同一條規則（門檻 0.50，連續值比較）",
    "note_Pc": "中間 34% 考生的答對率可由 (P − 0.33·Ph − 0.33·Pl)／0.34 直接算出，它與 Pc 的平均絕對誤差 0.011；迴歸的 Pc 係數（≈ 3.16·P − 1.08·Ph − 1.09·Pl）就是這個式子",
+   "p_only": {
+    "coefficients": {
+     "Pa": {
+      "P": 0.8182,
+      "const": 0.4209
+     },
+     "Pb": {
+      "P": 1.3604,
+      "const": -0.0345
+     },
+     "Pc": {
+      "P": 1.4417,
+      "const": -0.2414
+     }
+    },
+    "features": [
+     "const",
+     "P"
+    ],
+    "in_sample_accuracy_gsat": 0.926,
+    "leave_one_year_out_accuracy": 0.926,
+    "model": "最小平方線性迴歸 Pg = c0 + c1·P（g = c, b, a），以推估的 Pc、Pb 套用同一條規則（門檻 0.50，連續值比較）；斜率為正，所以等價於 thresholds 的兩個 P 門檻",
+    "threshold_rule": "P >= basic_min_P → basic；advanced_min_P <= P < basic_min_P → advanced；P < advanced_min_P → top。門檻由四位小數的係數算出：basic_min_P = (0.50 − Pc.const)／Pc.P，advanced_min_P = (0.50 − Pb.const)／Pb.P",
+    "thresholds": {
+     "advanced_min_P": 0.3929,
+     "basic_min_P": 0.5143
+    },
+    "train": "學測 91–115 共 1352 題",
+    "when": "只有全體答對率 P 的題目（沒有高低分組，或高低分組不是前後 33%；例如出版社模擬考只給全體答對率，docs/design/weak-paper.md §8.5）。有 Pa–Pe 時直接套 G50，有 P、Ph、Pl 時用上面的 coefficients"
+   },
    "train": "學測 91–115 共 1352 題",
    "validation": {
     "accuracy_far_from_threshold": {

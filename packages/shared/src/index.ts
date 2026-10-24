@@ -28,3 +28,6 @@ export * from './assist-report';
 // 作文範文：三個層級的規格、字數目標、對照數字與 API 型別（同樣直接轉匯出、不經 writing.ts；docs/design/model-essays.md §7.2）。
 export * from './connectives';
 export * from './exemplars';
+// 加強卷：技能代碼的別名表、題目來源契約（docs/design/weak-paper.md §5.2、§8.2）。
+export * from './skill-aliases';
+export * from './item-source';

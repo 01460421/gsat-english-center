@@ -149,6 +149,15 @@ describe('ExamPdfDownload：本站自組卷（bank-mock §2.5、§7.7）', () =>
     expect(screen.queryByText(new RegExp('\u5927\u8003\u4e2d\u5fc3'))).not.toBeInTheDocument();
   });
 
+  it('加強卷有出版社題組時說明改寫題目來源（docs/design/weak-paper.md §8.7）', () => {
+    const { unmount } = render(<ExamPdfDownload exam={MINI_EXAM} mockMeta={{ ...mockMeta, sitePaper: { ...site, paperKind: 'w', footerKind: 'mixed' } }} />);
+    expect(screen.getByText(/本站自組試卷，題目由 AI 撰寫或出自出版社模擬試題（經授權）/)).toBeInTheDocument();
+    unmount();
+    render(<ExamPdfDownload exam={MINI_EXAM} mockMeta={{ ...mockMeta, sitePaper: { ...site, paperKind: 'r', footerKind: 'publisher' } }} />);
+    expect(screen.getByText(/本站自組試卷，題目出自出版社模擬試題（經授權）/)).toBeInTheDocument();
+    expect(screen.queryByText(/AI 撰寫/)).not.toBeInTheDocument();
+  });
+
   it('歷屆卷沒有三種版本與「雙面列印」', () => {
     render(<ExamPdfDownload exam={MINI_EXAM} />);
     expect(screen.queryByRole('radio')).not.toBeInTheDocument();

@@ -19,6 +19,7 @@ import type {
   FeaturesResponse,
   MeResponse,
 } from '@gsat/shared';
+import { AI_BANK_SOURCE, PUBLISHER_ASSIST_ENDED_TEXT, PUBLISHER_ASSIST_NO_SCOPE_TEXT } from '@gsat/shared';
 import { screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
@@ -329,6 +330,24 @@ describe('AskPage', () => {
     expect(screen.getByRole('link', { name: '貼上題目' })).toHaveAttribute('href', '/assistant/new');
   });
 
+  it('出版社題組：授權結束（網站重建後題組檔不在）或不含 AI 解析時，說明原因、不顯示題目與送出按鈕', async () => {
+    const PB = 'pb.cz.5a6b7c@1';
+    recordOutcomes([{ s: 'bank', r: PB, g: 'pb.cz.5a6b7c', l: '1', sec: 'cloze', t: 'advanced', k: [], ok: 0, a: 'B', at: T }]);
+    const ask = `/assistant/ask?src=bank&ref=${encodeURIComponent(PB)}&label=1`;
+    // 題組檔 404（授權結束、重建後）：不是「已經改版」。
+    const gone = renderPage(ask, baseRoutes(), PAGES);
+    expect(await screen.findByText(PUBLISHER_ASSIST_ENDED_TEXT)).toBeInTheDocument();
+    expect(screen.queryByText(/已經改版/)).toBeNull();
+    gone.unmount();
+    // 題組檔還在、登記裡授權不含 ai_assist：不能送出。
+    const registry = { version: 'x', sources: [AI_BANK_SOURCE, { ...AI_BANK_SOURCE, id: 'pub-test', ns: 'pb', kind: 'publisher', label_zh: '測試出版', product_zh: '測試模擬試題', attribution_zh: '本題出自測試出版《測試模擬試題》，經授權使用', scope: ['web', 'pdf'], ends_on: '2099-12-31' }] };
+    const file = { ...(GROUPS[WB] as object), uid: 'pb.cz.5a6b7c', source: { id: 'pub-test', label_zh: '測試出版', product_zh: '測試模擬試題', attribution_zh: '本題出自測試出版《測試模擬試題》，經授權使用', ref_text: null } };
+    clearDataCache();
+    renderPage(ask, { ...baseRoutes(), [`GET /data/bank/groups/${PB}.json`]: () => jsonResponse(file), 'GET /data/bank/sources.json': () => jsonResponse(registry) }, PAGES);
+    expect(await screen.findByText(PUBLISHER_ASSIST_NO_SCOPE_TEXT)).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /送出/ })).toBeNull();
+  });
+
   it('網址格式不對：說明，不打 API', async () => {
     const { fetch } = renderPage('/assistant/ask?src=bank&ref=nope&label=1', baseRoutes(), PAGES);
     expect(await screen.findByText(/網址的格式不對/)).toBeInTheDocument();
@@ -572,6 +591,16 @@ describe('CasePage', () => {
     renderCase(caseDetail({ status: 'failed', turns: [{ id: 't1', seq: 1, kind: 'analyze', status: 'failed', failure: 'timeout', created_at: 1 }] }));
     expect(await screen.findByText('AI 回應逾時，這次的點數已經退還。')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '再試一次（用 8 點）' })).toBeInTheDocument();
+  });
+
+  it('出版社授權已經結束（source_ended，docs/design/weak-paper.md §9.6）：說明一次；不能再解析或追問', async () => {
+    const base = caseDetail();
+    const question = base.question ? { ...base.question, passage: null, targets: base.question.targets.map((t) => ({ ...t, stem: null, options: null, explanation: null })) } : null;
+    renderCase({ ...base, status: 'ready', source_ended: true, question, turns: [{ id: 't1', seq: 1, kind: 'analyze', status: 'done', created_at: 1, cache_hit: false }] });
+    expect(await screen.findByTestId('assist-source-ended')).toHaveTextContent(PUBLISHER_ASSIST_ENDED_TEXT);
+    expect(screen.queryByRole('button', { name: /送出解析|再試一次/ })).not.toBeInTheDocument();
+    expect(screen.queryByRole('textbox', { name: '還有問題？繼續追問' })).not.toBeInTheDocument();
+    expect(screen.queryByText('解析完成後就可以追問。')).not.toBeInTheDocument();
   });
 
   it('寫作批改的解析：整體情況、錯誤依類別、四項怎麼改；不顯示 AI 寫的分數', async () => {

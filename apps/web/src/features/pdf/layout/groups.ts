@@ -15,6 +15,7 @@ import { CONTENT_WIDTH, GAP, LINE, SIZE, lineHeightPt } from './metrics';
 import { boxLayout, boxed, figureBlock, groupLabelBlock, paragraphBlocks, type FigureOptions } from './nodes';
 import { bankBox } from './options';
 import { clusterNumberText, compositionBlock, questionBlock } from './questions';
+import { estimateTextWidth } from '../fontRuns';
 import { plainInline, type RichOptions } from './richInline';
 import { PDF_TEXT } from './strings';
 
@@ -132,6 +133,19 @@ function questionsNotInPassage(group: QuestionGroup): Question[] {
 /** 版面模式：本站自組卷的圖印法不同（bank-mock §7.3）。 */
 export interface GroupOptions {
   site?: boolean;
+  /** 題組 id → 出處（出版社題組；SitePaperPdfMeta.groupSources）：印在題組標示下一行（docs/design/weak-paper.md §9.5）。 */
+  groupSources?: Readonly<Record<string, string>>;
+}
+
+/** 出版社題組的出處（小字、灰色），和題組的第一塊綁在一起。高度照估計的行數算（中文一字約一個字級寬）。 */
+function groupSourceBlock(text: string): Block {
+  const size = 8.5;
+  const lines = Math.max(1, Math.ceil((estimateTextWidth(text, size) + 4) / CONTENT_WIDTH));
+  return {
+    node: { text: plainInline(text), fontSize: size, color: '#555555', lineHeight: 1.25, margin: [0, 0, 0, 3] },
+    height: lines * lineHeightPt(size, 1.25) + 3,
+    keepWithNext: true,
+  };
 }
 
 /** 一個題組的區塊。 */
@@ -141,7 +155,8 @@ export function groupBlocks(section: ExamSection, group: QuestionGroup, options:
   const ctx: GroupContext = { section, group, rich, figure };
   const layout = groupLayout(group);
   const labelText = groupLabelText(section, group);
-  const label = labelText ? [groupLabelBlock(labelText)] : [];
+  const sourceText = options.groupSources?.[group.id];
+  const label = [...(labelText ? [groupLabelBlock(labelText)] : []), ...(sourceText ? [groupSourceBlock(sourceText)] : [])];
   const passage = (group.passage ?? '').trim() !== '' ? paragraphBlocks(group.passage ?? '', rich) : [];
   const parts = passagePartBlocks(group, rich);
 

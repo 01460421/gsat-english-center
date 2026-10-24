@@ -42,6 +42,16 @@
  *     前四種題型沒有事實單是正常的（第一批不要求），略過不列。
  *   - figure.chart（README §3.2）照原樣輸出（欄位白名單就是 ChartSpec 的全部欄位），前端依它自己畫圖。
  *
+ * 出版社模考（docs/design/weak-paper.md §8.4、§8.9；P1 只有契約與合成的測試題組，沒有出版社資料）：
+ *   build-data.mjs 用 bank-select.mjs 的 selectPublisherGroups 選出 data/publisher/{來源}/v1 的 gsat-pub/v1 正規化檔，
+ *   傳進 buildBankData 的 publisher；這裡做同一套前端契約檢查，輸出同一種公開題組檔，差別：
+ *   - 多 source（來源 id、短名、書名、逐字的出處句、原卷位置的畫面文字）與 skills（每一題的技能代碼，由題目標註、
+ *     出版社解析或 skill_extra 的 clue_type／sense 算好；作答紀錄、技能分布、成績單都讀它）；沒有 auto_verified；
+ *   - 解析只有在 explanation_basis 是 publisher 而且授權包含 explanations 時才輸出；混合題的部分給分寫法與可對調的格
+ *     （scoring_extra）一律併進解析列（計分要用），沒有出版社解析的題只有這兩個欄位；
+ *   - curriculum 是空陣列；provenance 是 publisher-licensed／verbatim，出處說明就是來源的出處句；沒有參考資料。
+ *   index 的那一筆多 src（來源 id）。
+ *
  * 要發布的檔案違反前端契約（題號、答案、解析的形狀）時丟出 BankDataError 讓建置失敗：
  * 這些規則都是 tools/validate_bank.py 已經檢查的子集，正常流程產生的 verified 檔案不會踩到；
  * 真的踩到代表檔案壞了，在建置時擋下比在學生的畫面上壞掉好（和歷屆試題的 checkExamContract 同一個原則）。
@@ -52,6 +62,8 @@ import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { BankSelectError, selectBankGroups } from '../../../../packages/shared/scripts/bank-select.mjs';
+import { questionSkills } from './bank-paper-skills.mjs';
+import { sourceRefText } from './item-sources.mjs';
 
 /** 這個檔案的路徑：build-data.mjs 把它算進資料版本雜湊（輸出格式改了，版本才會跟著變）。 */
 export const BANK_DATA_SCRIPT = fileURLToPath(import.meta.url);
@@ -106,6 +118,11 @@ const SECTION_MODES = /** @type {Record<string, readonly string[]>} */ ({
 const HTTP_URL = /^https?:\/\/[^\s]+$/;
 const LICENSES = new Set(['original-ai', 'CC-BY-3.0', 'CC-BY-4.0', 'CC-BY-SA-3.0', 'CC-BY-SA-4.0']);
 const DERIVATIONS = new Set(['ai-original-from-facts', 'adapted', 'original']);
+/** 出版社題組只能是經授權的逐字內容（weak-paper.md §8.4）。 */
+const PUBLISHER_LICENSES = new Set(['publisher-licensed']);
+const PUBLISHER_DERIVATIONS = new Set(['verbatim']);
+/** 計分用的解析欄位（出版社題組放在 scoring_extra，輸出時併進解析列）。 */
+const SCORING_KEYS = ['partial_credit_forms', 'interchangeable_with'];
 
 /** 題組與小題輸出的欄位（前端 src/data/exams.ts 的 QuestionGroup／Question 認得的）。 */
 const GROUP_KEYS = ['id', 'group_label', 'passage', 'passage_parts', 'figures', 'options_bank', 'questions', 'tags'];
@@ -138,8 +155,9 @@ const READING_EXPLANATION_KEYS = [
  * @typedef {{ file: string, reason: SkipReason }} SkippedFile
  * @typedef {{
  *   uid: string, version: number, section_type: string, format_version: string, tier: string,
- *   topic: string | null, question_count: number, curriculum: { code: string, weight: string }[], skills: string[]
+ *   topic: string | null, question_count: number, curriculum: { code: string, weight: string }[], skills: string[], src?: string
  * }} BankIndexEntry
+ * @typedef {{ id: string, label_zh: string, product_zh: string | null, attribution_zh: string, licence: { scope: readonly string[] } }} PublisherSourceLike
  * @typedef {{ uid: string, version: number, section_type: string, tier: string } & JsonObject} PracticeGroupFile
  * @typedef {{
  *   entries: BankIndexEntry[],
@@ -263,11 +281,15 @@ function checkReadingExplanation(item, q, byLabel, where) {
 
 /**
  * 前端契約檢查（validate_bank.py 規則的子集，只檢查畫面會用到的形狀）。
+ * publisher：出版社正規化檔（gsat-pub/v1）的差別：解析可以沒有（explanation_basis null）、沒有 curriculum、
+ * 授權只能是 publisher-licensed／verbatim；scoring_extra 另外檢查（checkScoringExtra）。
  * @param {JsonObject} raw
  * @param {string} at  錯誤訊息裡的檔案位置（repo 內相對路徑）
  * @param {{ uid: string, version: number, file: string }} expected
+ * @param {{ publisher?: boolean }} [options]
  */
-function checkPracticeFile(raw, at, expected) {
+function checkPracticeFile(raw, at, expected, options = {}) {
+  const publisher = options.publisher === true;
   const { uid, version, file } = expected;
   check(raw.uid === uid && raw.version === version, `${at}：uid／version（${String(raw.uid)}@${String(raw.version)}）和檔名不一致`);
   const section = String(raw.section_type);
@@ -331,9 +353,10 @@ function checkPracticeFile(raw, at, expected) {
     check(isObject(q.tags), `${where}：tags 必須是物件`);
   }
 
-  const a = raw.annotations;
+  // 出版社題組沒有解析時（explanation_basis null）annotations 可以整個沒有；有的話形狀同題庫。
+  const a = publisher && (raw.annotations === undefined || raw.annotations === null) ? { explanations: { items: {} } } : raw.annotations;
   check(isObject(a), `${at}：缺少 annotations`);
-  const ex = a.explanations;
+  const ex = publisher && (a.explanations === undefined || a.explanations === null) ? { items: {} } : a.explanations;
   check(isObject(ex) && isObject(ex.items), `${at}：annotations.explanations 必須是 {"items": {題號: {...}}}（每題都要有解析）`);
   for (const [no, item] of Object.entries(ex.items)) {
     const where = `${at} 解析第 ${no} 題`;
@@ -353,7 +376,13 @@ function checkPracticeFile(raw, at, expected) {
     );
     if (READING_LIKE.has(section)) checkReadingExplanation(item, /** @type {JsonObject} */ (q), byLabel, where);
   }
-  for (const label of byLabel.keys()) check(Object.hasOwn(ex.items, label), `${at}：第 ${label} 題缺少解析`);
+  // 出版社題組：有解析就每題都要有；沒有解析（explanation_basis null）時一題都沒有。
+  const explained = Object.keys(ex.items).length;
+  if (!publisher || explained > 0) for (const label of byLabel.keys()) check(Object.hasOwn(ex.items, label), `${at}：第 ${label} 題缺少解析`);
+  if (publisher) {
+    checkScoringExtra(raw.scoring_extra, byLabel, at);
+    checkSkillExtra(raw.skill_extra, byLabel, at);
+  }
 
   const tz = a.translation_zh;
   check(tz === null || tz === undefined || (isObject(tz) && nonEmptyString(tz.text)), `${at}：translation_zh 必須是 {"text": "…"} 或 null`);
@@ -366,19 +395,61 @@ function checkPracticeFile(raw, at, expected) {
     }
   }
 
-  check(Array.isArray(raw.curriculum), `${at}：curriculum 必須是陣列`);
-  for (const c of raw.curriculum) {
+  const curriculum = publisher && raw.curriculum === undefined ? [] : raw.curriculum;
+  check(Array.isArray(curriculum), `${at}：curriculum 必須是陣列`);
+  for (const c of curriculum) {
     check(isObject(c) && nonEmptyString(c.code) && (c.weight === 'primary' || c.weight === 'secondary'), `${at}：curriculum 的項目要有 code 與 weight`);
   }
   const pv = raw.provenance;
   check(isObject(pv), `${at}：缺少 provenance`);
-  check(LICENSES.has(/** @type {string} */ (pv.license)), `${at}：provenance.license 不在白名單`);
-  check(DERIVATIONS.has(/** @type {string} */ (pv.derivation)), `${at}：provenance.derivation 不合法`);
+  check((publisher ? PUBLISHER_LICENSES : LICENSES).has(/** @type {string} */ (pv.license)), `${at}：provenance.license 不在白名單`);
+  check((publisher ? PUBLISHER_DERIVATIONS : DERIVATIONS).has(/** @type {string} */ (pv.derivation)), `${at}：provenance.derivation 不合法`);
   check(pv.attribution_text === null || typeof pv.attribution_text === 'string', `${at}：provenance.attribution_text 必須是字串或 null`);
   check(Array.isArray(pv.sources), `${at}：provenance.sources 必須是陣列`);
   for (const src of /** @type {unknown[]} */ (pv.sources)) {
     check(isObject(src) && typeof src.source_id === 'string', `${at}：provenance.sources 的每一項都要有 source_id`);
     check(src.url === undefined || (typeof src.url === 'string' && HTTP_URL.test(src.url)), `${at}：provenance.sources 的 url 必須是 http(s) 網址`);
+  }
+}
+
+/**
+ * 出版社題組的 scoring_extra（weak-paper.md §8.4）：{題號: {partial_credit_forms?, interchangeable_with?}}。
+ * 部分給分寫法只用在填充、簡答；可對調的格只用在兩格填充之間（同題庫解析列的規則）。
+ * @param {unknown} extra @param {Map<string, JsonObject>} byLabel @param {string} at
+ */
+function checkScoringExtra(extra, byLabel, at) {
+  if (extra === undefined || extra === null) return;
+  check(isObject(extra), `${at}：scoring_extra 必須是 {題號: {...}}`);
+  for (const [label, e] of Object.entries(extra)) {
+    const where = `${at} scoring_extra 第 ${label} 題`;
+    const q = byLabel.get(label);
+    check(q !== undefined, `${where}：題號不存在`);
+    check(isObject(e) && Object.keys(e).every((k) => SCORING_KEYS.includes(k)), `${where}：只能有 ${SCORING_KEYS.join('、')}`);
+    if (e.partial_credit_forms !== undefined) {
+      check(isStringList(e.partial_credit_forms), `${where}：partial_credit_forms 必須是字串陣列`);
+      check(q.mode === 'fill_in_blank' || q.mode === 'short_answer', `${where}：partial_credit_forms 只能用在填充、簡答`);
+    }
+    const swap = e.interchangeable_with;
+    if (swap !== undefined && swap !== null) {
+      check(typeof swap === 'number' && byLabel.has(String(swap)) && String(swap) !== label, `${where}：interchangeable_with 必須是另一題的題號或 null`);
+      check(q.mode === 'fill_in_blank' && byLabel.get(String(swap))?.mode === 'fill_in_blank', `${where}：interchangeable_with 只能用在兩格填充之間`);
+    }
+  }
+}
+
+/**
+ * 出版社題組的 skill_extra（解析不公開時另存的 clue_type、sense；§8.4）：值要在題庫的封閉清單裡。
+ * @param {unknown} extra @param {Map<string, JsonObject>} byLabel @param {string} at
+ */
+function checkSkillExtra(extra, byLabel, at) {
+  if (extra === undefined || extra === null) return;
+  check(isObject(extra), `${at}：skill_extra 必須是 {題號: {...}}`);
+  for (const [label, e] of Object.entries(extra)) {
+    const where = `${at} skill_extra 第 ${label} 題`;
+    check(byLabel.has(label), `${where}：題號不存在`);
+    check(isObject(e) && Object.keys(e).every((k) => k === 'clue_type' || k === 'sense'), `${where}：只能有 clue_type、sense`);
+    check(e.clue_type === undefined || CLUE_TYPES.has(/** @type {string} */ (e.clue_type)), `${where}：clue_type 不合法`);
+    check(e.sense === undefined || SENSE_KINDS.has(/** @type {string} */ (e.sense)), `${where}：sense 不合法`);
   }
 }
 
@@ -507,19 +578,8 @@ function publicFigure(f) {
  * @returns {PracticeGroupFile}
  */
 function practiceGroupFile(raw, references) {
-  const g = /** @type {JsonObject} */ (raw.group);
   const readingLike = READING_LIKE.has(String(raw.section_type));
-  const group = pick(g, GROUP_KEYS);
-  group.tags = pickTags(g.tags, GROUP_TAG_KEYS);
-  if (Array.isArray(g.passage_parts)) group.passage_parts = g.passage_parts.map((p) => pick(/** @type {JsonObject} */ (p), PASSAGE_PART_KEYS));
-  group.figures = /** @type {JsonObject[]} */ (g.figures).map(publicFigure);
-  group.questions = /** @type {JsonObject[]} */ (g.questions).map((q) => {
-    const out = pick(q, QUESTION_KEYS);
-    // stats 是全國統計；AI 題沒有（README：group 的 stats 必須是 null）。保留欄位是為了和歷屆題同一個型別。
-    out.stats = null;
-    out.tags = pickTags(q.tags, QUESTION_TAG_KEYS);
-    return out;
-  });
+  const group = publicGroup(/** @type {JsonObject} */ (raw.group));
 
   const a = /** @type {JsonObject} */ (raw.annotations);
   const ex = /** @type {{ items: Record<string, JsonObject> }} */ (a.explanations);
@@ -556,6 +616,106 @@ function practiceGroupFile(raw, references) {
   };
 }
 
+/**
+ * 公開題組檔的 group（本站題與出版社題相同的白名單）。
+ * @param {JsonObject} g  已通過 checkPracticeFile
+ */
+function publicGroup(g) {
+  const group = pick(g, GROUP_KEYS);
+  group.tags = pickTags(g.tags, GROUP_TAG_KEYS);
+  if (Array.isArray(g.passage_parts)) group.passage_parts = g.passage_parts.map((p) => pick(/** @type {JsonObject} */ (p), PASSAGE_PART_KEYS));
+  group.figures = /** @type {JsonObject[]} */ (g.figures).map(publicFigure);
+  group.questions = /** @type {JsonObject[]} */ (g.questions).map((q) => {
+    const out = pick(q, QUESTION_KEYS);
+    // stats 是全國統計；AI 題沒有（README：group 的 stats 必須是 null）。保留欄位是為了和歷屆題同一個型別。
+    // 出版社模考的作答統計是出版社考生（不同母體），只用在匯入時的分級（§8.5），也不輸出。
+    out.stats = null;
+    out.tags = pickTags(q.tags, QUESTION_TAG_KEYS);
+    return out;
+  });
+  return group;
+}
+
+/**
+ * 出版社題組的解析列：出版社的解析（有、而且授權包含 explanations 時；欄位白名單同題庫）併上 scoring_extra 的計分欄位。
+ * 沒有出版社解析、只有計分欄位的題，解析列是 { explanation_zh: '', evidence: [], 計分欄位 }：形狀和題庫的解析列相同
+ * （計分、組卷的重新編號、Worker 的判定都照舊讀同一個位置），前端把 explanation_zh 是空字串的列當成「這題沒有解析」。
+ * 一題什麼都沒有時不列。
+ * @param {JsonObject} raw @param {boolean} explanationsPublic
+ * @returns {Record<string, JsonObject>}
+ */
+export function publisherExplanationItems(raw, explanationsPublic) {
+  const readingLike = READING_LIKE.has(String(raw.section_type));
+  const keys = (readingLike ? READING_EXPLANATION_KEYS : EXPLANATION_KEYS).filter((k) => !SCORING_KEYS.includes(k));
+  const a = isObject(raw.annotations) ? raw.annotations : {};
+  const ex = isObject(a.explanations) && isObject(a.explanations.items) ? a.explanations.items : {};
+  const scoring = isObject(raw.scoring_extra) ? raw.scoring_extra : {};
+  /** @type {Record<string, JsonObject>} */
+  const items = {};
+  for (const q of /** @type {JsonObject[]} */ (/** @type {JsonObject} */ (raw.group).questions)) {
+    const label = String(q.label);
+    const base = explanationsPublic && isObject(ex[label]) ? pick(ex[label], keys) : null;
+    const extra = isObject(scoring[label]) ? pick(scoring[label], SCORING_KEYS) : {};
+    if (base) items[label] = { ...base, ...extra };
+    else if (Object.keys(extra).length > 0) items[label] = { explanation_zh: '', evidence: [], ...extra };
+  }
+  return items;
+}
+
+/**
+ * 出版社題組每一題的技能代碼（§8.4：題目標註＋出版社解析或 skill_extra 的 clue_type、sense；規則同 skillsOfQuestion）。
+ * 解析不公開時 clue_type、sense 仍然可以用（只是代碼，不是解析文字）。
+ * @param {JsonObject} raw
+ * @returns {Record<string, string[]>}
+ */
+export function publisherQuestionSkills(raw) {
+  const a = isObject(raw.annotations) ? raw.annotations : {};
+  const ex = isObject(a.explanations) && isObject(a.explanations.items) ? a.explanations.items : {};
+  const extra = isObject(raw.skill_extra) ? raw.skill_extra : {};
+  /** @type {Record<string, JsonObject>} */
+  const items = {};
+  const questions = /** @type {JsonObject[]} */ (/** @type {JsonObject} */ (raw.group).questions);
+  for (const q of questions) {
+    const label = String(q.label);
+    const own = isObject(ex[label]) ? ex[label] : {};
+    const more = isObject(extra[label]) ? extra[label] : {};
+    items[label] = { clue_type: own.clue_type ?? more.clue_type, sense: own.sense ?? more.sense };
+  }
+  const view = { uid: String(raw.uid), version: Number(raw.version), section_type: String(raw.section_type), tier: String(raw.tier), group: raw.group, annotations: { explanations: { items } } };
+  return Object.fromEntries(questions.map((q) => [String(q.label), questionSkills(view, q)]));
+}
+
+/**
+ * 出版社題組的公開檔（§8.9）。
+ * @param {JsonObject} raw  已通過 checkPracticeFile（publisher）
+ * @param {PublisherSourceLike} source
+ * @returns {PracticeGroupFile}
+ */
+function publisherGroupFile(raw, source) {
+  const explanationsPublic = raw.explanation_basis === 'publisher' && source.licence.scope.includes('explanations');
+  const ref = isObject(raw.source_ref) ? raw.source_ref : {};
+  return {
+    schema: PRACTICE_SCHEMA,
+    uid: /** @type {string} */ (raw.uid),
+    version: /** @type {number} */ (raw.version),
+    section_type: /** @type {string} */ (raw.section_type),
+    format_version: raw.format_version,
+    tier: /** @type {string} */ (raw.tier),
+    group: publicGroup(/** @type {JsonObject} */ (raw.group)),
+    annotations: { explanations: { items: publisherExplanationItems(raw, explanationsPublic) }, translation_zh: null, elimination: null },
+    curriculum: [],
+    provenance: { license: 'publisher-licensed', derivation: 'verbatim', attribution_text: source.attribution_zh, sources: [], references: [] },
+    source: {
+      id: source.id,
+      label_zh: source.label_zh,
+      product_zh: source.product_zh,
+      attribution_zh: source.attribution_zh,
+      ref_text: sourceRefText({ paper: typeof ref.paper === 'string' ? ref.paper : null, labels: Array.isArray(ref.labels) ? ref.labels.map(String) : [] }),
+    },
+    skills: publisherQuestionSkills(raw),
+  };
+}
+
 /** 技能代碼的值（封閉清單的英文代號）；不像代號的值不輸出。 */
 const SKILL_VALUE = /^[a-z][a-z0-9_]*$/;
 
@@ -567,6 +727,10 @@ const SKILL_VALUE = /^[a-z][a-z0-9_]*$/;
  * @returns {string[]}
  */
 export function groupSkills(f) {
+  // 出版社題組：每一題的代碼在建置時已經算好（publisherQuestionSkills），取聯集。
+  if (isObject(f.skills)) {
+    return [...new Set(Object.values(f.skills).flatMap((codes) => (Array.isArray(codes) ? codes.filter((c) => typeof c === 'string') : [])))].sort();
+  }
   const group = /** @type {{ questions: JsonObject[] }} */ (f.group);
   const annotations = /** @type {{ explanations?: { items?: Record<string, unknown> } }} */ (f.annotations ?? {});
   const items = annotations.explanations?.items ?? {};
@@ -594,7 +758,8 @@ export function groupSkills(f) {
 function indexEntry(f) {
   const group = /** @type {{ questions: unknown[], tags: JsonObject | null }} */ (f.group);
   const topic = group.tags && typeof group.tags.topic === 'string' && group.tags.topic.trim() !== '' ? group.tags.topic : null;
-  return {
+  /** @type {BankIndexEntry} */
+  const entry = {
     uid: f.uid,
     version: f.version,
     section_type: f.section_type,
@@ -605,6 +770,9 @@ function indexEntry(f) {
     curriculum: /** @type {{ code: string, weight: string }[]} */ (f.curriculum),
     skills: groupSkills(f),
   };
+  // 出版社題組多 src（來源 id）；本站題省略，現有輸出不變（§8.9）。
+  if (isObject(f.source) && typeof f.source.id === 'string') entry.src = f.source.id;
+  return entry;
 }
 
 /** 字串陣列排序後的副本（順序不影響計分的清單）；不是陣列時原樣回傳（形狀不對也照樣比對，只是一定算「不同」）。 */
@@ -651,14 +819,27 @@ function answerKey(raw) {
 }
 
 /**
+ * 出版社正規化檔的答案（selectPublisherGroups 的 contentKey；weak-paper.md §8.4）：同 answerKey，部分給分寫法與可對調的格
+ * 從 scoring_extra 取（公開檔把它們併進解析列）。新版改了這些也算改了答案，舊版撤下。
+ * @param {JsonObject} raw
+ * @returns {string | null}
+ */
+export function publisherAnswerKey(raw) {
+  if (!isObject(raw.group) || !Array.isArray(raw.group.questions)) return null;
+  return answerKey({ ...raw, annotations: { explanations: { items: publisherExplanationItems(raw, false) } } });
+}
+
+/**
  * 掃描 bankDir（data/bank/v1），挑出要公開的題組。
  * @param {string} bankDir
  * @param {{
  *   relative?: (file: string) => string, factsDir?: string,
  *   unpublished?: Map<string, { date: string, reason: string }>, repoRoot?: string,
+ *   publisher?: { chosen: readonly { uid: string, version: number, file: string, raw: JsonObject }[], sources: ReadonlyMap<string, PublisherSourceLike> },
  * }} [options]
  *   relative：錯誤訊息裡顯示的路徑（預設原樣）；factsDir：事實單目錄（預設 bankDir 旁邊的 facts，即 data/bank/facts）；
- *   unpublished：data/unpublish.jsonl 的內容（bank-select.mjs 的 readUnpublish；鍵是 repo 相對路徑，用 repoRoot 算）
+ *   unpublished：data/unpublish.jsonl 的內容（bank-select.mjs 的 readUnpublish；鍵是 repo 相對路徑，用 repoRoot 算）；
+ *   publisher：selectPublisherGroups 選出的出版社題組與來源登記（id → 名稱、出處句、授權範圍；weak-paper.md §8.4）
  * @returns {BankBuildResult}
  */
 export function buildBankData(bankDir, options = {}) {
@@ -666,7 +847,11 @@ export function buildBankData(bankDir, options = {}) {
   const factsDir = options.factsDir ?? path.join(path.dirname(bankDir), 'facts');
   /** @type {BankBuildResult} */
   const result = { entries: [], groups: [], inputs: [], skipped: [], warnings: [], scanned: 0 };
-  if (!existsSync(bankDir)) return result;
+  const publisherFiles = buildPublisherFiles(options.publisher, rel);
+  if (!existsSync(bankDir)) {
+    appendPublisher(result, publisherFiles);
+    return result;
+  }
 
   /** @type {ReturnType<typeof selectBankGroups>} */
   let sel;
@@ -710,7 +895,40 @@ export function buildBankData(bankDir, options = {}) {
   }
   // 事實單改了（例如修正來源網址），輸出的參考資料跟著變，資料版本也要變。
   result.inputs.push(...[...factInputs].sort());
+  appendPublisher(result, publisherFiles);
   return result;
+}
+
+/**
+ * 出版社題組 → 公開題組檔（契約檢查同題庫，見 checkPracticeFile 的 publisher）。
+ * @param {{ chosen: readonly { uid: string, version: number, file: string, raw: JsonObject }[], sources: ReadonlyMap<string, PublisherSourceLike> } | undefined} publisher
+ * @param {(file: string) => string} rel
+ * @returns {{ file: string, out: PracticeGroupFile }[]}
+ */
+function buildPublisherFiles(publisher, rel) {
+  if (!publisher) return [];
+  return publisher.chosen.map(({ uid, version, file, raw }) => {
+    checkPracticeFile(raw, rel(file), { uid, version, file }, { publisher: true });
+    const source = publisher.sources.get(String(raw.source_id));
+    check(source !== undefined, `${rel(file)}：來源 ${String(raw.source_id)} 不在 data/sources.json`);
+    return { file, out: publisherGroupFile(raw, source) };
+  });
+}
+
+/**
+ * 出版社題組併進結果：依題型、難度、uid 和本站題一起排序（uid 的 ai. 排在 pb. 前面，所以本站題的相對順序不變）。
+ * @param {BankBuildResult} result @param {{ file: string, out: PracticeGroupFile }[]} files
+ */
+function appendPublisher(result, files) {
+  if (files.length === 0) return;
+  const sectionOrder = (/** @type {string} */ s) => PRACTICE_SECTION_TYPES.indexOf(/** @type {never} */ (s));
+  const tierOrder = (/** @type {string} */ t) => TIERS.indexOf(/** @type {never} */ (t));
+  const groups = [...result.groups, ...files.map((f) => f.out)].sort(
+    (x, y) => sectionOrder(x.section_type) - sectionOrder(y.section_type) || tierOrder(x.tier) - tierOrder(y.tier) || x.uid.localeCompare(y.uid),
+  );
+  result.groups = groups;
+  result.entries = groups.map(indexEntry);
+  result.inputs.push(...files.map((f) => f.file));
 }
 
 /** 輸出檔的相對路徑（相對 public/data/）。 @param {{ uid: string, version: number }} g */

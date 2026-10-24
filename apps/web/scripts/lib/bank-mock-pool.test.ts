@@ -295,6 +295,57 @@ describe('排除原因（ex）與警告：條目仍在池子裡，只是不能�
     expect(r.warnings).toEqual(['ai.rd.0c1d2e@1 的圖不是圖表也不是表格，組卷時當成沒有圖表的篇章']);
   });
 
+  it('出版社題組（pb.）：ex 是 ns、輸出 src、sw 一律空陣列；不列進排除清單、不警告；本站題的輸出不變', () => {
+    const ai = readingFile();
+    const pub = readingFile((g) => {
+      g['uid'] = 'pb.rd.0c1d2e';
+      g['source'] = { id: 'pub-test', label_zh: '測試出版', product_zh: '模擬試題', attribution_zh: '本題出自測試出版《模擬試題》，經授權使用', ref_text: '原卷第 41–44 題' };
+    });
+    const only = pool([ai]);
+    const r = pool([ai, pub]);
+    const list = r.pool.tiers.basic.reading;
+    expect(list.map((e) => [e.uid, e.ex ?? null, e.src ?? null])).toEqual([
+      ['ai.rd.0c1d2e', null, null],
+      ['pb.rd.0c1d2e', 'ns', 'pub-test'],
+    ]);
+    expect(list[0]).toEqual(only.pool.tiers.basic.reading[0]);
+    expect(Object.keys(list[1] ?? {})).toEqual(['uid', 'v', 'theme', 'fig', 'form', 'sw', 'k', 'src', 'ex']);
+    expect(list[1]?.sw).toEqual([]);
+    expect(list[0]?.sw?.length).toBeGreaterThan(0);
+    expect(r.excluded).toEqual([]);
+    expect(r.warnings).toEqual([]);
+    // bk1 的供應量不算出版社題組。
+    expect(poolSupply(r.pool)).toEqual(poolSupply(only.pool));
+    expect(mockPoolLogLines(r)[0]).toMatch(/出版社題組 1 組（只給加強卷用，不進本站自組模擬考）$/);
+  });
+
+  it('出版社題組的形狀和本站題不同：ex 是 shape（排在 ns 之前）並警告；沒有本站題可比的大題也排除', () => {
+    const fiveQuestions = readingFile((g) => {
+      g['uid'] = 'pb.rd.0c1d2f';
+      g['source'] = { id: 'pub-test' };
+      const qs = g['group']['questions'];
+      qs.push({ ...qs[3], no: 5, label: '5' });
+    });
+    const r = pool([readingFile(), fiveQuestions]);
+    expect(r.pool.tiers.basic.reading[1]).toMatchObject({ uid: 'pb.rd.0c1d2f', ex: 'shape', src: 'pub-test' });
+    expect(r.excluded).toEqual([{ key: 'pb.rd.0c1d2f@1', reason: 'shape' }]);
+    expect(r.warnings).toEqual(['pb.rd.0c1d2f@1 不能用來組新卷：題組的形狀（題數、作答方式、配分）和學測格式不同，只進題庫練習']);
+    const alone = pool([readingFile((g) => ((g['uid'] = 'pb.rd.0c1d2f'), (g['source'] = { id: 'pub-test' })))]);
+    expect(alone.pool.tiers.basic.reading[0]?.ex).toBe('shape');
+  });
+
+  it('出版社題組的題型代碼不符是 uid；沒有來源時丟錯；本站題同一大題有兩種形狀時丟錯', () => {
+    const wrongCode = pool([readingFile(), readingFile((g) => ((g['uid'] = 'pb.cz.0c1d2f'), (g['source'] = { id: 'pub-test' })))]);
+    expect(wrongCode.pool.tiers.basic.reading.find((e) => e.uid === 'pb.cz.0c1d2f')?.ex).toBe('uid');
+    expect(() => pool([readingFile((g) => (g['uid'] = 'pb.rd.0c1d2f'))])).toThrow(/出版社題組沒有來源/);
+    const twoShapes = readingFile((g) => {
+      g['uid'] = 'ai.rd.0c1d2f';
+      g['group']['questions'][0]['points'] = 3;
+    });
+    expect(() => pool([readingFile(), twoShapes])).toThrow(BankMockPoolError);
+    expect(() => pool([readingFile(), twoShapes])).toThrow(/有 2 種形狀/);
+  });
+
   it('找不到已發布寫作題的原始檔時丟錯（不能少一組卻不知道）', () => {
     expect(() =>
       buildMockPool({
@@ -392,5 +443,48 @@ describe('供應量（§3.2）與建置紀錄', () => {
     expect(lines).toContain('  閱讀題組的形式（三種難度）：連續文本 0／0／0、圖表 1／0／0、表格 0／0／0、多文本 0／0／0');
     expect(lines).toContain('沒有任何概念鍵（c:）的主題 5 個（補 scripts/lib/bank-mock-themes.mjs 的別名表時逐條看）：');
     expect(lines).toContain('  穩定基礎・閱讀測驗（1）：falling child death rates since 1990');
+  });
+});
+
+describe('出版社題組的舊版本（prev，docs/design/weak-paper.md §8.4）', () => {
+  /** tools/tests/data/publisher 的合成題組：v1 原樣、v2 只改選文（答案不變）、v3 改了部分給分寫法（答案改了）。 */
+  function publisherRepo() {
+    const repo = tmpRepo();
+    const publisherDir = path.join(repo.root, 'data', 'publisher');
+    cpSync(path.join(WEB_DIR, '..', '..', 'tools', 'tests', 'data', 'publisher'), publisherDir, { recursive: true });
+    return { ...repo, publisherDir };
+  }
+
+  it('從 data/publisher 讀同一個 uid 較舊的 verified 版本；指紋和公開檔（計分欄位併進解析列）算法相同', async () => {
+    const { selectPublisherGroups, officialCorpus } = await import('../../../../packages/shared/scripts/bank-select.mjs');
+    const { publisherAnswerKey } = await import('./bank-data.mjs');
+    const repo = publisherRepo();
+    const mxDir = path.join(repo.publisherDir, 'pub-test', 'v1', 'mixed', 'advanced');
+    const v1 = readJson(path.join(mxDir, 'pb.mx.7a8b9c@1.json'));
+    writeFileSync(path.join(mxDir, 'pb.mx.7a8b9c@2.json'), JSON.stringify({ ...v1, version: 2, group: { ...v1['group'], passage: `${v1['group']['passage']} (edited)` } }));
+    const v3 = JSON.parse(JSON.stringify(v1)) as Json;
+    v3['version'] = 3;
+    v3['scoring_extra']['1']['partial_credit_forms'] = ['borrows'];
+    writeFileSync(path.join(mxDir, 'pb.mx.7a8b9c@3.json'), JSON.stringify(v3));
+    const sel = selectPublisherGroups(repo.publisherDir, {
+      sources: [{ id: 'pub-test', ns: 'pb', active: true, ends_on: null, scope: ['web', 'pdf'] }],
+      today: '2026-11-02',
+      corpus: officialCorpus([]),
+      contentKey: publisherAnswerKey,
+    });
+    const source = { id: 'pub-test', label_zh: '測試出版', product_zh: '測試模擬試題', attribution_zh: '本題出自測試出版《測試模擬試題》，經授權使用', licence: { scope: ['web', 'pdf'] } };
+    const bank = buildBankData(repo.bankDir, { publisher: { chosen: sel.chosen, sources: new Map([['pub-test', source]]) } });
+    const result = buildMockPool({ version: 'fixture', bankDir: repo.bankDir, publisherDir: repo.publisherDir, practice: bank.groups, writing: [] });
+    const e = entry(result.pool, 'advanced', 'mixed', 'pb.mx.7a8b9c');
+    expect(e?.v).toBe(3);
+    expect(e?.ex).toBe('ns');
+    // v2 只改選文：每一題的指紋和 v1 相同；v3 改了第 1 格的部分給分寫法：只有第 1 題的指紋不同。
+    expect(e?.prev?.['1']).toEqual(e?.prev?.['2']);
+    expect(e?.k.slice(1)).toEqual(e?.prev?.['1']?.slice(1));
+    expect(e?.k[0]).not.toBe(e?.prev?.['1']?.[0]);
+    expect([...result.inputs].map((f) => path.basename(f)).sort()).toEqual(expect.arrayContaining(['pb.mx.7a8b9c@1.json', 'pb.mx.7a8b9c@2.json']));
+    // 沒傳 publisherDir：出版社題組沒有 prev。
+    const without = buildMockPool({ version: 'fixture', bankDir: repo.bankDir, practice: bank.groups, writing: [] });
+    expect(entry(without.pool, 'advanced', 'mixed', 'pb.mx.7a8b9c')?.prev).toBeUndefined();
   });
 });

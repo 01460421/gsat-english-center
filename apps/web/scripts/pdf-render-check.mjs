@@ -20,6 +20,18 @@
  *   - 資料來源頁列出所有 CC BY 參考資料（網址）；
  *   - 雙面版：答題卷、答案、解析各段的第一頁是單數頁，補的空白頁印「（本頁空白）」；教師卷第 1 頁不是題本；
  *   - 學生卷 14–24 頁；字型全部嵌入子集；印出解析改印替代說明的題數（題庫補字後應為 0）。
+ *   圖表描述的資料片段只在封面與題本比對（資料來源頁的出處說明本來就會寫「圖表資料：Our World in Data（資料來源…）」）。
+ *
+ * 學習助手加強卷（bk2，docs/design/weak-paper.md §9.5、§12.1 W3）：四份代表性的卷子（題組依固定種子從組卷池挑），
+ * 同樣產生學生卷、教師卷與兩種雙面版：
+ *   - 弱點加強卷 40 分鐘（只有選擇題，答題卷只有答案卡；封面有「本卷針對」）；
+ *   - 模考格式卷（超越頂標，整份 11 組、100 分鐘）；
+ *   - 隨機抽題卷 12 組（代號最長、QR code 的上限；跨三種難度、有混合題與中譯英、沒有作文）；
+ *   - 隨機抽題卷只有中譯英與作文（答題卷沒有答案卡）。
+ * 檢查同自組卷（官方機構名稱、卷號、每一頁的頁尾、題本內容沒有遺漏、圖表、資料來源、雙面、字型），另外：
+ *   - 封面是加強卷的卷名、卷別、橫條與這份卷子自己的作答時間（「考試時間：40分鐘」）；弱點加強卷有「本卷針對」；
+ *   - 頁首頁尾、各節標題與文件屬性是加強卷的寫法，沒有「自組模擬考」；教師卷第 1 頁有卷別與作答時間；
+ *   - 答題卷：有作文時至少 3 頁（作文兩頁格線另起），沒有作文時 1–2 頁；網址不超過 QR code 的上限（152 個字元）。
  *
  * 單字講義（docs/design/vocab-handout.md §9.2）：用講義頁同一套程式（handout/selection.ts、assemble.ts）組資料、
  * layout/vocab/ 排版，讀 public/data/vocab/。固定產生 L1 第 1 份 100 字的四種類型、L4 第 3 份的講義版雙面列印、
@@ -39,6 +51,7 @@
  *   node apps/web/scripts/pdf-render-check.mjs --out /tmp/gsat-pdfs --ids bank   # 只跑自組卷（--ids 裡有 bank 才跑自組卷）
  *   node apps/web/scripts/pdf-render-check.mjs --out /tmp/gsat-pdfs --ids bank --bank-ids bk1-b-…,bk1-t-…
  *   node apps/web/scripts/pdf-render-check.mjs --out /tmp/gsat-pdfs --ids vocab  # 只跑單字講義（--ids 裡有 vocab 才跑）
+ *   node apps/web/scripts/pdf-render-check.mjs --out /tmp/gsat-pdfs --ids weak   # 只跑加強卷（--ids 裡有 weak 才跑）
  * 需要 poppler-utils（pdftotext、pdffonts；--png 另需 pdftoppm）。沒有安裝時只做第 1 項並提示。
  * 不在 CI 的 npm test 裡跑（要讀 data/、要 poppler，66 份約 40 秒）；版面有改動時手動跑，結果寫在 PR。
  */
@@ -227,8 +240,9 @@ async function main() {
   pdfmake.setLocalAccessPolicy(() => false);
 
   const runBank = !opts.ids || opts.ids.includes('bank');
+  const runWeak = !opts.ids || opts.ids.includes('weak');
   const runVocab = !opts.ids || opts.ids.includes('vocab');
-  const ids = (opts.ids?.filter((id) => id !== 'bank' && id !== 'vocab') ?? readdirSync(EXAMS_DIR).filter((f) => f.endsWith('.json') && f !== 'index.json' && f !== 'score-scales.json').map((f) => f.replace(/\.json$/, ''))).sort();
+  const ids = (opts.ids?.filter((id) => id !== 'bank' && id !== 'weak' && id !== 'vocab') ?? readdirSync(EXAMS_DIR).filter((f) => f.endsWith('.json') && f !== 'index.json' && f !== 'score-scales.json').map((f) => f.replace(/\.json$/, ''))).sort();
   /** @type {string[]} */
   const failures = [];
   /** @type {string[]} */
@@ -342,6 +356,12 @@ async function main() {
     bankCount = bank.papers;
     totalMs += bank.ms;
   }
+  let weakCount = 0;
+  if (runWeak) {
+    const weak = await checkWeakPapers({ opts, config, pdfmake, strings, poppler, failures, rows });
+    weakCount = weak.papers;
+    totalMs += weak.ms;
+  }
   let vocabCount = 0;
   if (runVocab) {
     const vocab = await checkVocabHandouts({ opts, config, pdfmake, poppler, failures, rows });
@@ -349,7 +369,9 @@ async function main() {
     totalMs += vocab.ms;
   }
   console.log(rows.join('\n'));
-  console.log(`[pdf-check] ${ids.length} 份考卷、${bankCount} 份自組卷、${vocabCount} 份單字講義、${rows.length} 個 PDF，排版共 ${(totalMs / 1000).toFixed(1)} 秒；輸出在 ${opts.out}`);
+  console.log(
+    `[pdf-check] ${ids.length} 份考卷、${bankCount} 份自組卷、${weakCount} 份加強卷、${vocabCount} 份單字講義、${rows.length} 個 PDF，排版共 ${(totalMs / 1000).toFixed(1)} 秒；輸出在 ${opts.out}`,
+  );
   if (failures.length > 0) {
     console.error(`[pdf-check] ${failures.length} 個問題：\n${failures.map((f) => `  - ${f}`).join('\n')}`);
     process.exit(1);
@@ -555,7 +577,9 @@ async function checkBankPapers(ctx) {
           } else if (!all.includes(probe)) fail(`取不到${what}`);
         }
         for (const note of notes) if (!all.includes(norm(note))) fail(`取不到圖表附註「${note.slice(0, 40)}」`);
-        for (const frag of fragments) if (all.includes(norm(frag))) fail(`印出了圖表描述的資料片段「${frag}」`);
+        // 只比對封面與題本：資料來源頁的出處說明本來就會寫圖表的資料來源（和描述的開頭常常相同）。
+        const bookletText = norm([...segments.cover, ...segments.booklet].map((n) => pages[n - 1] ?? '').join('\n'));
+        for (const frag of fragments) if (bookletText.includes(norm(frag))) fail(`印出了圖表描述的資料片段「${frag}」`);
       } else {
         if (!norm(pages[0] ?? '').includes(norm(T.teacherTitle))) fail('教師卷第 1 頁沒有「教師卷：答案與解析」');
         if (segments.booklet.length > 0 || segments.cover.length > 0) fail(`教師卷有題本或封面（第 ${[...segments.cover, ...segments.booklet].join('、')} 頁）`);
@@ -593,6 +617,277 @@ async function checkBankPapers(ctx) {
 
 /** 頁首右側的「英文考科」（空白頁檢查時當成頁首文字去掉）。 */
 const PDF_SUBJECT = '英文考科';
+
+// ---------------------------------------------------------------------------
+// 學習助手加強卷（bk2，docs/design/weak-paper.md §9.5）
+// ---------------------------------------------------------------------------
+
+/**
+ * @typedef {{ section: string, tier: 'basic' | 'advanced' | 'top', fig?: 'chart' | 'table' }} WeakSlotSpec
+ * @typedef {{ name: string, kind: 'w' | 'f' | 'r' | 'm', slots: WeakSlotSpec[], targets?: { labels: string[], balanced: boolean } }} WeakCase
+ */
+
+/** 模考格式卷的 11 個位置（同藍圖）。 */
+const FULL_SECTIONS = ['vocabulary', 'cloze', 'cloze', 'word_bank', 'structure', 'reading', 'reading', 'reading', 'mixed', 'translation', 'composition'];
+
+/** @type {WeakCase[]} 四份代表性的加強卷（見檔頭）。 */
+const WEAK_CASES = [
+  {
+    name: 'w-40',
+    kind: 'w',
+    slots: [
+      { section: 'vocabulary', tier: 'advanced' },
+      { section: 'structure', tier: 'advanced' },
+      { section: 'structure', tier: 'advanced' },
+      { section: 'reading', tier: 'advanced', fig: 'chart' },
+      { section: 'reading', tier: 'basic' },
+    ],
+    // 封面「本卷針對」：名稱是組卷頁存下的標籤（這裡用固定的兩個）。
+    targets: { labels: ['推論題（閱讀）', '代名詞指涉（篇章結構）'], balanced: false },
+  },
+  { name: 'f-top', kind: 'f', slots: FULL_SECTIONS.map((section) => ({ section, tier: /** @type {const} */ ('top') })) },
+  {
+    name: 'r-12',
+    kind: 'r',
+    slots: [
+      { section: 'vocabulary', tier: 'basic' },
+      { section: 'vocabulary', tier: 'advanced' },
+      { section: 'cloze', tier: 'basic' },
+      { section: 'cloze', tier: 'top' },
+      { section: 'word_bank', tier: 'advanced' },
+      { section: 'structure', tier: 'top' },
+      { section: 'reading', tier: 'basic', fig: 'table' },
+      { section: 'reading', tier: 'advanced' },
+      { section: 'reading', tier: 'top', fig: 'chart' },
+      { section: 'reading', tier: 'advanced' },
+      { section: 'mixed', tier: 'advanced' },
+      { section: 'translation', tier: 'basic' },
+    ],
+  },
+  {
+    name: 'r-writing',
+    kind: 'r',
+    slots: [
+      { section: 'translation', tier: 'advanced' },
+      { section: 'composition', tier: 'advanced' },
+    ],
+  },
+];
+
+/**
+ * 四份加強卷的學生卷、教師卷與雙面版。
+ * @param {{ opts: ReturnType<typeof parseArgs>, config: object, pdfmake: PdfMake, strings: StringsModule, poppler: boolean, failures: string[], rows: string[] }} ctx
+ */
+async function checkWeakPapers(ctx) {
+  const { opts, config, pdfmake, strings, poppler, failures, rows } = ctx;
+  if (!existsSync(path.join(DATA_DIR, 'bank', 'mock-pool.json'))) {
+    failures.push('加強卷：找不到 public/data/bank/mock-pool.json，請先執行 npm run build:data -w @gsat/web');
+    return { papers: 0, ms: 0 };
+  }
+  /** @param {string} rel */
+  const load = async (rel) => /** @type {any} */ ((await runnerImport(path.join(WEB_DIR, rel), /** @type {any} */ (config))).module);
+  const layoutDoc = await load('src/features/pdf/layout/buildDocDefinition.ts');
+  const code2 = await load('src/features/mock/bank/code2.ts');
+  const paperLayout = await load('src/features/mock/bank/layout.ts');
+  const build = await load('src/features/mock/bank/buildExam.ts');
+  const random = await load('src/features/mock/bank/random.ts');
+  const pdfText = await load('src/features/mock/bank/pdfText.ts');
+  const pdfIndex = await load('src/features/pdf/index.ts');
+  const T = strings.SITE_PAPER_TEXT;
+  const W = /** @type {Record<string, any>} */ (/** @type {any} */ (strings).WEAK_PAPER_TEXT);
+  const P = /** @type {Record<string, any>} */ (/** @type {any} */ (strings).PDF_TEXT);
+  const mockPool = readData('bank/mock-pool.json');
+
+  let ms = 0;
+  let papers = 0;
+  for (const c of WEAK_CASES) {
+    const label = `加強卷 ${c.name}`;
+    // 題組：每個位置依固定種子排序組卷池（同大題、同難度、沒有排除原因、沒用過的第一組；指定圖的閱讀優先挑有那種圖的）。
+    const used = new Set();
+    /** @type {{ ns: 'ai', section: string, tier: string, uid: string, v: number, sw: [number, number][] }[]} */
+    const picks = [];
+    let missing = false;
+    c.slots.forEach((spec, i) => {
+      const entries = /** @type {any[]} */ (mockPool.tiers[spec.tier][spec.section]).filter((e) => e.ex == null && !used.has(e.uid));
+      const ranked = entries
+        .map((e) => ({ e, h: random.fnv1a(`pdf-render-check:${c.name}:${i}:${e.uid}`) }))
+        .sort((a, b) => Number(spec.fig !== undefined && b.e.fig === spec.fig) - Number(spec.fig !== undefined && a.e.fig === spec.fig) || a.h - b.h);
+      const entry = ranked[0]?.e;
+      if (!entry) {
+        failures.push(`${label}：組卷池沒有 ${spec.tier} 的 ${spec.section} 題組`);
+        missing = true;
+        return;
+      }
+      used.add(entry.uid);
+      picks.push({ ns: 'ai', section: spec.section, tier: spec.tier, uid: entry.uid, v: entry.v, sw: entry.sw ?? [] });
+    });
+    if (missing) continue;
+    const slots = picks.map(({ ns, section, tier, uid, v }) => ({ ns, section, tier, uid, v }));
+    const paperId = code2.encodeBk2(c.kind, slots);
+    const layout = paperLayout.layoutForBk2({ kind: c.kind, slots });
+    const sources = picks.map((p) => ({ key: `${p.uid}@${p.v}`, swap: p.sw }));
+    const files = Object.fromEntries(picks.map((p) => [`${p.uid}@${p.v}`, slotFile(p.section, `${p.uid}@${p.v}`)]));
+    const paper = build.buildBankPaper({ paperId, tier: layout.tier, dataVersion: mockPool.version, slots: sources, files, layout });
+    const meta = pdfText.bankMockPdfMeta(paper, { strict: false, ...(c.targets ? { targets: c.targets } : {}) });
+    const site = meta.sitePaper;
+    const kindLabel = W.kindLabel(c.kind, site.tierLabel);
+    papers += 1;
+    console.log(`[pdf-check] ${label} ${paper.code}（${kindLabel}、${site.tierLabel}、${layout.minutes} 分鐘、${slots.length} 組）：${paperId}`);
+    const onlineUrl = `${SITE_ORIGIN}/mock/${paperId}.p`;
+    if (onlineUrl.length > code2.QR_MAX_URL_CHARS) failures.push(`${label}：網址 ${onlineUrl.length} 個字元，超過 QR code 的上限 ${code2.QR_MAX_URL_CHARS}`);
+    if (meta.durationMinutes !== layout.minutes) failures.push(`${label}：封面的作答時間 ${meta.durationMinutes} 不是版面的 ${layout.minutes} 分鐘`);
+    const readingFigures = paper.exam.sections.filter((/** @type {{ type: string }} */ s) => s.type === 'reading').flatMap((/** @type {any} */ s) => s.groups.flatMap((/** @type {any} */ g) => g.figures));
+    const notes = readingFigures.map((/** @type {any} */ f) => f.chart?.note).filter((/** @type {unknown} */ n) => typeof n === 'string' && n.trim() !== '');
+    const fragments = readingFigures.flatMap((/** @type {any} */ f) => (f.chart || (f.rows && f.rows.length > 0) ? descriptionFragments(f.description ?? '') : []));
+    const ccRefs = paper.groups.flatMap((/** @type {any} */ g) => g.references).filter((/** @type {any} */ r) => /^CC-BY/i.test(r.license ?? ''));
+    const hasComposition = paper.exam.sections.some((/** @type {any} */ s) => s.groups.some((/** @type {any} */ g) => g.questions.some((/** @type {any} */ q) => q.mode === 'composition')));
+    const targetsLine = c.targets ? (c.targets.balanced ? W.targetsBalanced : W.targets(c.targets.labels)) : null;
+
+    /** @type {[string, string, boolean][]} 輸出名稱、版本、雙面 */
+    const variants = [
+      ['student', 'student', false],
+      ['teacher', 'teacher', false],
+      ['student-duplex', 'student', true],
+      ['full-duplex', 'full', true],
+    ];
+    for (const [variant, version, duplex] of variants) {
+      const fail = (/** @type {string} */ msg) => failures.push(`${label} ${paper.code}（${variant}）：${msg}`);
+      const options = { ...pdfIndex.sitePdfOptions(version, duplex), mockMeta: meta, onlineUrl };
+      const fileName = pdfIndex.pdfFileName(paper.exam, options);
+      const expectedName = new RegExp(`^學測英文中心_加強卷_${c.kind.toUpperCase()}-[0-9A-Z]{5}_(學生卷|教師卷|含答案解析)\\.pdf$`, 'u');
+      if (!expectedName.test(fileName)) fail(`檔名不對：${fileName}`);
+      const file = path.join(opts.out, `weak-${c.name}-${variant}.pdf`);
+      const t0 = performance.now();
+      /** @type {Buffer} */
+      let buf;
+      try {
+        buf = await pdfmake.createPdf(layoutDoc.buildExamDocDefinition(paper.exam, options)).getBuffer();
+      } catch (err) {
+        fail(`產生失敗：${err instanceof Error ? (err.stack ?? err.message) : String(err)}`);
+        continue;
+      }
+      const elapsed = Math.round(performance.now() - t0);
+      ms += elapsed;
+      writeFileSync(file, buf);
+      if (buf.subarray(0, 5).toString('latin1') !== '%PDF-' || buf.length < 20_000) fail(`檔案不像 PDF（${buf.length} bytes）`);
+      const pageCount = (buf.toString('latin1').match(/\/Type \/Page\b/g) ?? []).length;
+      const row = `weak ${c.name.padEnd(10)} ${variant.padEnd(14)} ${String(pageCount).padStart(3)} 頁 ${String(Math.round(buf.length / 1024)).padStart(4)} KB ${String(elapsed).padStart(5)} ms`;
+      if (!poppler) {
+        rows.push(row);
+        continue;
+      }
+      // 文件屬性
+      const info = execFileSync('pdfinfo', ['-enc', 'UTF-8', file], { encoding: 'utf8' });
+      const title = /^Title:\s*(.*)$/m.exec(info)?.[1] ?? '';
+      const subject = /^Subject:\s*(.*)$/m.exec(info)?.[1] ?? '';
+      for (const banned of BANNED) if (`${title}${subject}`.toLowerCase().includes(banned)) fail(`文件屬性有「${banned}」：${title}｜${subject}`);
+      if (title !== W.docTitle(kindLabel, paper.code, version === 'teacher')) fail(`文件標題不對：${title}`);
+      if (subject !== W.docSubject(T.footerNotice)) fail(`文件主旨不對：${subject}`);
+
+      const text = execFileSync('pdftotext', ['-layout', '-enc', 'UTF-8', file, '-'], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
+      const pages = text.split('\f').slice(0, pageCount);
+      const all = norm(text);
+      for (const banned of BANNED) if (all.includes(banned)) fail(`內文有「${banned}」`);
+      if (all.includes(norm('自組模擬考'))) fail('有自組模擬考（bk1）的文字');
+      if (text.includes('[[')) fail('有殘留的 [[');
+      if (!all.includes(norm(paper.code))) fail('沒有卷號');
+      const footer = [norm(W.footerSource(paper.code)), norm(T.footerNotice)];
+      const blankMark = norm(T.blankPage);
+      const headers = {
+        sheet: norm(W.sheetHeader(kindLabel)),
+        key: norm(W.keyHeader(kindLabel)),
+        explanations: norm(W.explanationsHeader(kindLabel)),
+        sources: norm(W.sourcesHeader(kindLabel)),
+        booklet: norm(W.headerCenter),
+      };
+      /** @typedef {'cover' | 'booklet' | 'sources' | 'sheet' | 'key' | 'explanations' | 'blank'} WSeg */
+      /** @type {Record<WSeg, number[]>} */
+      const segments = { cover: [], booklet: [], sources: [], sheet: [], key: [], explanations: [], blank: [] };
+      pages.forEach((p, i) => {
+        const t = norm(p);
+        if (!footer.every((f) => t.includes(f))) fail(`第 ${i + 1} 頁的頁尾沒有加強卷的卷號或 AI 聲明`);
+        const seg = /** @type {WSeg} */ (t.includes(blankMark) ? 'blank' : (Object.entries(headers).find(([, h]) => t.includes(h))?.[0] ?? 'cover'));
+        segments[seg].push(i + 1);
+        if (seg === 'blank') {
+          let rest = t.replace(blankMark, '');
+          for (const f of [...footer, ...Object.values(headers), norm(PDF_SUBJECT)]) rest = rest.split(f).join('');
+          if (rest.replace(/[｜|]/gu, '').length > 0) fail(`第 ${i + 1} 頁是補的空白頁，卻有其他內容`);
+        }
+      });
+      if (options.includeBooklet) {
+        const cover = norm(pages[0] ?? '');
+        if (segments.cover.length !== 1 || segments.cover[0] !== 1) fail(`封面不是只有第 1 頁（${segments.cover.join('、')}）`);
+        for (const [what, expected] of [
+          ['卷名', meta.title],
+          ['卷別', meta.paperLabel],
+          ['卷別說明', W.coverFormat(c.kind)],
+          ['橫條', W.coverBand(site.footerKind)],
+          ['作答時間', P.timeLine(layout.minutes)],
+          ...(targetsLine ? [['本卷針對', targetsLine]] : []),
+        ]) {
+          if (!cover.includes(norm(expected))) fail(`封面沒有${what}「${expected}」`);
+        }
+        if (!targetsLine && cover.includes(norm('本卷針對'))) fail('封面不該有「本卷針對」');
+        if (segments.sources.length < 1) fail('題本後面沒有資料來源頁');
+        const tokens = new Set(text.match(/\d+[A-Z]?/g) ?? []);
+        // 內文：每頁去掉頁首頁尾再接起來（跨頁的段落才比對得到，同歷屆卷的檢查）。
+        const chromeText = [...footer, '｜', headers.booklet, ...W.examShort(kindLabel).map(norm)];
+        const body = pages
+          .map((p) => {
+            let t = norm(p).replace(/第\d+頁|共\d+頁|-\d+-/gu, '');
+            for (const c of chromeText) t = t.split(c).join('');
+            return t;
+          })
+          .join('');
+        for (const { what, probe } of contentProbes(paper.exam)) {
+          if (probe.startsWith('#')) {
+            if (!tokens.has(probe.slice(1))) fail(`取不到${what}`);
+          } else if (!body.includes(probe)) fail(`取不到${what}`);
+        }
+        for (const note of notes) if (!body.includes(norm(note))) fail(`取不到圖表附註「${note.slice(0, 40)}」`);
+        const bookletText = norm([...segments.cover, ...segments.booklet].map((n) => pages[n - 1] ?? '').join('\n'));
+        for (const frag of fragments) if (bookletText.includes(norm(frag))) fail(`印出了圖表描述的資料片段「${frag}」`);
+      } else {
+        const first = norm(pages[0] ?? '');
+        if (!first.includes(norm(T.teacherTitle))) fail('教師卷第 1 頁沒有「教師卷：答案與解析」');
+        if (!first.includes(norm(kindLabel)) || !first.includes(norm(W.minutes(layout.minutes)))) fail('教師卷第 1 頁沒有卷別或作答時間');
+        if (segments.booklet.length > 0 || segments.cover.length > 0) fail(`教師卷有題本或封面（第 ${[...segments.cover, ...segments.booklet].join('、')} 頁）`);
+      }
+      for (const ref of ccRefs) if (!all.includes(norm(ref.url))) fail(`資料來源頁沒有 CC BY 參考資料：${ref.url}`);
+      if (options.includeAnswerSheet) {
+        const [min, max] = hasComposition ? [3, 5] : [1, 2];
+        if (segments.sheet.length < min || segments.sheet.length > max) fail(`答題卷 ${segments.sheet.length} 頁，不在 ${min}–${max} 頁`);
+        const firstSheet = norm(pages[(segments.sheet[0] ?? 1) - 1] ?? '');
+        if (!firstSheet.includes(norm(T.codeLabel(paper.code)))) fail('答題卷第一頁沒有卷號');
+      }
+      if (options.includeAnswerKey && segments.key.length < 1) fail('沒有答案頁');
+      if (options.includeExplanations && segments.explanations.length < 1) fail('沒有解析頁');
+      if (!options.includeAnswerKey && (segments.key.length > 0 || segments.explanations.length > 0)) fail('學生卷有答案或解析');
+      if (duplex) {
+        for (const seg of /** @type {const} */ (['sheet', 'key', 'explanations'])) {
+          const first = segments[seg][0];
+          if (first !== undefined && first % 2 === 0) fail(`雙面列印：${seg} 從第 ${first} 頁（雙數頁）開始`);
+        }
+      } else if (segments.blank.length > 0) fail(`沒有勾雙面列印卻有空白頁（第 ${segments.blank.join('、')} 頁）`);
+      if (version === 'student' && (pageCount < 4 || pageCount > 24 + segments.blank.length)) fail(`學生卷 ${pageCount} 頁，不在 4–24 頁`);
+      const replaced = (all.match(new RegExp(norm(T.explanationMissing).replace(/[()（）]/g, '.'), 'g')) ?? []).length;
+      const fonts = execFileSync('pdffonts', [file], { encoding: 'utf8' }).split('\n').slice(2).filter((l) => l.trim() !== '');
+      for (const line of fonts) {
+        const cols = line.trim().split(/\s+/);
+        const [emb, sub] = cols.slice(-5, -3);
+        if (emb !== 'yes' || sub !== 'yes') fail(`字型沒有嵌入子集：${line.trim()}`);
+      }
+      const parts = /** @type {const} */ (['booklet', 'sources', 'sheet', 'key', 'explanations', 'blank'])
+        .filter((k) => segments[k].length > 0)
+        .map((k) => `${{ booklet: '題本', sources: '資料來源', sheet: '答題卷', key: '答案', explanations: '解析', blank: '空白' }[k]} ${segments[k].length}`);
+      rows.push(`${row}（${parts.join('、')}${options.includeExplanations ? `；解析改印說明 ${replaced} 題` : ''}）`);
+      if (opts.png && (!opts.pngIds || opts.pngIds.includes('weak'))) {
+        execFileSync('pdftoppm', ['-r', '60', '-png', file, path.join(opts.png, `weak-${c.name}-${variant}`)]);
+      }
+    }
+  }
+  return { papers, ms };
+}
 
 // ---------------------------------------------------------------------------
 // 單字講義（docs/design/vocab-handout.md §9.2）

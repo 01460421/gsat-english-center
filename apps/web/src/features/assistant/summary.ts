@@ -27,8 +27,9 @@ import {
 import { loadExam } from '../../data/exams';
 import { levelFromEntryId } from '../../data/vocab';
 import { bankReport } from '../mock/bank/bankScore';
-import { isBankPaperId, tierOfPaperId, TIER_CODES } from '../mock/bank/paperId';
+import { bk2KindOf, bk2UniformTier, isBankPaperId, tierOfPaperId, TIER_CODES } from '../mock/bank/paperId';
 import { loadBankPaperStrict } from '../mock/bank/resolve';
+import { weakPaperEvidence } from '../mock/bank/weakPapers';
 import { computeReport, type MockReport } from '../mock/report';
 import { loadHistory, loadRecord, type MockHistoryEntry } from '../mock/storage';
 import { getPracticeHistory, type DoneRecord } from '../practice/history';
@@ -37,6 +38,7 @@ import type { MistakeBook } from '../vocab/lib/mistakes';
 import { getMistakeStore, getSrsStore } from '../vocab/state';
 import { assistSectionOf } from './outcomeBuilders';
 import { getOutcomes, type OutcomeEntry } from './outcomes';
+import { isSectionEvidence, type PaperEvidenceMap } from './papers/weakness';
 import { planProgressFor, readPlanChecks } from './planProgress';
 
 const DAY_MS = 86_400_000;
@@ -61,6 +63,11 @@ export interface SummaryInput {
   mocks: readonly Mock[];
   vocab: { book: MistakeBook | null; srs: SrsState | null };
   planProgress: AssistHistorySummary['plan_progress'];
+  /**
+   * 「我的加強卷」的證據規則資料（docs/design/weak-paper.md §5.2、§9.4）：各大題答對率只收 isSectionEvidence 的紀錄
+   * （弱點加強卷與模考格式卷裡刻意挑的弱點題不算；技能與陷阱照算）。不給時當成空的清單。
+   */
+  papers?: PaperEvidenceMap;
 }
 
 function sourceOf(e: OutcomeEntry): AssistSummarySource | null {
@@ -79,9 +86,11 @@ export function summaryRange(outcomes: readonly OutcomeEntry[], now: number): { 
   return { items: [...outcomes], days: Math.min(3_650, Math.max(1, Math.ceil((now - earliest) / DAY_MS))) };
 }
 
-function sectionRows(items: readonly OutcomeEntry[], now: number): AssistHistorySummary['sections'] {
+function sectionRows(items: readonly OutcomeEntry[], now: number, papers: PaperEvidenceMap): AssistHistorySummary['sections'] {
   const map = new Map<string, AssistHistorySummary['sections'][number]>();
   for (const e of items) {
+    // 證據規則（和弱點模型共用）：加強卷裡刻意挑的弱點題不進各大題答對率。
+    if (!isSectionEvidence(e, papers)) continue;
     const src = sourceOf(e);
     if (!src || !(ASSIST_SECTIONS as readonly string[]).includes(e.sec)) continue;
     const key = `${e.sec}|${src}`;
@@ -176,7 +185,7 @@ export function buildSummary(input: SummaryInput): AssistHistorySummary {
     v: 2,
     generated_at: new Date(input.now).toISOString(),
     range_days: days,
-    sections: sectionRows(items, input.now),
+    sections: sectionRows(items, input.now, input.papers ?? new Map()),
     skills: skillRows(items),
     traps: trapRows(items),
     bank_groups: bankGroupRows(input.bankDone, input.now - days * DAY_MS),
@@ -242,25 +251,39 @@ export function mockRow(entry: MockHistoryEntry, report: MockReport | null, tier
   };
 }
 
+/** 自組卷與中性模考格式卷（bk2-m）的難度（加強卷的模考格式卷整份同一個難度）。 */
+function bankTierOf(paperId: string): Tier | null {
+  return tierOfPaperId(paperId) ?? bk2UniformTier(paperId);
+}
+
 async function mockReportOf(entry: MockHistoryEntry): Promise<{ report: MockReport | null; tier: Tier | null }> {
   const record = loadRecord(entry.id);
-  if (!record || record.status !== 'submitted') return { report: null, tier: tierOfPaperId(entry.paperId) };
+  if (!record || record.status !== 'submitted') return { report: null, tier: bankTierOf(entry.paperId) };
   try {
     if (isBankPaperId(entry.paperId)) {
       const loaded = await loadBankPaperStrict(entry.paperId);
-      if (!loaded.ok) return { report: null, tier: tierOfPaperId(entry.paperId) };
+      if (!loaded.ok) return { report: null, tier: bankTierOf(entry.paperId) };
       return { report: bankReport(loaded.paper.exam, loaded.paper.explanations, record), tier: loaded.paper.tier };
     }
     return { report: computeReport(await loadExam(entry.paperId), record), tier: null };
   } catch {
     // 考卷讀不到（離線、題目下架）：只送總分，各大題留空。
-    return { report: null, tier: tierOfPaperId(entry.paperId) };
+    return { report: null, tier: bankTierOf(entry.paperId) };
   }
+}
+
+/**
+ * 算進「最近 5 份模考」的卷子：歷屆卷、自組模擬考（bk1）與中性模考格式卷（bk2-m，整份、中性、單一難度）；
+ * 弱點加強卷、模考格式卷（偏重弱點）與隨機抽題卷不是模考（docs/design/weak-paper.md §9.4）。
+ */
+export function countsAsMock(paperId: string): boolean {
+  const kind = bk2KindOf(paperId);
+  return kind === null || kind === 'm';
 }
 
 /** 最近 5 份交卷的模考（新到舊）。 */
 export async function collectMocks(): Promise<Mock[]> {
-  const entries = loadHistory().slice(0, MOCKS_MAX);
+  const entries = loadHistory().filter((e) => countsAsMock(e.paperId)).slice(0, MOCKS_MAX);
   const rows: Mock[] = [];
   for (const entry of entries) {
     const { report, tier } = await mockReportOf(entry);
@@ -288,6 +311,7 @@ export async function collectSummary(opts: { previous: AssistReportDetail | null
     mocks: await collectMocks(),
     vocab: { book, srs },
     planProgress: opts.previous ? planProgressFor(opts.previous, outcomes, readPlanChecks(opts.previous.id), opts.todayTw) : null,
+    papers: weakPaperEvidence(),
   });
   return fitSummary(summary);
 }

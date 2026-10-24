@@ -24,6 +24,7 @@ import type { PdfContent, PdfDocDefinition, PdfNode, PdfSection } from '../engin
 import type { ExamPdfOptions, MockPdfMeta, SitePaperPdfMeta } from '../types';
 import { answerKeyContent } from './answerKey';
 import { answerSheetContent } from './answerSheet';
+import { siteAttribution, weakKindLabel } from './attribution';
 import { PageChrome, attributionLine, type PdfSegment } from './chrome';
 import { KeepRegistry, flowBlocks } from './blocks';
 import { bookletBlocks } from './booklet';
@@ -31,7 +32,7 @@ import { coverContent } from './cover';
 import { explanationsContent } from './explanations';
 import { LINE, PAGE_MARGINS, SIZE } from './metrics';
 import { sourcesContent } from './sources';
-import { SITE_PAPER_TEXT } from './strings';
+import { SITE_PAPER_TEXT, WEAK_PAPER_TEXT } from './strings';
 import { teacherHeaderContent } from './teacherHeader';
 
 /**
@@ -88,7 +89,7 @@ function siteContent(
   if (includeBooklet) {
     out.push(
       section('cover', coverContent(exam, { includeAnswerSheet: options.includeAnswerSheet, mockMeta: meta, onlineUrl: options.onlineUrl })),
-      section('booklet', flowBlocks(bookletBlocks(exam, { site: true }), registry)),
+      section('booklet', flowBlocks(bookletBlocks(exam, { site: true, ...(site.groupSources ? { groupSources: site.groupSources } : {}) }), registry)),
       sources(),
     );
   }
@@ -120,12 +121,14 @@ export function buildExamDocDefinition(exam: Exam, options: PdfLayoutOptions): P
   });
 
   if (meta && site) {
+    // 學習助手加強卷：標題寫卷別、主旨寫頁尾的聲明（依題目來源，docs/design/weak-paper.md §9.5）；自組模擬考照舊。
+    const kind = weakKindLabel(site);
     return {
       ...docBase(registry),
       info: {
-        title: SITE_PAPER_TEXT.docTitle(site.tierLabel, site.code, options.includeBooklet === false),
+        title: kind !== null ? WEAK_PAPER_TEXT.docTitle(kind, site.code, options.includeBooklet === false) : SITE_PAPER_TEXT.docTitle(site.tierLabel, site.code, options.includeBooklet === false),
         author: '學測英文中心',
-        subject: SITE_PAPER_TEXT.docSubject,
+        subject: kind !== null ? WEAK_PAPER_TEXT.docSubject(siteAttribution(site).notice) : SITE_PAPER_TEXT.docSubject,
         creator: '學測英文中心',
         producer: 'pdfmake',
       },

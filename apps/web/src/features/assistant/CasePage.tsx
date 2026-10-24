@@ -13,7 +13,7 @@
  *   - 開關關著（唯讀模式，AssistGate readOnly）：照常輪詢與顯示、可以改「懂了嗎」與刪除；頁首說明暫停，
  *     送出解析、追問、繼續拍照的入口都不顯示。
  */
-import { assistAnalyzePoints, type AssistAnalysisView, type AssistCaseDetail, type AssistPendingTask, type AssistTaskAccepted, type AssistTurnKind } from '@gsat/shared';
+import { PUBLISHER_ASSIST_ENDED_TEXT, assistAnalyzePoints, type AssistAnalysisView, type AssistCaseDetail, type AssistPendingTask, type AssistTaskAccepted, type AssistTurnKind } from '@gsat/shared';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router';
 import { PaneTabs } from '../../components/desktop/PaneTabs';
@@ -125,6 +125,8 @@ function CaseView({ detail, poller }: { detail: AssistCaseDetail; poller: Return
   const displayOf = (label: string) => targets.find((t) => t.label === label)?.display_label ?? label;
   const groupCase = targets.length > 1;
   const safety = (detail.flags.safety && detail.flags.safety !== 'none') || (analysis && 'safety_flag' in analysis && analysis.safety_flag !== 'none');
+  // 出版社題的授權已經結束（docs/design/weak-paper.md §9.6）：Worker 已經遮住題目與解析，這裡不再提供解析與追問。
+  const ended = detail.source_ended === true;
 
   // 進行中的任務結束（pending → 沒有）時：常駐的 live region 唸出結果；焦點還在 body（送出按鈕停用或不見了）才移動，
   // 不搶學生正在操作的焦點。解析完成移到「解析」標題，追問的回覆移到那一輪的標題。
@@ -254,7 +256,7 @@ function CaseView({ detail, poller }: { detail: AssistCaseDetail; poller: Return
           <p className="text-bad">{assistRefundMessage(lastAnalyze.failure)}，這次的點數已經退還。</p>
         </div>
       )}
-      {!analysis && !pending && (detail.status === 'ready' || detail.status === 'failed') && ready && (
+      {!analysis && !pending && !ended && (detail.status === 'ready' || detail.status === 'failed') && ready && (
         <button type="button" onClick={() => void retryAnalyze()} disabled={busy} className={primaryBtn}>
           {lastAnalyze ? '再試一次' : '送出解析'}（用 {assistAnalyzePoints(detail.kind, detail.item_count)} 點）
         </button>
@@ -295,7 +297,7 @@ function CaseView({ detail, poller }: { detail: AssistCaseDetail; poller: Return
       {pending?.kind === 'followup' && (
         <AssistStatus key={pending.turn_id} pending={pending} speed={poller.snapshot.speed} connectionError={connectionError} stopped={stopped} live={false} />
       )}
-      {analysis ? (
+      {ended ? null : analysis ? (
         ready ? (
           <FollowupComposer
             caseId={detail.id}
@@ -324,6 +326,11 @@ function CaseView({ detail, poller }: { detail: AssistCaseDetail; poller: Return
       <BackLink to="/assistant">學習助手</BackLink>
       <h1 className="text-xl font-bold tracking-tight break-words lg:text-2xl">{detail.title}</h1>
       <AiNotice variant="assistant" />
+      {ended && (
+        <Notice>
+          <p data-testid="assist-source-ended">{PUBLISHER_ASSIST_ENDED_TEXT}。</p>
+        </Notice>
+      )}
       <HistoryLine line={detail.history_line} currentId={detail.id} />
       {closed && <AssistAccessNotice access={access} />}
       <AssistLiveRegion text={announcement} />

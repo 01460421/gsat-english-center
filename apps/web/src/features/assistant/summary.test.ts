@@ -10,7 +10,8 @@ import type { DoneRecord } from '../practice/history';
 import type { MistakeBook } from '../vocab/lib/mistakes';
 import type { SrsState, StoredCard } from '../vocab/lib/srs';
 import type { OutcomeEntry } from './outcomes';
-import { buildSummary, fitSummary, mockRow, summaryBytes, summaryRange, type SummaryInput } from './summary';
+import { encodeBk2 } from '../mock/bank/code2';
+import { buildSummary, countsAsMock, fitSummary, mockRow, summaryBytes, summaryRange, type SummaryInput } from './summary';
 
 const NOW = Date.parse('2026-11-20T02:00:00.000Z');
 const DAY = 86_400_000;
@@ -171,5 +172,56 @@ describe('mockRow：模考成績單 → 摘要的一列', () => {
     const row = mockRow(bank, null, 'advanced');
     expect(row).toMatchObject({ kind: 'bank', paper: 'a', level: null, scale_year: null, predicted: null, nonmc: null, sections: [] });
     expect(JSON.stringify(row)).not.toContain('bk1-');
+  });
+});
+
+describe('加強卷的證據規則與模考（docs/design/weak-paper.md §5.2、§9.4）', () => {
+  const slot = (uid: string) => ({ ns: 'ai' as const, section: 'reading' as const, tier: 'advanced' as const, uid, v: 1 });
+  const wId = encodeBk2('w', [slot('ai.rd.0a0001'), slot('ai.rd.0a0002')]);
+  const rId = encodeBk2('r', [slot('ai.rd.0a0003')]);
+  const sharedW = encodeBk2('w', [slot('ai.rd.0a0004')]);
+  const reading = (p: string, l: string, k: string[], ok: 0 | 1) =>
+    o({ s: 'bank_mock', r: 'ai.rd.0a0001@1', g: 'ai.rd.0a0001', l, d: l, p, sec: 'reading', t: 'advanced', k, ok, a: 'A' });
+  const rows = [
+    // 弱點加強卷（目標：推論）：推論題不算進大題，其他題算。
+    reading(wId, '1', ['it:inference'], 0),
+    reading(wId, '2', ['it:detail'], 1),
+    // 隨機抽題卷：全部算。
+    reading(rId, '1', ['it:inference'], 0),
+    // 別人分享來的弱點加強卷（清單裡沒有）：整份不算進大題。
+    reading(sharedW, '1', ['it:detail'], 0),
+  ];
+  const papers = new Map([[wId, { kind: 'w', targetCodes: { reading: ['it:inference'] } }]]);
+
+  it('各大題答對率只收 isSectionEvidence 的紀錄；技能與陷阱照全部算', () => {
+    const s = buildSummary(input({ outcomes: rows, papers }));
+    const row = s.sections.find((x) => x.section === 'reading' && x.src === 'bank_mock:advanced');
+    expect(row?.n).toBe(2);
+    expect(row?.correct).toBe(1);
+    const inference = s.skills.find((x) => x.code === 'it:inference');
+    expect(inference?.n).toBe(2);
+    // 不給清單時，弱點加強卷整份不算（隨機抽題卷照算）。
+    const none = buildSummary(input({ outcomes: rows }));
+    expect(none.sections.find((x) => x.section === 'reading' && x.src === 'bank_mock:advanced')?.n).toBe(1);
+  });
+
+  it('只有歷屆卷、自組模擬考與中性模考格式卷算「最近 5 份模考」', () => {
+    const fullSlots = (['vocabulary', 'cloze', 'cloze', 'word_bank', 'structure', 'reading', 'reading', 'reading', 'mixed', 'translation', 'composition'] as const).map((section, i) => ({
+      ns: 'ai' as const,
+      section,
+      tier: 'basic' as const,
+      uid: `ai.${{ vocabulary: 'vo', cloze: 'cz', word_bank: 'wb', structure: 'st', reading: 'rd', mixed: 'mx', translation: 'tr', composition: 'cp' }[section]}.0b00${String(i).padStart(2, '0')}`,
+      v: 1,
+    }));
+    expect(countsAsMock('gsat-114')).toBe(true);
+    expect(countsAsMock('bk1-a-0123456789abcdefghjkmnpqrstvwxyz0123456789abcdefghjkmnpqrstvwxyz01')).toBe(true);
+    expect(countsAsMock(encodeBk2('m', fullSlots))).toBe(true);
+    expect(countsAsMock(encodeBk2('f', fullSlots))).toBe(false);
+    expect(countsAsMock(wId)).toBe(false);
+    expect(countsAsMock(rId)).toBe(false);
+    // 中性模考格式卷的一列：只送難度代碼，不送代號。
+    const row = mockRow({ id: 'x', paperId: encodeBk2('m', fullSlots), submittedAt: new Date(NOW).toISOString(), raw: 50, level: null, predictedScore: null, scaleYear: null } as unknown as MockHistoryEntry, null, 'basic');
+    expect(row).toMatchObject({ kind: 'bank', paper: 'b', level: null });
+    expect(JSON.stringify(row)).not.toContain('bk2-');
   });
 });

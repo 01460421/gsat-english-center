@@ -85,6 +85,8 @@ export const ROUTE_MODES: ReadonlyArray<readonly [pattern: string, mode: WidthMo
   ['/assistant/ask', 'narrow'],
   ['/assistant/new', 'default'],
   ['/assistant/case/:id', 'workspace'],
+  // 加強卷（docs/design/weak-paper.md §9.3）：預設寬度；桌機左欄設定、右欄預覽（頁面自己排）。
+  ['/assistant/papers', 'default'],
   // 學習報告：預設寬度；ws 寬度起左側加目錄（報告內容自己排）。
   ['/assistant/report', 'default'],
   ['/assistant/report/:version', 'default'],

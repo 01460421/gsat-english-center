@@ -89,6 +89,8 @@ const AssistantAskPage = lazy(() => import('./features/assistant/AskPage'));
 const AssistantNewQuestionPage = lazy(() => import('./features/assistant/NewQuestionPage'));
 const AssistantCasePage = lazy(() => import('./features/assistant/CasePage'));
 const AssistantReportPage = lazy(() => import('./features/assistant/ReportPage'));
+/** 加強卷（docs/design/weak-paper.md §3.2、§9.3）：依弱點選題組卷；不用 AI，學習助手暫停時照常能用（頁面自己判斷開關）。 */
+const AssistantPapersPage = lazy(() => import('./features/assistant/papers/PapersPage'));
 
 export function App() {
   return (
@@ -128,6 +130,7 @@ export function App() {
         <Route path="assistant/ask" element={<AssistantAskPage />} />
         <Route path="assistant/new" element={<AssistantNewQuestionPage />} />
         <Route path="assistant/case/:id" element={<AssistantCasePage />} />
+        <Route path="assistant/papers" element={<AssistantPapersPage />} />
         <Route path="assistant/report" element={<AssistantReportPage />} />
         <Route path="assistant/report/:version" element={<AssistantReportPage />} />
         <Route path="*" element={<NotFoundPage />} />

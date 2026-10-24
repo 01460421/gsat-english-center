@@ -55,6 +55,22 @@ export function paperStatuses(pool: MockPool, paper: { tier: Tier; slots: readon
   });
 }
 
+/**
+ * 加強卷（bk2）每一組的狀態（docs/design/weak-paper.md §7.6）：每一組用代號裡自己的大題與難度找組卷池。
+ * sourceActive 有給時，來源已停用或授權到期的出版社題組當成下架（fail closed；登記檔的判斷見 shared 的 isSourceUsable）。
+ */
+export function layoutStatuses(
+  pool: MockPool,
+  slots: readonly { section: BankSectionType; tier: Tier; uid: string; v: number }[],
+  sourceActive?: (src: string) => boolean,
+): SlotStatus[] {
+  return slots.map((slot) => {
+    const status = slotStatus(pool, slot.tier, slot.section, slot);
+    if (status.kind !== 'removed' && sourceActive && status.entry.src != null && !sourceActive(status.entry.src)) return { kind: 'removed' };
+    return status;
+  });
+}
+
 /** 嚴格載入（§4.7 第 (3) 部分）接受的狀態：current 或 same-key。 */
 export function isStrictlyUsable(status: SlotStatus): boolean {
   return status.kind === 'current' || status.kind === 'same-key';

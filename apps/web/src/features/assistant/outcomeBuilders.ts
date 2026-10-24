@@ -8,14 +8,13 @@
  * 計分沿用各模組自己的規則（選擇題 scoreQuestion；題庫的填充簡答用練習頁固定下來的判分；歷屆填充簡答用 assessOpenAnswer
  * 的建議分數，模考有自評時用自評），學生在網站上看到的對錯和這裡記的一致。中譯英、作文不記（另有寫作批改的入口）。
  */
-import { skillCodesOf, type AnswerValue, type AssistSection } from '@gsat/shared';
+import { skillsOfQuestion, type AnswerValue, type AssistSection, type Tier } from '@gsat/shared';
 import { groupKey, type ExplanationItem, type PracticeGroupFile } from '../../data/bank';
 import type { Exam, Question, QuestionGroup, SectionType } from '../../data/exams';
 import { isAnswered, scoreQuestion, type OpenOutcome } from '../exams/scoring';
 import type { PracticeScore } from '../practice/scoring';
 import type { BankOpenScores } from '../mock/bank/bankScore';
-import { BLUEPRINT_SLOTS } from '../mock/bank/blueprint';
-import type { BankPaper } from '../mock/bank/buildExam';
+import { paperLayout, type BankPaper } from '../mock/bank/buildExam';
 import { assessOpenGroup, type OpenAssessment } from '../mock/scoreOpen';
 import { okFromRatio, type OutcomeInput, type OutcomeSource } from './outcomes';
 
@@ -91,7 +90,7 @@ function openFields(earned: number, max: number): Pick<OutcomeInput, 'ok' | 'cs'
 
 /** 題庫練習交卷：一組的每一題。score 是交卷時的判分（填充簡答用練習頁固定下來的那一份）。 */
 export function practiceOutcomes(
-  file: Pick<PracticeGroupFile, 'uid' | 'version' | 'section_type' | 'tier' | 'group' | 'annotations'>,
+  file: Pick<PracticeGroupFile, 'uid' | 'version' | 'section_type' | 'tier' | 'group' | 'annotations' | 'skills'>,
   answers: Readonly<Record<string, AnswerValue>>,
   opts: { score: PracticeScore; hints?: Readonly<Record<string, number>>; at: number },
 ): OutcomeInput[] {
@@ -111,7 +110,7 @@ export function practiceOutcomes(
       l: q.label,
       sec,
       t: file.tier,
-      k: skillCodesOf({ tags: q.tags, explanation: item ?? null }),
+      k: skillsOfQuestion(file.skills, q.label, { tags: q.tags, explanation: item ?? null }),
       ok: 0,
       a: answerOf(value),
       at: opts.at,
@@ -175,7 +174,7 @@ function examEntry(
     g: assistGroupId(group.id, sec, q.label),
     l: q.label,
     sec,
-    k: skillCodesOf({ tags: q.tags }),
+    k: skillsOfQuestion(null, q.label, { tags: q.tags }),
     ok: 0,
     a: answerOf(value),
     at: opts.at,
@@ -210,16 +209,21 @@ export interface BankSlotMapping {
   key: string;
   uid: string;
   section: AssistSection;
+  /** 這一組的難度（加強卷每一組自己的難度，docs/design/weak-paper.md §9.4；自組模擬考是整份的難度）。 */
+  tier: Tier;
+  /** 題組檔的每一題技能代碼（出版社題才有）。 */
+  skills: Readonly<Record<string, readonly string[]>> | null;
   /** 依題組順序：原始題號、卷面題號。 */
   questions: Array<{ label: string; display: string }>;
   swap: [string, string] | null;
 }
 
-/** 自組卷的選擇題與混合題題組（中譯英、作文不算）。卷子的題組檔不完整時略過那一組。 */
-export function bankSlotMappings(paper: Pick<BankPaper, 'groups' | 'source' | 'letterSwaps'>): BankSlotMapping[] {
+/** 自組卷與加強卷的選擇題與混合題題組（中譯英、作文不算），依卷子的版面。卷子的題組檔不完整時略過那一組。 */
+export function bankSlotMappings(paper: Pick<BankPaper, 'groups' | 'source' | 'letterSwaps' | 'tier' | 'layout'>): BankSlotMapping[] {
   const out: BankSlotMapping[] = [];
+  const slots = paperLayout(paper).slots;
   paper.groups.forEach((g, index) => {
-    const slot = BLUEPRINT_SLOTS[index];
+    const slot = slots[index];
     if (!slot || g.section === 'translation' || g.section === 'composition') return;
     const file = paper.source.files[g.key];
     if (!file || !('group' in file)) return;
@@ -228,7 +232,7 @@ export function bankSlotMappings(paper: Pick<BankPaper, 'groups' | 'source' | 'l
     const labelOfNo = (no: number) => file.group.questions.find((q) => q.no === no)?.label ?? null;
     const a = pair ? labelOfNo(pair[0]) : null;
     const b = pair ? labelOfNo(pair[1]) : null;
-    out.push({ index, key: g.key, uid: file.uid, section: g.section as AssistSection, questions, swap: a && b ? [a, b] : null });
+    out.push({ index, key: g.key, uid: file.uid, section: g.section as AssistSection, tier: slot.tier, skills: file.skills ?? null, questions, swap: a && b ? [a, b] : null });
   });
   return out;
 }
@@ -240,9 +244,9 @@ function paperQuestions(exam: Exam): Map<string, Question> {
   return out;
 }
 
-/** 自組卷成績單：每一題選擇題與填充、簡答（卷面字母直接對交換後的題目計分）。 */
+/** 自組卷與加強卷成績單：每一題選擇題與填充、簡答（卷面字母直接對交換後的題目計分）。難度用每一組自己的。 */
 export function bankPaperOutcomes(
-  paper: Pick<BankPaper, 'id' | 'tier' | 'exam' | 'explanations' | 'groups' | 'source' | 'letterSwaps'>,
+  paper: Pick<BankPaper, 'id' | 'tier' | 'exam' | 'explanations' | 'groups' | 'source' | 'letterSwaps' | 'layout'>,
   answers: Readonly<Record<string, AnswerValue>>,
   opts: { scores: BankOpenScores; marked?: ReadonlySet<string>; at: number },
 ): OutcomeInput[] {
@@ -262,8 +266,8 @@ export function bankPaperOutcomes(
         d: display,
         p: paper.id,
         sec: slot.section,
-        t: paper.tier,
-        k: skillCodesOf({ tags: q.tags, explanation: item ?? null }),
+        t: slot.tier,
+        k: skillsOfQuestion(slot.skills, label, { tags: q.tags, explanation: item ?? null }),
         ok: 0,
         a: answerOf(value),
         at: opts.at,

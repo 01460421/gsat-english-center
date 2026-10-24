@@ -18,12 +18,20 @@
  *
  * 不顯示級分、五標、贏過多少比例、全國期望得分（§6.4）。自評一改就寫回紀錄與歷史（level 仍是 null）。
  * 打開成績單時順便刪掉孤兒快照（§4.7 第 (7) 部分）。
+ *
+ * 加強卷（bk2，docs/design/weak-paper.md §3.6）依卷別加減（題號範圍、題組狀態、扣分都依卷子自己的版面）：
+ *   弱點加強卷 w        「這次的弱點表現」（DrillTargetsTable）；沒有難度建議；下一步「再組一份（同設定）」「換設定」
+ *   模考格式卷 f        同上；難度建議改成「這份卷子偏重你的弱點…請做一份一般的自組模擬考」
+ *   隨機抽題卷 r        各難度、各大題得分率；沒有難度建議；「再抽一份（同設定）」
+ *   中性模考格式卷 m    同自組模擬考（難度建議）；「組一份新卷」
+ * 有 3 題以上錯時，另有「針對這份的錯題組一份加強卷」（from=paper:{代號}）。
  */
-import { TIER_LABELS, type Tier } from '@gsat/shared';
+import { TIER_LABELS, TIERS, type Tier } from '@gsat/shared';
 import { CircleAlert } from 'lucide-react';
 import { Suspense, use, useEffect, useId, useMemo, useState, type ReactNode } from 'react';
-import { Link } from 'react-router';
-import { forgetFailedLoads } from '../../../data/client';
+import { Link, useNavigate } from 'react-router';
+import { DataLoadError, forgetFailedLoads } from '../../../data/client';
+import { loadSourceRegistry, sourceActiveFn } from '../../../data/sources';
 import { APP_NAME } from '../../../modules';
 import { DataErrorBoundary } from '../../exams/components/DataErrorBoundary';
 import { formatDuration } from '../../exams/labels';
@@ -35,21 +43,34 @@ import { SelfAssessment, type SelfChange } from '../components/SelfAssessment';
 import { formatDateTime, signedPoints } from '../format';
 import { computeReport, historyEntryFor } from '../report';
 import { loadHistory, saveRecord, upsertHistory, type MockAttemptRecord } from '../storage';
-import { bankPaperLabel, bankPdfMeta, recordBankPdfDownload } from './bankMockPaper';
+import { bankPaperTitle, bankPdfMeta, recordBankPdfDownload, weakPaperHeading } from './bankMockPaper';
 import { bankAutoOpen, bankOpenScores } from './bankScore';
 import { BankReview } from './BankReview';
 import { BankSourceNote } from './BankSourceNote';
-import { BLUEPRINT_SLOTS, slotRange } from './blueprint';
-import type { BankPaper } from './buildExam';
-import { decodePaperId, paperNumber, tierOfPaperId } from './code';
+import { paperLayout, type BankPaper } from './buildExam';
+import { paperNumber } from './code';
+import { decodeAnyPaperId } from './code2';
+import { createWeakPaper } from './createWeakPaper';
 import { bankDeduction, objectiveScore, selfScoredPart } from './deduction';
-import { cleanupOrphanSnapshots, findMyPaper } from './myPapers';
-import { newPaperPath } from './PaperInfo';
+import { DrillTargetsTable } from './DrillTargetsTable';
+import { layoutForBk2, type LayoutSlot } from './layout';
+import { cleanupOrphanSnapshots } from './myPapers';
+import { bk2KindOf, bk2UniformTier, tierOfPaperId } from './paperId';
+import { findPaperEntry, findWeakEntry } from './paperLists';
+import { newPaperPath, useEndedSourceRanges } from './PaperInfo';
 import { loadMockPool } from './pool';
 import { labelsText, rangeText } from './rangeText';
-import { loadBankPaperStrict, type StrictLoadResult } from './resolve';
-import { paperStatuses, type SlotStatus } from './status';
+import { loadBankPaperStrict, rangeOf, type StrictLoadResult } from './resolve';
+import { layoutStatuses, paperStatuses, type SlotStatus } from './status';
+import { weakPaperList, type WeakPaperEntry } from './weakPapers';
+import { mockPaperLabel } from '../papers';
+import { FocusPaperEntry } from '../../assistant/papers/EntryLinks';
+import { weakPaperSeed } from '../../assistant/papers/flags';
+import { papersHref } from '../../assistant/papers/params';
+import { SECTION_NAMES } from '../../assistant/papers/reasons';
+import type { OutcomeInput } from '../../assistant/outcomes';
 import { tierAdvice, weakestSections, sectionLabel } from './tierAdvice';
+import { footerKindOf } from './paperSources';
 import { MockWritingHandoff } from '../../assistant/components/MockWritingHandoff';
 import { UpdateReportLink } from '../../assistant/components/UpdateReportLink';
 import { recordOutcomesOnce } from '../../assistant/entries';
@@ -76,11 +97,16 @@ function usePoolStatuses(paperId: string): SlotStatus[] | null {
   const [statuses, setStatuses] = useState<SlotStatus[] | null>(null);
   useEffect(() => {
     let alive = true;
-    const decoded = decodePaperId(paperId);
+    const decoded = decodeAnyPaperId(paperId);
     if (!decoded) return;
-    loadMockPool()
-      .then((pool) => {
-        if (alive) setStatuses(paperStatuses(pool, decoded));
+    // 加強卷：每一組用代號裡自己的大題與難度找組卷池；出版社來源停用的題組當成下架（docs/design/weak-paper.md §7.6）。
+    const load =
+      decoded.format === 'bk2'
+        ? Promise.all([loadMockPool(), loadSourceRegistry()]).then(([pool, registry]) => layoutStatuses(pool, decoded.slots, sourceActiveFn(registry)))
+        : loadMockPool().then((pool) => paperStatuses(pool, decoded));
+    load
+      .then((list) => {
+        if (alive) setStatuses(list);
       })
       .catch(() => {
         // 離線或部署中：不顯示題組狀態。
@@ -97,18 +123,19 @@ function usePoolStatuses(paperId: string): SlotStatus[] | null {
  * 答案已更正的逐題列出題號（status.ts 的 changed 是題組內的位置，換成卷子上的題號）、文字有修改而答案不變的題組。
  * 中譯英、作文的指紋涵蓋的是題目文字（§4.7），所以寫「題目」有修改、不寫答案更正。
  */
-export function statusNoteItems(statuses: readonly SlotStatus[]): string[] {
+export function statusNoteItems(statuses: readonly SlotStatus[], slots: readonly Pick<LayoutSlot, 'section' | 'first' | 'last' | 'questions'>[] = paperLayout({ tier: 'basic' }).slots): string[] {
   const items: string[] = [];
   const removed: string[] = [];
   const sameKey: string[] = [];
   const keyChanged: string[] = [];
   const promptChanged: string[] = [];
+  const range = (i: number) => (slots[i] ? rangeOf(slots[i]) : '');
   statuses.forEach((s, i) => {
-    const slot = BLUEPRINT_SLOTS[i];
-    if (s.kind === 'removed') removed.push(slotRange(i));
-    else if (s.kind === 'same-key') sameKey.push(slotRange(i));
+    const slot = slots[i];
+    if (s.kind === 'removed') removed.push(range(i));
+    else if (s.kind === 'same-key') sameKey.push(range(i));
     else if (s.kind === 'key-changed' && slot) {
-      if (slot.section === 'translation' || slot.section === 'composition') promptChanged.push(slotRange(i));
+      if (slot.section === 'translation' || slot.section === 'composition') promptChanged.push(range(i));
       else {
         // 新版本的題數和卷子不同時，對不上的位置不列；一題都對不上就整組列出。
         const labels = s.changed.flatMap((q) => slot.questions[q - 1]?.label ?? []);
@@ -123,8 +150,8 @@ export function statusNoteItems(statuses: readonly SlotStatus[]): string[] {
   return items;
 }
 
-function StatusNotes({ statuses }: { statuses: readonly SlotStatus[] }) {
-  const items = statusNoteItems(statuses);
+function StatusNotes({ statuses, slots }: { statuses: readonly SlotStatus[]; slots: readonly LayoutSlot[] }) {
+  const items = statusNoteItems(statuses, slots);
   if (items.length === 0) return null;
   return (
     <ul aria-label="題組狀態" className="space-y-1 rounded-xl border border-badge-fg/30 bg-badge-bg px-4 py-3 text-sm text-badge-fg">
@@ -138,22 +165,154 @@ function StatusNotes({ statuses }: { statuses: readonly SlotStatus[] }) {
   );
 }
 
+/** 隨機抽題卷：各難度、各大題的得分率（§3.6；可能混難度）。 */
+export function tierSectionRates(paper: Pick<BankPaper, 'tier' | 'layout' | 'exam'>, outcomes: readonly OutcomeInput[]) {
+  const points = new Map<string, number>();
+  for (const s of paper.exam.sections) for (const g of s.groups) for (const q of g.questions) points.set(q.label, q.points ?? 0);
+  const cells = new Map<string, { earned: number; max: number }>();
+  for (const e of outcomes) {
+    if (!e.t) continue;
+    const key = `${e.sec}|${e.t}`;
+    const p = points.get(e.d ?? e.l) ?? 0;
+    const cell = cells.get(key) ?? { earned: 0, max: 0 };
+    cell.earned += p * e.ok;
+    cell.max += p;
+    cells.set(key, cell);
+  }
+  const layout = paperLayout(paper);
+  const tiers = TIERS.filter((t) => layout.slots.some((s) => s.tier === t));
+  const sections = layout.sections.map((s) => s.type).filter((t) => t !== 'translation' && t !== 'composition');
+  return { tiers, rows: sections.map((section) => ({ section, cells: tiers.map((t) => cells.get(`${section}|${t}`) ?? null) })) };
+}
+
+function TierSectionTable({ paper, outcomes }: { paper: BankPaper; outcomes: readonly OutcomeInput[] }) {
+  const id = useId();
+  const { tiers, rows } = useMemo(() => tierSectionRates(paper, outcomes), [paper, outcomes]);
+  if (rows.length === 0) return null;
+  return (
+    <section aria-labelledby={`${id}-title`} className="rounded-2xl border border-line bg-surface p-5 lg:p-6">
+      <h2 id={`${id}-title`} className="mb-3 text-lg font-semibold">
+        各難度、各大題得分率
+      </h2>
+      <div className="overflow-x-auto" tabIndex={0} role="region" aria-label="各難度、各大題得分率">
+        <table className="w-full min-w-[16rem] border-collapse text-sm">
+          <thead>
+            <tr className="border-b border-line text-left text-muted">
+              <th scope="col" className="py-2 pr-3 font-medium">
+                大題
+              </th>
+              {tiers.map((t) => (
+                <th key={t} scope="col" className="py-2 pr-3 font-medium whitespace-nowrap">
+                  {TIER_LABELS[t]}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr key={r.section} className="border-b border-line last:border-0">
+                <th scope="row" className="py-2 pr-3 text-left font-normal">
+                  {SECTION_NAMES[r.section]}
+                </th>
+                {r.cells.map((c, i) => (
+                  <td key={tiers[i]} className="py-2 pr-3 tabular-nums">
+                    {c && c.max > 0 ? `${formatPoints(c.earned)}／${formatPoints(c.max)}（${percent(c.earned, c.max)}%）` : '—'}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  );
+}
+
+/** 「再抽一份（同設定）」：隨機抽題卷不需要弱點資料，直接用存下的設定組一份新的（§3.6）。 */
+function RandomAgainButton({ entry }: { entry: WeakPaperEntry }) {
+  const navigate = useNavigate();
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const request = entry.request;
+  if (!request) return null;
+  const again = async () => {
+    if (busy) return;
+    setBusy(true);
+    setError(null);
+    try {
+      const seed = weakPaperSeed();
+      const result = await createWeakPaper({ request, profile: null, ...(seed === null ? {} : { seed: seed + 7 }) });
+      if (!result.ok) {
+        setError('題庫裡同樣設定的題組不夠再抽一份，可以回組卷頁改設定。');
+        setBusy(false);
+        return;
+      }
+      navigate(`/mock/${result.paper.id}`);
+    } catch (err) {
+      setError(err instanceof DataLoadError && err.kind === 'not_found' ? '網站剛更新，請重新整理頁面後再試一次。' : '題目下載失敗，請確認網路連線後再試一次。');
+      setBusy(false);
+    }
+  };
+  return (
+    <>
+      <button type="button" onClick={() => void again()} aria-disabled={busy || undefined} className={`${primaryLink} aria-disabled:opacity-60`}>
+        {busy ? '組卷中…' : '再抽一份（同設定）'}
+      </button>
+      {error && (
+        <p role="alert" className="w-full text-sm font-medium text-bad">
+          {error}
+        </p>
+      )}
+    </>
+  );
+}
+
+/**
+ * 成績單頁尾的那一句（docs/design/weak-paper.md §8.7）：只用本站題的卷子照舊（bk1 不變）；本站題和出版社題都有時只說本站題由 AI 撰寫；
+ * 全部是出版社題時不提 AI。
+ */
+export function reportFooterNote(groups: readonly Pick<BankPaper['groups'][number], 'source'>[]): string {
+  const kind = footerKindOf(groups);
+  if (kind === 'publisher') return '模擬分數僅供參考。';
+  if (kind === 'mixed') return '模擬分數僅供參考；本站題目由 AI 撰寫，可能有錯。';
+  return '模擬分數僅供參考；題目由 AI 撰寫，可能有錯。';
+}
+
 function ReportBody({ paper, initial }: { paper: BankPaper; initial: MockAttemptRecord }) {
   const titleId = useId();
   const [record, setRecord] = useState(initial);
-  const [entry] = useState(() => findMyPaper(paper.id));
+  const [entry] = useState(() => findPaperEntry(paper.id));
+  const [weakEntry] = useState(() => findWeakEntry(paper.id));
+  const kind = paper.kind ?? null;
+  const layout = paperLayout(paper);
   const statuses = usePoolStatuses(paper.id);
+  const ended = useEndedSourceRanges(paper);
   const scores = useMemo(() => bankOpenScores(paper.exam, paper.explanations, record.attempt.answers), [paper, record.attempt.answers]);
-  const report = useMemo(() => computeReport(paper.exam, record, { autoOpen: bankAutoOpen(scores) }), [paper.exam, record, scores]);
+  const report = useMemo(
+    () => computeReport(paper.exam, record, { autoOpen: bankAutoOpen(scores), ...(kind ? { sectionMinutes: layout.sectionMinutes } : {}) }),
+    [paper.exam, record, scores, kind, layout],
+  );
   const objective = objectiveScore(report);
   const selfPart = selfScoredPart(report);
-  const removed = useMemo(() => (statuses ?? []).flatMap((s, i) => (s.kind === 'removed' ? [slotRange(i)] : [])), [statuses]);
+  const removed = useMemo(() => (statuses ?? []).flatMap((s, i) => (s.kind === 'removed' && layout.slots[i] ? [rangeOf(layout.slots[i])] : [])), [statuses, layout]);
   const printed = entry?.printed ?? null;
-  const deduction = bankDeduction(report, { reused: paper.notices.reused, removed, excluded: printed?.excluded ?? [] });
+  // 出版社授權已經結束的題組（題目已遮住）不計分（docs/design/weak-paper.md §7.6），和下架、紙本不同的題組一起扣掉。
+  const deduction = bankDeduction(report, { reused: paper.notices.reused, removed: [...removed, ...ended], excluded: printed?.excluded ?? [] }, layout.slots);
   const advice = tierAdvice(paper.tier, deduction?.objectiveEarned ?? objective.earned, deduction?.objectiveMax ?? objective.max);
   const weakest = weakestSections(report);
-  const label = bankPaperLabel(paper.tier);
+  const label = weakPaperHeading(paper) ?? bankPaperTitle(paper);
   const pdfMeta = useMemo(() => bankPdfMeta(paper, record.strict), [paper, record.strict]);
+  const at = record.submittedAt ? Date.parse(record.submittedAt) : NaN;
+  // 這份卷子的每一題（寫進作答紀錄的同一份；成績單的弱點表現、隨機抽題卷的各難度得分率都用它）。
+  const outcomes = useMemo(
+    () => (Number.isFinite(at) ? bankPaperOutcomes(paper, record.attempt.answers, { scores, marked: new Set(record.marked), at }) : []),
+    [paper, record.attempt.answers, record.marked, scores, at],
+  );
+  const wrong = outcomes.filter((e) => e.ok < 1).length;
+  const [recorded, setRecorded] = useState(false);
+  // 中性卷（診斷卷、/mock 組的 m）照自組模擬考給難度建議；偏重弱點的模考格式卷改寫一句；弱點加強卷與隨機抽題卷沒有。
+  const showAdvice = kind === null || kind === 'm' || kind === 'f';
+  const newPaperHref = kind === null || (kind === 'm' && !weakEntry?.request?.diagnostic && !weakEntry?.request?.fromPapers) ? newPaperPath(paper.tier) : '/assistant/papers';
 
   // 總分（自評）改變就寫回歷史；自組卷不換算級分。
   useEffect(() => {
@@ -161,29 +320,32 @@ function ReportBody({ paper, initial }: { paper: BankPaper; initial: MockAttempt
   }, [record, report]);
   useEffect(() => {
     void cleanupOrphanSnapshots().catch(() => []);
-  }, []);
+    if (kind) void weakPaperList.cleanupOrphanSnapshots().catch(() => []);
+  }, [kind]);
   // 學習助手的本機作答紀錄：成績單第一次顯示這份已交卷的紀錄時寫入（同一次交卷不重複寫；docs/design/learning-assistant.md §5.4）。
+  // 加強卷每一題的難度是那一組自己的、技能代碼取自題組檔（docs/design/weak-paper.md §9.4）。
   useEffect(() => {
     if (!record.submittedAt) return;
-    const at = Date.parse(record.submittedAt);
-    recordOutcomesOnce('bank_mock', { p: paper.id }, at, () =>
-      bankPaperOutcomes(paper, record.attempt.answers, { scores, marked: new Set(record.marked), at }),
+    const time = Date.parse(record.submittedAt);
+    recordOutcomesOnce('bank_mock', { p: paper.id }, time, () =>
+      bankPaperOutcomes(paper, record.attempt.answers, { scores, marked: new Set(record.marked), at: time }),
     );
+    setRecorded(true);
     // 只在打開這份成績單時寫一次。
   }, [paper.id, record.id]);
 
   /** 中譯英、作文：先帶進本站寫作題的作答頁送 AI 批改，再從批改結果問學習助手（§1.4.1）。 */
-  const writingHandoff = (kind: 'translation' | 'composition') => {
-    const labels = report.openItems.filter((i) => i.kind === kind).map((i) => i.label);
+  const writingHandoff = (k: 'translation' | 'composition') => {
+    const labels = report.openItems.filter((i) => i.kind === k).map((i) => i.label);
     const texts = labels.map((l) => {
       const v = record.attempt.answers[l];
       return typeof v === 'string' ? v : '';
     });
-    const itemId = kind === 'translation' ? Object.values(paper.writing.translationItemIds)[0] : paper.writing.essayItemId;
+    const itemId = k === 'translation' ? Object.values(paper.writing.translationItemIds)[0] : paper.writing.essayItemId;
     const uid = itemId?.split('@')[0] ?? '';
     const path = bankAttemptPath(uid);
     if (!path) return null;
-    return <MockWritingHandoff kind={kind === 'translation' ? 'translation' : 'essay'} bankUid={uid} attemptPath={path} texts={texts} attemptId={record.id} />;
+    return <MockWritingHandoff kind={k === 'translation' ? 'translation' : 'essay'} bankUid={uid} attemptPath={path} texts={texts} attemptId={record.id} />;
   };
 
   const onSelf: SelfChange = (itemLabel, score, detail) => {
@@ -198,14 +360,17 @@ function ReportBody({ paper, initial }: { paper: BankPaper; initial: MockAttempt
 
   const predicted = record.predictedScore;
   const ratePct = advice.rate === null ? null : Math.round(advice.rate * 100);
+  const suggestedTotal = Math.round(Object.values(layout.sectionMinutes).reduce((n, m) => n + (m ?? 0), 0));
+  const hasWriting = layout.slots.some((s) => s.section === 'translation' || s.section === 'composition');
 
   return (
     <div className="space-y-6">
       <header>
-        <title>{`${label}模擬考成績單｜${APP_NAME}`}</title>
-        <p className="text-sm text-muted">模擬考成績單・{paper.exam.title}</p>
+        <title>{`${label}${kind ? '' : '模擬考'}成績單｜${APP_NAME}`}</title>
+        <p className="text-sm text-muted">{kind ? `學習助手加強卷・卷號 ${paper.code}` : `模擬考成績單・${paper.exam.title}`}</p>
         <h1 id={titleId} className="mt-1 text-2xl font-bold tracking-tight lg:text-3xl">
-          {label}模擬考成績單
+          {label}
+          {kind ? '' : '模擬考'}成績單
         </h1>
         <p className="mt-1 text-sm text-muted">
           卷號 {paper.code}・{record.submittedAt ? formatDateTime(record.submittedAt) : ''}・{record.strict ? '實考模式' : '考試模式'}・用時 {formatDuration(report.usedSec)}
@@ -218,7 +383,7 @@ function ReportBody({ paper, initial }: { paper: BankPaper; initial: MockAttempt
 
       {report.pendingMax > 0 && (
         <p role="status" className="rounded-xl border border-bad/40 bg-bad/10 px-4 py-2 text-sm">
-          中譯英與作文尚未自評，總分暫不含 {formatPoints(report.pendingMax)} 分（不影響下面的難度建議）。
+          中譯英與作文尚未自評，總分暫不含 {formatPoints(report.pendingMax)} 分{showAdvice ? '（不影響下面的難度建議）' : ''}。
           <a href="#self-assessment" className="ml-1 font-semibold text-primary underline">
             前往自評
           </a>
@@ -232,8 +397,12 @@ function ReportBody({ paper, initial }: { paper: BankPaper; initial: MockAttempt
           <span className="text-xl font-normal text-muted">／{formatPoints(report.fullScore)}</span>
         </p>
         <p className="mt-1 text-sm text-muted">
-          選擇題與混合題（自動計分）{formatPoints(objective.earned)}／{formatPoints(objective.max)}＋中譯英與作文（自評）{formatPoints(selfPart.earned)}／
-          {formatPoints(selfPart.max)}
+          選擇題與混合題（自動計分）{formatPoints(objective.earned)}／{formatPoints(objective.max)}
+          {hasWriting || !kind ? (
+            <>
+              ＋中譯英與作文（自評）{formatPoints(selfPart.earned)}／{formatPoints(selfPart.max)}
+            </>
+          ) : null}
         </p>
         {predicted !== null && (
           <p className="mt-2">
@@ -255,47 +424,70 @@ function ReportBody({ paper, initial }: { paper: BankPaper; initial: MockAttempt
             紙本卷號 {paperNumber(printed.from)}：{labelsText(printed.keyChanged)}的答案已更正，以線上為準計分。
           </p>
         )}
-        <p className="mt-2 text-sm text-muted">本站自組卷只記原始分數，不換算級分：題型與配分同學測，難度依你選的等級，沒有和正式考試等化。</p>
+        <p className="mt-2 text-sm text-muted">
+          {kind === 'w' && weakEntry?.request?.balanced
+            ? '加強卷只記原始分數、不換算級分：這次不是針對弱點，各選擇題大題各練一組，題型與配分同學測。'
+            : kind === 'w'
+            ? '加強卷只記原始分數、不換算級分：題目刻意挑你的弱點，分數不代表整體實力。'
+            : kind
+              ? '加強卷只記原始分數、不換算級分：題型與配分同學測，題目依你的設定挑選，沒有和正式考試等化。'
+              : '本站自組卷只記原始分數，不換算級分：題型與配分同學測，難度依你選的等級，沒有和正式考試等化。'}
+        </p>
       </section>
       <UpdateReportLink />
+      <FocusPaperEntry from={`paper:${paper.id}`} wrong={wrong} />
 
-      <section aria-labelledby={`${titleId}-advice`} className="rounded-2xl border border-line bg-surface p-5 lg:p-6">
-        <h2 id={`${titleId}-advice`} className="text-lg font-semibold">
-          下一步建議
-        </h2>
-        {ratePct !== null && (
-          <p className="mt-1 text-sm text-muted">
-            選擇題與混合題{deduction ? '（扣掉做過、已下架或不計分的題組）' : ''}的得分率 {ratePct}%（
-            {formatPoints(deduction?.objectiveEarned ?? objective.earned)}／{formatPoints(deduction?.objectiveMax ?? objective.max)}）
-          </p>
-        )}
-        <p className="mt-2 font-medium">{advice.text}</p>
-        <div className="mt-3 flex flex-wrap gap-2">
-          {advice.nextTiers.map((t) => (
-            <Link key={t} to={newPaperPath(t)} className={t === advice.nextTiers[0] ? primaryLink : secondaryLink}>
-              組一份新卷（{TIER_LABELS[t]}）
-            </Link>
-          ))}
-          {advice.practice &&
-            weakest.map((s) => (
-              <Link key={s} to={practicePath(s, paper.tier)} className={secondaryLink}>
-                題型練習：{sectionLabel(s)}（{TIER_LABELS[paper.tier]}）
-              </Link>
-            ))}
-        </div>
-        <ul className="mt-3 ml-5 list-disc space-y-1 text-xs text-muted">
-          <li>建議只看選擇題與混合題（自動計分）的得分率：70% 以上建議往上一級、未滿 40% 建議往下一級。門檻依出題設計（每一級的目標族群上緣約答對七成），尚未用作答資料校正。</li>
-          <li>中譯英與作文的自評分數另外列，不影響這個建議。</li>
-          <li>
-            想知道級分：做 111–115 學測模擬考，那些卷子有官方對照表可以換算。
-            <Link to="/mock" className="ml-1 text-primary underline underline-offset-2">
-              看卷別
-            </Link>
-          </li>
-        </ul>
-      </section>
+      {(kind === 'w' || kind === 'f') && !weakEntry?.request?.balanced && (
+        <DrillTargetsTable paper={paper} entry={weakEntry} outcomes={outcomes} attemptId={record.id} ready={recorded} />
+      )}
 
-      {statuses && <StatusNotes statuses={statuses} />}
+      {showAdvice && (
+        <section aria-labelledby={`${titleId}-advice`} className="rounded-2xl border border-line bg-surface p-5 lg:p-6">
+          <h2 id={`${titleId}-advice`} className="text-lg font-semibold">
+            下一步建議
+          </h2>
+          {kind === 'f' ? (
+            <p className="mt-2 font-medium">這份卷子偏重你的弱點，得分率會比一般自組卷低；要判斷換不換難度，請做一份一般的自組模擬考。</p>
+          ) : (
+            <>
+              {ratePct !== null && (
+                <p className="mt-1 text-sm text-muted">
+                  選擇題與混合題{deduction ? '（扣掉做過、已下架或不計分的題組）' : ''}的得分率 {ratePct}%（
+                  {formatPoints(deduction?.objectiveEarned ?? objective.earned)}／{formatPoints(deduction?.objectiveMax ?? objective.max)}）
+                </p>
+              )}
+              <p className="mt-2 font-medium">{advice.text}</p>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {advice.nextTiers.map((t) => (
+                  <Link key={t} to={newPaperPath(t)} className={t === advice.nextTiers[0] ? primaryLink : secondaryLink}>
+                    組一份新卷（{TIER_LABELS[t]}）
+                  </Link>
+                ))}
+                {advice.practice &&
+                  weakest.map((s) => (
+                    <Link key={s} to={practicePath(s, paper.tier)} className={secondaryLink}>
+                      題型練習：{sectionLabel(s)}（{TIER_LABELS[paper.tier]}）
+                    </Link>
+                  ))}
+              </div>
+              <ul className="mt-3 ml-5 list-disc space-y-1 text-xs text-muted">
+                <li>建議只看選擇題與混合題（自動計分）的得分率：70% 以上建議往上一級、未滿 40% 建議往下一級。門檻依出題設計（每一級的目標族群上緣約答對七成），尚未用作答資料校正。</li>
+                <li>中譯英與作文的自評分數另外列，不影響這個建議。</li>
+                <li>
+                  想知道級分：做 111–115 學測模擬考，那些卷子有官方對照表可以換算。
+                  <Link to="/mock" className="ml-1 text-primary underline underline-offset-2">
+                    看卷別
+                  </Link>
+                </li>
+              </ul>
+            </>
+          )}
+        </section>
+      )}
+
+      {statuses && <StatusNotes statuses={statuses} slots={layout.slots} />}
+
+      {kind === 'r' && <TierSectionTable paper={paper} outcomes={outcomes} />}
 
       <section aria-labelledby={`${titleId}-sections`} className="rounded-2xl border border-line bg-surface p-5 lg:p-6">
         <h2 id={`${titleId}-sections`} className="mb-3 text-lg font-semibold">
@@ -304,7 +496,7 @@ function ReportBody({ paper, initial }: { paper: BankPaper; initial: MockAttempt
         {/* 自組卷沒有全國答題統計：整欄省略（混合題的填充、簡答已自動判分，不算「沒有逐題統計」）。 */}
         <SectionTable report={{ ...report, noNationalStats: true }} />
         <ul className="mt-2 ml-5 list-disc space-y-1 text-xs text-muted">
-          <li>建議時間是本站依題量估計的參考值（合計 100 分鐘）；用時只算頁面開著、停在該大題的時間，離開頁面的時間另計。</li>
+          <li>建議時間是本站依題量估計的參考值（合計 {suggestedTotal} 分鐘）；用時只算頁面開著、停在該大題的時間，離開頁面的時間另計。</li>
           <li>本站自組卷沒有全國答題統計，所以沒有全國期望得分。混合題的填充、簡答依本站的可接受答案自動判分。</li>
         </ul>
       </section>
@@ -325,18 +517,31 @@ function ReportBody({ paper, initial }: { paper: BankPaper; initial: MockAttempt
       <ExamPdfDownload exam={paper.exam} mockMeta={pdfMeta} defaultSiteVersion="full" onDownloaded={() => recordBankPdfDownload(paper)} />
 
       <nav aria-label="接下來" className="flex flex-wrap gap-2">
-        <Link to={`/mock/${paper.id}`} className={primaryLink}>
+        <Link to={`/mock/${paper.id}`} className={kind === 'w' || kind === 'f' || kind === 'r' ? secondaryLink : primaryLink}>
           再做一次
         </Link>
-        <Link to={newPaperPath(paper.tier)} className={secondaryLink}>
-          組一份新卷（同難度）
-        </Link>
-        <Link to="/mock" className={secondaryLink}>
-          回模擬考列表
+        {(kind === 'w' || kind === 'f') && (
+          <>
+            <Link to={weakEntry?.request ? papersHref({ same: paper.id }) : papersHref({ kind })} className={primaryLink}>
+              再組一份（同設定）
+            </Link>
+            <Link to={papersHref({ kind })} className={secondaryLink}>
+              換設定
+            </Link>
+          </>
+        )}
+        {kind === 'r' && (weakEntry?.request ? <RandomAgainButton entry={weakEntry} /> : <Link to={papersHref({ kind: 'r' })} className={primaryLink}>再抽一份</Link>)}
+        {(kind === null || kind === 'm') && (
+          <Link to={newPaperHref} className={secondaryLink}>
+            {kind === null ? '組一份新卷（同難度）' : '組一份新卷'}
+          </Link>
+        )}
+        <Link to={kind ? '/assistant/papers' : '/mock'} className={secondaryLink}>
+          {kind ? '回加強卷' : '回模擬考列表'}
         </Link>
       </nav>
 
-      <BankSourceNote groups={paper.groups} extra="模擬分數僅供參考；題目由 AI 撰寫，可能有錯。" />
+      <BankSourceNote groups={paper.groups} extra={reportFooterNote(paper.groups)} />
     </div>
   );
 }
@@ -354,9 +559,13 @@ function Message({ title, children }: { title: string; children: ReactNode }) {
 /** 嚴格載入拿不到題目（§2.8）：只顯示作答歷史裡的原始分數，檢討試卷停用。 */
 function HistoryOnly({ record, tier }: { record: MockAttemptRecord; tier: Tier | null }) {
   const [entry] = useState(() => loadHistory().find((h) => h.id === record.id) ?? null);
-  const label = tier ? bankPaperLabel(tier) : '本站自組';
+  const weak = bk2KindOf(record.paperId) !== null;
+  const label = weak ? mockPaperLabel(record.paperId) : tier ? `${bankPaperTitle({ tier })}模擬考` : '本站自組模擬考';
+  // 滿分只由代號決定（加強卷的版面，docs/design/weak-paper.md §7.2）；自組模擬考是 100。
+  const decoded = decodeAnyPaperId(record.paperId);
+  const fullScore = decoded?.format === 'bk2' ? layoutForBk2(decoded).fullScore : 100;
   return (
-    <Message title={`${label}模擬考成績單`}>
+    <Message title={`${label}成績單`}>
       <p>
         這份卷子的題目已經由本站更新或下架，這個瀏覽器也沒有保存原本的題目，所以無法重新檢討。為了不拿新題目對舊答案重新計分，
         這裡只顯示交卷時記下的原始分數。
@@ -366,16 +575,22 @@ function HistoryOnly({ record, tier }: { record: MockAttemptRecord; tier: Tier |
           <p className="text-sm text-muted">原得總分（卷號 {paperNumber(record.paperId)}・{formatDateTime(entry.submittedAt)}）</p>
           <p className="text-5xl font-bold tabular-nums">
             {formatPoints(entry.raw)}
-            <span className="text-xl font-normal text-muted">／100</span>
+            <span className="text-xl font-normal text-muted">／{formatPoints(fullScore)}</span>
           </p>
           {entry.pendingMax > 0 && <p className="mt-1 text-sm text-muted">中譯英與作文有 {formatPoints(entry.pendingMax)} 分沒有自評，不含在總分裡。</p>}
         </section>
       )}
       <div className="flex flex-wrap gap-2">
-        {tier && (
-          <Link to={newPaperPath(tier)} className={primaryLink}>
-            組一份新卷（{TIER_LABELS[tier]}）
+        {weak ? (
+          <Link to="/assistant/papers" className={primaryLink}>
+            組一份新的加強卷
           </Link>
+        ) : (
+          tier && (
+            <Link to={newPaperPath(tier)} className={primaryLink}>
+              組一份新卷（{TIER_LABELS[tier]}）
+            </Link>
+          )
         )}
         <Link to="/mock" className={secondaryLink}>
           回模擬考列表
@@ -387,14 +602,14 @@ function HistoryOnly({ record, tier }: { record: MockAttemptRecord; tier: Tier |
 
 function Loaded({ record, promise }: { record: MockAttemptRecord; promise: Promise<StrictLoadResult> }) {
   const result = use(promise);
-  if (!result.ok) return <HistoryOnly record={record} tier={tierOfPaperId(record.paperId)} />;
+  if (!result.ok) return <HistoryOnly record={record} tier={tierOfPaperId(record.paperId) ?? bk2UniformTier(record.paperId)} />;
   return <ReportBody paper={result.paper} initial={record} />;
 }
 
 export default function BankReport({ record }: { record: MockAttemptRecord }) {
   const [retry, setRetry] = useState(0);
   const promise = useMemo(() => loadBankPaperStrict(record.paperId), [record.paperId, retry]);
-  const tier = tierOfPaperId(record.paperId);
+  const tier = tierOfPaperId(record.paperId) ?? bk2UniformTier(record.paperId);
   if (record.status !== 'submitted') {
     return (
       <Message title="這份模擬考還在作答中">
@@ -405,7 +620,7 @@ export default function BankReport({ record }: { record: MockAttemptRecord }) {
       </Message>
     );
   }
-  if (!decodePaperId(record.paperId)) return <HistoryOnly record={record} tier={tier} />;
+  if (!decodeAnyPaperId(record.paperId)) return <HistoryOnly record={record} tier={tier} />;
   return (
     <DataErrorBoundary
       key={retry}

@@ -15,6 +15,8 @@
  *   data/bank/facts/{id}.json              題組引用的事實單（閱讀、混合題的「參考資料」從這裡來）
  *   data/unpublish.jsonl                   人工審核下架清單（題庫練習與本站仿真寫作題都不發布登記的版本；可以不存在）
  *   data/bank/topic-plan*.json             題庫的主題規劃（自組模擬考的主題鍵；可以不存在）
+ *   data/sources.json                      題目來源登記（本站題庫與出版社的出處句、授權範圍、到期日；可以不存在＝只有本站題庫）
+ *   data/publisher/{來源}/v1/…             出版社模考的正規化檔（gsat-pub/v1；可以不存在，docs/design/weak-paper.md §8.4）
  *   （新增輸入路徑時，根目錄 vercel.json 的 ignoreCommand 要一起加，否則只改那個路徑的提交不會重新建置；
  *    Vercel 限制 ignoreCommand 最多 256 字，超過時部署一建立就失敗，路徑太多就改列上層目錄）
  *
@@ -37,9 +39,13 @@
  *                        選題規則和 Worker 的題目庫共用 packages/shared/scripts/bank-select.mjs
  *   bank/mock-pool.json  本站自組模擬考的組卷池：每種難度、每個大題的已發布題組（主題鍵、答案指紋、可交換的閱讀題、排除原因），
  *                        規則在 scripts/lib/bank-mock-pool.mjs（docs/design/bank-mock.md §4.7、§9.1）
+ *   bank/paper-skills.json  加強卷的技能分布：每一組、每一題的技能代碼與誘答組成（只有組卷頁會下載），
+ *                        規則在 scripts/lib/bank-paper-skills.mjs（docs/design/weak-paper.md §6.2）
+ *   bank/sources.json    公開的來源登記（出處句、授權範圍、是否有效、到期日 ends_on；不含合約編號），
+ *                        規則在 scripts/lib/item-sources.mjs（docs/design/weak-paper.md §8.3、§7.6）
  *
  * 前端對應的型別在 apps/web/src/data/vocab.ts、exams.ts、scoreScales.ts、bank.ts、src/features/writing/data.ts、
- * src/features/writing/bank/data.ts、src/features/mock/bank/pool.ts；
+ * src/features/writing/bank/data.ts、src/features/mock/bank/pool.ts、src/features/mock/bank/paperSkills.ts；
  * 這裡改了輸出格式，那邊要一起改（npm run check:data -w @gsat/web 會用 tsc 比對）。
  *
  * 另外檢查 PDF 字型（scripts/font-coverage.mjs）：試題裡的每個字元都要在 src/features/pdf/fonts/ 的字型子集裡有字形，
@@ -62,11 +68,31 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { gzipSync } from 'node:zlib';
 import { FONTS_DIR, bankPrintableCoverage, checkFontCoverage, vocabPrintableCoverage } from './font-coverage.mjs';
-import { BANK_SELECT_SCRIPT, BankSelectError, OFFICIAL_RUN_WORDS, readUnpublish, wordRuns } from '../../../packages/shared/scripts/bank-select.mjs';
-import { BANK_DATA_SCRIPT, BankDataError, SKIP_REASON_LABELS, buildBankData, practiceGroupPath } from './lib/bank-data.mjs';
+import {
+  BANK_SELECT_SCRIPT,
+  BankSelectError,
+  OFFICIAL_RUN_WORDS,
+  PUBLISHER_SKIP_REASON_LABELS,
+  readUnpublish,
+  selectPublisherGroups,
+  wordRuns,
+} from '../../../packages/shared/scripts/bank-select.mjs';
+import { BANK_DATA_SCRIPT, BankDataError, SKIP_REASON_LABELS, buildBankData, practiceGroupPath, publisherAnswerKey } from './lib/bank-data.mjs';
+import {
+  ITEM_SOURCES_SCRIPT,
+  ItemSourcesError,
+  SOURCES_PATH,
+  effectiveSources,
+  publicSourceRegistry,
+  readSourceRegistry,
+  selectableSources,
+  sourceLogLines,
+  taiwanToday,
+} from './lib/item-sources.mjs';
 import { BANK_MOCK_LETTERS_SCRIPT } from './lib/bank-mock-letters.mjs';
 import { BANK_MOCK_POOL_SCRIPT, BankMockPoolError, MOCK_POOL_PATH, buildMockPool, mockPoolLogLines, readTopicPlans } from './lib/bank-mock-pool.mjs';
 import { BANK_MOCK_THEMES_SCRIPT } from './lib/bank-mock-themes.mjs';
+import { BANK_PAPER_SKILLS_SCRIPT, PAPER_SKILLS_PATH, buildPaperSkills } from './lib/bank-paper-skills.mjs';
 import { SCORE_SCALES_SCRIPT, ScoreScalesError, buildScoreScales } from './lib/score-scales.mjs';
 import {
   WRITING_BANK_INDEX_PATH,
@@ -107,6 +133,12 @@ const INPUTS = {
 const BANK_DIR = process.env.GSAT_BANK_DIR ? path.resolve(process.env.GSAT_BANK_DIR) : path.join(DATA_DIR, 'bank', 'v1');
 /** 人工審核下架清單（docs/design/bank-writing.md §4.2）：格式錯或路徑不存在時建置失敗（fail closed）。 */
 const UNPUBLISH_FILE = path.join(DATA_DIR, 'unpublish.jsonl');
+/**
+ * 題目來源登記與出版社正規化檔（docs/design/weak-paper.md §8.3、§8.4）。兩者都可以不存在（只有本站題庫）。
+ * 環境變數 GSAT_PUBLISHER_DIR、GSAT_SOURCES_FILE 可以改指到別的目錄（例如本機用 tools/tests/data/publisher 的合成題組預覽）。
+ */
+const SOURCES_FILE = process.env.GSAT_SOURCES_FILE ? path.resolve(process.env.GSAT_SOURCES_FILE) : path.join(DATA_DIR, 'sources.json');
+const PUBLISHER_DIR = process.env.GSAT_PUBLISHER_DIR ? path.resolve(process.env.GSAT_PUBLISHER_DIR) : path.join(DATA_DIR, 'publisher');
 /** 寫作題庫的 SVG 清理（版本雜湊用：清理規則改了，輸出就可能改變）。 */
 const SVG_SANITIZE_SCRIPT = path.join(REPO_ROOT, 'packages', 'shared', 'scripts', 'svg-sanitize.mjs');
 /** PDF 字型的缺字檢查（版本雜湊用：自組模擬考的組卷池依它判斷題本缺字的題組）。 */
@@ -312,13 +344,20 @@ function assertInputsExist() {
 // 用內容而不是 git commit 當版本，是因為本機常有尚未 commit 的資料；腳本也算進去，輸出格式改了版本才會跟著變。
 // ---------------------------------------------------------------------------
 
-/** @param {string[]} files */
-function contentVersion(files) {
+/**
+ * @param {string[]} files
+ * @param {string[]} [extra]  檔案以外、也會改變輸出的輸入（例如依建置日期算出的來源狀態）
+ */
+function contentVersion(files, extra = []) {
   const hash = createHash('sha256');
   for (const file of files) {
     hash.update(relative(file));
     hash.update('\0');
     hash.update(readFileSync(file));
+    hash.update('\0');
+  }
+  for (const x of extra) {
+    hash.update(x);
     hash.update('\0');
   }
   return hash.digest('hex').slice(0, 12);
@@ -990,10 +1029,31 @@ function main() {
   // 級分對照（模擬考成績單）：轉換與檢查規則在 scripts/lib/score-scales.mjs。
   const scoreScales = buildScoreScales(readJson(INPUTS.gsatSpec), { label: relative(INPUTS.gsatSpec) });
   const unpublished = readUnpublish(UNPUBLISH_FILE, { repoRoot: REPO_ROOT });
-  const bank = buildBankData(BANK_DIR, { relative, unpublished, repoRoot: REPO_ROOT });
+  // 題目來源（docs/design/weak-paper.md §8.3、§7.6）：授權到期、停用、不允許公開的來源這次建置一律不輸出題組（fail closed）。
+  const today = taiwanToday();
+  const registry = readSourceRegistry(SOURCES_FILE, relative(SOURCES_FILE));
+  const sources = effectiveSources(registry.sources, today);
   const writingBank = buildWritingBank({ bankDir: BANK_DIR, exams: exams.raws, unpublishFile: UNPUBLISH_FILE, repoRoot: REPO_ROOT, relative });
+  const publisher = selectPublisherGroups(PUBLISHER_DIR, {
+    sources: selectableSources(sources.effective),
+    today,
+    // D8 比對和寫作題選題同一份官方文字資料（bank-select.mjs 的 officialCorpus）。
+    corpus: writingBank.corpus,
+    contentKey: publisherAnswerKey,
+    unpublished,
+    repoRoot: REPO_ROOT,
+    relative,
+  });
+  const bank = buildBankData(BANK_DIR, {
+    relative,
+    unpublished,
+    repoRoot: REPO_ROOT,
+    publisher: { chosen: publisher.chosen, sources: new Map(registry.sources.map((src) => [src.id, src])) },
+  });
   const mockPool = buildMockBankPool(bank, writingBank);
   const version = contentVersion([
+    ITEM_SOURCES_SCRIPT,
+    ...(registry.exists ? [SOURCES_FILE] : []),
     SCRIPT_PATH,
     BANK_DATA_SCRIPT,
     BANK_SELECT_SCRIPT,
@@ -1003,6 +1063,7 @@ function main() {
     BANK_MOCK_POOL_SCRIPT,
     BANK_MOCK_THEMES_SCRIPT,
     BANK_MOCK_LETTERS_SCRIPT,
+    BANK_PAPER_SKILLS_SCRIPT,
     FONT_COVERAGE_SCRIPT,
     // 字型子集改變會改變哪些題組因為題本缺字不能組新卷（docs/design/bank-mock.md §7.6），資料版本要跟著變。
     ...fontVersionInputs(),
@@ -1017,6 +1078,9 @@ function main() {
     ...writingBank.inputs,
     // 組卷池的 prev（舊版本的答案指紋）來自同一個 uid 較舊的 verified 版本檔。
     ...mockPool.inputs.filter((f) => !bank.inputs.includes(f) && !writingBank.inputs.includes(f)),
+  ], [
+    // 來源的實際狀態取決於建置日期（授權到期自動停用）：狀態變了，輸出就變，資料版本也要跟著變。
+    JSON.stringify(sources.effective.map((e) => [e.entry.id, e.state])),
   ]);
 
   emit('vocab/index.json', { version, count: vocab.index.length, entries: vocab.index });
@@ -1038,6 +1102,10 @@ function main() {
   for (const f of writingBank.answers) emit(writingBankAnswersPath(f), f);
   // 組卷池在算資料版本之前就產生了（它讀的舊版本檔要算進版本），版本在這裡填。
   emit(MOCK_POOL_PATH, { ...mockPool.pool, version });
+  // 加強卷的技能分布（逐題的技能代碼與誘答組成；scripts/lib/bank-paper-skills.mjs，docs/design/weak-paper.md §6.2）。
+  emit(PAPER_SKILLS_PATH, buildPaperSkills({ version, practice: bank.groups, writing: writingBank.index }));
+  // 公開的來源登記（scripts/lib/item-sources.mjs，docs/design/weak-paper.md §8.3）：前端與 Worker 自己比對 ends_on。
+  emit(SOURCES_PATH, publicSourceRegistry(sources.effective, version));
   assertNoOfficialTranslations(outputs, exams.officialTextsById);
   // D8 第 4 道（docs/design/bank-writing.md §6）：寫作檔的禁止鍵、答案提前外流、官方文字（和選題同一支比對函式）、未清理的 SVG。
   assertWritingBankOutputs(outputs, writingBank.corpus);
@@ -1093,6 +1161,8 @@ function main() {
     ['exams/score-scales.json', fileSizes['exams/score-scales.json']],
     ['bank/index.json', fileSizes['bank/index.json']],
     [MOCK_POOL_PATH, fileSizes[MOCK_POOL_PATH]],
+    [PAPER_SKILLS_PATH, fileSizes[PAPER_SKILLS_PATH]],
+    [SOURCES_PATH, fileSizes[SOURCES_PATH]],
     ['writing/translation.json', fileSizes['writing/translation.json']],
     ['writing/essay.json', fileSizes['writing/essay.json']],
     [WRITING_BANK_INDEX_PATH, fileSizes[WRITING_BANK_INDEX_PATH]],
@@ -1111,6 +1181,7 @@ function main() {
     console.log(`  ${String(label).padEnd(44)} ${formatBytes(t.bytes).padStart(10)}  gzip ${formatBytes(t.gzip).padStart(9)}（${n} 個檔案合計）`);
   }
   logBank(bank);
+  logSources(sources, publisher, registry.exists);
   logWritingBank(writingBank);
   logMockPool(mockPool);
   console.log(`[build-data] 完成，用時 ${((Date.now() - started) / 1000).toFixed(1)} 秒`);
@@ -1142,6 +1213,7 @@ function buildMockBankPool(bank, writingBank) {
   const topicPlans = readTopicPlans(TOPIC_PLAN_FILES, relative);
   const result = buildMockPool({
     bankDir: BANK_DIR,
+    publisherDir: PUBLISHER_DIR,
     practice: bank.groups,
     writing: writingBank.index,
     topicPlans: topicPlans.plans,
@@ -1174,6 +1246,25 @@ function logBank(bank) {
 }
 
 /**
+ * 題目來源與出版社題組的建置紀錄：每個來源的狀態與發布的題組數、略過的出版社題組（依原因統計）、到期警告。
+ * @param {ReturnType<typeof effectiveSources>} sources
+ * @param {ReturnType<typeof selectPublisherGroups>} publisher
+ * @param {boolean} registryExists
+ */
+function logSources(sources, publisher, registryExists) {
+  if (!registryExists) console.log(`[build-data] 題目來源：${relative(SOURCES_FILE)} 不存在，只有本站題庫`);
+  for (const line of sourceLogLines(sources.effective, publisher.bySource)) console.log(`[build-data] ${line}`);
+  if (publisher.scanned > 0) {
+    /** @type {Map<string, number>} */
+    const byReason = new Map();
+    for (const sk of publisher.skipped) byReason.set(sk.reason, (byReason.get(sk.reason) ?? 0) + 1);
+    const skipped = [...byReason].map(([reason, n]) => `${PUBLISHER_SKIP_REASON_LABELS[/** @type {keyof typeof PUBLISHER_SKIP_REASON_LABELS} */ (reason)] ?? reason} ${n}`);
+    console.log(`[build-data] 出版社題組：掃描 ${publisher.scanned} 個檔案，輸出 ${publisher.chosen.length} 組${skipped.length > 0 ? `；略過：${skipped.join('、')}` : ''}`);
+  }
+  for (const w of [...sources.warnings, ...publisher.warnings]) console.warn(`[build-data] 警告：${w}`);
+}
+
+/**
  * 本站仿真寫作題的建置紀錄（格式同 logBank）：收了幾組、略過了哪些（依原因統計）與警告。
  * @param {ReturnType<typeof buildWritingBank>} wb
  */
@@ -1199,7 +1290,8 @@ try {
     err instanceof ScoreScalesError ||
     err instanceof BankSelectError ||
     err instanceof WritingBankError ||
-    err instanceof BankMockPoolError
+    err instanceof BankMockPoolError ||
+    err instanceof ItemSourcesError
   ) {
     console.error(`[build-data] 錯誤：${err.message}`);
     process.exit(1);

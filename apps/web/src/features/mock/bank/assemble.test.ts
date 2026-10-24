@@ -283,3 +283,56 @@ describe('remainingEstimate', () => {
     expect(r.sections.reading).toEqual({ unused: 8, papers: 0 });
   });
 });
+
+describe('assembleSelection 的選填參數（加強卷，docs/design/weak-paper.md §6.4）', () => {
+  const pool = fakeTier({ vocabulary: 6, cloze: 8, word_bank: 6, structure: 6, mixed: 6, translation: 6, composition: 6 }, { chart: 3, table: 2, multi: 2, continuous: 8 });
+
+  it('不傳 options、傳空的 options：結果和改動前一樣（bk1Golden.test.ts 另有黃金資料）', () => {
+    for (let seed = 0; seed < 20; seed += 1) expect(assembleSelection(pool, seed, new Map(), undefined, {})).toEqual(assembleSelection(pool, seed, new Map()));
+  });
+
+  it('priority：沒做過那一層裡最高分的先；同一段照種子洗牌（換種子仍會換題）', () => {
+    const favorite = (pool.structure[2] as MockPoolEntry).uid;
+    const picks = new Set<string>();
+    for (let seed = 0; seed < 30; seed += 1) {
+      const r = ok(assembleSelection(pool, seed, new Map(), undefined, { priority: (e) => (e.uid === favorite ? 10 : 1) }));
+      expect(r.slots[4]?.uid).toBe(favorite);
+      picks.add(r.slots[0]?.uid ?? '');
+    }
+    // 其他大題的優先序全部相同（同一段）：照種子洗牌，不會每份都一樣。
+    expect(picks.size).toBeGreaterThan(1);
+  });
+
+  it('priority 分 4 段：¾ 以上同一段（段內照洗牌）；負數（盡量避開）排在沒做過那一層的最後', () => {
+    const [a, b, c, d] = (pool.word_bank as MockPoolEntry[]).map((e) => e.uid);
+    const score: Record<string, number> = { [a ?? '']: 100, [b ?? '']: 80, [c ?? '']: 40 };
+    const seen = new Set<string>();
+    for (let seed = 0; seed < 40; seed += 1) {
+      const r = ok(assembleSelection(pool, seed, new Map(), undefined, { priority: (e) => (e.uid === d ? -1 : (score[e.uid] ?? 0)) }));
+      seen.add(r.slots[3]?.uid ?? '');
+    }
+    // 100 與 80 在同一段（≥ 75）：兩個都會被選到；40 與 0、負數都不會。
+    expect([...seen].sort()).toEqual([a, b].sort());
+  });
+
+  it('priority 只在同一個代價層內調整：做過的題組不會因為優先序高就被選到', () => {
+    const favorite = (pool.structure[0] as MockPoolEntry).uid;
+    const used = new Map([[favorite, 1]]);
+    for (let seed = 0; seed < 10; seed += 1) {
+      const r = ok(assembleSelection(pool, seed, used, undefined, { priority: (e) => (e.uid === favorite ? 100 : 0) }));
+      expect(r.slots[4]?.uid).not.toBe(favorite);
+      expect(r.reused).toEqual([]);
+    }
+  });
+
+  it('selectable、filter：取代 isSelectable、額外篩選', () => {
+    const withNs = structuredClone(pool);
+    for (const e of withNs.mixed as MockPoolEntry[]) e.ex = 'ns';
+    expect(assembleSelection(withNs, 1, new Map())).toEqual({ ok: false, reason: 'insufficient', section: 'mixed' });
+    const r = ok(assembleSelection(withNs, 1, new Map(), undefined, { selectable: (e) => e.ex == null || e.ex === 'ns' }));
+    expect(r.slots[8]?.section).toBe('mixed');
+    const only = (withNs.vocabulary[1] as MockPoolEntry).uid;
+    const f = ok(assembleSelection(pool, 3, new Map(), undefined, { filter: (e, section) => section !== 'vocabulary' || e.uid === only }));
+    expect(f.slots[0]?.uid).toBe(only);
+  });
+});

@@ -11,7 +11,7 @@
  */
 import type { SectionType } from '../../../data/exams';
 import type { MockReport } from '../report';
-import { BLUEPRINT_SLOTS, slotRange } from './blueprint';
+import { BLUEPRINT_SLOTS, type BlueprintSlot } from './blueprint';
 
 /** 客觀部分的大題（選擇題＋混合題）。 */
 export const OBJECTIVE_SECTION_TYPES: ReadonlySet<SectionType> = new Set<SectionType>(['vocabulary', 'cloze', 'word_bank', 'structure', 'reading', 'mixed']);
@@ -70,8 +70,15 @@ export interface BankDeduction {
   objectiveMax: number;
 }
 
-/** 扣掉做過、已下架或不計分的題組後的得分；沒有要扣的是 null。 */
-export function bankDeduction(report: Pick<MockReport, 'sections' | 'examScore' | 'openItems' | 'fullScore'>, sources: DeductionSources): BankDeduction | null {
+/**
+ * 扣掉做過、已下架或不計分的題組後的得分；沒有要扣的是 null。
+ * slots 是卷子的版面位置（加強卷依代號的版面，docs/design/weak-paper.md §7.2）；不給就是自組模擬考的藍圖。
+ */
+export function bankDeduction(
+  report: Pick<MockReport, 'sections' | 'examScore' | 'openItems' | 'fullScore'>,
+  sources: DeductionSources,
+  slots: readonly BlueprintSlot[] = BLUEPRINT_SLOTS,
+): BankDeduction | null {
   const wanted = new Set([...(sources.reused ?? []), ...(sources.removed ?? []), ...(sources.excluded ?? [])]);
   if (wanted.size === 0) return null;
   const openByLabel = new Map(report.openItems.map((o) => [o.label, o] as const));
@@ -81,8 +88,8 @@ export function bankDeduction(report: Pick<MockReport, 'sections' | 'examScore' 
   let removedMax = 0;
   let objectiveEarnedOut = 0;
   let objectiveMaxOut = 0;
-  for (const slot of BLUEPRINT_SLOTS) {
-    const range = slotRange(slot.index);
+  for (const slot of slots) {
+    const range = slot.first === slot.last ? slot.first : `${slot.first}-${slot.last}`;
     if (!wanted.has(range)) continue;
     ranges.push(range);
     const objective = OBJECTIVE_SECTION_TYPES.has(slot.section);

@@ -8,7 +8,7 @@
  */
 import { Bot, Crosshair } from 'lucide-react';
 import { useId, type ReactNode } from 'react';
-import type { ExplanationItem } from '../../../data/bank';
+import { hasExplanationText, type ExplanationItem } from '../../../data/bank';
 import type { OptionLetter, OptionMap, QuestionGroup } from '../../../data/exams';
 import { RichText } from '../../exams/components/RichText';
 import { evidenceRanges } from '../evidence';
@@ -37,16 +37,25 @@ export function OptionLabel({ letter, options }: { letter: string; options: Opti
   );
 }
 
-/** 解析卡的外框與標題（第 n 題解析・AI 撰寫・用了幾層提示）。 */
-export function CardShell({ label, hintsUsed, children }: { label: string; hintsUsed: number; children: ReactNode }) {
+/**
+ * 解析卡的外框與標題（第 n 題解析・AI 撰寫・用了幾層提示）。
+ * byline：出版社題組的解析不是 AI 寫的，標示換成「解析：{出版社}提供」（docs/design/weak-paper.md §8.7）。
+ */
+export function CardShell({ label, hintsUsed, byline, children }: { label: string; hintsUsed: number; byline?: string | null; children: ReactNode }) {
   const titleId = useId();
   return (
     <section aria-labelledby={titleId} className="space-y-3 rounded-xl border border-line bg-surface-2/50 p-3" data-testid="explanation-card">
       <h3 id={titleId} className="flex flex-wrap items-center gap-2 font-semibold">
         <span>第 {label} 題解析</span>
         <span className="inline-flex items-center gap-1 rounded-full bg-badge-bg px-2 py-0.5 text-xs font-semibold text-badge-fg">
-          <Bot aria-hidden="true" className="size-3.5" />
-          AI 撰寫
+          {byline ? (
+            byline
+          ) : (
+            <>
+              <Bot aria-hidden="true" className="size-3.5" />
+              AI 撰寫
+            </>
+          )}
         </span>
         {hintsUsed > 0 && <span className="rounded-full bg-surface px-2 py-0.5 text-xs font-normal text-muted">作答時用了 {hintsUsed} 層提示</span>}
       </h3>
@@ -131,6 +140,7 @@ export function ExplanationCard({
   codeLabels,
   evidenceSource,
   showBlankPos = true,
+  byline = null,
 }: {
   label: string;
   item: ExplanationItem | undefined;
@@ -149,8 +159,11 @@ export function ExplanationCard({
   evidenceSource?: (text: string) => string | null;
   /** 顯示「空格詞性」徽章（閱讀題沒有空格，不顯示；題目類型由歷屆試題的「考點」那一行標示）。 */
   showBlankPos?: boolean;
+  /** 解析的出處（出版社題組；見 CardShell）。 */
+  byline?: string | null;
 }) {
-  if (!item) return null;
+  // 出版社題組沒有出版社解析時，解析列只有計分欄位（explanation_zh 是空字串）：不畫解析卡。
+  if (!item || !hasExplanationText(item)) return null;
   const located = evidenceRanges(group, item).length > 0;
   const notes = item.option_notes_zh ?? {};
   const codes = item.option_codes ?? {};
@@ -187,7 +200,7 @@ export function ExplanationCard({
   };
 
   return (
-    <CardShell label={label} hintsUsed={hintsUsed}>
+    <CardShell label={label} hintsUsed={hintsUsed} byline={byline}>
       <Section step={1} title="正解依據">
         <p className="break-words">{item.explanation_zh}</p>
         {badges.length > 0 && (

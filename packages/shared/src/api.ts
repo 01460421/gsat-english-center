@@ -75,7 +75,10 @@ export const API_ERROR_CODES = [
   // ── 學習助手（assist.ts；docs/design/learning-assistant.md §4.2）──
   /** 學習助手的輸入不符合規則（400）；error.reason 是 AssistInputProblem，error.field 是欄位，D8 與 official_like 命中另附 error.ranges。 */
   'assist_input_invalid',
-  /** 讀不到這一題（409 版本已更新或下架、502 題目檔暫時讀不到、400 這種題目不支援）；error.reason 是 'gone' | 'unreachable' | 'unsupported'。 */
+  /**
+   * 讀不到這一題（409 版本已更新或下架、502 題目檔暫時讀不到、400 這種題目不支援）；error.reason 是 'gone' | 'unreachable' | 'unsupported'，
+   * 出版社題另有 'source_no_ai'（400，授權不含 AI 解析）與 'source_ended'（409，授權已經結束；docs/design/weak-paper.md §9.6）。
+   */
   'assist_source_unavailable',
   /** 學習助手的數量上限（429）；error.reason 是 'cases_per_day' | 'cases_live' | 'analyses_per_case' | 'followups_per_case' | 'photos'。 */
   'assist_limit',

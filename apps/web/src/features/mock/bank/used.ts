@@ -7,15 +7,20 @@
  *   題庫練習   gsat-bank-practice:v1       done 裡的 uid（交過卷）、current 裡的 uid（正在做）     done[uid].at；current 用作答紀錄的 updatedAt
  *   寫作題庫   gsat-writing-draft:v1:*     鍵裡的 ai.tr.*、ai.cp.* 有草稿（有文字、對照過或送過批改）  草稿的 updatedAt
  *   自組卷     gsat-bankmock:v1:papers     開考過、下載過 PDF 或按過「紙本做過」的卷子裡的 11 個 uid  三個時間裡最晚的一個
- *              gsat-mock:v1:*              另外也算作答中與作答歷史裡的自組卷（清單寫入失敗時的備援）  開考／交卷時間
+ *   加強卷     gsat-weakpaper:v1:papers    同上（docs/design/weak-paper.md §7.4）                     同上
+ *              gsat-mock:v1:*              另外也算作答中與作答歷史裡的自組卷與加強卷（清單寫入失敗時的備援）  開考／交卷時間
+ *   作答紀錄   gsat-assist:v1:outcomes     學習助手的本機作答紀錄裡 s 是 bank／bank_mock 的 uid      最後作答時間
+ *              （weak-paper.md §6.2：補上清單被清掉的舊卷子；對自組模擬考也生效，「做過」變得更完整是預期的修正）
  *
  * 只組了卷、三者都沒有的不算，因為學生沒看到題目。拿不到時間的當成很久以前做的（0）。
  */
+import { OUTCOMES_KEY, parseLog } from '../../assistant/outcomes';
 import { PRACTICE_HISTORY_KEY, parseHistory } from '../../practice/history';
 import { loadAttempt } from '../../exams/attempt';
 import { loadHistory } from '../storage';
-import { decodePaperId } from './code';
+import { decodeAnyPaperId } from './code2';
 import { activeBankAttempts, loadMyPapers, paperUsedAt } from './myPapers';
+import { weakPaperList } from './weakPapers';
 
 const WRITING_DRAFT_PREFIX = 'gsat-writing-draft:v1:';
 const WRITING_DRAFT_KEY = /^gsat-writing-draft:v1:(?:translation|essay):(ai\.(?:tr|cp)\.[0-9a-f]{6})@[1-9]\d*$/;
@@ -46,7 +51,7 @@ export function loadUsedGroups(options: UsedOptions = {}): Map<string, number> {
   };
   const addPaper = (paperId: string, at: number) => {
     if (paperId === options.excludePaperId) return;
-    const decoded = decodePaperId(paperId);
+    const decoded = decodeAnyPaperId(paperId);
     if (!decoded) return;
     for (const slot of decoded.slots) add(slot.uid, at);
   };
@@ -89,13 +94,28 @@ export function loadUsedGroups(options: UsedOptions = {}): Map<string, number> {
     // localStorage 不能用。
   }
 
-  // 自組卷
-  for (const entry of loadMyPapers()) {
+  // 自組卷與加強卷
+  for (const entry of [...loadMyPapers(), ...weakPaperList.load()]) {
     const at = paperUsedAt(entry);
     if (at !== null) addPaper(entry.id, at);
   }
-  for (const { paperId, record } of activeBankAttempts()) addPaper(paperId, timeOf(record.startedAt));
+  for (const { paperId, record } of [...activeBankAttempts(), ...weakPaperList.activeAttempts()]) addPaper(paperId, timeOf(record.startedAt));
   for (const h of loadHistory()) addPaper(h.paperId, timeOf(h.submittedAt));
+
+  // 學習助手的本機作答紀錄（題庫練習與自組卷、加強卷的每一題；作答時間在 at）。
+  try {
+    const text = window.localStorage.getItem(OUTCOMES_KEY);
+    if (text !== null) {
+      for (const e of parseLog(JSON.parse(text)).items) {
+        if (e.s !== 'bank' && e.s !== 'bank_mock') continue;
+        if (options.excludePaperId !== undefined && e.p === options.excludePaperId) continue;
+        const uid = e.r.split('@')[0] ?? '';
+        if (uid) add(uid, Number.isFinite(e.at) ? e.at : 0);
+      }
+    }
+  } catch {
+    // 讀不到就當成沒有作答紀錄。
+  }
 
   return used;
 }

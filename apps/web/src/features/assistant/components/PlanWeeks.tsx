@@ -7,11 +7,14 @@
  * ASSIST_FINAL_TAPER_DAYS 天減半；以檢討錯題、複習單字為主，可以計時做單一大題，不排整份模擬考（§10「審查修正」）。
  */
 import { ASSIST_FINAL_TAPER_DAYS, type AssistPlanItem, type AssistPlanWeek, type AssistPlanWeekNote, type AssistReportPlan, type Tier } from '@gsat/shared';
+import { useState } from 'react';
 import { Link } from 'react-router';
 import { isPracticeSectionType } from '../../../data/bank';
 import { practicePath } from '../../practice/labels';
 import { dateRangeText, planItemAmount, planItemTitle, weekTitle } from '../reportFormat';
 import { usePlanChecks, weekProgress, type PlanChecks } from '../planProgress';
+import { weakPaperVisible } from '../papers/flags';
+import { papersHref } from '../papers/params';
 
 export const WEEK_NOTE_TEXT: Record<AssistPlanWeekNote, string> = {
   school_exam: '段考週：份量減半。',
@@ -48,8 +51,18 @@ function itemHref(item: AssistPlanItem, tier: Tier): string | null {
   }
 }
 
+/**
+ * 加強卷的次要連結（docs/design/weak-paper.md §3.1）：題型練習 → 這個大題的弱點加強卷；模擬考 → 模考格式卷。其他項目沒有。
+ */
+export function papersHrefOf(item: AssistPlanItem): string | null {
+  if (item.kind === 'bank_practice') return papersHref({ kind: 'w', section: item.section && isPracticeSectionType(item.section) ? item.section : null });
+  if (item.kind === 'mock_exam') return papersHref({ kind: 'f' });
+  return null;
+}
+
 function Week({ week, done, toggle, tier, open, current }: { week: AssistPlanWeek; done: PlanChecks; toggle: (id: string, v: boolean) => void; tier: Tier; open: boolean; current: boolean }) {
   const p = weekProgress(week, done);
+  const [papersVisible] = useState(weakPaperVisible);
   // 可存取名稱的週次（畫面上週次已經在每週的標題，所以只給螢幕閱讀器）。
   const weekName = week.week === 0 ? '每週菜單' : `第 ${week.week} 週`;
   return (
@@ -101,6 +114,15 @@ function Week({ week, done, toggle, tier, open, current }: { week: AssistPlanWee
                         className="report-screen-only shrink-0 text-sm font-medium text-primary underline underline-offset-2"
                       >
                         去練習
+                      </Link>
+                    )}
+                    {papersVisible && papersHrefOf(item) && (
+                      <Link
+                        to={papersHrefOf(item) as string}
+                        aria-label={`組加強卷（${weekName}：${planItemTitle(item)}）`}
+                        className="report-screen-only shrink-0 text-sm text-primary underline underline-offset-2"
+                      >
+                        組加強卷
                       </Link>
                     )}
                   </li>

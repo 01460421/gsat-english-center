@@ -53,6 +53,13 @@ const SITE_VERSIONS: readonly { value: SitePdfVersion; label: string; hint: stri
   { value: 'full', label: '題本＋答案＋解析', hint: '自己練習、對答案用' },
 ];
 
+/** 本站自組卷的說明裡「題目從哪裡來」（docs/design/weak-paper.md §8.7：加強卷可能有出版社題組；自組模擬考一律是 ai）。 */
+const SITE_SOURCE_HINT: Readonly<Record<'ai' | 'publisher' | 'mixed', string>> = {
+  ai: '題目由 AI 撰寫',
+  publisher: '題目出自出版社模擬試題（經授權）',
+  mixed: '題目由 AI 撰寫或出自出版社模擬試題（經授權）',
+};
+
 const ERROR_TEXT: PdfErrorTextMap = {
   unsupported: '這個瀏覽器無法產生 PDF。請更新到最新版的 Safari、Chrome、Edge 或 Firefox 後再試。',
   network: '字型或 PDF 產生器下載失敗，請確認網路連線後再試一次；如果還是不行，請重新整理頁面。',
@@ -99,7 +106,7 @@ export function ExamPdfDownload({ exam, mockMeta, defaultIncludeAnswerKey = fals
       </h2>
       <p id={hintId} className="mt-1 text-sm text-muted">
         {site
-          ? 'A4 題本格式，可以列印後計時作答。本站自組試卷，題目由 AI 撰寫；圖表印成資料表，作文的圖以文字描述代替。'
+          ? `A4 題本格式，可以列印後計時作答。本站自組試卷，${SITE_SOURCE_HINT[site.footerKind ?? 'ai']}；圖表印成資料表，作文的圖以文字描述代替。`
           : 'A4 題本格式，可以列印後計時作答。本站依大考中心公開試題重新排版，非官方文件；圖片以文字描述代替。'}
         {download.firstTime && '第一次需要下載約 2 MB 的字型與產生器。'}
       </p>

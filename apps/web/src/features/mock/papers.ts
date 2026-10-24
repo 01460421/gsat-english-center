@@ -10,7 +10,7 @@ import { ESSAY_SUGGESTED_MINUTES, TIER_LABELS } from '@gsat/shared';
 import type { Exam, SectionType } from '../../data/exams';
 import type { QuestionExtras } from '../exams/QuestionExtras';
 import type { MockPdfMeta, PdfDownloadInfo } from '../pdf/types';
-import { isBankPaperId, paperNumber, tierOfPaperId } from './bank/paperId';
+import { bk2KindLabel, bk2KindOf, bk2UniformTier, isBankPaperId, paperNumber, tierOfPaperId } from './bank/paperId';
 import type { MockAttemptRecord, MockHistoryEntry } from './storage';
 
 export interface MockPaper {
@@ -55,6 +55,19 @@ export interface MockPaperBank {
   onPdfDownloaded: (info: PdfDownloadInfo) => void;
   /** 交卷時寫入歷史的摘要：混合題的填充、簡答自動判分，level 一律 null（§6.3、§6.4）。 */
   historyEntry: (record: MockAttemptRecord, exam: Exam) => MockHistoryEntry;
+  /**
+   * 作答時間（分鐘）：加強卷依版面（docs/design/weak-paper.md §4.4、§7.2，例如 40）；沒有就是 MOCK_DURATION_MIN（100）。
+   * 倒數、期限（storage.ts 的 createRecord）、開考前頁與成績單都讀它。
+   */
+  durationMinutes?: number;
+  /** 各大題建議時間（分鐘）：加強卷依版面（組數 × 每組時間）；沒有就用 SUGGESTED_MINUTES。 */
+  sectionMinutes?: Partial<Record<SectionType, number>>;
+  /** false 時開考前頁不畫實考模式（作答時間不到 60 分鐘的卷子，§3.5）；沒有這個欄位等於 true。 */
+  strictAllowed?: boolean;
+  /** 開考前與作答頁的標題（加強卷「弱點加強卷」，docs/design/weak-paper.md §3.5）；沒有就是「{label}模擬考」。 */
+  heading?: string;
+  /** 標題上方的小字（加強卷「學習助手加強卷・卷號 W-7Q2MK」）；沒有就是「模擬考・{考卷標題}」。 */
+  kicker?: string;
 }
 
 export const MOCK_PAPERS: readonly MockPaper[] = [
@@ -86,6 +99,12 @@ export function mockPaperLabel(paperId: string): string {
   if (isBankPaperId(paperId)) {
     const tier = tierOfPaperId(paperId);
     if (tier) return `本站自組（${TIER_LABELS[tier]}）${paperNumber(paperId)}`;
+    // 加強卷（docs/design/weak-paper.md §8.7）：「弱點加強卷 W-7Q2MK」「模考格式卷（進階練習）F-…」「隨機抽題卷 R-…」。
+    const kind = bk2KindOf(paperId);
+    if (kind) {
+      const label = bk2KindLabel(kind, bk2UniformTier(paperId));
+      return `${label}${label.endsWith('）') ? '' : ' '}${paperNumber(paperId)}`;
+    }
   }
   return paperId;
 }

@@ -50,9 +50,17 @@ function referenceItem(item: ReferenceItem): PdfNode {
 export function sourcesContent(site: SitePaperPdfMeta): PdfContent[] {
   const content: PdfContent[] = [
     { text: spacedInline(SITE_PAPER_TEXT.sourcesTitle, { bold: true, spacing: 4 }), fontSize: 16, alignment: 'center', margin: [0, 0, 0, 8] },
-    { text: plainInline(SITE_PAPER_TEXT.sourcesIntro), fontSize: 10, lineHeight: 1.4, margin: [0, 0, 0, 6] },
-    { text: plainInline(site.aiNotice), fontSize: 9, color: '#444444', margin: [0, 0, 0, 8] },
   ];
+  // 卷子裡有出版社題組時加出版社的聲明；全部是出版社題時不印 AI 的聲明（docs/design/weak-paper.md §9.5）。
+  if (site.footerKind !== 'publisher') {
+    content.push(
+      { text: plainInline(SITE_PAPER_TEXT.sourcesIntro), fontSize: 10, lineHeight: 1.4, margin: [0, 0, 0, 6] },
+      { text: plainInline(site.aiNotice), fontSize: 9, color: '#444444', margin: [0, 0, 0, 8] },
+    );
+  }
+  if (site.footerKind === 'publisher' || site.footerKind === 'mixed') {
+    content.push({ text: plainInline(SITE_PAPER_TEXT.sourcesPublisherIntro), fontSize: 10, lineHeight: 1.4, margin: [0, 0, 0, 8] });
+  }
   const groups = site.references.filter((g) => g.items.length > 0 || (g.attribution ?? '').trim() !== '');
   if (groups.length === 0) {
     content.push({ text: plainInline(SITE_PAPER_TEXT.sourcesNone), fontSize: 10 });

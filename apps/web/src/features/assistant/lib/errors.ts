@@ -2,7 +2,7 @@
  * 學習助手的錯誤文案（docs/design/learning-assistant.md §5.7）：依錯誤代碼與 error.reason 細分，其他（登入、同意、額度、
  * 連線、閘道錯誤）沿用寫作頁的 describeError，說法和 AI 批改一致。畫面一律顯示這裡的中文，不顯示後端的英文 message。
  */
-import { AI_REFUND_REASONS, ASSIST_INPUT_PROBLEM_MESSAGES, type AiRefundReason } from '@gsat/shared';
+import { AI_REFUND_REASONS, ASSIST_INPUT_PROBLEM_MESSAGES, PUBLISHER_ASSIST_ENDED_TEXT, PUBLISHER_ASSIST_NO_SCOPE_TEXT, type AiRefundReason } from '@gsat/shared';
 import { ApiRequestError, isGatewayError } from '../../../lib/api';
 import { API_ERROR_MESSAGES } from '../../../lib/apiErrors';
 import { describeError, messageFor, type DescribeContext, type ErrorView } from '../../writing/lib/errors';
@@ -12,6 +12,9 @@ export const ASSIST_SOURCE_MESSAGES = {
   gone: '這一題已經改版，舊版無法解析。可以做一次新版本再來問。',
   unreachable: '暫時讀不到題目，請稍後再試（沒有扣點）。',
   unsupported: '中譯英與作文請先送 AI 批改，再從批改結果問學習助手。',
+  // 出版社題（docs/design/weak-paper.md §9.6）：沒有扣點。
+  source_no_ai: `${PUBLISHER_ASSIST_NO_SCOPE_TEXT}（沒有扣點）。`,
+  source_ended: `${PUBLISHER_ASSIST_ENDED_TEXT}（沒有扣點）。`,
 } as const;
 
 /** assist_limit 的原因（§4.15）。 */

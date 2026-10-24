@@ -4,7 +4,7 @@
  *
  * 級分一律用 data/scoreScales.ts 的 rawToLevel（查當年官方對照表的邊界；ROADMAP Phase 2 驗收第 7 項）。
  */
-import { SECTION_TYPE_LABELS, type Exam, type ExamSection, type Question, type SectionStats } from '../../data/exams';
+import { SECTION_TYPE_LABELS, type Exam, type ExamSection, type Question, type SectionStats, type SectionType } from '../../data/exams';
 import {
   highestStandardReached,
   levelRange,
@@ -163,6 +163,11 @@ export interface ReportOptions {
    * docs/design/bank-mock.md §6.3）。回傳結果就當成自動計分、不進自評；回傳 null 照原本的規則（自評、建議分數）。
    */
   autoOpen?: (q: Question) => OpenOutcome | null;
+  /**
+   * 各大題的建議時間（分鐘）：加強卷依版面（docs/design/weak-paper.md §7.2，MockPaperBank.sectionMinutes）；
+   * 沒有（或沒有這個大題）時用 SUGGESTED_MINUTES。
+   */
+  sectionMinutes?: Partial<Record<SectionType, number>>;
 }
 
 export function computeReport(exam: Exam, record: MockAttemptRecord, options: ReportOptions = {}): MockReport {
@@ -220,7 +225,7 @@ export function computeReport(exam: Exam, record: MockAttemptRecord, options: Re
       }
     }
     const national = sectionNationalExpected(section);
-    const minutes = SUGGESTED_MINUTES[section.type];
+    const minutes = options.sectionMinutes?.[section.type] ?? SUGGESTED_MINUTES[section.type];
     sections.push({
       sectionId: section.id,
       type: section.type,

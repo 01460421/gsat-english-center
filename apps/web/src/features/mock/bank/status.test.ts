@@ -5,7 +5,7 @@
 import { describe, expect, it } from 'vitest';
 import { BLUEPRINT_SLOTS } from './blueprint';
 import type { MockPoolEntry } from './pool';
-import { isStrictlyUsable, paperStatuses, slotStatus, statusOfEntry } from './status';
+import { isStrictlyUsable, layoutStatuses, paperStatuses, slotStatus, statusOfEntry } from './status';
 import { fakeEntry, fakePool, fakeTier } from './testFixtures';
 
 const entry = (patch: Partial<MockPoolEntry>): MockPoolEntry => ({ uid: 'ai.rd.000001', v: 3, theme: [], k: ['aaaa', 'bbbb', 'cccc', 'dddd'], ...patch });
@@ -66,5 +66,35 @@ describe('slotStatus／paperStatuses', () => {
     slots[0] = { uid: 'ai.vo.ffffff', v: 1 };
     const kinds = paperStatuses(pool, { tier: 'basic', slots }).map((s) => s.kind);
     expect(kinds).toEqual(['removed', 'current', 'current', 'current', 'current', 'current', 'current', 'current', 'same-key', 'current', 'current']);
+  });
+});
+
+describe('layoutStatuses（加強卷，docs/design/weak-paper.md §7.6）', () => {
+  const basicReading = fakeEntry('reading', 'ai.rd.0b0001');
+  const topReading = fakeEntry('reading', 'ai.rd.0c0001');
+  const pb = { ...fakeEntry('reading', 'pb.rd.0f0001'), ex: 'ns', src: 'pub-x' } as MockPoolEntry;
+  const pool = fakePool({
+    basic: { ...fakeTier({}, {}, 'b9'), reading: [basicReading] as never },
+    top: { ...fakeTier({}, {}, 'c9'), reading: [topReading, pb] as never },
+  });
+
+  it('每一組用代號裡自己的大題與難度找組卷池', () => {
+    const statuses = layoutStatuses(pool, [
+      { section: 'reading', tier: 'basic', uid: 'ai.rd.0b0001', v: 1 },
+      { section: 'reading', tier: 'top', uid: 'ai.rd.0c0001', v: 1 },
+      // 同一個 uid 用錯難度找不到：removed。
+      { section: 'reading', tier: 'basic', uid: 'ai.rd.0c0001', v: 1 },
+    ]);
+    expect(statuses.map((s) => s.kind)).toEqual(['current', 'current', 'removed']);
+  });
+
+  it('出版社來源停用或到期（sourceActive 回傳 false）時那一組當成下架；本站題不受影響；不給 sourceActive 照池子', () => {
+    const slots = [
+      { section: 'reading' as const, tier: 'top' as const, uid: 'pb.rd.0f0001', v: 1 },
+      { section: 'reading' as const, tier: 'top' as const, uid: 'ai.rd.0c0001', v: 1 },
+    ];
+    expect(layoutStatuses(pool, slots, () => false).map((s) => s.kind)).toEqual(['removed', 'current']);
+    expect(layoutStatuses(pool, slots, (src) => src === 'pub-x').map((s) => s.kind)).toEqual(['current', 'current']);
+    expect(layoutStatuses(pool, slots).map((s) => s.kind)).toEqual(['current', 'current']);
   });
 });
