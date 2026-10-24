@@ -19,7 +19,8 @@
       綜合測驗／文意選填／篇章結構的 [[n]] 空格和題號一致、選項代號從 A 起、填充簡答的可接受答案含原卷答案。
     - D8：所有字串比對官方參考譯文（8 個英文字）與評分原則（8 個漢字）的指紋（validate_bank.py 的 official_corpus）。
     - 不是歷屆原題（official_copy）：選文與題幹和 data/exams/parsed 的歷屆試題比對，8 個英文字的片段重疊 ≥ 30%，
-      或有一題題幹完全相同（10 個字以上；"What is the passage mainly about?" 這種通用題幹不算）。
+      或有一題題幹完全相同（10 個字以上；"What is the passage mainly about?" 這種通用題幹不算），
+      而且選文和那一題所屬的歷屆題組也有 ≥ 10% 的 8 字片段重疊（題幹相同但選文不同的，是通用問法，不算原題）。
     - 出處句（provenance.attribution_text）不能含「大考中心」「CEEC」。
 檢查（warning，列進匯入檢查表）：
     - 形狀和該大題的標準形狀（data/specs/tiers.json section_formats）不同：只進題庫練習，組卷池是 ex: 'shape'（§8.5）。
@@ -69,6 +70,8 @@ TOP_KEYS = ({'schema', 'uid', 'version', 'source_id', 'source_ref', 'section_typ
 PAST_NGRAM = 8
 PAST_OVERLAP_MAX = 0.30
 PAST_STEM_MIN_TOKENS = 10
+# 題幹逐字相同時，選文和同一個歷屆題組至少要重疊這麼多才算原題；否則只是通用問法（例如 best title）。
+PAST_STEM_PASSAGE_MIN = 0.10
 
 
 class Report(ve.Report):
@@ -197,7 +200,7 @@ def past_corpus():
                 for q in g.get('questions') or []:
                     toks = vb.en_tokens(ve.strip_markup(q.get('stem') or ''))
                     if len(toks) >= PAST_STEM_MIN_TOKENS:
-                        stems.setdefault(' '.join(toks), f'{eid} 第 {q.get("label")} 題')
+                        stems.setdefault(' '.join(toks), []).append((f'{eid} 第 {q.get("label")} 題', gid))
     _past = {'shingles': shingles, 'sizes': sizes, 'stems': stems}
     return _past
 
@@ -219,8 +222,8 @@ def past_overlap(g):
     corpus = past_corpus()
     own = set(ngrams(group_text(g)))
     best = (0.0, None)
+    hits = {}
     if own:
-        hits = {}
         for k in own:
             for gid in corpus['shingles'].get(k, ()):
                 hits[gid] = hits.get(gid, 0) + 1
@@ -235,7 +238,10 @@ def past_overlap(g):
         toks = vb.en_tokens(ve.strip_markup(q.get('stem') or ''))
         key = ' '.join(toks)
         if len(toks) >= PAST_STEM_MIN_TOKENS and key in corpus['stems']:
-            same.append((q.get('label'), corpus['stems'][key]))
+            for where, gid in corpus['stems'][key]:
+                if own and hits.get(gid, 0) / len(own) >= PAST_STEM_PASSAGE_MIN:
+                    same.append((q.get('label'), where))
+                    break
     return best, same
 
 

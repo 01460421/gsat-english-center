@@ -54,7 +54,7 @@ def fake_past():
     own = set(vp.ngrams(vp.group_text(group)))
     toks = vb.en_tokens(PAST_STEM)
     return {'shingles': {k: {'gsat-999 g1'} for k in own}, 'sizes': {'gsat-999 g1': len(own)},
-            'stems': {' '.join(toks): 'gsat-999 第 41 題'}}
+            'stems': {' '.join(toks): [('gsat-999 第 41 題', 'gsat-999 g1')]}}
 
 
 class Case(unittest.TestCase):
@@ -165,7 +165,13 @@ class D8AndPast(Case):
 
         def copy_stem(d):
             d['group']['questions'][2]['stem'] = PAST_STEM
+            d['group']['passage'] = PAST_PASSAGE
         self.assert_error(self.check(MX, copy_stem), 'official_copy：題幹和 gsat-999 第 41 題 完全相同')
+
+        # 題幹逐字相同、選文不同：通用問法（例如 best title），不算原題。
+        def stem_only(d):
+            d['group']['questions'][2]['stem'] = PAST_STEM
+        self.assertEqual(self.check(MX, stem_only).errors, [])
 
         def short_generic(d):
             d['group']['questions'][2]['stem'] = 'What is the passage mainly about?'
