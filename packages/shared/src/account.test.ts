@@ -80,6 +80,13 @@ describe('isMeResponse', () => {
     expect(isMeResponse({ ...signedIn, assistant_preview: { photo: 'on' } })).toBe(false);
   });
 
+  it('assistant_preview.subjects 選填（AI_ASSISTANT_SUBJECTS 是 admin 時的管理員預覽；docs/design/assistant-subjects.md §7.2）', () => {
+    expect(isMeResponse({ ...signedIn, assistant_preview: { photo: true, subjects: [{ subject: 'chinese', photo: false }] } })).toBe(true);
+    expect(isMeResponse({ ...signedIn, assistant_preview: { photo: false, subjects: [] } })).toBe(true);
+    expect(isMeResponse({ ...signedIn, assistant_preview: { photo: true, subjects: [{ subject: 'chinese', photo: 'on' }] } })).toBe(false);
+    expect(isMeResponse({ ...signedIn, assistant_preview: { photo: true, subjects: 'chinese' } })).toBe(false);
+  });
+
   it('exemplars_preview 選填（只有作文範文的管理員預覽時才有）；有的話必須是 true（docs/design/model-essays.md §7.5）', () => {
     expect(isMeResponse({ ...signedIn, exemplars_preview: true })).toBe(true);
     expect(isMeResponse({ ...signedIn, exemplars_preview: false })).toBe(false);
