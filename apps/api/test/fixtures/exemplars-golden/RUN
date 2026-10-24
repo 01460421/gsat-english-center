@@ -11,9 +11,9 @@
 #                     只跑一部分時結論寫「部分」，不能拿來當上線門檻（上線 PR 要附完整評測的綠色 run）。
 #
 # 目前的值：E2 合併前確認 workflow 本身跑得起來（A 組＋1 題，預算 US$1，§10.1）。
-request=E2 合併前確認 workflow 跑得起來
+request=E2 合併前確認 workflow 跑得起來（沒有 dev 金鑰，改用正式站金鑰，上限 US$1）
 budget_usd=1
 resume=false
 effort_sweep=false
-allow_online_key=false
+allow_online_key=true
 cases=gsat-115
