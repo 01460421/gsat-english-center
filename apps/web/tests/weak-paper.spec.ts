@@ -95,6 +95,10 @@ async function routePublisherReading(page: Page): Promise<() => Record<string, u
   await page.route('**/data/bank/mock-pool.json', async (route) => {
     const res = await route.fetch();
     const pool = (await res.json()) as { tiers: Record<string, Record<string, Record<string, unknown>[]>> };
+    // 正式資料裡的出版社題組先拿掉，這個測試只看自己塞的那一組（題庫有真的出版社題之後也不受影響）。
+    for (const sections of Object.values(pool.tiers)) {
+      for (const [k, list] of Object.entries(sections)) sections[k] = list.filter((e) => !e['src']);
+    }
     const reading = pool.tiers['advanced']?.['reading'] ?? [];
     const ai = reading.find((e) => e['fig'] === null && e['form'] === 'continuous') ?? reading[0];
     reading.push({ ...ai, uid: PB_UID, v: 1, sw: [], theme: ['z:e2e出版社'], ex: 'ns', src: 'pub-e2e' });
@@ -103,7 +107,8 @@ async function routePublisherReading(page: Page): Promise<() => Record<string, u
   });
   await page.route('**/data/bank/sources.json', async (route) => {
     const res = await route.fetch();
-    const reg = (await res.json()) as { sources: unknown[] };
+    const reg = (await res.json()) as { sources: { ns?: string }[] };
+    reg.sources = reg.sources.filter((s) => s.ns !== 'pb');
     reg.sources.push({
       id: 'pub-e2e',
       ns: 'pb',
