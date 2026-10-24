@@ -1,12 +1,12 @@
 """tools/import_publisher.py 的測試：只用合成的試卷（不讀任何出版社資料）。
 
-涵蓋：切題組與重編題號、uid 公式與穩定、版本、翰林難度的彙整、覆寫檔（排除、爭議、未決事項）、混合題的補齊門檻、
+涵蓋：切題組與重編題號（含子題空格 [[47A]] 與第二個空格）、uid 公式與穩定、版本、翰林難度的彙整、覆寫檔（排除、爭議、未決事項）、
+混合題的補齊門檻與前端不收的作答方式、稽核事項的題號比對、既有檔案的撤下、檢查紀錄的日期、出處句改名不升版本、
 中譯英作文與不支援的題型、跨卷重複、來源登記檔的格式，以及輸出通過 P1 的 validate_publisher（找得到時）。
 
 執行：python3 -m unittest discover tools/tests
 P1 的 validate_publisher.py 不在 tools/ 時，可以用環境變數 GSAT_VALIDATE_PUBLISHER 指到它的路徑。
 """
-import copy
 import hashlib
 import json
 import os
@@ -217,7 +217,9 @@ class ImportTest(unittest.TestCase):
         self.assertEqual([q['no'] for q in cz['group']['questions']], [1, 2, 3, 4, 5])
         for n in range(1, 6):
             self.assertEqual(cz['group']['passage'].count(f'[[{n}]]'), 1)
-        self.assertIn('___2___', cz['group']['passage'])
+        self.assertIn('word ______ appeared', cz['group']['passage'])   # 第二個空格不帶題號（卷子重編時不會指到別題）
+        self.assertNotIn('___2___', cz['group']['passage'])
+        self.assertNotIn('___17___', cz['group']['passage'])
         self.assertNotIn('[[16]]', cz['group']['passage'])
         self.assertEqual(cz['source_ref']['labels'], ['16', '17', '18', '19', '20'])
         self.assertIsNone(cz['group']['group_label'])
@@ -242,7 +244,7 @@ class ImportTest(unittest.TestCase):
             self.assertEqual(d['tag_basis'], 'agent')
             self.assertEqual(d['provenance']['license'], 'publisher-licensed')
             self.assertEqual(d['review']['by'], 'ai-auditor')
-            self.assertEqual(d['review']['checks'], ['answers', 'tier', 'tags_sample', 'd8'])
+            self.assertEqual(d['review']['checks'], ['answers', 'd8'])
 
     def test_not_v1_and_unsupported_sections_listed(self):
         res = self.w.run()
@@ -378,7 +380,9 @@ class ImportTest(unittest.TestCase):
         hl = srcs['pub-hl-900-e2']
         self.assertEqual(hl['label_zh'], '翰林出版')
         self.assertEqual(hl['publisher_zh'], '翰林出版事業股份有限公司')
-        self.assertEqual(hl['attribution_zh'], f'本題出自翰林出版《{hl["product_zh"]}》，經授權使用')
+        self.assertIsNone(hl['attribution_zh'])                       # null＝建置用預設格式
+        self.assertEqual(ip.attribution_of(hl), f'本題出自翰林出版《{hl["product_zh"]}》，經授權使用')
+        self.assertEqual(hl['product_zh'], '901 學年度全國學測模擬考（第二次）英文考科')
         self.assertEqual(hl['tier_labels']['中'], 'advanced')
         self.assertEqual(hl['licence'], {'code': 'publisher-licensed', 'ref': None, 'scope': ['web', 'pdf', 'ai_assist'], 'public_ok': True, 'until': None})
         self.assertEqual(srcs['pub-ny-900-n2']['publisher_zh'], '南一書局企業股份有限公司')
@@ -398,6 +402,145 @@ class ImportTest(unittest.TestCase):
         self.assertIn('待補齊', rep)
         for banned in ('keeper', 'lantern', '詳解原文', '轉錄備註', 'Synthetic reading'):
             self.assertNotIn(banned, rep)
+
+    def test_mixed_with_unsupported_mode_is_not_written(self):
+        """混合題裡有單選（前端 SECTION_MODES.mixed 不收）：補齊了也不輸出，列為要等 P1。"""
+        paper = self.w.papers['hl-900-e2']
+        mixed = paper['sections'][5]['groups'][0]
+        mixed['questions'][2] = {'no': 49, 'label': '49', 'mode': 'single_choice', 'stem': 'Pick one.',
+                                 'options': {'A': 'one', 'B': 'two', 'C': 'three', 'D': 'four'}, 'answer': 'B',
+                                 'accepted_answers': None, 'points': 2, 'stats': None, 'scoring_notes': None, 'tags': {}}
+        self.w._write('hl-900-e2.json', paper)
+        self.w.override('hl-900-e2', groups={'47-50': {
+            'accepted_answers': {'47': ['lantern'], '48': ['meadow'], '50': ['pebble']}, 'open_key_complete': True}})
+        res = self.w.run()
+        mx = unit(res, 'hl-900-e2', '47-50')
+        self.assertIsNone(mx.get('doc'))
+        self.assertEqual(mx['blocked_p1'], ['single_choice'])
+        self.assertIn('需先擴充 P1 契約', mx['excluded'])
+        self.assertFalse(mx.get('pending_mixed'))
+        self.assertFalse(any('/mixed/' in k for k in self.w.docs()))
+        rep = self.w.report.read_text(encoding='utf-8')
+        self.assertIn('要等 P1 擴充契約的混合題', rep)
+
+    def test_sub_label_blanks_renumbered(self):
+        """拆成子題的空格 [[47A]]、[[47B]] 也重編成組內題號。"""
+        paper = self.w.papers['hl-900-e2']
+        mixed = paper['sections'][5]['groups'][0]
+        mixed['passage'] += ' First gap [[47A]] and second gap [[47B]].'
+        q47, q48 = mixed['questions'][0], mixed['questions'][1]
+        q47.update({'label': '47A', 'stem': 'Fill [[47A]].'})
+        q48.update({'no': 47, 'label': '47B', 'stem': 'Fill [[47B]].'})
+        self.w._write('hl-900-e2.json', paper)
+        self.w.override('hl-900-e2', groups={'47A-50': {
+            'accepted_answers': {'47A': ['lantern'], '47B': ['meadow'], '50': ['pebble']}, 'open_key_complete': True}})
+        res = self.w.run()
+        d = unit(res, 'hl-900-e2', '47A-50')['doc']
+        g = d['group']
+        self.assertIn('First gap [[1]] and second gap [[2]].', g['passage'])
+        self.assertEqual([q['stem'] for q in g['questions'][:2]], ['Fill [[1]].', 'Fill [[2]].'])
+        self.assertNotIn('47A', json.dumps(g))
+        self.assertEqual(d['source_ref']['labels'], ['47A', '47B', '49', '50'])
+
+    def test_stray_blank_marker_stops_the_run(self):
+        paper = self.w.papers['hl-900-e2']
+        paper['sections'][1]['groups'][0]['passage'] += ' Stray [[99]].'
+        self.w._write('hl-900-e2.json', paper)
+        with self.assertRaises(ValueError) as cm:
+            self.w.run()
+        self.assertIn('[[99]]', str(cm.exception))
+
+    def test_referenced_labels_forms(self):
+        labels = [str(n) for n in range(1, 47)] + ['47A', '47B', '48', '49', '50A', '50B']
+        f = ip.referenced_labels
+        self.assertEqual(f('Q47: two blanks (1)(2).', labels), {'47A', '47B'})
+        self.assertEqual(f('第47、48題：詳解評分只有兩級。', labels), {'47A', '47B', '48'})
+        self.assertEqual(f('第50(1)題：兩格順序。', labels), {'50A', '50B'})
+        self.assertEqual(f('48／49：照詳解參考答案。', labels), {'48', '49'})
+        self.assertEqual(f('47A–47B share one heading.', labels), {'47A', '47B'})
+        self.assertEqual(f('第 3 頁的圖比較小。', labels), set())
+        self.assertEqual(f('Q36: the key is arguable.', labels), {'36'})
+
+    def test_split_mixed_note_gates_group_and_unmatched_notes_listed(self):
+        self.w.manifest.clear()
+        self.w.add('ny-900-n2', '南一', 2, split_vocab=True, unresolved=['第47、48題：評分只有兩級。', 'Page images are 1700 px wide.'])
+        res = self.w.run()
+        pr = next(p for p in res['results'] if p['paper_id'] == 'ny-900-n2')
+        self.assertEqual(pr['unresolved'][0]['groups'], ['47-50'])
+        self.assertEqual(pr['unresolved'][1]['groups'], [])
+        rep = self.w.report.read_text(encoding='utf-8')
+        self.assertIn('未對應題組的稽核事項', rep)
+        self.assertIn('- #1：未確認', rep)
+
+    def test_excluded_group_with_existing_file_is_withdrawn(self):
+        self.w.run()
+        before = {k: v for k, v in self.w.docs().items() if 'pub-ny-900-n2/v1/word_bank/' in k}
+        self.assertEqual([v['status'] for v in before.values()], ['verified'])
+        self.w.override('ny-900-n2', groups={'21-30': {'exclude': '站主決定不用'}})
+        res = self.w.run()
+        after = {k: v for k, v in self.w.docs().items() if 'pub-ny-900-n2/v1/word_bank/' in k}
+        self.assertEqual(list(after), list(before))
+        self.assertEqual([v['status'] for v in after.values()], ['rejected'])
+        self.assertEqual(len(res['demoted']), 1)
+        self.assertIn('改成 rejected', self.w.report.read_text(encoding='utf-8'))
+
+    def test_draft_hold_also_demotes_older_verified_version(self):
+        self.w.run()
+        pid = 'hl-900-e2'
+        paper = self.w.papers[pid]
+        paper['sections'][4]['groups'][0]['questions'][0]['stem'] += ' Fixed typo.'
+        self.w._write(f'{pid}.json', paper)
+        self.w.override(pid, groups={'35-38': {'status': 'draft', 'status_reason': '圖說待改寫'}})
+        self.w.run()
+        st = {k.rsplit('/', 1)[1]: v['status'] for k, v in self.w.docs().items() if f'pub-{pid}/v1/reading/' in k}
+        self.assertEqual(sorted(st.values()), ['draft', 'draft'])
+
+    def test_review_date_kept_unless_content_changes(self):
+        self.w.run(today='2026-01-01')
+        self.w.run(today='2026-02-02')
+        self.assertEqual({d['review']['date'] for d in self.w.docs().values()}, {'2026-01-01'})
+        pid = 'hl-900-e2'
+        paper = self.w.papers[pid]
+        paper['sections'][4]['groups'][0]['questions'][0]['stem'] += ' Fixed typo.'
+        self.w._write(f'{pid}.json', paper)
+        res = self.w.run(today='2026-03-03')
+        rd = unit(res, pid, '35-38')['doc']
+        self.assertEqual((rd['version'], rd['review']['date']), (2, '2026-03-03'))
+
+    def test_attribution_rename_does_not_bump_versions(self):
+        self.w.run()
+        raw = json.loads(self.w.sources.read_text(encoding='utf-8'))
+        for s in raw['sources']:
+            if s['id'] == 'pub-hl-900-e2':
+                s['product_zh'] = '改過的書名'
+        self.w.sources.write_text(ip.dump_sources(raw['sources']), encoding='utf-8')
+        res = self.w.run()
+        d = unit(res, 'hl-900-e2', '11-15')['doc']
+        self.assertEqual(d['version'], 1)
+        self.assertEqual(d['provenance']['attribution_text'], '本題出自翰林出版《改過的書名》，經授權使用')
+        self.assertFalse(any('@2' in k for k in self.w.docs()))
+
+    def test_answer_change_updates_key_phrase(self):
+        self.w.manifest.clear()
+        self.w.add('hl-900-e2', '翰林', 1, labels=HL_LABELS, disputes=[{'label': '12', 'key': 'A', 'auditor_answer': 'B', 'reason': 'x'}])
+        paper = self.w.papers['hl-900-e2']
+        paper['sections'][1]['groups'][0]['questions'][1]['tags']['key_phrase'] = 'alpha12'
+        self.w._write('hl-900-e2.json', paper)
+        self.w.override('hl-900-e2', disputes={'12': {'decision': 'change', 'answer': 'B', 'reason': '改答案'}})
+        res = self.w.run()
+        q = unit(res, 'hl-900-e2', '11-15')['doc']['group']['questions'][1]
+        self.assertEqual((q['answer'], q['tags']['key_phrase']), ('B', 'beta12'))
+
+    def test_product_name_uses_printed_code_not_inferred_round(self):
+        meta = {'school_year': 114, 'label_from_toc': '翰林', 'series_code': 'E2'}
+        self.assertEqual(ip.product_name(meta, '北北基高級中等學校114學年度學科能力測驗聯合模擬考試英文考科', ['114-E2', '99362202-34']),
+                         '114 學年度北北基聯合模擬考（114-E2）英文考科')
+        self.assertEqual(ip.product_name(meta, '北北基高級中等學校114學年度學科能力測驗聯合模擬考試英文考科', []),
+                         '114 學年度北北基聯合模擬考英文考科')
+        tp = ip.source_entry({'paper_id': 'tp-900-b1', 'school_year': 900, 'label_from_toc': '北模', 'series_code': 'B1'},
+                             {'printed_exam_title': '臺北區900學年度第一學期學科能力測驗模擬考試英文考科', 'printed_codes': ['900-B1']})
+        self.assertEqual(tp['publisher_zh'], ip.TP_PUBLISHER_PLACEHOLDER)
+        self.assertEqual(tp['product_zh'], '900 學年度第一學期臺北區學測模擬考（900-B1）英文考科')
 
     def test_outputs_pass_validate_publisher(self):
         path = os.environ.get('GSAT_VALIDATE_PUBLISHER') or str(TOOLS / 'validate_publisher.py')

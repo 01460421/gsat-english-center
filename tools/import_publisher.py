@@ -21,7 +21,8 @@
 規則摘要：
     - 只收六種題型（詞彙、綜合測驗、文意選填、篇章結構、閱讀、混合題）；中譯英與作文第一版不收；其他題型 unsupported_section。
     - 切題組：詞彙整個大題一組；綜合測驗、閱讀、混合題每篇一組；文意選填、篇章結構一組。組內題號從 1 起重編，
-      選文的 [[n]]（與轉錄用來表示同一題第二個空格的 ___n___）、圖的 question_no 一起改；原卷題號留在 source_ref.labels。
+      選文與題幹的 [[n]]／[[47A]]、圖的 question_no 一起改（轉錄表示同一題第二個空格的 ___n___ 改成不帶題號的 ______）；
+      重編後選文或題幹還有不是本組題號的 [[x]] 就停下來報錯。原卷題號留在 source_ref.labels。
     - 形狀不是標準形狀的照收（format_version 寫實際形狀，只進題庫練習）。
     - uid：sha256(來源 id + ':' + 原卷位置) 的前 24 位元；原卷位置＝原卷題號以逗號串起（例如 11,12,13,14,15）。
       和已存在的 pb uid 撞到時 +1 順延。已經輸出過的題組（同來源、同原卷題號）沿用原本的 uid；內容（狀態與人工檢查紀錄以外的欄位）
@@ -31,7 +32,11 @@
       覆寫檔指定的難度＝manual。沒有作答統計，所以 G50（stats）不適用。
     - 狀態：試卷有 .verify.json、題組沒有未解決的答案爭議、沒有未確認或會影響答案的稽核未決事項 → verified；否則 draft。
       混合題要覆寫檔補齊所有填充／簡答的可接受寫法並標 open_key_complete 才輸出（validate_publisher 只收 open_key complete，
-      所以沒補齊的混合題不輸出，列在檢查表的「待補齊」）。
+      所以沒補齊的混合題不輸出，列在檢查表的「待補齊」）。混合題裡有前端不收的作答方式（MIXED_MODES 以外，例如單選、表格填答）
+      的題組補齊了也不輸出（網站建置會整個失敗），列為「要等 P1 擴充契約」。
+    - 這次不輸出的題組（排除、重複、混合題）已經有 verified 檔案時，把那些檔案改成 rejected／draft（內容與版本不動）並在檢查表列出；
+      站方指定草稿時，同一題組較舊的 verified 版本也改成 draft。已經上線的另用 data/unpublish.jsonl 下架。
+    - review：by ai-auditor、checks 只寫做過的 answers 與 d8；date 是寫出這個版本的那天（台北時間），內容沒變的重跑沿用。
     - 不輸出：詳解、轉錄與稽核備註（refers_to.note、*_raw 標註）、scoring_notes、卷頭卷尾說明（大題說明、題組標題）。
     - 跨卷重複：8 個英文字的片段重疊 ≥ 50%（以片段較少的一組為分母）就只留一組（已輸出過的優先，其次學年度早的），其餘列在檢查表。
     - 歷屆原題（和 data/exams/parsed 重疊 ≥ 30% 或題幹完全相同）與 D8 命中的題組不輸出（validate_publisher 也會拒收）。
@@ -39,11 +44,11 @@
 只用標準函式庫。測試：tools/tests/test_import_publisher.py（只用合成資料）。
 """
 import argparse
+import datetime
 import hashlib
 import importlib.util
 import json
 import re
-import statistics
 import sys
 from pathlib import Path
 
@@ -62,15 +67,25 @@ REPORT_FILE = ROOT / 'docs' / 'publisher-import' / 'report.md'
 PARSED_DIR = ROOT / 'data' / 'exams' / 'parsed'
 
 SCHEMA = 'gsat-pub/v1'
-IMPORT_DATE = '2026-10-24'
-REVIEW = {'by': 'ai-auditor', 'checks': ['answers', 'tier', 'tags_sample', 'd8']}
+# 人工檢查紀錄：只寫真的做過的檢查。獨立稽核（.verify.json）逐題核對了文字與答案，工具做了 D8；難度與標註沒有人抽查。
+# date 是寫出這個版本的那天（台北時間）；內容沒變的重跑沿用既有檔案的 date。
+REVIEW = {'by': 'ai-auditor', 'checks': ['answers', 'd8']}
+# 混合題前端收的作答方式（apps/web/scripts/lib/bank-data.mjs 的 SECTION_MODES.mixed）。其他作答方式（single_choice、
+# table_completion）會讓網站建置整個失敗，所以這種題組不輸出，等 P1 契約擴充。
+MIXED_MODES = ('fill_in_blank', 'multi_select', 'short_answer')
+# 北模的題本只印考試名稱，沒有印主辦單位；站主依授權書填著作權人正式名稱前先用這個（檢查表會一直提醒）。
+TP_PUBLISHER_PLACEHOLDER = '臺北區學測模擬考主辦單位'
+
+
+def taipei_today():
+    """台北時間的今天（YYYY-MM-DD）：新版本的 review.date、新來源的 added、檢查器的「今天」。"""
+    return (datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=8)).date().isoformat()
 UID_CODES = {'vocabulary': 'vo', 'cloze': 'cz', 'word_bank': 'wb', 'structure': 'st', 'reading': 'rd', 'mixed': 'mx'}
 SECTION_ZH = {'vocabulary': '詞彙', 'cloze': '綜合測驗', 'word_bank': '文意選填', 'structure': '篇章結構', 'reading': '閱讀測驗',
               'mixed': '混合題', 'translation': '中譯英', 'composition': '英文作文'}
 NOT_V1 = ('translation', 'composition')
 TIERS = ('basic', 'advanced', 'top')
 TIER_ZH = {'basic': '穩定基礎', 'advanced': '進階練習', 'top': '超越頂標'}
-BLANK_SECTIONS = ('cloze', 'word_bank', 'structure')
 OPEN_MODES = ('fill_in_blank', 'short_answer', 'table_completion')
 FILENAME_RE = re.compile(r'^(pb\.(vo|cz|wb|st|rd|mx)\.[0-9a-f]{6})@([1-9]\d*)\.json$')
 SOURCE_ID_RE = re.compile(r'^[a-z0-9]+(?:-[a-z0-9]+)*$')
@@ -110,7 +125,6 @@ PUBLISHERS = {
     '北模': {'label_zh': '北模', 'company': None},
     '中模': {'label_zh': '中模', 'company': None},
 }
-ROUND_ZH = {'1': '第一次', '2': '第二次', '3': '第三次', '4': '第四次', '5': '第五次'}
 FORBIDDEN_TERMS = ('大考中心', 'CEEC')
 
 
@@ -127,58 +141,78 @@ def _compact(s):
     return re.sub(r'\s+', '', s or '')
 
 
-def product_name(meta, printed_title):
-    """印出的考試名稱縮短成書名（含回次）：「114 學年度北北基聯合模擬考（第二次）英文考科」。"""
+def printed_series_code(meta, printed_codes):
+    """題本印的系列代碼（例如 114-E2、112-中1）；沒有印就回 None。"""
+    year = meta['school_year']
+    want = f'{year}-{meta.get("series_code") or ""}'
+    codes = [_compact(c) for c in printed_codes or []]
+    if want in codes:
+        return want
+    return next((c for c in codes if re.fullmatch(rf'{year}-(?:[A-Z]\d|中\d)', c)), None)
+
+
+def product_name(meta, printed_title, printed_codes=()):
+    """印出的考試名稱縮短成書名：「114 學年度北北基聯合模擬考（114-E2）英文考科」。
+    括號裡只寫原卷印的東西：印了回次（第二次）就用回次，否則用印的系列代碼（114-E2）；都沒有就不加括號。
+    翰林的封面沒有印回次（E2／E3／E4 的考試名稱一樣），所以不從系列代碼推回次。"""
     year = meta['school_year']
     t = _compact(printed_title)
     label = meta['label_from_toc']
     m = re.search(r'第([一二三四五])次', t)
-    printed_round = f'第{m.group(1)}次' if m else None
-    code_round = ROUND_ZH.get((meta.get('series_code') or '')[-1:])
+    tag = f'第{m.group(1)}次' if m else printed_series_code(meta, printed_codes)
+    paren = f'（{tag}）' if tag else ''
     if label == '翰林':
         region = next((r for r in ('北北基', '新北基', '新竹區') if r in t), None)
         name = f'{region}聯合模擬考' if region else '全國學測模擬考'
-        return f'{year} 學年度{name}（{printed_round or code_round}）英文考科'
+        return f'{year} 學年度{name}{paren}英文考科'
     if label == '南一':
-        return f'{year} 學年度全國公私立高中聯合模擬考（{printed_round or code_round}）英文考科'
+        return f'{year} 學年度全國公私立高中聯合模擬考{paren}英文考科'
     if label == '北模':
         term = '第一學期' if '第一學期' in t else '第二學期' if '第二學期' in t else ''
-        return f'{year} 學年度{term}臺北區學測模擬考{f"（{printed_round}）" if printed_round else ""}英文考科'
+        return f'{year} 學年度{term}臺北區學測模擬考{paren}英文考科'
     if label == '中模':
-        return f'{year} 學年度臺中市立高中聯合複習考（{printed_round or code_round}）英文考科'
+        return f'{year} 學年度臺中市立高中聯合複習考{paren}英文考科'
     raise ValueError(f'不認得的目錄標示 {label!r}')
 
 
 def organizer_name(meta, evidence):
-    """北模、中模的 publisher_zh：主辦單位照印（中模印在封面的單位名；北模封面只印「臺北區…學科能力測驗模擬考試」）。"""
+    """北模、中模的 publisher_zh：主辦單位照印（中模封面印的單位名）。北模封面只印考試名稱（不是單位），
+    先用 TP_PUBLISHER_PLACEHOLDER，等站主依授權書填著作權人的正式名稱（檢查表會列出）。"""
     if evidence.get('printed_company'):
         return evidence['printed_company']
     t = _compact(evidence.get('printed_exam_title'))
     if meta['label_from_toc'] == '北模':
-        return '臺北區學科能力測驗模擬考試'
+        return TP_PUBLISHER_PLACEHOLDER
     m = re.match(r'^(.*?)\d+學年度', t)
     return m.group(1) if m and m.group(1) else t
 
 
-def source_entry(meta, evidence, printed_labels=()):
-    """一回試卷的來源登記。printed_labels：詳解印的逐題難易度（有任何一個屬於五級標示，就登記 tier_labels，難度依據是 publisher）。"""
+def attribution_of(source):
+    """來源的出處句：登記檔有逐字句就用它，null 時用預設格式（同 item-sources.mjs）。"""
+    return source.get('attribution_zh') or default_attribution(source['label_zh'], source['product_zh'])
+
+
+def source_entry(meta, evidence, printed_labels=(), today=None):
+    """一回試卷的來源登記。printed_labels：詳解印的逐題難易度（有任何一個屬於五級標示，就登記 tier_labels，難度依據是 publisher）。
+    attribution_zh 寫 null（建置時用 label_zh、product_zh 套預設格式），站主改名時出處句跟著改。"""
     label = meta['label_from_toc']
     pub = PUBLISHERS[label]
     if pub['company'] is not None:
         publisher_zh = evidence.get('printed_company') or pub['company']
     else:
         publisher_zh = organizer_name(meta, evidence)
-    product = product_name(meta, evidence.get('printed_exam_title') or '')
+    product = product_name(meta, evidence.get('printed_exam_title') or '', evidence.get('printed_codes') or ())
     entry = {
         'id': source_id_of(meta['paper_id']), 'ns': 'pb', 'kind': 'publisher', 'label_zh': pub['label_zh'],
-        'publisher_zh': publisher_zh, 'product_zh': product, 'attribution_zh': default_attribution(pub['label_zh'], product),
+        'publisher_zh': publisher_zh, 'product_zh': product, 'attribution_zh': None,
     }
     if any(x in FIVE_LEVEL_TIER_LABELS for x in printed_labels):
         entry['tier_labels'] = dict(FIVE_LEVEL_TIER_LABELS)
-    entry.update({'licence': json.loads(json.dumps(PUBLISHER_LICENCE)), 'active': True, 'added': IMPORT_DATE, 'retired_on': None})
-    for k in ('label_zh', 'publisher_zh', 'product_zh', 'attribution_zh'):
-        upper = entry[k].upper()
-        if any(t in upper for t in FORBIDDEN_TERMS):
+    entry.update({'licence': json.loads(json.dumps(PUBLISHER_LICENCE)), 'active': True, 'added': today or taipei_today(),
+                  'retired_on': None})
+    for k, v in (('label_zh', entry['label_zh']), ('publisher_zh', publisher_zh), ('product_zh', product),
+                 ('attribution', attribution_of(entry))):
+        if any(t in v.upper() for t in FORBIDDEN_TERMS):
             raise ValueError(f'{entry["id"]} 的 {k} 含禁字')
     return entry
 
@@ -296,36 +330,66 @@ def _clean_tags(tags, allowed):
     return {k: tags[k] for k in allowed if k in tags and tags[k] is not None}
 
 
-def _renumber_text(text, nomap, underscores):
+MARKER_RE = re.compile(r'\[\[(\d+[A-Z]?)\]\]')       # [[47]]、[[47A]]（拆成子題的空格用原卷子題號）
+SECOND_BLANK_RE = re.compile(r'_{2,}\d+[A-Z]?_{2,}')  # 轉錄用來表示「同一題的第二個空格」的 ___13___
+
+
+def _new_no(token, nomap, labelmap):
+    """原卷題號（47、47A）→ 組內題號；先查子題號，再查整數題號；查不到回 None。"""
+    if token in labelmap:
+        return labelmap[token]
+    if token.isdigit():
+        return nomap.get(int(token))
+    return None
+
+
+def _renumber_text(text, nomap, labelmap):
+    """選文與題幹的 [[原卷題號]] → [[組內題號]]。同一題的第二個空格（___13___）改成不帶題號的 ______：
+    卷子與學習助手重編題號時只改 [[n]] 與「第 n 格」，帶題號的底線會留著舊題號，指到別題。"""
     if not isinstance(text, str):
         return text
-    out = ve.BLANK_RE.sub(lambda m: f'[[{nomap.get(int(m.group(1)), m.group(1))}]]', text)
-    if underscores:
-        out = re.sub(r'(_{2,})(\d+)(_{2,})', lambda m: f'{m.group(1)}{nomap.get(int(m.group(2)), m.group(2))}{m.group(3)}', out)
-    return out
+
+    def sub(m):
+        n = _new_no(m.group(1), nomap, labelmap)
+        return f'[[{n}]]' if n is not None else m.group(0)
+    out = MARKER_RE.sub(sub, text)
+    return SECOND_BLANK_RE.sub('______', out)
 
 
-def _renumber_refs(text, nomap):
-    """圖的標題與描述裡的「第38題」→ 組內題號（「第4題」）。"""
-    return re.sub(r'第(\s*)(\d+)(\s*)題', lambda m: f'第{m.group(1)}{nomap.get(int(m.group(2)), m.group(2))}{m.group(3)}題', text)
+def _renumber_refs(text, nomap, labelmap):
+    """圖的標題與描述裡的「第38題」「第47A題」→ 組內題號（「第4題」）。"""
+    def sub(m):
+        n = _new_no(m.group(2), nomap, labelmap)
+        return f'第{m.group(1)}{n if n is not None else m.group(2)}{m.group(3)}題'
+    return re.sub(r'第(\s*)(\d+[A-Z]?)(\s*)題', sub, text)
+
+
+def stray_markers(group):
+    """選文、分段選文與題幹裡不是本組題號的 [[x]]（重編後應該只剩 [[1]]…[[n]]）。"""
+    own = {q['label'] for q in group['questions']}
+    texts = [group.get('passage')] + [p.get('text') for p in group.get('passage_parts') or [] if isinstance(p, dict)]
+    texts += [q.get('stem') for q in group['questions']]
+    return sorted({m for t in texts if isinstance(t, str) for m in re.findall(r'\[\[([^\]]*)\]\]', t) if m not in own})
 
 
 def build_group(unit):
-    """原始題組 → gsat-exam/v1.1 的 QuestionGroup（題號從 1 起、只留公開欄位）。回傳 (group, 原題號→新題號)。"""
+    """原始題組 → gsat-exam/v1.1 的 QuestionGroup（題號從 1 起、只留公開欄位）。回傳 (group, 原題號→新題號)。
+    選文或題幹留下不是本組題號的 [[x]] 時丟 ValueError（空格會指到不存在的題目）。"""
     section = unit['section']
     src = unit['groups']
     qs_in = [q for g in src for q in g.get('questions') or []]
-    nomap = {}
+    nomap, labelmap = {}, {}
     for i, q in enumerate(qs_in, 1):
         if isinstance(q.get('no'), int):
             nomap.setdefault(q['no'], i)
-    underscores = section in BLANK_SECTIONS
+        if isinstance(q.get('label'), str):
+            labelmap.setdefault(q['label'], i)
     questions = []
     for i, q in enumerate(qs_in, 1):
         out = {k: q[k] for k in QUESTION_KEYS if k in q}
         out['no'] = i
         out['label'] = str(i)
-        out['stem'] = _renumber_text(q.get('stem'), nomap, underscores)
+        out['stem'] = _renumber_text(q.get('stem'), nomap, labelmap)
         out['stats'] = None
         out['tags'] = _clean_tags(q.get('tags'), QUESTION_TAGS[section])
         if isinstance(q.get('refers_to'), dict):
@@ -339,28 +403,32 @@ def build_group(unit):
             fo = {k: f[k] for k in FIGURE_KEYS if k in f}
             for k in ('label', 'caption', 'description'):
                 if isinstance(fo.get(k), str):
-                    fo[k] = _renumber_refs(fo[k], nomap)
+                    fo[k] = _renumber_refs(fo[k], nomap, labelmap)
             qn = f.get('question_no')
             if isinstance(qn, int):
                 fo['question_no'] = nomap.get(qn, qn)
-            elif isinstance(qn, str) and qn.isdigit():
-                fo['question_no'] = nomap.get(int(qn), int(qn))
+            elif isinstance(qn, str) and _new_no(qn, nomap, labelmap) is not None:
+                fo['question_no'] = _new_no(qn, nomap, labelmap)
             figures.append(fo)
     parts = first.get('passage_parts')
     if isinstance(parts, list):
-        parts = [{'label': p.get('label'), 'title': p.get('title'), 'text': _renumber_text(p.get('text'), nomap, underscores)}
+        parts = [{'label': p.get('label'), 'title': p.get('title'), 'text': _renumber_text(p.get('text'), nomap, labelmap)}
                  for p in parts if isinstance(p, dict)]
     tags = _clean_tags(first.get('tags'), GROUP_TAG_KEYS) if len(src) == 1 else _clean_tags(first.get('tags'), ('sdgs',))
     group = {
         'id': 'g1',
         'group_label': None,
-        'passage': _renumber_text(first.get('passage'), nomap, underscores) if len(src) == 1 else None,
+        'passage': _renumber_text(first.get('passage'), nomap, labelmap) if len(src) == 1 else None,
         'passage_parts': parts if len(src) == 1 else None,
         'figures': figures,
         'options_bank': first.get('options_bank') if len(src) == 1 else None,
         'questions': questions,
         'tags': tags or None,
     }
+    stray = stray_markers(group)
+    if stray:
+        raise ValueError(f'{section} 題組（原卷 {"、".join(str(q.get("label")) for q in qs_in)}）重編後還有不是本組題號的空格 '
+                         + '、'.join(f'[[{x}]]' for x in stray))
     return group, nomap
 
 
@@ -586,8 +654,9 @@ def d8_hit(doc):
 # ---------------------------------------------------------------------------
 
 def content_key(doc):
-    """版本比對用的內容：status、review、version 以外的全部欄位。"""
-    body = {k: v for k, v in doc.items() if k not in ('status', 'review', 'version')}
+    """版本比對用的內容：status、review、version、provenance 以外的全部欄位。provenance 只有授權與出處句
+    （出處句由建置從來源登記算，站主改名不該讓整個來源的題組升版本；內容沒變的重跑照樣覆寫成新的出處句）。"""
+    body = {k: v for k, v in doc.items() if k not in ('status', 'review', 'version', 'provenance')}
     return hashlib.sha256(json.dumps(body, ensure_ascii=False, sort_keys=True).encode('utf-8')).hexdigest()
 
 
@@ -608,7 +677,8 @@ def scan_existing(out_dir):
         uids.add(m.group(1))
         labels = tuple((d.get('source_ref') or {}).get('labels') or [])
         by_pos.setdefault((d.get('source_id'), labels), []).append(
-            {'uid': m.group(1), 'version': int(m.group(3)), 'path': p, 'key': content_key(d), 'status': d.get('status')})
+            {'uid': m.group(1), 'version': int(m.group(3)), 'path': p, 'key': content_key(d), 'status': d.get('status'),
+             'review': d.get('review')})
     return by_pos, uids
 
 
@@ -631,19 +701,49 @@ def uid_for(source_id, labels, section, used):
 LABEL_REF_RE = re.compile(r'(?:\bQ|第|\b)(\d{1,2}[A-Z]?)(?:\s*[–\-]\s*(\d{1,2}))?(?=題|\b|[:：(（.、 ,，])')
 
 
+_REF_TOKEN = r'\d{1,2}(?!\d)[A-Z]?(?:\s*[（(]\d[)）])?'          # 47、47A、50(1)
+_REF_LIST = rf'{_REF_TOKEN}(?:\s*[、／/,，]\s*{_REF_TOKEN})*'       # 47、48／49/50
+_NOT_ITEM = r'(?!\s*(?:頁|學期|次|段|行|欄|版|回|冊|屆|名|級|年))'    # 第 3 頁、第一學期之類不是題號
+
+
 def referenced_labels(text, all_labels):
-    """稽核未決事項提到的原卷題號（Q44、第44題、44:、31–34、第21–30題）；只回傳試卷裡真的有的題號。"""
+    """稽核未決事項提到的原卷題號：Q44、第44題、44:、31–34、第21–30題、第47、48題、49／50、第50(1)題、47A。
+    提到的題號不是原卷題號、但原卷有它的子題（47 → 47A、47B）時算全部子題；只回傳試卷裡真的有的題號。"""
+    labels = set(all_labels)
     out = set()
-    num_labels = {l for l in all_labels if l.isdigit()}
-    for m in re.finditer(r'(?<![\d.])(\d{1,2})(?:[A-Z])?\s*[–\-~～]\s*(\d{1,2})(?![\d.])', text):
-        a, b = int(m.group(1)), int(m.group(2))
-        if 1 <= a < b <= 60 and str(a) in num_labels and str(b) in num_labels:
-            out.update(str(x) for x in range(a, b + 1))
-    for m in re.finditer(r'(?:\bQ|第\s*)(\d{1,2}[A-Z]?)', text):
-        if m.group(1) in all_labels or m.group(1).rstrip('ABCD') in num_labels:
-            out.add(m.group(1) if m.group(1) in all_labels else m.group(1).rstrip('ABCD'))
-    for m in re.finditer(r'^\s*(\d{1,2}[A-Z]?)\s*[:：(（]', text):
-        if m.group(1) in all_labels:
+
+    def add(token):
+        token = re.sub(r'\s*[（(]\d[)）]$', '', token)  # 50(1) → 50
+        if token in labels:
+            out.add(token)
+            return
+        base = token.rstrip('ABCDEFGH') if token[:1].isdigit() else token
+        if base in labels:
+            out.add(base)
+            return
+        out.update(lb for lb in all_labels if re.fullmatch(rf'{re.escape(base)}[A-Z]', lb or ''))
+
+    def known(n):
+        return str(n) in labels or any(re.fullmatch(rf'{n}[A-Z]', lb or '') for lb in all_labels)
+
+    for m in re.finditer(r'(?<![\d.])(\d{1,2})([A-Z])?\s*[–\-~～]\s*(\d{1,2})([A-Z])?(?![\d.])', text):
+        a, b = int(m.group(1)), int(m.group(3))
+        if a == b and m.group(2) and m.group(4) and m.group(2) < m.group(4):  # 47A–47D
+            for c in range(ord(m.group(2)), ord(m.group(4)) + 1):
+                if f'{a}{chr(c)}' in labels:
+                    out.add(f'{a}{chr(c)}')
+        elif 1 <= a < b <= 60 and known(a) and known(b):
+            for x in range(a, b + 1):
+                add(str(x))
+    for m in re.finditer(rf'(?:\bQ|第\s*)({_REF_LIST}){_NOT_ITEM}', text):
+        for tok in re.findall(_REF_TOKEN, m.group(1)):
+            add(tok)
+    m = re.match(rf'^\s*({_REF_LIST})\s*[:：(（]', text)
+    if m:
+        for tok in re.findall(_REF_TOKEN, m.group(1)):
+            add(tok)
+    for m in re.finditer(r'(?<![\dA-Za-z])(\d{1,2}[A-Z])(?![A-Za-z\d])', text):
+        if m.group(1) in labels:
             out.add(m.group(1))
     return out
 
@@ -701,10 +801,20 @@ def process_paper(meta, paper, extras, verify, override, source, ctx):
         if ov.get('exclude'):
             r['excluded'] = f'站方排除：{ov["exclude"]}'
             continue
-        group, nomap = build_group(u)
+        try:
+            group, nomap = build_group(u)
+        except ValueError as e:
+            raise ValueError(f'{meta["paper_id"]}：{e}') from None
         for q, orig in zip(group['questions'], u['labels']):
             if orig in answer_changes:
+                old = q.get('answer')
                 q['answer'] = answer_changes[orig]
+                opts = q.get('options') if isinstance(q.get('options'), dict) else {}
+                tags = q.get('tags') or {}
+                # 標註的關鍵詞是原答案選項的文字時跟著換成新答案
+                if isinstance(old, str) and tags.get('key_phrase') is not None and tags.get('key_phrase') == opts.get(old) \
+                        and isinstance(opts.get(q['answer']), str):
+                    q['tags'] = {**tags, 'key_phrase': opts[q['answer']]}
                 r['notes'].append(f'第 {orig} 題依爭議裁決改答案')
         # 混合題：可接受寫法要補齊
         scoring_extra = None
@@ -720,6 +830,12 @@ def process_paper(meta, paper, extras, verify, override, source, ctx):
             r['open_items'] = [{'label': orig, 'mode': q.get('mode'), 'points': q.get('points'),
                                 'accepted': len(q.get('accepted_answers') or []), 'answer_table': isinstance(q.get('answer_table'), (list, dict))}
                                for orig, q in open_items]
+            # 前端（bank-data.mjs SECTION_MODES.mixed）只收填充、多選、簡答；其他作答方式會讓整個建置失敗，補齊了也不輸出。
+            bad = sorted({str(q.get('mode')) for q in group['questions'] if q.get('mode') not in MIXED_MODES})
+            if bad:
+                r['blocked_p1'] = bad
+                r['excluded'] = f'混合題含前端不支援的作答方式（{"／".join(bad)}），需先擴充 P1 契約'
+                continue
             if not ov.get('open_key_complete'):
                 r['pending_mixed'] = True
                 continue
@@ -751,8 +867,8 @@ def process_paper(meta, paper, extras, verify, override, source, ctx):
             doc['open_key'] = 'complete'
             if scoring_extra:
                 doc['scoring_extra'] = scoring_extra
-        doc['provenance'] = {'license': 'publisher-licensed', 'derivation': 'verbatim', 'attribution_text': source['attribution_zh'], 'sources': []}
-        doc['review'] = {'by': REVIEW['by'], 'date': IMPORT_DATE, 'checks': list(REVIEW['checks'])}
+        doc['provenance'] = {'license': 'publisher-licensed', 'derivation': 'verbatim', 'attribution_text': attribution_of(source), 'sources': []}
+        doc['review'] = {'by': REVIEW['by'], 'date': ctx.get('today') or taipei_today(), 'checks': list(REVIEW['checks'])}
         if ov.get('status') == 'draft':
             r['problems'].append(f'站方指定草稿：{ov.get("status_reason") or "（未寫理由）"}')
         doc['status'] = 'draft' if r['problems'] else 'verified'
@@ -790,9 +906,16 @@ def assign_ids(all_results, out_dir, ctx):
                 if content_key(doc) == prev[-1]['key']:
                     r['version_note'] = '內容沒變' if prev[-1]['status'] == doc['status'] else f'狀態 {prev[-1]["status"]} → {doc["status"]}'
                     r['replace'] = prev[-1]['path']
+                    # 內容沒變：沿用既有的檢查紀錄（日期是那個版本寫出的那天）；工具寫的紀錄只留真的做過的檢查
+                    rv = prev[-1].get('review')
+                    if isinstance(rv, dict) and isinstance(rv.get('date'), str):
+                        doc['review'] = {**rv, 'checks': list(REVIEW['checks'])} if rv.get('by') == REVIEW['by'] else dict(rv)
                 else:
                     doc['version'] = prev[-1]['version'] + 1
                     r['version_note'] = f'內容改了：@{prev[-1]["version"]} → @{doc["version"]}'
+                # 站方指定草稿（暫停發布）：舊的 verified 版本也要改成 draft，否則建置會繼續發布舊版
+                if (r.get('override') or {}).get('status') == 'draft':
+                    r['demote'] = [(x['path'], 'draft') for x in prev if x['status'] == 'verified' and x['path'] != r.get('replace')]
             else:
                 uid = uid_for(sid, list(labels), r['section'], used)
                 used.add(uid)
@@ -832,6 +955,38 @@ def find_duplicates(all_results, existing_uids):
             kept.append((pr, r))
 
 
+def plan_withdrawals(all_results, out_dir):
+    """這次不輸出的題組（排除、跨卷重複、混合題未補齊或受 P1 限制）如果已經有檔案，就把那些檔案的 status 改掉，否則建置會繼續發布
+    verified 的舊檔：排除 → 所有不是 rejected 的檔案改成 rejected；混合題 → verified 的檔案改成 draft。r['demote'] = [(路徑, 新狀態)]。"""
+    by_pos, _ = scan_existing(out_dir)
+    for pr in all_results:
+        for r in pr['units']:
+            if r.get('doc') is not None:
+                continue
+            recs = by_pos.get((pr['source_id'], tuple(r['labels'])), [])
+            if r.get('pending_mixed') or r.get('blocked_p1'):
+                r['demote'] = [(x['path'], 'draft') for x in recs if x['status'] == 'verified']
+            else:  # 排除：既有檔案（verified 或 draft）一律標 rejected，看檔案就知道這組不用了
+                r['demote'] = [(x['path'], 'rejected') for x in recs if x['status'] != 'rejected']
+
+
+def apply_demotions(all_results):
+    """把 plan_withdrawals／assign_ids 排好的狀態改寫進既有檔案（內容與版本不動）。回傳 [(檔名, 新狀態, 原因)]。"""
+    done = []
+    for pr in all_results:
+        for r in pr['units']:
+            for path, status in r.get('demote') or []:
+                d = load_json(path)
+                if d.get('status') == status:
+                    continue
+                d['status'] = status
+                write_doc(Path(path), d)
+                why = r.get('excluded') or ('混合題待補齊可接受答案' if r.get('pending_mixed') else '站方指定草稿')
+                done.append((Path(path).name, status, f'{pr["paper_id"]} {r["key"]}：{why}'))
+                r.setdefault('demoted', []).append(f'{Path(path).stem} 改成 {status}')
+    return done
+
+
 def write_doc(path, doc):
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(doc, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
@@ -864,7 +1019,48 @@ def _label_counts(labels):
     return '、'.join(f'{k}{v}' for k, v in c.items()) or '—'
 
 
-def render_report(all_results, pending, sources_added, validation=None):
+# 要人工比對圖說的題目：題幹問圖、地圖、照片、圖表，或選項是圖（［圖］），或題目附了圖。
+# 網站用轉錄的文字代替圖，圖說只能寫原圖印出或看得到的東西，不能多寫選文裡的線索（例如算出來的座標、物種或年代的判斷、
+# 「像…」的比喻、「不是／沒有…」的對比），否則看圖找答案的題目會變成比對字串。
+PICTURE_STEM_RE = re.compile(r'\b(pictures?|maps?|images?|photos?|photographs?|illustrations?|drawings?|charts?|graphs?|diagrams?|'
+                             r'figures?|locations?|depicts?|illustrates?)\b', re.I)
+
+
+def picture_items(r):
+    """題組裡要人工比對圖說的題目：[(原卷題號, 原因)]。"""
+    g = r['doc']['group']
+    fig_qs = {f.get('question_no') for f in g.get('figures') or []}
+    out = []
+    for q, orig in zip(g['questions'], r['labels']):
+        opts = q.get('options') if isinstance(q.get('options'), dict) else {}
+        why = []
+        if any(isinstance(v, str) and ('［圖］' in v or '[圖]' in v) for v in opts.values()):
+            why.append('選項是圖')
+        if q['no'] in fig_qs:
+            why.append('附圖')
+        if PICTURE_STEM_RE.search(ve.strip_markup(q.get('stem') or '')):
+            why.append('題幹問圖')
+        if why:
+            out.append((orig, '、'.join(why)))
+    return out
+
+
+def owner_checks(all_results, entries):
+    """上線前要站主依授權書確認的來源：題本沒有印出版者（出版者依彙編本目錄），或 publisher_zh 還是暫用名。"""
+    reg = {e['id']: e for e in entries or []}
+    out = []
+    for pr in all_results:
+        src = reg.get(pr['source_id']) or pr['source']
+        ev = pr.get('evidence') or {}
+        if src.get('publisher_zh') == TP_PUBLISHER_PLACEHOLDER:
+            out.append(f'`{src["id"]}`：題本只印考試名稱，出版者暫寫「{TP_PUBLISHER_PLACEHOLDER}」；請依授權書把 `data/sources.json` 的 '
+                       '`publisher_zh` 改成著作權人的正式名稱')
+        elif not ev.get('printed_company'):
+            out.append(f'`{src["id"]}`：題本與詳解都沒有印出版者，「{src["publisher_zh"]}」是依彙編本目錄標示；請依授權書確認著作權人')
+    return out
+
+
+def render_report(all_results, pending, sources_added, validation=None, entries=None):
     L = []
     w = L.append
     w('# 出版社模考匯入檢查表')
@@ -877,6 +1073,7 @@ def render_report(all_results, pending, sources_added, validation=None):
     tot = {'verified': 0, 'draft': 0}
     by_type_tier = {}
     excluded, pending_mixed = 0, 0
+    blocked = []
     nonstd = 0
     for pr in all_results:
         for r in pr['units']:
@@ -887,17 +1084,39 @@ def render_report(all_results, pending, sources_added, validation=None):
                 nonstd += 0 if r.get('standard') else 1
             elif r.get('pending_mixed'):
                 pending_mixed += 1
+            elif r.get('blocked_p1'):
+                blocked.append(f'{pr["paper_id"]} {r["key"]}')
             elif r.get('excluded'):
                 excluded += 1
     w(f'- 匯入的試卷：{len(all_results)} 回（有獨立稽核紀錄的才匯入）；還在稽核、這次沒有匯入：{len(pending)} 回'
       + (f'（{"、".join(pending)}）' if pending else '') + '。')
     w(f'- 輸出的題組：{tot["verified"] + tot["draft"]} 組（verified {tot["verified"]}、draft {tot["draft"]}）；'
       f'其中形狀和學測標準不同、只進題庫練習的 {nonstd} 組。')
-    w(f'- 沒有輸出：混合題待補齊可接受答案 {pending_mixed} 組；其他排除 {excluded} 組（原因見各卷）；中譯英、作文第一版不收。')
+    w(f'- 沒有輸出：混合題待補齊可接受答案 {pending_mixed} 組；混合題含前端不支援的作答方式、要等 P1 擴充契約 {len(blocked)} 組；'
+      f'其他排除 {excluded} 組（原因見各卷）；中譯英、作文第一版不收。')
+    if blocked:
+        w('- 要等 P1 擴充契約的混合題（題組裡有單選或表格填答，`bank-data.mjs` 的混合題只收填充、多選、簡答，補齊答案也不能輸出）：'
+          + '、'.join(blocked) + '。')
+    drafts = [f'{pr["paper_id"]} {r["key"]}' for pr in all_results for r in pr['units'] if r.get('doc') and r['doc']['status'] == 'draft']
+    if drafts:
+        w('- draft（不發布）的題組：' + '、'.join(drafts) + '（原因見各卷）。')
+    pic = [(pr, r, picture_items(r)) for pr in all_results for r in pr['units'] if r.get('doc')]
+    pic = [x for x in pic if x[2]]
+    if pic:
+        w(f'- 要人工比對圖說的題目：{sum(len(x[2]) for x in pic)} 題、{len(pic)} 組（各卷「要人工比對圖說的題目」）。'
+          '圖說只能寫原圖印出或看得到的東西；已知多寫了線索的題組先標 draft，改寫並重新核對後再發布。')
+    demoted = [f'{pr["paper_id"]} {r["key"]}（{"、".join(r["demoted"])}）' for pr in all_results for r in pr['units'] if r.get('demoted')]
+    if demoted:
+        w('- 這次改掉狀態的既有檔案（題組不再輸出或站方暫停發布；如果已經上線，另在 `data/unpublish.jsonl` 下架）：' + '；'.join(demoted) + '。')
     agree = [r['metrics_tier'] == r['doc']['tier'] for pr in all_results for r in pr['units'] if r.get('doc') and r['doc']['tier_basis'] == 'publisher']
     if agree:
         w(f'- 依出版社標示分級的題組，和文章指標推估一致 {sum(agree)}／{len(agree)} 組（不一致時採出版社標示；站主要改可在覆寫檔指定 tier）。')
     w(f'- 來源登記（`data/sources.json`）：每回試卷一筆，這次匯入的 {len(all_results)} 回都已登記。')
+    checks = owner_checks(all_results, entries)
+    if checks:
+        w('- **上線前請站主依授權書確認**：')
+        for c in checks:
+            w(f'  - {c}')
     w('')
     w('| 題型 | 穩定基礎 | 進階練習 | 超越頂標 | 合計 |')
     w('|---|---|---|---|---|')
@@ -912,7 +1131,8 @@ def render_report(all_results, pending, sources_added, validation=None):
     w('## 規則')
     w('')
     w('- **授權**：每回試卷一個來源（`pub-{試卷代號}`），授權範圍 web、pdf、ai_assist（不含 explanations：出版社詳解不公開、不進 repo），'
-      '`public_ok` true、沒有到期日。出處句一律用預設格式「本題出自{出版社}《{書名}》，經授權使用」。'
+      '`public_ok` true、沒有到期日。登記檔的 `attribution_zh` 是 null，出處句由建置用預設格式「本題出自{出版社}《{書名}》，經授權使用」'
+      '從 `label_zh`、`product_zh` 算（改名只要改登記檔）；書名括號裡只寫原卷印的回次或系列代碼（翰林的封面沒有印回次，寫代碼，例如 114-E2）。'
       '上線前請站主再確認一次：授權來自每回試卷的著作權人（翰林、南一，以及臺北區、臺中市聯合模擬考的主辦單位），'
       '不是彙編本的整理者（彙編本自己的說明寫「試題著作權屬各命題單位所有」）；repo 是公開的，推上去就等於公開題目。')
     w('- **難度（翰林、北模、中模：詳解印了逐題五級難易度）**：依出版社逐題標示，易、中偏易 → 穩定基礎；中 → 進階練習；中偏難、難 → 超越頂標。題組取各題（0／1／2）的平均，'
@@ -924,7 +1144,8 @@ def render_report(all_results, pending, sources_added, validation=None):
       '`tools/text_metrics.py` 的字數、L1–4／L1–6 覆蓋率、表外字比例、平均句長和三級的帶（`data/specs/tiers.json`）比距離，取最近的一級。'
       '詞彙題用 10 題正解的詞表級別平均：< 3.85 穩定基礎、< 4.5 進階練習、其餘超越頂標。依出版社標示分級的題組也列出指標的結果供對照。')
     w('- **狀態**：題組沒有未決的答案爭議、稽核未決事項都確認過不影響答案 → verified；否則 draft（不發布）。'
-      '混合題要補齊所有填充、簡答的可接受寫法並由校對者確認後才輸出（`open_key: complete`）。')
+      '混合題要補齊所有填充、簡答的可接受寫法並由校對者確認後才輸出（`open_key: complete`）。'
+      '`review.checks` 只寫真的做過的檢查（answers：獨立稽核逐題核對文字與答案；d8），難度與標註沒有人工抽查。')
     w('- **重複**：跨卷 8 字片段重疊 ≥ 50% 的題組只留一組。')
     w('- **形狀**：和學測標準不同的題組照收，`format_version` 寫實際形狀，只進題庫練習、不進任何卷子。')
     w('')
@@ -957,22 +1178,30 @@ def render_report(all_results, pending, sources_added, validation=None):
                 mt = f'{TIER_ZH[r["metrics_tier"]]}{agree}'
                 status = d['status']
                 vnote = r.get('version_note') or ''
-                notes = '；'.join(r['problems'] + r['notes'] + ([vnote] if vnote.startswith(('內容改了', '狀態')) else []))
+                notes = '；'.join(r['problems'] + r['notes'] + ([vnote] if vnote.startswith(('內容改了', '狀態')) else [])
+                                 + [f'舊版 {x}' for x in r.get('demoted') or []])
                 w(f'| {lab} | {sec} | {shape} | {tier} | {plab} | {mt} | `{d["uid"]}@{d["version"]}` | {status} | {notes.strip("；")} |')
-            elif r.get('pending_mixed'):
-                w(f'| {lab} | {sec} | — | — | — | — | — | 未輸出 | 待補齊可接受答案（見下） |')
             else:
-                w(f'| {lab} | {sec} | — | — | — | — | — | 排除 | {r.get("excluded")} |')
+                extra = ''.join(f'；既有檔 {x}' for x in r.get('demoted') or [])
+                if r.get('pending_mixed'):
+                    w(f'| {lab} | {sec} | — | — | — | — | — | 未輸出 | 待補齊可接受答案（見下）{extra} |')
+                elif r.get('blocked_p1'):
+                    w(f'| {lab} | {sec} | — | — | — | — | — | 未輸出 | {r["excluded"]}{extra} |')
+                else:
+                    w(f'| {lab} | {sec} | — | — | — | — | — | 排除 | {r.get("excluded")}{extra} |')
         for s in pr['skipped']:
             reason = '第一版不收' if s['reason'] == 'not_v1' else '學測沒有的題型（unsupported_section）'
             w(f'| {_labels_text(s["labels"])} | {SECTION_ZH.get(s["section"], s["section"])} | — | — | — | — | — | 不匯入 | {reason} |')
         w('')
+        excluded_keys = {r['key'] for r in pr['units'] if r.get('excluded') and not r.get('blocked_p1')}
         if pr['disputes']:
             w('**答案爭議**')
             w('')
             for d in pr['disputes']:
                 res = d['resolution']
-                if res is None:
+                if d['group'] in excluded_keys:
+                    rtext = '題組已排除（見上表）'
+                elif res is None:
                     rtext = '未裁決：題組維持草稿'
                 elif res['decision'] == 'keep':
                     rtext = f'維持答案表：{res["reason"]}'
@@ -984,9 +1213,11 @@ def render_report(all_results, pending, sources_added, validation=None):
         if acks:
             w('**稽核未決事項（涉及匯入的題組）**')
             w('')
+            out_keys = {r['key'] for r in pr['units'] if r.get('doc')}
             for u in acks:
                 a = u['ack']
-                state = '未確認：題組維持草稿' if a is None else ('影響答案：題組維持草稿；' + a['note'] if a['affects_answer'] else '不影響答案：' + a['note'])
+                held = '題組維持草稿' if any(k in out_keys for k in u['groups']) else '題組目前沒有輸出，輸出前要確認'
+                state = f'未確認：{held}' if a is None else (f'影響答案：{held}；' + a['note'] if a['affects_answer'] else '不影響答案：' + a['note'])
                 w(f'- #{u["index"]}（第 {label_range_text(u["labels"])} 題；題組 {"、".join(u["groups"])}）：{state}')
             w('')
         mixed = [r for r in pr['units'] if r.get('pending_mixed')]
@@ -998,8 +1229,28 @@ def render_report(all_results, pending, sources_added, validation=None):
                                  + ('，有表格答案' if x['answer_table'] else '') + '）' for x in r.get('open_items') or [])
                 w(f'- 題組 {r["key"]}：{items or "沒有填充簡答（只要確認選擇題計分）"}')
                 for u in pr['unresolved']:
-                    if r['key'] in u['groups'] and u['ack'] is not None:
-                        w(f'  - 稽核 #{u["index"]}：{u["ack"]["note"]}')
+                    if r['key'] in u['groups']:
+                        w(f'  - 稽核 #{u["index"]}：{u["ack"]["note"] if u["ack"] else "未確認（補齊時一併處理，確認後在覆寫檔 unresolved 記錄）"}')
+            w('')
+        loose = [u for u in pr['unresolved'] if not u['groups']]
+        if loose:
+            w('**未對應題組的稽核事項**（沒有提到任何匯入題組的題號，不影響題組狀態；請看 `.verify.json` 的 unresolved 確認沒有漏掉）')
+            w('')
+            for u in loose:
+                a = u['ack']
+                state = '未確認' if a is None else (('影響答案：' if a['affects_answer'] else '不影響答案：') + a['note'])
+                where = f'（提到第 {label_range_text(u["labels"])} 題，不在匯入的題組）' if u['labels'] else ''
+                w(f'- #{u["index"]}{where}：{state}')
+            w('')
+        pics = [(r, picture_items(r)) for r in pr['units'] if r.get('doc')]
+        pics = [(r, items) for r, items in pics if items]
+        if pics:
+            w('**要人工比對圖說的題目**（網站用文字代替圖；圖說只能寫原圖印出或看得到的東西，不能多寫選文的線索）')
+            w('')
+            for r, items in pics:
+                d = r['doc']
+                w(f'- 題組 {r["key"]}（`{d["uid"]}@{d["version"]}`，{d["status"]}）：'
+                  + '、'.join(f'第 {lb} 題（{why}）' for lb, why in items))
             w('')
         notes = pr['override'].get('notes') or []
         if notes:
@@ -1029,8 +1280,9 @@ def stats_line(meta):
 
 
 def run(work, out_dir=OUT_DIR, sources_file=SOURCES_FILE, overrides_dir=OVERRIDES_DIR, report_file=REPORT_FILE,
-        papers=None, dry_run=False, validator=None):
+        papers=None, dry_run=False, validator=None, today=None):
     work = Path(work)
+    today = today or taipei_today()
     manifest = load_json(work / 'manifest.json')
     metas = {m['paper_id']: m for m in manifest['papers']}
     pdir = work / 'papers'
@@ -1041,7 +1293,7 @@ def run(work, out_dir=OUT_DIR, sources_file=SOURCES_FILE, overrides_dir=OVERRIDE
         ex = pdir / f'{pid}.extras.json'
         extras = load_json(ex) if ex.exists() else {}
         labels = [(q or {}).get('difficulty_label') for q in (extras.get('questions') or {}).values()]
-        new_entries.append(source_entry(meta, extras.get('publisher_evidence') or {}, labels))
+        new_entries.append(source_entry(meta, extras.get('publisher_evidence') or {}, labels, today))
     entries, added = merged_sources(existing, new_entries)
     reg = {e['id']: e for e in entries}
 
@@ -1057,7 +1309,7 @@ def run(work, out_dir=OUT_DIR, sources_file=SOURCES_FILE, overrides_dir=OVERRIDE
         verify = load_json(pdir / f'{pid}.verify.json')
         override = load_override(pid, overrides_dir)
         source = reg[source_id_of(pid)]
-        pr = process_paper(meta, paper, extras, verify, override, source, {})
+        pr = process_paper(meta, paper, extras, verify, override, source, {'today': today})
         pr.update({'paper_id': pid, 'source_id': source['id'], 'source': source, 'meta': meta, 'school_year': meta['school_year'],
                    'evidence': extras.get('publisher_evidence') or {}, 'override': override, 'stats_line': stats_line(meta)})
         for r in pr['units']:
@@ -1080,7 +1332,9 @@ def run(work, out_dir=OUT_DIR, sources_file=SOURCES_FILE, overrides_dir=OVERRIDE
             others.append({'paper_id': pid, 'source_id': sid, 'school_year': metas[pid]['school_year'], 'units': units})
     find_duplicates(results + others, used)
     assign_ids(results, out_dir, {})
+    plan_withdrawals(results, out_dir)
     report_results = results
+    demoted = []
     if not dry_run:
         Path(sources_file).parent.mkdir(parents=True, exist_ok=True)
         Path(sources_file).write_text(dump_sources(entries), encoding='utf-8')
@@ -1088,14 +1342,16 @@ def run(work, out_dir=OUT_DIR, sources_file=SOURCES_FILE, overrides_dir=OVERRIDE
             for r in pr['units']:
                 if r.get('doc') is not None:
                     write_doc(r['path'], r['doc'])
+        demoted = apply_demotions(results)
     validation = None
     if validator is not None and not dry_run:
         files = [r['path'] for pr in results for r in pr['units'] if r.get('doc') is not None]
-        validation = validator(files, sources_file)
+        validation = validator(files, sources_file, today)
     if papers is None and not dry_run:
         Path(report_file).parent.mkdir(parents=True, exist_ok=True)
-        Path(report_file).write_text(render_report(report_results, pending, added, validation), encoding='utf-8')
-    return {'results': results, 'pending': pending, 'sources_added': added, 'entries': entries, 'validation': validation}
+        Path(report_file).write_text(render_report(report_results, pending, added, validation, entries), encoding='utf-8')
+    return {'results': results, 'pending': pending, 'sources_added': added, 'entries': entries, 'validation': validation,
+            'demoted': demoted}
 
 
 def load_validator(path):
@@ -1106,9 +1362,9 @@ def load_validator(path):
     sys.modules['validate_publisher'] = mod
     spec.loader.exec_module(mod)
 
-    def check(files, sources_file):
+    def check(files, sources_file, today=None):
         sources = mod.load_sources(str(sources_file))
-        reports = [mod.check_file(Path(f), sources, IMPORT_DATE) for f in files]
+        reports = [mod.check_file(Path(f), sources, today or taipei_today()) for f in files]
         bad = [r for r in reports if r.errors]
         kinds = {}
         for r in reports:
@@ -1123,7 +1379,7 @@ def load_validator(path):
 
 def summarize(res):
     out = {'papers': len(res['results']), 'pending_papers': res['pending'], 'by_type_tier': {}, 'verified': 0, 'draft': 0,
-           'pending_mixed': [], 'excluded': [], 'files': []}
+           'pending_mixed': [], 'blocked_p1': [], 'excluded': [], 'files': [], 'demoted': res.get('demoted') or []}
     for pr in res['results']:
         for r in pr['units']:
             if r.get('doc'):
@@ -1134,6 +1390,8 @@ def summarize(res):
                 out['files'].append(str(r['path']))
             elif r.get('pending_mixed'):
                 out['pending_mixed'].append(f'{pr["paper_id"]} {r["key"]}')
+            elif r.get('blocked_p1'):
+                out['blocked_p1'].append(f'{pr["paper_id"]} {r["key"]}')
             else:
                 out['excluded'].append(f'{pr["paper_id"]} {r["key"]}：{r.get("excluded")}')
     return out
@@ -1159,7 +1417,10 @@ def main(argv=None):
     if a.json:
         print(json.dumps({k: v for k, v in s.items() if k != 'files'}, ensure_ascii=False, indent=1))
     else:
-        print(f'試卷 {s["papers"]} 回；題組 verified {s["verified"]}、draft {s["draft"]}；混合題待補 {len(s["pending_mixed"])}；排除 {len(s["excluded"])}')
+        print(f'試卷 {s["papers"]} 回；題組 verified {s["verified"]}、draft {s["draft"]}；混合題待補 {len(s["pending_mixed"])}；'
+              f'混合題等 P1 {len(s["blocked_p1"])}；排除 {len(s["excluded"])}')
+        for name, status, why in s['demoted']:
+            print(f'  警告：既有檔 {name} 改成 {status}（{why}）；如果已經上線，另在 data/unpublish.jsonl 下架', file=sys.stderr)
         if res['validation']:
             print(f'validate_publisher：{res["validation"]["text"]}')
             for name, errs in res['validation']['bad']:
