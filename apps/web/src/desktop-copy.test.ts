@@ -25,6 +25,11 @@ const FILES = {
     ],
     { query: '?raw', import: 'default', eager: true },
   ),
+  // docs/design/desktop-polish.md PR 1（防誤觸與語言標記）新增的檔案。
+  ...import.meta.glob<string>(
+    ['./lib/timedSession.ts', './features/writing/components/SubmitGuard.tsx', './features/exams/components/UnansweredList.tsx'],
+    { query: '?raw', import: 'default', eager: true },
+  ),
 };
 
 describe('桌機介面的文案', () => {
@@ -39,6 +44,10 @@ describe('桌機介面的文案', () => {
         './features/home/DesktopDashboard.tsx',
         './features/home/continueItems.ts',
         './features/exams/ExamTable.tsx',
+        './components/desktop/LeaveSessionDialog.tsx',
+        './lib/timedSession.ts',
+        './features/writing/components/SubmitGuard.tsx',
+        './features/exams/components/UnansweredList.tsx',
       ]),
     );
   });

@@ -4,8 +4,11 @@
  */
 import { act, render, screen, within, type RenderResult } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import type { ReactNode } from 'react';
 import { MemoryRouter, Route, Routes } from 'react-router';
 import { SessionProvider } from '../../lib/api';
+import { TimedSessionContext, createTimedSessionRegistry } from '../../lib/timedSession';
+import { setDesktopViewport } from '../../test/viewport';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { clearDataCache } from '../../data/client';
 import ExamsPage from '../../pages/ExamsPage';
@@ -17,16 +20,18 @@ import { MINI_EXAM, MINI_INDEX, jsonResponse } from './testFixtures';
  * 頁面用 use() 讀資料：React 19 在測試環境（act）裡，Suspense 等到的 Promise 只在「被 await 的 act」中處理，
  * 所以 render 要包在 await act(async …) 裡，否則畫面會一直停在「載入中」。
  */
-async function renderAt(path: string): Promise<RenderResult> {
+async function renderAt(path: string, wrap: (ui: ReactNode) => ReactNode = (ui) => ui): Promise<RenderResult> {
   let result: RenderResult | undefined;
   await act(async () => {
     result = render(
-      <MemoryRouter initialEntries={[path]}>
-        <Routes>
-          <Route path="/exams" element={<ExamsPage />} />
-          <Route path="/exams/:examId" element={<ExamPaperPage />} />
-        </Routes>
-      </MemoryRouter>,
+      wrap(
+        <MemoryRouter initialEntries={[path]}>
+          <Routes>
+            <Route path="/exams" element={<ExamsPage />} />
+            <Route path="/exams/:examId" element={<ExamPaperPage />} />
+          </Routes>
+        </MemoryRouter>,
+      ),
     );
   });
   if (!result) throw new Error('render 沒有完成');
@@ -214,6 +219,123 @@ describe('考試模式', () => {
     expect(within(multi).getByText(/部分給分 2.67／4 分（錯 1 個選項）/)).toBeInTheDocument();
     expect(within(questionCard('1')).getByRole('radio', { name: /\(B\) tight/ })).toBeDisabled();
     expect(loadAttempt('gsat-115')?.result).toEqual({ earned: 2 + (4 * 4) / 6, autoMax: 13 });
+  });
+});
+
+/** 考試模式開始作答（限時 100 分鐘），第 1 題選 (B)。 */
+async function startExamMode(wrap?: (ui: ReactNode) => ReactNode) {
+  const user = userEvent.setup();
+  await renderAt('/exams/gsat-115', wrap);
+  await user.click(await screen.findByRole('radio', { name: /考試模式/ }));
+  await user.click(screen.getByRole('button', { name: '開始作答' }));
+  await user.click(within(questionCard('1')).getByRole('radio', { name: /\(B\) tight/ }));
+  return user;
+}
+
+describe('防誤觸（docs/design/desktop-polish.md §4.7）', () => {
+  it('交卷確認列：焦點在「繼續作答」，連按兩次 Enter 只會收起、回到「交卷」，不會交卷（手機也是）', async () => {
+    const user = await startExamMode();
+    await user.click(screen.getByRole('button', { name: '交卷' }));
+    const group = screen.getByRole('group', { name: '確認交卷' });
+    expect(within(group).getByRole('button', { name: '繼續作答' })).toHaveFocus();
+    // 手機：沒有桌機的未作答題號與剩餘時間。
+    expect(within(group).queryByRole('region', { name: /未作答/ })).not.toBeInTheDocument();
+    expect(within(group).queryByText(/剩餘時間/)).not.toBeInTheDocument();
+    await user.keyboard('{Enter}');
+    expect(screen.queryByRole('group', { name: '確認交卷' })).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '交卷' })).toHaveFocus();
+    await user.keyboard('{Enter}');
+    expect(screen.getByRole('button', { name: '繼續作答' })).toHaveFocus();
+    await user.keyboard('{Escape}');
+    expect(screen.queryByRole('region', { name: '交卷結果' })).not.toBeInTheDocument();
+    expect(loadAttempt('gsat-115')?.submittedAt).toBeNull();
+  });
+
+  it('桌機：確認列列出未作答的題號與剩餘時間，點題號收起確認列、焦點回到那一題', async () => {
+    setDesktopViewport();
+    const user = await startExamMode();
+    await user.click(screen.getByRole('button', { name: '交卷' }));
+    const group = screen.getByRole('group', { name: '確認交卷' });
+    expect(group).toHaveTextContent(/還有 12 題沒有作答；剩餘時間 1:40:00。交卷後就不能再修改答案。/);
+    const list = within(group).getByRole('region', { name: '未作答（點題號回去作答）' });
+    expect(within(list).queryByRole('button', { name: '回到第 1 題' })).not.toBeInTheDocument();
+    await user.click(within(list).getByRole('button', { name: '回到第 2 題' }));
+    expect(screen.queryByRole('group', { name: '確認交卷' })).not.toBeInTheDocument();
+    expect(within(questionCard('2')).getAllByRole('radio')[0]).toHaveFocus();
+  });
+
+  it('交卷後的「清除作答，重新開始」：先確認、焦點在「取消」，Esc 或取消收起、回到按鈕；確定清除才清掉（手機也是）', async () => {
+    const user = await startExamMode();
+    await user.click(screen.getByRole('button', { name: '交卷' }));
+    await user.click(screen.getByRole('button', { name: '確定交卷' }));
+    const result = screen.getByRole('region', { name: '交卷結果' });
+    const restart = within(result).getByRole('button', { name: '清除作答，重新開始' });
+    await user.click(restart);
+    const confirm = within(result).getByRole('group', { name: '確定要清除這份考卷的作答與成績嗎？清除後無法復原。' });
+    expect(within(confirm).getByRole('button', { name: '取消' })).toHaveFocus();
+    await user.keyboard('{Enter}');
+    expect(within(result).queryByRole('group')).not.toBeInTheDocument();
+    expect(within(result).getByRole('button', { name: '清除作答，重新開始' })).toHaveFocus();
+    expect(loadAttempt('gsat-115')?.submittedAt).not.toBeNull();
+    await user.keyboard('{Enter}');
+    await user.keyboard('{Escape}');
+    expect(loadAttempt('gsat-115')?.submittedAt).not.toBeNull();
+    await user.click(within(result).getByRole('button', { name: '清除作答，重新開始' }));
+    await user.click(screen.getByRole('button', { name: '確定清除' }));
+    expect(screen.getByRole('button', { name: '開始作答' })).toBeInTheDocument();
+    expect(loadAttempt('gsat-115')).toBeNull();
+  });
+
+  it('作答中的「清除重來」：桌機焦點在「取消」，手機維持在「確定清除」', async () => {
+    new AttemptStore(createAttempt('gsat-115', 'practice', null)).setAnswer('1', 'B');
+    const user = userEvent.setup();
+    const first = await renderAt('/exams/gsat-115');
+    await user.click(await screen.findByRole('button', { name: '清除重來' }));
+    expect(screen.getByRole('button', { name: '確定清除' })).toHaveFocus();
+    first.unmount();
+
+    setDesktopViewport();
+    await renderAt('/exams/gsat-115');
+    await user.click(await screen.findByRole('button', { name: '清除重來' }));
+    expect(screen.getByRole('button', { name: '取消' })).toHaveFocus();
+    await user.keyboard('{Enter}');
+    expect(screen.getByRole('button', { name: '清除重來' })).toHaveFocus();
+    expect(loadAttempt('gsat-115')).not.toBeNull();
+  });
+
+  it('計時中離開確認：考試模式作答中登記剩餘時間，交卷後取消登記；練習模式不登記', async () => {
+    const registry = createTimedSessionRegistry();
+    const wrap = (ui: ReactNode) => <TimedSessionContext value={registry}>{ui}</TimedSessionContext>;
+    const user = await startExamMode(wrap);
+    const info = registry.current();
+    expect(info?.remainingSec()).toBe(6000);
+    expect(info?.leaveNote).toMatch(/計時會暫停/);
+    await user.click(screen.getByRole('button', { name: '交卷' }));
+    await user.click(screen.getByRole('button', { name: '確定交卷' }));
+    expect(registry.current()).toBeNull();
+  });
+
+  it('計時中離開確認：練習模式（不限時）不登記', async () => {
+    const registry = createTimedSessionRegistry();
+    const user = userEvent.setup();
+    await renderAt('/exams/gsat-115', (ui) => <TimedSessionContext value={registry}>{ui}</TimedSessionContext>);
+    await user.click(await screen.findByRole('button', { name: '開始作答' }));
+    expect(registry.current()).toBeNull();
+  });
+});
+
+describe('英文內容的 lang（讀屏用英文語音念英文）', () => {
+  it('選文、題幹、選項標 lang="en"；選文裡的空格（中文名稱）與中文行不標', async () => {
+    await startPractice();
+    // 綜合測驗的選文：整段英文，根元素標 en；空格按鈕的名稱是中文，標回 zh-Hant-TW。
+    const blank = screen.getByRole('button', { name: /^第 11 題空格/ });
+    expect(blank).toHaveAttribute('lang', 'zh-Hant-TW');
+    expect(blank.closest('[lang="en"]')).not.toBeNull();
+    // 選項的英文
+    const option = within(questionCard('1')).getByText('tight');
+    expect(option.closest('[lang]')).toHaveAttribute('lang', 'en');
+    // 題號與分數（中文）不在 lang="en" 裡。
+    expect(within(questionCard('1')).getByText('第 1 題').closest('[lang="en"]')).toBeNull();
   });
 });
 

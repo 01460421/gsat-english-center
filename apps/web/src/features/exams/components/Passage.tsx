@@ -155,6 +155,7 @@ function PassageParts({
         highlights={highlights}
         variant={poem ? 'poem' : 'prose'}
         renderBlank={renderBlank}
+        lang="en"
       />
     </section>
   );
@@ -227,6 +228,7 @@ export function PassageView({
           highlights={highlights}
           variant={poem ? 'poem' : 'prose'}
           renderBlank={renderBlank}
+          lang="en"
         />
       )}
       {parts.length > 0 && (

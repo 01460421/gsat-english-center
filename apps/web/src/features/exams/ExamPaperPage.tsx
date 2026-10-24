@@ -8,6 +8,8 @@ import { Suspense, use, useEffect, useMemo, useRef, useState, type ReactNode } f
 import { Link, useLocation, useParams } from 'react-router';
 import { DataLoadError, forgetFailedLoads } from '../../data/client';
 import { examShortName, loadExam, type Exam } from '../../data/exams';
+import { useIsDesktop } from '../../lib/media';
+import { useTimedSession } from '../../lib/timedSession';
 import { APP_NAME } from '../../modules';
 import { ExamPdfDownload } from '../pdf/ExamPdfDownload';
 import { officialAskExtras, recordOutcomesOnce } from '../assistant/entries';
@@ -53,30 +55,80 @@ function ExamHeader({ exam }: { exam: Exam }) {
   );
 }
 
-/** 清除作答紀錄：先在原地確認一次，避免手滑把寫了一小時的考卷清掉。 */
+/**
+ * 清除作答紀錄：先在原地確認一次，避免手滑把寫了一小時的考卷清掉。
+ * 桌機（≥ lg）打開確認時焦點在「取消」、取消後回到原本的按鈕：連按兩次 Enter 不會清掉（docs/design/desktop-polish.md §4.7）。
+ * 手機維持原本的行為（焦點在「確定清除」）。
+ */
 function ClearControl({ onClear, label = '清除作答紀錄' }: { onClear: () => void; label?: string }) {
+  const isDesktop = useIsDesktop();
   const [confirming, setConfirming] = useState(false);
   const confirmRef = useRef<HTMLButtonElement>(null);
+  const cancelRef = useRef<HTMLButtonElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const restoreFocus = useRef(false);
   useEffect(() => {
-    if (confirming) confirmRef.current?.focus();
+    if (confirming) (isDesktop ? cancelRef : confirmRef).current?.focus();
+    else if (restoreFocus.current) triggerRef.current?.focus();
+    restoreFocus.current = false;
+    // 只在打開、關上的那一刻移焦點（isDesktop 改變時不搶焦點）。
   }, [confirming]);
   if (!confirming) {
     return (
-      <button type="button" onClick={() => setConfirming(true)} className="inline-flex min-h-11 items-center text-sm text-primary underline underline-offset-2">
+      <button
+        ref={triggerRef}
+        type="button"
+        onClick={() => setConfirming(true)}
+        className="inline-flex min-h-11 items-center text-sm text-primary underline underline-offset-2"
+      >
         {label}
       </button>
     );
   }
   return (
-    <span role="group" aria-label="確認清除" className="inline-flex flex-wrap items-center gap-2 text-sm">
+    <span
+      role="group"
+      aria-label="確認清除"
+      onKeyDown={(e) => {
+        if (e.key === 'Escape' && isDesktop) {
+          restoreFocus.current = true;
+          setConfirming(false);
+        }
+      }}
+      className="inline-flex flex-wrap items-center gap-2 text-sm"
+    >
       <span>確定要清除這份考卷的作答與計時嗎？</span>
       <button ref={confirmRef} type="button" onClick={onClear} className="rounded-full bg-bad px-3 py-1 font-semibold text-on-primary">
         確定清除
       </button>
-      <button type="button" onClick={() => setConfirming(false)} className="rounded-full border border-line px-3 py-1">
+      <button
+        ref={cancelRef}
+        type="button"
+        onClick={() => {
+          restoreFocus.current = isDesktop;
+          setConfirming(false);
+        }}
+        className="rounded-full border border-line px-3 py-1"
+      >
         取消
       </button>
     </span>
+  );
+}
+
+/**
+ * 計時中離開確認（docs/design/desktop-polish.md §4.7；Layout 只在 ≥ lg 攔）：考試模式、還沒交卷時登記剩餘時間。
+ * 歷屆試題的計時在離開頁面時暫停（SetupPanel 的說明），確認框照實說。
+ */
+function useExamLeaveGuard(store: AttemptStore) {
+  const timed = useAttemptSelector((s) => s.mode === 'exam' && s.submittedAt === null && s.timeLimitSec !== null);
+  useTimedSession(
+    timed,
+    () => {
+      const s = store.getState();
+      return s.timeLimitSec === null || s.submittedAt !== null ? null : Math.max(0, s.timeLimitSec - s.elapsedSec);
+    },
+    '離開這一頁計時會暫停，回來可以接著寫。',
   );
 }
 
@@ -121,6 +173,7 @@ function ActiveSession({ exam, store, resumed, onClear }: { exam: Exam; store: A
   const mode = useAttemptSelector((s) => s.mode);
   const answeredCount = useAttemptSelector((s) => Object.keys(s.answers).length);
   useAssistOutcomes(exam, store);
+  useExamLeaveGuard(store);
   // store.persisted 在每次寫入後更新；放進 selector，寫入失敗時這裡會跟著重繪顯示提示。
   const persisted = useAttemptSelector(() => store.persisted);
   const resultHeadingRef = useRef<HTMLHeadingElement>(null);

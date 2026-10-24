@@ -8,6 +8,7 @@ import { bankBlanksInPassage, clusterQuestions, groupLayout, isBlankCell } from 
 import {
   blankLabels,
   groupTextOffsets,
+  isEnglishText,
   parseRichText,
   questionRangeTitle,
   questionTitle,
@@ -185,5 +186,15 @@ describe('題組版面', () => {
     expect(isBlankCell(' __ ')).toBe(true);
     expect(isBlankCell('')).toBe(false);
     expect(isBlankCell('iron and vitamins')).toBe(false);
+  });
+});
+
+describe('語言標記（lang）', () => {
+  it('isEnglishText：英文字母為主才算英文；中文題目、中文為主的混合句不算', () => {
+    expect(isEnglishText('The city council decided to ___ the meeting.')).toBe(true);
+    expect(isEnglishText('Which phrase in the chatroom discussions means “works well”?（簡答，2分）')).toBe(true);
+    expect(isEnglishText('自2007年營運以來，高鐵（the High Speed Rail）已成為臺灣最便利的交通工具之一。')).toBe(false);
+    expect(isEnglishText('［圖］頭上長著像鹿一樣分叉的大角')).toBe(false);
+    expect(isEnglishText('£10.')).toBe(false);
   });
 });

@@ -19,6 +19,7 @@ import { EssayPromptView } from './components/EssayPromptView';
 import { EssaySelfAssess } from './components/EssaySelfAssess';
 import { PhotoPicker, type PickedPhoto } from './components/PhotoPicker';
 import { PromptNotFound, SourceNote } from './components/SourceNote';
+import { SubmitConfirm, essaySubmitWarnings, useSubmitGuard } from './components/SubmitGuard';
 import { AiNotice, BackLink, ConfirmButton, DataError, ErrorMessage, Loading, Notice, card, englishInputProps, primaryButton, secondaryButton, textInput } from './components/ui';
 import { findEssayPrompt, groupIdOf, loadEssayIndex, type EssayPrompt } from './data';
 import { useAiAccess } from './lib/access';
@@ -183,6 +184,9 @@ function EssayAttempt({ prompt }: { prompt: EssayPrompt }) {
   const photoRisky = photos.some((p) => photoQualityIssue(p) !== null);
   const ocrPoints = taskPoints(quota, 'essay_ocr');
   const gradePoints = taskPoints(quota, 'essay_grade');
+  // 桌機：字數或段數有提醒時，送出前先確認（components/SubmitGuard.tsx）。
+  const warnings = essaySubmitWarnings(length);
+  const guard = useSubmitGuard({ warnings, onSubmit: () => void submitTyped(), returnFocusId: 'essay-text' });
 
   return (
     <div className="space-y-4">
@@ -267,16 +271,20 @@ function EssayAttempt({ prompt }: { prompt: EssayPrompt }) {
             {saved ? '草稿會自動存在這台裝置。' : '這個瀏覽器無法儲存草稿（可能是無痕模式），離開頁面後內容會遺失。'}
           </p>
 
-          <div className="flex flex-wrap gap-2">
-            <button type="button" className={secondaryButton} aria-expanded={selfOpen} aria-controls="essay-self" onClick={() => setSelfOpen((v) => !v)}>
-              {selfOpen ? '收起自我檢核' : '自我檢核與自評（不用 AI）'}
-            </button>
-            {access.state === 'ready' && (
-              <button type="button" className={primaryButton} disabled={busy !== null || length.empty || length.tooLong} onClick={submitTyped}>
-                {busy ?? `送出 AI 批改（${gradePoints} 點）`}
+          {guard.confirming ? (
+            <SubmitConfirm guard={guard} warnings={warnings} points={gradePoints} quota={quota} />
+          ) : (
+            <div className="flex flex-wrap gap-2">
+              <button type="button" className={secondaryButton} aria-expanded={selfOpen} aria-controls="essay-self" onClick={() => setSelfOpen((v) => !v)}>
+                {selfOpen ? '收起自我檢核' : '自我檢核與自評（不用 AI）'}
               </button>
-            )}
-          </div>
+              {access.state === 'ready' && (
+                <button type="button" className={primaryButton} disabled={busy !== null || length.empty || length.tooLong} onClick={guard.request}>
+                  {busy ?? `送出 AI 批改（${gradePoints} 點）`}
+                </button>
+              )}
+            </div>
+          )}
           {access.state === 'ready' ? (
             <>
               <AiNotice />

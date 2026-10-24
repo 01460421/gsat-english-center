@@ -39,6 +39,7 @@ import { AiAccessNotice, QuotaSummary, taskPoints } from '../components/AiAccess
 import { EssaySelfAssess } from '../components/EssaySelfAssess';
 import { PhotoPicker, type PickedPhoto } from '../components/PhotoPicker';
 import { SourceTabs } from '../components/SourceTabs';
+import { SubmitConfirm, customSubmitWarnings, useSubmitGuard } from '../components/SubmitGuard';
 import { AiNotice, BackLink, ConfirmButton, ErrorMessage, Notice, card, englishInputProps, primaryButton, secondaryButton, textInput } from '../components/ui';
 import { useAiAccess } from '../lib/access';
 import { completeEssayScores, saveDraft } from '../lib/drafts';
@@ -285,9 +286,10 @@ function CustomEssayAttempt() {
 
   const length = checkEssayLength(draft.text, draft.prompt.paragraphs);
   const validWords = (n: number | null) => (n !== null && Number.isInteger(n) ? n : null);
+  const minWords = validWords(parseWordsInput(draft.prompt.minWords));
   const hints = customLengthHints(length, {
     paragraphs: draft.prompt.paragraphs,
-    minWords: validWords(parseWordsInput(draft.prompt.minWords)),
+    minWords,
     maxWords: validWords(parseWordsInput(draft.prompt.maxWords)),
   });
   const essayProblem = length.empty ? null : essayGradableProblem(draft.text, customTaskText(draft.prompt.text, draft.prompt.figure));
@@ -619,6 +621,9 @@ function CustomEssayAttempt() {
     max_words: check.ok ? check.value.max_words : null,
   };
   const showConfirm = confirmingReq !== null && pendingAny;
+  // 桌機：字數或段數有提醒時，送出前先確認（components/SubmitGuard.tsx）；確定之後照舊走題目要求的確認（submitTyped）。
+  const warnings = customSubmitWarnings(length, hints, minWords);
+  const guard = useSubmitGuard({ warnings, onSubmit: () => void submitTyped(), returnFocusId: ESSAY_INPUT });
 
   /** 送 AI 批改的按鈕為什麼不能按（只說一個最先要處理的）。 */
   const typedBlockedReason = !check.ok
@@ -812,16 +817,20 @@ function CustomEssayAttempt() {
             {saved ? '草稿會自動存在這台裝置。' : '這個瀏覽器無法儲存草稿（可能是無痕模式），離開頁面後內容會遺失。'}
           </p>
 
-          <div className="flex flex-wrap gap-2">
-            <button type="button" className={secondaryButton} aria-expanded={selfOpen} aria-controls="custom-essay-self" onClick={() => setSelfOpen((v) => !v)}>
-              {selfOpen ? '收起自我檢核' : '自我檢核與自評（不用 AI）'}
-            </button>
-            {access.state === 'ready' && customOpen && !showConfirm && (
-              <button id="custom-send-typed" type="button" className={primaryButton} disabled={busy !== null || !canGrade} onClick={() => void submitTyped()}>
-                {busy ?? `送出 AI 批改（${gradePoints} 點）`}
+          {guard.confirming ? (
+            <SubmitConfirm guard={guard} warnings={warnings} points={gradePoints} quota={quota} />
+          ) : (
+            <div className="flex flex-wrap gap-2">
+              <button type="button" className={secondaryButton} aria-expanded={selfOpen} aria-controls="custom-essay-self" onClick={() => setSelfOpen((v) => !v)}>
+                {selfOpen ? '收起自我檢核' : '自我檢核與自評（不用 AI）'}
               </button>
-            )}
-          </div>
+              {access.state === 'ready' && customOpen && !showConfirm && (
+                <button id="custom-send-typed" type="button" className={primaryButton} disabled={busy !== null || !canGrade} onClick={guard.request}>
+                  {busy ?? `送出 AI 批改（${gradePoints} 點）`}
+                </button>
+              )}
+            </div>
+          )}
           {access.state === 'ready' && customOpen && showConfirm && <RequirementsConfirm pending={pending} {...requirementsHandlers} />}
           {reqStatus && (
             <p role="status" className="text-sm">

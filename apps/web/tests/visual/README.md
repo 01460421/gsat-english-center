@@ -16,6 +16,8 @@
 | `scripts/visual-baseline.sh` | 從任一個 commit 重建基準：`git worktree` 檢出到暫存資料夾 → 安裝套件 → 建置（保留建置產物）→ 移除 worktree → 截圖 |
 | `tests/visual/visual.config.ts` | Playwright 設定：每種視窗一個 project、`vite preview --outDir <建置產物>` 當伺服器、確定性用的 Chromium 參數 |
 | `tests/visual/capture.shots.ts` | 截圖腳本本體：路由、狀態、假後端（`tests/support/backend.ts` 的 FakeBackend）、確定性處理 |
+| `tests/visual/fixtures.ts` | 固定的時間、帳號狀態與寫作的假提交（和 `audit/` 共用） |
+| `tests/visual/audit/` | 桌機改版的前後對照截圖（給人看，不做逐像素比對；`docs/design/desktop-polish.md` 附錄 B，用法見 `audit/README.md`） |
 | `tests/visual/compare.mjs` | 逐像素比對兩套截圖（不需要 npm 套件）；全部相同 exit 0 |
 | `tests/visual/manifest.mjs` | 把每張圖的網址、標題、console error、頁面尺寸彙整成 `<輸出資料夾>/manifest.json`；建置時記下建置產物的來源 |
 
@@ -210,6 +212,7 @@ node apps/web/tests/visual/compare.mjs <基準資料夾> <對照資料夾> [--vi
 | `30-writing-essay-custom__student-prompt-filled` / `__student-writing` | 同上 | 填好題目（設成 2 段）／題目設定好、寫好作文 |
 | `31-writing-essay-exam__anon` / `__student` | `/writing/essay/gsat-115` | 歷屆作文作答頁 |
 | `31-writing-essay-exam__student-filled` / `__student-photo` | 同上 | 寫好作文／切到拍照上傳 |
+| `31-writing-essay-exam__student-short` | 同上 | 作文 107 個單詞、只有 1 段（「少於 120 個單詞」「未分段」兩個提醒） |
 | `31-writing-essay-exam__focus-submit` | 同上 | 寫好作文、鍵盤聚焦在「送出 AI 批改」 |
 | `32-writing-submission__translation-graded` | `/writing/submissions/sub-t1` | 中譯英批改結果（錯誤加亮、修正版） |
 | `32-writing-submission__bank-translation-graded` | `/writing/submissions/sub-b1` | 本站仿真中譯英批改結果 |
@@ -219,6 +222,7 @@ node apps/web/tests/visual/compare.mjs <基準資料夾> <對照資料夾> [--vi
 | `33-exam-paper__start` | `/exams/gsat-115` | 開始作答前（模式選擇） |
 | `33-exam-paper__practice-answered` | 同上 | 練習模式：第 1 題作答、第 35 題看答案（全國答對率） |
 | `33-exam-paper__exam-midway` / `__exam-submitted` | 同上 | 考試模式：作答 3 題（含綜合測驗、文意選填空格）／交卷後 |
+| `33-exam-paper__exam-confirm` | 同上 | 考試模式：按「交卷」後的確認列（視窗截圖） |
 | `34-mock-session__start-screen` | `/mock/gsat-115` | 開考前（預估分數、實考模式） |
 | `34-mock-session__in-progress` | 同上 | 作答 2 題、標記 1 題 |
 | `34-mock-session__word-bank-section` / `__reading-section` | 同上 | 切到文意選填（填 1 格）／閱讀大題 |
@@ -226,14 +230,20 @@ node apps/web/tests/visual/compare.mjs <基準資料夾> <對照資料夾> [--vi
 | `34-mock-report__report` / `__review` | `/mock/report/<id>` | 成績單（級分、五標）／展開檢討試卷 |
 | `35-practice-session__<題型>-<難度>` | `/practice/{vocabulary/basic, cloze/advanced, word-bank/advanced, structure/top, reading/basic, mixed/basic}` | 剛進來 |
 | `35-practice-session__reading-basic-midway` / `-submitted` | `/practice/reading/basic` | 作答 2 題／交卷後（解析卡） |
+| `35-practice-session__reading-basic-confirm` | 同上 | 按「交卷」後的確認列（視窗截圖） |
 | `35-practice-session__vocabulary-basic-midway` | `/practice/vocabulary/basic` | 作答 4 題 |
 | `35-practice-session__word-bank-advanced-midway` / `-submitted` | `/practice/word-bank/advanced` | 填 3 格＋第 4 格選項面板打開／交卷後 |
 | `35-practice-session__structure-top-midway` | `/practice/structure/top` | 填 2 格 |
 | `35-practice-session__mixed-basic-submitted` | `/practice/mixed/basic` | 交卷後 |
 | `36-not-found` | `/no-such-page` | 找不到頁面 |
+| `37-assistant__anon` / `__student` | `/assistant` | 學習助手首頁（學習助手開著；假後端的案例與報告時間戳固定在 FIXED_NOW 前一分鐘） |
+| `37-assistant-mistakes__empty` | `/assistant/mistakes` | 錯題與疑點（這台裝置沒有紀錄） |
+| `37-assistant-new__photo` / `-new__paste` | `/assistant/new`、`?mode=paste` | 拍照問題目（預設分頁）／貼上題目 |
+| `37-assistant-report__empty` | `/assistant/report` | 學習報告：還沒有報告 |
+| `37-assistant-ask__from-practice` / `37-assistant-case__analysis` | `/assistant/ask`、`/assistant/case/case-1` | 文意選填練習交卷後「問學習助手」→ 送出解析 → 案例頁（假後端的固定範例） |
 
-每種窄視窗 102 張、桌機 101 張（「更多」面板只有窄視窗），12 種視窗共 1,215 張（Playwright 顯示 1,080 個測試，
-桌機的「更多」面板是略過；流程測試一次截好幾張）。
+每種窄視窗 113 張、桌機 112 張（「更多」面板只有窄視窗），12 種視窗共 1,347 張（流程測試一次截好幾張）。
+`docs/design/desktop-polish.md` PR 1 補了交卷確認列、字數不足的作文與學習助手各頁（§5.0 第 2 點），基準是 35ff807。
 
 設計文件 §11.1 列的「開工前要補截的基準情境」中，PR A（殼層、首頁與列表）的部分都在上表：帳號選單、主題切換、
 學習進度／寫作紀錄／歷屆試題列表／模擬考列表／題庫練習選單的有無紀錄、寫作紀錄「載入更多」之後、難度切換／篩選膠囊／送出按鈕的鍵盤聚焦。

@@ -15,7 +15,7 @@ import type { OptionLetter, OptionMap, Question, QuestionGroup } from '../../../
 import { useAttemptStore, useAttemptSelector, useQuestionState } from '../AttemptContext';
 import { bankBlanksInPassage } from '../paper';
 import { useGroupHighlights } from '../QuestionExtras';
-import { questionTitle, resolveBlankQuestion } from '../richText';
+import { PAGE_LANG, questionTitle, resolveBlankQuestion } from '../richText';
 import { acceptedLetters } from '../scoring';
 import { PassageView } from './Passage';
 import { ChoiceFeedback, sortedLetters } from './QuestionFeedback';
@@ -82,6 +82,8 @@ function ClozeSlot({
     <button
       ref={slotRef}
       type="button"
+      // 空格在英文選文裡（lang="en"），名稱是中文：標回 zh-Hant-TW，讀屏才用中文語音念「第 11 題空格」。
+      lang={PAGE_LANG}
       aria-label={slotLabel(q, letter, text, showFeedback)}
       aria-expanded={open}
       aria-controls={open ? panelId : undefined}
@@ -114,6 +116,7 @@ function ClozePanel({ q, id, onDone }: { q: ChoiceQ; id: string; onDone: () => v
     <span
       id={id}
       role="group"
+      lang={PAGE_LANG}
       aria-label={`${questionTitle(q.label)}的選項`}
       onKeyDown={(e) => {
         if (e.key === 'Escape') {
@@ -138,7 +141,7 @@ function ClozePanel({ q, id, onDone }: { q: ChoiceQ; id: string; onDone: () => v
             }}
             className="min-w-0 rounded-lg border border-line bg-surface px-3 py-2 text-left wrap-anywhere hover:border-primary aria-pressed:border-primary aria-pressed:bg-primary-soft disabled:opacity-70"
           >
-            <span className="font-semibold">({letter})</span> <RichText text={q.options?.[letter] ?? ''} variant="inline" className="inline" />
+            <span className="font-semibold">({letter})</span> <RichText text={q.options?.[letter] ?? ''} variant="inline" className="inline" lang="en" />
           </button>
         ))}
       </span>
@@ -244,6 +247,7 @@ function BankSlot({
     <button
       ref={slotRef}
       type="button"
+      lang={PAGE_LANG}
       aria-label={slotLabel(q, letter, text, showFeedback)}
       aria-expanded={open}
       aria-controls={open ? panelId : undefined}
@@ -266,7 +270,7 @@ function BankSlot({
       )}
       {letter ? (
         <span>
-          ({letter}) <RichText text={text ?? ''} variant="inline" className="inline" />
+          ({letter}) <RichText text={text ?? ''} variant="inline" className="inline" lang="en" />
         </span>
       ) : (
         <span aria-hidden="true">＿＿＿</span>
@@ -315,7 +319,7 @@ function Chip({
             : 'border-line bg-surface hover:border-primary'
       }`}
     >
-      <span className="font-semibold">({letter})</span> <RichText text={text} variant="inline" className="inline" />
+      <span className="font-semibold">({letter})</span> <RichText text={text} variant="inline" className="inline" lang="en" />
       {usedBy !== undefined && <span className="ml-1 text-xs">（已用於{questionTitle(usedBy)}）</span>}
     </button>
   );
@@ -351,6 +355,7 @@ function BankPanel({
     <span
       id={id}
       role="group"
+      lang={PAGE_LANG}
       aria-label={`${questionTitle(q.label)}的選項`}
       onKeyDown={(e) => {
         if (e.key === 'Escape') {
@@ -532,7 +537,7 @@ export function BankGroup({ group }: { group: QuestionGroup }) {
         <li key={q.label}>
           <p className="break-words">
             <span className="font-semibold text-primary">{q.label}.</span>{' '}
-            {q.stem && <RichText text={q.stem} variant="inline" className="inline" />} {renderSlot(q.label, q)}
+            {q.stem && <RichText text={q.stem} variant="inline" className="inline" lang="en" />} {renderSlot(q.label, q)}
           </p>
         </li>
       ))}

@@ -4,9 +4,10 @@
  */
 import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Link, MemoryRouter, Route, Routes } from 'react-router';
+import { Link, MemoryRouter, Route, Routes, useLocation } from 'react-router';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { resetHotkeysForTests } from '../lib/hotkeys';
+import { useTimedSession } from '../lib/timedSession';
 import { setDesktopViewport } from '../test/viewport';
 import { Layout } from './Layout';
 
@@ -209,5 +210,94 @@ describe('手機（< lg）', () => {
     await new Promise((r) => setTimeout(r, 20));
     expect(screen.queryByRole('dialog', { name: '鍵盤快捷鍵' })).not.toBeInTheDocument();
     expect(sidebar()).toHaveAttribute('data-sidebar', 'expanded');
+  });
+});
+
+// ───────────────────────── 計時中離開確認（docs/design/desktop-polish.md §4.7） ─────────────────────────
+
+/** 計時中的作答頁：登記剩 1 小時 23 分 45 秒（模擬考的說法）。 */
+function TimedPage() {
+  useTimedSession(true, () => 5025, '離開之後時間照樣倒數。');
+  return (
+    <>
+      <h1>計時中</h1>
+      <Link to="/exams">頁面裡的連結</Link>
+    </>
+  );
+}
+
+function LocationProbe() {
+  const location = useLocation();
+  return <p data-testid="location">{location.pathname}</p>;
+}
+
+function renderTimed() {
+  return render(
+    <MemoryRouter initialEntries={['/mock/gsat-115']}>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/mock/:paperId" element={<TimedPage />} />
+          <Route path="*" element={<Page />} />
+        </Route>
+      </Routes>
+      <LocationProbe />
+    </MemoryRouter>,
+  );
+}
+
+describe('計時中離開確認', () => {
+  it('桌機：點側邊欄的站內連結先問；「留下來作答」網址不變、焦點回到連結；「離開」才換頁', async () => {
+    setDesktopViewport();
+    const user = userEvent.setup();
+    renderTimed();
+    const home = within(sidebar() as HTMLElement).getByRole('link', { name: '首頁' });
+    await user.click(home);
+    const dialog = await screen.findByRole('dialog', { name: '要離開作答頁嗎？' });
+    expect(dialog).toHaveAccessibleDescription(/計時還在進行（剩\s?1:23:45\s?），作答已存在這台裝置。離開之後時間照樣倒數。$/);
+    expect(within(dialog).getByRole('button', { name: '留下來作答' })).toHaveFocus();
+    await user.click(within(dialog).getByRole('button', { name: '留下來作答' }));
+    expect(screen.queryByRole('dialog', { name: '要離開作答頁嗎？' })).not.toBeInTheDocument();
+    expect(screen.getByTestId('location')).toHaveTextContent('/mock/gsat-115');
+    expect(home).toHaveFocus();
+
+    // Esc 也是留下來；頁尾的連結一樣要問。
+    await user.click(screen.getByRole('link', { name: '服務條款' }));
+    expect(await screen.findByRole('dialog', { name: '要離開作答頁嗎？' })).toBeInTheDocument();
+    fireEvent(screen.getByRole('dialog', { name: '要離開作答頁嗎？' }), new Event('cancel'));
+    expect(screen.queryByRole('dialog', { name: '要離開作答頁嗎？' })).not.toBeInTheDocument();
+    expect(screen.getByTestId('location')).toHaveTextContent('/mock/gsat-115');
+
+    await user.click(home);
+    await user.click(within(await screen.findByRole('dialog', { name: '要離開作答頁嗎？' })).getByRole('button', { name: '離開' }));
+    expect(screen.getByTestId('location')).toHaveTextContent('/');
+  });
+
+  it('桌機：頁面裡自己的連結、Ctrl＋點（新分頁）不攔', async () => {
+    setDesktopViewport();
+    const user = userEvent.setup();
+    renderTimed();
+    fireEvent.click(within(sidebar() as HTMLElement).getByRole('link', { name: '首頁' }), { ctrlKey: true });
+    expect(screen.queryByRole('dialog', { name: '要離開作答頁嗎？' })).not.toBeInTheDocument();
+    await user.click(screen.getByRole('link', { name: '頁面裡的連結' }));
+    expect(screen.queryByRole('dialog', { name: '要離開作答頁嗎？' })).not.toBeInTheDocument();
+    expect(screen.getByTestId('location')).toHaveTextContent('/exams');
+  });
+
+  it('手機：不攔（底部導覽與頁尾照常換頁）', async () => {
+    const user = userEvent.setup();
+    renderTimed();
+    await user.click(screen.getByRole('link', { name: '服務條款' }));
+    expect(screen.queryByRole('dialog', { name: '要離開作答頁嗎？' })).not.toBeInTheDocument();
+    expect(screen.getByTestId('location')).toHaveTextContent('/terms');
+  });
+
+  it('側邊欄的每個清單都有名稱（分組標題；第一組是「開始」）', () => {
+    setDesktopViewport();
+    renderAt('/');
+    const nav = within(sidebar() as HTMLElement).getByRole('navigation', { name: '主要導覽' });
+    const names = within(nav)
+      .getAllByRole('list')
+      .map((list) => list.getAttribute('aria-label') ?? document.getElementById(list.getAttribute('aria-labelledby') ?? '')?.textContent);
+    expect(names).toEqual(['開始', '單字', '選擇題型', '混合題與非選擇題', '實戰']);
   });
 });

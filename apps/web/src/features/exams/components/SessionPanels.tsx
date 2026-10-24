@@ -2,7 +2,7 @@
  * 作答前後的畫面：開始畫面（選模式與時間）、交卷結果、出處標示。
  */
 import { ExternalLink } from 'lucide-react';
-import { useId, useMemo, useState, type RefObject } from 'react';
+import { useEffect, useId, useMemo, useRef, useState, type RefObject } from 'react';
 import { SECTION_TYPE_LABELS, type Exam } from '../../../data/exams';
 import { useAttemptSelector } from '../AttemptContext';
 import type { AttemptMode } from '../attempt';
@@ -216,12 +216,64 @@ export function ResultSummary({
         {oldAstPenalty && <li>91–99 學年度指考的選擇題原本答錯倒扣，這裡一律以現制（不倒扣）計分。</li>}
         <li>每題下方有你的答案、正確答案、全國答對率與各選項選答比例；往下捲動即可檢討。</li>
       </ul>
-      <div className="mt-4 flex flex-wrap gap-2">
-        <button type="button" onClick={onRestart} className="rounded-full border border-line px-4 py-2 text-sm font-medium hover:border-primary">
+      <RestartControl onRestart={onRestart} />
+    </section>
+  );
+}
+
+/**
+ * 交卷後的「清除作答，重新開始」：會清掉交卷結果、逐題檢討和列表上的「已交卷」紀錄，所以先就地確認一次，
+ * 焦點在「取消」（連按 Enter 不會清掉）；Esc 或「取消」收起、焦點回到按鈕（docs/design/desktop-polish.md §3.6、§4.7）。
+ * 手機與桌機都要確認（站主決定，§7 第 1 點 (a)）；按鈕在手機維持原本的樣子，桌機是卡片底部右側的紅字按鈕（danger-ghost）。
+ */
+function RestartControl({ onRestart }: { onRestart: () => void }) {
+  const [confirming, setConfirming] = useState(false);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const cancelRef = useRef<HTMLButtonElement>(null);
+  const restoreFocus = useRef(false);
+  const questionId = useId();
+  useEffect(() => {
+    if (confirming) cancelRef.current?.focus();
+    else if (restoreFocus.current) triggerRef.current?.focus();
+    restoreFocus.current = false;
+  }, [confirming]);
+  const cancel = () => {
+    restoreFocus.current = true;
+    setConfirming(false);
+  };
+  if (!confirming) {
+    return (
+      <div className="mt-4 flex flex-wrap gap-2 lg:justify-end">
+        <button
+          ref={triggerRef}
+          type="button"
+          onClick={() => setConfirming(true)}
+          className="rounded-full border border-line px-4 py-2 text-sm font-medium hover:border-primary lg:border-transparent lg:text-bad lg:hover:border-transparent lg:hover:bg-bad/10"
+        >
           清除作答，重新開始
         </button>
       </div>
-    </section>
+    );
+  }
+  return (
+    <div
+      role="group"
+      aria-labelledby={questionId}
+      onKeyDown={(e) => {
+        if (e.key === 'Escape') cancel();
+      }}
+      className="mt-4 flex flex-wrap items-center gap-2 rounded-xl border border-bad/40 bg-bad/10 p-3 text-sm lg:justify-end"
+    >
+      <p id={questionId} className="w-full font-medium lg:mr-auto lg:w-auto">
+        確定要清除這份考卷的作答與成績嗎？清除後無法復原。
+      </p>
+      <button ref={cancelRef} type="button" onClick={cancel} className="min-h-10 rounded-full border border-line bg-surface px-4 font-medium">
+        取消
+      </button>
+      <button type="button" onClick={onRestart} className="min-h-10 rounded-full bg-bad px-4 font-semibold text-on-primary">
+        確定清除
+      </button>
+    </div>
   );
 }
 

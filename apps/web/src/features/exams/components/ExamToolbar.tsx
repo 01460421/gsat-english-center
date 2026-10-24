@@ -4,14 +4,23 @@
  * 計時器自己持有每秒更新的 state，只有它每秒重繪，整份考卷不受影響。用時每秒寫回 store（幾 KB 的 localStorage，成本很低），
  * 交卷與續作時拿到的用時才準；離開頁面期間不計時（02 文件 §6.2 的模擬考計時是給練習用的，不是監考）。
  * 時間到自動交卷；剩 10、5、1 分鐘時用 aria-live 提醒，螢幕閱讀器使用者也知道時間快到了。
+ *
+ * 交卷確認列（docs/design/desktop-polish.md §4.7）：打開時焦點在「繼續作答」（手機與桌機都是；連按兩次 Enter 不會交卷）。
+ * 桌機另外列出還沒作答的題號（點了回去作答），考試模式寫出剩餘時間。
  */
 import { Timer as TimerIcon } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { scrollIntoPane } from '../../../components/desktop/scroll';
 import { iterateQuestions, type Exam } from '../../../data/exams';
+import { useIsDesktop } from '../../../lib/media';
+import { paperIndex, unansweredBySection } from '../../mock/paperIndex';
 import { useAttemptSelector, useAttemptStore } from '../AttemptContext';
 import type { AttemptStore } from '../attempt';
 import { formatClock, formatDuration } from '../labels';
+import { questionTitle } from '../richText';
 import { isAnswered, scoreExam } from '../scoring';
+import { questionAnchorId } from './Questions';
+import { UnansweredList } from './UnansweredList';
 
 const WARN_AT_SEC = [600, 300, 60];
 
@@ -93,6 +102,41 @@ export function AttemptTimer({ onTimeout, waitForFirstAnswer = false }: { onTime
 }
 
 /**
+ * 回到某一題作答（交卷確認列的題號）：題目卡（#q-題號）裡第一個能作答的元件；沒有題目卡的題（文意選填、篇章結構的空格）
+ * 找 aria-label 以「第 n 題」開頭的空格。先捲（置中，避開 sticky 工具列）、後聚焦。
+ */
+function goToQuestion(label: string): void {
+  const card = document.getElementById(questionAnchorId(label));
+  const title = questionTitle(label);
+  const target =
+    card?.querySelector<HTMLElement>('input:not([disabled]), textarea:not([disabled]), select:not([disabled])') ??
+    card?.querySelector<HTMLElement>('button:not([disabled])') ??
+    Array.from(document.querySelectorAll<HTMLElement>('main [aria-label]')).find((el) => el.getAttribute('aria-label')?.startsWith(title)) ??
+    card;
+  if (!target) return;
+  scrollIntoPane(card ?? target, { block: 'center' });
+  target.focus({ preventScroll: true });
+}
+
+/** 桌機的確認文字：未作答題數，考試模式另寫剩餘時間（確認列開著時才訂閱每秒更新的用時）。 */
+function DesktopConfirmText({ unanswered }: { unanswered: number }) {
+  const limit = useAttemptSelector((s) => s.timeLimitSec);
+  const elapsed = useAttemptSelector((s) => s.elapsedSec);
+  const remaining = limit === null ? null : Math.max(0, limit - elapsed);
+  return (
+    <p className="flex-1">
+      {unanswered > 0 ? `還有 ${unanswered} 題沒有作答` : '每一題都作答了'}
+      {remaining !== null && (
+        <>
+          ；剩餘時間 <span className="font-semibold tabular-nums">{formatClock(remaining)}</span>
+        </>
+      )}
+      。交卷後就不能再修改答案。
+    </p>
+  );
+}
+
+/**
  * modeLabel：模式標籤的文字（預設「考試模式／練習模式」；題庫練習頁傳「題庫練習」）。
  * waitForFirstAnswer：第一次作答才開始計時（見 AttemptTimer；題型頁內嵌的題庫練習用）。
  */
@@ -101,8 +145,10 @@ export function ExamToolbar({ exam, modeLabel, waitForFirstAnswer = false }: { e
   const mode = useAttemptSelector((s) => s.mode);
   const submitted = useAttemptSelector((s) => s.submittedAt !== null);
   const answers = useAttemptSelector((s) => s.answers);
+  const isDesktop = useIsDesktop();
   const [confirming, setConfirming] = useState(false);
-  const confirmRef = useRef<HTMLButtonElement>(null);
+  const [jumpTo, setJumpTo] = useState<string | null>(null);
+  const continueRef = useRef<HTMLButtonElement>(null);
   const submitRef = useRef<HTMLButtonElement>(null);
 
   let total = 0;
@@ -116,9 +162,17 @@ export function ExamToolbar({ exam, modeLabel, waitForFirstAnswer = false }: { e
   // useCallback：計時器的 effect 依賴這個函式，每次重繪都換新的會讓計時器一直重設。
   const onTimeout = useCallback(() => submitAttempt(store, exam, 'timeout'), [store, exam]);
 
+  // 打開確認列時焦點在「繼續作答」（安全的那一邊）：誤按 Enter 只會收起確認列、回到「交卷」，不會交卷。
   useEffect(() => {
-    if (confirming) confirmRef.current?.focus();
+    if (confirming) continueRef.current?.focus();
   }, [confirming]);
+
+  // 點了未作答的題號：確認列收起（工具列變矮）之後再捲過去，位置才對。
+  useEffect(() => {
+    if (confirming || jumpTo === null) return;
+    goToQuestion(jumpTo);
+    setJumpTo(null);
+  }, [confirming, jumpTo]);
 
   const cancel = () => {
     setConfirming(false);
@@ -166,11 +220,14 @@ export function ExamToolbar({ exam, modeLabel, waitForFirstAnswer = false }: { e
           }}
           className="mt-2 flex flex-wrap items-center gap-2 rounded-xl border border-primary bg-surface p-3 text-sm"
         >
-          <p className="w-full sm:w-auto sm:flex-1">
-            {unanswered > 0 ? `還有 ${unanswered} 題沒有作答。` : '每一題都作答了。'}交卷後就不能再修改答案。
-          </p>
+          {isDesktop ? (
+            <DesktopConfirmText unanswered={unanswered} />
+          ) : (
+            <p className="w-full sm:w-auto sm:flex-1">
+              {unanswered > 0 ? `還有 ${unanswered} 題沒有作答。` : '每一題都作答了。'}交卷後就不能再修改答案。
+            </p>
+          )}
           <button
-            ref={confirmRef}
             type="button"
             onClick={() => {
               setConfirming(false);
@@ -180,9 +237,20 @@ export function ExamToolbar({ exam, modeLabel, waitForFirstAnswer = false }: { e
           >
             確定交卷
           </button>
-          <button type="button" onClick={cancel} className="rounded-full border border-line px-4 py-1.5">
+          <button ref={continueRef} type="button" onClick={cancel} className="rounded-full border border-line px-4 py-1.5">
             繼續作答
           </button>
+          {isDesktop && unanswered > 0 && (
+            <div className="w-full border-t border-line pt-2">
+              <UnansweredList
+                groups={unansweredBySection(paperIndex(exam), answers)}
+                onJump={(label) => {
+                  setConfirming(false);
+                  setJumpTo(label);
+                }}
+              />
+            </div>
+          )}
         </div>
       )}
     </div>

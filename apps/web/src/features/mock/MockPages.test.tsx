@@ -6,11 +6,14 @@
  */
 import { act, render, screen, within, type RenderResult } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import type { ReactNode } from 'react';
 import { MemoryRouter, Route, Routes } from 'react-router';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { clearDataCache } from '../../data/client';
 import type { Exam } from '../../data/exams';
 import { SessionProvider } from '../../lib/api';
+import { TimedSessionContext, createTimedSessionRegistry } from '../../lib/timedSession';
+import { setDesktopViewport } from '../../test/viewport';
 import MockExamPage from '../../pages/MockExamPage';
 import { AttemptStore, createAttempt } from '../exams/attempt';
 import { MINI_EXAM, jsonResponse } from '../exams/testFixtures';
@@ -99,6 +102,60 @@ afterEach(() => {
   vi.restoreAllMocks();
   vi.useRealTimers();
   Reflect.deleteProperty(document, 'visibilityState');
+});
+
+describe('防誤觸（docs/design/desktop-polish.md §3.7、§4.7）', () => {
+  async function startMock(wrap: (ui: ReactNode) => ReactNode = (ui) => ui) {
+    const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
+    await act(async () => {
+      render(
+        wrap(
+          <MemoryRouter initialEntries={['/mock/gsat-115']}>
+            <Routes>
+              <Route path="/mock/:paperId" element={<MockSessionPage />} />
+            </Routes>
+          </MemoryRouter>,
+        ),
+      );
+    });
+    await screen.findByRole('heading', { level: 1, name: '115 學測模擬考' });
+    await user.type(screen.getByRole('spinbutton', { name: /你覺得這次會考幾分/ }), '30');
+    await user.click(screen.getByRole('button', { name: '開始作答' }));
+    await user.click(within(questionCard('1')).getByRole('radio', { name: /\(B\) tight/ }));
+    await user.click(within(questionCard('1')).getByRole('button', { name: '標記第 1 題，稍後檢查' }));
+    return user;
+  }
+
+  it('桌機的交卷對話框：右上角關閉、說明有標記題數與剩餘時間、動作列黏在底部；焦點在「繼續作答」', async () => {
+    setDesktopViewport();
+    const user = await startMock();
+    await user.click(screen.getByRole('button', { name: '交卷' }));
+    const dialog = screen.getByRole('dialog', { name: '確定要交卷嗎？' });
+    expect(dialog).toHaveAccessibleDescription(/^還有 12 題沒有作答、標記 1 題；剩餘時間 1:40:00\s?。交卷後就不能再修改答案/);
+    const stay = within(dialog).getByRole('button', { name: '繼續作答' });
+    expect(stay).toHaveFocus();
+    expect(stay.parentElement?.className).toMatch(/lg:sticky lg:-bottom-5/);
+    expect(within(dialog).getByRole('region', { name: '未作答（點題號回去作答）' })).toBeInTheDocument();
+    await user.click(within(dialog).getByRole('button', { name: '關閉' }));
+    expect(screen.queryByRole('dialog', { name: '確定要交卷嗎？' })).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '交卷' })).toBeInTheDocument();
+  });
+
+  it('手機的交卷對話框不變：沒有關閉鈕，說明是原本的文字', async () => {
+    const user = await startMock();
+    await user.click(screen.getByRole('button', { name: '交卷' }));
+    const dialog = screen.getByRole('dialog', { name: '確定要交卷嗎？' });
+    expect(within(dialog).queryByRole('button', { name: '關閉' })).not.toBeInTheDocument();
+    expect(dialog).toHaveAccessibleDescription('還有 12 題沒有作答。交卷後就不能再修改答案，會直接看到成績單。');
+  });
+
+  it('計時中離開確認：作答中登記剩餘時間（離開之後時間照樣倒數）', async () => {
+    const registry = createTimedSessionRegistry();
+    await startMock((ui) => <TimedSessionContext value={registry}>{ui}</TimedSessionContext>);
+    const info = registry.current();
+    expect(info?.remainingSec()).toBe(6000);
+    expect(info?.leaveNote).toMatch(/時間照樣倒數/);
+  });
 });
 
 describe('開考 → 作答 → 重新整理接續 → 交卷 → 成績單', () => {

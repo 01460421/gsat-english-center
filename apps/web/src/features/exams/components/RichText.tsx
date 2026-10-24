@@ -4,9 +4,14 @@
  *   - <u>／<b> 畫成底線／粗體，並加上底色：題目問「畫底線的字」時要一眼找得到；
  *   - refers_to 指到的字串用 <mark> 高亮。
  * 底色只靠顏色不夠（色弱、單色列印），所以底線與粗體本身的樣式保留，<mark> 另有 title 說明是哪一題指的字。
+ *
+ * lang="en"（選文、題幹、選項；docs/design/desktop-polish.md §3.5、§8.1）：每一行依內容判斷（richText.ts 的 isEnglishText），
+ * 全部是英文時整段的根元素標 lang="en"，有中文行時只標英文的那幾行。只加屬性、不拆文字：英文行裡夾的中文
+ * （「（簡答題，2分）」）不另外包一層 zh-Hant-TW——多一個元素會讓 Chrome 分段排版，字的位置差不到 1 px，
+ * 手機就不再逐像素不變（tests/visual 的比對抓得到）。預設空格的「＿＿＿」本來就是自己的 span，標回 zh-Hant-TW。
  */
 import { Fragment, useMemo, type ReactNode } from 'react';
-import { parseRichText, splitByHighlights, type RichNode, type TextHighlight } from '../richText';
+import { PAGE_LANG, isEnglishText, nodesText, parseRichText, splitByHighlights, type RichNode, type RichParagraph, type TextHighlight } from '../richText';
 
 export interface RichTextProps {
   text: string;
@@ -20,12 +25,19 @@ export interface RichTextProps {
    */
   variant?: 'prose' | 'poem' | 'inline';
   className?: string;
+  /**
+   * 'en'：這是英文教材（選文、題幹、選項），依內容標 lang（見檔頭）。不給時不加任何 lang（輸出和原本一樣）。
+   */
+  lang?: 'en';
 }
 
-function DefaultBlank({ label }: { label: string }) {
+function DefaultBlank({ label, inEnglish }: { label: string; inEnglish: boolean }) {
   return (
     <span className="mx-0.5 whitespace-nowrap font-semibold">
-      ({label})<span aria-hidden="true">＿＿＿</span>
+      ({label})
+      <span aria-hidden="true" lang={inEnglish ? PAGE_LANG : undefined}>
+        ＿＿＿
+      </span>
     </span>
   );
 }
@@ -34,6 +46,8 @@ function renderNodes(
   nodes: readonly RichNode[],
   highlights: readonly TextHighlight[],
   renderBlank: ((label: string) => ReactNode) | undefined,
+  /** 這幾個節點在 lang="en" 的範圍裡（預設空格的「＿＿＿」要標回 zh-Hant-TW）。 */
+  inEnglish = false,
 ): ReactNode[] {
   return nodes.map((node, i) => {
     switch (node.kind) {
@@ -75,9 +89,9 @@ function renderNodes(
       }
       case 'blank':
         // renderBlank 回傳 null／undefined（例如對不到題目的記號）時退回預設樣式，不讓空格憑空消失。
-        return <Fragment key={i}>{renderBlank?.(node.label) ?? <DefaultBlank label={node.label} />}</Fragment>;
+        return <Fragment key={i}>{renderBlank?.(node.label) ?? <DefaultBlank label={node.label} inEnglish={inEnglish} />}</Fragment>;
       case 'mark': {
-        const children = renderNodes(node.children, highlights, renderBlank);
+        const children = renderNodes(node.children, highlights, renderBlank, inEnglish);
         return node.tag === 'u' ? (
           <u key={i} className="rounded-sm bg-badge-bg/70 px-0.5 decoration-2 underline-offset-4">
             {children}
@@ -97,6 +111,15 @@ function renderNodes(
   });
 }
 
+type LineLang = 'en' | 'zh' | 'neutral';
+
+/** 每一行的語言：英文為主是 en；沒有任何字母與漢字（只有空格記號、數字、符號）是 neutral，跟著整段走。 */
+function lineLang(p: RichParagraph): LineLang {
+  const text = nodesText(p.nodes);
+  if (isEnglishText(text)) return 'en';
+  return /[A-Za-z\u3400-\u9fff]/.test(text) ? 'zh' : 'neutral';
+}
+
 export function RichText({
   text,
   offset = 0,
@@ -104,18 +127,28 @@ export function RichText({
   renderBlank,
   variant = 'prose',
   className,
+  lang,
 }: RichTextProps) {
   const paragraphs = useMemo(() => parseRichText(text, offset), [text, offset]);
+  const langs = useMemo(() => (lang === 'en' ? paragraphs.map((p) => (p.empty ? 'neutral' : lineLang(p))) : null), [lang, paragraphs]);
+  // 整段都是英文（或沒有字的行）：根元素標 en；有中文行時根元素不標，只標英文的那幾行。
+  const allEnglish = langs !== null && langs.includes('en') && !langs.includes('zh');
+  const rootLang = allEnglish ? 'en' : undefined;
+  /** 第 i 行自己要不要標 en（根元素已經標了就不用）；inLine：這一行在 lang="en" 的範圍裡。 */
+  const lineAttr = (p: RichParagraph) => (!allEnglish && langs?.[p.index] === 'en' ? 'en' : undefined);
+  const inLine = (p: RichParagraph) => allEnglish || langs?.[p.index] === 'en';
 
   if (variant === 'poem') {
     return (
-      <div className={className}>
+      <div className={className} lang={rootLang}>
         {paragraphs.map((p) => (
           <Fragment key={p.index}>
             {p.empty ? (
               <span aria-hidden="true" className="block h-3" />
             ) : (
-              <span className="block">{renderNodes(p.nodes, highlights, renderBlank)}</span>
+              <span className="block" lang={lineAttr(p)}>
+                {renderNodes(p.nodes, highlights, renderBlank, inLine(p))}
+              </span>
             )}
           </Fragment>
         ))}
@@ -127,21 +160,29 @@ export function RichText({
   if (variant === 'inline') {
     // 只有一行時不包 block，呼叫端可以用 className="inline" 讓它接在選項代號後面同一行。
     const [only] = visible;
-    if (visible.length === 1 && only) return <span className={className ?? 'block'}>{renderNodes(only.nodes, highlights, renderBlank)}</span>;
+    if (visible.length === 1 && only) {
+      return (
+        <span className={className ?? 'block'} lang={rootLang}>
+          {renderNodes(only.nodes, highlights, renderBlank, inLine(only))}
+        </span>
+      );
+    }
     return (
-      <span className={className ?? 'block'}>
+      <span className={className ?? 'block'} lang={rootLang}>
         {visible.map((p) => (
-          <span key={p.index} className="block">
-            {renderNodes(p.nodes, highlights, renderBlank)}
+          <span key={p.index} className="block" lang={lineAttr(p)}>
+            {renderNodes(p.nodes, highlights, renderBlank, inLine(p))}
           </span>
         ))}
       </span>
     );
   }
   return (
-    <div className={`space-y-3 ${className ?? ''}`}>
+    <div className={`space-y-3 ${className ?? ''}`} lang={rootLang}>
       {visible.map((p) => (
-        <p key={p.index}>{renderNodes(p.nodes, highlights, renderBlank)}</p>
+        <p key={p.index} lang={lineAttr(p)}>
+          {renderNodes(p.nodes, highlights, renderBlank, inLine(p))}
+        </p>
       ))}
     </div>
   );
