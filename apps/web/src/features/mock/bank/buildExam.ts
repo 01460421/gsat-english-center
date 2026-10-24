@@ -11,7 +11,7 @@
  *
  * 寫作題的答案檔和題目一起下載、一起進快照（§5.1）：卷子頁本來就可以下載附答案的 PDF，快照一次就是完整的。
  */
-import { TIER_LABELS, type BankSectionType, type Tier } from '@gsat/shared';
+import { TIER_LABELS, type BankSectionType, type ItemGroupSource, type Tier } from '@gsat/shared';
 import type { ExplanationItem, PracticeGroupFile, PracticeReference } from '../../../data/bank';
 import type { Exam, ExamSection, OptionLetter, QuestionGroup } from '../../../data/exams';
 import type {
@@ -22,17 +22,12 @@ import type {
   BankTranslationAnswersFile,
   BankTranslationPromptFile,
 } from '../../writing/bank/data';
-import {
-  BANK_EXAM_FULL_SCORE,
-  BANK_EXAM_MINUTES,
-  BLUEPRINT_PARTS,
-  BLUEPRINT_SECTIONS,
-  BLUEPRINT_SLOTS,
-  SLOT_COUNT,
-  compositionInstructions,
-} from './blueprint';
+import { compositionInstructions } from './blueprint';
 import { paperNumber } from './code';
-import { adjustReadingLetters } from './letters';
+import type { Bk2Kind } from './code2';
+import { layoutForBk1, type PaperLayout } from './layout';
+import { bk2KindLabel } from './paperId';
+import { BK2_LETTER_PREFIX, adjustReadingLetters } from './letters';
 import { compositionGroup, renumberPracticeGroup, translationGroup } from './renumber';
 
 /** 中譯英、作文的一組檔案：題目檔與答案檔。 */
@@ -74,16 +69,24 @@ export interface BankPaperGroup {
   attribution: string | null;
   /** AI 撰寫時參考的資料（閱讀、混合題一定有）。 */
   references: PracticeReference[];
+  /**
+   * 出版社題組的出處（題組檔的 source；docs/design/weak-paper.md §8.7、§8.9）：卷子頁、作答頁頁尾、PDF 與學習助手的出處文字都讀它。
+   * 本站題沒有這個欄位（自組模擬考只用本站題，整份 BankPaper 和改動前逐位元相同）。
+   */
+  source?: ItemGroupSource;
+  /** 出版社授權結束、快照裡的題組已經遮住（sourceMask.ts）：填充、簡答的答案文字不再顯示。只有遮住的題組才有這個欄位。 */
+  masked?: true;
 }
 
 export interface BankPaperWriting {
-  /** 中譯英：本站參考譯文、4 部分評分重點（items 的 label 是題組內的原始標籤 1、2）。 */
-  translation: BankTranslationAnswersFile;
-  /** 作文：評分重點、扣分說明、AI 範文。 */
-  composition: BankEssayAnswersFile;
-  /** 卷子的標籤（中譯英1、中譯英2）→ 寫作題庫的 item_id（{uid}@{v}#{原始標籤}）。 */
+  /** 中譯英：本站參考譯文、4 部分評分重點（items 的 label 是題組內的原始標籤 1、2）。加強卷沒有中譯英時是 null（自組模擬考一定有）。 */
+  translation: BankTranslationAnswersFile | null;
+  /** 作文：評分重點、扣分說明、AI 範文。加強卷沒有作文時是 null（自組模擬考一定有）。 */
+  composition: BankEssayAnswersFile | null;
+  /** 卷子的標籤（中譯英1、中譯英2）→ 寫作題庫的 item_id（{uid}@{v}#{原始標籤}）；沒有中譯英時是空物件。 */
   translationItemIds: Record<string, string>;
-  essayItemId: string;
+  /** 作文的 item_id；沒有作文時是 null。 */
+  essayItemId: string | null;
 }
 
 /** 一份本站自組卷（§5.1）。 */
@@ -110,17 +113,31 @@ export interface BankPaper {
   source: { slots: BankSlotSource[]; files: Record<string, SlotFile> };
   /** 閱讀實際交換的題目組合（依位置，題組內的原始題號；沒換或不是閱讀是 null）。測試與除錯用。 */
   letterSwaps: ([number, number] | null)[];
+  /**
+   * 加強卷（bk2）才有：版面與卷別（docs/design/weak-paper.md §7.2）。自組模擬考（bk1）不設這兩個欄位，
+   * 整份輸出和改動前逐位元相同（bk1Golden.test.ts）；要用版面時一律寫 paperLayout(paper)。
+   */
+  layout?: PaperLayout;
+  kind?: Bk2Kind;
 }
 
 export interface BuildBankPaperInput {
   paperId: string;
+  /** 自組模擬考的難度；加強卷以 layout.tier 為準。 */
   tier: Tier;
   dataVersion: string;
-  /** 11 個位置，依代號的順序。 */
+  /** 每個位置（題組），依代號的順序；數量要等於版面的位置數。 */
   slots: readonly BankSlotSource[];
   /** 鍵是 uid@v。 */
   files: Readonly<Record<string, SlotFile>>;
   notices?: Partial<BankPaperNotices>;
+  /** 版面；不給就是自組模擬考的藍圖（layoutForBk1(tier)）。 */
+  layout?: PaperLayout;
+}
+
+/** 卷子的版面：加強卷用自己的；自組模擬考是藍圖。 */
+export function paperLayout(paper: Pick<BankPaper, 'tier' | 'layout'>): PaperLayout {
+  return paper.layout ?? layoutForBk1(paper.tier);
 }
 
 export function emptyNotices(): BankPaperNotices {
@@ -131,7 +148,11 @@ export function isWritingPair(file: SlotFile): file is WritingFilePair {
   return 'prompt' in file && 'answers' in file;
 }
 
-const KEY_PATTERN = /^(ai\.([a-z]{2})\.[0-9a-f]{6})@([1-9]\d*)$/;
+/**
+ * 位置的題組鍵（uid@v）：本站題庫（ai.）與出版社題組（pb.，docs/design/weak-paper.md §8.2）。題型代碼兩個字母
+ * （含中譯英 tr、作文 cp，所以不用只收六種練習題型的 ITEM_GROUP_KEY_PATTERN）；題型和位置是否相符由 buildBankPaper 檢查。
+ */
+const KEY_PATTERN = /^((?:ai|pb)\.([a-z]{2})\.[0-9a-f]{6})@([1-9]\d*)$/;
 
 export function parseSlotKey(key: string): { uid: string; v: number } | null {
   const m = KEY_PATTERN.exec(key);
@@ -158,10 +179,14 @@ function writingPair<P extends BankPromptFile, A extends BankAnswersFile>(
   return { prompt: prompt as P, answers: answers as A };
 }
 
-/** 組成一份 BankPaper（§5）。題組檔缺少、和位置不符、題數不合藍圖時丟出錯誤。 */
+/** 組成一份 BankPaper（§5）。題組檔缺少、和位置不符、題數不合藍圖（版面）時丟出錯誤。 */
 export function buildBankPaper(input: BuildBankPaperInput): BankPaper {
-  const { paperId, tier, dataVersion, slots, files } = input;
-  if (slots.length !== SLOT_COUNT) throw new Error(`要有 ${SLOT_COUNT} 個位置，收到 ${slots.length} 個`);
+  const { paperId, dataVersion, slots, files } = input;
+  const layout = input.layout ?? layoutForBk1(input.tier);
+  const bk2 = layout.format === 'bk2';
+  const tier = bk2 ? layout.tier : input.tier;
+  const layoutSlots = layout.slots;
+  if (slots.length !== layoutSlots.length) throw new Error(`要有 ${layoutSlots.length} 個位置，收到 ${slots.length} 個`);
   const code = paperNumber(paperId);
 
   const groupsBySection = new Map<string, QuestionGroup[]>();
@@ -173,11 +198,11 @@ export function buildBankPaper(input: BuildBankPaperInput): BankPaper {
   let translation: { prompt: BankTranslationPromptFile; answers: BankTranslationAnswersFile } | null = null;
   let composition: { prompt: BankEssayPromptFile; answers: BankEssayAnswersFile } | null = null;
 
-  BLUEPRINT_SLOTS.forEach((spec, i) => {
+  layoutSlots.forEach((spec, i) => {
     const src = slots[i];
     if (!src) throw new Error(`缺少第 ${i + 1} 個位置`);
     const parsed = parseSlotKey(src.key);
-    if (!parsed || !parsed.uid.startsWith(`ai.${spec.uidCode}.`)) throw new Error(`第 ${i + 1} 個位置的題組不符：${src.key}`);
+    if (!parsed || !parsed.uid.startsWith(`${spec.ns}.${spec.uidCode}.`)) throw new Error(`第 ${i + 1} 個位置的題組不符：${src.key}`);
     const file = files[src.key];
     if (file) usedFiles[src.key] = file;
     let group: QuestionGroup;
@@ -193,7 +218,7 @@ export function buildBankPaper(input: BuildBankPaperInput): BankPaper {
     } else {
       let practice = practiceFile(file, src.key, spec.section);
       if (spec.section === 'reading') {
-        const adjusted = adjustReadingLetters(practice, i, src.swap);
+        const adjusted = adjustReadingLetters(practice, i, src.swap, bk2 ? BK2_LETTER_PREFIX : '');
         practice = adjusted.file;
         swap = adjusted.swap;
       }
@@ -208,6 +233,8 @@ export function buildBankPaper(input: BuildBankPaperInput): BankPaper {
         last: spec.last,
         attribution: practice.provenance.attribution_text,
         references: practice.provenance.references,
+        ...(practice.source ? { source: practice.source } : {}),
+        ...(practice.masked ? { masked: true as const } : {}),
       });
     }
     letterSwaps.push(swap);
@@ -219,21 +246,23 @@ export function buildBankPaper(input: BuildBankPaperInput): BankPaper {
   // forEach 裡的指定 TypeScript 追不到，這裡重新收窄。
   const tr = translation as { prompt: BankTranslationPromptFile; answers: BankTranslationAnswersFile } | null;
   const cp = composition as { prompt: BankEssayPromptFile; answers: BankEssayAnswersFile } | null;
-  if (!tr || !cp) throw new Error('缺少中譯英或作文');
+  // 自組模擬考一定有中譯英與作文；加強卷照版面（可以沒有）。
+  const needsWriting = (section: 'translation' | 'composition') => layoutSlots.some((s) => s.section === section);
+  if ((needsWriting('translation') && !tr) || (needsWriting('composition') && !cp)) throw new Error('缺少中譯英或作文');
 
-  const sections: ExamSection[] = BLUEPRINT_SECTIONS.map((s) => ({
+  const sections: ExamSection[] = layout.sections.map((s) => ({
     id: s.id,
     type: s.type,
     title: s.title,
     part: s.part,
-    instructions: s.type === 'composition' ? compositionInstructions(cp.prompt.word_count, cp.prompt.paragraphs) : s.instructions,
+    instructions: s.type === 'composition' && cp ? compositionInstructions(cp.prompt.word_count, cp.prompt.paragraphs) : s.instructions,
     points_total: s.points,
     groups: groupsBySection.get(s.id) ?? [],
   }));
 
-  const translationSlot = BLUEPRINT_SLOTS.find((s) => s.section === 'translation');
+  const translationSlot = layoutSlots.find((s) => s.section === 'translation');
   const translationItemIds: Record<string, string> = {};
-  tr.prompt.items.forEach((item, i) => {
+  tr?.prompt.items.forEach((item, i) => {
     const label = translationSlot?.questions[i]?.label ?? `中譯英${i + 1}`;
     translationItemIds[label] = item.item_id;
   });
@@ -244,17 +273,17 @@ export function buildBankPaper(input: BuildBankPaperInput): BankPaper {
     exam: 'reference',
     year: 0,
     session: 'regular',
-    title: `本站自組模擬考・${TIER_LABELS[tier]}・卷號 ${code}`,
-    time_minutes: BANK_EXAM_MINUTES,
-    full_score: BANK_EXAM_FULL_SCORE,
+    title: bk2 && layout.kind !== 'bank' ? `學習助手加強卷・${bk2KindLabel(layout.kind, layout.tier)}・卷號 ${code}` : `本站自組模擬考・${TIER_LABELS[tier]}・卷號 ${code}`,
+    time_minutes: layout.minutes,
+    full_score: layout.fullScore,
     target: 'gsat',
     verified: false,
     official_files: [],
-    parts: BLUEPRINT_PARTS.map((p) => ({ ...p, sections: [...p.sections] })),
+    parts: layout.parts.map((p) => ({ ...p, sections: [...p.sections] })),
     sections,
   };
 
-  return {
+  const paper: BankPaper = {
     id: paperId,
     code,
     tier,
@@ -262,10 +291,15 @@ export function buildBankPaper(input: BuildBankPaperInput): BankPaper {
     exam,
     explanations,
     elimination,
-    writing: { translation: tr.answers, composition: cp.answers, translationItemIds, essayItemId: cp.prompt.item_id },
+    writing: { translation: tr?.answers ?? null, composition: cp?.answers ?? null, translationItemIds, essayItemId: cp?.prompt.item_id ?? null },
     groups,
     notices: { ...emptyNotices(), ...input.notices },
     source: { slots: slots.map((s) => ({ key: s.key, swap: s.swap.map(([q, r]) => [q, r] as [number, number]) })), files: usedFiles },
     letterSwaps,
   };
+  if (bk2 && layout.kind !== 'bank') {
+    paper.layout = layout;
+    paper.kind = layout.kind;
+  }
+  return paper;
 }

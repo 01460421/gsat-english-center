@@ -3,7 +3,8 @@
  * AI 題庫的選題規則（docs/design/bank-writing.md §4.1）：網站建置與 Worker 的題目庫產生器共用這一份程式，
  * 兩邊看到的題組集合才一定相同。零依賴的 Node ESM（只用 Node 22 內建模組與同目錄、同樣零依賴的 svg-sanitize.mjs），型別宣告在旁邊的 bank-select.d.mts。
  *
- *   apps/web/scripts/lib/bank-data.mjs        題庫練習：selectBankGroups（行為和搬過來之前完全相同）
+ *   apps/web/scripts/lib/bank-data.mjs        題庫練習：selectBankGroups（行為和搬過來之前完全相同）；
+ *                                             出版社模考：selectPublisherGroups（docs/design/weak-paper.md §8.4，同一套版本、撤下、下架與 D8 規則）
  *   apps/web/scripts/lib/writing-bank.mjs     本站仿真中譯英與作文：selectWritingGroups
  *   apps/api/scripts/build-writing-prompts.mjs Worker 的題目庫：selectWritingGroups、restrictedFragments
  *
@@ -33,6 +34,15 @@ export const BANK_ESSAY_INSTRUCTIONS = '請依提示寫一篇英文作文，文�
 
 /** 檔名 {uid}@{version}.json（packages/shared/src/bank.ts 的 BANK_FILENAME_PATTERN）。 */
 export const BANK_FILENAME_PATTERN = /^(ai\.(?:vo|cz|wb|st|rd|mx|tr|cp)\.[0-9a-f]{6})@([1-9]\d*)\.json$/;
+
+/** 出版社正規化檔的格式代號（packages/shared/src/item-source.ts 的 PUBLISHER_SCHEMA；這裡是零依賴的 .mjs，測試確認兩邊相同）。 */
+export const PUBLISHER_SCHEMA = 'gsat-pub/v1';
+/** 出版社正規化檔的檔名（item-source.ts 的 PUBLISHER_FILENAME_PATTERN）：第一版只收六種選擇與混合題型（§8.5）。 */
+export const PUBLISHER_FILENAME_PATTERN = /^(pb\.(?:vo|cz|wb|st|rd|mx)\.[0-9a-f]{6})@([1-9]\d*)\.json$/;
+/** 來源 id（item-source.ts 的 ITEM_SOURCE_ID_PATTERN）：data/publisher/{id}/ 的目錄名。 */
+export const SOURCE_ID_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+/** 出版社題組能用的題型（同題庫練習的六種；中譯英、作文第一版不收，§8.5）。 */
+export const PUBLISHER_SECTION_TYPES = /** @type {const} */ (['vocabulary', 'cloze', 'word_bank', 'structure', 'reading', 'mixed']);
 /** uid 的題型縮寫（tiers.ts 的 BANK_UID_CODES）。 */
 const UID_CODES = /** @type {Record<string, string>} */ ({
   vocabulary: 'vo',
@@ -51,7 +61,7 @@ export class BankSelectError extends Error {}
 /**
  * @typedef {Record<string, unknown>} JsonObject
  * @typedef {'not_verified' | 'checkpoint' | 'unsupported_section' | 'older_version' | 'withdrawn' | 'bad_filename' | 'other_schema'
- *   | 'unpublished' | 'license' | 'bad_shape' | 'd8_overlap'} SkipReason
+ *   | 'unpublished' | 'license' | 'bad_shape' | 'd8_overlap' | 'source_inactive' | 'bad_source' | 'not_reviewed'} SkipReason
  * @typedef {{ file: string, reason: SkipReason }} SkippedFile
  * @typedef {{ file: string, version: number, status: string, raw: JsonObject | null }} VersionRecord
  * @typedef {{ uid: string, version: number, file: string, raw: JsonObject }} ChosenGroup
@@ -105,14 +115,19 @@ function repoPath(repoRoot, file) {
 // 人工審核下架清單 data/unpublish.jsonl（設計文件 §4.2）
 // ---------------------------------------------------------------------------
 
+/** 本站題庫的檔案：data/bank/v1/{題型}/{難度}/ai.…@v.json。 */
 const UNPUBLISH_PATH = /^data\/bank\/v1\/([a-z_]+)\/(basic|advanced|top)\/(ai\.[a-z]{2}\.[0-9a-f]{6}@[1-9]\d*\.json)$/;
+/** 出版社正規化檔（weak-paper.md §8.4）：data/publisher/{來源 id}/v1/{題型}/{難度}/pb.…@v.json。 */
+const UNPUBLISH_PUBLISHER_PATH = /^data\/publisher\/([a-z0-9]+(?:-[a-z0-9]+)*)\/v1\/([a-z_]+)\/(basic|advanced|top)\/(pb\.[a-z]{2}\.[0-9a-f]{6}@[1-9]\d*\.json)$/;
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 
 /**
  * data/unpublish.jsonl → Map<repo 相對路徑, { date, reason }>；檔案不存在回空 Map。
  * 下架是安全機制，一律 fail closed（丟 BankSelectError；網站建置與 Worker 產生器都會失敗）：
- *   任何一行不是 JSON、欄位不是剛好 path／date／reason、path 不在 data/bank/v1/ 底下或檔名不符 {uid}@{v}.json、
- *   path 指到不存在的檔案（打錯字會讓題目照常上架）、同一個 path 登記兩次。空白行略過。
+ *   任何一行不是 JSON、欄位不是剛好 path／date／reason、path 不在 data/bank/v1/ 或 data/publisher/{來源}/v1/ 底下、
+ *   檔名不符 {uid}@{v}.json、path 指到不存在的檔案（打錯字會讓題目照常上架）、同一個 path 登記兩次。空白行略過。
+ * 出版社題組的下架（weak-paper.md §8.4）和本站題庫同一份清單：寫作題的選題（Worker 的產生器也讀這份）只看 data/bank/v1，
+ * 登記的出版社路徑對它沒有作用，但格式一樣要對。
  * @param {string} file
  * @param {{ repoRoot: string }} options
  * @returns {Map<string, UnpublishEntry>}
@@ -138,8 +153,8 @@ export function readUnpublish(file, { repoRoot }) {
       const keys = Object.keys(row).sort().join(',');
       if (keys !== 'date,path,reason') throw new BankSelectError(`${where} 的欄位必須剛好是 path、date、reason（現在是 ${keys || '空的'}）`);
       const { path: p, date, reason } = row;
-      if (typeof p !== 'string' || !UNPUBLISH_PATH.test(p)) {
-        throw new BankSelectError(`${where} 的 path 必須是 data/bank/v1/{題型}/{難度}/{uid}@{version}.json`);
+      if (typeof p !== 'string' || !(UNPUBLISH_PATH.test(p) || UNPUBLISH_PUBLISHER_PATH.test(p))) {
+        throw new BankSelectError(`${where} 的 path 必須是 data/bank/v1/{題型}/{難度}/{uid}@{version}.json 或 data/publisher/{來源}/v1/{題型}/{難度}/{uid}@{version}.json`);
       }
       if (typeof date !== 'string' || !ISO_DATE.test(date)) throw new BankSelectError(`${where} 的 date 必須是 YYYY-MM-DD`);
       if (!nonEmptyString(reason)) throw new BankSelectError(`${where} 的 reason 不能是空的`);
@@ -177,9 +192,14 @@ const STATUS_LABELS = {
  *   repoRoot?: string,
  *   relative?: (file: string) => string,
  *   changeLabel?: string,
+ *   filenamePattern?: RegExp,
+ *   schema?: string,
+ *   pool?: string | null,
  * }} options
  *   unpublished 的鍵是 repo 相對路徑：有 repoRoot 時用它算，沒有就用 relative(file)。
  *   changeLabel：警告裡「改了…」的說法（題庫練習是「答案」）。
+ *   filenamePattern／schema／pool：檔名、格式代號與練習池（預設是本站題庫的 BANK_FILENAME_PATTERN、gsat-bank/v1、practice；
+ *   出版社正規化檔是 PUBLISHER_FILENAME_PATTERN、gsat-pub/v1，沒有練習池欄位時傳 null）。
  * @returns {SelectResult}
  */
 export function selectBankGroups(bankDir, options) {
@@ -187,6 +207,9 @@ export function selectBankGroups(bankDir, options) {
   const keyOf = (/** @type {string} */ f) => (options.repoRoot ? repoPath(options.repoRoot, f) : rel(f));
   const unpublished = options.unpublished ?? new Map();
   const changeLabel = options.changeLabel ?? '內容';
+  const filenamePattern = options.filenamePattern ?? BANK_FILENAME_PATTERN;
+  const schema = options.schema ?? BANK_SCHEMA;
+  const pool = options.pool === undefined ? 'practice' : options.pool;
   /** @type {SelectResult} */
   const result = { chosen: [], skipped: [], warnings: [], inputs: [], scanned: 0 };
   if (!existsSync(bankDir)) return result;
@@ -200,7 +223,7 @@ export function selectBankGroups(bankDir, options) {
 
   for (const file of listJsonFiles(bankDir)) {
     result.scanned += 1;
-    const m = BANK_FILENAME_PATTERN.exec(path.basename(file));
+    const m = filenamePattern.exec(path.basename(file));
     if (!m) {
       result.skipped.push({ file: rel(file), reason: 'bad_filename' });
       continue;
@@ -228,12 +251,12 @@ export function selectBankGroups(bankDir, options) {
       result.skipped.push({ file: rel(file), reason: 'not_verified' });
       continue;
     }
-    if (raw.schema !== BANK_SCHEMA) {
-      result.warnings.push(`${rel(file)} 的 schema 是 ${String(raw.schema)}，前端只支援 ${BANK_SCHEMA}，略過`);
+    if (raw.schema !== schema) {
+      result.warnings.push(`${rel(file)} 的 schema 是 ${String(raw.schema)}，前端只支援 ${schema}，略過`);
       result.skipped.push({ file: rel(file), reason: 'other_schema' });
       continue;
     }
-    if (raw.pool !== 'practice') {
+    if (pool !== null && raw.pool !== pool) {
       result.skipped.push({ file: rel(file), reason: 'checkpoint' });
       continue;
     }
@@ -950,6 +973,241 @@ export function selectWritingGroups(bankDir, options) {
       x.uid.localeCompare(y.uid),
   );
   return { ...sel, chosen, inputs: chosen.map((c) => c.file).sort(), corpus, unpublished };
+}
+
+// ---------------------------------------------------------------------------
+// 出版社模考（docs/design/weak-paper.md §8.3、§8.4、§7.6）
+// ---------------------------------------------------------------------------
+
+/** 出版社題組略過原因的中文（建置紀錄用；共用的原因同 WRITING_SKIP_REASON_LABELS）。 */
+export const PUBLISHER_SKIP_REASON_LABELS = /** @type {const} */ ({
+  not_verified: '尚未通過校對（draft／rejected）',
+  checkpoint: '不是練習池',
+  unsupported_section: '題型第一版不收（只收六種選擇與混合題型）',
+  older_version: '有更新的 verified 版本',
+  withdrawn: '較新的版本改了答案、還沒通過校對（暫時撤下）',
+  bad_filename: '檔名不符合 pb.{題型}.{hex}@{version}.json',
+  other_schema: '格式版本不支援',
+  unpublished: '人工審核後下架（data/unpublish.jsonl）',
+  license: '授權不是 publisher-licensed／verbatim',
+  bad_shape: '欄位檢查不通過',
+  d8_overlap: '和官方受保護文字重疊（D8）',
+  source_inactive: '來源停用或授權到期',
+  bad_source: '檔案的 source_id 和目錄不一致',
+  not_reviewed: '沒有人工檢查紀錄（review.checks 要有 answers 與 d8）',
+});
+
+/** 難度的分級依據（§8.5）。 */
+export const PUBLISHER_TIER_BASES = /** @type {const} */ (['stats', 'publisher', 'metrics', 'manual']);
+/** 技能標註的依據（§8.6）。 */
+export const PUBLISHER_TAG_BASES = /** @type {const} */ (['publisher', 'rules', 'agent', 'manual', 'none']);
+/** 人工檢查一定要有的項目（§8.4 的 review.checks；§8.8：校對者逐題核對答案、D8 檢查）。 */
+export const PUBLISHER_REQUIRED_CHECKS = /** @type {const} */ (['answers', 'd8']);
+/** uid 的題型縮寫（出版社題組的六種）。 */
+const PUBLISHER_UID_CODES = /** @type {Record<string, string>} */ ({ vocabulary: 'vo', cloze: 'cz', word_bank: 'wb', structure: 'st', reading: 'rd', mixed: 'mx' });
+
+/**
+ * @typedef {{ id: string, ns: string, active: boolean, ends_on: string | null, scope: readonly string[] }} PublishableSourceLike
+ */
+
+/**
+ * 這次建置能不能發布這個來源的題組（fail closed，§7.6）：出版社來源、active、今天（台灣時間 YYYY-MM-DD）還沒過 ends_on
+ * （到期日當天仍可用）、授權範圍包含 web（題庫練習就是網站顯示）。
+ * @param {PublishableSourceLike} source
+ * @param {string} today
+ */
+export function sourcePublishable(source, today) {
+  return source.ns === 'pb' && source.active && !(source.ends_on !== null && today > source.ends_on) && source.scope.includes('web');
+}
+
+/** @param {unknown} v @returns {v is string[]} */
+function isNonEmptyLabelList(v) {
+  return Array.isArray(v) && v.length > 0 && v.every(nonEmptyString);
+}
+
+/**
+ * 出版社正規化檔的契約檢查（題組本身的形狀由網站建置的前端契約檢查負責；這裡是 gsat-pub/v1 多的欄位）：
+ * 回傳 [原因, 說明] 的清單，空陣列＝可以發布。tools/validate_publisher.py 檢查同一份契約（匯入時、CI）。
+ * @param {JsonObject} raw
+ * @param {{ sourceId: string, uid: string, version: number, file: string }} at
+ * @returns {Array<[SkipReason, string]>}
+ */
+export function publisherProblems(raw, at) {
+  /** @type {Array<[SkipReason, string]>} */
+  const out = [];
+  const shape = (/** @type {string} */ msg) => out.push(['bad_shape', msg]);
+  if (raw.source_id !== at.sourceId) out.push(['bad_source', `source_id ${String(raw.source_id)} 和目錄 ${at.sourceId} 不一致`]);
+  if (raw.uid !== at.uid || raw.version !== at.version) shape(`uid／version（${String(raw.uid)}@${String(raw.version)}）和檔名不一致`);
+  const section = String(raw.section_type);
+  if (!PUBLISHER_SECTION_TYPES.includes(/** @type {never} */ (section))) shape(`section_type ${section} 第一版不收`);
+  else if (PUBLISHER_UID_CODES[section] !== at.uid.split('.')[1]) shape(`uid 的題型縮寫和 section_type ${section} 不一致`);
+  if (!TIERS.includes(/** @type {never} */ (raw.tier))) shape(`tier ${String(raw.tier)} 不是 basic／advanced／top`);
+  const tierDir = path.basename(path.dirname(at.file));
+  const sectionDir = path.basename(path.dirname(path.dirname(at.file)));
+  if (tierDir !== raw.tier || sectionDir !== section) shape(`應該放在 v1/${section}/${String(raw.tier)}/ 底下`);
+  if (!nonEmptyString(raw.format_version)) shape('缺少 format_version');
+  const ref = raw.source_ref;
+  if (!isObject(ref) || !isNonEmptyLabelList(ref.labels) || !(ref.paper === undefined || ref.paper === null || typeof ref.paper === 'string')) {
+    shape('source_ref 必須是 { paper, labels: [原卷題號…] }');
+  }
+  if (!PUBLISHER_TIER_BASES.includes(/** @type {never} */ (raw.tier_basis))) shape(`tier_basis 必須是 ${PUBLISHER_TIER_BASES.join('／')}`);
+  if (!PUBLISHER_TAG_BASES.includes(/** @type {never} */ (raw.tag_basis))) shape(`tag_basis 必須是 ${PUBLISHER_TAG_BASES.join('／')}`);
+  const a = isObject(raw.annotations) ? raw.annotations : null;
+  const hasExplanations = a !== null && isObject(a.explanations);
+  if (raw.explanation_basis === 'publisher') {
+    if (!hasExplanations) shape('explanation_basis 是 publisher，但沒有 annotations.explanations');
+  } else if (raw.explanation_basis === null) {
+    if (hasExplanations) shape('explanation_basis 是 null，不能有 annotations.explanations');
+  } else {
+    shape('explanation_basis 必須是 publisher 或 null');
+  }
+  // 混合題的填充、簡答要能自動判分：站方補齊所有可接受寫法、標 complete 才發布（§8.4；第一版不做自評）。
+  if (section === 'mixed') {
+    if (raw.open_key !== 'complete') shape('混合題的 open_key 必須是 complete（站方已補齊所有可接受答案）');
+  } else if (raw.open_key !== undefined && raw.open_key !== null) {
+    shape('只有混合題可以有 open_key');
+  }
+  const extra = raw.skill_extra;
+  if (extra !== undefined && extra !== null) {
+    const ok = isObject(extra) && Object.values(extra).every((e) => isObject(e) && Object.entries(e).every(([k, v]) => (k === 'clue_type' || k === 'sense') && typeof v === 'string'));
+    if (!ok) shape('skill_extra 必須是 {題號: {clue_type?, sense?}}');
+  }
+  const scoring = raw.scoring_extra;
+  if (scoring !== undefined && scoring !== null) {
+    const ok =
+      isObject(scoring) &&
+      Object.values(scoring).every(
+        (e) =>
+          isObject(e) &&
+          Object.keys(e).every((k) => k === 'partial_credit_forms' || k === 'interchangeable_with') &&
+          (e.partial_credit_forms === undefined || isNonEmptyStringList(e.partial_credit_forms)) &&
+          (e.interchangeable_with === undefined || e.interchangeable_with === null || typeof e.interchangeable_with === 'number'),
+      );
+    if (!ok) shape('scoring_extra 必須是 {題號: {partial_credit_forms?, interchangeable_with?}}');
+  }
+  const pv = raw.provenance;
+  if (!isObject(pv) || pv.license !== 'publisher-licensed' || pv.derivation !== 'verbatim') out.push(['license', 'provenance 必須是 publisher-licensed／verbatim']);
+  const review = raw.review;
+  const checks = isObject(review) && Array.isArray(review.checks) ? review.checks : [];
+  if (!isObject(review) || !nonEmptyString(review.by) || typeof review.date !== 'string' || !ISO_DATE.test(review.date) || !PUBLISHER_REQUIRED_CHECKS.every((c) => checks.includes(c))) {
+    out.push(['not_reviewed', `review 要有 by、date（YYYY-MM-DD）與 checks（至少 ${PUBLISHER_REQUIRED_CHECKS.join('、')}）`]);
+  }
+  return out;
+}
+
+/**
+ * 出版社題組的選題（§8.4）：掃描 publisherDir（data/publisher）底下每個來源的 v1/，套用和本站題庫同一套規則
+ * （selectBankGroups：每個 uid 取最大的 verified 版本、較新的未通過版本改了答案就撤下舊版、下架清單），再加上：
+ *   - 目錄名就是來源 id，一定要在來源登記檔裡（不在就丟 BankSelectError：登記檔是授權的唯一依據，打錯不能默默略過）；
+ *   - 來源停用、過了到期日或授權不含 web（sourcePublishable）：整個來源的檔案都不發布（source_inactive）；
+ *   - publisherProblems 的契約檢查（source_id、原卷位置、分級與標註依據、open_key、授權、人工檢查紀錄）；
+ *   - D8（bankD8Hits；scoring_extra 的可接受寫法也比對）。
+ * chosen 依題型、難度、uid 排序；每一組的 raw.source_id 就是來源。目錄不存在時是空的結果。
+ * @param {string} publisherDir
+ * @param {{
+ *   sources: readonly PublishableSourceLike[],
+ *   today: string,
+ *   corpus: OfficialCorpus,
+ *   contentKey: (raw: JsonObject) => string | null,
+ *   unpublished?: Map<string, UnpublishEntry>,
+ *   repoRoot?: string,
+ *   relative?: (file: string) => string,
+ * }} options
+ * @returns {SelectResult & { bySource: Record<string, number> }}
+ */
+export function selectPublisherGroups(publisherDir, options) {
+  const rel = options.relative ?? ((/** @type {string} */ f) => f);
+  /** @type {SelectResult & { bySource: Record<string, number> }} */
+  const result = { chosen: [], skipped: [], warnings: [], inputs: [], scanned: 0, bySource: {} };
+  if (!existsSync(publisherDir)) return result;
+  const byId = new Map(options.sources.map((src) => [src.id, src]));
+  // uid 在所有來源之間不能重複（不論狀態）：bk2 代號只記 uid、題組檔與 paper-skills 以 uid@v 為鍵、清理腳本依 uid 停用案例，
+  // 兩個來源用同一個 uid 會讓出處與授權對不上（§8.2 交給匯入程式避免，這裡是建置的最後一道檢查，fail closed）。
+  /** @type {Map<string, string>} */
+  const owner = new Map();
+  for (const ent of readdirSync(publisherDir, { withFileTypes: true }).sort((x, y) => x.name.localeCompare(y.name))) {
+    if (ent.name.startsWith('.') || !ent.isDirectory()) continue;
+    const dir = path.join(publisherDir, ent.name, 'v1');
+    if (!existsSync(dir)) continue;
+    for (const file of listJsonFiles(dir)) {
+      const uid = PUBLISHER_FILENAME_PATTERN.exec(path.basename(file))?.[1];
+      if (!uid) continue;
+      const other = owner.get(uid);
+      if (other !== undefined && other !== ent.name) {
+        throw new BankSelectError(`${uid} 同時出現在出版社來源 ${other} 與 ${ent.name}（${rel(file)}）：出版社題組的 uid 在所有來源之間不能重複`);
+      }
+      owner.set(uid, ent.name);
+    }
+  }
+  /** @type {ChosenGroup[]} */
+  const chosen = [];
+  for (const ent of readdirSync(publisherDir, { withFileTypes: true }).sort((x, y) => x.name.localeCompare(y.name))) {
+    if (ent.name.startsWith('.') || !ent.isDirectory()) continue;
+    const id = ent.name;
+    const source = byId.get(id);
+    if (!SOURCE_ID_PATTERN.test(id) || !source || source.ns !== 'pb') {
+      throw new BankSelectError(`${rel(path.join(publisherDir, id))} 的來源 ${id} 不在 data/sources.json（或不是出版社來源）：每個出版社目錄都要先登記來源與授權`);
+    }
+    const dir = path.join(publisherDir, id, 'v1');
+    if (!existsSync(dir)) continue;
+    if (!sourcePublishable(source, options.today)) {
+      for (const file of listJsonFiles(dir)) {
+        result.scanned += 1;
+        result.skipped.push({ file: rel(file), reason: 'source_inactive' });
+      }
+      continue;
+    }
+    const sel = selectBankGroups(dir, {
+      sections: PUBLISHER_SECTION_TYPES,
+      contentKey: options.contentKey,
+      withdrawOnRejectedSameKey: false,
+      unpublished: options.unpublished,
+      repoRoot: options.repoRoot,
+      relative: rel,
+      changeLabel: '答案',
+      filenamePattern: PUBLISHER_FILENAME_PATTERN,
+      schema: PUBLISHER_SCHEMA,
+      pool: null,
+    });
+    result.scanned += sel.scanned;
+    result.skipped.push(...sel.skipped);
+    result.warnings.push(...sel.warnings);
+    for (const c of sel.chosen) {
+      const problems = publisherProblems(c.raw, { sourceId: id, uid: c.uid, version: c.version, file: c.file });
+      if (problems.length > 0) {
+        const [reason] = /** @type {[SkipReason, string]} */ (problems[0]);
+        result.skipped.push({ file: rel(c.file), reason });
+        result.warnings.push(`${c.uid}@${c.version}（${id}）不發布：${problems.slice(0, 5).map(([, m]) => m).join('；')}${problems.length > 5 ? `；另有 ${problems.length - 5} 項` : ''}`);
+        continue;
+      }
+      const scoringStrings = isObject(c.raw.scoring_extra)
+        ? Object.values(c.raw.scoring_extra).flatMap((e) => (isObject(e) && Array.isArray(e.partial_credit_forms) ? e.partial_credit_forms.map(String) : []))
+        : [];
+      const hits = [...bankD8Hits(c.raw, options.corpus), ...d8HitsInStrings(scoringStrings, options.corpus).map((h) => ({ path: 'scoring_extra', kind: h.kind, length: h.length }))];
+      if (hits.length > 0) {
+        result.skipped.push({ file: rel(c.file), reason: 'd8_overlap' });
+        result.warnings.push(
+          `${c.uid}@${c.version}（${id}）和官方受保護文字重疊（D8），不發布：${hits
+            .slice(0, 5)
+            .map((h) => `${h.path}（${h.kind}，${h.length}）`)
+            .join('、')}`,
+        );
+        continue;
+      }
+      chosen.push(c);
+      result.bySource[id] = (result.bySource[id] ?? 0) + 1;
+    }
+  }
+  const sectionOrder = (/** @type {string} */ x) => PUBLISHER_SECTION_TYPES.indexOf(/** @type {never} */ (x));
+  chosen.sort(
+    (x, y) =>
+      sectionOrder(String(x.raw.section_type)) - sectionOrder(String(y.raw.section_type)) ||
+      TIER_ORDER(String(x.raw.tier)) - TIER_ORDER(String(y.raw.tier)) ||
+      x.uid.localeCompare(y.uid),
+  );
+  result.chosen = chosen;
+  result.inputs = chosen.map((c) => c.file).sort();
+  return result;
 }
 
 /**

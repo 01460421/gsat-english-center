@@ -13,7 +13,7 @@ import { ChevronRight } from 'lucide-react';
 import { Suspense, use, useId, useMemo, useState } from 'react';
 import { Link } from 'react-router';
 import { InfoSection, ModulePage, PageHeader } from '../../components/ModulePage';
-import { PRACTICE_SECTION_TYPES, loadBankIndex, type BankIndex, type PracticeSectionType, type Tier } from '../../data/bank';
+import { PRACTICE_SECTION_TYPES, loadPracticeIndex, type BankIndex, type PracticeSectionType, type Tier } from '../../data/bank';
 import { forgetFailedLoads } from '../../data/client';
 import { useIsDesktop, useMainTier } from '../../lib/media';
 import { getPage } from '../../modules';
@@ -273,7 +273,7 @@ function AiOrigin() {
 
 export default function PracticeHome() {
   const [retry, setRetry] = useState(0);
-  const indexPromise = useMemo(() => loadBankIndex(), [retry]);
+  const indexPromise = useMemo(() => loadPracticeIndex(), [retry]);
   const isDesktop = useIsDesktop();
   const { ws } = useMainTier();
   const handleRetry = () => {

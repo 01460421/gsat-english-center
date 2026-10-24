@@ -15,18 +15,22 @@
  * 解析卡、排除法表的型別直接沿用 @gsat/shared（和出題工具、檢查工具同一份定義）。
  */
 import {
-  GROUP_KEY_PATTERN,
+  ITEM_GROUP_KEY_PATTERN,
+  PRACTICE_ITEM_UID_PATTERN,
+  isItemGroupSource,
   type BankDerivation,
   type BankLicense,
   type BankSectionType,
   type ChartSpec,
   type EliminationAnnotation,
   type ExplanationsAnnotation,
+  type ItemGroupSource,
   type ProvenanceSource,
   type Tier,
   type TranslationZhAnnotation,
 } from '@gsat/shared';
 import { DataLoadError, DATA_BASE_URL, fetchDataFile, isRecord, memoizeAsync } from './client';
+import { loadSourceRegistry, sourceActiveFn } from './sources';
 import type { Figure, QuestionGroup } from './exams';
 
 export type { ChartSeries, ChartSpec, ChartType, ExplanationItem, EliminationAnnotation, FillTransform, Tier } from '@gsat/shared';
@@ -39,8 +43,11 @@ export function isPracticeSectionType(value: unknown): value is PracticeSectionT
   return (PRACTICE_SECTION_TYPES as readonly unknown[]).includes(value);
 }
 
-/** 題組 uid：ai.{題型縮寫}.{6 位小寫十六進位}（@gsat/shared 的 BANK_UID_PATTERN，這裡只收練習題型）。 */
-export const PRACTICE_UID_PATTERN = /^ai\.(vo|cz|wb|st|rd|mx)\.[0-9a-f]{6}$/;
+/**
+ * 題組 uid：{命名空間}.{題型縮寫}.{6 位小寫十六進位}，命名空間是 ai（本站題庫）或 pb（出版社模考；docs/design/weak-paper.md §8.2）。
+ * 只收練習題型；同 @gsat/shared 的 PRACTICE_ITEM_UID_PATTERN（本站 AI 題庫的檔案另用 BANK_UID_PATTERN）。
+ */
+export const PRACTICE_UID_PATTERN = PRACTICE_ITEM_UID_PATTERN;
 
 export interface BankCurriculumRef {
   /** 課綱代碼（ASCII 寫法，例如 3-V-12）。 */
@@ -65,6 +72,8 @@ export interface BankIndexEntry {
    * （docs/design/learning-assistant.md §5.6）。
    */
   skills?: string[];
+  /** 出版社題組的來源 id（bank/sources.json 的 id）；本站題庫省略（docs/design/weak-paper.md §8.9）。 */
+  src?: string;
 }
 
 /** /data/bank/index.json。groups 依題型、難度、uid 排序。 */
@@ -95,9 +104,10 @@ export interface PracticeReference {
 }
 
 export interface PracticeProvenance {
-  license: BankLicense;
-  derivation: BankDerivation;
-  /** 出處說明（CC BY 改作必填）。 */
+  /** 出版社題組是 publisher-licensed（經授權的逐字內容，derivation verbatim；docs/design/weak-paper.md §8.4）。 */
+  license: BankLicense | 'publisher-licensed';
+  derivation: BankDerivation | 'verbatim';
+  /** 出處說明（CC BY 改作必填；出版社題組是來源的出處句）。 */
   attribution_text: string | null;
   /** 有公開網址的來源（改作的原文、資料集）。 */
   sources: { role: ProvenanceSource['role']; url: string }[];
@@ -121,12 +131,32 @@ export interface PracticeGroupFile {
   section_type: PracticeSectionType;
   format_version: string;
   tier: Tier;
-  /** 已通過自動驗證（程式檢查、兩位盲解、干擾選項稽核、唯一正解）；人工審核還在進行。 */
-  auto_verified: true;
+  /** 本站 AI 題：已通過自動驗證（程式檢查、兩位盲解、干擾選項稽核、唯一正解）；人工審核還在進行。出版社題組沒有這個欄位。 */
+  auto_verified?: true;
   group: PracticeGroup;
   annotations: PracticeAnnotations;
   curriculum: BankCurriculumRef[];
   provenance: PracticeProvenance;
+  /**
+   * 每一題（題組裡的原始題號）的技能代碼：出版社題組在建置時由標註算好（docs/design/weak-paper.md §8.4、§8.9）。
+   * 本站題不輸出（前端照舊用 skillCodesOf 算）；作答紀錄、技能分布與成績單一律經過 shared 的 skillsOfQuestion。
+   */
+  skills?: Record<string, string[]>;
+  /**
+   * 出處（只有出版社題組有；docs/design/weak-paper.md §8.9）：來源 id、短名、書名、逐字的出處句、原卷位置的畫面文字。
+   * 出版社題組沒有出版社解析時，解析列只有計分欄位、explanation_zh 是空字串（見 hasExplanationText）。
+   */
+  source?: ItemGroupSource;
+  /**
+   * 只在這台裝置上：出版社授權結束後，快照裡的題組換成遮住的版本（features/mock/bank/sourceMask.ts）。計分要的答案留著，
+   * 但檢討試卷與 PDF 的答案頁不能再印出填充、簡答的答案文字（題目內容的一部分）。公開題組檔沒有這個欄位。
+   */
+  masked?: true;
+}
+
+/** 解析列有沒有解析文字（出版社題組沒有出版社解析時，解析列只帶計分欄位、explanation_zh 是空字串）。 */
+export function hasExplanationText(item: { explanation_zh?: string } | null | undefined): boolean {
+  return typeof item?.explanation_zh === 'string' && item.explanation_zh.trim() !== '';
 }
 
 /** 題組版本的代號：「ai.wb.0a1b2c@1」。檔名、作答紀錄都用它。 */
@@ -149,7 +179,8 @@ const indexLoader = memoizeAsync((_key: 'index') => fetchDataFile('bank/index.js
 
 const groupLoader = memoizeAsync((key: string) => {
   // 代號格式在快取裡面檢查：格式不對也要每次拿到同一個失敗的 Promise（理由見 client.ts 檔頭）。
-  const m = GROUP_KEY_PATTERN.exec(key);
+  // 本站題庫（ai.）與出版社題組（pb.，加強卷的卷子會用到；docs/design/weak-paper.md §8.2）都收。
+  const m = ITEM_GROUP_KEY_PATTERN.exec(key);
   if (!m) return Promise.reject(new DataLoadError('not_found', `${DATA_BASE_URL}bank/groups/${encodeURIComponent(key)}.json`, null));
   const [, uid, version] = m;
   return fetchDataFile(
@@ -161,13 +192,36 @@ const groupLoader = memoizeAsync((key: string) => {
       body.version === Number(version) &&
       isRecord(body.group) &&
       Array.isArray(body.group.questions) &&
-      isRecord(body.annotations),
+      isRecord(body.annotations) &&
+      // 出版社題組一定帶出處（沒有就當成壞檔：不能把出版社題當成本站題顯示）；本站題不能帶。
+      (uid?.startsWith('pb.') ? isItemGroupSource(body.source) : body.source === undefined),
   );
 });
 
 /** 載入題庫索引（同一頁面內只下載一次）。 */
 export function loadBankIndex(): Promise<BankIndex> {
   return indexLoader('index');
+}
+
+/**
+ * 題庫索引只留現在能顯示的題組：出版社題組（有 src）要它的來源有效、沒過到期日（docs/design/weak-paper.md §7.6；
+ * 到期後沒有重建網站也一樣停用）。索引裡沒有出版社題組時不下載來源登記檔，結果和 loadBankIndex 相同。
+ */
+export function filterActiveGroups(index: BankIndex, isActive: (src: string) => boolean): BankIndex {
+  if (!index.groups.some((g) => g.src !== undefined)) return index;
+  const groups = index.groups.filter((g) => g.src === undefined || isActive(g.src));
+  return { ...index, count: groups.length, groups };
+}
+
+const practiceIndexLoader = memoizeAsync(async (_key: 'index') => {
+  const index = await loadBankIndex();
+  if (!index.groups.some((g) => g.src !== undefined)) return index;
+  return filterActiveGroups(index, sourceActiveFn(await loadSourceRegistry()));
+});
+
+/** 題庫練習（選單、抽題）用的索引：授權結束的出版社題組不列（filterActiveGroups）。 */
+export function loadPracticeIndex(): Promise<BankIndex> {
+  return practiceIndexLoader('index');
 }
 
 /** 載入一個題組。uid／version 先檢查格式（不發請求，直接當成找不到），免得奇怪的字串被拼進網址。 */

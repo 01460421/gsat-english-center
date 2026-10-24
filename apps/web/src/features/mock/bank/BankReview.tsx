@@ -8,6 +8,10 @@
  *   renderFigure          圖表自己畫，交卷後標出解析引用的數據；表格不顯示文字描述
  *   noOfficialStats       不顯示「沒有官方答對率統計」的說明（AI 題本來就沒有）
  *   作答時標記過的題目加上標記章；解析卡的「在文中標出證據句」加亮並捲到選文裡的證據句（同題庫練習）
+ *
+ * 出版社題組（加強卷，docs/design/weak-paper.md §8.7「成績單、檢討試卷：同線上作答」）：每組上方的出處列（renderGroupSource）、
+ * 解析卡標「解析：{出版社}提供」（不標 AI 撰寫）、沒有解析的寫「這組沒有解析」；「問學習助手」只在授權包含 ai_assist 時出現（§9.6）。
+ * 只用本站題的卷子不設 renderGroupSource、不下載來源登記，畫面和原本相同。
  */
 import { useCallback, useEffect, useId, useMemo, useState } from 'react';
 import type { ExplanationItem } from '../../../data/bank';
@@ -21,7 +25,7 @@ import type { AnswerValue } from '../../exams/scoring';
 import { ExplanationCard } from '../../practice/components/ExplanationCard';
 import { MultiSelectCard, OpenAnswerFeedback } from '../../practice/components/MixedCards';
 import { evidenceHighlights } from '../../practice/evidence';
-import { READING_OPTION_CODE_LABELS } from '../../practice/labels';
+import { PUBLISHER_NO_EXPLANATION, READING_OPTION_CODE_LABELS, publisherExplanationBy } from '../../practice/labels';
 import { MarkedBadge } from '../components/MarkToggle';
 import { AskEntry, choiceState } from '../../assistant/components/AskEntry';
 import { okFromRatio } from '../../assistant/outcomes';
@@ -29,12 +33,35 @@ import { isAnswered } from '../../exams/scoring';
 import type { MockAttemptRecord } from '../storage';
 import { bankFigureRenderer } from './bankFigure';
 import type { BankOpenScores } from './bankScore';
-import type { BankPaper } from './buildExam';
+import type { BankPaper, BankPaperGroup } from './buildExam';
 import { OBJECTIVE_SECTION_TYPES } from './deduction';
+import { groupSourceRenderer, useAskAllowed } from './GroupSourceLine';
 
 interface Located {
   group: QuestionGroup;
   reading: boolean;
+  /** 卷子裡那一組的出處（出版社題組；本站題是 undefined）。 */
+  source: BankPaperGroup['source'];
+  /** 出版社授權結束、題目已經遮住（填充、簡答的答案文字也不顯示）。 */
+  masked: boolean;
+}
+
+/** 授權結束的出版社題組，填充、簡答在檢討試卷的寫法。 */
+export const MASKED_ANSWER_TEXT = '這一組的出版社授權已經結束，答案不再顯示；這一題照原本的作答計分。';
+
+/** 出版社題組的解析標示「解析：{出版社}提供」；本站題是 null（照舊標 AI 撰寫）。 */
+function bylineOf(at: Located | undefined): string | null {
+  return at?.source ? publisherExplanationBy(at.source.label_zh) : null;
+}
+
+/** 出版社題組這一題沒有解析文字（正規化檔沒有出版社解析時是空字串，§17.2 第 2 項）：卡片照樣顯示答案，下面加一句。 */
+function NoPublisherExplanation({ at, item }: { at: Located | undefined; item: ExplanationItem | undefined }) {
+  if (at?.source === undefined || (item?.explanation_zh ?? '').trim() !== '') return null;
+  return (
+    <p className="text-sm text-muted" data-testid="no-explanations">
+      {PUBLISHER_NO_EXPLANATION}
+    </p>
+  );
 }
 
 /** 檢討試卷只放選擇題與混合題的大題（部分也只留這兩個）。 */
@@ -58,21 +85,33 @@ function ReviewCard({
   onLocate: (label: string) => void;
 }) {
   if (!at) return null;
-  if (q.mode === 'multi_select') return <MultiSelectCard q={q} item={item} group={at.group} answer={answer} hintsUsed={0} onLocateEvidence={onLocate} />;
+  const byline = bylineOf(at);
+  if (q.mode === 'multi_select') {
+    return (
+      <>
+        <MultiSelectCard q={q} item={item} group={at.group} answer={answer} hintsUsed={0} onLocateEvidence={onLocate} byline={byline} />
+        <NoPublisherExplanation at={at} item={item} />
+      </>
+    );
+  }
   if (q.mode !== 'single_choice' && q.mode !== 'bank_choice') return null;
   return (
-    <ExplanationCard
-      label={q.label}
-      item={item}
-      group={at.group}
-      options={q.options ?? at.group.options_bank}
-      answer={q.answer}
-      chosen={typeof answer === 'string' && answer !== '' ? answer : null}
-      hintsUsed={0}
-      onLocateEvidence={onLocate}
-      codeLabels={at.reading ? READING_OPTION_CODE_LABELS : undefined}
-      showBlankPos={!at.reading}
-    />
+    <>
+      <ExplanationCard
+        label={q.label}
+        item={item}
+        group={at.group}
+        options={q.options ?? at.group.options_bank}
+        answer={q.answer}
+        chosen={typeof answer === 'string' && answer !== '' ? answer : null}
+        hintsUsed={0}
+        onLocateEvidence={onLocate}
+        codeLabels={at.reading ? READING_OPTION_CODE_LABELS : undefined}
+        showBlankPos={!at.reading}
+        byline={byline}
+      />
+      <NoPublisherExplanation at={at} item={item} />
+    </>
   );
 }
 
@@ -91,8 +130,12 @@ export function BankReview({ paper, record, scores }: { paper: BankPaper; record
     for (const section of exam.sections) {
       for (const group of section.groups) {
         const items: Record<string, ExplanationItem> = {};
+        // 卷子的題組（BankPaperGroup）依第一題對到 exam 的題組（同 paperSources.ts 的 groupSourceLines）。
+        const bankGroup = paper.groups.find((g) => group.questions.some((q) => q.label === g.first));
+        const source = bankGroup?.source;
+        const masked = bankGroup?.masked === true;
         for (const q of group.questions) {
-          labels.set(q.label, { group, reading: section.type === 'reading' });
+          labels.set(q.label, { group, reading: section.type === 'reading', source, masked });
           const item = paper.explanations[q.label];
           if (item) items[q.label] = item;
         }
@@ -100,7 +143,9 @@ export function BankReview({ paper, record, scores }: { paper: BankPaper; record
       }
     }
     return { byLabel: labels, itemsByGroup: groups };
-  }, [exam, paper.explanations]);
+  }, [exam, paper.explanations, paper.groups]);
+  const askAllowed = useAskAllowed(paper.groups);
+  const renderGroupSource = useMemo(() => groupSourceRenderer(paper), [paper]);
   const evidence = useMemo(() => Object.values(paper.explanations).flatMap((item) => item.evidence), [paper.explanations]);
   const onLocate = useCallback((label: string) => setLocate((cur) => ({ label, n: (cur?.n ?? 0) + 1 })), []);
   const active = locate?.label ?? null;
@@ -126,16 +171,27 @@ export function BankReview({ paper, record, scores }: { paper: BankPaper; record
       noOfficialStats: true,
       renderHeadingAccessory: (labels) => <MarkedBadge labels={labels} marked={marked} />,
       renderFigure: bankFigureRenderer(evidence),
+      ...(renderGroupSource ? { renderGroupSource } : {}),
       renderAfterFeedback: (q, answer) => (
         <>
           <ReviewCard q={q} answer={answer} item={paper.explanations[q.label]} at={byLabel.get(q.label)} onLocate={onLocate} />
-          {/* 學習助手的入口（開關關著時 render null；卷面題號，docs/design/learning-assistant.md §1.4）。 */}
-          <AskEntry ask={{ src: 'bankmock', attempt: record.id, labels: [q.label] }} q={q} state={choiceState(q, answer)} marked={marked.has(q.label)} />
+          {/* 學習助手的入口（開關關著時 render null；卷面題號，docs/design/learning-assistant.md §1.4）；出版社題組要授權包含 ai_assist。 */}
+          {askAllowed(byLabel.get(q.label)?.source) && (
+            <AskEntry ask={{ src: 'bankmock', attempt: record.id, labels: [q.label] }} q={q} state={choiceState(q, answer)} marked={marked.has(q.label)} />
+          )}
         </>
       ),
       renderOpenFeedback: (q, answer) => {
         const at = byLabel.get(q.label);
         if (!at || (q.mode !== 'fill_in_blank' && q.mode !== 'short_answer')) return null;
+        // 授權結束、已經遮住的出版社題組：答案文字（題目內容的一部分）不再顯示，分數照舊（§7.6）。
+        if (at.masked) {
+          return (
+            <p className="text-sm text-muted" data-testid="masked-answer">
+              {MASKED_ANSWER_TEXT}
+            </p>
+          );
+        }
         const pair = scores.swapped.find((p) => p.includes(q.label));
         const outcome = scores.outcomes.get(q.label);
         return (
@@ -149,20 +205,24 @@ export function BankReview({ paper, record, scores }: { paper: BankPaper; record
               swappedWith={pair ? (pair[0] === q.label ? pair[1] : pair[0]) : null}
               hintsUsed={0}
               onLocateEvidence={onLocate}
+              byline={bylineOf(at)}
             />
-            <AskEntry
-              ask={{ src: 'bankmock', attempt: record.id, labels: [q.label] }}
-              q={q}
-              state={{ ok: outcome ? okFromRatio(outcome.earned, outcome.max) : null, answered: answer !== undefined && isAnswered(answer) }}
-              marked={marked.has(q.label)}
-            />
+            <NoPublisherExplanation at={at} item={paper.explanations[q.label]} />
+            {askAllowed(at.source) && (
+              <AskEntry
+                ask={{ src: 'bankmock', attempt: record.id, labels: [q.label] }}
+                q={q}
+                state={{ ok: outcome ? okFromRatio(outcome.earned, outcome.max) : null, answered: answer !== undefined && isAnswered(answer) }}
+                marked={marked.has(q.label)}
+              />
+            )}
           </>
         );
       },
       extraHighlights: (group) => evidenceHighlights(group, itemsByGroup.get(group.id) ?? {}, active),
       locateRequest: locate,
     }),
-    [marked, evidence, paper.explanations, byLabel, onLocate, scores, itemsByGroup, active, locate, record.id],
+    [marked, evidence, paper.explanations, byLabel, onLocate, scores, itemsByGroup, active, locate, record.id, askAllowed, renderGroupSource],
   );
 
   return (

@@ -16,13 +16,20 @@
  * IndexedDB 不能用時（部分無痕模式、內嵌瀏覽器）改用記憶體，只在同一個分頁內有效；persistent() 回傳 false，
  * 畫面提示「這個瀏覽器不能保存卷子內容」。讀回來的資料一律檢查，形狀不對就當成沒有。
  * 單元測試用記憶體版（happy-dom 沒有 IndexedDB），e2e 在 Chromium 測真的 IndexedDB。
+ *
+ * 加強卷（bk2，docs/design/weak-paper.md §7.4）用另一個資料庫 gsat-weakpaper（同一個物件存放區名稱 papers、同樣的快照格式，
+ * slots 的長度＝代號的組數）：舊版程式的分頁打開成績單時會清理它不認得的代號，用新的資料庫，舊程式碰不到加強卷的快照。
+ * getSnapshotStore() 是自組模擬考的，getWeakSnapshotStore() 是加強卷的；snapshotStoreFor(paperId) 依代號格式挑一個。
  */
 import { isRecord } from '../../../data/client';
-import { SLOT_COUNT } from './blueprint';
 import { buildBankPaper, parseSlotKey, type BankPaper, type BankPaperNotices, type BankSlotSource, type SlotFile } from './buildExam';
-import { decodePaperId } from './code';
+import { decodeAnyPaperId } from './code2';
+import { layoutForBk2 } from './layout';
+import { normalizeBk2PaperId } from './paperId';
 
 export const SNAPSHOT_DB_NAME = 'gsat-bankmock';
+/** 加強卷的快照資料庫。 */
+export const WEAK_SNAPSHOT_DB_NAME = 'gsat-weakpaper';
 export const SNAPSHOT_STORE_NAME = 'papers';
 const DB_VERSION = 1;
 
@@ -33,7 +40,7 @@ export interface BankSnapshot {
   savedAt: string;
   /** 組卷池的 version。 */
   dataVersion: string;
-  /** 11 個位置，依代號的順序。 */
+  /** 每個位置，依代號的順序（自組模擬考 11 個；加強卷＝代號的組數）。 */
   slots: BankSlotSource[];
   /** 鍵是 uid@v。 */
   files: Record<string, SlotFile>;
@@ -78,14 +85,15 @@ function isSlotFile(value: unknown, key: string): value is SlotFile {
   return matches(value) && value['schema'] === 'gsat-bank-practice/v1' && isRecord(value['group']) && Array.isArray(value['group']['questions']) && isRecord(value['annotations']);
 }
 
-/** 檢查讀回來的快照；id 有給時也要對得上。形狀不對回傳 null。 */
+/** 檢查讀回來的快照；id 有給時也要對得上。位置數要等於代號的組數（自組模擬考 11 個）。形狀不對回傳 null。 */
 export function parseSnapshot(raw: unknown, id?: string): BankSnapshot | null {
   if (!isRecord(raw) || raw['v'] !== 1) return null;
   if (typeof raw['id'] !== 'string' || (id !== undefined && raw['id'] !== id)) return null;
   if (typeof raw['savedAt'] !== 'string' || typeof raw['dataVersion'] !== 'string') return null;
+  const decoded = decodeAnyPaperId(raw['id']);
   const slots = raw['slots'];
   const files = raw['files'];
-  if (!Array.isArray(slots) || slots.length !== SLOT_COUNT || !isRecord(files)) return null;
+  if (!decoded || !Array.isArray(slots) || slots.length !== decoded.slots.length || !isRecord(files)) return null;
   const cleanSlots: BankSlotSource[] = [];
   const cleanFiles: Record<string, SlotFile> = {};
   for (const slot of slots as unknown[]) {
@@ -140,11 +148,11 @@ export function createMemorySnapshotStore(): SnapshotStore {
 // IndexedDB 版
 // ---------------------------------------------------------------------------
 
-function openDatabase(factory: IDBFactory): Promise<IDBDatabase> {
+function openDatabase(factory: IDBFactory, name: string): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {
     let request: IDBOpenDBRequest;
     try {
-      request = factory.open(SNAPSHOT_DB_NAME, DB_VERSION);
+      request = factory.open(name, DB_VERSION);
     } catch (error) {
       reject(error instanceof Error ? error : new Error('IndexedDB 無法開啟'));
       return;
@@ -185,9 +193,9 @@ function runRequest<T>(db: IDBDatabase, mode: IDBTransactionMode, make: (store: 
  * IndexedDB 版。資料庫打不開（不支援、無痕模式、被封鎖）時，整個 store 改用記憶體版，persistent() 變成 false。
  * 打得開但某次讀寫失敗（空間滿）只讓那一次失敗：get 回傳 null、put 回傳 false。
  */
-export function createIndexedDbSnapshotStore(factory: IDBFactory | undefined): SnapshotStore {
+export function createIndexedDbSnapshotStore(factory: IDBFactory | undefined, name: string = SNAPSHOT_DB_NAME): SnapshotStore {
   const memory = createMemorySnapshotStore();
-  const ready: Promise<IDBDatabase | null> = factory ? openDatabase(factory).catch(() => null) : Promise.resolve(null);
+  const ready: Promise<IDBDatabase | null> = factory ? openDatabase(factory, name).catch(() => null) : Promise.resolve(null);
   return {
     persistent: async () => (await ready) !== null,
     get: async (paperId) => {
@@ -241,22 +249,47 @@ function defaultFactory(): IDBFactory | undefined {
 }
 
 let shared: SnapshotStore | null = null;
+let sharedWeak: SnapshotStore | null = null;
 
-/** 整個頁面共用的快照存放區（第一次用到時才開資料庫）。 */
+/** 整個頁面共用的快照存放區（自組模擬考；第一次用到時才開資料庫）。 */
 export function getSnapshotStore(): SnapshotStore {
   shared ??= createIndexedDbSnapshotStore(defaultFactory());
   return shared;
 }
 
-/** 測試用：換成指定的存放區（null＝下次重新建立）。 */
-export function setSnapshotStoreForTests(store: SnapshotStore | null): void {
-  shared = store;
+/** 加強卷的快照存放區（資料庫 gsat-weakpaper）。 */
+export function getWeakSnapshotStore(): SnapshotStore {
+  sharedWeak ??= createIndexedDbSnapshotStore(defaultFactory(), WEAK_SNAPSHOT_DB_NAME);
+  return sharedWeak;
 }
 
-/** 用快照重建卷子（不需要組卷池）。代號格式不對或快照內容和代號不符時丟出錯誤。 */
+/** 依代號格式挑存放區：加強卷（bk2）用 gsat-weakpaper，其他用自組模擬考的。 */
+export function snapshotStoreFor(paperId: string): SnapshotStore {
+  return normalizeBk2PaperId(paperId) ? getWeakSnapshotStore() : getSnapshotStore();
+}
+
+/** 測試用：換成指定的存放區（null＝下次重新建立）。weak 不給時加強卷用同一個存放區。 */
+export function setSnapshotStoreForTests(store: SnapshotStore | null, weak?: SnapshotStore | null): void {
+  shared = store;
+  sharedWeak = weak === undefined ? store : weak;
+}
+
+/** 用快照重建卷子（不需要組卷池）。代號格式不對或快照內容和代號不符時丟出錯誤。加強卷依代號的版面重建。 */
 export function paperFromSnapshot(snapshot: BankSnapshot, notices?: Partial<BankPaperNotices>): BankPaper {
-  const decoded = decodePaperId(snapshot.id);
+  const decoded = decodeAnyPaperId(snapshot.id);
   if (!decoded) throw new Error(`快照的代號格式不對：${snapshot.id}`);
+  if (decoded.format === 'bk2') {
+    const layout = layoutForBk2(decoded);
+    return buildBankPaper({
+      paperId: decoded.id,
+      tier: layout.tier,
+      dataVersion: snapshot.dataVersion,
+      slots: snapshot.slots,
+      files: snapshot.files,
+      layout,
+      ...(notices ? { notices } : {}),
+    });
+  }
   return buildBankPaper({
     paperId: decoded.id,
     tier: decoded.tier,
@@ -268,7 +301,7 @@ export function paperFromSnapshot(snapshot: BankSnapshot, notices?: Partial<Bank
 }
 
 /** 快照不存在時才寫（開考、下載 PDF、按「紙本做過」時確認快照已經寫入，§4.7 第 (2) 部分）。回傳最後有沒有快照。 */
-export async function ensureSnapshot(paper: Pick<BankPaper, 'id' | 'dataVersion' | 'source'>, store: SnapshotStore = getSnapshotStore()): Promise<boolean> {
+export async function ensureSnapshot(paper: Pick<BankPaper, 'id' | 'dataVersion' | 'source'>, store: SnapshotStore = snapshotStoreFor(paper.id)): Promise<boolean> {
   if (await store.get(paper.id)) return true;
   return store.put(snapshotOf(paper));
 }

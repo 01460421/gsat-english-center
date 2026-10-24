@@ -8,7 +8,7 @@
  */
 import { CircleCheck, CircleMinus, CircleX } from 'lucide-react';
 import type { ReactNode } from 'react';
-import type { ExplanationItem } from '../../../data/bank';
+import { hasExplanationText, type ExplanationItem } from '../../../data/bank';
 import type { MultiSelectQuestion, Question, QuestionGroup } from '../../../data/exams';
 import { sortedLetters } from '../../exams/components/QuestionFeedback';
 import { formatPoints, multiSelectFraction, type AnswerValue, type OpenOutcome } from '../../exams/scoring';
@@ -48,6 +48,7 @@ export function MultiSelectCard({
   answer,
   hintsUsed,
   onLocateEvidence,
+  byline = null,
 }: {
   q: MultiSelectQuestion;
   item: ExplanationItem | undefined;
@@ -55,8 +56,11 @@ export function MultiSelectCard({
   answer: AnswerValue | undefined;
   hintsUsed: number;
   onLocateEvidence: (label: string) => void;
+  /** 解析的出處（出版社題組；見 ExplanationCard.tsx 的 CardShell）。 */
+  byline?: string | null;
 }) {
-  if (!item) return null;
+  // 出版社題組沒有出版社解析時（explanation_zh 是空字串）不畫解析卡。
+  if (!item || !hasExplanationText(item)) return null;
   const letters = sortedLetters(q.options);
   const chosen = asLetters(answer);
   const correct = new Set<string>(q.answer);
@@ -66,7 +70,7 @@ export function MultiSelectCard({
   const located = evidenceRanges(group, item).length > 0;
   const hints = item.hints ?? [];
   return (
-    <CardShell label={q.label} hintsUsed={hintsUsed}>
+    <CardShell label={q.label} hintsUsed={hintsUsed} byline={byline}>
       <Section step={1} title="正解依據">
         <p className="break-words">{item.explanation_zh}</p>
         <EvidenceBlock label={q.label} evidence={item.evidence} located={located} onLocateEvidence={onLocateEvidence} />
@@ -189,6 +193,7 @@ export function OpenAnswerFeedback({
   swappedWith,
   hintsUsed,
   onLocateEvidence,
+  byline = null,
 }: {
   q: Extract<Question, { mode: 'fill_in_blank' | 'short_answer' }>;
   answer: AnswerValue | undefined;
@@ -199,6 +204,8 @@ export function OpenAnswerFeedback({
   swappedWith: string | null;
   hintsUsed: number;
   onLocateEvidence: (label: string) => void;
+  /** 解析的出處（出版社題組；見 ExplanationCard.tsx 的 CardShell）。 */
+  byline?: string | null;
 }) {
   const mine = typeof answer === 'string' ? answer : '';
   const accepted = Array.from(new Set([q.answer, ...(q.accepted_answers ?? [])].filter((a): a is string => typeof a === 'string' && a !== '')));
@@ -230,8 +237,8 @@ export function OpenAnswerFeedback({
           第 {q.label} 格和第 {swappedWith} 格可以互換，你的兩個答案對調放才對，照對調後計分。
         </p>
       )}
-      {item && (
-        <CardShell label={q.label} hintsUsed={hintsUsed}>
+      {item && hasExplanationText(item) && (
+        <CardShell label={q.label} hintsUsed={hintsUsed} byline={byline}>
           <Section step={1} title="正解依據">
             <p className="break-words">{item.explanation_zh}</p>
             {(item.source_token || shape) && (

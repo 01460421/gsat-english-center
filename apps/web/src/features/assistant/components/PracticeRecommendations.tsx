@@ -7,7 +7,7 @@
 import { TIER_LABELS, type AssistPracticeFocus, type AssistSection, type Tier } from '@gsat/shared';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
-import { isPracticeSectionType, loadBankIndex } from '../../../data/bank';
+import { isPracticeSectionType, loadPracticeIndex } from '../../../data/bank';
 import { loadUsedGroups } from '../../mock/bank/used';
 import { getPracticeHistory } from '../../practice/history';
 import { PRACTICE_SECTION_LABELS, displayTopic, practicePath } from '../../practice/labels';
@@ -39,7 +39,7 @@ async function loadRecs(focus: AssistPracticeFocus, exclude: ReadonlySet<string>
       return [{ key: entry.uid, to, title: `本站仿真${focus.section === 'translation' ? '中譯英' : '作文'}・${TIER_LABELS[entry.tier]}${topic ? `・${topic}` : ''}` }];
     });
   }
-  const index = await loadBankIndex();
+  const index = await loadPracticeIndex();
   const ranked = rankPracticeCandidates(index.groups as unknown as CandidateEntry[], focus, { tier, done }, 3, exclude);
   return ranked.flatMap(({ entry }) => {
     if (!isPracticeSectionType(entry.section_type)) return [];

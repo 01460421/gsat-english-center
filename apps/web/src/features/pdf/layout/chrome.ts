@@ -20,11 +20,11 @@
 import type { Exam } from '../../../data/exams';
 import type { PdfContent, PdfDynamicContent } from '../engine/docTypes';
 import type { SitePaperPdfMeta } from '../types';
-import { NON_OFFICIAL_NOTICE, siteAttribution, sourceLine } from './attribution';
+import { NON_OFFICIAL_NOTICE, siteAttribution, sourceLine, weakKindLabel } from './attribution';
 import { estimateTextWidth } from '../fontRuns';
 import { CONTENT_WIDTH, PAGE_HEIGHT, PAGE_MARGINS, SIZE } from './metrics';
 import { plainInline } from './richInline';
-import { PDF_TEXT, SITE_PAPER_TEXT } from './strings';
+import { PDF_TEXT, SITE_PAPER_TEXT, WEAK_PAPER_TEXT } from './strings';
 
 /** 節：封面、題本、答題卷、答案；本站自組卷另有解析、資料來源。 */
 export type PdfSegment = 'cover' | 'booklet' | 'sheet' | 'key' | 'explanations' | 'sources';
@@ -82,6 +82,14 @@ export class PageChrome {
   /** 答題卷、答案、解析、資料來源的頁首左側文字。 */
   private segmentTitle(segment: Exclude<PdfSegment, 'cover' | 'booklet'>): string {
     const site = this.site;
+    // 學習助手加強卷：「弱點加強卷　答題卷」（docs/design/weak-paper.md §9.5）。
+    const kind = site ? weakKindLabel(site) : null;
+    if (kind !== null) {
+      if (segment === 'sheet') return WEAK_PAPER_TEXT.sheetHeader(kind);
+      if (segment === 'key') return WEAK_PAPER_TEXT.keyHeader(kind);
+      if (segment === 'explanations') return WEAK_PAPER_TEXT.explanationsHeader(kind);
+      return WEAK_PAPER_TEXT.sourcesHeader(kind);
+    }
     if (site) {
       if (segment === 'sheet') return SITE_PAPER_TEXT.sheetHeader(site.tierLabel);
       if (segment === 'key') return SITE_PAPER_TEXT.keyHeader(site.tierLabel);
@@ -115,7 +123,9 @@ export class PageChrome {
   /** 題本頁首：一側是卷別（「115年學測／英文考科」），中間是「重新排版・非官方」；頁碼在另一側，由頁尾畫。 */
   private bookletHeader(n: number): PdfContent {
     const odd = n % 2 === 1;
-    const [line1, line2] = this.site ? SITE_PAPER_TEXT.examShort(this.site.tierLabel) : PDF_TEXT.examShort(this.exam);
+    const kind = this.site ? weakKindLabel(this.site) : null;
+    const [line1, line2] = kind !== null ? WEAK_PAPER_TEXT.examShort(kind) : this.site ? SITE_PAPER_TEXT.examShort(this.site.tierLabel) : PDF_TEXT.examShort(this.exam);
+    const center = kind !== null ? WEAK_PAPER_TEXT.headerCenter : this.site ? SITE_PAPER_TEXT.headerCenter : PDF_TEXT.headerCenter;
     const examBlock = {
       width: SIDE_WIDTH,
       stack: [{ text: plainInline(line1) }, { text: plainInline(line2) }],
@@ -127,7 +137,7 @@ export class PageChrome {
     return {
       columns: [
         odd ? empty : examBlock,
-        { width: '*', text: plainInline(this.site ? SITE_PAPER_TEXT.headerCenter : PDF_TEXT.headerCenter), fontSize: SIZE.headerCenter, alignment: 'center', color: '#333333', margin: [0, 3, 0, 0] },
+        { width: '*', text: plainInline(center), fontSize: SIZE.headerCenter, alignment: 'center', color: '#333333', margin: [0, 3, 0, 0] },
         odd ? examBlock : empty,
       ],
       margin: [PAGE_MARGINS[0], HEADER_TOP, PAGE_MARGINS[2], 0],

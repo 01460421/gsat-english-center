@@ -24,6 +24,9 @@
  * 讀、改「懂了嗎」、刪除只要登入：被撤銷 AI 核准的人、開關關著的時候，學生仍然可以看與刪自己的案例。
  * 送出解析與追問：先預扣、再寫 turn（同作文「先預扣、再改提交狀態」）；寫不進去（競爭）就以 internal 退還；排入 Queue 失敗也退還。
  * 日誌只記 id、代碼與數字，不記題目、疑問、追問或解析（§4.16）。
+ *
+ * 出版社題（docs/design/weak-paper.md §9.6，publisher.ts）：授權已經結束的案例，列表帶 source_ended、詳情遮住題目與解析，
+ * 解析與追問回 assist_source_unavailable（不扣點）。
  */
 import {
   AI_ERROR_MESSAGES,
@@ -59,6 +62,7 @@ import { nowSeconds } from '../time';
 import { assistCacheKey, flagCacheIfDisputed, insertCacheHitTurn, lookupCache, mergeCaseCodes } from './cache';
 import { confirmedOcrView, containsHiddenPlaceholder, latestOcr } from './ocr';
 import { deleteCasePhotos, listCasePhotos, storeCasePhoto } from './photos';
+import { assertCaseAssistable, endedPublisherCaseIds, withPublisherMask } from './publisher';
 import { refundWithAssistRef } from './refund';
 import {
   codeList,
@@ -174,14 +178,22 @@ assistRoutes.get('/cases', async (c) => {
   const [rows, counts] = await Promise.all([listCases(c.env.DB, user.id, now, { section, cursor }), errorCounts(c.env.DB, user.id, now)]);
   const page = rows.slice(0, CASE_PAGE_SIZE);
   const last = page[page.length - 1];
-  return c.json({ cases: page.map(toSummary), next_cursor: rows.length > CASE_PAGE_SIZE && last ? encodeCursor(last) : null, error_counts: counts });
+  // 出版社題的授權已經結束的案例帶 source_ended（列表本來就沒有題目文字；docs/design/weak-paper.md §9.6）。
+  const ended = await endedPublisherCaseIds(c.var.siteData, page);
+  const cases = page.map((r) => (ended.has(r.id) ? { ...toSummary(r), source_ended: true as const } : toSummary(r)));
+  return c.json({ cases, next_cursor: rows.length > CASE_PAGE_SIZE && last ? encodeCursor(last) : null, error_counts: counts });
 });
+
+/** 回傳案例詳情：出版社題的授權已經結束時遮住題目與解析（publisher.ts；本站題不讀任何檔案）。 */
+async function detailOf(c: Context<AppEnv>, row: CaseRow, now: number, extra: Parameters<typeof toDetail>[3] = {}) {
+  return withPublisherMask(c.var.siteData, row, await toDetail(c.env.DB, row, now, extra));
+}
 
 assistRoutes.get('/cases/:id', async (c) => {
   const user = await sessionUser(c);
   const now = nowSeconds();
   const row = await requireCase(c.env.DB, user.id, c.req.param('id'), now);
-  return c.json(await toDetail(c.env.DB, row, now));
+  return c.json(await detailOf(c, row, now));
 });
 
 // ───────────────────────── 建立 ─────────────────────────
@@ -254,7 +266,7 @@ assistRoutes.post('/cases', async (c) => {
 
   if (built.dedupeKey) {
     const existing = await existingCase(db, user.id, built.dedupeKey, now);
-    if (existing) return c.json(await toDetail(db, existing, now, { existing: true, ...(masked ? { masked } : {}) }), 200);
+    if (existing) return c.json(await detailOf(c, existing, now, { existing: true, ...(masked ? { masked } : {}) }), 200);
   }
   const questionJson = questionJsonOf(built.question);
   const injection = [...built.injection, ...(doubt.text ? detectInjection(doubt.text) : [])];
@@ -314,7 +326,7 @@ assistRoutes.post('/cases', async (c) => {
     // 同一個去重鍵剛好同時建立（唯一索引）：回那一筆。
     if (built.dedupeKey && /UNIQUE/i.test(String(err))) {
       const existing = await existingCase(db, user.id, built.dedupeKey, now);
-      if (existing) return c.json(await toDetail(db, existing, now, { existing: true }), 200);
+      if (existing) return c.json(await detailOf(c, existing, now, { existing: true }), 200);
       // 撞到的是過期、但剛好有進行中任務而刪不掉的舊案例：不回 500。
       throw new ApiError(409, 'conflict', '這一題的舊紀錄正在處理中，請稍後再試');
     }
@@ -330,7 +342,7 @@ assistRoutes.post('/cases', async (c) => {
   await injectionEvent(db, injection, ref);
   log('assist_case_created', { case_id: id, source: built.source, items: built.itemCount });
   const row = await requireCase(db, user.id, id, now);
-  return c.json(await toDetail(db, row, now, masked ? { masked } : {}), 201);
+  return c.json(await detailOf(c, row, now, masked ? { masked } : {}), 201);
 });
 
 // ───────────────────────── 修改、刪除 ─────────────────────────
@@ -366,7 +378,7 @@ assistRoutes.patch('/cases/:id', async (c) => {
     .run();
   // 「這則解析有錯」：命中或寫入過共用快取的案例，兩位不同的學生都回報就停用那一筆（§4.7.4）。
   if (body.rating === 'wrong' && row.cache_key) await flagCacheIfDisputed(db, row.cache_key);
-  return c.json(await toDetail(db, await requireCase(db, user.id, row.id, now), now));
+  return c.json(await detailOf(c, await requireCase(db, user.id, row.id, now), now));
 });
 
 assistRoutes.delete('/cases/:id', async (c) => {
@@ -455,7 +467,7 @@ assistRoutes.put('/cases/:id/question', async (c) => {
   if ((res?.meta.changes ?? 0) !== 1) throw new ApiError(409, 'conflict', '這一題的狀態剛剛改變了，請重新整理');
   await injectionEvent(db, injection, await userRefFor(config.auth.ledgerSalt, user.id));
   const updated = await requireCase(db, user.id, row.id, now);
-  return c.json(await toDetail(db, updated, now, s.masked > 0 || doubt.masked ? { masked: true } : {}));
+  return c.json(await detailOf(c, updated, now, s.masked > 0 || doubt.masked ? { masked: true } : {}));
 });
 
 // ───────────────────────── 解析與追問 ─────────────────────────
@@ -548,6 +560,8 @@ assistRoutes.post('/cases/:id/analyze', async (c) => {
   const db = c.env.DB;
   const now = nowSeconds();
   const row = await requireCase(db, user.id, c.req.param('id'), now);
+  // 出版社題的授權已經結束或不含 AI 解析：在預扣之前拒收（不扣點；共用快取也不再提供）。
+  await assertCaseAssistable(c.var.siteData, row);
   if (!['ready', 'analyzed', 'failed'].includes(row.status)) throw new ApiError(409, 'conflict', '這一題現在不能解析');
   if (row.analyses >= ASSIST_LIMITS.analysesPerCase) throw await analyzeConflict(db, row);
   const question = parseJson<AssistQuestionView>(row.question_json);
@@ -623,6 +637,7 @@ assistRoutes.post('/cases/:id/followups', async (c) => {
   const db = c.env.DB;
   const now = nowSeconds();
   const row = await requireCase(db, user.id, c.req.param('id'), now);
+  await assertCaseAssistable(c.var.siteData, row);
   if (row.analyses < 1 || row.status === 'analyzing') throw new ApiError(409, 'conflict', '請先等這一題解析完成再追問');
   if (row.followups >= ASSIST_LIMITS.followupsPerCase) {
     throw new ApiError(429, 'assist_limit', `這一題已經追問 ${ASSIST_LIMITS.followupsPerCase} 次，建議開新的一題`, { reason: 'followups_per_case' });

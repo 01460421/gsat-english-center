@@ -6,7 +6,7 @@ import { swapAnswerLetters, type PracticeGroupFileCore } from '@gsat/shared';
 import { describe, expect, it } from 'vitest';
 import type { PracticeGroupFile } from '../../../data/bank';
 import type { ChoiceQuestion, OptionLetter } from '../../../data/exams';
-import { adjustReadingLetters, applyLetterSwap, isAbcdPermutation, letterSwapFor } from './letters';
+import { BK2_LETTER_PREFIX, adjustReadingLetters, applyLetterSwap, isAbcdPermutation, letterSwapFor } from './letters';
 import { fakeGroupFile } from './testFixtures';
 
 /** 所有 12 個 (q, r) 組合都可以交換。 */
@@ -104,6 +104,27 @@ describe('黃金測試（bk1 的規則；改了就要換成 bk2）', () => {
       expect(answers(r.file)).toBe(c.answers);
     });
   }
+});
+
+describe('黃金測試（bk2 的規則：雜湊前綴 bk2:，docs/design/weak-paper.md §7.1）', () => {
+  // 位置是這一組在 bk2 代號裡的序號。同一個 (uid, 位置) 在 bk1 與 bk2 的結果各自獨立，但各自固定。
+  const cases: { uid: string; slot: number; swap: [number, number] | null; answers: string; bk1: [number, number] | null }[] = [
+    { uid: 'ai.rd.0c1d2e', slot: 2, swap: [1, 3], answers: 'ACAD', bk1: [3, 2] },
+    { uid: 'ai.rd.02e929', slot: 0, swap: [3, 2], answers: 'BCCD', bk1: null },
+    { uid: 'ai.rd.123456', slot: 5, swap: [1, 4], answers: 'DCAD', bk1: [4, 2] },
+  ];
+  for (const c of cases) {
+    it(`${c.uid} 在第 ${c.slot} 個位置：${c.swap ? `交換 ${c.swap.join('、')}` : '不換'}`, () => {
+      const r = adjustReadingLetters(fakeGroupFile('reading', c.uid), c.slot, ALL_PAIRS, BK2_LETTER_PREFIX);
+      expect(r.swap).toEqual(c.swap);
+      expect(answers(r.file)).toBe(c.answers);
+      expect(adjustReadingLetters(fakeGroupFile('reading', c.uid), c.slot, ALL_PAIRS).swap).toEqual(c.bk1);
+    });
+  }
+
+  it('出版社題組的 sw 是空陣列（建置端），自然不換', () => {
+    expect(letterSwapFor('pb.rd.0c1d2e', 2, fakeGroupFile('reading', 'pb.rd.0c1d2e').group.questions, [], BK2_LETTER_PREFIX)).toBeNull();
+  });
 });
 
 describe('@gsat/shared 的 swapAnswerLetters（學習助手的 Worker 用；docs/design/learning-assistant.md §4.5.2）和 applyLetterSwap 是同一個規則', () => {

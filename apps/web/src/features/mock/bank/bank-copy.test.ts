@@ -45,6 +45,11 @@ describe('本站自組模擬考的文案', () => {
         './blueprint.ts',
         './resolve.ts',
         './pdfText.ts',
+        // 加強卷（docs/design/weak-paper.md §10.1）。
+        './PaperTargets.tsx',
+        './DrillTargetsTable.tsx',
+        './GroupSourceLine.tsx',
+        './paperLists.ts',
       ]),
     );
   });

@@ -17,7 +17,7 @@ import { Link, type To } from 'react-router';
 import { forgetFailedLoads } from '../../data/client';
 import {
   groupKey,
-  loadBankIndex,
+  loadPracticeIndex,
   loadPracticeGroup,
   type BankIndex,
   type PracticeGroupFile,
@@ -30,6 +30,7 @@ import { DataErrorBoundary } from '../exams/components/DataErrorBoundary';
 import { cellKey, clearGroupRecords, getPracticeHistory, setCurrent, updatePracticeHistory, usePracticeHistory } from './history';
 import { PRACTICE_SECTION_LABELS, TIER_AUDIENCE, TIER_LABELS, TIERS, practicePath } from './labels';
 import { cellEntries, cellProgress, defaultTier, pickGroup, type Pick } from './pick';
+import { SourceGate } from './components/GroupSource';
 import { GroupSession } from './PracticeSession';
 import { practiceAttemptId, practiceAttemptIdForKey } from './practiceExam';
 
@@ -136,16 +137,26 @@ function GroupLoader({
   scrollToStart: () => void;
 }) {
   const file = use(promise);
+  // 出版社題組的授權結束了（到期後還沒重建網站時，題組檔仍在）：不顯示題目，可以換一組（SourceGate）。
   return (
-    <GroupSession
-      key={groupKey(file)}
+    <SourceGate
       file={file}
-      notice={notice}
-      repeatNotice={repeatNotice}
-      onNext={onNext}
-      embedded={embedded}
-      scrollToStart={scrollToStart}
-    />
+      action={
+        <button type="button" onClick={onNext} className="inline-flex min-h-11 items-center rounded-full bg-primary px-5 font-semibold text-on-primary">
+          換一組
+        </button>
+      }
+    >
+      <GroupSession
+        key={groupKey(file)}
+        file={file}
+        notice={notice}
+        repeatNotice={repeatNotice}
+        onNext={onNext}
+        embedded={embedded}
+        scrollToStart={scrollToStart}
+      />
+    </SourceGate>
   );
 }
 
@@ -387,7 +398,7 @@ export interface SectionBankPracticeProps {
 export function SectionBankPractice({ section, tier, embed, preferUid = null }: SectionBankPracticeProps) {
   const [retry, setRetry] = useState(0);
   // 失敗的請求留在 data/client.ts 的快取裡；「再試一次」先 forgetFailedLoads() 再換 retry 才會重新下載。
-  const indexPromise = useMemo(() => loadBankIndex(), [retry]);
+  const indexPromise = useMemo(() => loadPracticeIndex(), [retry]);
   const handleRetry = () => {
     forgetFailedLoads();
     setRetry((n) => n + 1);

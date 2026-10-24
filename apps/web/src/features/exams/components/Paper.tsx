@@ -11,7 +11,7 @@ import { useAttemptSelector } from '../AttemptContext';
 import { useExam } from '../ExamContext';
 import { groupErratum } from '../labels';
 import { clusterQuestions, groupLayout } from '../paper';
-import { useGroupHighlights } from '../QuestionExtras';
+import { useGroupHighlights, useQuestionExtras } from '../QuestionExtras';
 import { isAutoScored } from '../scoring';
 import { BankGroup, ClozeGroup } from './BlankGroups';
 import { PassageView, groupHasStimulus } from './Passage';
@@ -90,6 +90,17 @@ function StandardGroup({ group, section }: { group: QuestionGroup; section: Exam
 
 /** 一個題組的作答介面（依資料形狀選擇）。題庫練習頁直接用它畫 AI 題組。 */
 export function GroupView({ group, section }: { group: QuestionGroup; section: ExamSection }) {
+  // 加強卷的出版社題組：題組最上方的出處列（QuestionExtras.renderGroupSource；本站題回傳 null，畫面不變）。
+  const source = useQuestionExtras()?.renderGroupSource?.(group) ?? null;
+  return (
+    <>
+      {source}
+      <GroupBody group={group} section={section} />
+    </>
+  );
+}
+
+function GroupBody({ group, section }: { group: QuestionGroup; section: ExamSection }) {
   switch (groupLayout(group)) {
     case 'cloze':
       return <ClozeGroup group={group} />;

@@ -53,12 +53,26 @@ function swappable(questions: readonly Question[], [qNo, rNo]: readonly [number,
 }
 
 /**
- * 決定這一篇要不要換、換哪一組（題組內的原始題號）；不換回傳 null。
- * slotIndex 是這個題組在代號裡的位置（閱讀是 5–7）。
+ * 加強卷（bk2）的雜湊前綴（docs/design/weak-paper.md §7.1）：雜湊輸入是 `bk2:{uid}:{位置}`，位置是這一組在代號裡的序號。
+ * 和 bk1 一樣只看題組與位置、不看整個代號（換題或改版時卷內其他題組的字母不變）；加前綴讓兩種格式的規則各自獨立。
+ * 這條規則是 bk2 的一部分，改了就是 bk3（letters.test.ts 的黃金測試鎖住輸出）。
  */
-export function letterSwapFor(uid: string, slotIndex: number, questions: readonly Question[], sw: readonly (readonly [number, number])[]): [number, number] | null {
+export const BK2_LETTER_PREFIX = 'bk2:';
+
+/**
+ * 決定這一篇要不要換、換哪一組（題組內的原始題號）；不換回傳 null。
+ * slotIndex 是這個題組在代號裡的位置（bk1 的閱讀是 5–7）。prefix 是雜湊前綴：bk1 是空字串（輸出不變），bk2 是 BK2_LETTER_PREFIX。
+ * 出版社題組的 sw 一律是空陣列（建置端），自然不換。
+ */
+export function letterSwapFor(
+  uid: string,
+  slotIndex: number,
+  questions: readonly Question[],
+  sw: readonly (readonly [number, number])[],
+  prefix = '',
+): [number, number] | null {
   if (sw.length === 0 || !isAbcdPermutation(questions)) return null;
-  const h = fnv1a(`${uid}:${slotIndex}`);
+  const h = fnv1a(`${prefix}${uid}:${slotIndex}`);
   if (h % ALL_BUCKETS >= SWAP_BUCKETS) return null;
   const pair = sw[Math.floor(h / ALL_BUCKETS) % sw.length];
   if (!pair || !swappable(questions, pair)) return null;
@@ -112,12 +126,13 @@ export function applyLetterSwap(file: PracticeGroupFile, pair: readonly [number,
   };
 }
 
-/** 依 §5.3 調整一篇閱讀：回傳調整後的題組檔與實際交換的組合（沒換是 null）。 */
+/** 依 §5.3 調整一篇閱讀：回傳調整後的題組檔與實際交換的組合（沒換是 null）。prefix 見 letterSwapFor。 */
 export function adjustReadingLetters(
   file: PracticeGroupFile,
   slotIndex: number,
   sw: readonly (readonly [number, number])[],
+  prefix = '',
 ): { file: PracticeGroupFile; swap: [number, number] | null } {
-  const swap = letterSwapFor(file.uid, slotIndex, file.group.questions, sw);
+  const swap = letterSwapFor(file.uid, slotIndex, file.group.questions, sw, prefix);
   return swap ? { file: applyLetterSwap(file, swap), swap } : { file, swap: null };
 }

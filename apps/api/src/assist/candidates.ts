@@ -7,9 +7,13 @@
  *   - 另外加 ≤ 4 個寫作題庫的題目：依學生弱的 ts:、tt:（寫作解析案例）與作文四項（wc:）從寫作題庫索引的 skills 挑，
  *     排除已經送過批改的題（D1 的 submissions）。
  *   - 讀不到某一份索引（網路、部署中）時，那一類候選就是空的：報告照樣產生，只是那一類沒有推薦（記 log）。
+ *   - 出版社題組（索引的 src，docs/design/weak-paper.md §8.7）：來源要在 bank/sources.json 裡有效、授權包含網站（停用、過了到期日、
+ *     登記檔讀不到的一律丟掉，fail closed）；標題前面加出版社短名（「{出版社}・閱讀測驗・進階練習」）。沒有出版社候選時不讀登記檔。
  * 模型只能從這份清單挑 recommendations（output 時再檢查一次）。
  */
-import { ASSIST_SECTION_LABELS, ASSIST_SECTIONS, TIER_LABELS, TIERS, isAssistSkillCode, type AssistPracticeCandidate, type AssistSection, type Tier } from '@gsat/shared';
+import { ASSIST_SECTION_LABELS, ASSIST_SECTIONS, TIER_LABELS, TIERS, isAssistSkillCode, sourceStatus, type AssistPracticeCandidate, type AssistSection, type Tier } from '@gsat/shared';
+import { taiwanDay } from '../time';
+import { loadSourceRegistry } from './publisher';
 import { SiteDataError, type SiteData, type SiteWritingIndexEntry } from './siteData';
 
 /** 伺服器另外加的寫作候選上限。 */
@@ -34,8 +38,8 @@ function skillsOf(raw: unknown): string[] {
   return Array.isArray(raw) ? [...new Set(raw.filter((s): s is string => typeof s === 'string' && isAssistSkillCode(s)))].slice(0, 12) : [];
 }
 
-function title(section: AssistSection, tier: Tier | null, topic: string | null): string {
-  return truncate([ASSIST_SECTION_LABELS[section], tier ? TIER_LABELS[tier] : null, topic].filter((s): s is string => s !== null && s !== '').join('・'), TITLE_MAX);
+function title(section: AssistSection, tier: Tier | null, topic: string | null, publisher: string | null = null): string {
+  return truncate([publisher, ASSIST_SECTION_LABELS[section], tier ? TIER_LABELS[tier] : null, topic].filter((s): s is string => s !== null && s !== '').join('・'), TITLE_MAX);
 }
 
 /** 讀索引；讀不到回 null（只記 log）。 */
@@ -81,6 +85,11 @@ export async function rebuildCandidates(siteData: SiteData, refs: readonly strin
     tryLoad('writing', () => siteData.writingBankIndex()),
     needExams ? tryLoad('exams', () => siteData.examsIndex()) : Promise.resolve([]),
   ]);
+  // 出版社題組的來源登記：有出版社候選時才讀；讀不到是 null（那些候選全部丟掉）。
+  const wanted = new Set(unique.filter((r) => !r.includes(':')));
+  const needSources = (bank ?? []).some((e) => typeof e.src === 'string' && wanted.has(`${e.uid}@${e.version}`));
+  const registry = needSources ? await loadSourceRegistry(siteData, false) : null;
+  const today = taiwanDay(Date.now());
   const out: AssistPracticeCandidate[] = [];
   for (const ref of unique) {
     if (ref.startsWith('exam:')) {
@@ -97,9 +106,16 @@ export async function rebuildCandidates(siteData: SiteData, refs: readonly strin
     }
     const e = (bank ?? []).find((x) => `${x.uid}@${x.version}` === ref);
     if (!e || !(ASSIST_SECTIONS as readonly string[]).includes(e.section_type)) continue;
+    let publisher: string | null = null;
+    if (e.src !== undefined) {
+      const src = typeof e.src === 'string' ? e.src : '';
+      if (sourceStatus(registry, src, today, ['web']) !== 'ok') continue;
+      publisher = registry?.sources.find((x) => x.id === src)?.label_zh ?? null;
+      if (publisher === null) continue;
+    }
     const section = e.section_type as AssistSection;
     const tier = tierOf(e.tier);
-    out.push({ ref, section, tier, skills: skillsOf(e.skills), title: title(section, tier, topicOf(e.topic)) });
+    out.push({ ref, section, tier, skills: skillsOf(e.skills), title: title(section, tier, topicOf(e.topic), publisher) });
   }
 
   // 寫作候選：技能交集多的優先，其次同難度、低一級，最後 uid（結果穩定）；沒送過批改的才算。

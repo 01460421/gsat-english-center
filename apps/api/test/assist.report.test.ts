@@ -108,6 +108,51 @@ describe('POST /api/assist/reports：驗證與建立（§4.4）', () => {
     expect(op).toEqual({ task: 'assist_report', points_reserved: 10 });
   });
 
+  it('出版社題組的候選：來源有效時標題前面加出版社短名；停用、過期或登記檔讀不到時丟掉；沒有出版社候選時不讀登記檔', async () => {
+    const base = reportSiteFiles();
+    const index = base['bank/index.json'] as { groups: Record<string, unknown>[] };
+    const pbGroups = [
+      { uid: 'pb.rd.0f0001', version: 1, section_type: 'reading', tier: 'advanced', topic: '海邊的燈塔', skills: ['it:inference'], src: 'pub-a' },
+      { uid: 'pb.rd.0f0002', version: 1, section_type: 'reading', tier: 'advanced', topic: null, skills: [], src: 'pub-old' },
+    ];
+    const source = (id: string, extra: Record<string, unknown> = {}) => ({
+      id,
+      ns: 'pb',
+      kind: 'publisher',
+      label_zh: id === 'pub-a' ? '甲出版' : '乙出版',
+      publisher_zh: null,
+      product_zh: '模擬試題',
+      attribution_zh: '本題出自甲出版《模擬試題》，經授權使用',
+      scope: ['web', 'pdf', 'ai_assist'],
+      active: true,
+      retired_on: null,
+      ends_on: null,
+      ...extra,
+    });
+    const files = (sources: unknown) => ({ ...base, 'bank/index.json': { ...index, groups: [...index.groups, ...pbGroups] }, ...(sources === undefined ? {} : { 'bank/sources.json': sources }) });
+    const refs = ['pb.rd.0f0001@1', 'pb.rd.0f0002@1', RD_REF];
+    const candidatesWith = async (site: FakeSite) => {
+      const s = { ...setup(), site };
+      const res = await post(s, reportBody({ candidates: refs }));
+      expect(res.status, JSON.stringify(res.body)).toBe(202);
+      return JSON.parse(q(s.env, 'SELECT input_json FROM assist_reports WHERE id = ?', res.body.report_id).input_json).candidates as Array<{ ref: string; title: string }>;
+    };
+    const registry = { version: 'x', sources: [source('pub-a'), source('pub-old', { ends_on: '2026-11-19' })] };
+    const ok = await candidatesWith(fakeSite(files(registry)));
+    expect(ok.map((c) => c.ref)).toEqual(expect.arrayContaining(['pb.rd.0f0001@1', RD_REF]));
+    expect(ok.map((c) => c.ref)).not.toContain('pb.rd.0f0002@1');
+    expect(ok.find((c) => c.ref === 'pb.rd.0f0001@1')?.title).toBe('甲出版・閱讀測驗・進階練習・海邊的燈塔');
+    // 登記檔讀不到：出版社候選全部丟掉（本站題照舊）。
+    const none = await candidatesWith(fakeSite(files(undefined)));
+    expect(none.map((c) => c.ref)).not.toContain('pb.rd.0f0001@1');
+    expect(none.map((c) => c.ref)).toContain(RD_REF);
+    // 沒有出版社候選：不讀登記檔。
+    const site = fakeSite(files(registry));
+    const s = { ...setup(), site };
+    await post(s);
+    expect(site.requests.some((u) => u.endsWith('/bank/sources.json'))).toBe(false);
+  });
+
   it('已經送過批改的寫作題不再推薦', async () => {
     const s = setup();
     s.env.DB.sqlite

@@ -56,6 +56,11 @@ export interface QuestionExtras {
    * 選文自己切到看得到的分頁（證據都在同一篇就切到那一篇，分散在幾篇就切到「全部」），外層再捲過去、移焦點。
    */
   locateRequest?: { label: string; n: number } | null;
+  /**
+   * 題組最上方的一行（docs/design/weak-paper.md §3.5、§8.7）：加強卷裡出版社題組的出處列。有選文、沒有選文的題組都畫；
+   * 回傳 null（本站題）就什麼都不畫，畫面不變。
+   */
+  renderGroupSource?: (group: QuestionGroup) => ReactNode;
 }
 
 export const QuestionExtrasContext = createContext<QuestionExtras | null>(null);

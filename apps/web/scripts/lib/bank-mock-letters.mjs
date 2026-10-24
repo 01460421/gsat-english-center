@@ -160,10 +160,13 @@ function swappableQuestion(q) {
 
 /**
  * 一個閱讀題組可以交換的 (q, r) 組合（§5.3；q、r 是題組內的題號），依 q、r 排序。
- * @param {GroupLike} file
+ * 出版社題組（uid pb.…）一律是空陣列（docs/design/weak-paper.md §6.6）：交換是為了處理本站 AI 閱讀題「每篇答案剛好是
+ * ABCD 各一次」的生成痕跡；出版社題是逐字授權、卷面標原卷題號，學生會拿出版社的答案對照，所以不調整答案位置。
+ * @param {GroupLike & { uid?: unknown }} file
  * @returns {SwapPair[]}
  */
 export function swappablePairs(file) {
+  if (typeof file.uid === 'string' && file.uid.startsWith('pb.')) return [];
   const questions = questionsOf(file);
   const items = explanationItems(file);
   /** @type {Map<string, number>} 每個字母目前出現幾次 */

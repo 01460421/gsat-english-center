@@ -219,7 +219,8 @@ export const PAGES = [
     path: '/assistant',
     title: '學習助手',
     navLabel: '學習助手',
-    summary: '拍照或從錯題送出一題，AI 說明你錯在哪、正確解法與相關觀念，可以追問，並整理成個人學習報告與讀書計畫。',
+    // 加強卷（docs/design/weak-paper.md §9.3）開放時加最後一句；不能含其他學習模組的標題（例如「模擬考」）。
+    summary: '拍照或從錯題送出一題，AI 說明你錯在哪、正確解法與相關觀念，可以追問，並整理成個人學習報告與讀書計畫；也能依弱點組一份加強卷。',
     group: 'exam',
     icon: 'assistant',
     status: 'ready',

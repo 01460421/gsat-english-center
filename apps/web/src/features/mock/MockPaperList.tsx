@@ -24,7 +24,16 @@ import { pdfDownloadVisible } from '../pdf/index';
 import { bankMockVisible } from './bank/flags';
 import { formatDateTime, signedPoints } from './format';
 import { MOCK_DURATION_MIN, MOCK_PAPERS, mockPaperLabel, mockPdfMeta, type MockPaper } from './papers';
-import { HISTORY_LIMIT, MOCK_CHANGED_EVENT, MOCK_STORAGE_PREFIX, loadActiveRecord, loadHistory, type MockAttemptRecord, type MockHistoryEntry } from './storage';
+import {
+  HISTORY_LIMIT,
+  MOCK_CHANGED_EVENT,
+  MOCK_STORAGE_PREFIX,
+  isPracticePaperId,
+  loadActiveRecord,
+  loadHistory,
+  type MockAttemptRecord,
+  type MockHistoryEntry,
+} from './storage';
 import { isExpired, remainingSec } from './timer';
 import { useNow } from './useNow';
 
@@ -280,7 +289,9 @@ function HistoryList({ history }: { history: readonly MockHistoryEntry[] }) {
 }
 
 export function MockPaperList() {
-  const { active, history } = useMockSnapshot();
+  const { active, history: all } = useMockSnapshot();
+  // 加強卷的練習性卷子（弱點加強卷、模考格式卷、隨機抽題卷）列在組卷頁的「我的加強卷」，這裡不列（docs/design/weak-paper.md §7.7）。
+  const history = all.filter((h) => !isPracticePaperId(h.paperId));
   const id = useId();
   return (
     <>

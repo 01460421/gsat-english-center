@@ -6,6 +6,7 @@
  *   - 一列一個題組（同一組的錯題與疑點併成一列），預設依「建議先問」排序（rankMistakes.ts），可以改成新到舊。
  *   - 篩選：來源、大題、日期、只看沒問過的、錯題或疑點。題庫題先看本站解析（免費）；同技能多組時合併提示。
  *   - 手機是卡片列表；桌機（≥ lg）是 DataTable，篩選列用 StickyBar（R3：同時只有一份）。
+ *   - 篩選後至少 3 列錯題時：「用目前篩選的錯題組一份加強卷」（docs/design/weak-paper.md §3.1；大題與技能由 focusFromRows 依提升度挑）。
  */
 import { ASSIST_SECTION_LABELS, ASSIST_STANDARDS, type AssistSection } from '@gsat/shared';
 import { useEffect, useId, useMemo, useState } from 'react';
@@ -22,6 +23,9 @@ import { isAskedHref, readAsked } from './lib/asked';
 import { readPrefs } from './lib/prefs';
 import { getOutcomes } from './outcomes';
 import { DEFAULT_TARGET_LEVEL, rankMistakes, skillClusterNotes, weakestSkills, type RankedRow } from './rankMistakes';
+import { focusFromRows } from './papers/focus';
+import { weakPaperVisible } from './papers/flags';
+import { papersHref } from './papers/params';
 import { rowSummary } from './sources/common';
 import { listMistakes } from './sources';
 import type { MistakeRow, MistakeSource } from './sources/types';
@@ -181,6 +185,23 @@ function Body() {
     return rankMistakes(filtered, { targetLevel: targetLevel(), weakSkills: weak, sort: filters.sort });
   }, [rows, filters, askedSet, weak]);
   const clusters = useMemo(() => skillClusterNotes(rows ?? []), [rows]);
+  const [papersVisible] = useState(weakPaperVisible);
+  // 加強卷的入口：篩選後的錯題（不含只有疑點的列）至少 3 列時，依提升度挑大題與技能（focus.ts）。
+  const papersLink = useMemo(() => {
+    if (!papersVisible) return null;
+    const mistakes = ranked.map((r) => r.row).filter((r) => r.kind === 'mistake' && r.questionSkills && r.questionSkills.length > 0);
+    if (mistakes.length < 3) return null;
+    const focus = focusFromRows(
+      mistakes.map((r) => ({ section: r.section, questions: r.questionSkills ?? [] })),
+      getOutcomes().items,
+      { now: Date.now(), onlySection: filters.section === 'all' ? null : filters.section },
+    );
+    if (focus.sections.length === 0) return null;
+    const n = mistakes.reduce((sum, r) => sum + (r.questionSkills?.length ?? 0), 0);
+    // 提升度一起帶過去（預覽寫「錯題裡比你平常多 x 倍」）：lift=it:inference:1.8。
+    const lift = Object.entries(focus.lifts ?? {}).map(([code, value]) => `${code}:${value}`);
+    return papersHref({ kind: 'w', from: 'mistakes', section: focus.sections, skill: focus.skills, lift, n });
+  }, [papersVisible, ranked, filters.section]);
   const set = <K extends keyof Filters>(key: K, value: Filters[K]) => setFilters((f) => ({ ...f, [key]: value }));
 
   const filterBar = (
@@ -273,6 +294,13 @@ function Body() {
           <p role="status" className="text-sm text-muted">
             共 {ranked.length} 組{ranked.length !== rows.length ? `（全部 ${rows.length} 組）` : ''}
           </p>
+          {papersLink && (
+            <p className="text-sm">
+              <Link to={papersLink} className="inline-flex min-h-11 items-center font-medium text-primary underline underline-offset-2">
+                用目前篩選的錯題組一份加強卷
+              </Link>
+            </p>
+          )}
           {isDesktop ? <DesktopTable ranked={ranked} asked={asked} clusters={clusters} /> : <MobileList ranked={ranked} asked={asked} clusters={clusters} />}
         </>
       )}

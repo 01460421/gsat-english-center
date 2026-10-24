@@ -14,10 +14,17 @@
  *   version  版本超過 63（代號每格 6 個 base32 字元，版本只有 6 位元）
  *   marker   題組裡有指向題組外的 [[n]]，或解析的「第 n 格」不在題組的題號裡（重新編號會改錯，§5.2）
  *   glyph    題本會印的字串有 PDF 字型沒有的字（§7.6；字型子集補過題庫的字之後開始排除，題庫練習照樣用得到那一組）
+ *   shape    題組的形狀（題數、每題的作答方式與配分）和該大題的標準形狀不同（docs/design/weak-paper.md §7.2、§8.5：
+ *            標準形狀由本站題庫算出，建置斷言本站題每個大題只有一種；形狀不同的出版社題組只進題庫練習）
+ *   ns       出版社題組（uid pb.…，weak-paper.md §6.2）：bk1 的代號只能編 ai.，所以一律擋在 bk1 之外；
+ *            加強卷（bk2）的候選另用前端的 isSelectableBk2 判斷（請求的來源包含這一組的 src 才收）
+ * 判斷順序就是上面的順序（uid、version、marker、glyph、shape、ns），ex 取第一個原因。出版社題組的 uid 符合
+ * ^pb\.(vo|cz|wb|st|rd|mx)\.[0-9a-f]{6}$ 而且題型代碼和 section_type 一致時不算 uid 不符，只給 ns。
  *
  * 輸出格式（前端型別在 src/features/mock/bank/pool.ts 的 MockPool；資料契約見 lib/data-contract.mjs 的 MOCK_POOL_TYPE）：
  *   { version, blueprint: 'gsat-115', tiers: { basic|advanced|top: { vocabulary|cloze|word_bank|structure|reading|mixed|translation|composition: Entry[] } } }
- *   Entry   = { uid, v, theme: string[], k: string[], prev?: { [舊版本]: string[] }, ex?: 'uid' | 'version' | 'marker' | 'glyph' }
+ *   Entry   = { uid, v, theme: string[], k: string[], prev?: { [舊版本]: string[] }, src?: string, ex?: 'uid' | 'version' | 'marker' | 'glyph' | 'shape' | 'ns' }
+ *   src 是來源登記檔的 id（出版社題組的公開檔 source.id）；本站題庫省略，所以現有輸出不變。
  *   閱讀另外有 fig: 'chart' | 'table' | null、form（group.tags.text_format：continuous／mixed／multi_text）、sw: [q, r][]
  *   每個清單依 uid 排序；三種難度、八個大題的鍵一定都在（沒有題組時是空陣列）。欄位的意思見 bank-mock-letters.mjs（k、prev、sw）
  *   與 bank-mock-themes.mjs（theme）。
@@ -25,7 +32,8 @@
 import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { BANK_FILENAME_PATTERN, BANK_SCHEMA, TIERS, listJsonFiles } from '../../../../packages/shared/scripts/bank-select.mjs';
+import { BANK_FILENAME_PATTERN, BANK_SCHEMA, PUBLISHER_FILENAME_PATTERN, PUBLISHER_SCHEMA, TIERS, listJsonFiles } from '../../../../packages/shared/scripts/bank-select.mjs';
+import { publisherExplanationItems } from './bank-data.mjs';
 import { answerFingerprints, swappablePairs } from './bank-mock-letters.mjs';
 import { themeKeys, topicPlanIndex } from './bank-mock-themes.mjs';
 
@@ -43,8 +51,10 @@ export const MOCK_SECTIONS = /** @type {const} */ (['vocabulary', 'cloze', 'word
 export const GROUPS_PER_PAPER = /** @type {const} */ ({ vocabulary: 1, cloze: 2, word_bank: 1, structure: 1, reading: 3, mixed: 1, translation: 1, composition: 1 });
 /** uid 的題型代碼（同 packages/shared/src/tiers.ts 的 BANK_UID_CODES）。 */
 const UID_CODES = /** @type {const} */ ({ vocabulary: 'vo', cloze: 'cz', word_bank: 'wb', structure: 'st', reading: 'rd', mixed: 'mx', translation: 'tr', composition: 'cp' });
-/** 代號能編進的 uid（§4.6）。 */
+/** 代號能編進的 uid（§4.6）。維持只收 ai.（weak-paper.md §8.2：bk1 的代號只能編本站題庫）。 */
 export const MOCK_UID_PATTERN = /^ai\.(vo|cz|wb|st|rd|mx|tr|cp)\.[0-9a-f]{6}$/;
+/** 出版社題組的 uid（同 packages/shared/src/item-source.ts 的 PRACTICE_ITEM_UID_PATTERN 的 pb 那一半）：給 ex: 'ns'，不算 uid 不符。 */
+export const PUBLISHER_UID_PATTERN = /^pb\.(vo|cz|wb|st|rd|mx)\.[0-9a-f]{6}$/;
 /** 代號能編進的最大版本（每格的版本是 6 位元，§4.6）。 */
 export const MAX_MOCK_VERSION = 63;
 /**
@@ -60,6 +70,8 @@ export const MOCK_EXCLUSION_LABELS = /** @type {const} */ ({
   version: `版本超過 ${MAX_MOCK_VERSION}，無法編進卷子代號`,
   marker: '有指向題組外的 [[n]] 或「第 n 格」',
   glyph: '題本有 PDF 字型沒有的字',
+  shape: '題組的形狀（題數、作答方式、配分）和學測格式不同，只進題庫練習',
+  ns: '出版社題組，只給加強卷（bk2）用',
 });
 
 /** 大題的中文（建置紀錄用）。 */
@@ -83,7 +95,7 @@ const TIER_LABELS = /** @type {const} */ ({ basic: '穩定基礎', advanced: '�
  * @typedef {[number, number]} SwapPair
  * @typedef {{
  *   uid: string, v: number, theme: string[], fig?: 'chart' | 'table' | null, form?: string, sw?: SwapPair[],
- *   k: string[], prev?: Record<string, string[]>, ex?: ExclusionReason,
+ *   k: string[], prev?: Record<string, string[]>, src?: string, ex?: ExclusionReason,
  * }} MockPoolEntry
  * @typedef {{ version: string, blueprint: string, tiers: Record<Tier, Record<MockSection, MockPoolEntry[]>> }} MockPoolFile
  * @typedef {{ tier: Tier, section: MockSection, uid: string, v: number, topic: string | null }} NoConceptTopic
@@ -91,7 +103,7 @@ const TIER_LABELS = /** @type {const} */ ({ basic: '穩定基礎', advanced: '�
  * @typedef {{
  *   pool: MockPoolFile, inputs: string[], warnings: string[], excluded: ExcludedGroup[], noConcept: NoConceptTopic[],
  * }} MockPoolResult
- * @typedef {{ uid: string, version: number, section_type: string, tier: string, group?: unknown, annotations?: unknown }} PracticeLike
+ * @typedef {{ uid: string, version: number, section_type: string, tier: string, group?: unknown, annotations?: unknown, source?: unknown }} PracticeLike
  * @typedef {{ uid: string, version: number, section_type: string, tier: string, topic: string | null }} WritingIndexLike
  * @typedef {{ booklet: readonly string[], explanations: readonly string[], sources?: readonly string[] }} MissingGlyphs
  */
@@ -171,21 +183,33 @@ function topicOf(group) {
 }
 
 /**
- * data/bank/v1 底下每個 uid 的所有版本檔（只看檔名；內容要用時才讀）。
- * @param {string} bankDir
+ * data/bank/v1 底下每個 uid 的所有版本檔（只看檔名；內容要用時才讀）；有 publisherDir 時另外加上 data/publisher 底下的
+ * 出版社正規化檔（pb.…；weak-paper.md §8.4，舊版本的答案指紋 prev 用）。
+ * @param {string} bankDir @param {string} [publisherDir]
  * @returns {Map<string, { version: number, file: string }[]>}
  */
-function versionFiles(bankDir) {
+function versionFiles(bankDir, publisherDir) {
   /** @type {Map<string, { version: number, file: string }[]>} */
   const out = new Map();
-  if (!existsSync(bankDir)) return out;
-  for (const file of listJsonFiles(bankDir)) {
-    const m = BANK_FILENAME_PATTERN.exec(path.basename(file));
-    if (!m) continue;
-    const uid = m[1] ?? '';
-    out.set(uid, [...(out.get(uid) ?? []), { version: Number(m[2]), file }]);
+  for (const [dir, pattern] of /** @type {Array<[string | undefined, RegExp]>} */ ([[bankDir, BANK_FILENAME_PATTERN], [publisherDir, PUBLISHER_FILENAME_PATTERN]])) {
+    if (dir === undefined || !existsSync(dir)) continue;
+    for (const file of listJsonFiles(dir)) {
+      const m = pattern.exec(path.basename(file));
+      if (!m) continue;
+      const uid = m[1] ?? '';
+      out.set(uid, [...(out.get(uid) ?? []), { version: Number(m[2]), file }]);
+    }
   }
   return out;
+}
+
+/**
+ * 出版社正規化檔 → 算答案指紋用的形狀（和公開題組檔相同的 group 與計分欄位；部分給分寫法、可對調的格在 scoring_extra，
+ * 公開檔把它們併進解析列，舊版本也要一樣併，指紋才比得起來）。
+ * @param {JsonObject} raw
+ */
+function publisherFingerprintView(raw) {
+  return { uid: raw.uid, group: raw.group, annotations: { explanations: { items: publisherExplanationItems(raw, false) } } };
 }
 
 /** @param {string} file @returns {JsonObject | null} */
@@ -196,6 +220,17 @@ function readRaw(file) {
   } catch {
     return null;
   }
+}
+
+/**
+ * 題組的形狀（weak-paper.md §7.2）：每一題的作答方式與配分，依題目順序（題數就是長度）。能進卷子的題組一定是該大題的標準形狀，
+ * 卷子的版面與題號才只由代號決定；混合題多選的選項數（6 或 8）不影響題號與配分，不算進形狀。
+ * @param {{ group?: unknown }} file
+ */
+export function groupShape(file) {
+  const g = isObject(file.group) ? file.group : {};
+  const questions = Array.isArray(g.questions) ? g.questions : [];
+  return questions.map((q) => (isObject(q) ? `${String(q.mode)}:${String(q.points)}` : '?')).join(',');
 }
 
 /**
@@ -233,18 +268,20 @@ export function readTopicPlans(files, relative = (f) => f) {
  *   glyphs?: ReadonlyMap<string, MissingGlyphs>,
  *   excludeGlyphs?: boolean,
  *   relative?: (file: string) => string,
+ *   publisherDir?: string,
  * }} options
  *   version：資料版本（build-data.mjs 要把這裡讀的舊版本檔算進版本，所以先傳空字串、算完版本再填進 pool.version）；
  *   practice：buildBankData 的 groups（題庫練習的公開題組檔）；writing：buildWritingBank 的 index；
  *   topicPlans：已解析的 data/bank/topic-plan.json、topic-plan-writing.json（主題鍵的 keywords、angle_en）；
- *   glyphs：font-coverage.mjs 的 bankPrintableCoverage() 找到的缺字（鍵是 uid@v）；excludeGlyphs 預設 EXCLUDE_BOOKLET_GLYPHS
+ *   glyphs：font-coverage.mjs 的 bankPrintableCoverage() 找到的缺字（鍵是 uid@v）；excludeGlyphs 預設 EXCLUDE_BOOKLET_GLYPHS；
+ *   publisherDir：出版社正規化檔的目錄（data/publisher；出版社題組舊版本的 prev 從這裡讀）
  * @returns {MockPoolResult}
  */
 export function buildMockPool(options) {
   const rel = options.relative ?? ((/** @type {string} */ f) => f);
   const excludeGlyphs = options.excludeGlyphs ?? EXCLUDE_BOOKLET_GLYPHS;
   const plans = topicPlanIndex(options.topicPlans ?? []);
-  const files = versionFiles(options.bankDir);
+  const files = versionFiles(options.bankDir, options.publisherDir);
   /** @type {string[]} */
   const warnings = [];
   /** @type {Set<string>} 讀過的舊版本與寫作題原始檔（算進資料版本雜湊） */
@@ -267,17 +304,54 @@ export function buildMockPool(options) {
     const prev = {};
     for (const { version, file } of (files.get(uid) ?? []).filter((f) => f.version < current).sort((a, b) => a.version - b.version)) {
       const raw = readRaw(file);
-      if (!raw || raw.status !== 'verified' || raw.schema !== BANK_SCHEMA || raw.section_type !== section || raw.version !== version) continue;
+      const publisher = uid.startsWith('pb.');
+      if (!raw || raw.status !== 'verified' || raw.schema !== (publisher ? PUBLISHER_SCHEMA : BANK_SCHEMA) || raw.section_type !== section || raw.version !== version) continue;
       inputs.add(file);
-      prev[String(version)] = answerFingerprints(section, raw);
+      prev[String(version)] = answerFingerprints(section, publisher ? publisherFingerprintView(raw) : raw);
     }
     return Object.keys(prev).length > 0 ? prev : undefined;
   };
 
   /**
-   * @param {{ uid: string, version: number, section: string, tier: string, topic: string | null, file: { group?: unknown, annotations?: unknown } }} g
+   * @typedef {{ uid: string, version: number, section: string, tier: string, topic: string | null, file: { group?: unknown, annotations?: unknown }, src: string | null }} PoolInput
    */
-  const add = ({ uid, version, section, tier, topic, file }) => {
+  /** @type {PoolInput[]} */
+  const inputsList = [];
+  for (const g of options.practice) {
+    const source = isObject(g.source) ? g.source : null;
+    const src = source && typeof source.id === 'string' && source.id !== '' ? source.id : null;
+    inputsList.push({ uid: g.uid, version: g.version, section: g.section_type, tier: g.tier, topic: topicOf(g.group), file: g, src });
+  }
+  for (const w of options.writing) {
+    // 寫作題的公開檔（prompts／answers）形狀和題組不同；指紋與空格記號用原始檔算（和舊版本同一種形狀）。
+    const found = (files.get(w.uid) ?? []).find((f) => f.version === w.version);
+    const raw = found ? readRaw(found.file) : null;
+    if (!found || !raw) throw new BankMockPoolError(`找不到已發布寫作題 ${w.uid}@${w.version} 的原始檔（${rel(options.bankDir)}）`);
+    inputs.add(found.file);
+    inputsList.push({ uid: w.uid, version: w.version, section: w.section_type, tier: w.tier, topic: w.topic, file: raw, src: null });
+  }
+
+  // 每個大題的標準形狀：本站題庫（ai.）的題組只能有一種（weak-paper.md §7.2）；出版社題組和它比對。
+  /** @type {Map<string, Map<string, string>>} 大題 → 形狀 → 第一個用到它的題組 */
+  const aiShapes = new Map();
+  for (const g of inputsList) {
+    if (!g.uid.startsWith('ai.')) continue;
+    const shapes = aiShapes.get(g.section) ?? new Map();
+    const shape = groupShape(g.file);
+    if (!shapes.has(shape)) shapes.set(shape, `${g.uid}@${g.version}`);
+    aiShapes.set(g.section, shapes);
+  }
+  for (const [section, shapes] of aiShapes) {
+    if (shapes.size > 1) {
+      const list = [...shapes].map(([shape, key]) => `${key}（${shape}）`).join('、');
+      throw new BankMockPoolError(`本站題庫的 ${section} 有 ${shapes.size} 種形狀，卷子的版面無法只由代號決定：${list}`);
+    }
+  }
+  /** @param {string} section */
+  const standardShape = (section) => [...(aiShapes.get(section)?.keys() ?? [])][0] ?? null;
+
+  /** @param {PoolInput} g */
+  const add = ({ uid, version, section, tier, topic, file, src }) => {
     const key = `${uid}@${version}`;
     if (!MOCK_SECTIONS.includes(/** @type {never} */ (section)) || !TIERS.includes(/** @type {never} */ (tier))) {
       throw new BankMockPoolError(`${key}：題型 ${section} 或難度 ${tier} 不在組卷池的範圍`);
@@ -287,7 +361,10 @@ export function buildMockPool(options) {
     /** @type {ExclusionReason[]} */
     const reasons = [];
     const m = MOCK_UID_PATTERN.exec(uid);
-    if (!m || m[1] !== UID_CODES[s]) reasons.push('uid');
+    const pb = PUBLISHER_UID_PATTERN.exec(uid);
+    const publisher = pb !== null && pb[1] === UID_CODES[s];
+    if (publisher && src === null) throw new BankMockPoolError(`${key}：出版社題組沒有來源（題組檔的 source.id）`);
+    if (!publisher && (!m || m[1] !== UID_CODES[s])) reasons.push('uid');
     if (!Number.isInteger(version) || version < 1 || version > MAX_MOCK_VERSION) reasons.push('version');
     const stray = strayMarkers(file);
     if (stray.length > 0) reasons.push('marker');
@@ -302,6 +379,9 @@ export function buildMockPool(options) {
     if (missing?.sources && missing.sources.length > 0) {
       warnings.push(`${key} 的資料來源（參考資料、出處說明）有 PDF 字型沒有的字：${missing.sources.join('')}`);
     }
+    // 本站題已經斷言只有一種形狀，這裡只會排除出版社題組（沒有本站題可比的大題也排除：無法確認形狀）。
+    if (!uid.startsWith('ai.') && groupShape(file) !== standardShape(s)) reasons.push('shape');
+    if (publisher) reasons.push('ns');
 
     const plan = topic === null ? undefined : plans.get(topic);
     const theme = themeKeys({ section: s, topic, keywords: plan?.keywords, angle: plan?.angle });
@@ -322,27 +402,21 @@ export function buildMockPool(options) {
     }
     const prev = previousKeys(uid, version, s);
     if (prev) entry.prev = prev;
+    if (src !== null && publisher) entry.src = src;
     if (reasons.length > 0) {
       const reason = /** @type {ExclusionReason} */ (reasons[0]);
       entry.ex = reason;
-      excluded.push({ key, reason });
-      const detail = reason === 'marker' ? `（${[...new Set(stray)].slice(0, 5).join('、')}）` : '';
-      warnings.push(`${key} 不能用來組新卷：${reasons.map((r) => MOCK_EXCLUSION_LABELS[r]).join('；')}${detail}`);
+      // 只因為是出版社題組（ns）而不能進 bk1 是設計如此，不列進排除清單、不警告。
+      if (reason !== 'ns') {
+        excluded.push({ key, reason });
+        const detail = reason === 'marker' ? `（${[...new Set(stray)].slice(0, 5).join('、')}）` : '';
+        warnings.push(`${key} 不能用來組新卷：${reasons.filter((r) => r !== 'ns').map((r) => MOCK_EXCLUSION_LABELS[r]).join('；')}${detail}`);
+      }
     }
     tiers[t][s].push(entry);
   };
 
-  for (const g of options.practice) {
-    add({ uid: g.uid, version: g.version, section: g.section_type, tier: g.tier, topic: topicOf(g.group), file: g });
-  }
-  for (const w of options.writing) {
-    // 寫作題的公開檔（prompts／answers）形狀和題組不同；指紋與空格記號用原始檔算（和舊版本同一種形狀）。
-    const found = (files.get(w.uid) ?? []).find((f) => f.version === w.version);
-    const raw = found ? readRaw(found.file) : null;
-    if (!found || !raw) throw new BankMockPoolError(`找不到已發布寫作題 ${w.uid}@${w.version} 的原始檔（${rel(options.bankDir)}）`);
-    inputs.add(found.file);
-    add({ uid: w.uid, version: w.version, section: w.section_type, tier: w.tier, topic: w.topic, file: raw });
-  }
+  for (const g of inputsList) add(g);
   for (const t of TIERS) for (const s of MOCK_SECTIONS) tiers[t][s].sort((a, b) => (a.uid < b.uid ? -1 : a.uid > b.uid ? 1 : a.v - b.v));
   noConcept.sort(
     (a, b) => TIERS.indexOf(a.tier) - TIERS.indexOf(b.tier) || MOCK_SECTIONS.indexOf(a.section) - MOCK_SECTIONS.indexOf(b.section) || a.uid.localeCompare(b.uid),
@@ -431,7 +505,11 @@ export function mockPoolLogLines(result) {
   const byReason = new Map();
   for (const e of result.excluded) byReason.set(e.reason, (byReason.get(e.reason) ?? 0) + 1);
   const excludedText = [...byReason].map(([r, n]) => `${MOCK_EXCLUSION_LABELS[/** @type {ExclusionReason} */ (r)] ?? r} ${n}`).join('、');
-  const lines = [`自組模擬考組卷池：${total} 組${result.excluded.length > 0 ? `，其中 ${result.excluded.length} 組不能組新卷（${excludedText}）` : ''}`];
+  const publisher = TIERS.reduce((n, t) => n + MOCK_SECTIONS.reduce((m, s) => m + result.pool.tiers[t][s].filter((e) => e.ex === 'ns').length, 0), 0);
+  const lines = [
+    `自組模擬考組卷池：${total} 組${result.excluded.length > 0 ? `，其中 ${result.excluded.length} 組不能組新卷（${excludedText}）` : ''}` +
+      (publisher > 0 ? `；出版社題組 ${publisher} 組（只給加強卷用，不進本站自組模擬考）` : ''),
+  ];
   lines.push(`  ${padCells('大題', 12)}${TIERS.map((t) => padCells(TIER_LABELS[t], 10)).join('')}每份要`);
   for (const s of MOCK_SECTIONS) {
     lines.push(`  ${padCells(SECTION_LABELS[s], 12)}${TIERS.map((t) => padCells(String(supply[t].counts[s]), 10)).join('')}${GROUPS_PER_PAPER[s]}`);

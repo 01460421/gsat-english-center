@@ -55,7 +55,35 @@ export interface SitePaperPdfMeta {
      * 答案頁印在該題的答案下方，紙本批改和線上自動判分才一致（§6.3）。沒有就不印。
      */
     partialCredit?: Record<string, string[]>;
+    /**
+     * 出版社授權結束、題目已經遮住的題組裡的填充、簡答題號（docs/design/weak-paper.md §7.6）：答案頁不印答案文字。
+     * 只有加強卷有遮住的題組時才有。
+     */
+    ended?: string[];
   };
+  /**
+   * 以下三個欄位只有卷子裡有出版社題組時才有（docs/design/weak-paper.md §9.5；features/mock/bank/paperSources.ts 組出來）。
+   * 自組模擬考（只用本站題）不傳，PDF 和原本完全相同。
+   */
+  /** 封面「題目來源」的幾行（本站題庫、各出版社的書名，經授權使用）。 */
+  sourceLines?: readonly string[];
+  /** 題組 id（s5g2）→ 這組的出處（只有出版社題組）。題本每組標題下一行印出。 */
+  groupSources?: Record<string, string>;
+  /** 頁尾聲明的種類：ai（現行）、publisher（全部是出版社題）、mixed。 */
+  footerKind?: 'ai' | 'publisher' | 'mixed';
+  /**
+   * 學習助手加強卷（bk2，docs/design/weak-paper.md §9.5）的卷別：弱點加強卷 w、模考格式卷 f、隨機抽題卷 r、中性模考格式卷 m。
+   * 有值時封面、頁首頁尾、各節標題、文件屬性與檔名改用加強卷的文字（layout/strings.ts 的 WEAK_PAPER_TEXT），
+   * tierLabel 是卷子裡出現的難度（跨難度時「穩定基礎、進階練習」）。自組模擬考（bk1）不傳，PDF 和原本完全相同。
+   */
+  paperKind?: 'w' | 'f' | 'r' | 'm';
+  /** 加強卷的作答時間（分鐘；教師卷的卷子資訊用，封面讀 MockPdfMeta.durationMinutes）。只有 paperKind 有值時才有。 */
+  minutes?: number;
+  /**
+   * 加強卷封面的「本卷針對」（只在組卷的裝置上有：「我的加強卷」存的弱點名稱；分享來的卷子、隨機抽題卷沒有）。
+   * balanced：均衡加強卷（沒有針對弱點）。名稱含 PDF 字型沒有的字時那一項不印。
+   */
+  targets?: { labels: readonly string[]; balanced: boolean };
 }
 
 export interface ExamPdfOptions {

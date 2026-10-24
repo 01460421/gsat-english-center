@@ -46,6 +46,8 @@ export interface MistakeRow {
   links: Array<{ label: string; to: string }>;
   /** 錯題的技能代碼（排序用）。 */
   skills: string[];
+  /** 每一題錯題的原始技能代碼（加強卷入口的焦點，docs/design/weak-paper.md §3.1；單字、寫作沒有）。 */
+  questionSkills?: string[][];
   /** 歷屆題：錯題裡全國答對率最高的那一題的答對率與五等分組（排序用）。 */
   nationalRate: number | null;
   fiveGroups: number[] | null;

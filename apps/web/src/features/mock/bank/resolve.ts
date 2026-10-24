@@ -16,8 +16,15 @@
  * 網路錯誤等失敗要等「再試一次」（forgetFailedLoads）才重來。
  * 題組檔回 404（網站剛更新，開著的分頁還拿著舊的組卷池）時，清掉組卷池快取、重抓一次再來一次；還是 404 就丟出
  * DataLoadError 的 not_found（文案是「網站剛更新，請重新整理」），不說是網路問題。
+ *
+ * 加強卷（bk2，docs/design/weak-paper.md §7.6）走同樣的兩支載入函式，依代號格式分派：
+ *   - 每一組用代號裡自己的大題與難度找組卷池（status.ts 的 layoutStatuses）；出版社來源停用或授權到期的題組當成下架（fail closed）。
+ *   - 換題：同大題、同難度、優先同命名空間的中性選題（used 空、種子是舊代號的 FNV-1a、避開卷內其他題組與主題；
+ *     候選判斷用 isSelectableBk2，來源取原本那一組的來源與本站題庫）。替代題組一定和原題組同形狀，版面只由代號決定，
+ *     換題後卷面題號不變。答案改了而版本超過 31、或新版本的形狀不同（ex: 'shape'）時當成下架。
+ *   - 清單與快照用加強卷自己的（weakPapers.ts、gsat-weakpaper）。
  */
-import type { BankSectionType, Tier } from '@gsat/shared';
+import { AI_BANK_SOURCE_ID, namespaceOf, type BankSectionType, type Tier } from '@gsat/shared';
 import { loadPracticeGroup } from '../../../data/bank';
 import { DataLoadError, forgetFailedLoads, memoizeAsync } from '../../../data/client';
 import { loadBankAnswers, loadBankPrompt } from '../../writing/bank/data';
@@ -25,13 +32,18 @@ import { loadActiveId, loadHistory } from '../storage';
 import { assembleSelection, type Relaxation, type SlotPick } from './assemble';
 import { BLUEPRINT_SLOTS, slotRange } from './blueprint';
 import { buildBankPaper, type BankPaper, type BankPaperNotices, type SlotFile } from './buildExam';
-import { MAX_SLOT_VERSION, decodePaperId, encodePaperId, normalizePaperId, type DecodedPaperId, type PaperSlot } from './code';
+import { MAX_SLOT_VERSION, decodePaperId, encodePaperId, type DecodedPaperId, type PaperSlot } from './code';
+import { BK2_MAX_VERSION, decodeAnyPaperId, encodeBk2, normalizeAnyPaperId, type Bk2Slot, type DecodedBk2 } from './code2';
+import { layoutForBk2, type PaperLayout } from './layout';
 import { addMyPaper, findMyPaper, hasPaperUse, prunePapers, recordPrinted, replaceMyPaperId, type PrintedInfo } from './myPapers';
-import { loadMockPool, reloadMockPool, type MockPool, type MockPoolEntry, type MockPoolReadingEntry } from './pool';
-import { fnv1a, randomSeed } from './random';
-import { getSnapshotStore, paperFromSnapshot, snapshotOf, type BankSnapshot, type SnapshotStore } from './snapshots';
-import { isStrictlyUsable, paperStatuses, type SlotStatus } from './status';
+import { findPoolEntry, isSelectableBk2, loadMockPool, reloadMockPool, type MockPool, type MockPoolEntry, type MockPoolReadingEntry } from './pool';
+import { fnv1a, randomSeed, rngFromSeed, shuffled } from './random';
+import { getSnapshotStore, getWeakSnapshotStore, paperFromSnapshot, snapshotOf, type BankSnapshot, type SnapshotStore } from './snapshots';
+import { maskEndedSourceFiles } from './sourceMask';
+import { loadSourceRegistry, sourceActiveFn } from './sources';
+import { isStrictlyUsable, layoutStatuses, paperStatuses, type SlotStatus } from './status';
 import { loadUsedGroups } from './used';
+import { weakPaperList } from './weakPapers';
 
 export type StrictLoadResult =
   | { ok: true; paper: BankPaper; source: 'snapshot' | 'network' }
@@ -57,12 +69,13 @@ export type AssembleNewResult =
   | { ok: true; paper: BankPaper; relaxed: Relaxation[] }
   | { ok: false; reason: 'insufficient'; section: BankSectionType };
 
-/** 這台裝置有沒有這份卷子的使用紀錄（§4.7 第 (3) 部分的表）。 */
+/** 這台裝置有沒有這份卷子的使用紀錄（§4.7 第 (3) 部分的表）。加強卷查「我的加強卷」清單。 */
 export function hasLocalUse(paperId: string): boolean {
-  const id = normalizePaperId(paperId)?.id ?? paperId;
+  const normalized = normalizeAnyPaperId(paperId);
+  const id = normalized?.id ?? paperId;
   if (loadActiveId(id) !== null) return true;
   if (loadHistory().some((h) => h.paperId === id)) return true;
-  const entry = findMyPaper(id);
+  const entry = normalized?.format === 'bk2' ? weakPaperList.find(id) : findMyPaper(id);
   return entry !== null && hasPaperUse(entry);
 }
 
@@ -83,13 +96,13 @@ async function loadSlotFile(section: BankSectionType, uid: string, v: number): P
   return loadPracticeGroup(uid, v);
 }
 
-async function loadFiles(slots: readonly { section: BankSectionType; uid: string; v: number }[]): Promise<Record<string, SlotFile>> {
+export async function loadFiles(slots: readonly { section: BankSectionType; uid: string; v: number }[]): Promise<Record<string, SlotFile>> {
   const loaded = await Promise.all(slots.map(async (s) => [`${s.uid}@${s.v}`, await loadSlotFile(s.section, s.uid, s.v)] as const));
   return Object.fromEntries(loaded);
 }
 
-/** 用組卷池做一件事；題組檔 404 時清掉組卷池快取、重抓一次再做一次（最多一次，§4.7 第 (6) 部分）。 */
-async function withPoolRetry<T>(run: (pool: MockPool) => Promise<T>, first?: MockPool): Promise<T> {
+/** 用組卷池做一件事；題組檔 404 時清掉組卷池快取、重抓一次再做一次（最多一次，§4.7 第 (6) 部分）。加強卷的組卷也用它。 */
+export async function withPoolRetry<T>(run: (pool: MockPool) => Promise<T>, first?: MockPool): Promise<T> {
   const pool = first ?? (await loadMockPool());
   try {
     return await run(pool);
@@ -109,7 +122,7 @@ async function readSnapshot(store: SnapshotStore, paperId: string): Promise<Bank
   }
 }
 
-async function writeSnapshot(store: SnapshotStore, paper: BankPaper, now = new Date()): Promise<boolean> {
+export async function writeSnapshot(store: SnapshotStore, paper: BankPaper, now = new Date()): Promise<boolean> {
   try {
     return await store.put(snapshotOf(paper, now));
   } catch {
@@ -150,6 +163,8 @@ function isUnusableUpdate(s: SlotStatus): boolean {
 // ---------------------------------------------------------------------------
 
 async function strictImpl(raw: string): Promise<StrictLoadResult> {
+  const any = decodeAnyPaperId(raw);
+  if (any?.format === 'bk2') return strictBk2(any);
   const decoded = decodePaperId(raw);
   if (!decoded) return { ok: false, reason: 'invalid' };
   const store = getSnapshotStore();
@@ -185,7 +200,7 @@ const strictLoader = memoizeAsync(strictImpl);
 
 /** 嚴格載入（有使用紀錄的卷子用）。代號可以是任何寫法（大小寫、.p）。 */
 export function loadBankPaperStrict(paperId: string): Promise<StrictLoadResult> {
-  return strictLoader(normalizePaperId(paperId)?.id ?? paperId);
+  return strictLoader(normalizeAnyPaperId(paperId)?.id ?? paperId);
 }
 
 // ---------------------------------------------------------------------------
@@ -279,6 +294,8 @@ async function resolveFromPool(decoded: DecodedPaperId, fromPdf: boolean, pool: 
 
 async function resolveImpl(key: string): Promise<ResolveResult> {
   const fromPdfFlag = key.startsWith('p:');
+  const any = decodeAnyPaperId(key.slice(2));
+  if (any?.format === 'bk2') return resolveBk2(any, fromPdfFlag || any.fromPdf);
   const decoded = decodePaperId(key.slice(2));
   if (!decoded) return { ok: false, reason: 'invalid' };
   const { id } = decoded;
@@ -307,7 +324,7 @@ const resolveLoader = memoizeAsync(resolveImpl);
 
 /** 解析一份沒有使用紀錄的卷子（有使用紀錄時自動改走嚴格載入）。代號可以是任何寫法；網址結尾的 .p 也算「從 PDF 來」。 */
 export function resolveBankPaper(paperId: string, options: { fromPdf?: boolean } = {}): Promise<ResolveResult> {
-  const normalized = normalizePaperId(paperId);
+  const normalized = normalizeAnyPaperId(paperId);
   const fromPdf = Boolean(options.fromPdf) || Boolean(normalized?.fromPdf);
   return resolveLoader(`${fromPdf ? 'p' : 'n'}:${normalized?.id ?? paperId}`);
 }
@@ -350,4 +367,202 @@ export async function assembleNewPaper(tier: Tier, options: { seed?: number; now
   addMyPaper(findMyPaper(paper.id) ?? { id: paper.id, tier, createdAt: now.toISOString(), poolVersion: paper.dataVersion });
   await prunePapers().catch(() => []);
   return result;
+}
+
+// ---------------------------------------------------------------------------
+// 加強卷（bk2）
+// ---------------------------------------------------------------------------
+
+export function rangeOf(slot: { first: string; last: string }): string {
+  return slot.first === slot.last ? slot.first : `${slot.first}-${slot.last}`;
+}
+
+/** 用到這台裝置「開考前」做過的題組的位置（題號範圍；同 reusedRanges，清單是「我的加強卷」）。 */
+function reusedRangesBk2(paperId: string, layout: PaperLayout, uids: readonly string[]): string[] {
+  const entry = weakPaperList.find(paperId);
+  const before = entry ? Date.parse(entry.createdAt) : Date.now();
+  const used = loadUsedGroups({ excludePaperId: paperId, before });
+  return uids.flatMap((uid, i) => {
+    const slot = layout.slots[i];
+    return used.has(uid) && slot ? [rangeOf(slot)] : [];
+  });
+}
+
+/**
+ * 池子裡較新的版本組不成加強卷（§7.6）：指向題組外的空格記號、形狀和學測格式不同（ex: 'shape'），或答案改了而版本超過 31
+ * （編不進 bk2 代號）。和下架一樣處理。
+ */
+function isUnusableBk2Update(s: SlotStatus): boolean {
+  if (s.kind === 'same-key') return s.entry.ex === 'marker' || s.entry.ex === 'shape';
+  if (s.kind === 'key-changed') return s.entry.ex === 'marker' || s.entry.ex === 'shape' || s.entry.v > BK2_MAX_VERSION;
+  return false;
+}
+
+/** 加強卷的快照：停用來源的出版社題組換成遮住的版本（快照本身不改）。 */
+function maskedSnapshot(snapshot: BankSnapshot, active: (src: string) => boolean): BankSnapshot {
+  const { files, masked } = maskEndedSourceFiles(snapshot.files, active);
+  return masked.length > 0 ? { ...snapshot, files } : snapshot;
+}
+
+async function strictBk2(decoded: DecodedBk2): Promise<StrictLoadResult> {
+  const layout = layoutForBk2(decoded);
+  const store = getWeakSnapshotStore();
+  const reused = reusedRangesBk2(decoded.id, layout, decoded.slots.map((s) => s.uid));
+  const snapshot = await readSnapshot(store, decoded.id);
+  const active = sourceActiveFn(await loadSourceRegistry());
+  // 快照裡停用來源的出版社題組遮住題目文字（sourceMask.ts，docs/design/weak-paper.md §7.6）。
+  if (snapshot) return { ok: true, paper: paperFromSnapshot(maskedSnapshot(snapshot, active), { reused }), source: 'snapshot' };
+
+  return withPoolRetry(async (pool) => {
+    const statuses = layoutStatuses(pool, decoded.slots, active);
+    const usable: (SlotStatus & { entry: MockPoolEntry })[] = [];
+    for (const s of statuses) {
+      if (!isStrictlyUsable(s) || s.kind === 'removed' || isUnusableBk2Update(s)) return { ok: false, reason: 'changed' } as const;
+      usable.push(s);
+    }
+    const picks = usable.map((s, i) => ({ section: decoded.slots[i]?.section ?? 'vocabulary', uid: s.entry.uid, v: s.entry.v, sw: swapOf(s.entry) }));
+    const files = await loadFiles(picks);
+    const paper = buildBankPaper({
+      paperId: decoded.id,
+      tier: layout.tier,
+      dataVersion: pool.version,
+      slots: picks.map((p) => ({ key: `${p.uid}@${p.v}`, swap: p.sw })),
+      files,
+      layout,
+      notices: { reused, textChanged: statuses.flatMap((s, i) => (s.kind === 'same-key' && layout.slots[i] ? [rangeOf(layout.slots[i])] : [])) },
+    });
+    await writeSnapshot(store, paper);
+    return { ok: true, paper, source: 'network' } as const;
+  });
+}
+
+/**
+ * 加強卷的換題（§7.6）：每個下架的位置挑同大題、同難度的另一組，優先同命名空間；只由舊代號與目前的題庫決定
+ * （used 空、種子是舊代號的 FNV-1a），所以全班打開同一個舊連結會換到同一份。避開卷內其他題組與主題（撞了才放寬）。
+ * 候選判斷用 isSelectableBk2，來源是原本那一組的來源（仍有效時）與本站題庫。找不到替代的位置不放進結果。
+ */
+function replaceBk2(pool: MockPool, decoded: DecodedBk2, statuses: readonly SlotStatus[], active: (src: string) => boolean): Map<number, MockPoolEntry> {
+  const rng = rngFromSeed(fnv1a(decoded.id));
+  const taken = new Set(statuses.flatMap((s) => (s.kind === 'removed' ? [] : [s.entry.uid])));
+  const themes: (readonly string[])[] = statuses.flatMap((s, i) => (s.kind === 'removed' || decoded.slots[i]?.section === 'vocabulary' ? [] : [s.entry.theme]));
+  const conflicts = (theme: readonly string[]) => theme.length > 0 && themes.some((t) => t.some((k) => theme.includes(k)));
+  const out = new Map<number, MockPoolEntry>();
+  statuses.forEach((s, i) => {
+    const slot = decoded.slots[i];
+    if (s.kind !== 'removed' || !slot) return;
+    const original = findPoolEntry(pool, slot.tier, slot.section, slot.uid);
+    const sources = new Set<string>([AI_BANK_SOURCE_ID]);
+    const all = pool.tiers[slot.tier][slot.section] as readonly MockPoolEntry[];
+    if (original?.src && active(original.src)) sources.add(original.src);
+    // 原本那一組已經不在池子裡（下架）時查不到它的來源：同命名空間的出版社題組都可以（仍然只收有效的來源）。
+    else if (!original && slot.ns === 'pb') for (const e of all) if (e.src && active(e.src)) sources.add(e.src);
+    const candidates = all
+      .filter((e) => isSelectableBk2(e, sources) && !taken.has(e.uid) && (e.src == null || active(e.src)))
+      .sort((a, b) => (a.uid < b.uid ? -1 : a.uid > b.uid ? 1 : 0));
+    const order = shuffled(candidates, rng);
+    const same = order.filter((e) => namespaceOf(e.uid) === slot.ns);
+    const other = order.filter((e) => namespaceOf(e.uid) !== slot.ns);
+    const vocab = slot.section === 'vocabulary';
+    const pick = same.find((e) => vocab || !conflicts(e.theme)) ?? other.find((e) => vocab || !conflicts(e.theme)) ?? same[0] ?? other[0];
+    if (!pick) return;
+    taken.add(pick.uid);
+    if (!vocab) themes.push(pick.theme);
+    out.set(i, pick);
+  });
+  return out;
+}
+
+async function resolveBk2FromPool(
+  decoded: DecodedBk2,
+  fromPdf: boolean,
+  pool: MockPool,
+  store: SnapshotStore,
+  hadSnapshot: boolean,
+  active: (src: string) => boolean,
+): Promise<ResolveResult> {
+  const { id } = decoded;
+  const statuses = layoutStatuses(pool, decoded.slots, active).map((s): SlotStatus => (isUnusableBk2Update(s) ? { kind: 'removed' } : s));
+  const removed = statuses.flatMap((s, i) => (s.kind === 'removed' ? [i] : []));
+  const replacements = removed.length > 0 ? replaceBk2(pool, decoded, statuses, active) : new Map<number, MockPoolEntry>();
+  // 找不到同形狀的替代題組（同大題、同難度都沒有可用的）：這份卷子無法在線上重組。
+  if (removed.some((i) => !replacements.has(i))) return { ok: false, reason: 'removed' };
+
+  const picks = statuses.map((s, i) => {
+    const slot = decoded.slots[i] as Bk2Slot;
+    const entry = s.kind === 'removed' ? (replacements.get(i) as MockPoolEntry) : s.entry;
+    return { section: slot.section, tier: slot.tier, uid: entry.uid, v: entry.v, sw: swapOf(entry) };
+  });
+  // 代號：current、same-key 不變；key-changed 換成新版本；removed 換成替代題組（大題與難度不變，所以版面不變）。
+  const codeSlots: Bk2Slot[] = decoded.slots.map((slot, i) => {
+    const s = statuses[i];
+    const p = picks[i];
+    if (!s || !p || s.kind === 'current' || s.kind === 'same-key') return slot;
+    return { ns: namespaceOf(p.uid) ?? 'ai', section: slot.section, tier: slot.tier, uid: p.uid, v: p.v };
+  });
+  const newId = encodeBk2(decoded.kind, codeSlots);
+  const changed = newId !== id;
+  // 版面只看大題與難度（換題不變）；每一組的命名空間跟著新代號（換成本站題庫時是 ai）。
+  const layout = layoutForBk2({ kind: decoded.kind, slots: codeSlots });
+
+  const files = await loadFiles(picks);
+  if (changed && hasLocalUse(id)) return viaStrict(id);
+
+  const range = (i: number) => (layout.slots[i] ? rangeOf(layout.slots[i]) : '');
+  const keyChanged = statuses.flatMap((s, i) => (s.kind === 'key-changed' ? s.changed.map((q) => layout.slots[i]?.questions[q - 1]?.label ?? String(q)) : []));
+  const notices: Partial<BankPaperNotices> = {
+    reused: reusedRangesBk2(newId, layout, codeSlots.map((s) => s.uid)),
+    replaced: statuses.flatMap((s, i): BankPaperNotices['replaced'] =>
+      s.kind === 'removed' ? [{ range: range(i), kind: 'removed' }] : s.kind === 'key-changed' ? [{ range: range(i), kind: 'updated' }] : [],
+    ),
+    textChanged: statuses.flatMap((s, i) => (s.kind === 'same-key' ? [range(i)] : [])),
+    keyChanged,
+  };
+  const paper = buildBankPaper({
+    paperId: newId,
+    tier: layout.tier,
+    dataVersion: pool.version,
+    slots: picks.map((p) => ({ key: `${p.uid}@${p.v}`, swap: p.sw })),
+    files,
+    layout,
+    notices,
+  });
+
+  let printed: PrintedInfo | null = null;
+  if (changed) {
+    if (weakPaperList.replaceId(id, newId) || hadSnapshot) {
+      try {
+        await store.delete(id);
+      } catch {
+        // 留下的孤兒快照之後由 cleanupOrphanSnapshots 清掉。
+      }
+    }
+    if (fromPdf) {
+      printed = { from: id, excluded: removed.map(range), keyChanged };
+      weakPaperList.recordPrinted(newId, printed, pool.version);
+    }
+  }
+  if (weakPaperList.find(newId) && !(await readSnapshot(store, newId))) await writeSnapshot(store, paper);
+  return { ok: true, paper, source: 'network', strict: false, redirectedFrom: changed ? id : null, printed };
+}
+
+async function resolveBk2(decoded: DecodedBk2, fromPdf: boolean): Promise<ResolveResult> {
+  const { id } = decoded;
+  if (hasLocalUse(id)) return viaStrict(id);
+  const store = getWeakSnapshotStore();
+  const snapshot = await readSnapshot(store, id);
+  const layout = layoutForBk2(decoded);
+  const active = sourceActiveFn(await loadSourceRegistry());
+  // 快照裡停用來源的出版社題組遮住題目文字（sourceMask.ts，docs/design/weak-paper.md §7.6）。
+  const snapshotPaper = (s: BankSnapshot) => paperFromSnapshot(maskedSnapshot(s, active), { reused: reusedRangesBk2(id, layout, decoded.slots.map((x) => x.uid)) });
+  let pool: MockPool;
+  try {
+    pool = await loadMockPool();
+  } catch (error) {
+    if (snapshot) return { ok: true, paper: snapshotPaper(snapshot), source: 'snapshot', strict: false, redirectedFrom: null, printed: null };
+    throw error;
+  }
+  if (snapshot && layoutStatuses(pool, decoded.slots, active).every(isStrictlyUsable)) {
+    return { ok: true, paper: snapshotPaper(snapshot), source: 'snapshot', strict: false, redirectedFrom: null, printed: null };
+  }
+  return withPoolRetry((p) => resolveBk2FromPool(decoded, fromPdf, p, store, snapshot !== null, active), pool);
 }

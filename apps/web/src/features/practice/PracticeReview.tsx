@@ -15,6 +15,7 @@ import { APP_NAME } from '../../modules';
 import { bankAnswersFor, type BankAnswers } from '../assistant/sources/bank';
 import { DataErrorBoundary } from '../exams/components/DataErrorBoundary';
 import { PRACTICE_SECTION_LABELS, TIER_LABELS, practicePath } from './labels';
+import { SourceGate } from './components/GroupSource';
 import { GroupSession } from './PracticeSession';
 
 const noop = () => {};
@@ -34,15 +35,18 @@ function Notice({ title, text, again }: { title: string; text: string; again: st
 
 function ReviewLoader({ promise, record, again }: { promise: Promise<PracticeGroupFile>; record: BankAnswers; again: string }) {
   const file = use(promise);
+  // 出版社題組的授權結束時不顯示題目與解析（SourceGate，docs/design/weak-paper.md §7.6）。
   return (
-    <GroupSession
-      key={groupKey(file)}
-      file={file}
-      notice={null}
-      repeatNotice={null}
-      onNext={noop}
-      review={{ answers: record.answers, submittedAt: record.submittedAt, again }}
-    />
+    <SourceGate file={file}>
+      <GroupSession
+        key={groupKey(file)}
+        file={file}
+        notice={null}
+        repeatNotice={null}
+        onNext={noop}
+        review={{ answers: record.answers, submittedAt: record.submittedAt, again }}
+      />
+    </SourceGate>
   );
 }
 

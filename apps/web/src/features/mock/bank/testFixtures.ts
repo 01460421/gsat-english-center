@@ -174,6 +174,31 @@ export function fakeGroupFile(section: PracticeSectionType, uid: string, v = 1, 
 
   const textFormat = section === 'reading' ? (opts.chart || opts.table ? 'mixed' : 'continuous') : section === 'mixed' ? 'multi_text' : 'continuous';
   const hasRefs = section === 'reading' || section === 'mixed';
+  // 出版社題組（pb.）：公開題組檔一定帶出處、沒有 auto_verified、授權是 publisher-licensed／verbatim（docs/design/weak-paper.md §8.9）。
+  if (uid.startsWith('pb.')) {
+    const attribution = '本題出自測試出版《模擬試題》，經授權使用';
+    return {
+      schema: 'gsat-bank-practice/v1',
+      uid,
+      version: v,
+      section_type: section,
+      format_version: `${section}-test`,
+      tier: opts.tier ?? 'basic',
+      group: {
+        id: 'g1',
+        passage,
+        passage_parts: passageParts,
+        figures,
+        options_bank: optionsBank,
+        questions,
+        tags: section === 'vocabulary' ? null : { topic: `${uid} topic`, text_format: textFormat },
+      },
+      annotations: { explanations: { items }, translation_zh: null, elimination },
+      curriculum: [],
+      provenance: { license: 'publisher-licensed', derivation: 'verbatim', attribution_text: attribution, sources: [], references: [] },
+      source: { id: 'pub-test', label_zh: '測試出版', product_zh: '模擬試題', attribution_zh: attribution, ref_text: '原卷第 41–44 題' },
+    };
+  }
   return {
     schema: 'gsat-bank-practice/v1',
     uid,

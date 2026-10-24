@@ -16,7 +16,7 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync
 import { createRequire } from 'node:module';
 import path from 'node:path';
 
-export const CONTRACT_PARTS = /** @type {const} */ (['meta', 'vocab', 'exams', 'bank', 'writing', 'writingBank', 'mockPool']);
+export const CONTRACT_PARTS = /** @type {const} */ (['meta', 'vocab', 'exams', 'bank', 'writing', 'writingBank', 'mockPool', 'paperSkills', 'sources']);
 /** @typedef {(typeof CONTRACT_PARTS)[number]} ContractPart */
 
 /**
@@ -24,6 +24,12 @@ export const CONTRACT_PARTS = /** @type {const} */ (['meta', 'vocab', 'exams', '
  * 前端改了型別名稱或檔案位置時只要改這裡。
  */
 export const MOCK_POOL_TYPE = /** @type {const} */ ({ module: 'features/mock/bank/pool', name: 'MockPool' });
+
+/** 加強卷的技能分布（bank/paper-skills.json，scripts/lib/bank-paper-skills.mjs）對應的前端型別。 */
+export const PAPER_SKILLS_TYPE = /** @type {const} */ ({ module: 'features/mock/bank/paperSkills', name: 'PaperSkills' });
+
+/** 題目來源登記（bank/sources.json，scripts/lib/item-sources.mjs）對應的前端型別。 */
+export const SOURCES_TYPE = /** @type {const} */ ({ module: 'data/sources', name: 'SourceRegistry' });
 
 /** exams/ 底下不是單份考卷的檔案（和 build-data.mjs 的同名常數一致）。 */
 export const EXAM_DIR_NON_EXAM_FILES = new Set(['index.json', 'score-scales.json']);
@@ -161,6 +167,27 @@ export function contractSource({ dataDir, srcDir, parts = CONTRACT_PARTS }) {
       }
     }
     summary.push(`自組模擬考的組卷池（${entries} 組）`);
+  }
+  if (parts.includes('paperSkills')) {
+    // 加強卷的技能分布（docs/design/weak-paper.md §6.2）。build-data 一定會輸出（沒有題組時 groups 是空物件）；缺檔就讓檢查失敗。
+    // 外層（groups 清空）與每 100 組各自宣告（同 chunked 的理由）。
+    const types = path.join(srcDir, '..', PAPER_SKILLS_TYPE.module);
+    const file = /** @type {{ groups?: Record<string, unknown> }} */ (read('bank/paper-skills.json'));
+    const groups = Object.entries(file.groups ?? {});
+    lines.push(`import type { ${PAPER_SKILLS_TYPE.name} } from ${JSON.stringify(types)};`);
+    lines.push(`export const paperSkills: ${PAPER_SKILLS_TYPE.name} = ${JSON.stringify({ ...file, groups: {} })};`);
+    for (let i = 0; i < groups.length; i += 100) {
+      lines.push(`export const paperSkills_${i}: ${PAPER_SKILLS_TYPE.name}['groups'] = ${JSON.stringify(Object.fromEntries(groups.slice(i, i + 100)))};`);
+    }
+    summary.push(`加強卷的技能分布（${groups.length} 組）`);
+  }
+  if (parts.includes('sources')) {
+    // 題目來源登記（docs/design/weak-paper.md §8.3）。build-data 一定會輸出（至少有本站題庫那一筆）；缺檔就讓檢查失敗。
+    const types = path.join(srcDir, '..', SOURCES_TYPE.module);
+    const file = /** @type {{ sources?: unknown[] }} */ (read('bank/sources.json'));
+    lines.push(`import type { ${SOURCES_TYPE.name} } from ${JSON.stringify(types)};`);
+    lines.push(`export const sourceRegistry: ${SOURCES_TYPE.name} = ${JSON.stringify(file)};`);
+    summary.push(`題目來源登記（${(file.sources ?? []).length} 個來源）`);
   }
   return { source: lines.join('\n'), summary };
 }

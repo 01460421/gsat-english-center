@@ -122,10 +122,10 @@ export type AssistSourceRef =
   | { source: 'bank'; ref: string /* ai.rd.0a1b2c@3 */; labels: string[]; answers: Record<string, AnswerValue>; client_status?: Record<string, AssistClientStatus> }
   | {
       source: 'bank_mock';
-      paper_id: string; // bk1-…
+      paper_id: string; // bk1-…（自組模擬考）或 bk2-…（學習助手加強卷）
       ref: string; // 這一組所在的題組版本
       labels: string[]; // 題組裡的原始題號
-      label_map: Record<string, string>; // 原始題號 → 卷面題號（整組；值必須是 1–50 的整數字串、不重複）
+      label_map: Record<string, string>; // 原始題號 → 卷面題號（整組；值必須是 1–80 的整數字串、不重複）
       swap: [string, string] | null; // BankPaper.letterSwaps 的那一對原始題號 [q, r]；Worker 依兩題的答案字母交換
       answers: Record<string, AnswerValue>; // 鍵是原始題號，值是卷面字母
       client_status?: Record<string, AssistClientStatus>;
@@ -228,6 +228,11 @@ export interface AssistCaseSummary {
   created_at: number;
   updated_at: number;
   expires_at: number;
+  /**
+   * 出版社題的授權已經結束（docs/design/weak-paper.md §7.6、§9.6）：詳情的題目只剩題號、作答與對錯，解析與追問的回覆不回傳，
+   * 也不能再解析或追問。只有這種案例才有這個欄位。
+   */
+  source_ended?: true;
 }
 
 /** GET /api/assist/cases 的回應：另附這個學生各錯因的案例數（確認頁與案例頁的歷史一行用）。 */

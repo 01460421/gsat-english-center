@@ -8,6 +8,13 @@ export declare const WRITING_SECTION_TYPES: readonly ['translation', 'compositio
 export declare const BANK_TRANSLATION_INSTRUCTIONS: string;
 export declare const BANK_ESSAY_INSTRUCTIONS: string;
 export declare const BANK_FILENAME_PATTERN: RegExp;
+export declare const PUBLISHER_SCHEMA: 'gsat-pub/v1';
+export declare const PUBLISHER_FILENAME_PATTERN: RegExp;
+export declare const SOURCE_ID_PATTERN: RegExp;
+export declare const PUBLISHER_SECTION_TYPES: readonly ['vocabulary', 'cloze', 'word_bank', 'structure', 'reading', 'mixed'];
+export declare const PUBLISHER_TIER_BASES: readonly ['stats', 'publisher', 'metrics', 'manual'];
+export declare const PUBLISHER_TAG_BASES: readonly ['publisher', 'rules', 'agent', 'manual', 'none'];
+export declare const PUBLISHER_REQUIRED_CHECKS: readonly ['answers', 'd8'];
 export declare const OFFICIAL_RUN_WORDS: 7;
 export declare const OFFICIAL_HAN_RUN: 8;
 export declare const OFFICIAL_TRANSLATION_MIN_MATCH: 20;
@@ -25,7 +32,10 @@ export type SkipReason =
   | 'unpublished'
   | 'license'
   | 'bad_shape'
-  | 'd8_overlap';
+  | 'd8_overlap'
+  | 'source_inactive'
+  | 'bad_source'
+  | 'not_reviewed';
 export interface SkippedFile {
   file: string;
   reason: SkipReason;
@@ -61,7 +71,8 @@ export interface OfficialCorpus {
 }
 export type D8Kind = 'translation_text' | 'english_run' | 'han_run' | 'leak_fragment';
 
-export declare const WRITING_SKIP_REASON_LABELS: Readonly<Record<SkipReason, string>>;
+export declare const WRITING_SKIP_REASON_LABELS: Readonly<Record<Exclude<SkipReason, 'source_inactive' | 'bad_source' | 'not_reviewed'>, string>>;
+export declare const PUBLISHER_SKIP_REASON_LABELS: Readonly<Record<SkipReason, string>>;
 
 export declare function listJsonFiles(dir: string): string[];
 export declare function readUnpublish(file: string, options: { repoRoot: string }): Map<string, UnpublishEntry>;
@@ -75,6 +86,9 @@ export declare function selectBankGroups(
     repoRoot?: string;
     relative?: (file: string) => string;
     changeLabel?: string;
+    filenamePattern?: RegExp;
+    schema?: string;
+    pool?: string | null;
   },
 ): SelectResult;
 export declare function writingContentKey(raw: JsonObject): string | null;
@@ -98,4 +112,25 @@ export declare function selectWritingGroups(
     unpublished?: Map<string, UnpublishEntry>;
   },
 ): SelectResult & { corpus: OfficialCorpus; unpublished: Map<string, UnpublishEntry> };
+export interface PublishableSourceLike {
+  id: string;
+  ns: string;
+  active: boolean;
+  ends_on: string | null;
+  scope: readonly string[];
+}
+export declare function sourcePublishable(source: PublishableSourceLike, today: string): boolean;
+export declare function publisherProblems(raw: JsonObject, at: { sourceId: string; uid: string; version: number; file: string }): Array<[SkipReason, string]>;
+export declare function selectPublisherGroups(
+  publisherDir: string,
+  options: {
+    sources: readonly PublishableSourceLike[];
+    today: string;
+    corpus: OfficialCorpus;
+    contentKey: (raw: JsonObject) => string | null;
+    unpublished?: Map<string, UnpublishEntry>;
+    repoRoot?: string;
+    relative?: (file: string) => string;
+  },
+): SelectResult & { bySource: Record<string, number> };
 export declare function readExams(examsDir: string): { exams: Record<string, any>[]; files: string[]; warnings: string[] };

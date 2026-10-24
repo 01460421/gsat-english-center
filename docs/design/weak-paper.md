@@ -1495,3 +1495,193 @@ export interface SitePaperPdfMeta {
 | 23 | 隨機抽題卷可以放 2 組中譯英，但 `BankPaper` 只裝一份中譯英答案 | **採納**。中譯英每份最多 1 組（步進器上限、`decodeBk2` 拒收、分配不放第 2 組）；測試 | §4.3、§4.4、§7.1、§10.1 |
 | 24 | 「大題取 facts 裡這個代碼作答最多的大題」做不到 | **部分採納**（和第 6 項同一個問題）。採用「本機作答最多的大題」。**不採用**「依前綴對應、跨大題的代碼平均分配」：前綴對應會把 `it:synthesis`（混合題 201 題、閱讀 15 題）歸到閱讀；平均分配會讓權重小到進不了前 6 名（第 6 項的理由）。改用 `paper-skills.json` 的 `codeSections` 取出現最多的大題；測試含只有報告、沒有本機紀錄的案例 | §5.4、§10.1 |
 | 25 | 自組卷成績單的 `from=attempt:{attemptId}` 對不到作答紀錄 | **採納**。查證 `BankReport.tsx:169`（`p` 是代號）、`MockReportPage.tsx:138`（`p` 是 attemptId）。自組卷與加強卷改傳 `from=paper:{paperId}`，焦點是「這份卷子目前保留的紀錄」；真題模考維持 `attempt:`；兩種都測 | §3.1、§5.5、§9.2、§10.1 |
+
+## 17. 實作備註
+
+### 17.1 W1（資料與核心，沒有畫面）
+
+**站主決定（2026-10-23，覆蓋本文的預設）**：
+- 直接開放：通過檢查就對所有人開放（不用 AI、不花錢）。本文 §9.3 的 `WEAK_PAPER_ENABLED` 保留為緊急開關，但這次的預設與正式站的值是開（true）。開關檔 `features/assistant/papers/flags.ts` 屬於 W2（路由與入口），W1 沒有畫面、沒有建立開關；W2 建立時直接寫成開。§12.2 第 3、4 步的「預覽試用後改一行開放」改成上線後的檢查。
+- 出版社題（P2）之後以 PDF 提供；這次只做 P1（來源契約、出處的傳遞、授權到期、匯入檢查的骨架），不放任何出版社資料。出處句的預設格式：「本題出自{出版社}《{書名}》，經授權使用」。
+
+**檔案**：
+- shared：`skill-aliases.ts`（`SKILL_ALIASES`、`canonicalSkills`、`deriveSkillAliases`）、`item-source.ts`（命名空間、`PRACTICE_ITEM_UID_PATTERN`、`ITEM_GROUP_KEY_PATTERN`、公開來源登記的型別、`isSourceUsable`、`usablePaperSources`、只有本站題庫的 `DEFAULT_SOURCE_REGISTRY`）、`assist-codes.ts` 的 `skillsOfQuestion`。
+- 建置：`scripts/lib/bank-paper-skills.mjs`（`bank/paper-skills.json`）、`bank-mock-pool.mjs`（`shape`、`ns`、`src`）、`bank-mock-letters.mjs`（`pb` 的 `sw` 是空陣列）、`data-contract.mjs`（`paperSkills`）。
+- 前端核心：`mock/bank/` 的 `code2.ts`、`layout.ts`、`assemblePaper.ts`、`paperSkills.ts`、`sources.ts`、`weakPapers.ts`、`createWeakPaper.ts`，以及 `assemble.ts`、`buildExam.ts`、`letters.ts`、`status.ts`、`resolve.ts`、`snapshots.ts`、`myPapers.ts`、`used.ts`、`deduction.ts`、`paperId.ts`、`pool.ts` 的參數化；`mock/storage.ts`、`mock/report.ts`、`mock/papers.ts`；`assistant/papers/` 的 `weakness.ts`、`errorTargets.ts`、`focus.ts`；`assistant/outcomeBuilders.ts`、`assistant/summary.ts`。
+
+**和本文不同的地方（依實際程式結構，意圖不變）**：
+
+1. **來源登記的建置留給 P1**：§12.1 的 W1 一列提到「來源登記的建置（只有本站題庫）」，P1 一列也列了 `data/sources.json` 與 `bank/sources.json`。W1 只放共用的型別與判斷（`item-source.ts`）和前端的載入（`mock/bank/sources.ts`）：`bank/sources.json` 讀不到（P1 之前的部署）時一律用只有本站題庫的預設，出版社題組因此全部視同停用（fail closed）。
+2. **`paper-skills.json` 的 `codeSections` 以原始代碼為鍵**（§6.2 寫「每個主代碼」）：別名表是 TS 常數、建置腳本是 `.mjs`，而且作答紀錄也存原始代碼；前端讀的時候依各大題的別名表換成主代碼再加總（`paperSkills.ts` 的 `codeSectionCounts`），改別名表不必重建資料。
+3. **`skillsOfQuestion` 在建置端另寫一份**（§9.2 寫「和前端共用同一支，放在 shared」）：建置腳本是 `.mjs`，不能匯入 shared 的 TS。規則相同，`bank-paper-skills.test.ts`（範例題庫）與 `weak-paper.data.test.ts`（真實題庫 469 組、2,506 題）逐題比對 `q` 與作答紀錄的 `k` 完全相同。
+4. **別名表的漂移檢查放在 web 的 data 專案**（`apps/web/scripts/lib/skill-aliases.data.test.ts`，要用題庫的建置程式）；另外確認正規化之後沒有任何一對還需要併。即時題庫重算的結果和 `SKILL_ALIASES` 完全相同（篇章結構 10 對、閱讀與混合題各 1 對、三種詞彙類大題的搭配詞）。
+5. **`BankPaper.layout`、`kind` 只有加強卷才設**：自組模擬考不設這兩個欄位，整份 `BankPaper` 的 JSON 才逐位元不變；要用版面一律呼叫 `paperLayout(paper)`（bk1 回傳 `layoutForBk1(tier)`）。`BankPaperWriting` 的 `translation`、`composition`、`essayItemId` 改成可以是 null（加強卷可以沒有中譯英或作文），`SelfAssessment.tsx` 與 `pdfText.ts` 跟著處理 null（bk1 的輸出不變）。
+6. **`PaperLayout` 多一個 `tier`**（代表難度：bk1、f、m 是唯一的難度；w、r 是組數最多的難度，同數取較低的一級），給卷名與 PDF 用；每一組自己的難度在 `slots[].tier`，作答紀錄、換題、成績單都用每一組自己的。非選擇題的大題標題在「非選擇題」部分裡從「一」重新起算（同學測題本），部分的序號依實際出現的部分。
+7. **`isSelectableBk2(entry, usableSources)`**：第二個參數是「可以用的來源 id」集合（由 `usablePaperSources(登記, 請求的來源, 今天)` 算好：有效、沒過 `ends_on`、授權包含 `web` 與 `pdf`），不是整個請求。
+8. **`decodeBk2` 另外拒收**：選擇與混合題超過 80 題（§4.4），以及出版社題放在中譯英、作文（§8.5 第一版不收）。
+9. **組卷的請求與輸入**：`PaperRequest.sections` 在 `w` 是空陣列＝依弱點自動選；`AssembleInput` 多 `now`（來源到期、「7 天以上前做過」）；`wrong` 的形狀是 `uid → { at, questions: 每一題答錯的題的主代碼 }`，第 2 層（重做）才算得出「當時答錯的弱點題數」。成功的結果多 `kind`。
+10. **時間分配同權重時的順序**（§6.3 沒有寫）：依大題在弱點排名裡第一次出現的順序，其餘照閱讀 → 綜合測驗 → 詞彙 → 篇章結構 → 文意選填 → 混合題 → 中譯英 → 作文。這樣真實題庫重現了 §6.3 的原型組成（進階練習 40 分鐘：閱讀 2、篇章 2、詞彙 1）。
+11. **保持手感**：只在弱點加強卷「依弱點自動選大題」而且長度 ≥ 40 分鐘時放（學生自己勾大題時不放）；預留的時間是那個大題一組的實際分鐘數（7–8⅓ 分鐘），找不到沒做過、不在盡量避開的題組時不預留。弱點模型挑保持手感的大題時，另外要求那個大題至少 4 題證據（沒有資料的大題殘差是 0，不能當成「達到應有表現」）。
+12. **相鄰難度**：只為技能與錯因群組目標開放（大題與陷阱目標在基準難度本來就有題組）；基準難度是進階練習時兩邊都看，取「沒做過、命中 ≥ 1 題」的題組比較多的一級（同數取較低的一級）。
+13. **「盡量避開」也用在模考格式卷與中性卷**：§6.4 的優先序多一段「負數＝盡量避開」，排在沒做過那一層的最後（`assemble.ts` 的 `priorityBand`，bk1 不傳 `options` 時完全不走這段）。/mock 選了出版社來源組的 `m` 在盡量避開是空的時候和 bk1 一樣只看種子。
+14. **隨機抽題卷超過上限不截短**：某個大題的組數超過 12 組（中譯英、作文超過 1 組）時回 `insufficient`（那個大題），和總數超過 12 組、80 題的處理相同；畫面請學生減少組數。
+15. **錯因訊號的合併**（§5.4 沒有寫報告文字與案例次數同時出現時怎麼算）：報告文字每個錯因 0.10、案例次數 0.05 × 次數（最多 0.20），兩者相加、上限 0.25，再依 §5.7 加成。報告訊號沒有另外拆成 `reportSignals.ts`，寫在 `weakness.ts` 的 `computeWeakness` 裡；`WeakTarget` 多 `residual`、`reportPriority`、`contradicted`、`merged`（包含關係併進來的技能）、`errors`、`focusOnly`（給 W2 的理由句），`WeaknessProfile` 多 `unhelpedErrors`、`reportPins`。
+16. **加強卷找不到同形狀的替代題組時**（§7.6 寫「保留為『已下架、不計分』，題號不變」）：W1 的解析回 `removed`（同 bk1「這份卷子拿不到」），還沒有畫出「已下架、不計分」那一組；佔位題組要畫面配合，留給 W2。實際上只有同大題、同難度的本站題也全部下架時才會發生（出版社來源到期時會換成本站題庫的同大題、同難度題組）。已經有快照的卷子遇到停用的來源時遮住題目文字（§7.6）也要畫面配合，留給 W2／P1；W1 的 `layoutStatuses(pool, slots, sourceActive)` 已經把停用來源的題組當成下架。
+17. **`/mock` 先跑加強卷實例的逾期處理**（§7.4）與 `MockPaperList` 不列練習性卷子（§7.7）都在畫面元件裡，留給 W2；W1 已經把清單參數化（`createPaperList`，bk1 實例只處理 `bk1-`、加強卷實例只處理 `bk2-`）。W2 上線之前使用者組不出 bk2 卷子，所以這段期間不會有 bk2 的作答。
+18. **`source-scan.test.ts` 的允許清單**：除了固定允許的 bk1 程式（`code.ts`、`blueprint.ts`、`assemble.ts`、`status.ts`、`resolve.ts` 的 bk1 路徑、`code2.ts`、寫作題庫），先列入還沒改的檔案並註明工作包（W2：`BankMockSection.tsx`、`BankReport.tsx`、`BankPaperRoute.tsx`；W3：`pdfText.ts`；P1：`AskPage.tsx`、`PracticeSessionPage.tsx`、`data/bank.ts`）。另一條測試在樣式已經不在檔案裡時失敗，提醒改完的工作包把它從清單移除。
+19. **黃金測試集中在 `bk1Golden.test.ts`**（§10.1 分散寫在 `buildExam.test.ts`、`assemble.test.ts`）：三份固定 bk1 代號的整份 `BankPaper`（SHA-256 與可讀摘要）、代號與卷號、固定組卷池 × 20 個種子（沒做過、做過、換題），黃金資料在改動共用程式之前產生；另外在一份乾淨的 HEAD 檢出上重跑過，確認黃金資料就是改動前的輸出。含出版社條目（`ex: 'ns'`）的測試池：組卷、換題、剩餘份數、「題庫不夠」的判斷都和沒有時相同。`pdf-render-check` 的三份自組卷屬於 W3。
+
+**真實題庫測試的數字**（`weak-paper.data.test.ts`，2026-10-23 的資料：題庫練習 469 組 2,506 題、寫作 204 組）：
+- `paper-skills.json`：160.9 KB、gzip 14.0 KB（原型 140 KB／11.9 KB）；有誘答組成的 622 題，每個錯誤選項都有代碼。
+- 弱點加強卷四個情境 × 三種長度 × 100 個種子全部通過（題號、配分、分鐘數、組數、題數、主題、命中、相鄰難度、A1）。40 分鐘的命中：進階練習推論 2、代名詞指涉 4、延伸義 2；穩定基礎推論 2、代名詞指涉 6、延伸義 2（推論與延伸義用相鄰的進階練習）。
+- 連續組卷（每個弱點都還有命中）：20／12／14／10 份，和 §6.3 的原型相同。
+- 換一份：把第一份列為盡量避開時重疊 0%；不避開時 26.4%／24.8%／10.7%／43.3%。
+- 模考格式卷每份命中情境弱點的題數（偏重弱點／中性）：穩定基礎 3.00／1.12、進階練習 7.00／5.02、超越頂標 11.00／5.28（情境只有三個技能，和 §6.4 原型的計法不同，只看相對提升）。
+- bk1：300 個種子 × 三種難度，組卷池加進出版社條目之後 `assembleSelection` 與 `remainingEstimate` 逐位元相同。
+- 單份弱點加強卷組卷（Node）：平均約 2 ms、最長約 30 ms（第一次執行）。
+
+### 17.2 P1（來源契約，沒有出版社資料）
+
+**站主決定**：同 §17.1（直接開放；這次只做 P1、不放出版社資料；出處句預設「本題出自{出版社}《{書名}》，經授權使用」，`defaultAttribution`）。P1 沒有新增任何畫面開關：沒有出版社資料時所有新路徑都不會出現；每個來源的緊急停用就是 `data/sources.json` 的 `active`（改成 false 推上去，或不重建也會在 `ends_on` 之後自動停用）。
+
+**檔案**：
+- shared：`item-source.ts`（來源 id 格式、`gsat-pub/v1`、檔名格式、禁字、`defaultAttribution`、`labelRangeText`、`sourceRefText`、`ItemGroupSource` 與守衛、`sourceTitle`、`groupSourceLine`、`publisherOriginLabel`、`isSourceRegistry`、`sourceStatus`、學習助手的兩句說明）；`bank-practice-file.ts`（`GROUP_KEY_PATTERN` 收 `pb`、選填的 `source`、`skills`；pb 題組沒有合法的 `source` 就是壞檔）；`assist.ts`（`source_ended`）；`api.ts`（錯誤原因的註解）；`scripts/bank-select.mjs`（下架路徑收 `data/publisher/…/pb.…@v.json`、`selectBankGroups` 的 `filenamePattern`／`schema`／`pool`、`sourcePublishable`、`publisherProblems`、`selectPublisherGroups`）。
+- 資料：`data/sources.json`（只有本站題庫一筆）；`data/exams/difficulty-bands.json`（多 `rule.imputation.p_only`）與 `generation-spec.json`（只有輸入雜湊跟著變）。
+- 建置：`scripts/lib/item-sources.mjs`（登記檔的白名單檢查、到期、公開輸出、紀錄）；`bank-data.mjs`（`gsat-pub/v1` 的讀取：同一套前端契約檢查、公開題組檔多 `source`／`skills`、index 多 `src`）；`bank-mock-pool.mjs`（出版社條目一律 `ex: 'ns'`）；`build-data.mjs`（`bank/sources.json`、資料版本納入登記檔、出版社目錄與來源狀態）；`data-contract.mjs`（`sources`）；`font-coverage.mjs`（出處文字）。
+- 前端：`data/sources.ts`（登記檔的載入與判斷；`mock/bank/sources.ts` 改成轉出）、`data/bank.ts`（`loadPracticeIndex` 濾掉停用來源）；題庫練習的 `GroupSource.tsx`（出處列、授權聲明、`SourceGate`、`useGroupSourceStatus`）、`labels.ts`、`ExplanationCard.tsx`、`MixedCards.tsx`、`PracticeSession.tsx`、`BankPractice.tsx`、`PracticeHome.tsx`、`PracticeReview.tsx`、`PracticeSessionPage.tsx`；學習助手的 `AskPage.tsx`、`CasePage.tsx`、`lib/errors.ts`、`sources/publisher.ts`、`sources/bank.ts`、`sources/bankMock.ts`；卷子的 `buildExam.ts`、`paperSources.ts`、`PaperInfo.tsx`、`BankSourceNote.tsx`、`pdfText.ts`、`sourceMask.ts`、`resolve.ts`；PDF 的 `types.ts`、`layout/strings.ts`、`attribution.ts`、`cover.ts`、`groups.ts`、`buildDocDefinition.ts`、`sources.ts`。
+- Worker：`assist/publisher.ts`（新）、`siteData.ts`（`sourceRegistry()`；`siteDataFailure` 從 `sources.ts` 搬來）、`sources.ts`、`routes.ts`；`scripts/retire-publisher-source.mjs`（新，附 `.d.mts`）。
+- 工具：`tools/validate_publisher.py`（新）、`tools/difficulty_bands.py`；CI 的 exams job 多一步 `validate_publisher.py --all`。
+- 測試（只用合成題組 `tools/tests/data/publisher/pub-test/**`）：shared 的 `item-source.test.ts`、`bank-select.publisher.test.ts`；web 的 `item-sources.test.ts`、`bank-data.publisher.test.ts`（產生 `tests/fixtures/publisher-public/` 的黃金輸出，`UPDATE_PUBLISHER_GOLDEN=1` 重產）、`bank-mock-pool.test.ts`、`data-contract.test.ts`、`PublisherPractice.test.tsx`、`paperSources.test.ts`、`publisherSources.test.ts`（PDF）、`resolveBk2.test.ts`（快照遮蔽）、`assistant/sources/publisher.test.ts`、`pages.test.tsx`（案例頁）；Worker 的 `assist.publisher.test.ts`；工具的 `test_validate_publisher.py`、`test_difficulty_bands.py`。
+
+**和本文不同的地方（依實際程式結構，意圖不變）**：
+
+1. **計分欄位放在 `scoring_extra`**（§8.4 的表沒有列）：出版社解析不公開時，混合題的部分給分寫法與可對調的格沒有地方放，所以正規化檔另有 `scoring_extra: {題號: {partial_credit_forms?, interchangeable_with?}}`，建置時併進公開題組檔的解析列（計分、組卷的重新編號、Worker 的判定都照舊讀同一個位置）。
+2. **沒有出版社解析的解析列是 `{ explanation_zh: '', evidence: [] }`（加上計分欄位）**：形狀和題庫的解析列相同，資料契約不必放寬；前端、PDF 與 Worker 一律把空的 `explanation_zh` 當成「這組沒有解析」（練習頁與 PDF 印「這組沒有解析」，Worker 不把它當解析送給模型）。
+3. **公開題組檔的 `source` 帶算好的文字**（`label_zh`、`product_zh`、`attribution_zh`、`ref_text`）：練習頁、卷子、PDF、確認頁不必另外下載登記檔就能印出處；授權是否還有效仍然一律查 `bank/sources.json`。過期或停用的來源仍留在公開登記裡（`active: false`、`ends_on` 照舊），前端與 Worker 才分得出「授權結束」和「沒有這個來源」（兩者都 fail closed）。`contentVersion` 納入每個來源的有效狀態，所以到期後重建一定換資料版本。
+4. **前端的登記檔載入搬到 `src/data/sources.ts`**（W1 放在 `mock/bank/sources.ts`）：練習頁、學習助手與卷子都要用，`mock/bank/sources.ts` 改成轉出，W1 的呼叫端不變。
+5. **題庫練習的「來源篩選」只做到資料層**（§12.1 的 P1 列）：`loadPracticeIndex` 濾掉停用、過期、登記檔沒有的來源，選單不列、題組不顯示（`SourceGate`）；讓學生選「只練本站題／出版社題」的介面等 P2 有出版社資料再做，避免畫面上出現一個永遠空的選項。
+6. **快照的遮蔽保留答案**（§7.6）：已經存在裝置上的加強卷快照，停用來源的出版社題組換成遮住的版本（選文換成一句說明、題幹與選項清空、圖拿掉、標籤裡的自由文字拿掉、解析只留計分欄位），題號、作答方式、答案與配分不變，交過的卷子分數照舊；快照本身不改（來源恢復時照常顯示）。「這組不計分」的畫面標示屬於 W2。
+7. **PDF 的出處在 P1 做完**（封面的題目來源、每組的出處列、頁尾聲明、資料來源頁的出版社聲明；全部是出版社題時不印 AI 出題聲明）：只在卷子有出版社題組時多出 `sourceLines`、`groupSources`、`footerKind` 三個欄位，只用本站題的卷子（bk1）輸出逐位元不變（`paperSources.test.ts` 確認欄位集合不變、`bk1Golden.test.ts` 照舊通過）。
+8. **Worker 的拒收原因**：§9.6 寫回 `unsupported`，但前端依 `error.reason` 換成自己的文案（`unsupported` 是「中譯英與作文請先送 AI 批改」），所以改成兩個新原因：`source_no_ai`（400，「這一題的出版社授權不包含 AI 解析」）與 `source_ended`（409，「這一題的出版社授權已經結束，題目與解析不再顯示」），文案放在 shared，Worker 與前端共用；都在預扣之前，不扣點。
+9. **Worker 怎麼知道案例的來源**：建立出版社題的案例時 `ref_json` 多記 `src`（來源 id；本站題的 `ref_json` 與去重鍵不變）。列表只讀登記檔（一頁一次，頁裡沒有出版社題時完全不讀）；詳情與其他回傳詳情的端點（PATCH、建立時回傳既有的案例）另外讀題組檔，404 也算授權結束。讀案例時讀不到登記檔或題組檔一律遮住（fail closed）；解析與追問讀不到時回 502（請稍後再試、不扣點）。遮住的詳情：選文、說明、圖、題幹、選項、解析、標註、排除法表、同組其他題的題幹都拿掉；選擇題的答案字母留著，填充、簡答的可接受寫法拿掉；turn 的解析與追問回覆拿掉，學生自己寫的追問留著；帶 `source_ended: true`。案例頁顯示說明、不顯示「送出解析」與追問框。授權後來不含 `ai_assist`（但仍有效）時題目照常顯示，只拒收解析與追問。
+10. **Worker 接受 bk2 卷號與卷面題號 51–80 屬於 W2**（§12.1 的 W2 列「Worker 接受 bk2」）：P1 只放寬題組代號（`pb`）與加上授權檢查；出版社題的 `origin_label` 不分卷別，一律「{出版社}《{書名}》・{難度}・經授權使用」，案例標題用「{出版社}《{書名}》・{難度}・{大題}：第…題」。
+11. **還沒有遮的地方**（清理腳本執行後才不再保存）：已經排進 Queue、還沒處理的解析或追問不再檢查來源（只差排隊的幾秒到幾分鐘）；帳號資料匯出照樣包含案例的 `question_json`（學生自己的紀錄）；學習報告的案例摘要用的是解析的「錯在哪」一句（AI 寫的，不是題目文字）。
+12. **清理腳本**：`node apps/api/scripts/retire-publisher-source.mjs <來源 id> [--out retire.sql]`。除了 uid 清單，案例另外用 `ref_json` 的 `src` 認（正規化檔已經從 repo 移除時仍然找得到）；共用快取的 `ref_id` 是「{uid}@{版本}#{題號}」，只能用 uid 清單認；uid 很多時分成每句 400 個。只有 UPDATE、可以重複執行；uid 與來源 id 先用固定格式檢查才拼進 SQL。
+13. **`validate_publisher.py` 的歷屆原題比對**：「8 個字」取英文 8 個字的片段（同 `validate_bank.py` 的 D8 比對單位），和任何一個歷屆題組的重疊 ≥ 30% 就拒收；「題幹完全相同」只算 10 個字以上的題幹，否則 "What is the passage mainly about?" 這種通用題幹會讓正常的閱讀題被拒收。D8 直接用 `validate_bank.py` 的 `official_corpus`（官方參考譯文的英文 8 字串、評分原則的 8 個漢字）。標準形狀不同、題目內容出現禁字、G50 推估和 `tier` 不同、來源停用都是 warning（列進匯入檢查表）。`scoring_notes` 不收。有作答統計時：五等分組直接套 G50、有 P／Ph／Pl 用 `rule.imputation.coefficients`、只有 P 用 `rule.imputation.p_only`（題組取各題推估的平均）；高低分組不是前後 33% 的情況要由 P2 的匯入程式在轉換時丟掉 Ph、Pl。
+14. **`p_only` 的數字**：係數 Pc = −0.2414 + 1.4417·P、Pb = −0.0345 + 1.3604·P（學測 1,352 題）；門檻 `basic_min_P` 0.5143、`advanced_min_P` 0.3929（由四位小數的係數算出）；逐年留一 92.6%（等於既有的 `baseline_P_only`），全樣本 92.6%。其他輸出逐位元不變（`--check` 通過）；`generation-spec.json` 只有記錄的輸入雜湊跟著變。
+15. **`source-scan.test.ts`**：P1 的三個待改檔案（`AskPage.tsx`、`PracticeSessionPage.tsx`、`data/bank.ts`）已經改用 shared 的格式，從允許清單移除。
+
+### 17.3 W2（畫面與流程）
+
+**站主決定**：同 §17.1。`features/assistant/papers/flags.ts` 的 `WEAK_PAPER_ENABLED = true`，保留為緊急開關：改成 false 時所有入口不出現、`/assistant/papers` 顯示「這個功能還沒開放。」，已經存在的 `/mock/bk2-…` 照常能開。預覽開關 `?weakpaper=preview`（記在 localStorage，`?weakpaper=off` 關掉）與只在預覽模式有效的 `?paperseed=`（e2e 的固定種子）照 §9.3 保留。沒有出版社資料：來源列、題組出處列、出版社題的組卷只用 e2e 的 `page.route` 合成資料測過。
+
+**檔案**：
+- 新增：`features/assistant/papers/` 的 `flags.ts`、`params.ts`（網址參數 `kind`、`section`、`skill`、`n`、`from=mistakes|report|attempt:|paper:`、`report`、`same`）、`data.ts`（本機資料；`paper-skills.json`、來源登記；登入時讀最新一份報告與案例次數）、`reasons.ts`（§3.3 的句子）、`drill.ts`（成績單逐題與下一步）、`EntryLinks.tsx`、`PapersPage.tsx`；`mock/bank/` 的 `paperLists.ts`、`GroupSourceLine.tsx`、`PaperTargets.tsx`、`DrillTargetsTable.tsx`。
+- 修改：`App.tsx`（`/assistant/papers`）、`lib/desktopLayout.ts`（`['/assistant/papers', 'default']`）、`modules.ts`（學習助手的說明多「也能依弱點組一份加強卷」）；學習助手的 `AssistantHomePage.tsx`、`MistakesPage.tsx`、`components/ReportView.tsx`、`components/PlanWeeks.tsx`、`components/AssistAccess.tsx`、`sources/types.ts`、`sources/common.ts`、`sources/bankMock.ts`、`papers/focus.ts`；卷子的 `exams/QuestionExtras.ts`、`exams/components/Paper.tsx`、`mock/papers.ts`、`mock/components/StartScreen.tsx`、`mock/MockSessionPage.tsx`、`mock/MockReportPage.tsx`、`mock/MockPaperList.tsx`，`mock/bank/` 的 `bankMockPaper.ts`、`BankPaperRoute.tsx`、`PaperInfo.tsx`、`BankReport.tsx`、`BankMockSection.tsx`、`weakPapers.ts`；Worker 的 `apps/api/src/assist/sources.ts`；shared 的 `assist.ts`（只有註解）。
+- 測試：`papers/reasons.test.ts`、`papers/PapersPage.test.tsx`、`mock/bank/weakPaperPages.test.tsx`、`tests/weak-paper.spec.ts`（新）；`apps/api/test/assist.routes.test.ts`（bk2 卷號、題號 80／81）、`scripts/source-scan.test.ts`（移除 W2 的三個允許項目）、`assistant-copy.test.ts`、`bank-copy.test.ts`（文案檢查納入新檔案）。
+
+**入口**（§3.1 的六處，都經過 `weakPaperVisible()`）：學習助手首頁的「加強卷」卡（學習助手唯讀或關閉時也顯示，`AssistAccess.tsx`）；學習報告「待加強」下方（`ReportWeakPaperEntry`，只在報告頁）；讀書計畫的題型練習與模擬考項目；錯題清單（篩選後 ≥ 3 列，`focusFromRows` 依提升度）；/mock 區塊的「依弱點組卷、隨機抽題 →」；兩種成績單（≥ 3 題錯，`FocusPaperEntry`：真題模考 `from=attempt:`、自組卷與加強卷 `from=paper:`，焦點在組卷頁用 `focusFromOutcomes` 算）。
+
+**和本文不同的地方（依實際程式結構，意圖不變）**：
+
+1. **開關是開的，§10.3 與 A12 的「開關關著」改由單元測試涵蓋**：建置後的產物裡開關是常數，e2e 切不到關著的狀態；`PapersPage.test.tsx` 測「這個功能還沒開放。」，入口一律經過 `weakPaperVisible()`。A12 的「開關關著時手機畫面 0 差異」不再適用（入口已經出現在學習助手首頁、/mock、錯題清單、報告與成績單）；桌機截圖的基準由桌機工作線依這次的畫面重建。
+2. **預覽沒有 debounce**（§6.8 寫 150 ms）：預覽只用弱點模型（`computeWeakness`，在基準難度、焦點或資料改變時重算）與理由句；真正的組卷（`createWeakPaper`）只在按「組卷」時跑一次，沒有需要延後的計算。
+3. **冷啟動的門檻**：從錯題清單或成績單帶焦點進來（`from=`），而且焦點算得出目標時，首次作答不到 30 題也可以組弱點加強卷（焦點項目一定列為目標，§3.8 第 3 列）；沒有焦點時照 §3.4 停用，引導做診斷卷。
+4. **桌機右欄**（§3.2 寫「高度寫進 `scroll-padding`」）：右欄是 `lg:sticky lg:top-20`，另外加 `lg:max-h-[calc(100dvh-6rem)] lg:overflow-y-auto`（目標多時右欄自己捲動）；右欄在主欄旁邊、不蓋住主欄的焦點元素，所以沒有改 `scroll-padding`。共用元件與樣式沒有改，新 class 都帶 `lg:`。
+5. **來源列與出版社選項**：只有一個可用來源（本站題庫）時整列不顯示。/mock 區塊的出版社來源選項（§15 第 3 題）與「我的加強卷」列出 /mock 組的出版社 `m` 卷留給 P2：沒有出版社資料時兩者永遠是空的。
+6. **「再組一份（同設定）」**：弱點加強卷與模考格式卷連到組卷頁 `?same={代號}`（預填那一份的設定；弱點用新的作答紀錄重算，學生在預覽確認後組卷）；隨機抽題卷的「再抽一份（同設定）」直接用存下的請求、新種子組卷（不需要弱點資料）。卷子頁的「換一份（同設定）」照 §6.7 用組卷時存下的目標、不重算，被取代的那一份列為盡量避開，清單裡換成新的。
+7. **「已下架、不計分」的佔位題組沒有做**（§3.8、§17.1 第 16 項）：找不到同大題、同難度的替代時，`/mock/bk2-…` 照 bk1 顯示「這份卷子拿不到」，附「組一份新的加強卷」（連到組卷頁）。只有同大題、同難度的本站題也全部下架時才會發生。出版社授權結束的題組（快照已遮住，§17.2 第 6 項）在「本卷資訊」列出題號並說明不計分，成績單的「扣掉做過、已下架或不計分的…題」一起扣掉。
+8. **成績單「這次的弱點表現」的「現在」**：只用這台裝置的資料重算（不讀學習報告、不等網路），答對率是本機首次作答的單純比例（`localRate`，和預覽的理由句同一支）。「先問學習助手」只在學習助手開放時出現，否則那一列改成「再組一份加強卷」。
+9. **隨機抽題卷的「各難度、各大題得分率」以得分／配分計**（§3.6 的表沒有寫分母），和成績單其他得分率一致。
+10. **`MockPaperBank` 多 `heading`、`kicker`**（§9.2 只列 `strictAllowed`、`durationMinutes`、`sectionMinutes`）：卷子頁與作答頁的標題「弱點加強卷」與上方小字「學習助手加強卷・卷號 W-…」要從卷子帶進共用的 `StartScreen`、`MockSessionPage`；沒有這兩個欄位時（歷屆卷、bk1）畫面不變。實考模式只給作答時間比實考模式的 60 分鐘鎖定長的卷子（`layout.minutes > STRICT_LOCK_SEC / 60`；原本是 ≥ 60，60 分鐘的卷子勾了實考模式就整份不能提早交卷，§17.5 第 16 項）。bk1 的 `bankMockPaper()` 輸出不含任何新欄位（`weakPaperPages.test.tsx` 檢查）。
+11. **`Paper.tsx` 的 `renderGroupSource`**：題組多一層 `GroupBody` 包住原本的內容，只在 `extras.renderGroupSource` 有回傳時畫出處列；沒有出版社題組的卷子 `groupSourceRenderer` 回傳 undefined，歷屆卷與 bk1 不畫任何新元素。
+12. **PDF 的卷別文字與作答分鐘數留給 W3**（`pdfText.ts`、`features/pdf/**`）：W2 沒有動 PDF。
+13. **錯題清單的技能**：`MistakeRow` 多 `questionSkills`（每列的技能代碼，`sources/common.ts`），`focusFromRows` 依提升度挑技能時用它。
+14. **Worker 接受 bk2**：卷號收 `bk2-[wfrm]-` 加 1–12 段 7 碼；`label_map` 的值兩種卷號都收 1–80（§4.4）；案例的出處是「學習助手加強卷・{難度}」（出版社題照 §17.2 第 10 項）。
+15. **`/mock` 的清單**（§7.4、§7.7，§17.1 第 17 項）：`MockPaperList` 不列練習性卷子（`isPracticePaperId`：bk2 的 w、r、f）；/mock 區塊與組卷頁都先處理加強卷清單的逾期作答，再處理自組卷的。
+16. **成績單只剩作答紀錄時**（`HistoryOnly`，快照與題目都拿不到）：bk2 的滿分由代號解出的版面算，不再寫死 100 分。
+
+**檢查**（2026-10-24，全部重跑）：
+- `npm run typecheck` 通過；`npm test` 全部通過（api 30 檔 933 項、web 170 檔 1,999 項、shared 20 檔 524 項）；`npm run test:data` 通過（shared 62 項、web 215 項）；`npm run build -w @gsat/web` 通過；`npm run check:data -w @gsat/web` 通過（加強卷的技能分布 673 組、來源登記 1 個來源）。
+- Playwright（`E2E_PORT=4701`，建置之後）：`weak-paper.spec.ts`（desktop＋mobile）16 項全過（mobile 的主流程在機器負載高時第一次卡在「載入中…」逾時，單獨重跑一次通過）；相關規格 `bank-mock`、`mock`、`assistant`、`assistant-report`、`exams`、`practice`、`section-practice`、`pdf`、`smoke`、`mobile-guard`、`desktop-shell`（desktop、mobile、desktop-ui、desktop-lg）210 項通過、33 項略過（`desktop-shell` 依視窗寬度略過的項目，和改動前相同）。沒有跑完整的 e2e。
+- 重跑時另外修正：開考前頁「建議時間合計」對沒有版面的卷子（歷屆卷、bk1）照舊寫 100 分鐘，不由各大題加總（原本的加總在大題不齊的歷屆卷上會改變畫面）。
+
+### 17.4 W3（PDF）
+
+**站主決定**：同 §17.1。W3 沒有新的開關：PDF 的加強卷文字只在 `SitePaperPdfMeta.paperKind` 有值（bk2 卷子）時出現；出版社的出處只在卷子有出版社題組時出現（P1），沒有出版社資料時只用 e2e 與單元測試的合成題組測過。
+
+**檔案**：
+- PDF：`features/pdf/types.ts`（`SitePaperPdfMeta` 多 `paperKind`、`minutes`、`targets`）、`layout/strings.ts`（`WEAK_PAPER_TEXT`；`SITE_PAPER_BOLD` 多三種加強卷封面橫條）、`layout/attribution.ts`（頁尾出處、`weakKindLabel`）、`layout/chrome.ts`（頁首卷別、各節標題）、`layout/cover.ts`（卷別說明、橫條、「本卷針對」、作答方式依實際大題）、`layout/teacherHeader.ts`（卷別、作答時間；出版社題的聲明）、`layout/buildDocDefinition.ts`（文件屬性）、`index.ts`（檔名）、`ExamPdfDownload.tsx`（說明依題目來源）。
+- 字型：`fonts/NotoSerifTC-Bold.subset.ttf.gz`、`fonts/metrics.json`（只換 `boldCjk` 與粗體的雜湊）、`fonts/README.md`。
+- 卷子：`mock/bank/pdfText.ts`（依版面組 `SitePaperPdfMeta`：`examGroupOf`、作文題號、範文難度都讀 `paperLayout`；加強卷的卷名、卷別、作答時間、跨難度的難度名稱、「本卷針對」）、`mock/bank/bankMockPaper.ts`（`bankPdfMeta` 從「我的加強卷」帶「本卷針對」）。
+- 檢查：`scripts/pdf-render-check.mjs`（四份加強卷；圖表描述片段只比對封面與題本）、`scripts/source-scan.test.ts`（`pdfText.ts` 移出允許清單，W2、W3、P1 的待改項目都已清空）。
+- 測試：`layout/bk1PdfGolden.test.ts`＋`layout/__golden__/bk1-pdf-{basic,advanced,top}.json`（新）、`layout/weakPaperPdf.test.ts`（新）、`cover.test.ts`、`groups.test.ts`、`publisherSources.test.ts`、`ExamPdfDownload.test.tsx`、`mock/bank/weakPapers.test.ts`、`tests/weak-paper.spec.ts`。
+
+**和本文不同的地方（依實際程式結構，意圖不變）**：
+
+1. **bk1 的 PDF 黃金測試是文件定義，不是 PDF 位元組**（§7.2、§10.1、A9 寫「`pdf-render-check` 的三份自組卷改動前後逐位元相同」）：pdfkit 每次產生都寫入建立時間，嵌入的字型子集也會因為字型檔重產而換字形編號，PDF 位元組本來就不會相同。所以分兩層：
+   - `bk1PdfGolden.test.ts`：三種難度 × 學生卷、學生卷雙面、教師卷、題本＋答案＋解析雙面，整份 pdfmake 文件定義（含依 pdfmake 呼叫順序實際呼叫的頁首頁尾）的 SHA-256 與摘要。黃金資料是在改動 PDF 程式之前，用 HEAD（`274fc7e`）的乾淨匯出產生的；P1 已改過的程式與 W3 之後都和它相同。
+   - `pdf-render-check` 的三份 bk1（固定代號）：HEAD 與改動後各產生 12 份 PDF，pdftotext 全文、pdfinfo（標題、主旨、頁數、版面大小）與 50 dpi 的每頁影像全部相同，另抽 3 份用 110 dpi 彩色比對也相同；歷屆卷抽 5 份（含模擬考版封面，共 8 份）同樣相同。位元組只差建立時間與嵌入字型。
+2. **`SitePaperPdfMeta` 多 `minutes`、`targets`**（§9.5 只列 `paperKind`、`sourceLines`、`groupSources`、`footerKind`）：教師卷沒有封面，作答時間與卷別印在第一頁的卷子資訊；封面多一行「本卷針對：推論題（閱讀）、延伸義（詞彙）」（均衡加強卷寫「這次不是針對弱點，各大題各練一組保持手感」），資料同卷子頁的「本卷針對」，只在組卷的裝置上有（「我的加強卷」有這一份、`request` 不是 null），只給弱點加強卷與模考格式卷；隨機抽題卷、中性卷、分享來的卷子不印。名稱含 PDF 字型沒有的字時那一項不印（`targetsLine`，字型檢查管不到組卷頁存下的名稱）。
+3. **卷別名稱不另外放欄位**：PDF 那一側由 `paperKind`＋`tierLabel` 算（`WEAK_PAPER_TEXT.kindLabel`），封面第二行由 `pdfText.ts` 用卷子頁同一支 `bk2KindLabel`（不把 PDF 的字串檔打包進一般頁面）；`weakPaperPdf.test.ts` 檢查兩邊四種卷別 × 三種難度都相同。
+4. **加強卷的 `tierLabel` 是卷子裡出現的難度**（§17.1 第 6 項的代表難度只給卷名用）：跨難度時寫「穩定基礎、進階練習」（教師卷的「難度」列）；頁首、各節標題、文件屬性與檔名改用卷別名稱，不寫難度（模考格式卷的卷別名稱本身含難度）。作文範文依作文那一組自己的難度（自組模擬考每一組都是卷子的難度，輸出不變）。
+5. **加強卷的封面橫條與文件主旨依題目來源**（§9.5 沒有列）：本站題「學測英文中心學習助手加強卷・題目由 AI 撰寫・非官方試題」，全部是出版社題「…・題目出自出版社模擬試題（經授權）・非官方試題」，兩者都有「…・題目由 AI 撰寫或出自出版社（經授權）・非官方試題」；文件主旨＝卷名＋頁尾的聲明。P1 留下的一處也一起改：教師卷第一頁的聲明在有出版社題組時改用頁尾的寫法（全部是出版社題時不寫 AI 出題）。「下載考試格式 PDF」區塊的說明也依題目來源改寫（只用本站題時照舊）。
+6. **作答方式依實際的大題**（§9.5 只寫答題卷）：加強卷的封面只在有答案卡的題目時寫答案卡那一條、只在有混合題或非選擇題時寫作答區那一條；只有中譯英與作文時最後一條改成「掃封面或答題卷的 QR code 線上作答（中譯英與作文不自動計分）」。自組模擬考照舊。
+7. **答題卷不必改程式**（§9.5「確認只有部分大題時答題卷的版面」）：`answerSheetContent` 本來就依實際的大題產生。確認的結果：只有選擇題時只有答案卡（1 頁，26 題分三欄）；只有中譯英與作文時第一頁是表頭與中譯英作答線，作文兩頁格線另起（共 3 頁，和自組模擬考的作文頁相同）；12 組、有混合題與中譯英、沒有作文時 2 頁。只有作文的卷子第一頁只有表頭，作文照舊另起一頁（格線頁數固定兩頁，不為這種卷子另算）。
+8. **字型只更新粗體子集**（§12.1 的「字型子集的新粗體字串」）：新的粗體字串缺「加助強手社」。重跑 `subset_fonts.py` 整套時結果不是「只加字元」：W1 的原始碼註解有 α、ω、√，工具會把 α 從 Tinos 改分給中文字型（單字講義的字會換字型），也會拿掉已經沒有資料用到的 ⑳➀➉➊➓。所以只取工具產生的粗體子集（多 20 字，PDF 固定文字的粗體警告也一併清掉），`metrics.json` 只換 `boldCjk` 與粗體的雜湊，其他字型檔不動；`npm run check:fonts` 通過，歷屆卷、自組卷與單字講義的渲染結果如第 1 項。題庫解析缺 7 字、資料來源缺 3 字的警告（真實題庫，PDF 改印「請到線上檢討試卷查看」）照舊，要等整套重跑；做法寫在 `fonts/README.md`。
+9. **`pdf-render-check` 是四份加強卷**（§12.1 寫三份）：弱點加強卷 40 分鐘（只有選擇題，封面有「本卷針對」）、模考格式卷（超越頂標，11 組）、隨機抽題卷 12 組（最長的代號，網址 136 字元；跨三種難度、有混合題與中譯英）、隨機抽題卷只有中譯英與作文。題組依固定種子直接從組卷池挑（`assemblePaper` 要弱點資料，這裡只需要版面），代號、版面、`buildBankPaper`、PDF 資訊都走線上同一條路。另外修正一個改動前就有的誤報：圖表描述的資料片段原本比對整份 PDF，資料來源頁的出處說明（「圖表資料：Our World in Data（資料來源…」）和描述開頭相同時會失敗（HEAD 用同一份題庫重跑也失敗），改成只比對封面與題本。
+10. **e2e 的 PDF 測試放在 `weak-paper.spec.ts`**（§10.3 寫 `pdf.spec.ts`）：要用那個檔案裡改寫組卷池與來源登記的出版社題組（抽成 `routePublisherReading`、`buildPublisherPaper` 兩個共用函式，原本的出處測試改用它們）。出版社題組的卷子是隨機抽題卷，所以檔名斷言是 `R-`；`W-` 的檔名由單元測試檢查。PDF 文字層的斷言（卷名、卷別、作答時間、封面題目來源、每組出處、資料來源頁的出版社聲明、頁尾聲明；教師卷的卷子資訊）只在有 `pdftotext` 時跑，CI 沒有 poppler 時略過並記在測試的 annotation；檔名、`%PDF-` 與「我的加強卷」記下 `pdfAt` 一律檢查。
+11. **12 組代號的 QR code**（§7.1、§10.1 寫每格 ≥ 1.7 pt）：`cover.test.ts` 用 pdfmake 的編碼程式量 136 字元的網址，一般寫法與大寫都是每格 2 pt。
+
+**檢查**（2026-10-24）：
+- `npm run typecheck` 通過；`npm test` 全部通過（api 30 檔 933 項、web 172 檔 2,023 項、shared 20 檔 524 項）；`npm run test:data` 通過（shared 62 項、web 215 項）；`npm run build -w @gsat/web` 通過；`npm run check:data -w @gsat/web` 通過；`npm run check:fonts -w @gsat/web` 通過（只有改動前就有的題庫解析與資料來源缺字警告）。
+- `pdf-render-check.mjs`（全部）：66 份考卷、3 份自組卷、4 份加強卷、11 份單字講義，共 111 個 PDF 全部通過。四份加強卷：學生卷 8／18／18／6 頁，答題卷 1／4／2／3 頁；封面都是 1 頁。
+- Playwright（`E2E_PORT=4701`，建置之後；desktop＋mobile）：`weak-paper`（含新的 PDF 測試）、`pdf`、`bank-mock`、`mock`、`smoke`、`mobile-guard`、`exams` 共 101 項通過、1 項略過（手機才跑的項目）。沒有跑完整的 e2e。
+
+### 17.5 審查修正（2026-10-24）
+
+**站主決定**：同 §17.1（直接開放、只做 P1、出處句預設不變）。這一輪只修審查找到的問題，沒有新增開關；新的程式路徑在沒有出版社資料時都不會出現（出版社相關的修正只用單元測試與 e2e 的合成資料測過）。
+
+**修正（依程式結構，意圖同本文）**：
+
+1. **40 分鐘卷放得進作文**（§4.1）：`allocateGroups` 的「單一大題最多六成」從那個大題的第二組起算（一篇 25 分鐘的作文在 40 分鐘的卷子裡超過六成的 24 分鐘）；第一輪放不進任何一組的大題（時間、組數、題數只會增加，供應不變，之後也放不進）拿掉，再重算「只有一個大題」與權重合計，放不進的大題不再壓低其他大題的上限。真實題庫：作文 0.3、閱讀推論 0.2 的 40 分鐘卷（自動與自己勾）都有 1 篇作文、40 ± 5 分鐘（`weak-paper.data.test.ts`）。
+2. **隨機抽題卷最長 100 分鐘**（§4.4）：`BK2_MAX_RANDOM_MINUTES`（`code2.ts`）；超過時回 `insufficient`（最後一個大題），組卷頁的步進器加到超過 100 分鐘時不能再加，說明寫「最長 100 分鐘」。
+3. **證據規則只和同一個大題的目標比**（§5.2）：`PaperEvidenceMap` 的 `targetCodes` 改成「大題 → 目標的命中代碼」（`weakPapers.ts` 的 `targetCodesBySection`）。`tp:collocation` 這類代碼出現在好幾個大題，綜合測驗的目標不再讓同一份卷子詞彙（含保持手感）的題不算進大題證據與學習報告的各大題答對率。
+4. **保持手感的「幾天沒練」**：最後一次練取作答紀錄與作答紀錄上線前的題庫練習（`practiceDone` 的 `at`）兩者較晚的；都沒有可用的時間就不選那個大題（不會出現 Infinity）。`maintenanceText` 另外擋非有限值。
+5. **score_plan 的 +0.10**（§5.4）：直接加在大題目標上（上限 0.5），不走 max ＋ 0.5 × min 的合併；報告弱點第 1 優先（0.25）＋同一個大題的 score_plan → 0.35。同一個大題在 score_plan 出現兩次只加一次。
+6. **「換一份（同設定）」帶錯過的題組**（§6.3 第 4 步第 2 層）：和組卷頁一樣傳 `wrongGroupsFrom(作答紀錄)`，「也重做錯過的」照樣有重做層。
+7. **成績單「這次的弱點表現」的下一步與「組卷時」**：`StoredTarget` 多 `from`（`local`／`report`／`cases`／`focus`）與 `focusOnly`（舊清單沒有，照原本的規則）。只有組卷時有本機證據（`from` 含 `local`）的弱點，才依「本機重算之後跌出前 6 名」叫學生先放；學習報告、解析案例、入口焦點帶來的弱點本機重算本來就看不到，改依本卷這一項的答對率（≤ 40% 先問學習助手，其他再組一份；重算標成有進步才先放）。「組卷時」那一格本機不到 4 題時依來源寫「學習報告列為弱點」「你問學習助手的題目」或「依你篩選的錯題」（`drill.ts` 的 `beforeText`）。
+8. **「自己勾」大題的預覽**：預覽與存下的「本卷針對」只列勾的大題裡的弱點（組卷照樣拿全部的弱點算權重）；勾的大題裡沒有弱點時寫「你勾的大題裡沒有列為弱點的項目，這份依大題選題」；沒勾大題時不能組卷（「至少勾一個大題。」）。按鈕的分鐘數改成預估值（`assemblePaper.ts` 的 `estimateWeakPaper`：同組卷的大題權重、保持手感的預留與時間分配，題組供應當作充足），和組出來的卷子相同（單元測試與 e2e 都比對）。只勾作文（或作文加放不進的大題）而且不到 40 分鐘時，組卷回新的原因 `composition_too_short`，畫面說明「作文一篇要 25 分鐘，要選約 40 分鐘以上」，作文的勾選框也加註；組卷失敗的說明依卷別（只有隨機抽題卷寫「減少組數」）。
+9. **「沒有明顯弱點」的「（換高一級）組一份模考格式卷」是中性卷**（§3.4）：沒有弱點可偏重時組 `m`（`request.fromPapers`），不組 `f`：卷子頁照自組模擬考說明、沒有「本卷針對」，成績單照常給難度建議（換高一級才看得出合不合適）；列在「我的加強卷」（`listWeakPapers` 收 `fromPapers` 的 `m`）、作答紀錄照中性卷算（證據全部算、算進「最近 5 份模考」）。
+10. **檢討試卷的出版社出處**（§8.7「成績單、檢討試卷：同線上作答」）：每個出版社題組上方的出處列（`renderGroupSource`，只有出版社題組的卷子才設）、解析卡標「解析：{出版社}提供」、沒有解析的題寫「這組沒有解析」（卡片照樣顯示答案）；「問學習助手」只在來源有效、授權包含 `ai_assist` 時出現（`GroupSourceLine.tsx` 的 `useAskAllowed`，登記檔讀不到時不出現），成績單「這次的弱點表現」的「先問學習助手」連結同樣過濾。
+11. **成績單頁尾那一句依題目來源**：只有本站題照舊（bk1 不變）；本站題與出版社題都有時「本站題目由 AI 撰寫」；全部是出版社題時只寫「模擬分數僅供參考。」（`BankReport.tsx` 的 `reportFooterNote`）。
+12. **均衡加強卷、診斷卷的標題與說明**：卷子頁與成績單的標題依「我的加強卷」存的請求寫「均衡加強卷」「診斷卷（{難度}）」（同清單的列名；分享來的卷子照卷別名稱，`bankMockPaper.ts` 的 `weakPaperHeading`）；本卷資訊與成績單的分數說明對均衡加強卷不再說「刻意挑你的弱點」。
+13. **預估分數的範圍是這份卷子的滿分**：開考前頁「你覺得這次會考幾分？（0–{滿分}）」與檢查的上限讀 `exam.full_score`（歷屆卷與自組模擬考都是 100，畫面不變）。
+14. **冷啟動從模考格式卷（診斷卷）開始**：弱點加強卷不能用、網址也沒有指定 `kind=w` 時，卷別預設模考格式卷（就是診斷卷，右欄有它自己的按鈕）；網址指定 `kind=w` 時右欄也放「先做一份診斷卷」。下載失敗等錯誤也把焦點移到錯誤說明。
+15. **從報告頁進來用學生看的那一版**：`useRemoteWeaknessData(reportId)` 讀網址 `report=` 的那一版（不是 done、讀不到時改讀最新一版）。
+16. **實考模式**：見 §17.3 第 10 項（只給比 60 分鐘長的卷子）。
+17. **錯題清單帶提升度**：連到組卷頁時多 `lift=it:inference:1.8`（`params.ts` 只收 `skill` 裡有的代碼、格式對的數字），預覽寫「錯題裡比你平常多 1.8 倍」；不知道提升度時技能寫「（你篩選的錯題裡常見）」，不說成學生自己選的（大題照舊「你這次選的範圍」）。
+18. **預覽勾選框的說明**：每個勾選框保留短名稱（`aria-label`），理由句用 `aria-describedby` 接上；最後一項不能取消時另外接上「至少要留一項」。
+19. **e2e**：出版社題組的卷子交卷後檢查成績單頁尾（不提 AI）與檢討試卷的出處、解析標示；入口測試另外打開學習報告（待加強的連結帶那一版的 id、讀書計畫的「組加強卷」）與真題模考成績單（錯 3 題以上）；冷啟動的卷子頁標題改成「診斷卷（…）」；主流程比對按鈕的預估分鐘數和卷子相同。
+20. **出版社來源的緊急停用會重新部署**：`vercel.json` 的 `ignoreCommand` 加 `data/sources.json`、`data/publisher`（主題規劃檔改寫成 `data/bank/topic-plan*.json`，合計 223 字，Vercel 上限 256）；`apps/web/scripts/vercel-ignore.test.ts` 從 `build-data.mjs` 抓 `path.join(DATA_DIR, …)` 讀的路徑，檢查每一個都在清單裡、長度不超過上限；README 的清單一起更新。
+21. **錯題清單與確認頁看出版社來源的狀態**（§7.6、§9.6、A8）：`publisherTitles` 的每一列多 `askable`（來源有效、授權包含 `ai_assist`），出版社題組沒有 `askable` 時不給「問學習助手」（讀不到登記檔也不給）；確認頁讀題組檔之後查登記檔，授權結束（含登記檔讀不到時的預設）或不含 AI 解析時丟 `PublisherSourceError`，畫面寫 shared 的那兩句、不顯示題目預覽也沒有送出按鈕；授權結束、重建之後題組檔不在（404）的出版社題也寫授權結束，不寫「已經改版」。索引與登記都讀到了、但這一組已經不在索引時，列標題寫「出版社模考題（已下架）」（不是一直「出處載入中」）。
+22. **兩個出版社來源不能用同一個 uid**：`selectPublisherGroups` 先掃全部來源（不論狀態）的檔名，同一個 uid 出現在兩個來源就丟 `BankSelectError`（建置失敗）；`validate_publisher.py` 另外做跨檔檢查（`check_duplicate_uids`），列進匯入檢查表。
+23. **學習報告的推薦**（§8.7「學習報告的推薦（候選標題）」）：前端的候選與「推薦練習」改用 `loadPracticeIndex`（濾掉停用、過期的來源）；Worker 的 `rebuildCandidates` 讀索引的 `src`，有出版社候選時才讀登記檔，來源無效（或登記檔讀不到）的丟掉，有效的標題前面加出版社短名（「{出版社}・閱讀測驗・進階練習・…」）。
+24. **授權結束後快照裡的填充、簡答答案不再顯示**：遮住的題組檔標 `masked`（只在這台裝置上，公開檔沒有），卷子的 `BankPaperGroup` 跟著標；檢討試卷那幾題改寫「這一組的出版社授權已經結束，答案不再顯示；這一題照原本的作答計分。」，PDF 答案頁印「（出版社授權結束，這一題的答案不顯示）」、不印部分給分的寫法（`SitePaperPdfMeta.answers.ended`，只有遮住的題組才有）。計分照舊讀原本的答案（§17.2 第 6 項）；選擇題的字母照印（同 Worker 的遮住規則）。
+25. **出處缺字擋在組卷池外**：`practicePrintableStrings` 把出版社題組的出處（出版社、書名、出處句、原卷位置）算進題本，缺字時那一組帶 `ex: 'glyph'`、不能進任何卷子（題庫練習照常），不再只是警告。
+26. **CI 跑工具的單元測試**：exams job 多一步 `python3 -m unittest tools/tests/test_validate_publisher.py tools/tests/test_difficulty_bands.py`，並用合成題組實際跑一次 `validate_publisher.py`（真實的 D8 指紋與歷屆題庫）。
+
+**檢查**（2026-10-24，全部重跑）：
+- `npm run typecheck` 通過；`npm test` 全部通過（api 30 檔 934 項、web 173 檔 2,054 項、shared 20 檔 525 項）；`npm run test:data` 通過（web 6 檔 64 項、shared 6 檔 215 項）；`npm run build -w @gsat/web` 通過；`npm run check:data -w @gsat/web`、`npm run check:fonts -w @gsat/web` 通過（只有改動前就有的題庫解析與資料來源缺字警告）；`python3 -m unittest tools/tests/test_validate_publisher.py tools/tests/test_difficulty_bands.py` 20 項通過。
+- Playwright（`E2E_PORT=4701`，建置之後）：`weak-paper.spec.ts`（desktop＋mobile）18 項全過；`bank-mock`、`mock`、`assistant`、`assistant-report`、`exams`、`practice`、`section-practice`、`pdf`、`smoke`、`mobile-guard`（desktop＋mobile）138 項通過、2 項略過；`desktop-shell`（全部 project）52 項通過、30 項略過（依視窗寬度略過，和改動前相同）。沒有跑完整的 e2e 與 `pdf-render-check`（PDF 只有遮住的題組才多 `ended`，bk1 的 PDF 黃金測試照舊通過）。
+
+### 17.6 上線前的最終檢查（2026-10-24）
+
+**修正**：§17.5 第 24 項 PDF 答案頁的「（出版社授權已經結束，…）」帶進粗體子集沒有的「已」，建置又出現 §17.4 第 8 項清掉的「PDF 固定文字有 1 個字不在粗體子集」警告（那一句用一般粗細印，實際不影響輸出）。改成「（出版社授權結束，這一題的答案不顯示）」，警告消失，字型檔不必重產。
+
+**檢查**（CI 的每一步，加上完整的 e2e 與 `pdf-render-check`）：
+- `npm run typecheck`、`npm run build`（含 Worker 的 `wrangler deploy --dry-run`）通過；`npm test` 全部通過（api 30 檔 934 項、web 173 檔 2,054 項、shared 20 檔 525 項）；`npm run test:data` 通過（web 6 檔 64 項、shared 6 檔 215 項）；`npm run check:data -w @gsat/web`、`npm run check:fonts -w @gsat/web` 通過。
+- `python3 -m unittest discover tools/tests` 182 項通過；`validate_bank.py --all` 874 個檔案 0 error；`validate_exam.py --all` 66 份 0 error（403 個 warning 是改動前就有的）；`validate_publisher.py --all`（沒有 `data/publisher`）與 CI 的合成題組匯入檢查通過；`link_grammar_refs.py --check`、`normalize_exams.py --check` 通過。
+- Playwright 完整執行（`E2E_PORT=4702`，建置之後；desktop、mobile、desktop-ui、desktop-lg）：334 項通過、37 項略過（都是依 project 或視窗寬度略過），0 項失敗；修正後重新建置，`weak-paper`、`pdf`、`bank-mock` 38 項再跑一次全過。
+- `pdf-render-check.mjs`（全部）：66 份考卷、3 份自組卷、4 份加強卷、11 份單字講義，共 111 個 PDF 全部通過。
+- bk1 黃金測試另外在改動前的乾淨匯出（HEAD `274fc7e`）上重跑：`bk1Golden.test.ts`、`bk1PdfGolden.test.ts` 9 項全過，黃金資料確實是改動前的輸出。

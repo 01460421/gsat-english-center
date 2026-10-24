@@ -312,11 +312,12 @@ function ActiveExamBody({ exam, paper, session, resumed, onSubmitted, onAbandon,
 
   return (
     <>
-      <title>{`${paper.label}模擬考（作答中）｜${APP_NAME}`}</title>
+      <title>{`${paper.bank?.heading ?? `${paper.label}模擬考`}（作答中）｜${APP_NAME}`}</title>
       <div className="space-y-4">
         <header>
-          <p className="text-sm text-muted">模擬考・{exam.title}</p>
-          <h1 className="mt-1 text-2xl font-bold tracking-tight">{paper.label}模擬考</h1>
+          {/* 加強卷的標題與上方小字（MockPaperBank.heading、kicker，docs/design/weak-paper.md §3.5）；其他卷子不變。 */}
+          <p className="text-sm text-muted">{paper.bank?.kicker ?? `模擬考・${exam.title}`}</p>
+          <h1 className="mt-1 text-2xl font-bold tracking-tight">{paper.bank?.heading ?? `${paper.label}模擬考`}</h1>
         </header>
         {resumedAt !== null && !readOnly && (
           <p className="rounded-xl bg-primary-soft px-4 py-2 text-sm">已接續上次的作答進度。離開期間時間照常計算，目前剩下 {formatDuration(resumedAt)}。</p>

@@ -30,6 +30,7 @@ import { bankAttemptPath } from '../../writing/bank/data';
 import { REPORT_AI_DISCLAIMER, areaLabel, gainText, pct, reportDate, targetLabel } from '../reportFormat';
 import { MethodCard } from './MethodCard';
 import { AnalysisSection, AssistSafetyCare, ProcessingNotices } from './parts';
+import { ReportWeakPaperEntry } from '../papers/EntryLinks';
 import { PlanWeeks } from './PlanWeeks';
 import { SectionTargetsTable } from './SectionTargetsTable';
 
@@ -182,6 +183,8 @@ export function ReportView({
                 </li>
               ))}
             </ol>
+            {/* 加強卷的入口（docs/design/weak-paper.md §3.1）：依報告的弱點組卷；報告推薦的題組可以直接放進卷子。 */}
+            <ReportWeakPaperEntry reportId={detail.id} />
           </Block>
         )}
 

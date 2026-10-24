@@ -4,7 +4,7 @@
  */
 import { CircleAlert } from 'lucide-react';
 import { useId, useMemo, useState, type FormEvent } from 'react';
-import { SECTION_TYPE_LABELS, type Exam } from '../../../data/exams';
+import { SECTION_TYPE_LABELS, type Exam, type SectionType } from '../../../data/exams';
 import { examIdLabel } from '../../exams/labels';
 import { ExamPdfDownload } from '../../pdf/ExamPdfDownload';
 import { APP_NAME } from '../../../modules';
@@ -55,7 +55,12 @@ function ReuseNotice({ paper, exam }: { paper: MockPaper; exam: Exam }) {
   );
 }
 
-function StructureTable({ exam }: { exam: Exam }) {
+/** 建議時間：整數直接寫，有小數（加強卷的閱讀每組 8⅓ 分鐘）寫「約 n」。 */
+function minutesText(minutes: number): string {
+  return Number.isInteger(minutes) ? `${minutes} 分鐘` : `約 ${Math.round(minutes)} 分鐘`;
+}
+
+function StructureTable({ exam, sectionMinutes }: { exam: Exam; sectionMinutes?: Partial<Record<SectionType, number>> }) {
   return (
     <div className="overflow-x-auto" tabIndex={0} role="region" aria-label="大題結構與建議時間">
       <table className="w-full min-w-[18rem] border-collapse text-sm">
@@ -78,7 +83,7 @@ function StructureTable({ exam }: { exam: Exam }) {
         <tbody>
           {exam.sections.map((s) => {
             const count = s.groups.reduce((acc, g) => acc + g.questions.length, 0);
-            const minutes = SUGGESTED_MINUTES[s.type];
+            const minutes = sectionMinutes?.[s.type] ?? SUGGESTED_MINUTES[s.type];
             return (
               <tr key={s.id} className="border-b border-line last:border-0">
                 <th scope="row" className="py-2 pr-3 text-left font-normal">
@@ -86,7 +91,7 @@ function StructureTable({ exam }: { exam: Exam }) {
                 </th>
                 <td className="py-2 pr-3 tabular-nums">{count} 題</td>
                 <td className="py-2 pr-3 tabular-nums">{s.points_total ?? '—'} 分</td>
-                <td className="py-2 tabular-nums">{minutes !== undefined ? `${minutes} 分鐘` : '—'}</td>
+                <td className="py-2 tabular-nums">{minutes !== undefined ? minutesText(minutes) : '—'}</td>
               </tr>
             );
           })}
@@ -104,11 +109,19 @@ export function StartScreen({ paper, exam, onStart }: { paper: MockPaper; exam: 
   const count = exam.sections.reduce((acc, s) => acc + s.groups.reduce((n, g) => n + g.questions.length, 0), 0);
   const pdfMeta = useMemo(() => mockPdfMeta(paper, strict), [paper, strict]);
   const [storageOk] = useState(canUseStorage);
+  // 加強卷依版面（docs/design/weak-paper.md §3.5、§7.2）：作答時間、各大題建議時間、短卷不畫實考模式、標題。
+  const duration = paper.bank?.durationMinutes ?? MOCK_DURATION_MIN;
+  const sectionMinutes = paper.bank?.sectionMinutes;
+  // 沒有版面的卷子（歷屆卷、bk1）照舊寫 100 分鐘，畫面不變。
+  const suggestedTotal = sectionMinutes ? Math.round(exam.sections.reduce((n, s) => n + (sectionMinutes[s.type] ?? SUGGESTED_MINUTES[s.type] ?? 0), 0)) : 100;
+  const heading = paper.bank?.heading ?? `${paper.label}模擬考`;
+  // 預估分數的上限＝這份卷子的滿分（歷屆卷與自組模擬考是 100，畫面不變；加強卷可以只有 30 分）。
+  const maxScore = Number.isFinite(exam.full_score) && exam.full_score > 0 ? Math.ceil(exam.full_score) : 100;
 
   const submit = (e: FormEvent) => {
     e.preventDefault();
     const value = Number(predicted);
-    if (predicted.trim() === '' || !Number.isInteger(value) || value < 0 || value > 100) {
+    if (predicted.trim() === '' || !Number.isInteger(value) || value < 0 || value > maxScore) {
       setError(true);
       document.getElementById(`${id}-predicted`)?.focus();
       return;
@@ -119,11 +132,11 @@ export function StartScreen({ paper, exam, onStart }: { paper: MockPaper; exam: 
   return (
     <div className="space-y-6">
       <header>
-        <title>{`${paper.label}模擬考｜${APP_NAME}`}</title>
-        <p className="text-sm text-muted">模擬考・{exam.title}</p>
-        <h1 className="mt-1 text-2xl font-bold tracking-tight lg:text-3xl">{paper.label}模擬考</h1>
+        <title>{`${heading}｜${APP_NAME}`}</title>
+        <p className="text-sm text-muted">{paper.bank?.kicker ?? `模擬考・${exam.title}`}</p>
+        <h1 className="mt-1 text-2xl font-bold tracking-tight lg:text-3xl">{heading}</h1>
         <p className="mt-1 text-sm text-muted">
-          {MOCK_DURATION_MIN} 分鐘・滿分 {exam.full_score} 分・{count} 題
+          {duration} 分鐘・滿分 {exam.full_score} 分・{count} 題
         </p>
       </header>
 
@@ -142,7 +155,7 @@ export function StartScreen({ paper, exam, onStart }: { paper: MockPaper; exam: 
         <form className="mt-3 space-y-5" onSubmit={submit} noValidate>
           <div>
             <label htmlFor={`${id}-predicted`} className="block font-medium">
-              你覺得這次會考幾分？（0–100）
+              你覺得這次會考幾分？（0–{maxScore}）
             </label>
             <p id={`${id}-predicted-hint`} className="text-sm text-muted">
               先預估再作答，交卷後成績單會對照你的預估與實得分數。
@@ -152,7 +165,7 @@ export function StartScreen({ paper, exam, onStart }: { paper: MockPaper; exam: 
               type="number"
               inputMode="numeric"
               min={0}
-              max={100}
+              max={maxScore}
               step={1}
               value={predicted}
               onChange={(e) => {
@@ -165,21 +178,23 @@ export function StartScreen({ paper, exam, onStart }: { paper: MockPaper; exam: 
             />
             {error && (
               <p id={`${id}-predicted-error`} className="mt-1 text-sm text-bad">
-                請輸入 0 到 100 之間的整數，或按「不預估，直接開始」。
+                請輸入 0 到 {maxScore} 之間的整數，或按「不預估，直接開始」。
               </p>
             )}
           </div>
 
-          <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-line p-3 has-[:checked]:border-primary has-[:checked]:bg-primary-soft">
-            <input type="checkbox" checked={strict} onChange={(e) => setStrict(e.currentTarget.checked)} className="mt-1.5 size-4 shrink-0 accent-[var(--primary)]" />
-            <span>
-              <span className="block font-medium">實考模式</span>
-              <span className="block text-sm text-muted">開考後 60 分鐘內不能交卷，比照正式考試入場後 60 分鐘內不得離場。</span>
-            </span>
-          </label>
+          {paper.bank?.strictAllowed !== false && (
+            <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-line p-3 has-[:checked]:border-primary has-[:checked]:bg-primary-soft">
+              <input type="checkbox" checked={strict} onChange={(e) => setStrict(e.currentTarget.checked)} className="mt-1.5 size-4 shrink-0 accent-[var(--primary)]" />
+              <span>
+                <span className="block font-medium">實考模式</span>
+                <span className="block text-sm text-muted">開考後 60 分鐘內不能交卷，比照正式考試入場後 60 分鐘內不得離場。</span>
+              </span>
+            </label>
+          )}
 
           <ul className="ml-5 list-disc space-y-1 text-sm text-muted">
-            <li>倒數 {MOCK_DURATION_MIN} 分鐘，以開考時間計算期限：關掉分頁或手機休眠時時間照走，時間到自動交卷。</li>
+            <li>倒數 {duration} 分鐘，以開考時間計算期限：關掉分頁或手機休眠時時間照走，時間到自動交卷。</li>
             <li>作答每次修改都會存在這台裝置的瀏覽器，關掉分頁可以回來接著寫；換裝置或清除網站資料就沒有了。</li>
             {paper.bank ? paper.bank.startRule : <li>考試中不提供答案、提示與全國答對率；交卷後才在成績單與檢討試卷看到。</li>}
             <li>一次顯示一個大題，可以用大題導覽與題號面板切換；不確定的題目可以「標記」，交卷前會再提醒。</li>
@@ -200,8 +215,8 @@ export function StartScreen({ paper, exam, onStart }: { paper: MockPaper; exam: 
         <h2 id={`${id}-structure`} className="mb-2 font-semibold">
           大題結構與建議時間
         </h2>
-        <StructureTable exam={exam} />
-        <p className="mt-2 text-xs text-muted">建議時間合計 100 分鐘，是本站依題量估計的參考值；成績單會對照你在每個大題實際用的時間。</p>
+        <StructureTable exam={exam} sectionMinutes={sectionMinutes} />
+        <p className="mt-2 text-xs text-muted">建議時間合計 {suggestedTotal} 分鐘，是本站依題量估計的參考值；成績單會對照你在每個大題實際用的時間。</p>
       </section>
 
       {/*

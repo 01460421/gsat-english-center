@@ -21,6 +21,8 @@
     本檔 GSAT_STANDARDS／AST_STANDARDS   大考中心「各科成績標準一覽表」英文科（manifest subkind = score_standard；
                                         原檔不進 git，--verify-raw 可重新核對）
 
+rule.imputation.p_only：只有全體答對率 P 時的係數與 P 門檻（出版社題的難度，docs/design/weak-paper.md §8.5）。
+
 輸出 data/exams/difficulty-bands.json（items 一題一行，其餘 json.dumps(sort_keys=True, indent=1)；重跑逐位元組相同）。
 只用標準函式庫；--verify-raw 另需 xlrd（與 pdftotext，可省略）。
 """
@@ -249,6 +251,35 @@ def impute(model, it, p_only=False):
 def imputed_tier(model, it, p_only=False):
     e = impute(model, it, p_only)
     return tier_group(e['Pc'] * 100, e['Pb'] * 100)
+
+
+P_ONLY_FEATURES = ['const', 'P']
+
+
+def p_only_thresholds(model):
+    """只靠 P 的模型（Pg = c0 + c1·P）換成 P 的門檻：推估的 Pc ≥ 0.50 ⇔ P ≥ (0.50 − c0)／c1（c1 > 0）。
+
+    basic_min_P：推估 Pc 剛好 0.50 的 P；advanced_min_P：推估 Pb 剛好 0.50 的 P。斜率不是正的（不會發生）就丟錯，
+    因為那時「P 越高越容易」不成立，門檻沒有意義。
+    """
+    out = {}
+    for key, g in (('basic_min_P', 'Pc'), ('advanced_min_P', 'Pb')):
+        c0, c1 = model[g]
+        if c1 <= 0:
+            raise SystemExit(f'p_only 的 {g} 斜率 {c1} 不是正的，門檻沒有意義')
+        out[key] = (THETA / 100 - c0) / c1
+    if out['advanced_min_P'] >= out['basic_min_P']:
+        raise SystemExit(f'p_only 門檻順序不對：{out}')
+    return out
+
+
+def p_only_tier(thresholds, p):
+    """只有全體答對率 P 時的級別（門檻是 p_only_thresholds 的輸出，連續值比較）。"""
+    if p >= thresholds['basic_min_P']:
+        return 'basic'
+    if p >= thresholds['advanced_min_P']:
+        return 'advanced'
+    return 'top'
 
 
 # ---------------------------------------------------------------- 載入
@@ -490,6 +521,10 @@ def build():
     # 推估模型：用全部學測題擬合，係數取四位小數後再套用（使用者可用 JSON 的係數重現）
     model_full = fit_imputer(gsat)
     model = {g: [round(c, 4) for c in v] for g, v in model_full.items()}
+    # 只靠 P 的模型（出版社題只給全體答對率時用，docs/design/weak-paper.md §8.5）：同樣用全部學測題、係數取四位小數，
+    # 門檻由取整後的係數算（匯入工具讀 JSON 的門檻，不在程式裡寫死）。
+    model_p = {g: [round(c, 4) for c in v] for g, v in fit_imputer(gsat, p_only=True).items()}
+    p_thresholds = p_only_thresholds(model_p)
     for it in items:
         it['tier'] = item_tier(it)
         it['method'] = 'five_group'
@@ -541,6 +576,19 @@ def build():
             'in_sample_accuracy_all_items': r4(sum(1 for i in items if i['tier_imputed'] == i['tier']) / len(items)),
             'baseline_P_only_leave_one_year_out_accuracy': r4(acc(conf_p)),
             'baseline_P_only_confusion_true_by_pred': conf_p,
+        },
+        'p_only': {
+            'when': '只有全體答對率 P 的題目（沒有高低分組，或高低分組不是前後 33%；例如出版社模擬考只給全體答對率，'
+                    'docs/design/weak-paper.md §8.5）。有 Pa–Pe 時直接套 G50，有 P、Ph、Pl 時用上面的 coefficients',
+            'model': '最小平方線性迴歸 Pg = c0 + c1·P（g = c, b, a），以推估的 Pc、Pb 套用同一條規則（門檻 0.50，連續值比較）；'
+                     '斜率為正，所以等價於 thresholds 的兩個 P 門檻',
+            'features': P_ONLY_FEATURES, 'train': f'學測 91–115 共 {len(gsat)} 題',
+            'coefficients': {g: dict(zip(P_ONLY_FEATURES, v)) for g, v in model_p.items()},
+            'thresholds': {k: r4(v) for k, v in p_thresholds.items()},
+            'threshold_rule': 'P >= basic_min_P → basic；advanced_min_P <= P < basic_min_P → advanced；P < advanced_min_P → top。'
+                              '門檻由四位小數的係數算出：basic_min_P = (0.50 − Pc.const)／Pc.P，advanced_min_P = (0.50 − Pb.const)／Pb.P',
+            'in_sample_accuracy_gsat': r4(sum(1 for i in gsat if p_only_tier(p_thresholds, i['P']) == i['tier']) / len(gsat)),
+            'leave_one_year_out_accuracy': r4(acc(conf_p)),
         },
     }
 

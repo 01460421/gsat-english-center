@@ -52,7 +52,7 @@ describe('sitePaperPdfMeta', () => {
     expect(site.answers.translation['中譯英2']?.[0]).toMatch(/^To reduce plastic waste/);
     const criteria = site.answers.composition.criteria;
     expect(criteria.map((c) => c.slice(0, c.indexOf('：')))).toEqual(['內容', '組織', '文法句構', '字彙拼字', '扣分說明']);
-    const models = paper.writing.composition.model_texts;
+    const models = paper.writing.composition?.model_texts ?? [];
     expect(site.answers.composition.modelText).toBe(models.find((m) => m.label === 'steady')?.text.trim());
     const top = sitePaperPdfMeta({ ...paper, tier: 'top' });
     expect(top.answers.composition.modelText).toBe(models.find((m) => m.label === 'top')?.text.trim());

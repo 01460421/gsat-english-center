@@ -112,7 +112,7 @@ export function sitePdfOptions(
 /**
  * 下載檔名：「學測英文中心_115學測英文_題本.pdf」「學測英文中心_模擬考_115學測英文_含答案.pdf」。
  * 本站自組卷（docs/design/bank-mock.md §2.5）：「學測英文中心_自組模擬考_進階練習_A-3KD9W_學生卷.pdf」，
- * 另外兩種結尾是「_教師卷」「_含答案解析」。
+ * 另外兩種結尾是「_教師卷」「_含答案解析」。學習助手加強卷是「學測英文中心_加強卷_W-7Q2MK_學生卷.pdf」。
  */
 export function pdfFileName(
   exam: Pick<Exam, 'exam' | 'year' | 'session' | 'target'>,
@@ -122,6 +122,8 @@ export function pdfFileName(
   if (site) {
     const version = options.includeBooklet === false ? '教師卷' : options.includeAnswerKey ? '含答案解析' : '學生卷';
     const safe = (s: string) => s.replace(/[\s/\\:*?"<>|]+/g, '');
+    // 學習助手加強卷（docs/design/weak-paper.md §9.5）：「學測英文中心_加強卷_W-7Q2MK_學生卷.pdf」（卷號的字母已經分得出卷別）。
+    if (site.paperKind) return `學測英文中心_加強卷_${safe(site.code)}_${version}.pdf`;
     return `學測英文中心_自組模擬考_${safe(site.tierLabel)}_${safe(site.code)}_${version}.pdf`;
   }
   const name = `${examShortName(exam).replace(/\s+/g, '')}英文`;

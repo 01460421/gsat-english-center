@@ -110,6 +110,19 @@ describe('bankPrintableCoverage', () => {
   });
 });
 
+describe('出版社題組的出處（docs/design/weak-paper.md §8.7）', () => {
+  it('出處（出版社、書名、出處句、原卷位置）算進題本：缺字的題組在題本那一欄（組卷池排除 ex: glyph），不是只警告的資料來源', () => {
+    const g = practiceGroup();
+    g['uid'] = 'pb.rd.000004';
+    g['source'] = { id: 'pub-x', label_zh: `測試${RARE[3] ?? RARE[0]}出版`, product_zh: '模擬試題', attribution_zh: '本題出自測試出版《模擬試題》，經授權使用', ref_text: '原卷第 41–44 題' };
+    const strings = practicePrintableStrings(g);
+    expect(strings.booklet).toContain(`測試${RARE[3] ?? RARE[0]}出版`);
+    expect(strings.sources).not.toContain(`測試${RARE[3] ?? RARE[0]}出版`);
+    const result = bankPrintableCoverage({ practice: [g as never] });
+    expect(result.missing.get('pb.rd.000004@1')?.booklet).toContain(RARE[3] ?? RARE[0]);
+  });
+});
+
 describe('自組卷 PDF 的字型檢查（bank-mock §7.6）', () => {
   it('GLYPH_SUBSTITUTES 的字：解析與資料來源不算缺字（PDF 會先替換），題本照樣算', () => {
     const g = practiceGroup();

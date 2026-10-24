@@ -3,7 +3,7 @@
  * 抽題、載入、作答、「再一組」都在 BankPractice.tsx（題型頁 /cloze 等內嵌的練習也用同一份、同一份練習紀錄）。
  * ?review=uid@v 是唯讀檢視交卷過的那一組（PracticeReview.tsx）。
  */
-import { GROUP_KEY_PATTERN } from '@gsat/shared';
+import { GROUP_KEY_PATTERN, PRACTICE_ITEM_UID_PATTERN } from '@gsat/shared';
 import { ChevronLeft } from 'lucide-react';
 import { Link, useParams, useSearchParams } from 'react-router';
 import { APP_NAME } from '../../modules';
@@ -33,8 +33,11 @@ function NotFound() {
   );
 }
 
-/** ?group=：指定題組的 uid（學習助手的推薦練習、確認頁的「做新版本」；docs/design/learning-assistant.md §2.4）。 */
-const UID_RE = /^ai\.(vo|cz|wb|st|rd|mx)\.[0-9a-f]{6}$/;
+/**
+ * ?group=：指定題組的 uid（學習助手的推薦練習、確認頁的「做新版本」；docs/design/learning-assistant.md §2.4）。
+ * 本站題庫（ai.）與出版社題組（pb.，docs/design/weak-paper.md §8.2）都收。
+ */
+const UID_RE = PRACTICE_ITEM_UID_PATTERN;
 
 export default function PracticeSessionPage() {
   const params = useParams();

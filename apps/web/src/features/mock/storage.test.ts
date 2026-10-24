@@ -4,9 +4,12 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { AttemptStore, attemptStorageKey, createAttempt } from '../exams/attempt';
 import { findMockPaper } from './papers';
+import { encodeBk2 } from './bank/code2';
 import {
   HISTORY_KEY,
   HISTORY_LIMIT,
+  PRACTICE_HISTORY_LIMIT,
+  isPracticePaperId,
   activeKey,
   clearActiveId,
   createRecord,
@@ -231,5 +234,59 @@ describe('這台裝置做過哪些考卷（ref-115 的沿用題）', () => {
     expect([...doneExamIds(all)].sort()).toEqual(['gsat-111', 'gsat-113']);
     expect([...doneExamIds(all, '2026-10-03T00:00:00.000Z')]).toEqual(['gsat-111']);
     expect([...doneExamIds(all, '2026-09-30T00:00:00.000Z')]).toEqual([]);
+  });
+});
+
+describe('加強卷（docs/design/weak-paper.md §7.2、§7.7）', () => {
+  const bk2 = (kind: 'w' | 'f' | 'r' | 'm', n: number) =>
+    kind === 'f' || kind === 'm'
+      ? encodeBk2(
+          kind,
+          (['vocabulary', 'cloze', 'cloze', 'word_bank', 'structure', 'reading', 'reading', 'reading', 'mixed', 'translation', 'composition'] as const).map((section, i) => ({
+            ns: 'ai' as const,
+            section,
+            tier: 'basic' as const,
+            uid: `ai.${{ vocabulary: 'vo', cloze: 'cz', word_bank: 'wb', structure: 'st', reading: 'rd', mixed: 'mx', translation: 'tr', composition: 'cp' }[section]}.${(n * 16 + i).toString(16).padStart(6, '0')}`,
+            v: 1,
+          })),
+        )
+      : encodeBk2(kind, [{ ns: 'ai', section: 'reading', tier: 'basic', uid: `ai.rd.${n.toString(16).padStart(6, '0')}`, v: 1 }]);
+
+  it('createRecord：卷子帶 durationMinutes 時期限與 durationSec 依它（40 分鐘 → 2,400 秒）；沒有時照舊 6,000 秒', () => {
+    const now = new Date('2026-10-23T01:00:00.000Z');
+    const short = createRecord({ examId: bk2('w', 1), label: '弱點加強卷', scaleYear: 115, bank: { durationMinutes: 40 } as never }, 's5', { strict: false, predictedScore: null }, now);
+    expect(short.durationSec).toBe(2400);
+    expect(Date.parse(short.deadlineAt) - now.getTime()).toBe(2_400_000);
+    expect(short.attempt.timeLimitSec).toBe(2400);
+    const full = createRecord({ examId: 'gsat-115', label: '115 學測', scaleYear: 115 }, 's1', { strict: false, predictedScore: null }, now);
+    expect(full.durationSec).toBe(6000);
+  });
+
+  it('練習性卷子：w、r、f；中性模考格式卷 m 和自組模擬考、歷屆卷不是', () => {
+    expect(['w', 'r', 'f'].map((k) => isPracticePaperId(bk2(k as 'w', 2)))).toEqual([true, true, true]);
+    expect(isPracticePaperId(bk2('m', 3))).toBe(false);
+    expect(isPracticePaperId('gsat-115')).toBe(false);
+  });
+
+  it(`練習性卷子最多 ${PRACTICE_HISTORY_LIMIT} 筆；超過 ${HISTORY_LIMIT} 筆時先刪最舊的練習性卷子，再刪其他；模考的紀錄不被短卷擠掉`, () => {
+    window.localStorage.clear();
+    const day = (i: number) => new Date(Date.UTC(2026, 8, 1) + i * 3_600_000).toISOString();
+    // 20 份模考（歷屆卷與 m）＋ 20 份練習性卷子，交錯交卷。
+    for (let i = 0; i < 40; i += 1) {
+      const practice = i % 2 === 1;
+      const id = `att-${i}`;
+      saveRecord({ ...fresh(), id, paperId: practice ? bk2('w', 100 + i) : i % 4 === 0 ? bk2('m', 100 + i) : 'gsat-115', status: 'submitted', submittedAt: day(i), submitReason: 'manual' });
+      upsertHistory(entry(id, day(i), { paperId: practice ? bk2('w', 100 + i) : i % 4 === 0 ? bk2('m', 100 + i) : 'gsat-115' }));
+    }
+    const history = loadHistory();
+    expect(history.length).toBeLessThanOrEqual(HISTORY_LIMIT);
+    const practice = history.filter((h) => isPracticePaperId(h.paperId));
+    expect(practice.length).toBeLessThanOrEqual(PRACTICE_HISTORY_LIMIT);
+    // 20 份模考全部留著；練習性卷子留最新的 10 份。
+    expect(history.filter((h) => !isPracticePaperId(h.paperId))).toHaveLength(20);
+    expect(practice.map((h) => h.id)).toEqual(['att-39', 'att-37', 'att-35', 'att-33', 'att-31', 'att-29', 'att-27', 'att-25', 'att-23', 'att-21']);
+    // 被刪的歷史連同完整紀錄一起刪。
+    expect(window.localStorage.getItem(recordKey('att-1'))).toBeNull();
+    expect(window.localStorage.getItem(recordKey('att-39'))).not.toBeNull();
   });
 });

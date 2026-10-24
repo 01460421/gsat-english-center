@@ -50,8 +50,8 @@ export interface BlueprintSection {
   suggestedMinutes: number;
 }
 
-/** 選擇題的計分規則（照題本慣例的寫法，本站撰寫）。 */
-const CHOICE_RULE = '答錯、未作答或選擇多於一個選項者，該題以零分計算。';
+/** 選擇題的計分規則（照題本慣例的寫法，本站撰寫）。加強卷的版面（layout.ts）用同一句。 */
+export const CHOICE_RULE = '答錯、未作答或選擇多於一個選項者，該題以零分計算。';
 
 export const BLUEPRINT_SECTIONS: readonly BlueprintSection[] = [
   {

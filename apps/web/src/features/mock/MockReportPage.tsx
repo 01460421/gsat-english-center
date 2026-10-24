@@ -25,6 +25,7 @@ import { ExamPdfDownload } from '../pdf/ExamPdfDownload';
 import { MockWritingHandoff } from '../assistant/components/MockWritingHandoff';
 import { UpdateReportLink } from '../assistant/components/UpdateReportLink';
 import { officialAskExtras, recordOutcomesOnce } from '../assistant/entries';
+import { FocusPaperEntry } from '../assistant/papers/EntryLinks';
 import { examOutcomes } from '../assistant/outcomeBuilders';
 import { useAssistantEnabled } from '../assistant/lib/useAssistantEnabled';
 import { isBankPaperId } from './bank/paperId';
@@ -228,6 +229,8 @@ function ReportBody({ exam, paper, initial }: { exam: Exam; paper: MockPaper; in
         )}
       </section>
       <UpdateReportLink />
+      {/* 加強卷的入口（docs/design/weak-paper.md §3.1）：這份有 3 題以上錯時；焦點由這份作答的錯題算（作答紀錄的 p 是 attemptId）。 */}
+      <FocusPaperEntry from={`attempt:${record.id}`} wrong={report.sections.reduce((n, s) => n + Math.max(0, s.autoCount - s.correctCount), 0)} />
 
       {info && scale ? (
         <LevelCard

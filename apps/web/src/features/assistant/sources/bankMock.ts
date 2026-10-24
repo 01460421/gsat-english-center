@@ -7,16 +7,19 @@
  *
  * 題目用 loadBankPaperStrict（快照、完全相同的版本，或答案完全相同的新版本）；拿不到（卷子已更新）時不能送。
  * 網址的 attempt 是模考作答紀錄的 id；紀錄已經被刪掉（超過 30 筆）時，也接受卷子代號（paperId），作答改讀本機作答紀錄。
+ * 學習助手加強卷（bk2，docs/design/weak-paper.md §8.7）的列標題與確認頁寫「學習助手加強卷 W-7Q2MK」，難度用那一組自己的。
  */
-import { TIER_LABELS, assistAskHref, type AnswerValue, type AskRef, type AssistClientStatus } from '@gsat/shared';
+import { TIER_LABELS, assistAskHref, groupSourceLine, namespaceOf, type AnswerValue, type AskRef, type AssistClientStatus } from '@gsat/shared';
 import type { Question } from '../../../data/exams';
 import { bankOpenScores } from '../../mock/bank/bankScore';
-import { isBankPaperId } from '../../mock/bank/paperId';
+import { bk2KindOf, isBankPaperId, paperNumber } from '../../mock/bank/paperId';
 import { loadBankPaperStrict } from '../../mock/bank/resolve';
 import { loadHistory, loadRecord } from '../../mock/storage';
 import { bankSlotMappings, isAssistableQuestion } from '../outcomeBuilders';
 import { getOutcomes, okFromRatio, type OutcomeEntry } from '../outcomes';
 import { compareLabels, groupOutcomeRows, isDoubtEntry, labelsText, latestEntries, pickDefaults, rangeText, rowStats, sectionLabel, signalsOf, statusOf } from './common';
+import { loadSourceRegistry } from '../../../data/sources';
+import { PUBLISHER_TITLE_LOADING, assertAskableSource, publisherTitles, type PublisherTitle } from './publisher';
 import { answerOrNull, groupPreview, previewItem } from './site';
 import type { MistakeRow, MistakeSourceAdapter, PreviewItem, ResolvedAsk } from './types';
 import { isAnswered, scoreQuestion } from '../../exams/scoring';
@@ -26,7 +29,11 @@ function latestAttemptFor(paperId: string): string | null {
   return loadHistory().find((h) => h.paperId === paperId)?.id ?? null;
 }
 
-function listRows(entries: readonly OutcomeEntry[]): MistakeRow[] {
+/**
+ * 錯題清單的列。出版社題組（只會出現在加強卷）的列標題後面加「・{出版社}」（docs/design/weak-paper.md §8.7；
+ * titles 見 publisher.ts，查不到時寫「出版社模考題（出處載入中）」）。
+ */
+function listRows(entries: readonly OutcomeEntry[], titles: ReadonlyMap<string, PublisherTitle> = new Map()): MistakeRow[] {
   return groupOutcomeRows(entries, 'bank_mock').map(({ key, entries: list }) => {
     const first = list[0] as OutcomeEntry;
     const stats = rowStats(list);
@@ -34,19 +41,35 @@ function listRows(entries: readonly OutcomeEntry[]): MistakeRow[] {
     const asked = list.filter((e) => e.ok < 1 || isDoubtEntry(e)).map((e) => e.d ?? e.l).sort(compareLabels);
     const attempt = latestAttemptFor(paperId) ?? paperId;
     const tier = first.t ?? null;
+    const weak = bk2KindOf(paperId) !== null;
+    const origin = weak ? `學習助手加強卷 ${paperNumber(paperId)}` : `本站自組模考${tier ? `（${TIER_LABELS[tier]}）` : ''}`;
     return {
       key,
       source: 'bank_mock',
-      title: `本站自組模考${tier ? `（${TIER_LABELS[tier]}）` : ''} ${rangeText(list.map((e) => e.d ?? e.l))}（${sectionLabel(first.sec)}）：${labelsText(stats.labels, first.sec)}`,
+      title: `${origin} ${rangeText(list.map((e) => e.d ?? e.l))}（${sectionLabel(first.sec)}${weak && tier ? `・${TIER_LABELS[tier]}` : ''}）${publisherSuffix(first.r, titles)}：${labelsText(stats.labels, first.sec)}`,
       section: first.sec,
       tier,
       ...stats,
-      askHref: paperId ? assistAskHref({ src: 'bankmock', attempt, labels: asked }) : null,
+      // 出版社題組要授權有效、包含 ai_assist 才給「問學習助手」（讀不到登記時也不給，§9.6）。
+      askHref: paperId && askableRef(first.r, titles) ? assistAskHref({ src: 'bankmock', attempt, labels: asked }) : null,
       links: [],
       maybeFree: true,
       groupRef: first.r,
     };
   });
+}
+
+/** 本站題一律可以問；出版社題組看來源登記（publisher.ts 的 askable）。 */
+function askableRef(ref: string, titles: ReadonlyMap<string, PublisherTitle>): boolean {
+  const uid = ref.split('@')[0] ?? ref;
+  return namespaceOf(uid) !== 'pb' || titles.get(uid)?.askable === true;
+}
+
+/** 出版社題組的列標題後綴「・{出版社}」；本站題是空字串。 */
+function publisherSuffix(ref: string, titles: ReadonlyMap<string, PublisherTitle>): string {
+  const uid = ref.split('@')[0] ?? ref;
+  if (namespaceOf(uid) !== 'pb') return '';
+  return `・${titles.get(uid)?.label ?? PUBLISHER_TITLE_LOADING}`;
 }
 
 export async function resolveBankMock(ask: Extract<AskRef, { src: 'bankmock' }>): Promise<ResolvedAsk | null> {
@@ -99,12 +122,17 @@ export async function resolveBankMock(ask: Extract<AskRef, { src: 'bankmock' }>)
     items.push(previewItem(q, label, display, value, { status, marked: marked.has(display), clientJudged: Boolean(open) && ok < 1 }));
   }
   if (!group) return null;
-  const originLabel = `本站自組模考（${TIER_LABELS[paper.tier]}・卷號 ${paper.code}）`;
+  // 出版社題組在卷子裡另加一行出處（題組檔的出處列，docs/design/weak-paper.md §8.7）；授權結束（快照已遮住）或不含 AI 解析時不能問。
+  const groupSource = paper.groups.find((g) => g.key === slot.key)?.source;
+  if (groupSource) assertAskableSource(await loadSourceRegistry(), groupSource);
+  // 加強卷（bk2）：「學習助手加強卷（卷號 W-7Q2MK）」；難度用那一組自己的（§8.7）。
+  const originLabel = paper.kind ? `學習助手加強卷（卷號 ${paper.code}）` : `本站自組模考（${TIER_LABELS[paper.tier]}・卷號 ${paper.code}）`;
+  const previewOrigin = groupSource ? `${originLabel}｜${groupSourceLine(groupSource)}` : originLabel;
   const allDisplays = slot.questions.map((q) => q.display);
   return {
     kind: 'item',
     title: `${originLabel} ${rangeText(allDisplays)}（${sectionLabel(slot.section)}）`,
-    preview: groupPreview({ originLabel, section: slot.section, tier: paper.tier, instructions: null, group, items }),
+    preview: groupPreview({ originLabel: previewOrigin, section: slot.section, tier: slot.tier, instructions: null, group, items }),
     group: pickDefaults(items, requested, slot.section),
     maybeFree: true,
     displayOf: (label) => toDisplay.get(label) ?? label,
@@ -142,7 +170,12 @@ export class BankPaperChangedError extends Error {
 }
 
 export const bankMockAdapter: MistakeSourceAdapter = {
-  list: async () => listRows(getOutcomes().items),
+  list: async () => {
+    const items = getOutcomes().items;
+    // 有出版社題組（pb.）的列時才下載索引與來源登記（publisher.ts）。
+    const titles = await publisherTitles(items.filter((e) => e.s === 'bank_mock').map((e) => e.r));
+    return listRows(items, titles);
+  },
   resolve: async (ask) => (ask.src === 'bankmock' ? resolveBankMock(ask) : null),
 };
 

@@ -7,7 +7,7 @@
 | 檔案 | 用途 | 原始字型 | 版本 | 字元數 | TTF | gzip |
 |---|---|---|---|---|---|---|
 | `NotoSerifTC-Regular.subset.ttf.gz` | 中文內文、全形標點 | Noto Serif TC Regular | 2.003-H1 | 5,219 | 2,355 KB | 1,441 KB |
-| `NotoSerifTC-Bold.subset.ttf.gz` | 中文標題 | Noto Serif TC Bold | 2.003-H1 | 494 | 151 KB | 99 KB |
+| `NotoSerifTC-Bold.subset.ttf.gz` | 中文標題 | Noto Serif TC Bold | 2.003-H1 | 514 | 159 KB | 105 KB |
 | `Tinos-Regular.subset.ttf.gz` | 英文內文（與 Times New Roman 等寬）、國際音標 | Tinos Regular | 1.340 | 467 | 37 KB | 22 KB |
 | `Tinos-Bold.subset.ttf.gz` | 英文粗體（題目的 `<b>`、標題裡的數字、講義的字頭） | Tinos Bold | 1.340 | 467 | 37 KB | 22 KB |
 | `Tinos-Italic.subset.ttf.gz` | 英文斜體（書名、外來語、講義的詞性） | Tinos Italic | 1.340 | 467 | 38 KB | 24 KB |
@@ -17,6 +17,8 @@
 合計約 **1.61 MB（gzip）**，另有 PDF 引擎 pdfmake 約 0.36 MB（gzip）。2026-10-20 本站自組模擬考（`docs/design/bank-mock.md` §7.6）
 補進題庫會印的字：中文多 91 字（+23 KB gzip）、粗體多 62 字（+15 KB gzip）。2026-10-23 單字講義（`docs/design/vocab-handout.md` §7）
 補進單字資料會印的字：中文多 136 字（+39 KB gzip）、粗體多 28 字（+8 KB gzip）、Tinos 三個字重各多 104 字（國際音標等，各約 +6–7 KB gzip）。
+2026-10-24 學習助手加強卷（`docs/design/weak-paper.md` §9.5、§17.4）只更新粗體子集：`strings.ts` 新的粗體字串（加強卷的封面橫條）
+與 PDF 固定文字的中文多 20 字（+6 KB gzip）；中文內文、Tinos、Noto Emoji 三個子集與 `metrics.json` 的其他欄位照舊（見下方「只更新粗體子集」）。
 只加字元：原本就有的字元選到的字型、字寬都不變，所以歷屆卷、模擬考、自組卷的版面不變（`pdf-render-check.mjs` 的頁數相同）。
 
 ## 授權
@@ -98,6 +100,12 @@ npm run build:data -w @gsat/web
 python3 -I apps/web/scripts/fonts/subset_fonts.py --src /tmp/gsat-font-src --download
 npm run check:fonts -w @gsat/web
 ```
+
+**只更新粗體子集**（2026-10-24）：當時重跑整套工具不是「只加字元」——介面原始碼（`src/**`）多了 α、ω、√ 這些字，
+工具會把 α 從 Tinos 改分給中文字型（單字講義的字型會變），也會拿掉已經沒有資料用到的 ⑳➀➉➊➓。所以那一次只取工具產生的
+`NotoSerifTC-Bold.subset.ttf.gz`，`metrics.json` 只換 `boldCjk` 與 `fonts.NotoSerifTC-Bold`，其他檔案維持原樣；
+歷屆卷、自組模擬考與單字講義的 PDF 渲染結果逐像素相同（`pdf-render-check.mjs` 的輸出與改動前比對）。
+下一次整套重跑前，先處理 α 的分配（例如工具裡把單字資料用到的 Tinos 字元固定留在 Tinos），再確認歷屆卷每個字元選到的字型不變。
 
 `--download` 會下載上表固定版本的原始字型（雜湊不符就停止）；`--src` 請放在 repo 外，原始字型（每個約 10 MB）不進版控。
 子集化工具會呼叫 `node apps/web/scripts/font-coverage.mjs --print-bank-chars` 與 `--print-vocab-chars`，所以要先跑過 `build:data`。

@@ -172,6 +172,30 @@ describe('自組模擬考的組卷池（bank/mock-pool.json）的型別契約', 
   }, 60_000);
 });
 
+describe('加強卷的技能分布（bank/paper-skills.json）的型別契約', () => {
+  // 範例輸出（bank-paper-skills.test.ts 的 golden）。前端型別在 src/features/mock/bank/paperSkills.ts（PAPER_SKILLS_TYPE）。
+  const MOCK_GOLDEN = path.join(WEB_DIR, 'tests', 'fixtures', 'bank-mock-public');
+
+  it('範例輸出符合前端的型別；不合型別的值會讓 tsc 失敗', () => {
+    const { summary } = contractSource({ dataDir: MOCK_GOLDEN, srcDir: SRC, parts: ['paperSkills'] });
+    expect(summary[0]).toMatch(/^加強卷的技能分布（\d+ 組）$/);
+    const good = check(MOCK_GOLDEN, 'paper-skills-ok', ['paperSkills']);
+    expect(good.output).toBe('');
+    expect(good.ok).toBe(true);
+    const dir = mkdtempSync(path.join(tmpdir(), 'gsat-contract-'));
+    cleanup.push(dir);
+    cpSync(MOCK_GOLDEN, dir, { recursive: true });
+    editJson(path.join(dir, 'bank', 'paper-skills.json'), (file) => {
+      const groups = file['groups'] as Record<string, Record<string, unknown>>;
+      const first = Object.values(groups)[0];
+      if (first) first['q'] = { '1': [42] };
+    });
+    const bad = check(dir, 'paper-skills-bad', ['paperSkills']);
+    expect(bad.ok).toBe(false);
+    expect(bad.output).toMatch(/'number' is not assignable to type 'string'/);
+  }, 60_000);
+});
+
 describe('本站仿真寫作題（writing/bank/）的型別契約', () => {
   it('範例輸出（tests/fixtures/bank-writing-public）符合 src/features/writing/bank/data.ts', () => {
     const result = check(WRITING_GOLDEN, 'writing-ok', ['writingBank']);
@@ -204,5 +228,31 @@ describe('本站仿真寫作題（writing/bank/）的型別契約', () => {
     expect(result.output).toMatch(/references/);
     expect(result.output).toMatch(/figure_count/);
     expect(result.output).toMatch(/verification/);
+  }, 60_000);
+});
+
+describe('出版社題組與來源登記的型別契約（docs/design/weak-paper.md §8.9）', () => {
+  const PUBLISHER_GOLDEN = path.join(WEB_DIR, 'tests', 'fixtures', 'publisher-public');
+
+  it('合成出版社題組的建置輸出（tests/fixtures/publisher-public）符合 src/data/bank.ts 與 src/data/sources.ts', () => {
+    const result = check(PUBLISHER_GOLDEN, 'publisher', ['bank', 'sources']);
+    expect(result.output).toBe('');
+    expect(result.ok).toBe(true);
+    expect(result.summary).toEqual(['題庫索引', '2 個 AI 題組', '題目來源登記（2 個來源）']);
+  }, 60_000);
+
+  it('來源登記的值不合型別（授權範圍拼錯、少了 ends_on）時 tsc 失敗', () => {
+    const dir = mkdtempSync(path.join(tmpdir(), 'gsat-contract-'));
+    cleanup.push(dir);
+    cpSync(PUBLISHER_GOLDEN, dir, { recursive: true });
+    editJson(path.join(dir, 'bank', 'sources.json'), (r) => {
+      const sources = r['sources'] as Record<string, unknown>[];
+      if (sources[1]) sources[1]['scope'] = ['web', 'print'];
+      if (sources[0]) delete sources[0]['ends_on'];
+    });
+    const result = check(dir, 'sources-bad', ['sources']);
+    expect(result.ok).toBe(false);
+    expect(result.output).toMatch(/"print"/);
+    expect(result.output).toMatch(/ends_on/);
   }, 60_000);
 });

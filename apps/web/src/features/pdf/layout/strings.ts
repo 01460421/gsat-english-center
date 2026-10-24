@@ -132,6 +132,10 @@ export const SITE_PAPER_BOLD = {
   modelTextTitle: '英文作文範文',
   /** 閱讀圖表的標示（表名列的開頭）。 */
   chartMarker: '［圖表］',
+  /** 學習助手加強卷（docs/design/weak-paper.md §9.5）封面的灰底橫條：只有本站題、全部是出版社題、兩者都有。 */
+  weakCoverBand: '學測英文中心學習助手加強卷・題目由 AI 撰寫・非官方試題',
+  weakCoverBandPublisher: '學測英文中心學習助手加強卷・題目出自出版社模擬試題（經授權）・非官方試題',
+  weakCoverBandMixed: '學測英文中心學習助手加強卷・題目由 AI 撰寫或出自出版社（經授權）・非官方試題',
 } as const;
 
 /** 本站自組卷 PDF 的固定文字（封面、頁首頁尾、答題卷、答案、解析、資料來源、教師卷資訊、文件屬性）。 */
@@ -139,6 +143,9 @@ export const SITE_PAPER_TEXT = {
   /** 每頁頁尾：「學測英文中心自組模擬考　卷號 A-3KD9W」＋「｜」＋聲明。 */
   footerSource: (code: string) => `學測英文中心自組模擬考　卷號 ${code}`,
   footerNotice: '題目由 AI 撰寫，經本站自動驗證，非官方試題',
+  /** 卷子裡有出版社題組時的頁尾聲明（docs/design/weak-paper.md §8.7）：全部是出版社題、兩者都有。 */
+  footerNoticePublisher: '題目出自各出版社模擬試題（經授權），非官方試題',
+  footerNoticeMixed: '題目由 AI 撰寫或出自出版社模擬試題（經授權），非官方試題',
   headerCenter: '學測英文中心自組模擬考・非官方',
   /** 題本頁首的卷別（兩行）。 */
   examShort: (tierLabel: string) => [`自組模擬考（${tierLabel}）`, '英文考科'] as const,
@@ -184,6 +191,8 @@ export const SITE_PAPER_TEXT = {
   partialCredit: (forms: readonly string[]) => `部分給分（1 分）：${forms.join('；')}`,
   /** 答案頁的答案或參考譯文含 PDF 字型沒有的字（替代之後仍有）時。 */
   answerMissing: '（這一題的答案含 PDF 無法顯示的字，請到線上檢討試卷查看）',
+  /** 出版社授權結束（題目已經遮住）的填充、簡答：不印答案文字。只用粗體子集裡有的字（font-coverage 會檢查整個檔案）。 */
+  answerEnded: '（出版社授權結束，這一題的答案不顯示）',
   translationAnswerLabel: '本站參考譯文（不是唯一答案）：',
   compositionCriteriaLabel: '評分重點：',
   /** 作文評分重點的一項含 PDF 字型沒有的字時。 */
@@ -200,6 +209,8 @@ export const SITE_PAPER_TEXT = {
   sourcesRange: (range: string) => `第 ${range} 題`,
   sourcesLicense: '授權：',
   sourcesNone: '本卷的題目沒有引用外部資料。',
+  /** 資料來源頁：卷子裡有出版社題組時（全部是出版社題時取代上面的 AI 聲明）。 */
+  sourcesPublisherIntro: '本卷有出版社模擬試題的題目，依題號範圍列出出處；出版社的題目經授權使用，不得另行轉載。',
   teacherTitle: SITE_PAPER_BOLD.teacherTitle,
   teacherRows: { code: '卷號', tier: '難度', assembledOn: '組卷日期', dataVersion: '資料版本', online: '線上作答' },
   /** 雙面列印補的空白頁。 */
@@ -207,6 +218,50 @@ export const SITE_PAPER_TEXT = {
   /** 文件屬性（PDF 的 Title、Subject）。 */
   docTitle: (tierLabel: string, code: string, teacher: boolean) => `學測英文中心自組模擬考 ${tierLabel} ${code}${teacher ? ' 教師卷' : ''}`,
   docSubject: '學測英文中心自組模擬考　題目由 AI 撰寫，非官方試題',
+} as const;
+
+/** 加強卷的卷別（SitePaperPdfMeta.paperKind）。 */
+export type WeakPaperKind = 'w' | 'f' | 'r' | 'm';
+
+/** 加強卷的卷別名稱（同 features/mock/bank/paperId.ts 的 BK2_KIND_LABELS；strings.test 檢查兩邊一致）。 */
+const WEAK_KIND_NAMES: Readonly<Record<WeakPaperKind, string>> = {
+  w: '弱點加強卷',
+  f: '模考格式卷',
+  r: '隨機抽題卷',
+  m: '模考格式卷',
+};
+
+/**
+ * 學習助手加強卷（bk2，docs/design/weak-paper.md §9.5）的 PDF 文字：SitePaperPdfMeta.paperKind 有值時，
+ * 封面、頁首頁尾、答題卷、答案、解析、資料來源的標題與文件屬性改用這些（「自組模擬考（難度）」換成卷別名稱）。
+ * 自組模擬考（bk1）不用這裡的任何文字，PDF 和原本完全相同（bk1PdfGolden.test.ts）。
+ */
+export const WEAK_PAPER_TEXT = {
+  /** 卷別名稱：「弱點加強卷」「模考格式卷（進階練習）」「隨機抽題卷」。模考格式卷只有一種難度，寫出來。 */
+  kindLabel: (kind: WeakPaperKind, tierLabel: string) => (kind === 'f' || kind === 'm' ? `${WEAK_KIND_NAMES[kind]}（${tierLabel}）` : WEAK_KIND_NAMES[kind]),
+  /** 封面卷別下方的說明（取代「題型與配分同學測，難度依所選等級」）。 */
+  coverFormat: (kind: WeakPaperKind) =>
+    kind === 'w' ? '依你的作答紀錄挑選的加強題組，題型與配分同學測' : kind === 'r' ? '依所選大題、難度與來源隨機抽題' : SITE_PAPER_TEXT.coverFormat,
+  coverBand: (footerKind: 'ai' | 'publisher' | 'mixed' | undefined) =>
+    footerKind === 'publisher' ? SITE_PAPER_BOLD.weakCoverBandPublisher : footerKind === 'mixed' ? SITE_PAPER_BOLD.weakCoverBandMixed : SITE_PAPER_BOLD.weakCoverBand,
+  /** 作答方式的最後一條：卷子只有中譯英與作文時（線上不自動計分）。 */
+  howOnlineWritten: '掃封面或答題卷的 QR code 線上作答（中譯英與作文不自動計分）。',
+  /** 封面「本卷針對」（只在組卷的裝置上有；弱點名稱由呼叫端帶進來）。 */
+  targets: (labels: readonly string[]) => `本卷針對：${labels.join('、')}`,
+  targetsBalanced: '本卷針對：這次不是針對弱點，各大題各練一組保持手感',
+  footerSource: (code: string) => `學測英文中心學習助手加強卷　卷號 ${code}`,
+  headerCenter: '學測英文中心學習助手加強卷・非官方',
+  examShort: (kindLabel: string) => [kindLabel, '英文考科'] as const,
+  sheetHeader: (kindLabel: string) => `${kindLabel}　答題卷`,
+  keyHeader: (kindLabel: string) => `${kindLabel}　答案`,
+  explanationsHeader: (kindLabel: string) => `${kindLabel}　解析`,
+  sourcesHeader: (kindLabel: string) => `${kindLabel}　資料來源`,
+  /** 教師卷第一頁的卷子資訊多兩列。 */
+  teacherRows: { kind: '卷別', minutes: '作答時間' },
+  minutes: (minutes: number) => `${minutes} 分鐘`,
+  docTitle: (kindLabel: string, code: string, teacher: boolean) => `學測英文中心學習助手加強卷 ${kindLabel} ${code}${teacher ? ' 教師卷' : ''}`,
+  /** 文件屬性的主旨：卷名＋頁尾的聲明（依題目來源）。 */
+  docSubject: (notice: string) => `學測英文中心學習助手加強卷　${notice}`,
 } as const;
 
 /**

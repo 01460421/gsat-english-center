@@ -266,7 +266,7 @@ describe('本站自組模擬考：卷面題號與字母交換（§4.4、§4.5.2�
 
   it.each([
     [{ '1': 'x', '2': '38' }, 'bad_label_map'],
-    [{ '1': '51', '2': '38' }, 'bad_label_map'],
+    [{ '1': '81', '2': '38' }, 'bad_label_map'],
     [{ '1': '38', '2': '38' }, 'bad_label_map'],
     [{ '1': '37' }, 'bad_label_map'],
     [{ '1': '07', '2': '38' }, 'bad_label_map'],
@@ -284,6 +284,23 @@ describe('本站自組模擬考：卷面題號與字母交換（§4.4、§4.5.2�
     const res = await create(env, fakeSite(), user, { source: { source: 'bank_mock', paper_id: `bk1-a-${'0'.repeat(66)}`, ref: RD_REF, labels: ['1'], label_map: labelMap, swap, answers: {} } });
     expect(res.status).toBe(400);
     expect(res.body.error.reason).toBe('bad_swap');
+  });
+
+  it('學習助手加強卷（bk2）：卷號收 bk2、卷面題號到 80、出處寫「學習助手加強卷」（docs/design/weak-paper.md §9.6）', async () => {
+    const env = assistEnv();
+    const user = seedUser(env.DB);
+    const res = await create(env, fakeSite(), user, {
+      source: { source: 'bank_mock', paper_id: `bk2-w-${'0000001'.repeat(3)}`, ref: RD_REF, labels: ['1'], label_map: { '1': '77', '2': '78' }, swap: null, answers: { '1': 'A' } },
+    });
+    expect(res.status).toBe(201);
+    expect(res.body.question.targets[0]).toMatchObject({ label: '1', display_label: '77' });
+    expect(res.body.question.origin_label).toMatch(/^學習助手加強卷・/);
+    expect(res.body.title).toContain('學習助手加強卷');
+    expect(res.body.title).toContain('第 77 題');
+    for (const paperId of [`bk2-x-${'0000001'}`, `bk2-w-${'000000'}`, `bk2-w-${'0000001'.repeat(13)}`]) {
+      const bad = await create(env, fakeSite(), user, { source: { source: 'bank_mock', paper_id: paperId, ref: RD_REF, labels: ['1'], label_map: { '1': '77', '2': '78' }, swap: null, answers: {} } });
+      expect(bad.status, paperId).toBe(400);
+    }
   });
 
   it('文意選填的卷面題號換進選文的 [[n]] 與解析的「第 n 格」；卷號格式不對 400', async () => {

@@ -6,7 +6,7 @@
  *            gsat-exam-attempt:v1:practice:{uid}@{v}，否則讀本機作答紀錄。對錯與填充簡答的 client_status 和練習頁一致：
  *            作答還在時用練習頁固定下來的判分，否則用作答紀錄記下的 ok、cs（不重新判分：重新判分沒有單字索引，結果可能不同）。
  */
-import { GROUP_KEY_PATTERN, TIER_LABELS, assistAskHref, type AnswerValue, type AskRef, type AssistClientStatus } from '@gsat/shared';
+import { GROUP_KEY_PATTERN, TIER_LABELS, assistAskHref, groupSourceLine, type AnswerValue, type AskRef, type AssistClientStatus } from '@gsat/shared';
 import { loadPracticeGroup, type PracticeGroupFile } from '../../../data/bank';
 import { loadAttempt } from '../../exams/attempt';
 import { getPracticeHistory } from '../../practice/history';
@@ -15,39 +15,60 @@ import { practiceAttemptIdForKey } from '../../practice/practiceExam';
 import { scorePractice } from '../../practice/scoring';
 import { getOutcomes, okFromRatio, type OutcomeEntry } from '../outcomes';
 import { clampAnswers, compareLabels, groupOutcomeRows, isDoubtEntry, labelsText, latestEntries, pickDefaults, rowStats, signalsOf, statusOf } from './common';
+import { loadSourceRegistry } from '../../../data/sources';
+import { assertAskableSource, publisherTitleOf, publisherTitles, type PublisherTitle } from './publisher';
 import { answerOrNull, assistableQuestions, groupPreview, previewItem } from './site';
 import type { MistakeRow, MistakeSourceAdapter, ResolvedAsk } from './types';
 
-/** 「本站題庫・文意選填（進階練習）」。 */
-export function bankOrigin(file: Pick<PracticeGroupFile, 'section_type' | 'tier'>): string {
+/**
+ * 確認頁題目預覽的出處：本站題「本站題庫・文意選填（進階練習）」；出版社題組是題組檔的出處列
+ * 「{label_zh}《{product_zh}》原卷第 41–44 題・經授權使用」（docs/design/weak-paper.md §8.7）。
+ */
+export function bankOrigin(file: Pick<PracticeGroupFile, 'section_type' | 'tier' | 'source'>): string {
+  if (file.source) return groupSourceLine(file.source);
   return `本站題庫・${PRACTICE_SECTION_LABELS[file.section_type]}（${TIER_LABELS[file.tier]}）`;
 }
 
-function listRows(entries: readonly OutcomeEntry[]): MistakeRow[] {
+/**
+ * 錯題清單的列。titles：出版社題組的出處（publisher.ts；鍵是 uid）：出版社題組的列標題以「{label_zh}《{product_zh}》」開頭，
+ * 查不到時是「出版社模考題（出處載入中）」；本站題照舊是「本站題庫」。
+ */
+function listRows(entries: readonly OutcomeEntry[], titles: ReadonlyMap<string, PublisherTitle> = new Map()): MistakeRow[] {
   return groupOutcomeRows(entries, 'bank').map(({ key, entries: list }) => {
     const first = list[0] as OutcomeEntry;
     const stats = rowStats(list);
     const sectionName = PRACTICE_SECTION_LABELS[first.sec as PracticeGroupFile['section_type']] ?? '題目';
     const tier = first.t ?? null;
+    const publisher = publisherTitleOf(first.r, titles);
     const links: MistakeRow['links'] = [];
     if (tier && first.sec !== 'other' && first.sec in PRACTICE_SECTION_LABELS) {
       // 題庫題先看本站解析（免費）：唯讀檢視這一次的作答與解析（practice/PracticeReview.tsx）；按了「再一組」也看得到。
-      links.push({ label: '本站解析（免費）', to: `${practicePath(first.sec as PracticeGroupFile['section_type'], tier)}?review=${encodeURIComponent(first.r)}` });
+      // 出版社題組的解析不是本站寫的（也可能沒有），連結改叫「檢討這一組」。
+      links.push({
+        label: publisher ? '檢討這一組（免費）' : '本站解析（免費）',
+        to: `${practicePath(first.sec as PracticeGroupFile['section_type'], tier)}?review=${encodeURIComponent(first.r)}`,
+      });
     }
     return {
       key,
       source: 'bank',
-      title: `本站題庫・${sectionName}${tier ? `（${TIER_LABELS[tier]}）` : ''}：${labelsText(stats.labels, first.sec)}`,
+      title: `${publisher ?? '本站題庫'}・${sectionName}${tier ? `（${TIER_LABELS[tier]}）` : ''}：${labelsText(stats.labels, first.sec)}`,
       section: first.sec,
       tier,
       ...stats,
-      askHref: assistAskHref({ src: 'bank', ref: first.r, labels: list.filter((e) => e.ok < 1 || isDoubtEntry(e)).map((e) => e.l).sort(compareLabels) }),
+      // 出版社題組要授權有效、包含 ai_assist 才給「問學習助手」（讀不到登記時也不給，§9.6）。
+      askHref:
+        publisher === null || titles.get(uidOf(first.r))?.askable === true
+          ? assistAskHref({ src: 'bank', ref: first.r, labels: list.filter((e) => e.ok < 1 || isDoubtEntry(e)).map((e) => e.l).sort(compareLabels) })
+          : null,
       links,
       maybeFree: true,
       groupRef: first.r,
     };
   });
 }
+
+const uidOf = (ref: string): string => ref.split('@')[0] ?? ref;
 
 /** 這台裝置上這一組（uid@v）交卷時的作答。submittedAt 是交卷時間（ISO）。 */
 export interface BankAnswers {
@@ -80,6 +101,8 @@ export async function resolveBank(ask: Extract<AskRef, { src: 'bank' }>): Promis
   const record = bankAnswersFor(ask.ref);
   if (!record) return null;
   const file = await loadPracticeGroup(m[1] ?? '', Number(m[2]));
+  // 出版社題組：授權結束（題組檔在重建前還在）不顯示題目；授權不含 AI 解析時不給送出（docs/design/weak-paper.md §7.6、§9.6）。
+  if (file.source) assertAskableSource(await loadSourceRegistry(), file.source);
   const history = getPracticeHistory();
   const hints = history.hints[ask.ref] ?? {};
   // 練習頁固定下來的判分只對同一次交卷有效；作答已經清掉（或判分不是這一次的）時改用作答紀錄記下的對錯。
@@ -126,7 +149,12 @@ export async function resolveBank(ask: Extract<AskRef, { src: 'bank' }>): Promis
 }
 
 export const bankAdapter: MistakeSourceAdapter = {
-  list: async () => listRows(getOutcomes().items),
+  list: async () => {
+    const items = getOutcomes().items;
+    // 有出版社題組的列時才下載索引與來源登記（publisher.ts）。
+    const titles = await publisherTitles(items.filter((e) => e.s === 'bank').map((e) => e.r));
+    return listRows(items, titles);
+  },
   resolve: async (ask) => (ask.src === 'bank' ? resolveBank(ask) : null),
 };
 

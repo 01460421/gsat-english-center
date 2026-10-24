@@ -16,9 +16,12 @@
  *                 （myPapers.ts 的 maintainMyPapers）。最多先列 5 份，其他收進「更多」。
  *
  * 預覽模式的 ?bankmockseed=<n> 指定組卷的種子（只給 e2e 用，flags.ts）。桌機只有 lg: 起的差異。
+ *
+ * 學習助手加強卷（docs/design/weak-paper.md §3.1、§7.4）：weakPaperVisible() 時多一行「依弱點組卷、隨機抽題 →」連到組卷頁；
+ * 打開時先處理加強卷清單的逾期作答（weakPaperList），再處理自組卷的（兩份清單各自只處理自己的代號格式）。
  */
 import { TIER_LABELS, TIERS, type BankSectionType, type Tier } from '@gsat/shared';
-import { ChevronRight, CircleAlert, FileText, Shuffle } from 'lucide-react';
+import { ChevronRight, CircleAlert, Crosshair, FileText, Shuffle } from 'lucide-react';
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router';
 import { DataLoadError } from '../../../data/client';
@@ -31,9 +34,13 @@ import { isExpired, remainingSec } from '../timer';
 import { useNow } from '../useNow';
 import { insufficientSection, remainingEstimate, type RemainingEstimate } from './assemble';
 import { bankHistoryEntry } from './bankScore';
-import { SELECTION_ORDER, slotRange } from './blueprint';
-import { decodePaperId } from './code';
+import { SELECTION_ORDER } from './blueprint';
+import { decodeAnyPaperId } from './code2';
 import { bankMockSeed } from './flags';
+import { layoutForBk1 } from './layout';
+import { rangeOf } from './resolve';
+import { weakPaperList } from './weakPapers';
+import { weakPaperVisible } from '../../assistant/papers/flags';
 import { MY_PAPERS_KEY, listMyPapers, maintainMyPapers, type MyPaperRow } from './myPapers';
 import { loadMockPool, type MockPool } from './pool';
 import { rangeText } from './rangeText';
@@ -103,10 +110,11 @@ export function shortageText(tier: Tier, estimate: RemainingEstimate): string | 
 
 /** 「我組過的卷子」一列用到這台裝置在組卷前做過的題組（題號範圍）。 */
 function reusedOf(row: MyPaperRow): string[] {
-  const decoded = decodePaperId(row.entry.id);
-  if (!decoded) return [];
+  const decoded = decodeAnyPaperId(row.entry.id);
+  if (!decoded || decoded.format !== 'bk1') return [];
+  const slots = layoutForBk1(decoded.tier).slots;
   const used = loadUsedGroups({ excludePaperId: row.entry.id, before: Date.parse(row.entry.createdAt) });
-  return decoded.slots.flatMap((s, i) => (used.has(s.uid) ? [slotRange(i)] : []));
+  return decoded.slots.flatMap((s, i) => (used.has(s.uid) && slots[i] ? [rangeOf(slots[i])] : []));
 }
 
 /** ISO 時間 → 「10/18」（台灣時間）。 */
@@ -213,6 +221,20 @@ function MyPapers({ rows, persistent, storageOk }: { rows: readonly MyPaperRow[]
   );
 }
 
+/** 學習助手加強卷的入口（docs/design/weak-paper.md §3.1）：開關關著時不畫（/mock 一個像素都不變）。 */
+function WeakPapersLink() {
+  const [visible] = useState(weakPaperVisible);
+  if (!visible) return null;
+  return (
+    <p className="border-t border-line pt-4 text-sm">
+      <Link to="/assistant/papers" className="inline-flex min-h-11 items-center gap-1.5 font-medium text-primary underline underline-offset-2">
+        <Crosshair aria-hidden="true" className="size-4" />
+        依弱點組卷、隨機抽題 →
+      </Link>
+    </p>
+  );
+}
+
 export default function BankMockSection() {
   const id = useId();
   const location = useLocation();
@@ -253,10 +275,14 @@ export default function BankMockSection() {
   // 逾期作答與清單上限（只動 localStorage 與快照），處理完再讀一次清單；快照存不存得住（IndexedDB）。
   useEffect(() => {
     let alive = true;
-    maintainMyPapers({ historyEntry: bankHistoryEntry })
-      .then((expired) => {
+    // 加強卷的清單先處理（docs/design/weak-paper.md §7.4），再處理自組卷的；兩份清單各自只看自己的代號格式。
+    weakPaperList
+      .maintain({ historyEntry: bankHistoryEntry })
+      .catch(() => ({ submitted: [], discarded: [] }))
+      .then(async (weak) => {
+        const expired = await maintainMyPapers({ historyEntry: bankHistoryEntry });
         // 逾期的作答交卷或丟棄了：同一頁上面的作答紀錄（MockPaperList）也要重新讀，storage 事件只會在別的分頁觸發。
-        if (expired.submitted.length > 0 || expired.discarded.length > 0) notifyMockChanged();
+        if (expired.submitted.length + expired.discarded.length + weak.submitted.length + weak.discarded.length > 0) notifyMockChanged();
       })
       .catch(() => undefined)
       .finally(() => {
@@ -428,6 +454,7 @@ export default function BankMockSection() {
       </div>
 
       <MyPapers rows={rows} persistent={persistent} storageOk={storageOk} />
+      <WeakPapersLink />
     </section>
   );
 }

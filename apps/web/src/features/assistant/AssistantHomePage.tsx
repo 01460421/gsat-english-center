@@ -7,9 +7,10 @@
  *   - 最近的解析（GET /api/assist/cases；登入才有）：標題、大題、對錯（題組「錯 2／2」）、懂了嗎、日期；先列 10 筆，
  *     「顯示更多」接著列（next_cursor），超過 10 筆的舊案例也找得到、刪得到。
  *   - 第一次開啟時把已經交卷的歷屆試題與模考補登進本機作答紀錄（backfill.ts），錯題清單才看得到它們。
+ *   - 第四張動作卡「加強卷」（docs/design/weak-paper.md §3.1）：weakPaperVisible() 時出現；不用 AI，唯讀模式也顯示。
  */
 import { ASSIST_SECTION_LABELS, assistAnalyzePoints, type AssistCaseSummary } from '@gsat/shared';
-import { ChevronRight, ClipboardPaste, FileText, ListChecks } from 'lucide-react';
+import { ChevronRight, ClipboardPaste, Crosshair, FileText, ListChecks } from 'lucide-react';
 import { useEffect, useId, useState, type ReactNode } from 'react';
 import { Link } from 'react-router';
 import { useSignedIn } from '../writing/lib/access';
@@ -17,6 +18,7 @@ import { backfillOutcomes } from './backfill';
 import { AssistAccessNotice, AssistGate, AssistHeader, useAssistAccess, useAssistReadOnly } from './components/AssistAccess';
 import { VerdictBadge, secondaryBtn } from './components/parts';
 import { listAssistCases } from './lib/assistApi';
+import { weakPaperVisible } from './papers/flags';
 import { useAssistantPhotoEnabled } from './lib/useAssistantEnabled';
 
 const DATE = new Intl.DateTimeFormat('zh-TW', { timeZone: 'Asia/Taipei', month: 'numeric', day: 'numeric' });
@@ -124,6 +126,19 @@ function ActionCard({ to, icon, title, children }: { to: string; icon: ReactNode
   );
 }
 
+/** 第四張動作卡：加強卷（不用 AI，開關關著或唯讀模式也顯示；功能開關關著時不出現）。 */
+function PapersCard() {
+  const [visible] = useState(weakPaperVisible);
+  if (!visible) return null;
+  return (
+    <li className="min-w-0">
+      <ActionCard to="/assistant/papers" icon={<Crosshair aria-hidden="true" className="size-5" />} title="加強卷">
+        依你的作答紀錄挑出需要加強的題型與技能，組成一份計時卷子；也可以隨機抽題。不用點數。
+      </ActionCard>
+    </li>
+  );
+}
+
 function HomeBody() {
   const access = useAssistAccess();
   const readOnly = useAssistReadOnly();
@@ -142,6 +157,7 @@ function HomeBody() {
               看、列印或刪除之前產生的學習報告。
             </ActionCard>
           </li>
+          <PapersCard />
         </ul>
         <RecentCases readOnly />
       </div>
@@ -169,6 +185,7 @@ function HomeBody() {
             彙整你的弱點與錯誤樣態，排出提分計畫與逐週讀書計畫。
           </ActionCard>
         </li>
+        <PapersCard />
       </ul>
       <RecentCases readOnly={false} />
       <p className="text-sm text-muted">

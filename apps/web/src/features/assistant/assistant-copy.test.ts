@@ -47,6 +47,11 @@ describe('學習助手的文案', () => {
         './components/UpdateReportLink.tsx',
         './lib/printText.ts',
         './summary.ts',
+        // 加強卷（docs/design/weak-paper.md §10.1：papers/** 也要掃）。
+        './papers/PapersPage.tsx',
+        './papers/reasons.ts',
+        './papers/EntryLinks.tsx',
+        './papers/weakness.ts',
       ]),
     );
   });

@@ -183,6 +183,8 @@ export const PDF_DYNAMIC_FILES = [
   '../mock/papers.ts',
   '../mock/bank/blueprint.ts',
   '../mock/bank/pdfText.ts',
+  // 卷子的題目來源（出版社題組的封面來源行、頁尾聲明，docs/design/weak-paper.md §8.7）。
+  '../mock/bank/paperSources.ts',
   '../practice/labels.ts',
   '../practice/chart.ts',
   '../../../../../packages/shared/src/tiers.ts',
@@ -383,6 +385,7 @@ function sourceStrings(provenance, figures, out) {
  *   題本：文章、題幹、選項、圖說、圖表附註與資料表；
  *   解析：每題的 explanation_zh，以及混合題填充、簡答的答案、可接受答案與部分給分的寫法（答案頁）；
  *   資料來源：出處說明、參考資料、圖表的資料來源（§7.5）。
+ *   出版社題組的出處（source）算進題本：封面與題本每組都會印，缺字的題組不能組卷。
  * 全文中譯（translation_zh）與閱讀圖表的文字描述不印，不算。
  * @param {unknown} file
  * @returns {PrintableStrings}
@@ -405,6 +408,9 @@ export function practicePrintableStrings(file) {
     if (q.mode === 'fill_in_blank' || q.mode === 'short_answer') pushStrings(explanations, q.answer, q.accepted_answers);
   }
   sourceStrings(f.provenance, list(g.figures), sources);
+  // 出版社題組的出處（PDF 的封面、題本每組標題下一行與資料來源頁都會印，docs/design/weak-paper.md §8.7）：出處是授權條件，
+  // 印成缺字就不合約定，所以算進題本：缺字的題組帶 ex: 'glyph'，不能進任何卷子（題庫練習照常可以用）。
+  if (isObj(f.source)) pushStrings(booklet, f.source.label_zh, f.source.product_zh, f.source.attribution_zh, f.source.ref_text);
   const a = isObj(f.annotations) ? f.annotations : {};
   const items = isObj(a.explanations) && isObj(a.explanations.items) ? a.explanations.items : {};
   for (const item of Object.values(items)) if (isObj(item)) pushStrings(explanations, item.explanation_zh, item.partial_credit_forms);

@@ -8,7 +8,7 @@
  */
 import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore, type RefObject } from 'react';
 import { Link } from 'react-router';
-import { groupKey, type PracticeFigure, type PracticeGroupFile } from '../../data/bank';
+import { groupKey, hasExplanationText, type PracticeFigure, type PracticeGroupFile } from '../../data/bank';
 import type { Question } from '../../data/exams';
 import { AttemptContext } from '../exams/AttemptContext';
 import { AttemptStore, createAttempt, loadAttempt, type AttemptPersistence, type AttemptState } from '../exams/attempt';
@@ -19,16 +19,17 @@ import { ExamContext } from '../exams/ExamContext';
 import { QuestionExtrasContext, type QuestionExtras } from '../exams/QuestionExtras';
 import type { AnswerValue } from '../exams/scoring';
 import { isChartEvidence, evidenceRows } from './chart';
-import { AiGroupBadge, AiSourceNote, TranslationDetails } from './components/AiNotice';
+import { TranslationDetails } from './components/AiNotice';
 import { EliminationTable } from './components/EliminationTable';
 import { ExplanationCard } from './components/ExplanationCard';
+import { GroupSourceBadge, GroupSourceNote, useGroupSourceStatus } from './components/GroupSource';
 import { HintLadder, useHintsUsed } from './components/HintLadder';
 import { MultiSelectCard, OpenAnswerFeedback, openAnswerNote } from './components/MixedCards';
 import { renderPracticeFigure } from './components/PracticeFigure';
 import { GradingPanel, ResultPanel } from './components/ResultPanel';
 import { evidenceHighlights } from './evidence';
 import { recordDone, recordGraded, updatePracticeHistory, usePracticeHistory } from './history';
-import { PRACTICE_SECTION_LABELS, READING_OPTION_CODE_LABELS, TIER_LABELS, displayTopic } from './labels';
+import { PRACTICE_SECTION_LABELS, PUBLISHER_NO_EXPLANATION, READING_OPTION_CODE_LABELS, TIER_LABELS, displayTopic, publisherExplanationBy } from './labels';
 import { NO_PRACTICE_MISTAKES, recordPracticeMistakes, type PracticeMistakeResult } from './mistakes';
 import { practiceAttemptId, practiceExam } from './practiceExam';
 import { freezeGrades, needsWordIndex, scorePractice, useWordLookup, type PracticeScore } from './scoring';
@@ -40,10 +41,13 @@ import { okFromRatio } from '../assistant/outcomes';
 import { formatPoints, isAnswered } from '../exams/scoring';
 import { formatDateTime } from '../mock/format';
 
-/** 學習助手的入口（交卷後每題解析卡下方；docs/design/learning-assistant.md §1.4）：開關關著時 render null。 */
-function AskFor({ file, q, answer, score }: { file: PracticeGroupFile; q: Question; answer: AnswerValue | undefined; score: PracticeScore | null }) {
+/**
+ * 學習助手的入口（交卷後每題解析卡下方；docs/design/learning-assistant.md §1.4）：開關關著時 render null。
+ * allowed：出版社題組的授權不含 ai_assist（或已經結束）時是 false，不顯示（docs/design/weak-paper.md §9.6）。
+ */
+function AskFor({ file, q, answer, score, allowed }: { file: PracticeGroupFile; q: Question; answer: AnswerValue | undefined; score: PracticeScore | null; allowed: boolean }) {
   const outcome = score?.outcomes[q.label];
-  if (!outcome) return null;
+  if (!outcome || !allowed) return null;
   return (
     <AskEntry
       ask={{ src: 'bank', ref: groupKey(file), labels: [q.label] }}
@@ -94,8 +98,9 @@ function CardFor({
 }) {
   const hintsUsed = useHintsUsed(groupKey(file), q.label);
   const item = file.annotations.explanations.items[q.label];
+  const byline = explanationByline(file);
   if (q.mode === 'multi_select') {
-    return <MultiSelectCard q={q} item={item} group={file.group} answer={answer} hintsUsed={hintsUsed} onLocateEvidence={onLocate} />;
+    return <MultiSelectCard q={q} item={item} group={file.group} answer={answer} hintsUsed={hintsUsed} onLocateEvidence={onLocate} byline={byline} />;
   }
   if (q.mode !== 'single_choice' && q.mode !== 'bank_choice') return null;
   const reading = file.section_type === 'reading';
@@ -112,8 +117,14 @@ function CardFor({
       codeLabels={reading ? READING_OPTION_CODE_LABELS : undefined}
       evidenceSource={reading ? figureEvidenceSource(file) : undefined}
       showBlankPos={!reading}
+      byline={byline}
     />
   );
+}
+
+/** 出版社題組的解析標示「解析：{出版社}提供」；本站題是 null（照舊標 AI 撰寫）。 */
+function explanationByline(file: PracticeGroupFile): string | null {
+  return file.source ? publisherExplanationBy(file.source.label_zh) : null;
 }
 
 /** 填充、簡答交卷後：自動判分＋解析卡（同上，包一層才能讀提示紀錄）。 */
@@ -144,6 +155,7 @@ function OpenFor({
       swappedWith={pair ? (pair[0] === q.label ? pair[1] : pair[0]) : null}
       hintsUsed={hintsUsed}
       onLocateEvidence={onLocate}
+      byline={explanationByline(file)}
     />
   );
 }
@@ -289,6 +301,9 @@ export function GroupSession({
   const wasSubmitted = useRef(submitted);
   const items = file.annotations.explanations.items;
   const hasPassage = groupHasStimulus(file.group);
+  // 出版社題組：授權不含 ai_assist（或已經結束）就不顯示「問學習助手」；沒有出版社解析時交卷後說明「這組沒有解析」。
+  const askAllowed = useGroupSourceStatus(file, ['ai_assist']) === 'ok';
+  const noExplanations = file.source !== undefined && !Object.values(items).some(hasExplanationText);
 
   // 剛交卷：記成做過、答錯的詞彙題正解字收進單字錯題本，捲回頂端看成績（焦點移到「交卷結果」）。
   // 答對題數只看「等於可接受答案」，和單字索引無關（索引只影響拼字錯誤、字形的部分給分），交卷當下就可以記。
@@ -356,7 +371,7 @@ export function GroupSession({
   const translation = file.annotations.translation_zh?.text ?? null;
   // 交卷後才把證據引用的資料點標在圖表與表格上（作答中標出來等於洩漏答案）。
   const figureEvidence = useMemo(
-    () => (submitted ? Object.values(items).flatMap((item) => item.evidence) : NO_EVIDENCE),
+    () => (submitted ? Object.values(items).flatMap((item) => item.evidence ?? []) : NO_EVIDENCE),
     [submitted, items],
   );
 
@@ -375,27 +390,27 @@ export function GroupSession({
       renderAfterFeedback: (q, answer) => (
         <>
           <CardFor file={file} q={q} answer={answer} onLocate={onLocate} />
-          <AskFor file={file} q={q} answer={answer} score={score} />
+          <AskFor file={file} q={q} answer={answer} score={score} allowed={askAllowed} />
         </>
       ),
       renderOpenFeedback: (q, answer) => (
         <>
           <OpenFor file={file} q={q} answer={answer} score={score} onLocate={onLocate} />
-          <AskFor file={file} q={q} answer={answer} score={score} />
+          <AskFor file={file} q={q} answer={answer} score={score} allowed={askAllowed} />
         </>
       ),
       openAnswerNote,
       renderFigure: (figure) => renderPracticeFigure(figure as PracticeFigure, figureEvidence),
       passageFooter: (
         <div className="space-y-3">
-          <AiSourceNote file={file} />
+          <GroupSourceNote file={file} />
           {submitted && translation && <TranslationDetails text={translation} />}
         </div>
       ),
       extraHighlights: submitted ? (group) => evidenceHighlights(group, items, activeEvidence) : undefined,
       locateRequest: submitted ? locate : null,
     }),
-    [key, items, file, onLocate, submitted, translation, activeEvidence, score, figureEvidence, locate],
+    [key, items, file, onLocate, submitted, translation, activeEvidence, score, figureEvidence, locate, askAllowed],
   );
 
   const section = exam.sections[0];
@@ -429,7 +444,7 @@ export function GroupSession({
                 {file.group.questions.length} 題
                 {sdgs.length > 0 ? `・SDG ${sdgs.join('、')}` : ''}
               </p>
-              <AiGroupBadge />
+              <GroupSourceBadge file={file} />
               {notice && <p className="rounded-xl bg-primary-soft px-4 py-2 text-sm">{notice}</p>}
             </header>
             {!persisted && (
@@ -453,7 +468,13 @@ export function GroupSession({
                 embedded={embedded}
               />
             )}
-            {submitted && score && submittedAnswers && <AskGroupLink file={file} score={score} answers={submittedAnswers} hinted={hinted} />}
+            {submitted && noExplanations && (
+              <p className="text-sm text-muted" data-testid="no-explanations">
+                {PUBLISHER_NO_EXPLANATION}
+                {askAllowed ? '；有疑問可以問學習助手。' : '。'}
+              </p>
+            )}
+            {submitted && score && submittedAnswers && askAllowed && <AskGroupLink file={file} score={score} answers={submittedAnswers} hinted={hinted} />}
             {submitted && elimination && file.group.options_bank && (
               <EliminationTable
                 elimination={elimination}
@@ -470,7 +491,7 @@ export function GroupSession({
             {!submitted && isBank && <BankHints file={file} />}
             {!hasPassage && (
               <div className="space-y-3 rounded-2xl border border-line bg-surface p-4">
-                <AiSourceNote file={file} items />
+                <GroupSourceNote file={file} items />
                 {submitted && translation && <TranslationDetails text={translation} />}
               </div>
             )}

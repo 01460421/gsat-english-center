@@ -10,7 +10,7 @@
  * 這裡的文案寫「AI」而不是「AI 批改」：學習助手不打分數。
  */
 import { AI_ERROR_MESSAGES } from '@gsat/shared';
-import { createContext, useContext, type ReactNode } from 'react';
+import { createContext, useContext, useState, type ReactNode } from 'react';
 import { Link, useLocation } from 'react-router';
 import { loginHref, useMe } from '../../../lib/api';
 import { APP_NAME } from '../../../modules';
@@ -19,6 +19,7 @@ import { AiNotice, Notice } from '../../writing/components/ui';
 import { useAiAccess, useSignedIn, type AiAccess } from '../../writing/lib/access';
 import { AI_PAUSED_MESSAGE } from '../../writing/lib/errors';
 import { useAssistantEnabled } from '../lib/useAssistantEnabled';
+import { weakPaperVisible } from '../papers/flags';
 
 const linkCls = 'font-medium text-primary underline underline-offset-2';
 
@@ -53,6 +54,20 @@ export function useAssistAccess(): AssistAccess {
   return readOnly ? { state: 'closed' } : access;
 }
 
+/** 加強卷不用 AI（docs/design/weak-paper.md §9.3）：學習助手暫停時照常能用，暫停的畫面另外指過去。 */
+function PapersStillOpen() {
+  const [visible] = useState(weakPaperVisible);
+  if (!visible) return null;
+  return (
+    <p className="text-sm text-muted">
+      加強卷不用 AI，照常可以組卷：
+      <Link to="/assistant/papers" className={`ml-1 ${linkCls}`}>
+        加強卷
+      </Link>
+    </p>
+  );
+}
+
 /** 開關關著（不是唯讀的頁面，或沒登入）：「學習助手暫停使用中」。登入的人另外指到首頁看之前的紀錄。 */
 export function AssistantClosed({ title = '學習助手' }: { title?: string }) {
   const signedIn = useSignedIn();
@@ -73,6 +88,7 @@ export function AssistantClosed({ title = '學習助手' }: { title?: string }) 
           回到首頁
         </Link>
       )}
+      <PapersStillOpen />
     </section>
   );
 }
