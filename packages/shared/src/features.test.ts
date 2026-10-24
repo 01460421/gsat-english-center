@@ -39,6 +39,17 @@ describe('isFeaturesResponse', () => {
     expect('assistant' in FEATURES_OFF).toBe(false);
   });
 
+  it('essayExemplars 選填（開關沒開、或只有管理員預覽時沒有這個欄位）；有的話必須是布林（docs/design/model-essays.md §7.5）', () => {
+    const base = { auth: true, ai: true, ocr: true, aiPaused: false };
+    expect(isFeaturesResponse({ ...base, essayExemplars: true })).toBe(true);
+    expect(isFeaturesResponse({ ...base, essayExemplars: false })).toBe(true);
+    expect(isFeaturesResponse({ ...base, essayExemplars: 'on' })).toBe(false);
+    expect(isFeaturesResponse({ ...base, essayExemplars: 'admin' })).toBe(false);
+    expect(isFeaturesResponse({ ...base, essayExemplars: null })).toBe(false);
+    expect(isFeaturesResponse({ ...base, essayExemplars: 1 })).toBe(false);
+    expect('essayExemplars' in FEATURES_OFF).toBe(false);
+  });
+
   it('預設值全部關閉，且不可被修改', () => {
     expect(Object.values(FEATURES_OFF).every((v) => v === false)).toBe(true);
     expect(Object.isFrozen(FEATURES_OFF)).toBe(true);

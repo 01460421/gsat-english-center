@@ -18,8 +18,10 @@
  * 學習助手的任務（assist_*；docs/design/learning-assistant.md §4.8）：讀到操作、確認還是 reserved 之後先看任務，交給
  * src/assist/consumer.ts 的 handleAssistMessage（對象是 assist_turns／assist_reports，不走提交）。呼叫政策（callWithPolicy 等）
  * 在 callPolicy.ts，兩邊共用；租約記住在哪一張表（LeaseHeld.table），預期外的錯誤依表別放掉。
+ * 作文範文（essay_exemplars；docs/design/model-essays.md §7.4）同樣在讀到操作之後分流，交給 src/exemplars/consumer.ts 的
+ * handleExemplarMessage（對象是 exemplar_sets）。
  *
- * ai-tasks-dlq：重試用完的訊息 → 對應操作依任務退還點數（提交或 turn、報告改 failed）、寫 ops_events(severity='error')。
+ * ai-tasks-dlq：重試用完的訊息 → 對應操作依任務退還點數（提交、turn、報告或作文範文改 failed）、寫 ops_events(severity='error')。
  *   逐則處理：其中一則失敗只重送那一則（不讓整批重試、用完次數後整批丟掉）；真的丟掉了由 housekeeping 6 小時後回收。
  * 每一批訊息處理完之後跑 housekeeping（清過期照片、回收卡住的預扣；src/ai/housekeeping.ts）。
  *
@@ -37,6 +39,7 @@ import {
   countEnglishWords,
   isAssistTask,
   isCustomEssayGroupId,
+  isExemplarTask,
   type AiTask,
   type EssayBody,
   type PhotoMime,
@@ -44,6 +47,7 @@ import {
   type TranslationBody,
 } from '@gsat/shared';
 import { handleAssistMessage } from '../assist/consumer';
+import { handleExemplarMessage } from '../exemplars/consumer';
 import { loadConfig } from '../config';
 import type { AiQueueMessage, Env } from '../env';
 import { groupForSubmission } from '../submissions/custom';
@@ -157,7 +161,7 @@ async function handleDeadLetter(env: Env, msg: Message<AiQueueMessage>, deps: Co
   if (typeof opId === 'string') {
     const op = await loadOp(env.DB, opId);
     if (op && op.status === 'reserved') {
-      // 依任務退還：學習助手的 turn、報告改 failed；其他照舊改提交（guard.ts 的 refundForOp）。
+      // 依任務退還：學習助手的 turn、報告改 failed；作文範文的那一列改 failed；其他照舊改提交（guard.ts 的 refundForOp）。
       const refunded = await refundForOp(env.DB, op, 'api_error', now());
       if (refunded) {
         await opsEvent(env.DB, 'ai_dlq', 'error', { op_id: op.id, task: op.task, attempts: msg.attempts });
@@ -185,6 +189,8 @@ async function handleMessage(env: Env, msg: Message<AiQueueMessage>, deps: Consu
   }
   // 學習助手的任務：對象是 assist_turns／assist_reports，不找提交（docs/design/learning-assistant.md §4.8）。
   if (isAssistTask(op.task)) return handleAssistMessage(env, msg, deps, lease, op);
+  // 作文範文：對象是 exemplar_sets（docs/design/model-essays.md §7.4）。
+  if (isExemplarTask(op.task)) return handleExemplarMessage(env, msg, deps, lease, op);
   const config = loadConfig(env);
   /** 讀到提交之後才知道是不是自訂題（內容退還的告警只算自訂題）。 */
   let customEssay = false;

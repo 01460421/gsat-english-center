@@ -112,6 +112,19 @@ AI_EFFORT_ASSIST = "medium"
 AI_EFFORT_CHAT = "low"
 # 學習助手讀網站公開題目檔的來源（SITE_DATA_ORIGIN）：不設＝APP_ORIGIN（正式站不用設；只有 local-e2e 指到假的靜態檔伺服器）。
 
+# 作文範文（docs/design/model-essays.md §7.5；輸入或選一個作文題目，AI 寫出基礎版、穩健版、頂標版三篇範文）。
+# 只認 "on"、"admin"，其他任何值都當成關（fail closed）：
+#   off（關）／admin（只有管理員帳號能用，緊急時查問題用；公開的 /api/features 不透露）／on（開放給已核准的學生）
+# 目前是 "off"：上線之前一定要先跑真模型的評測並達標（設計文件 §9.6），上線是另一個 PR（把這一行改成 "on"，附達標的 run 連結）。
+# 改了範文的提示、輸出格式、層級規格或後處理，上線後也要重跑評測。
+# 緊急關閉：先在 /admin 按「AI 全站暫停」止血，再把這一行改成 "off" 推到 main（只留給管理員查問題：改成 "admin"）。
+#   已經排隊的照常完成；學生仍然可以看與刪除之前的範文。
+# 這一行是例外：src/config.ts 的程式預設固定是 off（[vars] 漏設時偏向關），不用跟著改（test/skeleton.test.ts）。
+# 不要在 Cloudflare 儀表板改成 Text 變數：下一次部署會被這裡的 [vars] 蓋回來。
+AI_ESSAY_EXEMPLARS = "off"
+# 作文範文的 effort（模型一律用 AI_MODEL_DEFAULT）。
+AI_EFFORT_EXEMPLARS = "medium"
+
 # 每人額度：每天 30 點、每月 300 點（試用 10 點／天）；作文每天 3 篇；同時進行中 2 個任務。
 AI_POINTS_USER_DAY = "30"
 AI_POINTS_USER_MONTH = "300"

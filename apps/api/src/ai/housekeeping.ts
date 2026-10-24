@@ -13,9 +13,13 @@
  *      學習助手的任務（docs/design/learning-assistant.md §4.8）不在這條：它們的 ref_id 是 assist_turns／assist_reports 的列，
  *      照提交的條件找不到提交（s.id IS NULL），30 分鐘就會退還「正在處理」的報告。所以 STALE_OPS_SQL 排除學習助手的任務，
  *      另外用對稱的 STALE_ASSIST_OPS_SQL（turn 或報告不存在、指向別的操作、不在進行中；或沒有有效租約而且沒處理過／超過 6 小時）。
+ *      作文範文（docs/design/model-essays.md §7.4）同理：ref_id 是 exemplar_sets 的列，STALE_OPS_SQL 的排除清單也包含它，
+ *      另外用對稱的 STALE_EXEMPLAR_OPS_SQL。三條各自綁自己的任務清單。
  *   3. 學習助手的到期清理（purgeExpiredAssist，每一步各自吞錯誤）：過期照片（最長 24 小時）、照片到期而沒確認的轉錄文字
  *      （只留統計）、過期案例（最後一次更新後 180 天，每次最多 200 個，CASCADE turn 與照片）、過期報告、過期的共用快取
  *      （每次最多 200 筆）。進行中的案例與報告不刪。
+ *   4. 作文範文的到期清理（purgeExpiredExemplars）：最後一次更新後 180 天的 exemplar_sets，每次最多 200 列；進行中的不刪。
+ *      共用快取的範文由第 3 步的共用快取清理一起處理。
  *
  * 觸發點（盡量常跑、但不影響回應時間）：
  *   - 每一個 /api/* 請求（housekeeping 中介層，回應之後用 waitUntil 跑；每個 isolate 每分鐘最多一次）
@@ -23,7 +27,7 @@
  *   - 送出 AI 任務之前（同步回收，卡住的預扣不會讓這次預扣失敗）
  * 這些都是「有人在用」才會跑：整站完全沒有流量時照片會留到下一個請求為止（真正的保證要等 Cron，設計文件 §1.2）。
  */
-import { ASSIST_TASKS } from '@gsat/shared';
+import { ASSIST_TASKS, EXEMPLAR_TASKS } from '@gsat/shared';
 import type { MiddlewareHandler } from 'hono';
 import type { AppEnv } from '../env';
 import { nowSeconds } from '../time';
@@ -40,8 +44,16 @@ export const HOUSEKEEPING_INTERVAL_MS = 60_000;
 const RECLAIM_BATCH = 20;
 /** 學習助手的到期清理每次最多刪幾筆（案例、共用快取；積太多就分幾次）。 */
 export const ASSIST_PURGE_BATCH = 200;
+/** 作文範文的到期清理每次最多刪幾列。 */
+export const EXEMPLAR_PURGE_BATCH = 200;
 
-/** 寫作批改的卡住預扣（?5：學習助手的任務代號，JSON 陣列；那些由 STALE_ASSIST_OPS_SQL 處理）。 */
+/** STALE_OPS_SQL 排除的任務（各自有對稱的回收 SQL）：學習助手與作文範文。 */
+export const NON_WRITING_TASKS: readonly string[] = [...ASSIST_TASKS, ...EXEMPLAR_TASKS];
+
+/**
+ * 寫作批改的卡住預扣（?5：要排除的任務代號，JSON 陣列＝NON_WRITING_TASKS；學習助手由 STALE_ASSIST_OPS_SQL、
+ * 作文範文由 STALE_EXEMPLAR_OPS_SQL 處理）。
+ */
 export const STALE_OPS_SQL = `SELECT o.id, o.user_id, o.task, o.ref_id, o.created_at
   FROM ai_ops o
   LEFT JOIN submissions s ON s.id = o.ref_id AND s.user_id = o.user_id
@@ -69,6 +81,19 @@ export const STALE_ASSIST_OPS_SQL = `SELECT o.id, o.user_id, o.task, o.ref_id, o
  ORDER BY o.created_at
  LIMIT ?4`;
 
+/** 作文範文的卡住預扣：條件和提交版本對稱，對象是 exemplar_sets（docs/design/model-essays.md §7.4 第 6 點）。 */
+export const STALE_EXEMPLAR_OPS_SQL = `SELECT o.id, o.user_id, o.task, o.ref_id, o.created_at
+  FROM ai_ops o
+  LEFT JOIN exemplar_sets e ON e.id = o.ref_id AND e.user_id = o.user_id
+ WHERE o.status = 'reserved' AND o.created_at < ?1
+   AND o.task IN (SELECT value FROM json_each(?5))
+   AND (e.id IS NULL
+        OR e.op_id IS NOT o.id
+        OR e.status NOT IN ('queued', 'running')
+        OR ((e.lease_until IS NULL OR e.lease_until <= ?3) AND (e.tries = 0 OR o.created_at < ?2)))
+ ORDER BY o.created_at
+ LIMIT ?4`;
+
 /**
  * 照片到期時清掉沒確認的轉錄文字（設計文件 §4.8 第 2 步、§4.17）：轉錄 turn 已完成、文字還在（output_json 沒有 stats）、
  * 照片的到期時間（轉錄結算時記在 meta_json.photos_expire_at；沒有時用 turn 建立時間＋24 小時）已過。只留 status、omitted
@@ -92,18 +117,18 @@ export async function purgeExpiredPhotos(db: D1Database, nowMs: number): Promise
   return res.meta.changes ?? 0;
 }
 
-/** 回收卡住的預扣（寫作批改與學習助手兩條）；回傳這次真的退還了幾筆。 */
+/** 回收卡住的預扣（寫作批改、學習助手、作文範文三條，各自綁自己的任務清單）；回傳這次真的退還了幾筆。 */
 export async function reclaimStaleOps(db: D1Database, nowMs: number): Promise<number> {
   const now = nowSeconds(nowMs);
-  const assistTasks = JSON.stringify(ASSIST_TASKS);
   type Stale = { id: string; user_id: number | null; task: string; ref_id: string | null; created_at: number };
-  const stale = (sql: string) =>
-    db.prepare(sql).bind(now - STALE_RESERVE_SECONDS, now - STALE_RESERVE_HARD_SECONDS, now, RECLAIM_BATCH, assistTasks).all<Stale>();
-  const writing = await stale(STALE_OPS_SQL);
-  const assist = await stale(STALE_ASSIST_OPS_SQL);
+  const stale = (sql: string, tasks: readonly string[]) =>
+    db.prepare(sql).bind(now - STALE_RESERVE_SECONDS, now - STALE_RESERVE_HARD_SECONDS, now, RECLAIM_BATCH, JSON.stringify(tasks)).all<Stale>();
+  const writing = await stale(STALE_OPS_SQL, NON_WRITING_TASKS);
+  const assist = await stale(STALE_ASSIST_OPS_SQL, ASSIST_TASKS);
+  const exemplars = await stale(STALE_EXEMPLAR_OPS_SQL, EXEMPLAR_TASKS);
   let reclaimed = 0;
-  for (const op of [...writing.results, ...assist.results]) {
-    // 依任務退還：提交改 failed，或學習助手的 turn、報告改 failed（guard.ts 的 refundForOp）；都要求沒有有效租約。
+  for (const op of [...writing.results, ...assist.results, ...exemplars.results]) {
+    // 依任務退還：提交改 failed，或學習助手的 turn、報告、作文範文的那一列改 failed（guard.ts 的 refundForOp）；都要求沒有有效租約。
     if (await refundForOp(db, op, 'expired', nowMs, { onlyIfUnleased: true })) {
       reclaimed++;
       await opsEvent(db, 'ai_reserve_reclaimed', 'warn', { op_id: op.id, task: op.task, age_s: now - op.created_at });
@@ -156,7 +181,27 @@ export async function purgeExpiredAssist(db: D1Database, nowMs: number): Promise
   return out;
 }
 
-/** 三件事都跑；任何錯誤只記 log，不影響呼叫端。 */
+/**
+ * 作文範文的到期清理（docs/design/model-essays.md §6.2）：最後一次更新後 180 天（expires_at）的組，每次最多 200 列；
+ * 進行中的不刪（等結算或回收）。錯誤只記 log；回傳刪了幾列。
+ */
+export async function purgeExpiredExemplars(db: D1Database, nowMs: number): Promise<number> {
+  try {
+    const res = await db
+      .prepare(
+        `DELETE FROM exemplar_sets WHERE id IN (
+           SELECT id FROM exemplar_sets WHERE expires_at < ?1 AND status NOT IN ('queued', 'running') LIMIT ?2)`,
+      )
+      .bind(nowSeconds(nowMs), EXEMPLAR_PURGE_BATCH)
+      .run();
+    return res.meta.changes ?? 0;
+  } catch (err) {
+    console.error('作文範文的到期清理失敗', err);
+    return 0;
+  }
+}
+
+/** 四件事都跑；任何錯誤只記 log，不影響呼叫端。 */
 export async function runHousekeeping(db: D1Database, nowMs: number): Promise<void> {
   try {
     await purgeExpiredPhotos(db, nowMs);
@@ -169,6 +214,7 @@ export async function runHousekeeping(db: D1Database, nowMs: number): Promise<vo
     console.error('回收卡住的預扣失敗', err);
   }
   await purgeExpiredAssist(db, nowMs);
+  await purgeExpiredExemplars(db, nowMs);
 }
 
 let lastRunAt = 0;

@@ -40,11 +40,12 @@
 
 ## 2. 表格總覽與關聯
 
-### 2.1 表格總覽（61 張表、4 個檢視表、22 個 trigger）
+### 2.1 表格總覽（62 張表、4 個檢視表、22 個 trigger）
 
 「開始使用」是指哪個階段開始寫入或讀取（ROADMAP）；表在 0001 一次建好。之後的遷移另外加的：0003 的 `submission_custom_prompts`
 與 3 個 trigger（英文作文自訂題目，docs/design/custom-essay.md §3；0002 的手寫照片暫存表 `submission_photo_temp` 見遷移檔頭）；
-0004 的學習助手四張表 `assist_cases`、`assist_turns`、`assist_photos`、`assist_reports`（docs/design/learning-assistant.md §4.6；§3.7）。
+0004 的學習助手四張表 `assist_cases`、`assist_turns`、`assist_photos`、`assist_reports`（docs/design/learning-assistant.md §4.6；§3.7）；
+0005 的作文範文 `exemplar_sets`（docs/design/model-essays.md §6.1；§3.7）。
 
 | 群組 | 表 | 開始使用 | 一句話 |
 |---|---|---|---|
@@ -106,6 +107,7 @@
 | | `assist_turns` | 學習助手（0004） | 案例裡的一次 AI 呼叫（轉錄、解析、追問） |
 | | `assist_photos` | 學習助手（0004） | 拍照題目的暫存照片（最長 24 小時） |
 | | `assist_reports` | 學習助手（0004） | 學習報告（一版一列） |
+| | `exemplar_sets` | 作文範文（0005） | 一組三個層級的 AI 範文與說明（一次產生一列） |
 | 稽核維運 | `admin_audit` | Phase 2 | 管理稽核 |
 | | `ops_events` | Phase 2 | 告警與維運事件 |
 | | `deletion_log` | Phase 2 | 刪除證明 |
@@ -127,9 +129,9 @@ vocab_entries ◄─ vocab_forms、vocab_senses、vocab_relations、vocab_exampl
 
 users ◄─ consents、user_prefs、user_notices、practice_sessions、attempts、user_group_seen、srs_cards、srs_reviews、
          user_skill_daily、score_predictions、user_ability、submissions、submission_photos、gradings、chat_threads、
-         submission_custom_prompts、assist_cases、assist_turns、assist_photos、assist_reports（CASCADE）
+         submission_custom_prompts、assist_cases、assist_turns、assist_photos、assist_reports、exemplar_sets（CASCADE）
 users ◄─ ai_ops、item_reports（SET NULL）
-assist_cases ◄─ assist_turns、assist_photos（CASCADE）；ai_ops.ref_id ─ assist_turns.id／assist_reports.id（不設外鍵）
+assist_cases ◄─ assist_turns、assist_photos（CASCADE）；ai_ops.ref_id ─ assist_turns.id／assist_reports.id／exemplar_sets.id（不設外鍵）
 submissions ◄─ submission_photos、gradings、submission_custom_prompts（CASCADE）；submissions.revision_of ─► submissions（SET NULL）
 ai_ops ◄─ ai_calls（SET NULL）；ai_calls、ai_safety_events、deletion_log 只用 HMAC 假名 user_ref
 admin_audit、ops_events、takedowns：不設外鍵
@@ -1369,6 +1371,8 @@ WHERE (SELECT COALESCE(SUM(COALESCE(points_charged, points_reserved)), 0) FROM a
 
 **學習助手**（遷移 0004 不改這張表；docs/design/learning-assistant.md §4.9）用既有的 `kind='explain_template'`：站內題、沒有自由輸入的疑問、作答裡沒有學生自己打的文字（填充、簡答和本站的可接受答案一字不差時不算）、不帶學生個人樣式的解析才讀寫。`cache_key` 是**整個請求**的雜湊（系統提示版本、模型、effort、過濾與 D8 指紋版本、實際組好的 user 訊息全文），任何會進提示的輸入都在鍵裡；`ref_id` 是 `{題組或小題 ref}#{排序後的題號}`。這張表沒有中繼資料欄位，D8 與過濾版本只放在鍵裡：版本換新後舊列不再命中、到期刪除。`result_json` 超過 32,768 字元的解析不寫快取。兩位學生回報「這則解析有錯」就停用（`assist_cases.cache_key` 計數）。
 
+**作文範文**（遷移 0005 不改這張表；docs/design/model-essays.md §4.3）同樣用既有的 `kind='explain_template'`，`ref_id` 是 `exemplar:{group_id}`：只有白名單的網站題目（歷屆試題、本站仿真題）讀寫；學生自己輸入的題目**永遠不讀不寫**。`cache_key` 同樣是整個請求的雜湊（任務與鍵的版本、提示版本、模型、effort、過濾與 D8 指紋版本、實際組好的 user 訊息全文）。和學習助手不同的是：被停用（`flagged`）或已經過期、還沒被清理的列由下一次產生的結果取代（`ON CONFLICT … DO UPDATE … WHERE status = 'flagged' OR expires_at <= 新列的 created_at`，`created_at` 跟著換），所以 `exemplar_sets.cache_gen` 記下命中或寫入當下那一筆的 `created_at`（快取的「代」），「這組範文有問題」的停用計數只算同一代。
+
 個資注意：`translation_grade` 與 `short_answer_judge` 的結果是針對「某一題的某個正規化答案」，`result_json` 會引用學生寫的句子或片語。快取鍵與學生身分無關、也不連回提交，所以學生刪除提交或帳號時**不會**連帶刪除這筆快取（它已無法對應到任何人），到期才刪。這點要寫進隱私權說明（ARCHITECTURE §8.3）；作文（自由寫作、可能含個人經驗）**永遠不進共用快取**。
 
 | 欄位 | 型別與約束 | 說明 |
@@ -1548,6 +1552,51 @@ Anthropic 未成年人指引要求的監控與回報（04 文件 §7.5）：AI �
 | `expires_at` | `INTEGER NOT NULL` | updated_at + 180 天 |
 
 表層約束：`UNIQUE (user_id, version)`　索引：`UNIQUE idx_assist_reports_inflight (user_id) WHERE status IN ('queued','running')`、`idx_assist_reports_expire (expires_at)`　選項：`STRICT`
+
+#### `exemplar_sets`（作文範文）
+
+作文範文（遷移 0005；docs/design/model-essays.md §6.1）：輸入或選一個作文題目，AI 依同一個構想寫出基礎版、穩健版、頂標版三篇範文與說明。一次產生一列，`id` 就是 `ai_ops.ref_id`；consumer 的租約（`lease_until`）與嘗試次數（`tries`）在這裡，不假設 `ref_id` 是提交。只新增這一張表，不改任何既有表與 CHECK。
+
+- 使用者資料：`user_id ON DELETE CASCADE`、每一句查詢都帶 `user_id`（IDOR）；`GET /api/me/export` 多 `exemplars`（來源、題組 id、自訂題的題目、標題、狀態、`output`、評分、時間；題目、標題（自訂題是題目開頭）與範文顯示時重查 D8，和列表、詳情同一支），帳號刪除列進 `deletion_log.rows_json` 的計數。快取鍵與代、去重鍵、`op_id`、租約、內容失敗次數、`meta_json`、提示版本、注入旗標不匯出。內容不進日誌、`ai_calls`、`ops_events` 與後台。
+- 網站題目只存題組 id（`group_id`）；自訂題存正規化、遮過聯絡方式的題目（`prompt_json`）。`output_json` 是程式後處理、過濾後的顯示內容（`ExemplarSetView`）；寫入的值由同一支組列函式產生，先檢查這裡的 CHECK（JSON 合法、長度上限），`meta_json` 超過上限時結構化縮減、不切字串。
+- `content_failures`：語意檢查不通過的次數（跨 Queue 投遞累計）。加上 `ai_calls` 裡同一個操作的截斷與格式不符（`stop_reason='max_tokens'`、`error_code` 是 `schema_mismatch`／`invalid_json`／`unexpected_stop`），一個操作最多付費產生 2 次內容失敗的結果（docs/design/model-essays.md §3.6）。
+- `cache_key`、`cache_gen`：網站題目命中或真的寫入成功的共用快取與它當下的 `created_at`（快取的「代」）；寫入衝突沒寫進去時兩欄都是 NULL。
+- `idx_exemplar_sets_inflight` 保證同一個使用者、同一題（`dedupe_key`）同時只有一個進行中。
+- 保存到最後一次更新後 180 天（`expires_at`）；清理接在 housekeeping（`purgeExpiredExemplars`，每次最多 200 列，進行中的不刪）。回收卡住的預扣用對稱的 `STALE_EXEMPLAR_OPS_SQL`，寫作批改的回收 SQL 排除這個任務（`essay_exemplars`）。
+- 會增加的列舉（`source`）不設 CHECK；時間是 Unix 秒。
+
+| 欄位 | 型別與約束 | 說明 |
+|---|---|---|
+| `id` | `TEXT PRIMARY KEY` | UUID（＝ai_ops.ref_id） |
+| `user_id` | `INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE` | 使用者 |
+| `source` | `TEXT NOT NULL` | exam\|bank\|custom（會增加，不設 CHECK） |
+| `group_id` | `TEXT` | 網站題目的題組 id；自訂題 NULL |
+| `prompt_json` | `TEXT CHECK (prompt_json IS NULL OR (json_valid(prompt_json) AND length(prompt_json) <= 4096))` | 自訂題：題目、圖片描述、段數、字數 |
+| `dedupe_key` | `TEXT NOT NULL` | sha256(site\|group_id) 或 sha256(custom\|正規化題目\|圖片描述\|段數\|字數) |
+| `title` | `TEXT NOT NULL CHECK (length(title) <= 60)` | 列表標題（程式產生） |
+| `status` | `TEXT NOT NULL CHECK (status IN ('queued','running','done','failed'))` | 狀態 |
+| `op_id` | `TEXT` | ai_ops.id（共用快取命中時 NULL） |
+| `fresh` | `INTEGER NOT NULL DEFAULT 0 CHECK (fresh IN (0,1))` | 重新產生（不讀快取） |
+| `cache_hit` | `INTEGER NOT NULL DEFAULT 0 CHECK (cache_hit IN (0,1))` | 共用快取命中（0 點） |
+| `cache_key` | `TEXT` | 命中或真的寫入／取代成功的 ai_shared_cache.cache_key |
+| `cache_gen` | `INTEGER` | 那一筆快取當下的 created_at（快取的「代」） |
+| `output_json` | `TEXT CHECK (output_json IS NULL OR (json_valid(output_json) AND length(output_json) <= 32768))` | ExemplarSetView |
+| `failure` | `TEXT` | 退還原因（AiRefundReason） |
+| `rating` | `TEXT CHECK (rating IS NULL OR rating IN ('helpful','wrong'))` | 學生的評分 |
+| `injection_flag` | `INTEGER NOT NULL DEFAULT 0 CHECK (injection_flag IN (0,1))` | 題目有注入樣式 |
+| `safety_flag` | `TEXT` | 只存類別：這個操作看過最嚴重的身心安全旗標（consumer 在模型標了的當下就寫，退還的組也有；詳情帶給前端顯示求助資源） |
+| `d8_hidden` | `INTEGER NOT NULL DEFAULT 0 CHECK (d8_hidden IN (0,1))` | 有內容因 D8 被隱藏 |
+| `prompt_version` | `TEXT` | 提示詞版本 |
+| `served_model` | `TEXT` | 實際服務的模型 |
+| `meta_json` | `TEXT NOT NULL DEFAULT '{}' CHECK (json_valid(meta_json) AND length(meta_json) <= 2048)` | 規則／過濾／D8／層級版本、處理數、not_writing_task |
+| `lease_until` | `INTEGER` | consumer 的租約到期時間 |
+| `tries` | `INTEGER NOT NULL DEFAULT 0 CHECK (tries BETWEEN 0 AND 5)` | consumer 處理過幾次 |
+| `content_failures` | `INTEGER NOT NULL DEFAULT 0 CHECK (content_failures BETWEEN 0 AND 4)` | 語意檢查不通過的次數（跨投遞） |
+| `created_at` | `INTEGER NOT NULL DEFAULT (unixepoch())` | 建立時間 |
+| `updated_at` | `INTEGER NOT NULL DEFAULT (unixepoch())` | 最後更新時間 |
+| `expires_at` | `INTEGER NOT NULL` | updated_at + 180 天 |
+
+表層約束：`CHECK (expires_at > created_at)`、`CHECK (group_id IS NOT NULL OR prompt_json IS NOT NULL)`　索引：`idx_exemplar_sets_user (user_id, created_at DESC)`、`idx_exemplar_sets_expire (expires_at)`、`idx_exemplar_sets_work (status, lease_until) WHERE status IN ('queued','running')`、`idx_exemplar_sets_cache (cache_key, cache_gen) WHERE cache_key IS NOT NULL`、`UNIQUE idx_exemplar_sets_inflight (user_id, dedupe_key) WHERE status IN ('queued','running')`　選項：`STRICT`
 
 ### 3.8 稽核、維運、刪除證明
 

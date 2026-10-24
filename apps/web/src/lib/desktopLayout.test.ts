@@ -67,6 +67,17 @@ describe('desktopWidthMode', () => {
     expect(desktopWidthMode('/mock/report/00000000-0000-4000-8000-000000000001')).toBe('default');
   });
 
+  it('作文範文：兩條規則在 :examId 之前（首頁是一般寬度、結果頁是工作區；docs/design/model-essays.md §8.3）', () => {
+    expect(desktopWidthMode('/writing/essay/exemplars')).toBe('default');
+    expect(desktopWidthMode('/writing/essay/exemplars/x')).toBe('workspace');
+    expect(isWorkspaceRoute('/writing/essay/exemplars')).toBe(false);
+    const order = ROUTE_MODES.map(([pattern]) => pattern);
+    expect(order.indexOf('/writing/essay/exemplars')).toBeLessThan(order.indexOf('/writing/essay/:examId'));
+    expect(order.indexOf('/writing/essay/exemplars/:id')).toBeLessThan(order.indexOf('/writing/essay/:examId'));
+    expect(sidebarActivePath('/writing/essay/exemplars')).toBe('/composition');
+    expect(sidebarActivePath('/writing/essay/exemplars/x')).toBe('/composition');
+  });
+
   it('isWorkspaceRoute', () => {
     expect(isWorkspaceRoute('/exams/gsat-115')).toBe(true);
     expect(isWorkspaceRoute('/exams')).toBe(false);

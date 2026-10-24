@@ -6,7 +6,7 @@
  * scaleYear：成績單預設用哪一年的官方級分對照表（學生可以在成績單上切換 111–115）。
  */
 import type { ReactNode } from 'react';
-import { TIER_LABELS } from '@gsat/shared';
+import { ESSAY_SUGGESTED_MINUTES, TIER_LABELS } from '@gsat/shared';
 import type { Exam, SectionType } from '../../data/exams';
 import type { QuestionExtras } from '../exams/QuestionExtras';
 import type { MockPdfMeta, PdfDownloadInfo } from '../pdf/types';
@@ -108,7 +108,8 @@ export const SUGGESTED_MINUTES: Partial<Record<SectionType, number>> = {
   reading: 25,
   mixed: 10,
   translation: 8,
-  composition: 25,
+  // 作文的建議用時和作文範文（頂標版「在考場上怎麼用」）共用同一個數字（docs/design/model-essays.md §2.5）。
+  composition: ESSAY_SUGGESTED_MINUTES,
 };
 
 /** 對照年度可以選的範圍（score-scales.json 有的年度）。 */

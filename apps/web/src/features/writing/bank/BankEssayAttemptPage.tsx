@@ -7,6 +7,8 @@
  *   4. 對照：有寫內容就能按「寫好了，看評分規準與範文」（少於 100 字先確認）。按下後作答鎖定，這時才下載 answers 檔，
  *      顯示本題的評分重點與分數帶、自評四項，範文收在下方展開（標「AI 生成範文，僅供參考」）。
  * AI 批改直接呼叫 lib/submit.ts、lib/writingApi.ts；歷屆的 EssayAttemptPage 一行都沒改。
+ * 作文範文（docs/design/model-essays.md §1.3、§1.4）：「看這題的三個層級範文」只放在對照之後才出現的「評分規準與範文」區
+ * （沿用「寫完才對照、對照後鎖定」；次要樣式；開關關著時不出現）。
  */
 import { ESSAY_SHORT_WORDS, PHOTO_MAX_COUNT, TIER_LABELS, type EssayBody, type SelfAssessment } from '@gsat/shared';
 import { ChevronRight, Lock, ShieldCheck } from 'lucide-react';
@@ -43,6 +45,7 @@ import { bankAttemptPath, bankListPath, loadBankAnswers, type BankEssayPromptFil
 import { emptyBankEssayDraft, loadRawDraft, toBankEssayDraft, type BankEssayDraft } from './drafts';
 import { bankErrorView } from './errors';
 import { nextEntry, useBankItem } from './useBankItem';
+import { ExemplarsButton } from '../exemplars/components/ExemplarsButton';
 
 export default function BankEssayAttemptPage() {
   const { code } = useParams();
@@ -440,6 +443,7 @@ function BankEssayAttempt({ entry, index, prompt }: { entry: WritingBankEntry; i
             評分規準與範文
           </h2>
           <EssayAnswers prompt={prompt} selfScores={draft.selfScores} onScores={(selfScores) => update({ selfScores })} />
+          <ExemplarsButton target={`本站仿真${title}`} group={groupId} />
         </section>
       )}
 

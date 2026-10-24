@@ -3,10 +3,12 @@
  * （assist/consumer.ts）呼叫 Claude 的方式相同，所以從 consumer.ts 抽出來，行為不變（test/ai.consumer.test.ts 不改、全過）。
  *
  *   callWithPolicy     一次呼叫：stop_reason='max_tokens' 與輸出格式不符各重試一次（時間夠才在這次重試，否則交給 Queue），
- *                      每一次呼叫都寫 ai_calls；成功時交給 onSuccess（回傳字串＝語意檢查不通過，當成格式不符）
+ *                      每一次呼叫都寫 ai_calls；成功時交給 onSuccess（回傳字串＝語意檢查不通過，當成格式不符）。
+ *                      選填的 contentAttempts（預設 2）：這次投遞最多付費產生幾次內容失敗的結果；作文範文依跨投遞的累計
+ *                      傳 1 或 2（docs/design/model-essays.md §3.6），批改與學習助手不傳、行為逐字不變
  *   actionForFailures  失敗結果 → 處理動作（任何一位不可重試就退還，否則讓 Queue 重送）
  *   recordFiltered     輸出過濾擋下的類別寫進安全事件
- *   LeaseHeld          這次投遞搶到的租約在哪一張表（提交、學習助手的 turn、報告）；預期外的錯誤由外層依表別放掉
+ *   LeaseHeld          這次投遞搶到的租約在哪一張表（提交、學習助手的 turn、報告、作文範文）；預期外的錯誤由外層依表別放掉
  *   contentRefundAlert 內容造成的退還（拒答、格式不符、截斷）同一人 7 天內第 3 次起寫 ops_events 告警（自訂作文題目、學習助手）
  *
  * CallContext 只有呼叫需要的東西（不含提交與題目）；寫作批改的 Ctx 是 CallContext＋提交與題組。
@@ -44,19 +46,20 @@ export interface OpRow {
   status: 'reserved' | 'settled' | 'refunded';
 }
 
-/** 租約所在的表：寫作批改是提交；學習助手的轉錄、解析、追問是 turn，報告是報告。 */
-export type LeaseTable = 'submissions' | 'assist_turns' | 'assist_reports';
+/** 租約所在的表：寫作批改是提交；學習助手的轉錄、解析、追問是 turn，報告是報告；作文範文是 exemplar_sets 的一列。 */
+export type LeaseTable = 'submissions' | 'assist_turns' | 'assist_reports' | 'exemplar_sets';
 
 /** 這次投遞搶到的租約（預期外錯誤時由外層依表別放掉）。 */
 export interface LeaseHeld {
   held: { table: LeaseTable; id: string; userId: number; opId: string } | null;
 }
 
-/** 三句固定的 SQL（不拼表名）：只放掉還指向這個操作的那一列的租約。 */
+/** 每張表一句固定的 SQL（不拼表名）：只放掉還指向這個操作的那一列的租約。 */
 const RELEASE_LEASE_SQL: Record<LeaseTable, string> = {
   submissions: 'UPDATE submissions SET lease_until = NULL WHERE id = ?1 AND user_id = ?2 AND op_id = ?3',
   assist_turns: 'UPDATE assist_turns SET lease_until = NULL WHERE id = ?1 AND user_id = ?2 AND op_id = ?3',
   assist_reports: 'UPDATE assist_reports SET lease_until = NULL WHERE id = ?1 AND user_id = ?2 AND op_id = ?3',
+  exemplar_sets: 'UPDATE exemplar_sets SET lease_until = NULL WHERE id = ?1 AND user_id = ?2 AND op_id = ?3',
 };
 
 /** 放掉這次投遞搶到的租約（重送時才不會被自己的租約擋住、白白用掉投遞次數）。 */
@@ -94,15 +97,29 @@ export function log(event: string, fields: Record<string, unknown>): void {
   console.log(JSON.stringify({ event, ...fields }));
 }
 
+/** callWithPolicy 的選項。 */
+export interface CallPolicyOptions {
+  /**
+   * 這次投遞最多付費產生幾次「內容失敗」的結果（截斷、輸出格式不符、onSuccess 回傳字串）：預設 2＝既有規則（第一次失敗時
+   * 來得及就在這次重試、來不及就交回 Queue；第二次失敗退還）。1＝這次的內容失敗直接回 retryable: false（退還）。
+   * 作文範文依「這個操作已有的內容失敗次數」傳 1 或 2，所以跨 Queue 投遞累計最多付費 2 次（docs/design/model-essays.md §3.6）；
+   * 批改與學習助手不傳。超出 1–2 的值夾到 1–2。
+   */
+  contentAttempts?: number;
+}
+
 /**
  * 呼叫一位評分者（或 OCR）：stop_reason='max_tokens' 與輸出格式不符各重試一次（§6.2 第 4 條、SPEC §8.3）；
  * 每一次呼叫都寫 ai_calls。成功時交給 onSuccess 處理（計分、寫 gradings）；onSuccess 回傳字串＝語意檢查不通過。
+ * 內容失敗（截斷、格式不符、語意檢查不通過）在這次投遞裡最多 contentAttempts 次（見 CallPolicyOptions）。
  */
 export async function callWithPolicy(
   ctx: CallContext,
   input: ClaudeCallInput,
   onSuccess: (data: unknown, callId: number | null, model: string, promptVersion: string) => Promise<string | null>,
+  options: CallPolicyOptions = {},
 ): Promise<CallResult> {
+  const contentAttempts = Math.min(2, Math.max(1, Math.floor(options.contentAttempts ?? 2)));
   let built;
   try {
     built = await buildClaudeRequest(input);
@@ -115,6 +132,8 @@ export async function callWithPolicy(
   const day = taiwanDay(ctx.now());
   /** 同一次呼叫裡還來得及再跑一次完整呼叫嗎（否則交給 Queue 重送）。 */
   const canRetryHere = () => ctx.now() - ctx.startedAt + callDeadlineMs(input) <= CONSUMER_WALL_BUDGET_MS;
+  /** 這是第 attempt 次（0 起算）內容失敗：還能不能再付費產生一次（在這次投遞或交回 Queue）。只有內容失敗會進到下一圈。 */
+  const mayRetryContent = (attempt: number) => attempt + 1 < contentAttempts;
   for (let attempt = 0; attempt < 2; attempt++) {
     const outcome = await executeClaudeCall(client, input, built, ctx.now);
     const callId = await recordCall(ctx.db, ctx.op.id, outcome.record, ctx.userRef, day);
@@ -136,7 +155,7 @@ export async function callWithPolicy(
         const problem = await onSuccess(outcome.data, callId, outcome.record.servedModel ?? input.spec.model, built.promptVersion);
         if (problem === null) return { ok: true };
         log('ai_invalid_output', { op_id: ctx.op.id, role: input.spec.role, attempt });
-        if (attempt === 0) {
+        if (mayRetryContent(attempt)) {
           if (canRetryHere()) continue;
           return { ok: false, retryable: true, reason: 'invalid_output' };
         }
@@ -144,13 +163,13 @@ export async function callWithPolicy(
       }
       case 'invalid':
         log('ai_invalid_output', { op_id: ctx.op.id, role: input.spec.role, attempt });
-        if (attempt === 0) {
+        if (mayRetryContent(attempt)) {
           if (canRetryHere()) continue;
           return { ok: false, retryable: true, reason: 'invalid_output' };
         }
         return { ok: false, retryable: false, reason: 'invalid_output' };
       case 'max_tokens':
-        if (attempt === 0) {
+        if (mayRetryContent(attempt)) {
           if (canRetryHere()) continue;
           return { ok: false, retryable: true, reason: 'max_tokens' };
         }

@@ -13,6 +13,8 @@
  *            值一定是 true。admin 模式（只有管理員能用）不回任何欄位：公開端點不透露有預覽，
  *            管理員的預覽資格在要登入的 /api/me（MeResponseSignedIn.assistant_preview）。
  *   assistantPhoto assistant 有值而且拍照開關 AI_ASSISTANT_PHOTO 也是 on；同樣只在 on 時出現、值一定是 true。
+ *   essayExemplars ai 為 true 且作文範文的總開關 AI_ESSAY_EXEMPLARS 是 on（docs/design/model-essays.md §7.5）；規則同 assistant：
+ *            只在 on 時出現、值一定是 true；admin 模式不回任何欄位（管理員的預覽在 /api/me 的 exemplars_preview）。
  *
  * Worker 還沒部署時，Vercel 代理會回 HTML 或 404：前端 api() 包裝把它當成 not_configured，
  * 改用 FEATURES_OFF，整站照常運作，只是不顯示登入與 AI。
@@ -28,13 +30,15 @@ export interface FeaturesResponse {
   assistant?: boolean;
   /** 學習助手的拍照問題目開放（沒有這個欄位＝只能貼上文字）。 */
   assistantPhoto?: boolean;
+  /** 作文範文對所有已核准的學生開放（沒有這個欄位＝沒開放，或只有管理員預覽）。 */
+  essayExemplars?: boolean;
 }
 
 /** 後端連不上或未設定時的預設值：全部關閉。 */
 export const FEATURES_OFF: FeaturesResponse = Object.freeze({ auth: false, ai: false, ocr: false, aiPaused: false });
 
 /**
- * 型別守衛：四個欄位都必須是布林（代理回的 HTML 不算）；customEssay、assistant、assistantPhoto 可以不存在
+ * 型別守衛：四個欄位都必須是布林（代理回的 HTML 不算）；customEssay、assistant、assistantPhoto、essayExemplars 可以不存在
  * （舊版 Worker、開關沒開），存在時必須是布林。
  */
 export function isFeaturesResponse(value: unknown): value is FeaturesResponse {
@@ -47,6 +51,7 @@ export function isFeaturesResponse(value: unknown): value is FeaturesResponse {
     typeof v['aiPaused'] === 'boolean' &&
     (v['customEssay'] === undefined || typeof v['customEssay'] === 'boolean') &&
     (v['assistant'] === undefined || typeof v['assistant'] === 'boolean') &&
-    (v['assistantPhoto'] === undefined || typeof v['assistantPhoto'] === 'boolean')
+    (v['assistantPhoto'] === undefined || typeof v['assistantPhoto'] === 'boolean') &&
+    (v['essayExemplars'] === undefined || typeof v['essayExemplars'] === 'boolean')
   );
 }

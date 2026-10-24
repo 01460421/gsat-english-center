@@ -50,11 +50,19 @@ export class ApiRequestError extends Error {
   readonly field: string | null;
   /** 命中處在學生自己（正規化後）文字裡的位置 [start, end)；沒有就是 null。只是位置，不含任何受保護文字。 */
   readonly ranges: ReadonlyArray<readonly [number, number]> | null;
+  /** 作文範文的 409 exemplar_site_match：相同的網站題目（題組代號與標題；docs/design/model-essays.md §5.3）；其他錯誤是 null。 */
+  readonly siteMatch: { group_id: string; title: string } | null;
   constructor(
     status: number,
     code: ApiErrorCode | null,
     message: string,
-    options: { nonJson?: boolean; reason?: string | null; field?: string | null; ranges?: ReadonlyArray<readonly [number, number]> | null } = {},
+    options: {
+      nonJson?: boolean;
+      reason?: string | null;
+      field?: string | null;
+      ranges?: ReadonlyArray<readonly [number, number]> | null;
+      siteMatch?: { group_id: string; title: string } | null;
+    } = {},
   ) {
     super(message);
     this.name = 'ApiRequestError';
@@ -64,11 +72,17 @@ export class ApiRequestError extends Error {
     this.reason = options.reason ?? null;
     this.field = options.field ?? null;
     this.ranges = options.ranges ?? null;
+    this.siteMatch = options.siteMatch ?? null;
   }
 }
 
-/** 錯誤本體裡選填的 reason、field、ranges（形狀不對的一律略過，不讓整個錯誤變成別的代碼）。 */
-function errorDetail(body: unknown): { reason: string | null; field: string | null; ranges: Array<[number, number]> | null } {
+/** 錯誤本體裡選填的 reason、field、ranges、group_id＋title（形狀不對的一律略過，不讓整個錯誤變成別的代碼）。 */
+function errorDetail(body: unknown): {
+  reason: string | null;
+  field: string | null;
+  ranges: Array<[number, number]> | null;
+  siteMatch: { group_id: string; title: string } | null;
+} {
   const err = typeof body === 'object' && body !== null ? (body as { error?: unknown }).error : undefined;
   const e = typeof err === 'object' && err !== null ? (err as Record<string, unknown>) : {};
   const reason = typeof e['reason'] === 'string' ? e['reason'] : null;
@@ -80,7 +94,8 @@ function errorDetail(body: unknown): { reason: string | null; field: string | nu
           Array.isArray(r) && r.length === 2 && Number.isInteger(r[0]) && Number.isInteger(r[1]) && (r[0] as number) >= 0 && (r[1] as number) >= (r[0] as number),
       )
     : null;
-  return { reason, field, ranges: ranges && ranges.length > 0 ? ranges : null };
+  const siteMatch = typeof e['group_id'] === 'string' && typeof e['title'] === 'string' ? { group_id: e['group_id'], title: e['title'] } : null;
+  return { reason, field, ranges: ranges && ranges.length > 0 ? ranges : null, siteMatch };
 }
 
 /** 閘道或代理回的非 JSON 5xx（Vercel 502／504、Cloudflare 1101／1102 錯誤頁）：暫時性錯誤，重試多半就好。 */

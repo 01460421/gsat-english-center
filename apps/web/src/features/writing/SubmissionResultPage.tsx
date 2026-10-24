@@ -80,6 +80,7 @@ import { saveSelfAssessment, startTask } from './lib/submit';
 import { countEnglishWords, countParagraphs } from './lib/text';
 import { useDescribeContext, useErrorView, useRefreshMeOnConsentError } from './lib/useErrorView';
 import { deleteSubmission, getAiOp, updateSubmission, type AiTaskPath } from './lib/writingApi';
+import { ExemplarsButton } from './exemplars/components/ExemplarsButton';
 
 export default function SubmissionResultPage() {
   const { id = '' } = useParams();
@@ -856,6 +857,14 @@ function SubmissionView({ id }: { id: string }) {
           <ReportAiContent />
           {/* 學習助手（開關關著時 render null；docs/design/learning-assistant.md §1.4）：錯誤依類別歸納、逐句拆解、下次怎麼寫。 */}
           <AskAssistantButton ask={{ src: 'writing', sub: detail.id }} variant="primary" label="請學習助手解析這份批改" className="self-start" />
+          {/* 作文範文（docs/design/model-essays.md §1.4）：次要樣式（主要按鈕是上面的學習助手）；帶 ?sub= 給「你的作文」欄。
+              網站題目帶題組 id；自訂題的題目經 sessionStorage 交接（題目被隱藏時不出現）。開關關著時 render null。 */}
+          {detail.kind === 'essay' &&
+            (isCustom ? (
+              customPrompt && !customPrompt.hidden ? <ExemplarsButton target={heading} customPrompt={customPrompt} sub={detail.id} /> : null
+            ) : (
+              <ExemplarsButton target={heading} group={detail.group_id} sub={detail.id} />
+            ))}
           {bankCurrent && <BankAnswersPanel uid={bankCurrent.uid} version={bankCurrent.version} kind={detail.kind} />}
           <div className="flex flex-wrap gap-2">
             {attemptPath && (

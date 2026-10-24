@@ -7,7 +7,8 @@
  *   2  不送 temperature／top_p／top_k、強制 tool_choice、assistant 預填（messages 只有一則 user）
  *   3  不送 thinking（Opus 5.5 一律 adaptive）；每個任務明確設定 output_config.effort
  *   4  max_tokens 含思考空間；stop_reason='max_tokens' 由呼叫端重試一次
- *   5  output_config.format＝SDK 的 betaZodOutputFormat 產生的 JSON schema（剝除不支援的約束；學習助手另外攤開 $ref，見 inlineJsonSchemaRefs）；
+ *   5  output_config.format＝SDK 的 betaZodOutputFormat 產生的 JSON schema（剝除不支援的約束；學習助手與作文範文另外攤開 $ref，
+ *      見 inlineJsonSchemaRefs 與 shared 的 inlinesSchemaRefs）；
  *      只送 { type, schema }、不帶 SDK 的自動解析：先檢查 stop_reason 再用完整的 zod schema 驗證，
  *      拒答或截斷時才不會在 SDK 裡丟出解析錯誤、拿不到 usage
  *   6  schema 欄位名稱不含 reasoning 類字樣（說明欄位叫 explanation_zh）
@@ -32,7 +33,7 @@ import type {
   BetaMessage,
   BetaMessageStreamParams,
 } from '@anthropic-ai/sdk/resources/beta/messages/messages';
-import { isAssistTask, type AiRefundReason, type AiTask } from '@gsat/shared';
+import { inlinesSchemaRefs, type AiRefundReason, type AiTask } from '@gsat/shared';
 import type * as z from 'zod/v4';
 import { promptVersionOf } from './prompts/common';
 import { costOfUsage, PRICING_VERSION, pricingOf, type UsageEntry } from './pricing';
@@ -98,8 +99,8 @@ export function inlineJsonSchemaRefs(schema: Record<string, unknown>): Record<st
 }
 
 /**
- * 送出的 JSON schema（SDK 的轉換結果）。inlineRefs：學習助手的任務攤開 $ref（見 inlineJsonSchemaRefs）；
- * 批改任務維持原樣（正式站一直正常，請求逐位元不變）。
+ * 送出的 JSON schema（SDK 的轉換結果）。inlineRefs：學習助手與作文範文的任務攤開 $ref（見 inlineJsonSchemaRefs；
+ * 哪些任務攤開由 shared 的 inlinesSchemaRefs 決定）；批改任務維持原樣（正式站一直正常，請求逐位元不變）。
  */
 export function outgoingJsonSchema(schema: z.ZodType, opts: { inlineRefs?: boolean } = {}): Record<string, unknown> {
   const raw = betaZodOutputFormat(schema).schema as Record<string, unknown>;
@@ -111,7 +112,7 @@ export async function buildClaudeRequest(input: ClaudeCallInput): Promise<BuiltR
   const { spec } = input;
   const pricing = pricingOf(spec.model);
   if (!pricing) throw new ModelNotAllowedError(spec.model);
-  const jsonSchema = outgoingJsonSchema(input.schema, { inlineRefs: isAssistTask(input.task) });
+  const jsonSchema = outgoingJsonSchema(input.schema, { inlineRefs: inlinesSchemaRefs(input.task) });
   const promptVersion = await promptVersionOf([input.system, JSON.stringify(jsonSchema), input.templateVersion, spec.framework]);
   const images = Array.isArray(input.content) ? input.content.filter((b) => b.type === 'image').length : 0;
   const params: BetaMessageStreamParams = {

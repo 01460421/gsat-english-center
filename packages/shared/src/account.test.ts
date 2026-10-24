@@ -80,6 +80,13 @@ describe('isMeResponse', () => {
     expect(isMeResponse({ ...signedIn, assistant_preview: { photo: 'on' } })).toBe(false);
   });
 
+  it('exemplars_preview 選填（只有作文範文的管理員預覽時才有）；有的話必須是 true（docs/design/model-essays.md §7.5）', () => {
+    expect(isMeResponse({ ...signedIn, exemplars_preview: true })).toBe(true);
+    expect(isMeResponse({ ...signedIn, exemplars_preview: false })).toBe(false);
+    expect(isMeResponse({ ...signedIn, exemplars_preview: null })).toBe(false);
+    expect(isMeResponse({ ...signedIn, exemplars_preview: 'admin' })).toBe(false);
+  });
+
   it('拒絕其他形狀', () => {
     expect(isMeResponse({})).toBe(false);
     expect(isMeResponse({ user: { ...signedIn.user, role: 'root' }, pending_consents: [], onboarded: true })).toBe(false);

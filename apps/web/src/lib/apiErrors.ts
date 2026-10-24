@@ -37,6 +37,10 @@ export const API_ERROR_MESSAGES: Record<ApiErrorCode, string> = {
   assist_input_invalid: '題目或內容不符合規則，請依畫面上的說明修改。',
   assist_source_unavailable: '暫時讀不到這一題，請稍後再試。',
   assist_limit: '已經達到學習助手的使用上限。',
+  // 作文範文（docs/design/model-essays.md §7.2）：通用文案；範文頁依 error.reason 與題目資訊顯示更細的說明。
+  exemplar_site_match: '這一題和網站上的題目相同，可以改用網站上的題目。',
+  exemplar_unavailable: '這一題目前不提供範文。',
+  exemplar_limit: '已經達到作文範文的使用上限。',
 };
 
 /** 錯誤代碼（不是 ApiRequestError 或後端沒給代碼時為 null）。 */

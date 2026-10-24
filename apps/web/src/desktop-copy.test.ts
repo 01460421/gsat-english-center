@@ -32,6 +32,46 @@ const FILES = {
   ),
 };
 
+/**
+ * 作文範文（docs/design/model-essays.md §8.4）：features/writing/exemplars/** 的原始碼（含測試與註解）與抽出的共用元件，
+ * 不出現考試單位的中英文名稱，也不寫任何模型名稱或模型 ID（模型一律是 AI_MODEL_DEFAULT，前端不需要知道是哪一個）。
+ */
+const EXEMPLAR_FILES = import.meta.glob<string>(['./features/writing/exemplars/**/*.{ts,tsx}', './features/writing/components/AnnotatedEssayText.tsx'], {
+  query: '?raw',
+  import: 'default',
+  eager: true,
+});
+
+/**
+ * 模型名稱：Worker 價格表（apps/api/src/ai/pricing.ts）裡每一個模型代號的前兩段，同 API 評測測試的做法（這裡不寫模型名稱本身）。
+ * 價格表涵蓋所有可能呼叫或接手的模型，換模型時這裡自動跟著換。
+ */
+const PRICING_SOURCE = Object.values(import.meta.glob<string>('../../api/src/ai/pricing.ts', { query: '?raw', import: 'default', eager: true }))[0] ?? '';
+const MODEL_IDS = [...PRICING_SOURCE.matchAll(/^\s*'([a-z]+(?:-[a-z0-9]+)+)':\s*\{/gm)].map((m) => m[1] ?? '');
+const MODEL_WORDS = new RegExp(`\\b(?:${[...new Set(MODEL_IDS.flatMap((id) => id.split('-').slice(0, 2)))].join('|')})\\b`, 'i');
+
+describe('作文範文的文案', () => {
+  it('掃到作文範文的檔案', () => {
+    expect(Object.keys(EXEMPLAR_FILES)).toEqual(
+      expect.arrayContaining([
+        './features/writing/exemplars/ExemplarsHomePage.tsx',
+        './features/writing/exemplars/ExemplarSetPage.tsx',
+        './features/writing/exemplars/labels.ts',
+        './features/writing/exemplars/lib/copyText.ts',
+        './features/writing/components/AnnotatedEssayText.tsx',
+      ]),
+    );
+  });
+
+  it('不出現「大考中心」或 CEEC，也沒有模型名稱或模型 ID', () => {
+    // 價格表讀得到、至少有一個模型代號，掃描才有意義。
+    expect(MODEL_IDS.length).toBeGreaterThan(0);
+    expect(MODEL_WORDS.test(MODEL_IDS[0] ?? '')).toBe(true);
+    const hits = Object.entries(EXEMPLAR_FILES).filter(([, source]) => /大考中心|CEEC/i.test(source) || MODEL_WORDS.test(source));
+    expect(hits.map(([file]) => file)).toEqual([]);
+  });
+});
+
 describe('桌機介面的文案', () => {
   it('掃到這次新增的檔案', () => {
     expect(Object.keys(FILES)).toEqual(

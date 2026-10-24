@@ -79,6 +79,13 @@ export const API_ERROR_CODES = [
   'assist_source_unavailable',
   /** 學習助手的數量上限（429）；error.reason 是 'cases_per_day' | 'cases_live' | 'analyses_per_case' | 'followups_per_case' | 'photos'。 */
   'assist_limit',
+  // ── 作文範文（exemplars.ts；docs/design/model-essays.md §7.2）──
+  /** 學生貼的題目和網站上的題目相同（409）；error.group_id、error.title 是網站題目的代號與標題。帶 allow_custom 就不再比對。 */
+  'exemplar_site_match',
+  /** 這一題目前不提供範文（409；白名單以外的題組）。 */
+  'exemplar_unavailable',
+  /** 作文範文的數量上限（429）；error.reason 是 'sets_per_day' | 'sets_stored'。 */
+  'exemplar_limit',
 ] as const;
 export type ApiErrorCode = (typeof API_ERROR_CODES)[number];
 
@@ -96,6 +103,9 @@ export interface ApiErrorBody {
      * 只是位置，不含任何受保護文字（D8）。
      */
     ranges?: Array<[number, number]>;
+    /** 選填：exemplar_site_match 時相同的網站題目（題組代號與標題；docs/design/model-essays.md §5.3）。 */
+    group_id?: string;
+    title?: string;
   };
 }
 

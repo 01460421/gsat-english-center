@@ -1,0 +1,19 @@
+# 作文範文真模型評測的觸發檔（docs/design/model-essays.md §9.6 第 2 點；.github/workflows/exemplars-eval.yml 讀這個檔）。
+# 改這個檔、推到 claude/** 分支，就會用下面的參數跑評測（和 Actions 頁面的 Run workflow 同一個 job、同一個預算上限）。
+# 只有改到這個檔的 push 才會跑完整評測；只改其他檔不會。每一行是「名稱=值」，# 開頭是註解，不認得的名稱會讓 workflow 失敗。
+#
+#   request           這次的說明（隨便寫；只改這一行也算改了這個檔，可以用來重跑同樣的參數）
+#   budget_usd        累計花費上限（美元，大於 0、不超過 100；含之前中斷的那幾次）。完整評測約 US$11（估計）。
+#   resume            true＝接著上次中斷的結果跑（已完成的題目不重新花錢）；false＝從頭開始
+#   effort_sweep      true＝另外跑 G 組（B 組的 3 題改用 effort low，只給站主參考）
+#   allow_online_key  true＝沒有 ANTHROPIC_PARITY_API_KEY 時改用正式站的 ANTHROPIC_API_KEY
+#   cases             只跑這些題目（題目 id 或組別字母，逗號分隔；空白＝B–F 全部）。A 組（輸出格式編譯）一定先跑。
+#                     只跑一部分時結論寫「部分」，不能拿來當上線門檻（上線 PR 要附完整評測的綠色 run）。
+#
+# 目前的值：E2 合併前確認 workflow 本身跑得起來（A 組＋1 題，預算 US$1，§10.1）。
+request=E2 合併前確認 workflow 跑得起來（沒有 dev 金鑰，改用正式站金鑰，上限 US$1）
+budget_usd=1
+resume=false
+effort_sweep=false
+allow_online_key=true
+cases=gsat-115

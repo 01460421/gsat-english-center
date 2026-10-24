@@ -13,6 +13,8 @@
  *   /api/ai/*         任務型 AI 端點（src/ai/routes.ts）：提示詞與評分基準都寫在伺服器端，前端只送作答內容
  *   /api/assist/*     學習助手的案例、解析與追問（src/assist/routes.ts；docs/design/learning-assistant.md §4.1）：題目由 Worker 自己讀
  *                     網站的公開題目檔（c.var.siteData，下面的中介層建立），前端只送「哪一題、學生答什麼」
+ *   /api/exemplars/*  作文範文（src/exemplars/routes.ts；docs/design/model-essays.md §7.1）：網站題目只送題組 id（題目由 Worker 從
+ *                     題目庫取），自訂題經 checkCustomPrompt 與 D8；產生走 Queue（consumer 在 src/exemplars/consumer.ts）
  *   /api/admin/*      後台（src/admin/routes.ts、src/admin/ai.ts）。不用 /admin/*：過渡期 Vercel 只轉送 /api 與 /auth，
  *                     SPA 的 catch-all 會吞掉 /admin/*（ARCHITECTURE §12）
  *   /auth/*           Google OAuth 與 session cookie（src/auth/routes.ts）
@@ -37,6 +39,7 @@ import { adminRoutes } from './admin/routes';
 import { aiRoutes } from './ai/routes';
 import { assistRoutes } from './assist/routes';
 import { createSiteData } from './assist/siteData';
+import { exemplarRoutes } from './exemplars/routes';
 import { authRoutes } from './auth/routes';
 import { featureRoutes } from './features';
 import { housekeeping } from './ai/housekeeping';
@@ -75,6 +78,7 @@ app.use('/api/assist/*', async (c, next) => {
   await next();
 });
 app.route('/api/assist', assistRoutes);
+app.route('/api/exemplars', exemplarRoutes);
 app.route('/api/admin', adminRoutes);
 app.route('/api/admin', adminAiRoutes);
 app.route('/auth', authRoutes);

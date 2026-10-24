@@ -11,6 +11,7 @@ import { handleError } from '../src/errors';
 import { VERSIONS, authEnv, call, cookieFor, insertUser, nowSec, setCookies, type TestEnv } from './helpers/auth';
 import { seedAssistCase, seedAssistPhoto, seedAssistReport, seedAssistTurn } from './helpers/assist';
 import { CUSTOM_TASK, seedCustomSubmission } from './helpers/customEssay';
+import { sampleExemplarView, seedExemplarOp, seedExemplarSet } from './helpers/exemplars';
 
 let env: TestEnv;
 beforeEach(() => {
@@ -327,6 +328,51 @@ describe('匯出與刪除帳號：要 10 分鐘內登入過', () => {
     expect(q(env, 'SELECT COUNT(*) AS n FROM assist_cases WHERE user_id = ?', other.id)).toEqual([{ n: 1 }]);
     const log = q(env, 'SELECT rows_json FROM deletion_log') as Array<Record<string, string>>;
     expect(JSON.parse(log[0]!['rows_json']!)).toMatchObject({ assist_cases: 2, assist_turns: 3, assist_photos: 1, assist_reports: 2 });
+  });
+
+  it('作文範文（docs/design/model-essays.md §6.2）：匯出每一組的來源、題組 id、自訂題的題目、標題、狀態、output、評分與時間；不含內部欄位；只含自己的', async () => {
+    const u = insertUser(env.DB, { aiStatus: 'approved' });
+    const site = seedExemplarSet(env.DB, u.id, { output: sampleExemplarView(), opId: 'op-exemplar-secret' });
+    env.DB.sqlite.prepare("UPDATE exemplar_sets SET rating = 'helpful' WHERE id = ?").run(site);
+    const custom = seedExemplarSet(env.DB, u.id, { source: 'custom', status: 'failed', createdAt: nowSec() + 5 });
+    const other = insertUser(env.DB);
+    const otherSet = seedExemplarSet(env.DB, other.id, { output: sampleExemplarView() });
+
+    const data = (await (await call(env, 'GET', '/api/me/export', { cookie: await cookieFor(u) })).json()) as MeExport;
+    expect(data.exemplars).toHaveLength(2);
+    const [first, second] = data.exemplars as Array<Record<string, unknown>>;
+    expect(first).toMatchObject({ id: site, source: 'exam', group_id: 'gsat-115.s8g1@1', prompt: null, title: '115 學測 英文作文', status: 'done', rating: 'helpful' });
+    expect((first!['output'] as { essays: unknown[] }).essays).toHaveLength(3);
+    expect(first!['output']).toEqual(sampleExemplarView());
+    expect(Object.keys(first!).sort()).toEqual(['created_at', 'group_id', 'id', 'output', 'prompt', 'rating', 'source', 'status', 'title', 'updated_at']);
+    expect(second).toMatchObject({ id: custom, source: 'custom', group_id: null, status: 'failed', output: null });
+    expect(second!['prompt']).toMatchObject({ text: '請寫一篇英文作文，談談你最喜歡的季節。', paragraphs: 2, min_words: 120, max_words: null });
+    // 內部欄位不匯出（快取鍵與代、去重鍵、op_id、租約、內容失敗次數、meta、提示版本、實際模型、注入旗標）；別人的不匯出。
+    const text = JSON.stringify(data.exemplars);
+    for (const internal of ['cache-key-secret', 'cache_gen', '1700000000', 'dedupe', 'op-exemplar-secret', 'op_id', 'lease_until', 'tries', 'content_failures', 'meta-secret', 'pv-secret', 'served-model-secret', 'injection_flag']) {
+      expect(text, internal).not.toContain(internal);
+    }
+    expect(text).not.toContain(otherSet);
+  });
+
+  it('作文範文：沒有任何範文時匯出不帶 exemplars（和上線前相同）；刪帳號時一起刪、刪除證明有列數；預扣的帳本去識別', async () => {
+    const empty = insertUser(env.DB);
+    const plain = (await (await call(env, 'GET', '/api/me/export', { cookie: await cookieFor(empty) })).json()) as MeExport;
+    expect(plain).not.toHaveProperty('exemplars');
+
+    const u = insertUser(env.DB, { aiStatus: 'approved' });
+    seedExemplarSet(env.DB, u.id);
+    const set = seedExemplarSet(env.DB, u.id, { source: 'custom' });
+    seedExemplarOp(env.DB, u.id, set);
+    const other = insertUser(env.DB);
+    seedExemplarSet(env.DB, other.id);
+    const cookie = await cookieFor(u);
+    expect((await call(env, 'DELETE', '/api/me', { cookie, json: { confirm: DELETE_ACCOUNT_CONFIRM } })).status).toBe(204);
+    expect(q(env, 'SELECT COUNT(*) AS n FROM exemplar_sets WHERE user_id = ?', u.id)).toEqual([{ n: 0 }]);
+    expect(q(env, 'SELECT COUNT(*) AS n FROM exemplar_sets WHERE user_id = ?', other.id)).toEqual([{ n: 1 }]);
+    const log = q(env, 'SELECT rows_json FROM deletion_log') as Array<Record<string, string>>;
+    expect(JSON.parse(log[0]!['rows_json']!)).toMatchObject({ exemplar_sets: 2, ai_ops_anonymized: 1 });
+    expect(q(env, "SELECT COUNT(*) AS n FROM ai_ops WHERE task = 'essay_exemplars' AND user_id IS NULL")).toEqual([{ n: 1 }]);
   });
 
   it('同意未完成也可以匯出與刪除（個資權利不受新條款影響）', async () => {

@@ -7,10 +7,16 @@
  * 學習助手（docs/design/learning-assistant.md §4.17）：assist.cases 是每個案例的題目、疑問、筆記、全部解析與追問（turns），
  * assist.reports 是每一版報告（facts、逐週計畫與內容）。照片不匯出；租約、重試次數、op_id、快取鍵、去重鍵、注入旗標、
  * 提示版本與 meta 不匯出。沒有任何學習助手資料時不帶 assist（回應和學習助手上線前相同）。
+ * 作文範文（docs/design/model-essays.md §6.2）：exemplars 是每一組的 id、來源、題組 id、自訂題的題目、標題、狀態、output、評分、
+ * 建立與更新時間；題目、標題（自訂題是題目開頭）與 output 顯示時重查 D8（exemplars/visible.ts、repo.ts 的 visibleTitle，和列表、
+ * 詳情同一支）。快取鍵與代、去重鍵、op_id、租約、內容失敗次數、meta、
+ * 提示版本、注入旗標不匯出。沒有任何範文時不帶 exemplars。
  * MVP 還沒有作答、複習、偏好等資料，Phase 2 加上對應的表時在這裡補。
  */
-import type { ConsentKind, ConsentRecord, MeExport } from '@gsat/shared';
+import type { ConsentKind, ConsentRecord, ExemplarSource, MeExport } from '@gsat/shared';
 import { USER_COLUMNS, type UserRow } from '../auth/session';
+import { visibleTitle } from '../exemplars/repo';
+import { visibleExemplarPrompt, visibleExemplarView } from '../exemplars/visible';
 import { visibleCustomPrompt, type CustomPromptRow } from '../submissions/custom';
 
 /** *_json 欄位轉回物件；壞掉的 JSON 原樣保留成字串（匯出不能因為一列壞資料就整個失敗）。 */
@@ -29,7 +35,7 @@ interface SubmissionExportRow {
 }
 
 export async function buildExport(db: D1Database, userId: number): Promise<MeExport> {
-  const [users, consents, submissions, gradings, customPrompts, assistCases, assistTurns, assistReports] = await db.batch([
+  const [users, consents, submissions, gradings, customPrompts, assistCases, assistTurns, assistReports, exemplarSets] = await db.batch([
     db.prepare(`SELECT ${USER_COLUMNS} FROM users WHERE id = ?`).bind(userId),
     db.prepare('SELECT kind, version, granted, created_at FROM consents WHERE user_id = ? ORDER BY id').bind(userId),
     db
@@ -71,6 +77,12 @@ export async function buildExport(db: D1Database, userId: number): Promise<MeExp
         `SELECT id, version, based_on, status, target_json, exam_date, feedback_text, input_json, report_json, failure,
                 created_at, updated_at, expires_at
          FROM assist_reports WHERE user_id = ? ORDER BY version`,
+      )
+      .bind(userId),
+    db
+      .prepare(
+        `SELECT id, source, group_id, prompt_json, title, status, output_json, meta_json, rating, created_at, updated_at
+         FROM exemplar_sets WHERE user_id = ? ORDER BY created_at, id`,
       )
       .bind(userId),
   ]);
@@ -131,6 +143,37 @@ export async function buildExport(db: D1Database, userId: number): Promise<MeExp
   const cases = ((assistCases?.results ?? []) as Array<Record<string, unknown>>).map((c) => ({ ...jsonColumns(c), turns: turnsByCase.get(String(c['id'])) ?? [] }));
   const reports = ((assistReports?.results ?? []) as Array<Record<string, unknown>>).map(jsonColumns);
 
+  // 作文範文：題目、標題與範文都重查 D8（meta_json 只用來判斷要不要重查，不匯出）。
+  type ExemplarExportRow = {
+    id: string;
+    source: string;
+    group_id: string | null;
+    prompt_json: string | null;
+    title: string;
+    status: string;
+    output_json: string | null;
+    meta_json: string | null;
+    rating: string | null;
+    created_at: number;
+    updated_at: number;
+  };
+  const exemplars = ((exemplarSets?.results ?? []) as ExemplarExportRow[]).map((e) => {
+    const output = visibleExemplarView(e.output_json, e.meta_json);
+    return {
+      id: e.id,
+      source: e.source,
+      group_id: e.group_id,
+      prompt: visibleExemplarPrompt(e.prompt_json, e.updated_at),
+      title: visibleTitle({ source: e.source as ExemplarSource, title: e.title }),
+      status: e.status,
+      output: output.view,
+      ...(output.unavailable ? { output_unavailable: true } : {}),
+      rating: e.rating,
+      created_at: e.created_at,
+      updated_at: e.updated_at,
+    };
+  });
+
   return {
     format: 'gsat-export/v1',
     exported_at: new Date().toISOString(),
@@ -150,5 +193,6 @@ export async function buildExport(db: D1Database, userId: number): Promise<MeExp
     ),
     submissions: exportedSubmissions,
     ...(cases.length > 0 || reports.length > 0 ? { assist: { cases, reports } } : {}),
+    ...(exemplars.length > 0 ? { exemplars } : {}),
   };
 }

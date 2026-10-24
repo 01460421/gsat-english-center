@@ -138,6 +138,12 @@ export interface MeResponseSignedIn {
    * （開關是 on 時看公開的 /api/features）。前端的開關判斷：features.assistant === true || me.assistant_preview != null。
    */
   assistant_preview?: { photo: boolean };
+  /**
+   * 作文範文的管理員預覽（docs/design/model-essays.md §7.5）：AI_ESSAY_EXEMPLARS 是 admin、使用者是管理員、AI 已設定時才有
+   * （值一定是 true）。其他人、其他模式都沒有這個欄位（開關是 on 時看公開的 /api/features）。
+   * 前端的開關判斷：features.essayExemplars === true || me.exemplars_preview === true。
+   */
+  exemplars_preview?: true;
 }
 
 export type MeResponse = MeResponseAnonymous | MeResponseSignedIn;
@@ -199,6 +205,12 @@ export interface MeExport {
    * 內部欄位（租約、重試次數、op_id、快取鍵、注入旗標）不匯出。舊版 Worker 沒有這個欄位。
    */
   assist?: { cases: unknown[]; reports: unknown[] };
+  /**
+   * 作文範文（docs/design/model-essays.md §6.2）：每一組的 id、來源、題組 id、自訂題的題目（顯示時重查 D8，命中就隱藏）、
+   * 標題、狀態、output（ExemplarSetView；同樣重查 D8）、評分、建立與更新時間。快取鍵與代、去重鍵、op_id、租約、
+   * 內容失敗次數、meta、提示版本、注入旗標不匯出。沒有任何範文時不帶這個欄位（回應和作文範文上線前相同）。
+   */
+  exemplars?: unknown[];
 }
 
 /**
@@ -365,7 +377,8 @@ export function isMeResponse(value: unknown): value is MeResponse {
     (AI_STATUSES as readonly unknown[]).includes(user['ai_status']) &&
     Array.isArray(v['pending_consents']) &&
     typeof v['onboarded'] === 'boolean' &&
-    isAssistantPreview(v['assistant_preview'])
+    isAssistantPreview(v['assistant_preview']) &&
+    (v['exemplars_preview'] === undefined || v['exemplars_preview'] === true)
   );
 }
 
