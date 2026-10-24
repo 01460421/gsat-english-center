@@ -107,7 +107,7 @@ async function routePublisherReading(page: Page): Promise<() => Record<string, u
   });
   await page.route('**/data/bank/sources.json', async (route) => {
     const res = await route.fetch();
-    const reg = (await res.json()) as { sources: { ns?: string }[] };
+    const reg = (await res.json()) as { sources: Record<string, unknown>[] };
     reg.sources = reg.sources.filter((s) => s.ns !== 'pb');
     reg.sources.push({
       id: 'pub-e2e',
