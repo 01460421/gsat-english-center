@@ -14,8 +14,9 @@
  *   超過就不再預扣（429 rate_limited），否則可以零成本反覆呼叫 Claude、耗光全站預算。系統原因的退還
  *   （API 錯誤、逾時、暫停、排隊太久、內部錯誤）不算。
  */
-import { isAssistTask, type AiReserveErrorCode, type AiTask } from '@gsat/shared';
+import { isAssistTask, isExemplarTask, type AiReserveErrorCode, type AiTask } from '@gsat/shared';
 import { refundWithAssistRef } from '../assist/refund';
+import { refundWithExemplarSet } from '../exemplars/refund';
 import type { SessionUser } from '../auth/session';
 import type { AppConfig } from '../config';
 import { nowSeconds, taiwanDay, taiwanMonth } from '../time';
@@ -27,6 +28,8 @@ export const UNLIMITED = 1_000_000_000;
 /**
  * 每人每天「內容造成的退還」上限（設計值）。正常使用每天最多十幾個任務，這幾種退還很少見；
  * 上限內每次的成本最多是一次預扣（作文 US$0.544），所以一個帳號一天最多讓全站多花約 US$2.7。
+ * 例外：作文範文的一個操作最多付費產生兩次（內容失敗跨 Queue 投遞累計，docs/design/model-essays.md §3.6），
+ * 每次最多兩倍預扣（2 × US$0.36），一個帳號一天最壞約 US$3.6。
  */
 export const AI_REFUNDS_PER_DAY = 5;
 
@@ -234,7 +237,7 @@ export interface FinishInput {
   /** 依這次的 settle_token 產生附帶語句（例如更新提交）；每一句都要以 token 當條件才會冪等。 */
   extra?: (token: string) => D1PreparedStatement[];
   /**
-   * 只在「對應的提交（或學習助手的 turn、報告）沒有有效租約」時才結算或退還（回收卡住的預扣用）：consumer 已經搶到租約、
+   * 只在「對應的提交（或學習助手的 turn、報告、作文範文）沒有有效租約」時才結算或退還（回收卡住的預扣用）：consumer 已經搶到租約、
    * 正在處理的操作不會被回收退還；反過來 consumer 搶租約時也要求操作仍是 reserved，兩邊互斥（D1 的寫入是序列化的）。
    */
   onlyIfUnleased?: boolean;
@@ -253,7 +256,8 @@ const FINISH_UNLEASED_SQL = `UPDATE ai_ops SET status = ?1,
    WHERE id = ?2 AND status = 'reserved'
      AND NOT EXISTS (SELECT 1 FROM submissions s WHERE s.id = ai_ops.ref_id AND s.op_id = ?2 AND s.lease_until IS NOT NULL AND s.lease_until > ?5)
      AND NOT EXISTS (SELECT 1 FROM assist_turns t WHERE t.id = ai_ops.ref_id AND t.op_id = ?2 AND t.lease_until IS NOT NULL AND t.lease_until > ?5)
-     AND NOT EXISTS (SELECT 1 FROM assist_reports r WHERE r.id = ai_ops.ref_id AND r.op_id = ?2 AND r.lease_until IS NOT NULL AND r.lease_until > ?5)`;
+     AND NOT EXISTS (SELECT 1 FROM assist_reports r WHERE r.id = ai_ops.ref_id AND r.op_id = ?2 AND r.lease_until IS NOT NULL AND r.lease_until > ?5)
+     AND NOT EXISTS (SELECT 1 FROM exemplar_sets e WHERE e.id = ai_ops.ref_id AND e.op_id = ?2 AND e.lease_until IS NOT NULL AND e.lease_until > ?5)`;
 
 async function finishOp(db: D1Database, input: FinishInput, outcome: { status: 'settled' } | { status: 'refunded'; reason: string }): Promise<boolean> {
   const token = settleToken();
@@ -335,10 +339,13 @@ export async function refundWithSubmission(db: D1Database, op: OpRef, reason: st
 
 /**
  * 依任務退還（死信佇列、回收卡住的預扣共用；docs/design/learning-assistant.md §4.8）：學習助手的任務退還並把 turn 或報告
- * 標成 failed（assist/refund.ts 的 refundWithAssistRef），其他任務照舊 refundWithSubmission。
+ * 標成 failed（assist/refund.ts 的 refundWithAssistRef）；作文範文退還並把 exemplar_sets 的那一列標成 failed
+ * （exemplars/refund.ts 的 refundWithExemplarSet，docs/design/model-essays.md §7.4）；其他任務照舊 refundWithSubmission。
  */
 export function refundForOp(db: D1Database, op: OpRef, reason: string, nowMs: number, options: { onlyIfUnleased?: boolean } = {}): Promise<boolean> {
-  return isAssistTask(op.task) ? refundWithAssistRef(db, op, reason, nowMs, options) : refundWithSubmission(db, op, reason, nowMs, options);
+  if (isAssistTask(op.task)) return refundWithAssistRef(db, op, reason, nowMs, options);
+  if (isExemplarTask(op.task)) return refundWithExemplarSet(db, op, reason, nowMs, options);
+  return refundWithSubmission(db, op, reason, nowMs, options);
 }
 
 /** 全站暫停或恢復（今天的 ai_budget_daily.paused；一天一列，隔天自動恢復）。 */

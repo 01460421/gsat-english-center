@@ -21,12 +21,19 @@ export const englishInputProps = {
   lang: 'en',
 } as const;
 
+/** AI 標示的變體：assistant＝學習助手、exemplar＝作文範文（docs/design/model-essays.md §1.11）；沒有 variant＝AI 批改。 */
+export type AiVariant = 'assistant' | 'exemplar';
+
+/** 作文範文的 AI 標章（每一篇範文旁邊）。 */
+export const EXEMPLAR_AI_BADGE = 'AI 範文，僅供參考';
+
 /**
  * 「AI 批改，僅供參考」：每一則 AI 產生的內容旁邊都要有（SPEC §8.4、ARCHITECTURE §8.5）。
- * variant="assistant"：學習助手不打分數，改寫「AI 產生，僅供參考」（docs/design/learning-assistant.md §1.11）；沒有 variant 時輸出不變。
+ * variant="assistant"：學習助手不打分數，改寫「AI 產生，僅供參考」（docs/design/learning-assistant.md §1.11）；
+ * variant="exemplar"：作文範文，「AI 範文，僅供參考」。沒有 variant 時輸出不變。
  */
-export function AiBadge({ compact = false, variant }: { compact?: boolean; variant?: 'assistant' }) {
-  const text = variant === 'assistant' ? 'AI 產生，僅供參考' : 'AI 批改，僅供參考';
+export function AiBadge({ compact = false, variant }: { compact?: boolean; variant?: AiVariant }) {
+  const text = variant === 'assistant' ? 'AI 產生，僅供參考' : variant === 'exemplar' ? EXEMPLAR_AI_BADGE : 'AI 批改，僅供參考';
   if (compact) {
     // 列表裡空間小：只顯示「AI」，完整說明給讀屏與滑鼠提示。
     return (
@@ -49,9 +56,11 @@ export function AiBadge({ compact = false, variant }: { compact?: boolean; varia
  * 「回報不當內容」（SPEC §8.4：每則 AI 回饋旁都要有）。回報端點（ARCHITECTURE §10.4 的 POST /api/ai/feedback-report）
  * 不在這次 MVP 的契約裡、後端還沒有，所以先照站內慣例顯示「即將開放」，並告訴學生現在可以怎麼做（設計文件 §10「前端需要」）。
  */
-export function ReportAiContent({ variant }: { variant?: 'assistant' }) {
+export function ReportAiContent({ variant }: { variant?: AiVariant }) {
   // 學習助手版（docs/design/learning-assistant.md §1.11、§5.2）：不提分數，刪除的是「這一題」。沒有 variant 時輸出不變。
+  // 作文範文版（docs/design/model-essays.md §1.8 第 8 點）：可以按「這組範文有問題」，或刪除這一組。
   const assistant = variant === 'assistant';
+  const exemplar = variant === 'exemplar';
   return (
     <details className="text-sm">
       <summary className="cursor-pointer py-3 text-muted hover:text-primary">
@@ -62,11 +71,19 @@ export function ReportAiContent({ variant }: { variant?: 'assistant' }) {
         <p>
           {assistant
             ? '線上回報即將開放。在那之前，如果 AI 的解析內容不恰當、讓你不舒服，或明顯有錯：'
-            : '線上回報即將開放。在那之前，如果 AI 的回饋內容不恰當、讓你不舒服，或分數明顯不合理：'}
+            : exemplar
+              ? '線上回報即將開放。在那之前，如果 AI 的範文或說明內容不恰當、讓你不舒服，或明顯有錯：'
+              : '線上回報即將開放。在那之前，如果 AI 的回饋內容不恰當、讓你不舒服，或分數明顯不合理：'}
         </p>
         <ul className="list-disc space-y-0.5 pl-5">
           <li>請不要理會它，AI 的說明只是參考；</li>
-          <li>{assistant ? '可以按「這則解析有錯」，或把這一題刪除（頁面最下方的「刪除這一題」）；' : '可以把這份紀錄刪除（頁面最下方的「刪除這份紀錄」）；'}</li>
+          <li>
+            {assistant
+              ? '可以按「這則解析有錯」，或把這一題刪除（頁面最下方的「刪除這一題」）；'
+              : exemplar
+                ? '可以按「這組範文有問題」，或把這一組刪除（頁面最下方的「刪除這一組」）；'
+                : '可以把這份紀錄刪除（頁面最下方的「刪除這份紀錄」）；'}
+          </li>
           <li>需要的話，告訴你信任的老師或家人。</li>
         </ul>
       </div>
@@ -77,20 +94,27 @@ export function ReportAiContent({ variant }: { variant?: 'assistant' }) {
 /** 學習助手各頁頂端與追問串的 AI 聲明（docs/design/learning-assistant.md §1.11；assistant-copy.test.ts 檢查這段文字）。 */
 export const ASSISTANT_AI_NOTICE = '你正在和 AI 互動：解析與建議由 AI 產生，可能有錯；答案以題目頁或官方公布為準。';
 
+/** 作文範文各頁頂端的 AI 聲明（docs/design/model-essays.md §1.11）。 */
+export const EXEMPLAR_AI_NOTICE =
+  '你正在和 AI 互動：範文由 AI 產生，僅供學習參考，可能有錯；分數帶是本站設定的目標，不是評分結果。請不要把範文當成自己的作品繳交。';
+
 /**
  * AI 頁面頂端固定的告知：正在和 AI 互動、分數不是大考中心的正式評分。
  * generic：不提考試機構名稱的版本（自訂題目的作答頁與結果頁用；docs/design/custom-essay.md §6.10）。預設輸出不變。
  * variant="assistant"：學習助手（不打分數，docs/design/learning-assistant.md §1.11），優先於 generic。
+ * variant="exemplar"：作文範文（docs/design/model-essays.md §1.11），優先於 generic。
  */
-export function AiNotice({ children, generic = false, variant }: { children?: ReactNode; generic?: boolean; variant?: 'assistant' }) {
+export function AiNotice({ children, generic = false, variant }: { children?: ReactNode; generic?: boolean; variant?: AiVariant }) {
   const assistant = variant === 'assistant';
   return (
     <p className="flex flex-wrap items-center gap-2 rounded-xl border border-badge-fg/30 bg-badge-bg/60 px-4 py-2 text-sm">
-      {assistant ? <AiBadge variant="assistant" /> : <AiBadge />}
+      {assistant ? <AiBadge variant="assistant" /> : variant === 'exemplar' ? <AiBadge variant="exemplar" /> : <AiBadge />}
       <span>
         {assistant
           ? ASSISTANT_AI_NOTICE
-          : generic
+          : variant === 'exemplar'
+            ? EXEMPLAR_AI_NOTICE
+            : generic
             ? '你正在和 AI 互動：AI 評分僅供參考，不是正式考試的評分。'
             : '你正在和 AI 互動：AI 評分僅供參考，不是大考中心的正式評分。'}
         {children}

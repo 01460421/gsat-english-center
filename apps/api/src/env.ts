@@ -85,6 +85,13 @@ export interface Env {
   AI_EFFORT_ASSIST?: string;
   /** 學習助手追問的 effort（預設 low；ARCHITECTURE §11 預留的名字）。 */
   AI_EFFORT_CHAT?: string;
+  /**
+   * 作文範文的總開關（docs/design/model-essays.md §7.5）：規則同 AI_ASSISTANT（只認 on、admin，其他任何值都當成關；沒設定時
+   * 用 config.ts 的預設值 off）。真模型評測達標之前 wrangler.toml 是 off（上線是另一個 PR）。
+   */
+  AI_ESSAY_EXEMPLARS?: string;
+  /** 作文範文的 effort（預設 medium）。 */
+  AI_EFFORT_EXEMPLARS?: string;
 
   // ── AI 上限與預算（ARCHITECTURE §6.3；數字字串，config.ts 解析）──
   AI_POINTS_USER_DAY?: string;

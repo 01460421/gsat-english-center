@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 /**
  * 本機端對端測試：wrangler dev（本機 D1＋Queue）＋假 Google＋假 Anthropic＋假網站題目檔，跑完「登入 → 同意 → AI 批改 →
- * 學習助手（建立案例 → 解析 → 追問；拍照 → 轉錄 → 確認；學習報告）→ 後台核准 → 額度用完 → 登出所有裝置」的完整流程。
+ * 學習助手（建立案例 → 解析 → 追問；拍照 → 轉錄 → 確認；學習報告）→ 作文範文（網站題目 → 共用快取；自訂題；網站題目比對）→
+ * 後台核准 → 額度用完 → 登出所有裝置」的完整流程。
  * 負責：整合者（docs/design/ai-auth-mvp.md §10「整合」）；學習助手的部分：WP-A2、拍照的部分 WP-A3、學習報告 WP-C
  * （docs/design/learning-assistant.md §6.2）。
  *
@@ -18,6 +19,10 @@
  *     寫作題庫與歷屆試題的三份索引（重建推薦候選的標題）。學習助手照 wrangler.toml 的 AI_ASSISTANT、AI_ASSISTANT_PHOTO
  *     （2026-10-23 上線後都是 on；緊急時可能是 admin）：由管理員帳號走這段流程（on、admin 兩種模式管理員都能用；off 時這段會失敗），
  *     /api/features 與核准後學生的 /api/ai/quota 照開關檢查。
+ *   - 作文範文（docs/design/model-essays.md §9.5）：照 wrangler.toml 的 AI_ESSAY_EXEMPLARS；合併時是 off，這時用 --var 改成 admin
+ *     （只有管理員能用、/api/features 照樣沒有 essayExemplars），由管理員帳號跑完整段流程。假 Anthropic 依系統提示開頭
+ *     （You write model essays）辨識範文任務，回一份會通過後處理的固定 JSON，並檢查 effort、max_tokens、1 小時快取、送出的 schema
+ *     沒有 $ref、自訂題的題目在 <student_text role="task">、送出的內容沒有 email 與暱稱。
  *   - 機密用暫存的 env 檔（--env-file，權限 600，結束時刪除）、端點與允許來源用 --var 傳給 wrangler dev。
  *     有 --env-file 時 wrangler 不讀 apps/api/.dev.vars，站主本機的真金鑰不會被用到。
  *   - D1 與 Queue 的本機狀態放在暫存目錄（--persist-to）：每次都是全新的資料庫，結束時刪除；不動 .wrangler/state。
@@ -34,7 +39,7 @@ import { createServer as createNetServer } from 'node:net';
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { assistantMode, assistantVarsFrom, customEssayExpected, customEssayVarFrom } from '../../../.github/scripts/deploy-summary.mjs';
+import { assistantMode, assistantVarsFrom, customEssayExpected, customEssayVarFrom, exemplarsMode, exemplarsVarFrom } from '../../../.github/scripts/deploy-summary.mjs';
 
 const API_DIR = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const require = createRequire(import.meta.url);
@@ -283,6 +288,71 @@ function assistReportOutput(userText) {
     changes_zh: [],
     questions_zh: ['你每週哪幾天比較有時間？'],
     data_notes_zh: '資料只來自這台裝置。',
+    safety_flag: 'none',
+  };
+}
+
+// ───────────────────────── 作文範文（本站自己寫的句子） ─────────────────────────
+
+const EXEMPLAR_POINTS = 8;
+/** 自訂題（含一個 email：存檔前遮掉，送給模型的請求裡不能有原值）。 */
+const EXEMPLAR_CUSTOM_EMAIL = 'e2e-teacher@example.com';
+const EXEMPLAR_CUSTOM_TEXT = `提示：每個人都有一段難忘的旅行經驗。請寫一篇英文作文，文分兩段，第一段描述你最難忘的一次旅行，第二段說明這次旅行讓你學到什麼。有問題寄 ${EXEMPLAR_CUSTOM_EMAIL}。`;
+/** 假模型寫範文用的句子（本站自己寫的；依序取用湊出 <task> 目標範圍中間的字數）。 */
+const EXEMPLAR_SENTENCES = [
+  'Last winter my family took a slow train along the east coast of Taiwan.',
+  'However, the trip did not start well because heavy rain closed the road.',
+  'We waited at a small station and shared hot soup with a friendly old couple.',
+  'In addition, my younger brother learned to read the train map by himself.',
+  'As a result, the delay turned into one of the warmest memories of my life.',
+  'I learned that a plan can change, but a calm attitude keeps everyone happy.',
+  'For example, my mother told funny stories while we waited for the next train.',
+  'Therefore, I now try to see problems on a trip as chances to learn something new.',
+];
+
+/** 湊出 words 個英文單詞、paragraphs 段的範文（段落之間一個換行）。 */
+function exemplarEssay(words, paragraphs, offset) {
+  const out = [];
+  let count = 0;
+  let i = offset;
+  while (count < words) {
+    const ws = EXEMPLAR_SENTENCES[i % EXEMPLAR_SENTENCES.length].split(' ');
+    const need = words - count;
+    out.push(ws.length <= need ? ws.join(' ') : `${ws.slice(0, need).join(' ').replace(/[.,]$/, '')}.`);
+    count += Math.min(ws.length, need);
+    i += 1;
+  }
+  const per = Math.ceil(out.length / paragraphs);
+  return Array.from({ length: paragraphs }, (_, p) => out.slice(p * per, (p + 1) * per).join(' ')).filter(Boolean).join('\n');
+}
+
+/** 假模型的範文輸出：字數取 <task> 目標範圍的中間、段數照 Required paragraphs（沒有規定時 2 段）。 */
+function exemplarOutput(userText) {
+  const words = {};
+  for (const level of ['basic', 'steady', 'top']) {
+    const m = new RegExp(`- ${level}: (\\d+)-(\\d+) words`).exec(userText);
+    words[level] = m ? Math.round((Number(m[1]) + Number(m[2])) / 2) : 150;
+  }
+  const pm = /Required paragraphs: (\d+)/.exec(userText);
+  const paragraphs = pm ? Number(pm[1]) : 2;
+  const notes = {};
+  for (const level of ['basic', 'steady', 'top']) for (const c of ['content', 'organization', 'grammar', 'vocabulary']) notes[`${level}_${c}_zh`] = `${c}：照這一級的規格寫。`;
+  return {
+    is_writing_task: true,
+    task_reading_zh: '題目要你寫兩段：描述經驗，再說明學到什麼。',
+    plan_zh: '第一段寫火車旅行遇到大雨；第二段寫學到保持冷靜。',
+    basic_text: exemplarEssay(words.basic, paragraphs, 0),
+    steady_text: exemplarEssay(words.steady, paragraphs, 1),
+    top_text: exemplarEssay(words.top, paragraphs, 2),
+    ...notes,
+    basic_next_zh: '第二段加一個具體的例子。',
+    steady_next_zh: '結尾加上自己的反思。',
+    top_next_zh: '時間不夠時先保住兩段的主題句。',
+    highlights: [
+      { level: 'basic', kind: 'detail', text: EXEMPLAR_SENTENCES[0], zh: '開頭交代時間與地點。' },
+      { level: 'steady', kind: 'connective', text: 'However', zh: '轉折。' },
+    ],
+    typical_errors: [{ wrong: 'I am very enjoy the trip.', right: 'I really enjoyed the trip.', zh: 'enjoy 是動詞，前面不加 be 動詞。' }],
     safety_flag: 'none',
   };
 }
@@ -688,7 +758,9 @@ async function startFakeAnthropic({ apiKey }) {
       const content = body.messages?.[0]?.content;
       const userText = typeof content === 'string' ? content : Array.isArray(content) ? content.filter((b) => b.type === 'text').map((b) => b.text).join('\n') : '';
       const images = Array.isArray(content) ? content.filter((b) => b.type === 'image') : [];
-      const task = system.includes('careful transcriber')
+      const task = system.startsWith('You write model essays')
+        ? 'exemplar'
+        : system.includes('careful transcriber')
         ? system.includes('exam-style English questions')
           ? 'assist_ocr'
           : 'ocr'
@@ -725,14 +797,24 @@ async function startFakeAnthropic({ apiKey }) {
       if (!Array.isArray(body.messages) || body.messages.length !== 1 || body.messages[0].role !== 'user') p('messages 必須只有一則 user');
       if (body.system?.[0]?.cache_control?.type !== 'ephemeral') p('系統提示沒有 cache_control');
       // 學習助手的系統提示所有學生共用：1 小時快取；批改照舊 5 分鐘（沒有 ttl）。
-      if ((body.system?.[0]?.cache_control?.ttl ?? '5m') !== (assist ? '1h' : '5m')) p(`系統提示的快取時間 ${body.system?.[0]?.cache_control?.ttl ?? '5m'}`);
+      if ((body.system?.[0]?.cache_control?.ttl ?? '5m') !== (assist || task === 'exemplar' ? '1h' : '5m')) p(`系統提示的快取時間 ${body.system?.[0]?.cache_control?.ttl ?? '5m'}`);
       const marks = [...(Array.isArray(body.system) ? body.system : []), ...(Array.isArray(content) ? content : [])].filter((b) => b.cache_control);
       if (marks.length > 4) p(`cache_control 斷點 ${marks.length} 個（上限 4）`);
       if (marks.some((b) => b.type !== 'text')) p('cache_control 只能放在 system 與 text block');
       const ttls = marks.map((b) => b.cache_control.ttl ?? '5m');
       if (ttls.indexOf('5m') >= 0 && ttls.slice(ttls.indexOf('5m')).includes('1h')) p('1 小時的快取斷點要在 5 分鐘的前面');
       if (task === 'unknown') p('認不出是哪個任務');
-      if (task === 'assist_analyze') {
+      if (task === 'exemplar') {
+        // 作文範文（docs/design/model-essays.md §3.1–§3.4）：max_tokens 16,000、送出的 schema 沒有 $ref／$defs；網站題目沒有學生的文字、
+        // 自訂題的題目整段在 <student_text role="task">；歷屆題不帶考卷年度與名稱。
+        if (body.max_tokens !== 16_000) p(`max_tokens=${body.max_tokens}`);
+        const schema = JSON.stringify(body.output_config?.format?.schema ?? {});
+        if (schema.includes('$ref') || schema.includes('$defs')) p('送出的 schema 帶 $ref／$defs');
+        if (!userText.startsWith('<task>\n') || !userText.includes('Targets set by the website:')) p('範文請求沒有 <task> 或字數目標');
+        const custom = userText.includes('Source: a writing task supplied by the student');
+        if (custom !== userText.includes('<student_text role="task">')) p('自訂題的題目沒有包在 <student_text role="task">（或網站題目多了學生的文字）');
+        if (!custom && /Exam:|學年度/.test(userText)) p('歷屆題的範文請求帶了考卷名稱');
+      } else if (task === 'assist_analyze') {
         // 站內題、沒有自由輸入的疑問：可以共用快取，請求裡不能有學生的文字與錯因歷史。
         if (userText.includes('<student_text') || userText.includes('<student_patterns>')) p('可以進快取的解析請求含有學生的文字');
         if (!userText.includes('<question>') || !userText.includes('<site_explanation>')) p('解析請求沒有 <question> 或 <site_explanation>');
@@ -792,6 +874,8 @@ async function startFakeAnthropic({ apiKey }) {
         output = assistFollowupOutput();
       } else if (task === 'assist_report') {
         output = assistReportOutput(userText);
+      } else if (task === 'exemplar') {
+        output = exemplarOutput(userText);
       } else {
         output = {};
       }
@@ -1037,6 +1121,14 @@ async function main() {
   const removeEnvFile = () => rmSync(envFile, { force: true });
   cleanupTasks.push(async () => removeEnvFile());
 
+  // 自訂作文題目、學習助手與作文範文跟著 wrangler.toml 的開關（wrangler dev 讀同一份 [vars]）。作文範文合併時是 off（上線前要先跑
+  // 真模型評測）：這時用 --var 改成 admin，由管理員帳號跑完整段流程；/api/features 照樣沒有 essayExemplars（admin 模式不公開）。
+  const wranglerToml = readFileSync(join(API_DIR, 'wrangler.toml'), 'utf8');
+  const exemplarsToml = exemplarsMode(exemplarsVarFrom(wranglerToml));
+  const exemplarsOn = exemplarsToml === 'on';
+  const exemplarsVar = exemplarsToml === 'off' ? { AI_ESSAY_EXEMPLARS: 'admin' } : {};
+  anthropic.state.forbidden.add(EXEMPLAR_CUSTOM_EMAIL);
+
   let dev = null;
   try {
     await step('套用本機遷移（全新的暫存 D1）', async () => {
@@ -1059,6 +1151,7 @@ async function main() {
           GOOGLE_USERINFO_URL: `${google.state.base}/userinfo`,
           ANTHROPIC_BASE_URL: anthropic.state.base,
           SITE_DATA_ORIGIN: site.state.base,
+          ...exemplarsVar,
         },
       });
       cleanupTasks.push(async () => {
@@ -1076,17 +1169,25 @@ async function main() {
     const student = new CookieJar();
 
     // 自訂作文題目與學習助手跟著 wrangler.toml 的 AI_CUSTOM_ESSAY、AI_ASSISTANT、AI_ASSISTANT_PHOTO（wrangler dev 讀同一份 [vars]）。
-    const wranglerToml = readFileSync(join(API_DIR, 'wrangler.toml'), 'utf8');
     const customEssay = customEssayExpected(customEssayVarFrom(wranglerToml));
     const assistantVars = assistantVarsFrom(wranglerToml);
     const assistantOn = assistantMode(assistantVars.assistant) === 'on';
     const assistantPhotoOn = assistantOn && assistantMode(assistantVars.photo) === 'on';
     await step(
-      `GET /api/features：登入、AI、OCR 都已啟用，自訂作文題目${customEssay ? '已啟用' : '未啟用'}、學習助手${assistantOn ? `已開放（拍照${assistantPhotoOn ? '也開放' : '未開放'}）` : '不公開'}（照 wrangler.toml）`,
+      `GET /api/features：登入、AI、OCR 都已啟用，自訂作文題目${customEssay ? '已啟用' : '未啟用'}、學習助手${assistantOn ? `已開放（拍照${assistantPhotoOn ? '也開放' : '未開放'}）` : '不公開'}、作文範文${exemplarsOn ? '已開放' : '不公開'}（照 wrangler.toml）`,
       async () => {
         const r = await http(BASE, 'GET', '/api/features');
         expectStatus(r, 200, 'features');
-        const expected = { auth: true, ai: true, ocr: true, aiPaused: false, customEssay, ...(assistantOn ? { assistant: true } : {}), ...(assistantPhotoOn ? { assistantPhoto: true } : {}) };
+        const expected = {
+          auth: true,
+          ai: true,
+          ocr: true,
+          aiPaused: false,
+          customEssay,
+          ...(assistantOn ? { assistant: true } : {}),
+          ...(assistantPhotoOn ? { assistantPhoto: true } : {}),
+          ...(exemplarsOn ? { essayExemplars: true } : {}),
+        };
         same(r.json, expected, 'features');
       },
     );
@@ -1349,8 +1450,8 @@ async function main() {
       same([q.json.points.day_used, q.json.points.month_used], [expected, expected], '已用點數');
       same([q.json.essays.day_used, q.json.concurrent.active], [2, 0], '今日作文篇數（退還的不算）與進行中任務');
       check(q.json.points.day_limit >= 100_000_000, '管理員的上限應該是「不限」');
-      // task_points 列出全部任務（含學習助手的四種；AI_TASK_POINTS）。
-      same(q.json.task_points, { ...POINTS, assist_ocr: 2, assist_analyze: 6, assist_followup: 3, assist_report: 10 }, 'task_points');
+      // task_points 列出全部任務（含學習助手的四種與作文範文；AI_TASK_POINTS）。
+      same(q.json.task_points, { ...POINTS, assist_ocr: 2, assist_analyze: 6, assist_followup: 3, assist_report: 10, essay_exemplars: EXEMPLAR_POINTS }, 'task_points');
       return `day_used=${q.json.points.day_used}、essays=${q.json.essays.day_used}、上限 ${q.json.points.day_limit}（不限）`;
     });
 
@@ -1534,6 +1635,84 @@ async function main() {
       return `${weeks.length} 週、模考 ${rep.plan.skeleton.mock_weeks.length} 次、扣 ${op.json.points_charged} 點`;
     });
 
+    // ── 作文範文（docs/design/model-essays.md §9.5）：管理員帳號（on 或 admin 模式都能用）──
+    async function waitForExemplar(jar, id, timeoutMs = 90_000) {
+      const until = Date.now() + timeoutMs;
+      for (;;) {
+        const r = await http(BASE, 'GET', `/api/exemplars/${id}`, { jar });
+        expectStatus(r, 200, 'GET /api/exemplars/{id}');
+        if (r.json.status === 'done') return r.json;
+        if (r.json.status === 'failed') throw new Error(`範文變成 failed（failure=${r.json.failure}）\n${dev.log.tail(40)}`);
+        if (Date.now() > until) throw new Error(`範文逾時：status=${r.json.status}`);
+        await sleep(500);
+      }
+    }
+    const essayStem = JSON.parse(readFileSync(join(API_DIR, 'src', 'generated', 'writing-prompts.json'), 'utf8')).groups[ESSAY_GROUP].items[0].stem;
+
+    await step(`作文範文：/api/me ${exemplarsOn ? '沒有 exemplars_preview（on）' : '有 exemplars_preview（admin 模式只給管理員）'}；POST /api/exemplars 網站題目 → 202（${EXEMPLAR_POINTS} 點）→ 輪詢到 done`, async () => {
+      const me = await http(BASE, 'GET', '/api/me', { jar: admin });
+      same(me.json.exemplars_preview === true, !exemplarsOn, '/api/me 的 exemplars_preview');
+      const before = await http(BASE, 'GET', '/api/ai/quota', { jar: admin });
+      same(before.json.exemplars, { day_used: 0, day_limit: 20 }, '/api/ai/quota 的 exemplars');
+      const r = await http(BASE, 'POST', '/api/exemplars', { jar: admin, json: { source: 'site', group_id: ESSAY_GROUP } });
+      expectStatus(r, 202, 'POST /api/exemplars（網站題目）');
+      same(r.json.status, 'queued', '建立後的狀態');
+      const set = await waitForExemplar(admin, r.json.id);
+      same([set.source, set.group_id, set.title, set.cache_hit, set.view.essays.length], ['exam', ESSAY_GROUP, '115 學測 英文作文', false, 3], '範文');
+      const words = set.view.essays.map((e) => e.metrics.words);
+      check(words[0] >= 130 && words[0] <= 170 && words[2] >= 300 && words[2] <= 380, `字數不在目標範圍：${words.join('／')}`);
+      same(set.view.essays.map((e) => e.metrics.paragraphs), [2, 2, 2], '三篇的段數');
+      same(set.view.essays[0].highlights.map((h) => h.text), [EXEMPLAR_SENTENCES[0]], '基礎版的亮點');
+      const op = await http(BASE, 'GET', `/api/ai/ops/${r.json.op_id}`, { jar: admin });
+      same([op.json.task, op.json.status, op.json.points_charged], ['essay_exemplars', 'settled', EXEMPLAR_POINTS], '範文的操作');
+      S.exemplarSite = r.json.id;
+      return `三篇 ${words.join('／')} 字、扣 ${op.json.points_charged} 點`;
+    });
+
+    await step('作文範文：同一題的共用快取 → 刪掉自己那一組後再產生 → 200、0 點、沒有新的呼叫', async () => {
+      const calls = anthropic.state.requests.filter((x) => x.task === 'exemplar').length;
+      const quota = await http(BASE, 'GET', '/api/ai/quota', { jar: admin });
+      const status = await http(BASE, 'GET', `/api/exemplars/site-status?group_id=${encodeURIComponent(ESSAY_GROUP)}`, { jar: admin });
+      same([status.json.cached, status.json.points], [true, 0], 'site-status');
+      const del = await http(BASE, 'DELETE', `/api/exemplars/${S.exemplarSite}`, { jar: admin });
+      expectStatus(del, 204, '刪除自己那一組');
+      const r = await http(BASE, 'POST', '/api/exemplars', { jar: admin, json: { source: 'site', group_id: ESSAY_GROUP } });
+      expectStatus(r, 200, '共用快取命中');
+      same([r.json.status, r.json.cache_hit, r.json.view.essays.length], ['done', true, 3], '命中的範文');
+      const after = await http(BASE, 'GET', '/api/ai/quota', { jar: admin });
+      same(after.json.points.day_used, quota.json.points.day_used, '命中不扣點');
+      same(anthropic.state.requests.filter((x) => x.task === 'exemplar').length, calls, '命中沒有新的呼叫');
+      S.exemplarHit = r.json.id;
+      return `0 點；今天建立 ${after.json.exemplars.day_used} 組`;
+    });
+
+    await step('作文範文：自訂題（email 存檔前遮掉、題目在 <student_text role="task">）→ 202 → done；貼了 115 學測的題目 → 409 exemplar_site_match', async () => {
+      const r = await http(BASE, 'POST', '/api/exemplars', { jar: admin, json: { source: 'custom', prompt: { text: EXEMPLAR_CUSTOM_TEXT, paragraphs: 2, min_words: 120 } } });
+      expectStatus(r, 202, 'POST /api/exemplars（自訂題）');
+      const set = await waitForExemplar(admin, r.json.id);
+      same([set.source, set.group_id, set.cache_hit], ['custom', null, false], '自訂題的範文');
+      check(set.prompt.text.includes('［已隱藏］') && !set.prompt.text.includes(EXEMPLAR_CUSTOM_EMAIL), '自訂題的 email 沒有遮掉');
+      const match = await http(BASE, 'POST', '/api/exemplars', { jar: admin, json: { source: 'custom', prompt: { text: essayStem, paragraphs: 2, min_words: 120 } } });
+      expectError(match, 409, 'exemplar_site_match', '貼了網站題目');
+      same([match.json.error.group_id, match.json.error.title], [ESSAY_GROUP, '115 學測 英文作文'], '比對到的網站題目');
+      const unavailable = await http(BASE, 'POST', '/api/exemplars', { jar: admin, json: { source: 'site', group_id: TRANSLATION_GROUP } });
+      expectError(unavailable, 409, 'exemplar_unavailable', '白名單以外的題組');
+      S.exemplarCustom = r.json.id;
+      return `自訂題 ${set.view.essays.map((e) => e.metrics.words).join('／')} 字`;
+    });
+
+    await step('作文範文：GET /api/exemplars → DELETE 一組 → 204；未登入讀不到', async () => {
+      const list = await http(BASE, 'GET', '/api/exemplars', { jar: admin });
+      expectStatus(list, 200, 'GET /api/exemplars');
+      // 同一秒建立的兩組依 id 排，順序不固定：比對集合。
+      same(list.json.sets.map((x) => [x.id, x.status]).sort(), [[S.exemplarCustom, 'done'], [S.exemplarHit, 'done']].sort(), '我的範文');
+      const del = await http(BASE, 'DELETE', `/api/exemplars/${S.exemplarCustom}`, { jar: admin });
+      expectStatus(del, 204, '刪除自訂題那一組');
+      const anon = await http(BASE, 'GET', `/api/exemplars/${S.exemplarHit}`);
+      expectError(anon, 401, 'unauthorized', '未登入讀範文');
+      return `剩 1 組（共用快取命中的那一組）`;
+    });
+
     await step(`學習助手要登入：未登入 401；GET /api/features ${assistantOn ? '有 assistant（on：開放給已核准的學生）' : '沒有 assistant（admin 模式不公開）'}`, async () => {
       const anon = await http(BASE, 'GET', '/api/assist/cases');
       expectError(anon, 401, 'unauthorized', '未登入讀案例');
@@ -1600,6 +1779,9 @@ async function main() {
       expectStatus(q, 200, '核准後學生的 /api/ai/quota');
       same('assist' in q.json, assistantOn, `學生的 /api/ai/quota ${assistantOn ? '要有' : '不該有'} assist`);
       check(!('assistant_preview' in me.json), '學生的 /api/me 不該有 assistant_preview');
+      // 作文範文同理：on 時學生的 /api/ai/quota 多 exemplars；admin 模式下學生沒有，/api/me 也沒有 exemplars_preview。
+      same('exemplars' in q.json, exemplarsOn, `學生的 /api/ai/quota ${exemplarsOn ? '要有' : '不該有'} exemplars`);
+      check(!('exemplars_preview' in me.json), '學生的 /api/me 不該有 exemplars_preview');
       return `名額 ${list.json.approval.approved}→1／${list.json.approval.cap}；學習助手${assistantOn ? '已對學生開放' : '沒有對學生開放'}`;
     });
 
@@ -1644,14 +1826,14 @@ async function main() {
     await step('後台用量彙總（GET /api/admin/usage）', async () => {
       const u = await http(BASE, 'GET', '/api/admin/usage', { jar: admin });
       expectStatus(u, 200, '/api/admin/usage');
-      // 批改 15 個任務（19＋學生 30 點）＋學習助手的解析、追問、拍照轉錄與學習報告（4 個任務）。
+      // 批改 15 個任務（19＋學生 30 點）＋學習助手的解析、追問、拍照轉錄與學習報告（4 個任務）＋作文範文 2 組（共用快取命中不算任務）。
       same(
         [u.json.totals.ops, u.json.totals.points, u.json.totals.refunded_ops],
-        [19, 19 + STUDENT_DAY_LIMIT + ASSIST_POINTS.analyze + ASSIST_POINTS.followup + ASSIST_POINTS.ocr + ASSIST_REPORT_POINTS, 1],
+        [21, 19 + STUDENT_DAY_LIMIT + ASSIST_POINTS.analyze + ASSIST_POINTS.followup + ASSIST_POINTS.ocr + ASSIST_REPORT_POINTS + 2 * EXEMPLAR_POINTS, 1],
         '用量（ops、點數、退還）',
       );
       check(u.json.totals.usd_micros > 0 && u.json.budget.today_usd_micros > 0, '實際成本沒有記帳');
-      return `19 個任務、${u.json.totals.points} 點、實際成本 US$${(u.json.totals.usd_micros / 1e6).toFixed(4)}`;
+      return `21 個任務、${u.json.totals.points} 點、實際成本 US$${(u.json.totals.usd_micros / 1e6).toFixed(4)}`;
     });
 
     await step('POST /auth/logout-all 之後舊 cookie 失效（其他帳號不受影響）', async () => {
@@ -1687,7 +1869,7 @@ async function main() {
       const usage = await http(BASE, 'GET', '/api/admin/usage', { jar: admin });
       same(
         [usage.json.totals.ops, usage.json.totals.points],
-        [19, 19 + STUDENT_DAY_LIMIT + ASSIST_POINTS.analyze + ASSIST_POINTS.followup + ASSIST_POINTS.ocr + ASSIST_REPORT_POINTS],
+        [21, 19 + STUDENT_DAY_LIMIT + ASSIST_POINTS.analyze + ASSIST_POINTS.followup + ASSIST_POINTS.ocr + ASSIST_REPORT_POINTS + 2 * EXEMPLAR_POINTS],
         '刪帳號後帳本仍保留（去識別）',
       );
       const list = await http(BASE, 'GET', '/api/admin/users', { jar: admin });
@@ -1707,6 +1889,7 @@ async function main() {
       same(anthropic.state.problems, [], '假 Anthropic 發現的問題');
       same(google.state.problems, [], '假 Google 發現的問題');
       same(['assist_analyze', 'assist_followup', 'assist_ocr', 'assist_report'].map((t) => anthropic.state.requests.filter((r) => r.task === t).length), [1, 1, 1, 1], '學習助手的請求數（解析、追問、拍照轉錄、學習報告）');
+      same(anthropic.state.requests.filter((r) => r.task === 'exemplar').length, 2, '作文範文的請求數（網站題目、自訂題；共用快取命中不呼叫）');
       const byTask = {};
       for (const r of anthropic.state.requests) byTask[r.task] = (byTask[r.task] ?? 0) + 1;
       return `共 ${anthropic.state.requests.length} 次請求（${Object.entries(byTask).map(([k, v]) => `${k} ${v}`).join('、')}）；429 ×${anthropic.state.served.rate_limited}、拒答 ×${anthropic.state.served.refusal}`;
@@ -1719,7 +1902,7 @@ async function main() {
         if (name === 'ADMIN_EMAIL') continue;
         check(!log.includes(value), `日誌出現機密 ${name}`);
       }
-      for (const s of [ADMIN.email, STUDENT.email, ADMIN.name, STUDENT.nickname, TRANSLATION_ANSWER[0], 'feel lonely after work', ASSIST_FOLLOWUP_TEXT, ASSIST_REPORT_FEEDBACK, ASSIST_WB_SENTENCES[1], ASSIST_OCR_PASSAGE, '測試生']) {
+      for (const s of [ADMIN.email, STUDENT.email, ADMIN.name, STUDENT.nickname, TRANSLATION_ANSWER[0], 'feel lonely after work', ASSIST_FOLLOWUP_TEXT, ASSIST_REPORT_FEEDBACK, ASSIST_WB_SENTENCES[1], ASSIST_OCR_PASSAGE, '測試生', EXEMPLAR_CUSTOM_EMAIL, EXEMPLAR_CUSTOM_TEXT.slice(3, 20), EXEMPLAR_SENTENCES[1]]) {
         check(!log.includes(s), `日誌出現身分資訊、學生文字或題目內容（${s.slice(0, 12)}…）`);
       }
       check(log.includes('ai_settled'), '日誌沒有 consumer 的結算紀錄');
@@ -1746,6 +1929,8 @@ async function main() {
         "SELECT COUNT(*) AS n FROM assist_photos",
         "SELECT COUNT(*) AS n FROM assist_turns WHERE kind = 'ocr' AND output_json LIKE '%Mina folded%'",
         "SELECT COUNT(*) AS n, SUM(CASE WHEN status = 'done' AND lease_until IS NULL THEN 1 ELSE 0 END) AS done FROM assist_reports",
+        'SELECT COUNT(*) AS n, SUM(cache_hit) AS hits, SUM(CASE WHEN lease_until IS NULL THEN 1 ELSE 0 END) AS released FROM exemplar_sets',
+        "SELECT COUNT(*) AS n FROM ai_calls WHERE task = 'essay_exemplars' AND role = 'writer'",
       ];
       const { stdout } = await runWrangler(
         ['d1', 'execute', 'gsat-english', '--local', '--persist-to', persistDir, '--json', '--command', sql.join('; ')],
@@ -1755,7 +1940,7 @@ async function main() {
       const start = stdout.search(/^\[/m);
       check(start >= 0, `d1 execute 沒有輸出 JSON：${stdout.slice(0, 300)}`);
       const rows = JSON.parse(stdout.slice(start)).map((r) => r.results[0]);
-      const [photos, calls, refusals, paused, anonymized, deletions, submissions, turns, sharedCache, assistPhotos, ocrText, reports] = rows;
+      const [photos, calls, refusals, paused, anonymized, deletions, submissions, turns, sharedCache, assistPhotos, ocrText, reports, exemplarSets, exemplarCalls] = rows;
       same(photos.n, 0, 'submission_photo_temp 列數');
       same(calls.hashed, calls.n, 'ai_calls.user_ref 都是 64 碼 HMAC 假名');
       same(refusals.n, 1, 'refusal 安全事件');
@@ -1764,9 +1949,10 @@ async function main() {
       same(deletions.n, 1, 'deletion_log');
       same(submissions.n, 3, '學生的提交隨帳號刪除（只剩管理員的 3 份）');
       same([turns.n, turns.done], [3, 3], '學習助手的 turn（解析、追問、拍照轉錄）');
-      same(sharedCache.n, 1, '站內題的解析寫進共用快取');
+      same(sharedCache.n, 2, '站內題的解析與網站題目的範文寫進共用快取');
       same([assistPhotos.n, ocrText.n], [0, 0], '題目照片已刪、確認後的轉錄只留統計');
       same([reports.n, reports.done], [1, 1], '學習報告（完成、租約已放掉）');
+      same([exemplarSets.n, exemplarSets.hits, exemplarSets.released, exemplarCalls.n], [1, 1, 1, 2], '作文範文（刪掉兩組、剩共用快取命中的那一組；ai_calls 2 列）');
       return `ai_calls ${calls.n} 列（429 重試後成功的那次只記一列）、照片暫存 0 列、去識別 ai_ops 10 列`;
     });
   } catch (err) {

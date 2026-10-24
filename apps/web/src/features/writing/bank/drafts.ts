@@ -4,7 +4,7 @@
  * 登出時 clearLocalWritingData 一起清掉。
  * 放在 bank/ 底下（不放 lib/drafts.ts）：lib/drafts.ts 在首頁的主程式裡（登出要清草稿），這些只有本站題的頁面用得到。
  */
-import { draftKey, isPartialEssayScores, loadDraft, type PartialEssayScores } from '../lib/drafts';
+import { draftKey, isPartialEssayScores, loadDraft, saveDraft, type PartialEssayScores } from '../lib/drafts';
 
 const isObject = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v);
 const isStringArray = (v: unknown): v is string[] => Array.isArray(v) && v.every((x) => typeof x === 'string');
@@ -123,4 +123,28 @@ export function bankProgressOf(kind: 'translation' | 'essay', groupId: string): 
 /** 讀草稿的原始內容（不檢查形狀；本站題的草稿用 toBank*Draft 補預設值）。沒有、壞掉或不能用回 null。 */
 export function loadRawDraft(key: string): unknown {
   return loadDraft(key, (v: unknown): v is unknown => v !== null);
+}
+
+/**
+ * 本站仿真作文「已對照」的鎖（作答頁按「寫好了，看評分規準與範文」時寫的同一個 revealedAt）：作文範文頁選了「我已經寫過了，
+ * 直接看」、真的送出產生範文時也走這一支（docs/design/model-essays.md §1.5 第 2 步、§8.1、§12.5）。已經鎖了就不動（保留原本的時間）；
+ * 回傳寫入後的草稿，寫不進去（無痕模式、容量滿）回 null。作答頁之後讀到 revealedAt 就是唯讀。
+ */
+export function markBankEssayRevealed(groupId: string, now: number = Date.now()): BankEssayDraft | null {
+  const key = draftKey('essay', groupId);
+  const draft = toBankEssayDraft(loadRawDraft(key)) ?? emptyBankEssayDraft();
+  if (draft.revealedAt !== null) return draft;
+  const next: BankEssayDraft = { ...draft, revealedAt: now, updatedAt: now };
+  return saveDraft(key, next) ? next : null;
+}
+
+/**
+ * 收回 markBankEssayRevealed 剛寫的鎖：作文範文頁在送出前寫鎖，伺服器明確拒絕（沒有建立任何一組範文）時呼叫，學生沒拿到範文
+ * 就不該被鎖住草稿。只在草稿的 revealedAt 還是那一次寫的時間 at 時才清掉（作答頁之後自己對照過的不動）。
+ */
+export function unmarkBankEssayRevealed(groupId: string, at: number): void {
+  const key = draftKey('essay', groupId);
+  const draft = toBankEssayDraft(loadRawDraft(key));
+  if (!draft || draft.revealedAt !== at) return;
+  saveDraft(key, { ...draft, revealedAt: null });
 }

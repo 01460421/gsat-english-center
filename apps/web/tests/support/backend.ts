@@ -34,6 +34,9 @@ import type {
   CreateAssistCaseBody,
   CreateAssistFollowupBody,
   CreateAssistReportBody,
+  CreateExemplarSetBody,
+  ExemplarSetDetail,
+  ExemplarSetSummary,
   FeaturesResponse,
   MeResponse,
   MeResponseSignedIn,
@@ -42,6 +45,7 @@ import type {
   UpdateAssistQuestionBody,
 } from '@gsat/shared';
 import { reportDetail as reportDetailFixture } from '../../src/features/assistant/testing/report';
+import { setView as exemplarSetViewFixture } from '../../src/features/writing/exemplars/testing/fixtures';
 
 /** 現行條款版本：要和 src/features/account/policy.ts（以及後端 wrangler.toml）一致，歡迎頁才允許送出。 */
 export const VERSIONS = { privacy: '2026-10-23', terms: '2026-10-23', ai: '2026-10-23' } as const;
@@ -60,6 +64,9 @@ export const FEATURES_ASSISTANT_ON: FeaturesResponse = { ...FEATURES_ON, assista
 
 /** 學習助手與拍照都打開（AI_ASSISTANT_PHOTO=on；WP-A3）。 */
 export const FEATURES_ASSISTANT_PHOTO_ON: FeaturesResponse = { ...FEATURES_ASSISTANT_ON, assistantPhoto: true };
+
+/** 作文範文打開（AI_ESSAY_EXEMPLARS=on；docs/design/model-essays.md §7.5）。 */
+export const FEATURES_EXEMPLARS_ON: FeaturesResponse = { ...FEATURES_ON, essayExemplars: true };
 
 /** 已登入的 /api/me（預設：完成首次設定、尚未申請 AI 的學生）。 */
 export function signedInMe(
@@ -93,6 +100,9 @@ export function signedInMe(
  */
 export const ME_ASSISTANT_PREVIEW: MeResponseSignedIn = signedInMe({ role: 'admin', ai_status: 'approved' }, { assistant_preview: { photo: false } });
 
+/** 作文範文開關是 admin 時，管理員的 /api/me（多 exemplars_preview；公開的 /api/features 沒有 essayExemplars）。 */
+export const ME_EXEMPLARS_PREVIEW: MeResponseSignedIn = signedInMe({ role: 'admin', ai_status: 'approved' }, { exemplars_preview: true });
+
 export const QUOTA: AiQuotaResponse = {
   ai_status: 'approved',
   tier: 'standard',
@@ -102,7 +112,7 @@ export const QUOTA: AiQuotaResponse = {
   site: { paused: false, budget_available: true },
   approval: { cap: 49, approved: 12, full: false },
   resets_at: { day: '2026-10-09T16:00:00Z', month: '2026-10-31T16:00:00Z' },
-  task_points: { translation_grade: 3, essay_grade: 7, essay_ocr: 2, assist_ocr: 2, assist_analyze: 6, assist_followup: 3, assist_report: 10 },
+  task_points: { translation_grade: 3, essay_grade: 7, essay_ocr: 2, assist_ocr: 2, assist_analyze: 6, assist_followup: 3, assist_report: 10, essay_exemplars: 8 },
 };
 
 export const ADMIN_HEALTH: AdminHealthResponse = {
@@ -914,4 +924,142 @@ export async function expectNoHorizontalOverflow(page: Page, isMobile: boolean):
     expect(scrollWidth, `頁面寬 ${scrollWidth}px 超出視窗 ${viewport}px`).toBeLessThanOrEqual(viewport);
   }
   if (original && isMobile) await page.setViewportSize(original);
+}
+
+// ───────────────────────── 作文範文（/api/exemplars/*） ─────────────────────────
+
+export interface FakeExemplarsOptions {
+  /** 這些網站題目已經有共用的範文（site-status 回 cached、建立時直接 200 cache_hit）。 */
+  cachedGroups?: string[];
+  /** 進行中的組被 GET 幾次之後完成（預設 1：第一次看到排隊中，下一次完成）。 */
+  pendingPolls?: number;
+  /** 自訂題的題目文字包含這些字時回 409 exemplar_site_match（沒帶 allow_custom）。 */
+  siteMatch?: { includes: string; group_id: string; title: string };
+}
+
+/**
+ * 有狀態的作文範文假後端（docs/design/model-essays.md §7.1–§7.3 的形狀）：建立（排入佇列 → 輪詢完成；網站題目已有共用範文時
+ * 200 cache_hit）、列表、site-status、評分、刪除。三篇範文用 src/features/writing/exemplars/testing/fixtures.ts（本站自己寫的短文）。
+ * 同一個網站題目第二次建立（第一組完成後）：共用快取命中（cachedGroups 自動加入）。
+ */
+export class FakeExemplars {
+  readonly sets = new Map<string, ExemplarSetDetail>();
+  readonly cached: Set<string>;
+  private readonly pendingLeft = new Map<string, number>();
+  private seq = 0;
+
+  constructor(
+    backend: FakeBackend,
+    private readonly options: FakeExemplarsOptions = {},
+  ) {
+    this.cached = new Set(options.cachedGroups ?? []);
+    backend.on('GET /api/exemplars', () => ok({ sets: [...this.sets.values()].reverse().map((d) => this.summaryOf(d)), next_cursor: null }));
+    backend.on('POST /api/exemplars', (call) => this.create(call.json as CreateExemplarSetBody));
+    backend.on('GET /api/exemplars/:id', (call) => {
+      const d = this.sets.get(call.params['id'] ?? '');
+      if (!d) return apiError(404, 'not_found');
+      this.advance(d);
+      return ok(d);
+    });
+    // 後登記的優先：site-status 要在 :id 之後登記，才不會被當成一組範文的 id。
+    backend.on('GET /api/exemplars/site-status', (call) => {
+      const groupId = call.query.get('group_id') ?? '';
+      const cached = this.cached.has(groupId);
+      return ok({ group_id: groupId, title: siteTitleOf(groupId), cached, points: cached ? 0 : 8 });
+    });
+    backend.on('PATCH /api/exemplars/:id', (call) => {
+      const d = this.sets.get(call.params['id'] ?? '');
+      if (!d) return apiError(404, 'not_found');
+      d.rating = (call.json as { rating: 'helpful' | 'wrong' | null }).rating;
+      return ok(d);
+    });
+    backend.on('DELETE /api/exemplars/:id', (call) => {
+      const d = this.sets.get(call.params['id'] ?? '');
+      if (!d) return apiError(404, 'not_found');
+      if (d.status === 'queued' || d.status === 'running') return apiError(409, 'conflict');
+      this.sets.delete(d.id);
+      return { status: 204, body: '' };
+    });
+  }
+
+  private summaryOf(d: ExemplarSetDetail): ExemplarSetSummary {
+    const { id, source, group_id, title, status, cache_hit, created_at, updated_at } = d;
+    return { id, source, group_id, title, status, cache_hit, created_at, updated_at };
+  }
+
+  private create(body: CreateExemplarSetBody): Reply {
+    const now = nowSec();
+    this.seq += 1;
+    const id = `00000000-0000-4000-8000-${String(this.seq).padStart(12, '0')}`;
+    if (body.source === 'site') {
+      const cacheHit = this.cached.has(body.group_id) && body.fresh !== true;
+      const d: ExemplarSetDetail = {
+        id,
+        source: body.group_id.startsWith('ai.') ? 'bank' : 'exam',
+        group_id: body.group_id,
+        title: siteTitleOf(body.group_id),
+        status: cacheHit ? 'done' : 'queued',
+        cache_hit: cacheHit,
+        created_at: now,
+        updated_at: now,
+        prompt: null,
+        view: cacheHit ? exemplarSetViewFixture() : null,
+        failure: null,
+        rating: null,
+        expires_at: now + 180 * 86_400,
+      };
+      this.sets.set(id, d);
+      if (cacheHit) return ok(d);
+      this.pendingLeft.set(id, this.options.pendingPolls ?? 1);
+      return ok({ id, op_id: `op-${id}`, status: 'queued' }, 202);
+    }
+    const match = this.options.siteMatch;
+    if (match && body.allow_custom !== true && body.prompt.text.includes(match.includes)) {
+      return { status: 409, json: { error: { code: 'exemplar_site_match', message: 'e2e exemplar_site_match', group_id: match.group_id, title: match.title } } };
+    }
+    const p = body.prompt;
+    const d: ExemplarSetDetail = {
+      id,
+      source: 'custom',
+      group_id: null,
+      title: [...p.text].slice(0, 30).join(''),
+      status: 'queued',
+      cache_hit: false,
+      created_at: now,
+      updated_at: now,
+      prompt: { text: p.text, figure_text: p.figure_text ?? null, paragraphs: p.paragraphs ?? null, min_words: p.min_words ?? null, max_words: p.max_words ?? null, updated_at: now },
+      view: null,
+      failure: null,
+      rating: null,
+      expires_at: now + 180 * 86_400,
+    };
+    this.sets.set(id, d);
+    this.pendingLeft.set(id, this.options.pendingPolls ?? 1);
+    return ok({ id, op_id: `op-${id}`, status: 'queued' }, 202);
+  }
+
+  /** 每次 GET：進行中的倒數，歸零時完成（網站題目完成後就有共用的範文）。 */
+  private advance(d: ExemplarSetDetail) {
+    if (d.status !== 'queued' && d.status !== 'running') return;
+    const left = this.pendingLeft.get(d.id) ?? 0;
+    if (left > 0) {
+      this.pendingLeft.set(d.id, left - 1);
+      return;
+    }
+    d.status = 'done';
+    d.view = exemplarSetViewFixture();
+    d.updated_at = nowSec();
+    if (d.group_id) this.cached.add(d.group_id);
+  }
+}
+
+/** 假後端的網站題目標題（真的 Worker 由題目庫產生；這裡只認得 e2e 用到的格式）。 */
+function siteTitleOf(groupId: string): string {
+  const exam = /^gsat-(\d+)\./.exec(groupId);
+  if (exam) return `${exam[1]} 學測 英文作文`;
+  return groupId.startsWith('ai.') ? '本站仿真作文' : groupId;
+}
+
+export function fakeExemplars(backend: FakeBackend, options: FakeExemplarsOptions = {}): FakeExemplars {
+  return new FakeExemplars(backend, options);
 }

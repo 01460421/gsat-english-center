@@ -13,11 +13,14 @@ import type { AppEnv } from './env';
 /**
  * 錯誤的選填細節（docs/design/custom-essay.md §2.5）：更細的原因代碼、出問題的欄位、命中處在學生自己文字裡的位置。
  * 目前只有 custom_prompt_invalid、essay_not_gradable 會帶；其他錯誤的回應一個字都不變。
+ * group_id、title：作文範文的 exemplar_site_match 回相同的網站題目（docs/design/model-essays.md §5.3）。
  */
 export interface ApiErrorDetail {
   reason?: string;
   field?: string;
   ranges?: Array<[number, number]>;
+  group_id?: string;
+  title?: string;
 }
 
 /** 產生錯誤回應。所有錯誤出口都經過這裡，格式才不會走鐘。detail 有值的欄位才放進本體。 */
@@ -29,6 +32,8 @@ export function errorResponse(c: Context<AppEnv>, status: ContentfulStatusCode, 
       ...(detail.reason !== undefined ? { reason: detail.reason } : {}),
       ...(detail.field !== undefined ? { field: detail.field } : {}),
       ...(detail.ranges !== undefined ? { ranges: detail.ranges } : {}),
+      ...(detail.group_id !== undefined ? { group_id: detail.group_id } : {}),
+      ...(detail.title !== undefined ? { title: detail.title } : {}),
     },
   };
   return c.json(body, status);

@@ -111,12 +111,11 @@ export function essaySchema(framework: PromptFramework) {
 }
 
 /**
- * 評分基準（本站自己的話；放在可快取的系統提示前綴）。前端作答頁的「評分規準摘要（本站撰寫）」
- * （apps/web/src/features/writing/lib/rubric.ts 的 COMPOSITION_CRITERIA）是同四個面向的學生版說明，兩份的四個面向必須一致。
+ * 四項 5–0 的描述（本站自己的話）：批改的 ESSAY_RUBRIC 由它組出來（組出來的位元組和抽出之前完全相同，
+ * test/ai.bank-writing.test.ts 的 system_sha256 快照證明），作文範文的系統提示（prompts/exemplars.ts）逐字引用同一段，
+ * 兩邊的規準才會一致（docs/design/model-essays.md §3.2）。
  */
-export const ESSAY_RUBRIC = `Task: an English essay written for the GSAT composition section (the official guidance asks for at least about 120 words; many tasks require two paragraphs). Score four criteria, each an integer from 0 to 5. Bands: 5-4 strong, 3 adequate, 2-1 weak, 0 nothing creditable.
-
-content (relevance and development)
+export const ESSAY_CRITERIA_DESCRIPTORS = `content (relevance and development)
 - 5: answers every part of the task; main ideas are clear and developed with specific, relevant details, examples, or personal experience.
 - 4: answers every part of the task; development is solid but some details are general or thin.
 - 3: answers the task, but one required part is underdeveloped or partly off target; supporting detail is limited or repetitive.
@@ -146,7 +145,15 @@ vocabulary (range, precision, spelling, mechanics)
 - 3: adequate but limited or repetitive vocabulary; noticeable spelling or word-choice errors.
 - 2: limited vocabulary; frequent errors that sometimes obscure meaning.
 - 1: very limited vocabulary; errors make the meaning hard to follow.
-- 0: no creditable use of vocabulary.
+- 0: no creditable use of vocabulary.`;
+
+/**
+ * 評分基準（本站自己的話；放在可快取的系統提示前綴）。前端作答頁的「評分規準摘要（本站撰寫）」
+ * （apps/web/src/features/writing/lib/rubric.ts 的 COMPOSITION_CRITERIA）是同四個面向的學生版說明，兩份的四個面向必須一致。
+ */
+export const ESSAY_RUBRIC = `Task: an English essay written for the GSAT composition section (the official guidance asks for at least about 120 words; many tasks require two paragraphs). Score four criteria, each an integer from 0 to 5. Bands: 5-4 strong, 3 adequate, 2-1 weak, 0 nothing creditable.
+
+${ESSAY_CRITERIA_DESCRIPTORS}
 
 Rules the program applies itself (do not apply them in your criterion scores):
 - It deducts 1 point from the total if the essay has fewer than ${ESSAY_SHORT_WORDS} words or is not divided into the required paragraphs (only 1 point even if both happen). It reminds students below ${ESSAY_MIN_WORDS_HINT} words.

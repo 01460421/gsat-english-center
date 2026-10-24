@@ -110,8 +110,12 @@ export function ProcessingNotices({ notices }: { notices: readonly AssistNotice[
   );
 }
 
-/** 身心安全旗標：先顯示關懷訊息與求助資源（§1.11），內容照常。 */
-export function AssistSafetyCare() {
+/**
+ * 身心安全旗標：先顯示關懷訊息與求助資源（§1.11），內容照常。
+ * note：最後一行（作文範文頁換成「下面的範文照常提供。」，docs/design/model-essays.md §1.11）；沒給時輸出不變。
+ * null＝不寫最後一行（作文範文退還、下面沒有內容時）。
+ */
+export function AssistSafetyCare({ note = '下面的解析照常提供。' }: { note?: string | null } = {}) {
   const id = useId();
   return (
     <section role="note" aria-labelledby={id} className="rounded-2xl border border-primary/40 bg-primary-soft p-4 lg:p-5">
@@ -135,7 +139,7 @@ export function AssistSafetyCare() {
           保護專線 <a href="tel:113" className="font-semibold text-primary underline">113</a>
         </li>
       </ul>
-      <p className="mt-2 text-sm text-muted">下面的解析照常提供。</p>
+      {note !== null && <p className="mt-2 text-sm text-muted">{note}</p>}
     </section>
   );
 }

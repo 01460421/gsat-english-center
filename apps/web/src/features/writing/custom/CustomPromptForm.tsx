@@ -12,6 +12,8 @@
  *     英文單詞、行數接近或超過上限時，計數那一行另外顯示目前的數量；
  *   - 題目文字有寫段數或字數、欄位卻是「不指定」時，欄位旁邊建議一次（「設成 2 段」）。
  * 題目欄與預覽都不加 lang（內容可能是中文、英文或混合），也不經 RichText（一律是文字節點）。
+ * 作文範文（docs/design/model-essays.md §8.2 的 ExemplarPromptForm）包同一個表單：換訊息表（messages）、加範文模式的字數問題與
+ * 提醒（extraProblems、extraWarnings）、換說明與隱私提醒（promptHelp、privacyNote）。這些都沒給時輸出不變。
  */
 import {
   CUSTOM_PROMPT_LIMITS,
@@ -58,6 +60,7 @@ export const PROMPT_HELP =
 export const FIGURE_HELP = '題目有圖或表格的話，用文字寫出圖裡有什麼，例如「第一張圖：一位學生在公車上低頭滑手機；第二張圖：……」。AI 看不到圖片。可以用中文寫。';
 export const PRIVACY_NOTE =
   '題目會存在你的寫作紀錄裡，送 AI 批改時也會一起傳給 AI。請先刪掉老師姓名、學校或補習班名稱等個人資料；常見格式的 email、手機與市話號碼會自動換成［已隱藏］，其他寫法的聯絡方式（例如把 @ 寫成 at）請自己刪掉。在共用電腦上寫完，請按「清除題目」。';
+const PASTE_TIP = '題目和作文分開：題目貼在這裡，作文寫在下面的作答區。題目裡的評分標準、配分或範文請刪掉，本站用自己的評分規準批改。';
 export const PHOTO_TIP = '題目在紙本上？可以用手機相機的「原況文字」（iPhone）或 Google 智慧鏡頭（Android）複製題目文字，再貼到這裡。本站不辨識題目照片。';
 
 interface Line {
@@ -149,9 +152,12 @@ function countsOf(normalized: string, wordsMax: number, linesMax: number): Field
   return { words: customPromptEnglishWords(normalized), wordsMax, lines: normalized === '' ? 0 : normalized.split('\n').length, linesMax };
 }
 
+/** 問題代碼 → 訊息（自訂作文題目用 CUSTOM_PROMPT_PROBLEM_MESSAGES；作文範文換兩則、另加字數代碼）。 */
+export type PromptProblemMessages = Readonly<Record<CustomPromptProblem, string>>;
+
 /** 錯誤訊息補上目前的數量（「英文超過 100 個單詞」學生要知道現在幾個，才知道要刪多少；審查 ux-12）。 */
-function messageWithCounts(code: CustomPromptProblem, counts: FieldCounts | undefined): string {
-  const base = CUSTOM_PROMPT_PROBLEM_MESSAGES[code];
+function messageWithCounts(code: CustomPromptProblem, counts: FieldCounts | undefined, messages: PromptProblemMessages): string {
+  const base = messages[code];
   if (!counts) return base;
   if (code === 'english_too_long') return `${base}（目前 ${fmt(counts.words)} 個英文單詞）`;
   if (code === 'too_many_lines') return `行數太多了（最多 ${counts.linesMax} 行，目前 ${fmt(counts.lines)} 行），請把空行與不需要的說明刪掉。`;
@@ -159,11 +165,17 @@ function messageWithCounts(code: CustomPromptProblem, counts: FieldCounts | unde
 }
 
 /** 同一欄位的問題：同一個原因只說一次，命中位置收在一起。 */
-function issuesFor(field: CustomPromptField, problems: CustomPromptHit<CustomPromptProblem>[], touched: boolean, counts?: FieldCounts): FieldIssue[] {
+function issuesFor(
+  field: CustomPromptField,
+  problems: CustomPromptHit<CustomPromptProblem>[],
+  touched: boolean,
+  counts: FieldCounts | undefined,
+  messages: PromptProblemMessages,
+): FieldIssue[] {
   const out = new Map<string, FieldIssue>();
   for (const p of problems) {
     if (p.field !== field || (!touched && AFTER_BLUR.has(p.code))) continue;
-    const issue = out.get(p.code) ?? { code: p.code, message: messageWithCounts(p.code, counts), hits: [] };
+    const issue = out.get(p.code) ?? { code: p.code, message: messageWithCounts(p.code, counts, messages), hits: [] };
     if (p.start !== undefined && p.end !== undefined && p.end > p.start) issue.hits.push({ start: p.start, end: p.end });
     out.set(p.code, issue);
   }
@@ -245,6 +257,20 @@ function FieldCounter({ raw, normalized, maxChars, rawMaxChars, counts }: { raw:
   );
 }
 
+/** 表單另外要顯示的問題（作文範文的字數範圍；擋送出的判斷在呼叫端）。 */
+export interface ExtraPromptProblem {
+  field: CustomPromptField;
+  code: string;
+  message: string;
+}
+
+/** 表單另外要顯示的提醒（作文範文的「自我介紹」提醒；不擋送出）。 */
+export interface ExtraPromptWarning {
+  field: 'text' | 'figure_text';
+  code: string;
+  message: string;
+}
+
 export function CustomPromptForm({
   value,
   onChange,
@@ -252,6 +278,12 @@ export function CustomPromptForm({
   serverError,
   confirmed,
   idPrefix = 'custom',
+  messages = CUSTOM_PROMPT_PROBLEM_MESSAGES,
+  extraProblems = [],
+  extraWarnings = [],
+  promptHelp,
+  privacyNote = PRIVACY_NOTE,
+  pasteTip = PASTE_TIP,
   children,
 }: {
   value: CustomPromptDraft;
@@ -262,6 +294,16 @@ export function CustomPromptForm({
   serverError: PromptFieldError | null;
   confirmed: RequirementsConfirmed | null;
   idPrefix?: string;
+  /** 問題的訊息表（預設是自訂作文題目的）。 */
+  messages?: PromptProblemMessages;
+  extraProblems?: readonly ExtraPromptProblem[];
+  extraWarnings?: readonly ExtraPromptWarning[];
+  /** 換掉題目欄的說明（預設是 PROMPT_HELP＋「歷屆題目請到歷屆試題作答」）。 */
+  promptHelp?: ReactNode;
+  /** 換掉表單最下方的隱私提醒。 */
+  privacyNote?: string;
+  /** 換掉「怎麼貼題目」裡的第二段（題目和作文分開…）。 */
+  pasteTip?: string;
   /** 表單下方的動作按鈕（「題目設定好了」「儲存題目」…）。 */
   children?: ReactNode;
 }) {
@@ -293,14 +335,21 @@ export function CustomPromptForm({
 
   const textCounts = countsOf(normalized.text, L.textEnglishWordsMax, L.textMaxLines);
   const figureCounts = countsOf(normalized.figure, L.figureEnglishWordsMax, L.figureMaxLines);
-  const textIssues = [...issuesFor('text', problems, touched.text || server?.field === 'text', textCounts), ...serverIssue('text')];
-  const figureIssues = [...issuesFor('figure_text', problems, touched.figure, figureCounts), ...serverIssue('figure_text')];
+  // 呼叫端另外給的問題（作文範文的字數範圍）：同一欄已經有同一個代碼時不重複。
+  const extraIssue = (field: CustomPromptField, existing: FieldIssue[]): FieldIssue[] =>
+    extraProblems.filter((p) => p.field === field && !existing.some((i) => i.code === p.code)).map((p) => ({ code: p.code, message: p.message, hits: [] }));
+  const withExtra = (field: CustomPromptField, issues: FieldIssue[]): FieldIssue[] => [...issues, ...extraIssue(field, issues)];
+  const textIssues = withExtra('text', [...issuesFor('text', problems, touched.text || server?.field === 'text', textCounts, messages), ...serverIssue('text')]);
+  const figureIssues = withExtra('figure_text', [...issuesFor('figure_text', problems, touched.figure, figureCounts, messages), ...serverIssue('figure_text')]);
   const combined = problems.some((p) => p.code === 'combined_too_long');
   if (combined && !figureIssues.some((i) => i.code === 'combined_too_long') && normalized.figure !== '') {
-    figureIssues.push({ code: 'combined_too_long', message: CUSTOM_PROMPT_PROBLEM_MESSAGES.combined_too_long, hits: [] });
+    figureIssues.push({ code: 'combined_too_long', message: messages.combined_too_long, hits: [] });
   }
-  const paragraphIssues = [...issuesFor('paragraphs', problems, true), ...serverIssue('paragraphs')];
-  const wordIssues = [...issuesFor('min_words', problems, true), ...issuesFor('max_words', problems, true), ...serverIssue('min_words'), ...serverIssue('max_words')];
+  const paragraphIssues = withExtra('paragraphs', [...issuesFor('paragraphs', problems, true, undefined, messages), ...serverIssue('paragraphs')]);
+  const wordIssues = [
+    ...withExtra('min_words', [...issuesFor('min_words', problems, true, undefined, messages), ...serverIssue('min_words')]),
+    ...withExtra('max_words', [...issuesFor('max_words', problems, true, undefined, messages), ...serverIssue('max_words')]),
+  ];
 
   const deleteHeaders = (field: 'text' | 'figure') => {
     const hits = check.warnings.filter((w) => w.code === 'personal_header' && w.field === (field === 'text' ? 'text' : 'figure_text'));
@@ -315,9 +364,15 @@ export function CustomPromptForm({
   const warningNotices = (field: 'text' | 'figure') => {
     const codes = warningsFor(field === 'text' ? 'text' : 'figure_text', check.warnings);
     const undoHere = undo && undo.field === field && value[field] === undo.after ? undo : null;
-    if (codes.length === 0 && !undoHere) return null;
+    const extra = [...new Map(extraWarnings.filter((w) => w.field === (field === 'text' ? 'text' : 'figure_text')).map((w) => [w.code, w.message])).entries()];
+    if (codes.length === 0 && !undoHere && extra.length === 0) return null;
     return (
       <div className="space-y-2">
+        {extra.map(([code, message]) => (
+          <Notice key={`extra-${code}`}>
+            <p>{message}</p>
+          </Notice>
+        ))}
         {codes.map((code) => (
           <Notice key={code}>
             <p>{CUSTOM_PROMPT_WARNING_MESSAGES[code]}</p>
@@ -358,11 +413,15 @@ export function CustomPromptForm({
           作文題目
         </label>
         <p id={`${ids.text}-help`} className="text-sm text-muted">
-          {PROMPT_HELP}如果是歷屆學測或指考的題目，請到
-          <Link to="/writing/essay" className="mx-0.5 font-medium text-primary underline underline-offset-2">
-            歷屆試題
-          </Link>
-          作答，那裡附圖片的文字描述與段數要求，批改比較準。
+          {promptHelp ?? (
+            <>
+              {PROMPT_HELP}如果是歷屆學測或指考的題目，請到
+              <Link to="/writing/essay" className="mx-0.5 font-medium text-primary underline underline-offset-2">
+                歷屆試題
+              </Link>
+              作答，那裡附圖片的文字描述與段數要求，批改比較準。
+            </>
+          )}
         </p>
         <textarea
           id={ids.text}
@@ -495,13 +554,13 @@ export function CustomPromptForm({
         <summary className="min-h-11 cursor-pointer py-2 font-medium text-primary">怎麼貼題目、拍照小技巧</summary>
         <div className="mt-1 space-y-1 rounded-xl bg-surface-2 px-4 py-3">
           <p>{PHOTO_TIP}</p>
-          <p>題目和作文分開：題目貼在這裡，作文寫在下面的作答區。題目裡的評分標準、配分或範文請刪掉，本站用自己的評分規準批改。</p>
+          <p>{pasteTip}</p>
         </div>
       </details>
 
       <p className="flex items-start gap-1.5 text-sm text-muted">
         <ShieldCheck aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
-        {PRIVACY_NOTE}
+        {privacyNote}
       </p>
 
       {children}

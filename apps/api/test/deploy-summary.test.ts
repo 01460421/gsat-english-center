@@ -5,6 +5,7 @@
  * 自訂題沒開時（評分對照達標之前，或只關自訂題）只給提醒，並說明怎麼打開。
  * 學習助手的兩個開關（docs/design/learning-assistant.md §4.14）：Summary 列出 wrangler.toml 的值（off／admin／on），
  * /api/features 和 on 對不起來時警告，admin 模式（只有管理員能用）給提醒。
+ * 作文範文的開關（docs/design/model-essays.md §7.6）：多一列寫出 wrangler.toml 的值；規則同學習助手。關著（上線前）只有這一列。
  */
 import { execFileSync } from 'node:child_process';
 import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
@@ -19,9 +20,12 @@ import {
   CUSTOM_ESSAY_DEFAULT,
   customEssayExpected,
   customEssayVarFrom,
+  EXEMPLARS_DEFAULT,
+  exemplarsMode,
+  exemplarsVarFrom,
   type DeploySummaryInput,
 } from '../../../.github/scripts/deploy-summary.mjs';
-import { assistantSwitch, CONFIG_DEFAULTS, customEssaySwitch } from '../src/config';
+import { assistantSwitch, CONFIG_DEFAULTS, customEssaySwitch, featureModeSwitch } from '../src/config';
 
 const REPO = path.resolve(import.meta.dirname, '..', '..', '..');
 const SCRIPT = path.join(REPO, '.github', 'scripts', 'deploy-summary.mjs');
@@ -208,7 +212,7 @@ describe('deploy-summary.mjs', () => {
     const summary = path.join(dir, 'summary.md');
     const toml = path.join(dir, 'wrangler.toml');
     writeFileSync(summary, '');
-    writeFileSync(toml, '[vars]\nAI_CUSTOM_ESSAY = "off"\nAI_ASSISTANT = "admin"\nAI_ASSISTANT_PHOTO = "admin"\n');
+    writeFileSync(toml, '[vars]\nAI_CUSTOM_ESSAY = "off"\nAI_ASSISTANT = "admin"\nAI_ASSISTANT_PHOTO = "admin"\nAI_ESSAY_EXEMPLARS = "off"\n');
     const out = execFileSync('node', [SCRIPT], {
       env: {
         ...process.env,
@@ -233,6 +237,74 @@ describe('deploy-summary.mjs', () => {
     expect(out).toContain('學習助手拍照（assistantPhoto）：只有管理員能用（admin）');
     expect(out).toContain('::notice::學習助手是「只有管理員能用」');
     expect(readFileSync(summary, 'utf8')).toContain('| 學習助手（assistant） | 只有管理員能用（admin）');
+    // 作文範文的一列（讀同一個檔的 AI_ESSAY_EXEMPLARS）。
+    expect(out).toContain('作文範文（essayExemplars）：關閉（wrangler.toml 的 AI_ESSAY_EXEMPLARS："off"）');
+    expect(readFileSync(summary, 'utf8')).toContain('| 作文範文（essayExemplars） | 關閉');
+  });
+
+  it('作文範文：一列寫出 wrangler.toml 的值（對所有人開放／只有管理員能用／關閉）；off 時只有這一列，其他列、警告、提醒都不變', () => {
+    const EXEMPLARS_ROW = '作文範文（essayExemplars）';
+    const base = assistantInput({ assistant: true, assistantPhoto: true }, 'on', 'on');
+    const without = buildDeploySummary(base);
+    expect(row(without, EXEMPLARS_ROW)).toBe('關閉（wrangler.toml 的 AI_ESSAY_EXEMPLARS：沒有設定，預設 off）');
+    const off = buildDeploySummary({ ...base, exemplarsVar: 'off' });
+    expect(row(off, EXEMPLARS_ROW)).toBe('關閉（wrangler.toml 的 AI_ESSAY_EXEMPLARS："off"）');
+    expect(off.warnings).toEqual([]);
+    expect(off.notices).toEqual([]);
+    expect(off.rows.filter(([k]) => k !== EXEMPLARS_ROW)).toEqual(without.rows.filter(([k]) => k !== EXEMPLARS_ROW));
+    // 新的一列在學習助手拍照之後、全站暫停之前。
+    const keys = off.rows.map(([k]) => k);
+    expect(keys.indexOf(EXEMPLARS_ROW)).toBe(keys.indexOf(PHOTO_ROW) + 1);
+    expect(off.markdown).toContain('| 作文範文（essayExemplars） | 關閉（wrangler.toml 的 AI_ESSAY_EXEMPLARS："off"） |');
+    // on：/api/features 有 essayExemplars 時沒有警告與提醒。
+    const opened = buildDeploySummary({ ...base, features: { ...base.features, essayExemplars: true }, exemplarsVar: 'on' });
+    expect(row(opened, EXEMPLARS_ROW)).toBe('對所有人開放（wrangler.toml 的 AI_ESSAY_EXEMPLARS："on"）');
+    expect(opened.warnings).toEqual([]);
+    expect(opened.notices).toEqual([]);
+    // admin：提醒用管理員帳號確認、查完改回 on；不是警告。
+    const admin = buildDeploySummary({ ...base, exemplarsVar: 'admin' });
+    expect(row(admin, EXEMPLARS_ROW)).toBe('只有管理員能用（wrangler.toml 的 AI_ESSAY_EXEMPLARS："admin"）');
+    expect(admin.warnings).toEqual([]);
+    expect(admin.notices).toHaveLength(1);
+    expect(admin.notices[0]).toContain('作文範文是「只有管理員能用」');
+    expect(admin.notices[0]).toContain('exemplars_preview');
+    expect(admin.notices[0]).toContain('改回 "on"');
+  });
+
+  it('作文範文和 wrangler.toml 對不起來（on 卻沒有 essayExemplars、off 或 admin 卻出現）：::warning::；AI 沒開時不比', () => {
+    const base = assistantInput({ assistant: true, assistantPhoto: true }, 'on', 'on');
+    const missing = buildDeploySummary({ ...base, exemplarsVar: 'on' });
+    expect(missing.warnings.some((w) => w.includes('作文範文') && w.includes('對不起來') && w.includes('不要解除全站暫停'))).toBe(true);
+    for (const v of ['off', 'admin', null]) {
+      const leaked = buildDeploySummary({ ...base, features: { ...base.features, essayExemplars: true }, exemplarsVar: v });
+      expect(leaked.warnings.some((w) => w.includes('作文範文')), String(v)).toBe(true);
+    }
+    const noAi = buildDeploySummary({ ...base, features: { auth: true, ai: false, ocr: false, aiPaused: false }, exemplarsVar: 'admin' });
+    expect(noAi.warnings.some((w) => w.includes('作文範文'))).toBe(false);
+    expect(noAi.notices.some((n) => n.includes('作文範文'))).toBe(false);
+  });
+
+  it('AI_ESSAY_EXEMPLARS 的判斷和 src/config.ts 的 featureModeSwitch 相同（含預設值 off）；讀 wrangler.toml 的那一行', () => {
+    expect(EXEMPLARS_DEFAULT).toBe(CONFIG_DEFAULTS.AI_ESSAY_EXEMPLARS);
+    const warn = console.warn;
+    console.warn = () => {};
+    try {
+      for (const v of [null, '', '   ', 'on', 'ON', ' on ', 'admin', ' Admin ', 'off', 'Off', 'true', 'yes', '0', 'onn', 'admins']) {
+        expect(exemplarsMode(v), JSON.stringify(v)).toBe(featureModeSwitch('AI_ESSAY_EXEMPLARS', v ?? undefined));
+      }
+    } finally {
+      console.warn = warn;
+    }
+    expect(exemplarsVarFrom('# AI_ESSAY_EXEMPLARS = "on" 的說明\n[vars]\nAI_ESSAY_EXEMPLARS = "admin"\n')).toBe('admin');
+    expect(exemplarsVarFrom('[vars]\nAPP_ORIGIN = "x"\n')).toBeNull();
+    const toml = readFileSync(path.join(REPO, 'apps', 'api', 'wrangler.toml'), 'utf8');
+    // 現在是 "off"（test/skeleton.test.ts 釘住）；上線（on）、緊急關閉（off）、只留給管理員（admin）都只改那一行。
+    expect(exemplarsVarFrom(toml)).toMatch(/^(off|admin|on)$/);
+    // 現行設定配上對得起來的 /api/features（只有 on 時有 essayExemplars）：沒有作文範文的警告。
+    const mode = exemplarsMode(exemplarsVarFrom(toml));
+    const s = buildDeploySummary({ ...input({ ...on, customEssay: true, ...(mode === 'on' ? { essayExemplars: true } : {}) }), exemplarsVar: exemplarsVarFrom(toml) });
+    expect(s.warnings.some((w) => w.includes('作文範文'))).toBe(false);
+    if (mode !== 'admin') expect(s.notices.some((n) => n.includes('作文範文'))).toBe(false);
   });
 
   it('worker-deploy.yml 的部署後確認呼叫這支腳本', () => {

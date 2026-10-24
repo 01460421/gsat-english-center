@@ -11,6 +11,9 @@
  *      &reuse=essay 連作文一起帶回、另建一份（「修改題目後重新批改這篇」）。那一份的題目被隱藏（D8 重查命中）時
  *      只不帶題目，作文照常帶回，請學生重新輸入題目；目前的草稿已經有別的作文或還沒送出的題目時先問。
  *      讀不到時依原因說明：404 才說可能已刪除；登入過期、要重新同意給連結；連線或伺服器錯誤給「再試一次」（參數先留著）。
+ *   作文範文：題目通過規則後，題目區下方有「看這題的三個層級範文」（次要樣式；開關關著時不出現）。
+ *   4b. ?prompt=exemplar：作文範文結果頁的「回到題目寫一篇」帶來的題目（sessionStorage 交接，exemplars/lib/handoff.ts；
+ *      docs/design/model-essays.md §1.8 第 7 點）：只帶題目，和 ?from= 只帶回題目時同一套判斷（目前有別的題目或作文時先問）。
  *   5. AI 開著、自訂題目的 AI 批改沒開（features.customEssay 不是 true；評分對照達標之前的上線狀態）：不管登入與核准狀態，
  *      一律說「即將開放」、只能自我檢核，不叫學生登入或申請（申請、核准之後才發現不能送，等於白跑一趟）；開頭的說明也不提送 AI。
  * 草稿（題目、作文、自評）存在這台裝置（custom/drafts.ts）；照片不存。歷屆與本站作答頁一行都沒改。
@@ -73,6 +76,8 @@ import {
 } from './drafts';
 import { customErrorView, gradableMessage, isCustomTaskConflict, withSnapshot, type PromptFieldError } from './errors';
 import { customLengthHints } from './lengthHints';
+import { takeAttemptHandoff } from '../exemplars/lib/handoff';
+import { ExemplarsButton } from '../exemplars/components/ExemplarsButton';
 import { hasPending, pendingRequirements, type PendingRequirements, type WordsSuggestion } from './requirements';
 
 export const CUSTOM_INTRO = '把作文題目貼在下面（老師、補習班或其他考卷的題目都可以），寫完可以自我檢核，或送 AI 依本站的學測作文評分規準批改。';
@@ -92,6 +97,7 @@ const FROM_HIDDEN = '那一份作答的題目含有和官方評分說明相同�
 const FROM_HIDDEN_ESSAY = '那一份作答的題目含有和官方評分說明相同的文字，已隱藏，不能帶回；作文已帶回，請在上方重新輸入題目。';
 const FROM_UNAVAILABLE = '那一份作答的題目暫時無法顯示，請稍後重新整理再試。';
 const FROM_RETRY = '暫時讀不到那一份作答（連線或伺服器問題），請再試一次。';
+const FROM_EXEMPLAR_MISSING = '讀不到作文範文帶過來的題目（可能換了分頁或瀏覽器），請直接輸入題目。';
 /** 送出前確認的標題（出現時焦點移過去，讀屏會念出來；審查 ux-3）。 */
 const REQ_CONFIRM_HEADING = 'custom-req-confirm-h';
 
@@ -120,6 +126,8 @@ interface FromPlan {
   submissionId: string | null;
   reuse: boolean;
   hidden: boolean;
+  /** 作文範文帶來的題目（?prompt=exemplar）：問的時候說「作文範文的題目」。 */
+  exemplar?: boolean;
 }
 
 type FromState =
@@ -356,7 +364,22 @@ function CustomEssayAttempt() {
       focusOn(PROMPT_FIELD_INPUT.text);
     }
     const withEssay = choice === 'replace' && plan.essay !== null;
-    setFromState({ status: 'note', message: plan.hidden ? FROM_HIDDEN_ESSAY : withEssay ? '已帶回之前的題目與作文。' : '已帶回之前的題目。' });
+    setFromState({
+      status: 'note',
+      message: plan.hidden ? FROM_HIDDEN_ESSAY : withEssay ? '已帶回之前的題目與作文。' : plan.exemplar ? '已帶入作文範文的題目。' : '已帶回之前的題目。',
+    });
+  };
+
+  /** 只帶回題目（?from= 不帶作文、?prompt=exemplar）：同一題就不用動；目前沒有作文、也沒有別的題目才直接換；否則先問。 */
+  const decidePromptOnly = (plan: FromPlan, same: boolean) => {
+    const current = draftRef.current;
+    const hasEssay = current.text.trim() !== '';
+    if (same) {
+      setFromState({ status: 'note', message: '這個題目已經在下面了。' });
+      return;
+    }
+    if (!hasEssay && promptDraftEmpty(current.prompt)) applyFrom(plan, 'replace');
+    else setFromState({ status: 'ask', plan, hasEssay });
   };
 
   /** 處理完 ?from= 之後要不要把網址參數拿掉（題目暫時無法顯示時留著，重新整理就會再試一次）。 */
@@ -393,13 +416,7 @@ function CustomEssayAttempt() {
     // 換掉目前的題目會不會丟掉東西：題目是空的、或就是要載入的這一題才不會（審查 ux-11）。
     const promptSafe = promptDraftEmpty(current.prompt) || same;
     if (plan.essay === null) {
-      // 只帶回題目：同一題就不用動；目前沒有作文、也沒有別的題目才直接換；否則先問。
-      if (same) {
-        setFromState({ status: 'note', message: '這個題目已經在下面了。' });
-        return 'clear';
-      }
-      if (!hasEssay && promptSafe) applyFrom(plan, 'replace');
-      else setFromState({ status: 'ask', plan, hasEssay });
+      decidePromptOnly(plan, same);
       return 'clear';
     }
     // 連作文一起帶回：不會丟掉別的作文或別的題目時直接載入；否則先問。
@@ -451,6 +468,25 @@ function CustomEssayAttempt() {
     );
     // 只依網址參數、登入狀態與「再試一次」決定（其他值在處理當下從 ref 讀）。
   }, [fromId, reuse, sessionLoading, features.auth, me.user, fromAttempt]);
+
+  // ───────────── ?prompt=exemplar：作文範文帶來的題目 ─────────────
+  const exemplarPrompt = params.get('prompt') === 'exemplar';
+  const handledExemplar = useRef(false);
+  useEffect(() => {
+    if (!exemplarPrompt || handledExemplar.current) return;
+    handledExemplar.current = true;
+    const next = new URLSearchParams(params);
+    next.delete('prompt');
+    navigate({ pathname: location.pathname, search: next.toString() ? `?${next.toString()}` : '' }, { replace: true, state: location.state });
+    const p = takeAttemptHandoff();
+    if (!p) {
+      setFromState({ status: 'note', message: FROM_EXEMPLAR_MISSING });
+      return;
+    }
+    const plan: FromPlan = { prompt: promptDraftFrom(p), essay: null, submissionId: null, reuse: false, hidden: false, exemplar: true };
+    decidePromptOnly(plan, samePrompt(draftRef.current.prompt, p));
+    // 只在網址帶 ?prompt=exemplar 的那一次處理（交接讀完就刪）。
+  }, [exemplarPrompt]);
 
   // ───────────── 送出 ─────────────
   const completeSelf = completeEssayScores(draft.selfScores);
@@ -682,7 +718,13 @@ function CustomEssayAttempt() {
       {fromState.status === 'ask' && (
         <div role="group" aria-labelledby="custom-from-h" className="space-y-2 rounded-xl border border-badge-fg/30 bg-badge-bg/60 px-4 py-3 text-sm">
           <p id="custom-from-h" className="font-semibold">
-            {fromState.plan.hidden ? '要載入之前作答的作文嗎？' : fromState.plan.essay === null ? '要載入之前作答的題目嗎？' : '要載入之前作答的題目與作文嗎？'}
+            {fromState.plan.hidden
+              ? '要載入之前作答的作文嗎？'
+              : fromState.plan.exemplar
+                ? '要載入作文範文的題目嗎？'
+                : fromState.plan.essay === null
+                  ? '要載入之前作答的題目嗎？'
+                  : '要載入之前作答的題目與作文嗎？'}
           </p>
           <p>{fromState.hasEssay ? '這台裝置上的草稿已經有另一篇作文。' : '這台裝置上的草稿已經有另一個還沒送出的題目。'}</p>
           {fromState.plan.hidden && <p>那一份作答的題目已隱藏，不能帶回；載入後請重新輸入題目。</p>}
@@ -749,6 +791,9 @@ function CustomEssayAttempt() {
           </CustomPromptForm>
         )}
       </section>
+
+      {/* 作文範文（docs/design/model-essays.md §1.4）：題目通過規則才出現；題目經 sessionStorage 交接（按了才寫），只建議先寫。 */}
+      {check.ok && <ExemplarsButton target="自訂題目" customPrompt={check.value} hint />}
 
       {/* 切換按鈕（aria-pressed），和歷屆作答頁同一種做法；不用 tab 角色。 */}
       <div role="group" aria-label="作答方式" className="flex flex-wrap gap-2">

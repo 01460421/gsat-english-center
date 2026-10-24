@@ -73,6 +73,13 @@ const BankEssayAttemptPage = lazy(() => import('./features/writing/bank/BankEssa
  */
 const CustomEssayAttemptPage = lazy(() => import('./features/writing/custom/CustomEssayAttemptPage'));
 /**
+ * 作文範文（docs/design/model-essays.md §8.1）：/writing/essay/exemplars（說明、輸入或選題目、確認、我的範文）與
+ * /writing/essay/exemplars/:id（輪詢與結果）。靜態段 exemplars 同樣優先於歷屆題的 :examId（歷屆考卷的 id 不可能是 exemplars）。
+ * 開關關著時：已登入的人是唯讀模式（看與刪除之前的範文），沒登入只顯示暫停（ExemplarsGate，不打作文範文的 API）。
+ */
+const ExemplarsHomePage = lazy(() => import('./features/writing/exemplars/ExemplarsHomePage'));
+const ExemplarSetPage = lazy(() => import('./features/writing/exemplars/ExemplarSetPage'));
+/**
  * 學習助手的子頁（docs/design/learning-assistant.md §5.1）：錯題與疑點、確認頁、貼上題目、案例（解析與追問）。
  * 學習報告（/assistant/report、/assistant/report/:version；WP-C）。開關關著時：首頁、案例、學習報告對已登入的人是唯讀模式
  * （看與刪除之前的紀錄），其他頁與沒登入只顯示「學習助手暫停使用中」，不打學習助手的 API（AssistGate）。
@@ -112,6 +119,8 @@ export function App() {
         <Route path="writing/essay/ai" element={<BankEssayListPage />} />
         <Route path="writing/essay/ai/:code" element={<BankEssayAttemptPage />} />
         <Route path="writing/essay/custom" element={<CustomEssayAttemptPage />} />
+        <Route path="writing/essay/exemplars" element={<ExemplarsHomePage />} />
+        <Route path="writing/essay/exemplars/:id" element={<ExemplarSetPage />} />
         <Route path="writing/essay/:examId" element={<EssayAttemptPage />} />
         <Route path="writing/submissions/:id" element={<SubmissionResultPage />} />
         <Route path="practice/:section/:tier" element={<PracticeSessionPage />} />

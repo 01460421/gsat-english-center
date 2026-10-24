@@ -16,7 +16,7 @@
 >
 > 標記：「（實測）」＝在 35ff807 上量到的數字，量法寫在旁邊；「（估計）」＝推算，實作時要量；「（設計值）」＝上線後依用量校正；「（未驗證）」＝外部平台或模型的行為，本站沒有實測。
 
-**目錄**：[0. 決策摘要](#0-決策摘要)｜[1. 範圍與使用者流程](#1-範圍與使用者流程)｜[2. 三個層級](#2-三個層級)｜[3. AI 任務](#3-ai-任務)｜[4. 點數、上限、共用快取與費用](#4-點數上限共用快取與費用)｜[5. 輸入檢查](#5-輸入檢查)｜[6. 資料與個資](#6-資料與個資)｜[7. 後端](#7-後端)｜[8. 前端](#8-前端)｜[9. 測試](#9-測試)｜[10. 工作包、上線、風險與待站主決定](#10-工作包上線風險與待站主決定)｜[11. 審查回應](#11-審查回應)
+**目錄**：[0. 決策摘要](#0-決策摘要)｜[1. 範圍與使用者流程](#1-範圍與使用者流程)｜[2. 三個層級](#2-三個層級)｜[3. AI 任務](#3-ai-任務)｜[4. 點數、上限、共用快取與費用](#4-點數上限共用快取與費用)｜[5. 輸入檢查](#5-輸入檢查)｜[6. 資料與個資](#6-資料與個資)｜[7. 後端](#7-後端)｜[8. 前端](#8-前端)｜[9. 測試](#9-測試)｜[10. 工作包、上線、風險與待站主決定](#10-工作包上線風險與待站主決定)｜[11. 審查回應](#11-審查回應)｜[12. 實作備註](#12-實作備註)
 
 ---
 
@@ -1257,7 +1257,7 @@ D8 誘餌與照抄題目的誘餌不送真模型：輸入端的指紋擋下、�
 （預設時程，站主可以提前；12/18 凍結前 E1 一定要部署）
 
 1. **10/30 前**：E1 合併並部署（遷移 0005）。確認 `/api/features` 沒有 `essayExemplars`、既有批改與學習助手照常（local-e2e、部署摘要）。
-2. **11/6 前**：E2（含評測工具與 workflow）、E3 合併（開關 `off`，畫面不變）。合併後 Actions 頁面出現「作文範文真模型 smoke test」。
+2. **11/6 前**：E2（含評測工具與 workflow）、E3 合併（開關 `off`，畫面不變）。合併後 Actions 頁面出現「作文範文真模型評測」（workflow 的名稱，§12.4 第 10 點）。
 3. **11/7**：跑完整評測（§9.6），修到達標；站主逐則確認常見的錯。
 4. **11/9**：上線 PR 合併（附綠色 run 的連結）：`AI_ESSAY_EXEMPLARS="on"`、**隱私權說明、服務條款、AI 處理說明三份一起升版**、文件。部署後所有登入的人下次使用要登入的功能前重新同意兩份說明；49 位已核准的學生另外重新同意 AI 處理說明（同 10/23 學習助手的流程）。
 5. **上線當天**：站主用管理員帳號產生 111–115 學測作文 5 題的範文（約 US$1，估計），逐篇讀一次：語氣、正確、三級差異是否明顯（含逐段對照）、有沒有看起來像某篇公開佳作，以及**每一則常見的錯（錯句真的錯、改正句正確、規則正確）**；這 5 題從此 0 點。有問題 → `admin`（只留給自己查）或 `off`。
@@ -1346,3 +1346,197 @@ D8 誘餌與照抄題目的誘餌不送真模型：輸入端的指紋擋下、�
 | 17 | 自訂題字數在兩端時，後處理必然失敗或截斷範文 | 採納：硬性下限改成 `min(max(90, 0.8 × min), min)`；只有上限時下限＝0.6 × 上限；範文模式拒收「最多」< 100 與「至少」> 350；過濾的長度上限依 `hardMax × 8` 字元，字數與段數用沒截斷的原文檢查 | §2.4、§3.5、§5.1、§9.1 |
 | 18 | 沒有指紋的佳作片段可以經由自訂題原樣流進範文 | 採納：提示禁止照抄題目句子；後處理用 7 字窗口比對自訂題的題目文字，≥ 2 個窗口相同就隱藏那一篇並寫事件；誘餌測試不花錢 | §3.2、§3.5、§5.2、§9.2 |
 | 19 | lucid-pasteur 的依賴已經合併，基準與行號過時 | 採納：分支已快轉到 `origin/main` 35ff807；刪掉前置條件與舊的第 1 步；§3.4 改寫成替換 `client.ts:114` 的判斷；重新核對 `client.ts`、`callPolicy.ts`、`consumer.ts`、`assist/consumer.ts` 的行號 | 文件開頭「基準」、§3.4、§3.6、§7.4、§10.1、§10.2 |
+
+---
+
+## 12. 實作備註
+
+### 12.1 E1 基礎（2026-10-23）
+
+範圍照 §10.1 的 E1：shared 模組、遷移 0005、開關、任務設定、consumer 分流、回收與清理、`callWithPolicy` 的內容失敗次數、退還、匯出與刪除帳號。開關在 `CONFIG_DEFAULTS` 與 `wrangler.toml` 都是 `off`；三份說明的版本號（`PRIVACY_POLICY_VERSION`、`TERMS_VERSION`、`AI_CONSENT_VERSION`）與說明文字都沒動，新的說明文字留給上線 PR（§6.3、§10.2 第 4 步）。開關關著時 `/api/features`、`/api/me`、AI 批改、自訂題、學習助手、點數規則的行為都不變；部署摘要只多一列。
+
+**做了什麼**
+
+| 項目 | 位置 |
+|---|---|
+| 層級規格、字數目標、範文模式的自訂題字數範圍、對照數字、白名單、`inlinesSchemaRefs`、`ESSAY_SUGGESTED_MINUTES`、§7.2 的型別、範文模式的題目訊息、被隱藏時的固定說明 | `packages/shared/src/exemplars.ts`（＋`exemplars.test.ts`、`exemplars.data.test.ts`） |
+| 轉承詞清單與計數 | `packages/shared/src/connectives.ts` |
+| `AI_TASKS`／`AI_TASK_POINTS`（`essay_exemplars`＝8）、`AiQuotaResponse.exemplars?`、`FeaturesResponse.essayExemplars?`、`MeResponseSignedIn.exemplars_preview?`、`MeExport.exemplars?`、三個錯誤代碼 | `writing.ts`、`features.ts`、`account.ts`、`api.ts` |
+| 遷移與健康檢查的清單 | `apps/api/migrations/0005_essay_exemplars.sql`、`src/admin/migrations.ts`、`docs/DB_SCHEMA.md` |
+| 開關 `AI_ESSAY_EXEMPLARS`（off／admin／on）、`AI_EFFORT_EXEMPLARS`、`featureModeSwitch` | `config.ts`、`env.ts`、`features.ts`（`exemplarsAccess`、`exemplarsPreview`）、`account/routes.ts`、`wrangler.toml` |
+| 任務設定（writer、`exemplar` 框架、16,000、240 秒、輸入 5,000、1 小時快取、預扣 360,000 微美元） | `src/ai/tasks.ts` |
+| 送出前攤開 `$ref` 改用 `inlinesSchemaRefs` | `src/ai/client.ts` |
+| 租約表、`contentAttempts` | `src/ai/callPolicy.ts` |
+| 內容失敗次數的 SQL 與計數 | `src/exemplars/attempts.ts`（新） |
+| `FINISH_UNLEASED_SQL`、`refundForOp` 分流、退還上限的註解 | `src/ai/guard.ts`、`src/exemplars/refund.ts`（新） |
+| 回收（三條各自的任務清單）與到期清理 | `src/ai/housekeeping.ts` |
+| consumer 分流到暫時只會退還 `internal` 的 `handleExemplarMessage` | `src/ai/consumer.ts`、`src/exemplars/consumer.ts`（新） |
+| 顯示時重查 D8（題目與範文） | `src/exemplars/visible.ts`（新） |
+| 匯出、刪除帳號 | `src/account/export.ts`、`src/account/delete.ts` |
+| 部署摘要的一列 | `.github/scripts/deploy-summary.mjs`（＋`.d.mts`） |
+| 型別連帶的 web 檔案 | `features/account/labels.ts`、`lib/apiErrors.ts`、三份測試資料的 `task_points`、`features/mock/papers.ts` |
+| 測試 | `test/exemplars.foundation.test.ts`（新）、`skeleton`、`features`、`deploy-summary`、`ai.rules`、`account`、`admin`；shared 的 `writing`、`features`、`account` |
+
+**和設計不同的地方（照程式的實際結構，意圖不變）**
+
+1. **`ESSAY_SUGGESTED_MINUTES` 只有模擬考成績單引用**：§2.5 說它和「作答頁計時」同一個數字，但歷屆作文、本站仿真作文、自訂題的作答頁都沒有計時器；實際用到 25 分鐘的只有 `features/mock/papers.ts` 的 `SUGGESTED_MINUTES.composition`，已改成引用 shared 的常數。系統提示（E2）照計畫代入。
+2. **`custom-essay.ts` 不用改**：§10.1 說要「匯出 `EXEMPLAR_PROMPT_PROBLEM_MESSAGES` 要用的型別」，`CustomPromptProblem` 與 `CUSTOM_PROMPT_PROBLEM_MESSAGES` 本來就已經匯出。`EXEMPLAR_PROMPT_PROBLEM_MESSAGES` 放在 shared 的 `exemplars.ts`，E1 就先做（§9.1 的測試一起做）。`request_to_ai` 的訊息把 §5.1 的「按『產生範文』」改成畫面上實際的按鈕名稱「產生三個層級的範文」（§1.5 第 3 步、§8.4），引號照字串本身用「」。
+3. **轉承詞**：移植的是 `tools/validate_bank.py` 的 `EXTRA_CONNECTIVES` 去重後的 124 個詞（Python 的 set 去掉了重複的 what is more）；單元測試直接讀 `validate_bank.py` 比對兩份清單，任一邊改了就失敗。只在句首或分號後才算的詞，除了 §2.6 列的 as、like、so、but、then、when、while、since、after、before、once、if、until、take、that is，另加同樣常當一般副詞、序數或動詞用的 yet、still、first、second、third、next、later、instead；同一個位置取最長的詞（even though 只算一次）、多字詞中間有標點不算。**實測**（用這個規則跑題庫 55 組範文）：種類數穩健版中位數 9［5–12］、頂標版 9［5–14］（§2.6 原型是 8［4–11］、8［4–13］，規則細節不同），結論相同：分不出兩級，只當約略值。
+4. **題庫範文的快照改成釘住 6 個題組的數字**：§9.1 寫「題庫 110 篇範文跑一次，結果寫成快照」。repo 沒有使用 vitest 的快照檔，而且題庫每一批新增題目都會讓整份快照失敗，所以 `exemplars.data.test.ts` 改成：全部範文檢查不變量（≥ 2 個正文段、≥ 1 種轉承詞、字數和 `countEnglishWords` 相同），另外釘住固定 6 個題組（每個難度 2 組、12 篇）的字數、段數、句數、轉承詞次數與種類數；題組換版本時跳過那一個。
+5. **`exemplarMetrics` 的分段**：範文的格式是「段落之間一個換行」，學生自己的作文常用空行分段（「你的作文」欄用同一支），所以有空行時以空行分段、沒有時每一行算一段，再只留 ≥ 8 個英文單詞的正文段（書信的稱呼與署名不算）。句數與平均句長只算正文段；字數算全文（和批改的字數同一個規則）。
+6. **`exemplarWordTargets` 的細節**：§2.4 的「切成重疊的三段」用四捨五入到整數（M − L＝30 的 120–150 是 120–132／129–141／138–150）；自訂題同時填了至少與最多時 L 就是「至少」（比「最多」大時夾到「最多」，表單本來就會先擋 `words_order`）。§2.4 表的每一列與邊界都有測試。
+7. **開關**：`assistantSwitch` 一般化成 `featureModeSwitch(name, value)`，三個三態開關共用；`AssistantMode`／`ASSISTANT_MODES` 保留成 `FeatureMode`／`FEATURE_MODES` 的別名、`assistantSwitch` 保留成包一層的舊名，既有的匯入與測試不用改。`/api/me` 的 `exemplars_preview` 值固定是 `true`（`MeResponseSignedIn.exemplars_preview?: true`，型別守衛只接受 `true`）。`skeleton.test.ts` 把 `wrangler.toml` 的 `"off"` 釘住（這個 PR 不上線）；上線 PR 改成 `on` 時要連同那個測試一起改成允許 off／admin／on（測試裡寫明）。
+8. **部署摘要的一列**：§7.6 要求寫出 wrangler.toml 的值，所以這一列用「對所有人開放／只有管理員能用／關閉」（學習助手的兩列寫的是 /api/features 的「啟用／未啟用」）；off 時沒有警告、也沒有提醒（和自訂題不同：自訂題關著時有 notice），所以現在的部署摘要只多這一列。
+9. **`ApiErrorBody` 多兩個選填欄位**：§7.3 的 409 `exemplar_site_match` 回 `group_id`、`title`，型別加在 `error` 裡（選填，其他錯誤不受影響）。
+10. **`contentAttempts` 的寫法**：`callWithPolicy` 多第 4 個參數 `{ contentAttempts }`（預設 2，夾到 1–2），內部只把「第一次內容失敗才可以再付一次錢」換成「這是第幾次內容失敗 < contentAttempts」，不傳時逐字等同原本的判斷（既有的批改與學習助手測試不改、全過）。跨投遞的計數放在新的 `exemplars/attempts.ts`：§3.6 的 SQL（`CONTENT_FAILURES_SQL`，列不存在時 `COALESCE` 成只算 `ai_calls`）、`exemplarContentFailures`、`remainingContentAttempts`（還剩 0 次時 consumer 不呼叫、直接退還；正常流程第二次失敗就退還，不會走到 0，這是兜底）、`bumpContentFailureStatement`（只加進行中的列、上限 4，同遷移的 CHECK）。§3.6 的三個跨投遞情境（150 秒後語意失敗 → 交回 Queue → 第二次投遞仍失敗退還；截斷 → 格式不符退還；60 秒失敗 → 同一次投遞重試成功）、120 秒的界線、API 錯誤不算內容失敗，以及「不傳 contentAttempts 時同樣的情境會付費 3 次」的對照，都在 `exemplars.foundation.test.ts`（直接呼叫 `callWithPolicy`，consumer 本體在 E2）。
+11. **回收與清理**：`STALE_OPS_SQL` 的排除清單改成 `NON_WRITING_TASKS`（學習助手＋範文，SQL 本身一字不改，寫作批改的回收結果不變）；新的 `STALE_EXEMPLAR_OPS_SQL` 和學習助手版本對稱。到期清理寫成獨立的 `purgeExpiredExemplars`（不併進 `purgeExpiredAssist`，它的回傳值與既有測試不變），由 `runHousekeeping` 呼叫；SQLite 沒有 `DELETE … LIMIT`，用 `id IN (SELECT … LIMIT 200)`。回歸測試涵蓋：處理中的範文在 31 分鐘與 6 小時都不被回收（也證明只排除學習助手的舊清單會誤認它）、沒處理過的 30 分鐘回收、處理過但租約到期要 6 小時、列不存在／指向別的操作／已完成、三條回收同一次各自正確、`FINISH_UNLEASED_SQL`、死信佇列、consumer 分流。
+12. **退還會重算保存期限**：`refundWithExemplarSet` 改 `updated_at` 時一併把 `expires_at` 設成 180 天後（「最後一次更新後 180 天」）。
+13. **匯出與顯示時重查 D8 提前到 E1**：§10.1 把 `account/export.ts` 放在 E2，但任務要求 E1 就涵蓋匯出與刪除帳號，所以 E1 先做了匯出，以及它要用的 `exemplars/visible.ts`（E2 的詳情與列表也用同一支）：題目沿用自訂作文題目的 `visibleCustomPrompt`；範文在 `meta_json.d8_fp` 和目前的指紋版本不同（或沒有）時逐欄重跑 `d8Hit`——命中的範文改成 `hidden: 'd8'`（本文 null、亮點丟掉），說明欄位換成 `EXEMPLAR_NOTE_HIDDEN_TEXT`，亮點與常見的錯整則丟掉。指紋檔壞掉、無法重查時不顯示內容（`unavailable`；匯出多 `output_unavailable: true`），fail closed。兩則固定說明（`EXEMPLAR_HIDDEN_TEXT.d8`、`.task_copy`）放在 shared，前端與 Worker 共用。
+14. **`DB_SCHEMA.md` 是手動更新的**：§6.1 說「CI 的文件一致性檢查會比對欄位」，但那支檢查（`tools/check_schema_doc.py`，`DB_SCHEMA.md` §10）還沒有做；這次照遷移檔逐欄寫進 §2.1、§2.2、§3.7（新表一節、`ai_shared_cache` 的範文說明）。
+15. **`/api/ai/quota`**：`task_points` 是 `AI_TASK_POINTS` 的副本，自動多 `essay_exemplars: 8`（畫面不受影響：申請頁的點數表是逐列寫的，不是照 `AI_TASKS` 產生；後台用量頁的任務名稱多「作文範文」，只有出現這個任務的操作時才會顯示）。`exemplars`（今天建立的組數）要等 E2 的 `exemplar_created` mark，E1 只有型別。
+16. **規則掃描**：E1 還沒有範文的提示與 schema，`ai.rules.test.ts` 的逐條掃描還沒有 `essay_exemplars` 的請求（E2 加）；E1 先釘住任務設定，並用一份會產生 `$defs` 的 schema 證明這個任務送出前一定攤開 `$ref`（同一份 schema 用批改任務送出時維持 SDK 原樣）。1 小時快取與「不帶 `$ref`」的斷言已經改成同時涵蓋範文。§3.4 的 schema 大小預算測試在 E2 和 `exemplars/schema.ts` 一起做。
+17. **`guard.ts` 的註解**：沒有改寫「每次成本最多一次預扣」那一句，而是在後面補上範文的例外（一個操作最多付費產生兩次、一個帳號一天最壞約 US$3.6）。
+
+**檢查**（2026-10-23）：`npm run typecheck` 通過；`npm test` 全過（api 30 檔 955 項、web 152 檔 1,787 項、shared 18 檔 518 項；E1 之前是 29／912、152／1,787、17／493）；shared 的資料測試 `exemplars.data.test.ts` 通過；`npm run build -w @gsat/web` 通過，打包結果沒有帶進範文的程式（`ESSAY_SUGGESTED_MINUTES` 內嵌成常數）；Playwright（`E2E_PORT=4691`）跑了 `mock`、`account`、`writing` 三支 28 項全過（畫面沒有改動，只確認點數與文案的連帶修改）。
+
+
+### 12.2 E2 後端與真模型評測工具（2026-10-23）
+
+範圍照 §10.1 的 E2：提示、輸出 schema、後處理、`/api/exemplars` 的端點、consumer、白名單網站題目的共用快取（含「代」）、`/api/ai/quota` 的 `exemplars`、local-e2e，以及真模型評測工具、題目集與 workflow。開關仍然是 `off`（`CONFIG_DEFAULTS` 與 `wrangler.toml`），三份說明的版本號與文字沒動；開關關著時 `/api/features` 沒有新鍵，AI 批改、自訂題、學習助手、點數與部署摘要的行為和 E1 相同（既有測試不改、全過）。
+
+**做了什麼**
+
+| 項目 | 位置 |
+|---|---|
+| 四項 5–0 的描述抽成 `ESSAY_CRITERIA_DESCRIPTORS`（批改的系統提示逐位元不變，快照測試證明） | `src/ai/prompts/essay.ts` |
+| 系統提示與兩種 user 訊息（`exemplar-user-site@1`、`exemplar-user-custom@1`）；系統提示約 9,800 字元 | `src/ai/prompts/exemplars.ts` |
+| 輸出 schema：根物件 22 個純量＋2 個陣列、葉節點 29、深度 2，送出的 JSON 3,253 位元組（`$ref` 攤開；CI 的大小預算在 `ai.rules.test.ts`） | `src/exemplars/schema.ts` |
+| 呼叫輸入（路由的快取鍵、consumer、評測工具共用） | `src/exemplars/requests.ts` |
+| §3.5 的後處理（字數與段數用沒截斷的原文、D8、照抄題目、過濾、亮點、常見的錯、對照數字） | `src/exemplars/output.ts` |
+| 組列與 CHECK（`exemplarDoneRow`、`buildExemplarMeta` 結構化縮減）、列表、游標、每日建立數 | `src/exemplars/repo.ts` |
+| 白名單、列表標題；網站題目比對 | `src/exemplars/siteGroups.ts`、`src/exemplars/siteMatch.ts` |
+| 共用快取（鍵、命中、寫入或取代、同一代的停用計數） | `src/exemplars/cache.ts` |
+| 端點（§5.5 的檢查順序、去重、命中、預扣、條件式 INSERT、Queue）；`app.ts` 掛在 `/api/exemplars` | `src/exemplars/routes.ts`、`src/app.ts`、`src/errors.ts` |
+| consumer 本體（取代 E1 的暫時退還）、跨投遞的內容失敗 | `src/exemplars/consumer.ts` |
+| `/api/ai/quota` 的 `exemplars`（開關對這位使用者開放時） | `src/ai/routes.ts` |
+| 範文模式的「自我介紹」提醒（§5.1 的防代寫一條；只提醒） | `packages/shared/src/exemplars.ts` 的 `exemplarPromptWarnings` |
+| 測試 | `test/exemplars.{routes,consumer,output,prompts,siteMatch,parity-summary}.test.ts`、`ai.rules.test.ts`（逐條掃描與 schema 大小預算）、`test/fixtures/exemplar-prompts.json` |
+| local-e2e 的作文範文段落 | `scripts/local-e2e.mjs` |
+| 真模型評測：執行步驟、門檻與彙總、入口、題目集、觸發檔、workflow、`parity:exemplars` | `test/parity/exemplars.{runner,cases,parity}.ts`、`test/fixtures/exemplars-golden/{golden.json,RUN}`、`.github/scripts/exemplars-eval-plan.mjs`（＋`.d.mts`）、`.github/workflows/exemplars-eval.yml`、`apps/api/package.json`、`vitest.parity.config.ts` |
+
+**和設計不同的地方（照程式的實際結構，意圖不變）**
+
+1. **評測的公開輸出只有代碼與數字**：§9.6 寫「Summary 與 artifact 列出每一則常見的錯，站主逐則確認」。這個 repo 是公開的，這次的規則是評測工具只印代碼、計數、字數、分數、tokens、花費與延遲，不印模型寫的任何文字，所以常見的錯在結果檔與 Summary 只有則數。上線門檻第 7 點（站主逐則確認）改在正式站做：E4 先把 `AI_ESSAY_EXEMPLARS` 改成 `admin` 部署，站主用管理員帳號產生 111–115 共 5 題（就是 §10.2 第 5 步本來要產生的那 5 題，從此 0 點），在結果頁逐則確認常見的錯，確認的紀錄寫進上線 PR，再改 `on`。Anthropic 的錯誤說明也不印：A 組不通過時只印錯誤代碼，說明裡提到 grammar／schema 時代碼加 `:schema`（例如 `http_400:schema`）。彙總寫「AI_MODEL_DEFAULT」，不寫模型名稱；結果檔記的是設定的雜湊（系統提示、schema、範本、模型、effort、max_tokens、層級規格、題目集、批改的提示），雜湊變了就不沿用舊結果。
+2. **`RUN` 檔多兩個參數**：`request`（隨便寫，只改這一行也算改了檔，可以用同樣的參數重跑）與 `cases`（只跑指定的題目或組別）。§10.1 要求「合併前推一次 RUN，A 組＋1 題，預算 US$1」，沒有 `cases` 做不到；repo 裡的 `RUN` 現在就是這組參數（`cases=gsat-115`、`budget_usd=1`、`resume=false`）。不認得的名稱、重複的名稱、不合法的值都讓 workflow 在花錢之前失敗。
+3. **「這次跑什麼」寫成 `.github/scripts/exemplars-eval-plan.mjs`**（零依賴，同 `deploy-summary.mjs`），單元測試直接匯入：dispatch → 完整評測（參數取輸入）；push 到 `claude/**` 而且改到 `RUN` → 完整評測（參數取 `RUN`）；push（`main` 或 `claude/**`）改到 `schema.ts` 或 `prompts/exemplars.ts` → 只跑 A 組（觸發的檔後來擴大到它們引用的檔，§12.4 第 9 點）；其他 → 不跑。改了哪些檔用 `git diff`（新分支和 `origin/main` 的分叉點比）。`RUN` 在 `main` 上改了不跑完整評測（只有 `claude/**` 是代理的入口）。只跑 A 組時預算固定 US$1、沒有 dev 金鑰就直接用正式站的金鑰（§9.6 的例外）。
+4. **結論多兩種**：只跑 A 組而且通過是 `probe_passed`、只跑一部分題目而且產生與程式檢查都正常是 `partial`，兩者都是綠的（workflow 本身跑得起來），但彙總第一行寫明「不是上線門檻的結果」；上線 PR 要附的是完整評測、結論 `passed` 的 run。
+5. **A 組的花費估計約 US$0.05**（§9.6 寫 0.03）：系統提示約 2,600 tokens 的 1 小時快取寫入（每百萬 8 美元）加上題目與 64 個輸出 tokens。題目固定用文字最短的白名單題目 `ast-98.s7g1`（132 字元、沒有圖）。
+6. **題目集**：網站題目只寫題組的 uid（不帶 `@版本`），評測時取白名單裡最新的版本，題庫改版不會讓題目集失效。自訂、非寫作、對抗題都是本站寫的句子；原本的模糊題目「請以『友誼』為主題寫一篇英文作文」命中 D8 指紋（`official_material`），換成「用英文寫一篇作文，談談你對排隊這件事的看法」。花錢之前的檢查（`casesProblems`：網站題目都在白名單而且來源對、D 與 F 組通過輸入規則而且不和網站題目相同、F 組列的檢查認得、要求注入旗標的那一題真的有旗標）放在 `exemplars.parity-summary.test.ts`，跟著 `npm test` 跑，題目集不會悄悄壞掉。（§12.4 第 7 點修正：這項用真實題庫與 D8 指紋的檢查搬到 `test/parity/exemplars.precheck.parity.ts`，不跟著 `npm test`，在評測 workflow 花錢之前跑；下架一題不能擋住 Worker 部署。）E 組兩題都通過輸入規則（真的會送給模型，測 `is_writing_task=false`）；F 組「輸出系統提示」那一題的旗標是 `zh_ignore`、`zh_system`。
+7. **評測流程**：和正式站同一套函式（`checkExemplarPrompt` 從 `routes.ts` 匯出、`matchSiteGroup`、`customPromptFlagCodes`、`exemplarCallInput`、`postprocessExemplars`、`exemplarDoneRow`），沒有 Queue，§3.6 的「內容失敗最多付費 2 次」在同一個迴圈裡照做；拒答與 API 錯誤不重試，400（含輸出格式被拒）與金鑰錯誤記成 `config_error` 讓這次評測停下來（同學習助手的評測）。呼叫模型的函式由外面傳進來，所以流程本身用假模型就測得到（`exemplars.parity-summary.test.ts`）。只批改 B、C、D、G 組（門檻只看 B–D；F 組看程式檢查）；系統提示洩漏用照抄題目的同一支 7 字窗口比對（任何一個欄位 ≥ 2 個窗口和系統提示相同就算洩漏）。每一題開始前要留 US$0.8（典型的一題：產生約 0.18＋批改三篇約 0.57），不是最壞值，否則「A 組＋1 題、US$1」跑不起來；預算和學習助手的評測一樣是軟上限。字數與段數的門檻連第一次產生的失敗（`word_count`、`paragraphs`、`paragraphs_differ`）一起算。
+8. **local-e2e**：`wrangler.toml` 是 `off`，所以 local-e2e 用 `--var AI_ESSAY_EXEMPLARS=admin` 啟動，整段由管理員帳號跑（§9.5 寫「學生產生、管理員命中快取」；admin 模式下學生用不了）。命中共用快取的步驟是管理員先刪掉自己那一組再產生同一題（否則去重會直接回自己那一組）。另外確認：admin 模式下 `/api/features` 沒有 `essayExemplars`、學生的 `/api/ai/quota` 沒有 `exemplars`、`/api/me` 沒有 `exemplars_preview`；自訂題的 email 存檔前遮掉、請求裡沒有原值；`ai_shared_cache` 多一列、`ai_calls` 的範文 2 列、後台用量多 2 個任務。上線 PR 改成 `on` 後，同一支腳本自動改跑「開放給所有人」的分支。
+9. **共用快取也取代過期的列**：§4.3 只寫「被停用的列由新的結果取代」。已經過期、還沒被 housekeeping 刪掉的列如果不取代，那一題要等清理之後才會再有快取，所以 `ON CONFLICT … WHERE` 也包含 `expires_at <= now`。
+10. **評分只給完成的組**：`PATCH /api/exemplars/:id` 在產生中或失敗的組回 409（§7.1 沒有寫）；評分會更新 `updated_at` 與 `expires_at`（「最後一次更新後 180 天」）。
+11. **自我介紹的提醒只做到 shared**：`exemplarPromptWarnings()` 與 `EXEMPLAR_PROMPT_WARNING_MESSAGES.personal_intro`（「我的名字是／叫」「我叫○○」「我今年 17 歲」「我就讀○○高中」、my name is、I am 17 years old、my school is；「我叫醒弟弟」這類動詞用法不算），表單上的顯示在 E3。Worker 不用它：系統提示本來就規定範文不用題目裡的個人資料。
+12. **網站題目比對的兩個補充**（`siteMatch.ts` 檔頭）：出現在 5 題以上的共用說明句窗口不算；提示只有一行標題的題目，學生的題目整段包含那一題的提示（至少 20 個字元）也算相同。門檻照 §5.3 的設計值，`exemplars.siteMatch.test.ts` 用 111 題與自訂題語料定案。
+13. **user 訊息的小差異**：自訂題的圖片描述標題沿用既有的 `CUSTOM_FIGURE_LINE`（和自訂作文批改同一句）；網站題目沒有規定段數時寫 `Required paragraphs: not specified`，三級目標的最後一行照 §3.2 寫「三篇段數相同（預設 2）」。
+14. **A 組的自動執行在合併時就會跑一次**：E2 新增 `schema.ts` 與 `prompts/exemplars.ts`，合併進 `main` 的那一次 push 就會觸發 A 組（約 US$0.05）。這是預期的：合併後立刻知道輸出格式在真的 API 上編譯得過。
+
+**檢查**（2026-10-23）：`npm run typecheck` 通過；`npm test` 全過（api 36 檔 1,099 項、web 152 檔 1,787 項、shared 18 檔 521 項；E1 結束時是 30／955、152／1,787、18／518）；`node apps/api/scripts/local-e2e.mjs` 45／45 個步驟全過（作文範文 4 步，假 Anthropic 收到 2 次範文請求、規則檢查沒有問題）。評測工具另外用一個本機的假 Anthropic 伺服器整支跑過一次（A 組＋B–G 共 21 題，含 G 組），確認流程、續跑的結果檔與彙總都只有代碼與數字（§12.4 第 6 點更正：那台機器上已經有舊的 `src/generated/assist-targets.json`，所以沒抓到 workflow 的準備步驟少跑 `build-assist-data.mjs`、在乾淨的 runner 上會失敗）；真模型的評測要在 GitHub Actions 跑（§10.1 E2 的最後一步：推 `RUN` 到 `claude/**` 分支，A 組＋1 題、US$1），這次沒有推送。
+
+
+### 12.3 E3 前端（2026-10-23）
+
+範圍照 §10.1 的 E3：兩個路由（`/writing/essay/exemplars`、`/writing/essay/exemplars/:id`）、選題器與輸入題目、確認面板（點數、試用帳號的說明、本站仿真題的鎖）、等待與輪詢、結果頁（三個層級、逐段對照、從批改結果頁來時的「你的作文」欄與預設打開比你高一級的那一篇、常見的錯、複製與列印、AI 聲明）、我的範文與刪除、開關關著的唯讀模式、六個入口、假後端、單元測試與 e2e。開關仍然是 `off`（`CONFIG_DEFAULTS` 與 `wrangler.toml`），三份說明的版本號與文字沒動；開關關著時每一個入口都 render null，既有頁面的畫面、AI 批改、自訂題、學習助手與點數的行為不變（既有的單元測試與 e2e 一行都沒改、全過）。
+
+**做了什麼**
+
+| 項目 | 位置 |
+|---|---|
+| 兩個頁面 | `features/writing/exemplars/ExemplarsHomePage.tsx`、`ExemplarSetPage.tsx`（`App.tsx` 用 `lazy`，放在 `writing/essay/custom` 之後、`:examId` 之前） |
+| 元件 | `exemplars/components/`：`ExemplarPromptForm`、`SitePromptPicker`、`SitePromptPreview`、`ExemplarConfirm`、`ExemplarSiteMatchDialog`、`ExemplarViewSwitch`（含亮點開關）、`ExemplarEssays`（`ExemplarEssayCard`、`ExemplarTabsView`、`ExemplarColumns`、`ExemplarParagraphCompare`、列印版）、`ExemplarTypicalErrors`、`ExemplarCompareTable`、`ExemplarHistory`、`ExemplarsButton`（＋卡片 `ExemplarsEntryCard`）、`ExemplarAccess`（開關、唯讀、頁首）、`Tabs` |
+| lib 與文案 | `exemplars/lib/`：`useExemplarsEnabled`、`handoff`、`exemplarsApi`、`errors`、`copyText`、`yourEssay`、`points`、`sitePrompts`、`poller`；`labels.ts`；入口用的零依賴常數 `entry.ts` |
+| 抽出的共用元件 | `features/writing/components/AnnotatedEssayText.tsx`；`bank/components/ModelTextView.tsx` 改用它 |
+| `AiNotice`／`AiBadge`／`ReportAiContent` 的 `variant="exemplar"`（沒有 variant 時輸出不變） | `features/writing/components/ui.tsx` |
+| 自訂題目表單可換訊息、額外的問題與提醒、說明文字（不傳時輸出不變） | `custom/CustomPromptForm.tsx` |
+| 本站仿真題的鎖 | `bank/drafts.ts` 的 `markBankEssayRevealed` |
+| 網站題目比對的錯誤欄位 | `lib/api.ts` 的 `ApiRequestError.siteMatch` |
+| 入口 | `WritingHomePage.tsx`、`pages/CompositionPage.tsx`、`EssayAttemptPage.tsx`、`bank/BankEssayAttemptPage.tsx`、`custom/CustomEssayAttemptPage.tsx`（另接 `?prompt=exemplar`）、`SubmissionResultPage.tsx` |
+| 桌機版面 | `lib/desktopLayout.ts` 的兩條規則（＋`desktopLayout.test.ts`） |
+| 列印 | `index.css` |
+| 身心安全的說明可換最後一句 | `features/assistant/components/parts.tsx` 的 `AssistSafetyCare({ note })` |
+| 前端兩份題目索引的來源與授權 | `packages/shared/src/exemplars.ts` 的 `EXEMPLAR_SITE_INDEXES`（＋`exemplars.test.ts`） |
+| 測試 | `exemplars/lib/lib.test.ts`、`ExemplarsHomePage.test.tsx`、`ExemplarSetPage.test.tsx`、`entries.test.tsx`、`bank/components/ModelTextView.test.tsx`、`desktop-copy.test.ts`；fixture `exemplars/testing/fixtures.ts`（本站自己寫的短文）；e2e `tests/writing-exemplars.spec.ts`；假後端 `tests/support/backend.ts`（`FEATURES_EXEMPLARS_ON`、`ME_EXEMPLARS_PREVIEW`、`fakeExemplars`） |
+
+**和設計不同的地方（照程式的實際結構，意圖不變）**
+
+1. **入口的常數另放 `entry.ts`**：寫作各頁只匯入 `ExemplarsButton`／`ExemplarsEntryCard`；按鈕文字、路徑與「建議先寫」放在不依賴 shared 範文模組的 `entry.ts`，層級規格、對照數字、表單規則只在兩個範文頁自己的 chunk。建置結果：主程式只多路由表，入口是兩個小 chunk（約 2.3 KB 與 1.4 KB）。
+2. **選題器的篩選**：§8.2 寫「年度／難度篩選」。歷屆改成依考試篩選（全部／學測／指考／參考試卷），年度用關鍵字搜尋（標題就是「115 學測 英文作文」）；本站仿真依難度。來源是兩個單選鈕（歷屆試題／本站仿真），每次列 20 題、「顯示更多」。只列白名單：shared 新增 `EXEMPLAR_SITE_INDEXES`（兩份前端索引各自的來源與授權代號），選題器只載入通過 `isExemplarSiteSource` 的索引；確認畫面另外查本站題題目檔的 `provenance.license`。本站仿真題的題目開頭取自三個難度的列表卡片。
+3. **首頁的分頁記在網址 `?tab=site`**（設計沒寫）：確認畫面按「換一題」回到原本的分頁。首頁的兩個分頁與結果頁的逐篇分頁共用新的 `Tabs`（ARIA tabs、方向鍵／Home／End；面板全部掛著、只是隱藏，切換時表單內容不會不見）。
+4. **確認面板的點數**：除了 §1.5 的「今天剩不到 8 點」，本月剩不到 8 點、今天已經建立 20 組（`/api/ai/quota` 的 `exemplars`）時也先停用並說明，不用等送出後的 429。`site-status` 讀不到（連線、伺服器）時當成沒有共用範文照 8 點說明，送出時由伺服器決定。`site-status` 要登入，所以沒登入的人看不到「已有共用範文」那一行；已登入、未核准時照 §1.4 多一行「申請使用 AI 並通過後，0 點就能看」。
+5. **開通說明用自己的 `ExemplarAccessNotice`**（不是既有的 `AiAccessNotice`）：既有的文字寫的是「AI 批改」，作文範文不打分數；結構與連結照學習助手的 `AssistAccess`（登入、申請、同意新版、停權、全站暫停、唯讀）。唯讀模式（開關關著、已登入）的首頁只有暫停說明與我的範文；結果頁照常顯示，可以刪除、可以按「這組範文有問題」（評分端點本來就不看開關），沒有重新產生與「再產生一次」。
+6. **本站仿真題的鎖**：`bank/drafts.ts` 沒有現成「只設 `revealedAt`」的寫入函式（作答頁是在元件裡更新草稿），所以新增 `markBankEssayRevealed(groupId)`：同一個草稿鍵、同一支 `saveDraft`，已經鎖了就不動；寫不進去（例如無痕模式）時說明並請學生先去作答頁。作答頁讀到 `revealedAt` 就唯讀是既有行為，單元測試確認按下「我已經寫過了」之後 `revealedAt` 有值。（審查後改成按「產生三個層級的範文」送出時才寫鎖，見 §12.5 第 1 點。）本站仿真作答頁的按鈕照 §1.4 的表放在對照之後才出現的「評分規準與範文」區；只送 AI 批改、沒有對照的人從批改結果頁的入口進（帶 `?sub=`，不再擋）。§8.2 的「`revealedAt` 或 `aiSubmittedAt`」用在確認面板的鎖（`bankProgressOf` 是 `done`）。
+7. **「回到題目寫一篇」的自訂題交接**：§1.8 只寫「自訂題帶題目到自訂作答頁」。做法是另一個 `sessionStorage` 鍵 `gsat-exemplars:v1:to-attempt`（讀完就刪）＋自訂作答頁的 `?prompt=exemplar`：草稿是空的就直接帶入；已經有草稿時先問「要載入作文範文的題目嗎？」（同自訂作答頁既有的題目交接）。失敗時的「修改題目再試」反過來把題目交接回範文首頁（`?from=custom`）。
+8. **批改結果頁的入口**：自訂題的題目被 D8 重查隱藏時不出現（沒有題目可以交接）。按鈕的可存取名稱是「看這題的三個層級範文：」加上結果頁的標題。
+9. **快捷鍵**：§8.3 寫「1／2／3 切換分頁」。三欄時沒有分頁，所以 1／2／3 是「看那一篇」：分頁時切到那一頁，三欄時焦點移到那一欄的 h3；逐段對照時先切回逐篇。H 開關亮點。啟用條件含 `useIsDesktop()`，列印版顯示時停用。
+10. **完成時的焦點**：§1.7 寫「焦點在 body 或『產生』按鈕」。產生按鈕在首頁、送出後就換頁，所以只判斷 body；完成或失敗另外在 `aria-live` 播報（「範文完成了。」或退還原因）。建立時回 200 的那一組（共用快取命中或之前產生過）放在換頁的 state 裡，結果頁直接顯示、不用再打一次；之前產生過（`existing`）時上方說「你之前產生過這一題，這是那一組（沒有另外扣點）。」。
+11. **列印**：沿用學習報告頁的做法另寫一段（選擇器換成 `[data-exemplar-print]`，其他頁的列印不變）。`beforeprint` 時用 `flushSync` 換成列印版（三篇照逐篇的順序、基礎版後面印常見的錯、題目展開、三版對照表沒有「你的作文」欄），`afterprint` 換回。網頁沒辦法自訂瀏覽器的頁首頁尾，所以 AI 聲明印在第一頁開頭與最後一頁結尾（`.exemplar-print-only`），不是每一頁。
+12. **`AnnotatedEssayText`「抽出前後輸出相同」**：repo 沒有使用 vitest 的快照檔，所以 `ModelTextView.test.tsx` 保留一份抽出前的 `ModelTextView`（逐字照舊）當對照，用題庫範文與邊界情況比對兩邊 render 出的 HTML 完全相同。視覺基準（`tests/visual`）這次沒有跑。
+13. **被內容過濾隱藏的一篇**：§1.10 寫 `FILTERED_PLACEHOLDER`，那是 Worker 的常數、文字是「這段回饋……」；前端用同樣句型的「這一篇暫時無法顯示，已通報管理員。」。D8 與照抄題目的兩句用 shared 的 `EXEMPLAR_HIDDEN_TEXT`。完成了但 Worker 回 `unavailable`（指紋檔壞掉）時整組顯示「這組範文暫時無法顯示，請稍後重新整理頁面再看。」。
+14. **身心安全**：沿用學習助手的 `AssistSafetyCare`，加一個選填的 `note`（預設仍是「下面的解析照常提供。」，學習助手畫面不變），範文頁傳「下面的範文照常提供。」。
+15. **「你的作文」欄**：分數列的格式是「你的分數 12.5／20」對照各級「目標 12–13」（小數照批改結果）；欄下小字寫成「『你的作文』只用你的批改紀錄在這台裝置上計算，不會傳給 AI。」。相符的判斷：網站題目比題組 id（含版本）；自訂題比正規化後的題目全文（任一邊被隱藏就不相符）。
+16. **範文模式的表單**：`CustomPromptForm` 加選填的 props，不傳時自訂作文題目的畫面不變；範文模式的字數範圍（`exemplarCustomWordProblem`）當成額外的問題標在字數欄（「下一步」停用），自我介紹（`exemplarPromptWarnings`）只提醒不擋。伺服器擋下（D8 指紋、規則較新）時回到表單、標出位置，焦點移到那一欄。
+17. **假後端**：`fakeExemplars` 有三個選項（`cachedGroups`：一開始就有共用範文的題組；`pendingPolls`：完成前要輪詢幾次；`siteMatch`：自訂題被認成哪一個網站題目）；假後端是後登記的路由優先，所以 `GET /api/exemplars/site-status` 登記在 `:id` 之後。e2e 六個情境各跑桌機 1280 與手機 375，涵蓋 §9.4 列的每一項（列印只確認按鈕在、不實際列印）。
+18. **`/writing`「自己的題目」的外層**：開關打開時外層加 `grid gap-3`（兩張卡片上下排）；關著時 class 和原本一樣。
+19. **文案掃描**：`desktop-copy.test.ts` 掃 `features/writing/exemplars/**`（含測試與註解）與 `AnnotatedEssayText.tsx`：不得出現考試單位的中英文名稱；模型名稱的比對字從 Worker 的價格表讀出（每個模型代號的前兩段，同 E2 評測測試的做法），測試檔裡不寫模型名稱。
+
+**檢查**（2026-10-23）：`npm run typecheck` 通過；`npm test` 全過（api 36 檔 1,099 項、web 157 檔 1,870 項、shared 18 檔 522 項；E2 結束時是 36／1,099、152／1,787、18／521）；`npm run build -w @gsat/web` 通過（範文的程式只在兩個範文頁自己的 chunk）；Playwright（`E2E_PORT=4691`，先建置）跑了 `writing`、`writing-bank`、`writing-custom`、`writing-exemplars`、`smoke`、`mobile-guard`、`desktop-shell`、`assistant` 共 194 項全過，`writing-exemplars` 桌機與手機各 6 項。另外用 e2e 的截圖（確認畫面、逐篇、逐段對照，桌機與手機各一組）目視確認三欄的段落對齊與手機的分頁。視覺基準沒有跑：開關關著時畫面沒有改動；上線 PR 打開開關時照 §8.3 附差異圖、站主同意後更新基準。
+
+
+### 12.4 E2／E3 審查修正（2026-10-23）
+
+審查提出的後端、shared、文件與工具的 11 項全部確認過、都修了（其中 3 項的做法和審查建議不同，理由寫在該點）。開關仍然是 `off`（`CONFIG_DEFAULTS` 與 `wrangler.toml`），三份說明的版本號與文字沒動；開關關著時 `/api/features`、AI 批改、自訂題、學習助手、點數與部署摘要的行為不變。
+
+**改了什麼**
+
+1. **身心安全旗標在每一種結果都留下來**（§1.11）。原本旗標只在結算的 batch 寫：自訂題不是寫作題（例如題目欄寫的是心裡的話）、或兩次產生都過不了硬性檢查而退還時，旗標被丟掉，學生只看到「點數已經退還」，監控表也沒有事件。現在 consumer 在 `onSuccess` 拿到後處理結果、任何提早結束之前，只要 `safety_flag` 不是 `none` 就當下記：列的 `safety_flag` 改成這個操作看過最嚴重的類別（`self_harm_risk` > `abuse_disclosure` > `other`），並寫一筆 `wellbeing_flag` 安全事件（同一個操作、同一個類別只寫一次）。結算時列與 `output_json` 的 view 都用最嚴重的那個（第一次產生標了、第二次沒標也一樣）；共用快取的條件改成「這個操作每一次產生都是 `none`」；結算的 batch 不再另外寫事件。詳情多一個選填的 `safety_flag`（列上有就帶），結果頁在退還的組（沒有 view）也先顯示求助資源（`AssistSafetyCare` 的最後一句傳 `null` 就不寫，學習助手的畫面不變）。
+   - **和審查建議不同**：審查建議在退還的 batch 以 `settle_token` 為條件寫事件與旗標。內容失敗可能跨 Queue 投遞（第一次投遞標了旗標、交回 Queue，第二次投遞才退還，那時第一次的狀態已經不在記憶體裡），也可能被回收或進死信佇列（不經過 consumer 的退還），所以改成當下寫，涵蓋所有路徑。
+2. **被隱藏的那一篇連說明一起不留**（§1.10「那一篇顯示固定說明」）：`output.ts` 把那一篇的四項說明與升級說明設成空字串（亮點本來就丟掉），這些欄位不跑過濾與 D8、也不算進計數；`visible.ts` 顯示時重查新隱藏的那一篇、以及指紋版本相同的快速路徑裡已經隱藏的那一篇，都同樣清空。前端的分頁、三欄（留空格子，列照樣對齊）與列印都不顯示那一篇的說明（同「複製全部」本來的做法）。
+3. **照抄題目也比對說明與常見的錯**（只有自訂題，§3.5、§5.2）：說明欄位（四項、升級、題目理解、構想、亮點的 zh）和學生題目相同的 7 字窗口 ≥ 2 個就換成新的固定說明 `EXEMPLAR_NOTE_TASK_COPY_TEXT`（「這段說明和你貼的題目文字重複太多，已隱藏。」，shared）；常見的錯的 wrong 或 right 照抄就整則丟掉；計數 `task_copy_fields`、算 tainted。系統提示的原創段改成「不把題目的句子抄進範文或任何其他欄位」（系統提示約 10,000 字元）。
+   - **和審查建議不同**：門檻沿用範文的 2 個窗口（連續 8 個單詞），不是 1 個。說明常引用沒被隱藏的那一篇，而那一篇本來就允許和題目有 1 個相同的窗口，門檻 1 會把引用它的說明誤擋。固定說明不用 `EXEMPLAR_NOTE_HIDDEN_TEXT`（那句寫的是「和官方文件相同」，照抄題目不是這個原因）。亮點的 text 不另外比對：它必須逐字出自沒被隱藏的那一篇，最多只有 1 個相同的窗口。題目理解（`task_reading_zh`）也比對：同一頁本來就顯示題目，換掉不會少任何資訊。網站題目的題目是公開的，照舊不檢查。
+4. **常見的錯的「wrong 與 right 相同」**（§3.5「比較時忽略大小寫與空白」）：拿掉原本多做的「去掉句末標點」，「Where do you live.」→「Where do you live?」這種只差標點的現在留著（`sameSentence`）。引號的寫法（彎引號與直引號）不是錯誤，仍算相同，這是設計沒寫的一項。只差大小寫的照設計丟掉，所以系統提示多一句：每一則都要改到字或詞形（動詞形式、介系詞、冠詞、用字），不能只改大小寫或標點。「錯句出現在範文裡」的比對仍去掉句末標點（錯句在範文裡可能接在句中）。
+5. **匯出的標題也重查 D8**（§6.2）：`repo.ts` 的 `visibleTitle` 改成匯出，`account/export.ts` 用同一支（自訂題的標題是題目開頭：命中「（題目已隱藏）」、指紋檔壞掉「（題目暫時無法顯示）」）。測試放在 `exemplars.foundation.test.ts`，不是 `account.test.ts`：前者本來就換成測試自己的假指紋、也有匯出重查的測試；後者用真的指紋檔。
+6. **評測 workflow 的準備步驟**：多跑 `node scripts/build-assist-data.mjs`（同 `assistant-eval.yml`）。`exemplars.parity-summary.test.ts` 匯入 `helpers/ai.ts`，經由 `src/app.ts` 匯入學習助手的 `facts.ts`，它讀不進 git 的 `src/generated/assist-targets.json`；乾淨的 runner 上沒有這個檔，這一步在任何觸發方式下都會失敗（完整評測、A 組都跑不到）。這次把那個檔移開重現了 `Cannot find module '../generated/assist-targets.json'`，加上這一步之後通過。`exemplars.parity.ts` 本身的匯入不碰學習助手，`preparity:exemplars` 不必改。§10.1 E2 要求的「合併前推一次 `RUN` 到 `claude/**` 分支、確認 workflow 跑得起來」仍要做（這次沒有推送）。
+7. **`npm test` 不依賴真實題庫的個別題目**（Worker 部署前要跑 `npm test`，下架或新增一題作文時不能失敗；同 `custom-essay.precheck.parity.ts` 的原則）：
+   - `ai.rules.test.ts`、`exemplars.prompts.test.ts` 的本站仿真題改用測試自己的範例題組（`helpers/bankWriting.ts` 的 `ai.cp.0e1f2a@1`：看圖、兩段、有內容步驟）。
+   - `exemplars.siteMatch.test.ts` 不寫死 66／45／111 題與個別題目的標題：改成下限（歷屆 ≥ 60、本站仿真 ≥ 30）、全部在白名單而且是作文、標題 ≤ 60 字而且不含考試單位名稱；標題的確切文字用範例題組釘住。
+   - 題目集對真實題庫與 D8 指紋的檢查（`casesProblems`）搬到新的 `test/parity/exemplars.precheck.parity.ts`（不在 `npm test` 裡），workflow 的準備步驟用 `npx vitest run --config vitest.parity.config.ts exemplars.precheck` 跑；`exemplars.parity.ts` 花錢之前照舊再查一次。`exemplars.parity-summary.test.ts` 改用測試自己的假指紋，`casesProblems` 改測一份故意寫壞的題目集（每一種問題都列出來）。
+   - 實測：在 `data/unpublish.jsonl` 加一行下架 `ai.cp.0e89ae@1`、重新產生題目庫後，`npm test` 的這幾支全過，只有 precheck 失敗並指出 C 組那一題；之後還原。
+8. **常見的錯命中 D8 算進評測的 D8 門檻**（§9.6 第 6 點）：`ExemplarCounts` 多 `typical_d8`（仍算在 `typical_dropped` 裡）；評測彙總的「輸出 D8 命中」改名為「輸出 D8 命中（範文、說明與常見的錯）」並加上它；「照抄題目而隱藏（B–D）」也加上第 3 點的 `task_copy_fields`。`meta_json.counts` 多兩個鍵，`buildExemplarMeta` 的縮減照舊（計數全部約 400 字元，遠低於 2,048）。
+9. **A 組的自動觸發涵蓋引用的檔**（§9.6 第 3 點、§10.4 風險 1）：`PROBE_PATHS` 與 workflow 的 `on.push.paths` 加上 `apps/api/src/ai/prompts/essay.ts`（評分描述、`safety_flag` 的 enum）、`prompts/common.ts`、`apps/api/src/ai/client.ts`（送出前攤開 `$ref`）、`packages/shared/src/exemplars.ts`（層級規格、欄位上限、層級的 enum）與 `bank.ts`（亮點的 kind）。單元測試比對兩份清單相同、每個路徑都存在。代價：改這些檔的 push 在 `main` 上多跑一次 A 組（每次約 US$0.05）。這次改了 `prompts/exemplars.ts`（第 3、4 點的兩句；系統提示的快照 `test/fixtures/exemplar-prompts.json` 一起更新），合併時 A 組本來就會跑。
+10. **文件**：`DB_SCHEMA.md` 的共用快取取代條件補上「已經過期、還沒被清理的列」（§12.2 第 9 點）、`exemplar_sets.safety_flag` 的意思（第 1 點）、匯出的標題重查（第 5 點）；§10.2 第 2 步的 workflow 名稱改成實際的「作文範文真模型評測」；workflow 檔頭改成「B–D（與選填的 G）用本站批改打分，E、F 只做程式檢查」。§12.2 第 3、6 點與「檢查」那一段加了指向這裡的註記。
+
+**檢查**（2026-10-24，接續中斷的那一次、全部重跑）：`npm run typecheck` 通過；`npm test` 全過（api 36 檔 1,109 項、web 157 檔 1,873 項、shared 18 檔 522 項）；`node apps/api/scripts/local-e2e.mjs` 45／45 個步驟通過（作文範文 4 步）。跑了三次，第一次在學習助手的追問那一步失敗（追問的 turn 已經 `done`，案例的 `followups` 卻還是 0）：`GET /api/assist/cases/:id` 先讀案例、再另外讀 turn，兩次查詢之間 consumer 的結算 batch 剛好寫入，是學習助手既有的讀取時間差，這次沒有改到學習助手的程式，另外兩次都通過。另外在一份只有版控檔案、沒有任何 `src/generated/` 的乾淨複本上照 workflow 的準備步驟跑：只跑 `build-writing-prompts.mjs` 時 `exemplars.parity-summary.test.ts` 重現 `Cannot find module '../generated/assist-targets.json'`；加上 `build-assist-data.mjs` 後 27 項通過、`exemplars.precheck` 通過；`exemplars.parity.ts` 不需要學習助手的資料也載入得了（沒有金鑰時略過）。同一份複本在 `data/unpublish.jsonl` 加一行下架 `ai.cp.0e89ae@1`：api 的 `npm test` 36 檔 1,109 項全過，只有 precheck 失敗並指出 C 組那一題（真的資料檔沒有改）。`exemplars-eval-plan.mjs` 用假的變更清單試過：改到 `apps/api/src/ai/client.ts` 是 `probe`、只改 README 是 `none`。`npm run build -w @gsat/web` 通過；Playwright（先建置）`E2E_PORT=4691` 跑 `writing-exemplars` 12 項、`writing`、`writing-bank`、`writing-custom`、`assistant` 全過；同一次的 `smoke` 與 `desktop-shell` 跑到一半預覽伺服器不見了（`ERR_CONNECTION_REFUSED`，同一台機器上有別的工作目錄在跑測試），改用 `E2E_PORT=4692` 重跑這兩支，113 項通過（32 項依裝置略過）。`AI_ESSAY_EXEMPLARS` 仍是 `off`，三份說明的版本號沒動。§10.1 E2 的「推一次 `RUN` 到 `claude/**` 分支」這次仍沒有做（不推送）。
+
+
+### 12.5 E3 前端審查修正（2026-10-24）
+
+審查提出的前端 5 項（1 項 major、4 項 minor）都確認過、都修了，各有測試。開關仍然是 `off`（`CONFIG_DEFAULTS` 與 `wrangler.toml`），三份說明的版本號與文字沒動；開關關著時既有頁面、AI 批改、自訂題、學習助手與點數的行為不變（改到的共用程式只有 shared 的 `exemplarMetrics` 多一個選填參數、`bank/drafts.ts` 多一支函式，Worker 與既有頁面的呼叫方式不變）。
+
+1. **本站仿真題的鎖改成送出時才寫**（major；§1.5 第 2 步）。原本按「我已經寫過了，直接看」就寫 `revealedAt`，但鎖的面板畫在開通說明與點數之前：沒登入、未核准、待同意、全站暫停、今天剩不到 8 點、今天已經 20 組的學生按下去之後產生按鈕是停用的，草稿卻已經被鎖住（作答頁唯讀，只剩「清除重寫」會把作文刪掉），什麼也沒拿到。沒登入的人可以瀏覽選題器（§1.10），所以這是大多數訪客會遇到的情況。
+   - **和設計不同**：§1.5 第 2 步寫「按第二個時……把 `revealedAt` 設成現在，再進到第 3 步」。現在「我已經寫過了」只換成點數的畫面（不寫任何東西），鎖在按「產生三個層級的範文」、送出 `POST /api/exemplars` 之前才寫（同一支 `markBankEssayRevealed`）；點數畫面多一行「按『產生三個層級的範文』之後，這台裝置上這一題的作答會鎖定（之後只能看、不能改）。」（只在按鈕能按時顯示）。按鈕文字照 §8.4 不變。寫不進去（無痕模式、容量滿）時不送出、不扣點，說明並連到作答頁。伺服器明確拒絕（JSON 的 4xx 或 503：點數、同意、未核准、不提供、全站暫停）時沒有建立任何一組範文，用新的 `unmarkBankEssayRevealed(groupId, at)` 把剛寫的鎖收回（只在 `revealedAt` 還是那一次寫的時間時才清）；連線中斷、閘道的非 JSON 回應、500 不確定伺服器有沒有建立，鎖留著。
+   - 審查也建議另一種做法（沒有開通或點數不夠時不顯示鎖的面板）。沒有採用：兩種做法都能讓草稿不被誤鎖，但點數在 `/api/ai/quota` 回來之前看不出夠不夠，面板會先出現再消失，學生可能在那一瞬間按下去；送出時才寫不受讀取順序影響，也涵蓋送出後才被拒絕的情況。
+   - 測試：`ExemplarsHomePage.test.tsx` 的沒登入、未核准、剩 3 點三種情況按下「我已經寫過了」之後 `revealedAt` 都沒有值、沒有送出；點數夠的學生送出後才有值、草稿文字不變；409 拒絕時收回、連線中斷時留著；寫不進去時不送出。e2e 的「試用帳號剩 3 點」改成確認作答頁照樣可以寫，另加一個情境：產生之後作答頁唯讀。
+2. **「你的作文」欄的拍照作答**（minor；§1.8 第 6 點、§2.6）：照片辨識的文字一行對應紙上的一行，`exemplarParagraphBlocks` 沒有空白行時每一行算一段，五行、一段、三句的辨識文字被算成 5 段、6 句（批改結果頁用 `countParagraphs(text, true)` 是 1 段）。shared 的 `exemplarParagraphBlocks`／`exemplarBodyParagraphs`／`exemplarMetrics` 多一個選填的 `{ photoMode }`：只認空白行分段、段內換行當成空白（同 `countParagraphs` 的 photoMode）；`yourEssayOf` 依作答的 `input_mode === 'photo'` 傳入。Worker 算範文時不傳，數字不變。測試在 `exemplars.test.ts`（shared）與 `lib.test.ts`。
+3. **確認畫面顯示三篇的字數目標**（minor；§2.4「前端確認畫面、Worker 的 `<task>`、後處理三邊共用」）：原本前端沒有呼叫 `exemplarWordTargets`，學生按下去（8 點）之後才在範文標題看到字數。新的 `exemplars/lib/wordTargets.ts`：網站題目取題目檔的 `word_count`（歷屆與本站仿真的前端靜態檔，和 Worker 題目庫的 `essay.min_words`／`max_words`／`approx_words` 出自同一個欄位，不另外打 API），自訂題取學生填的至少／最多，都交給 shared 的 `exemplarWordTargets`；確認畫面在點數上面顯示一行「三篇的字數目標：基礎版 130–170、穩健版 180–240、頂標版 300–380 字。」。三級從基礎版的下限到頂標版的上限不到 60 字時多一行「三個層級的字數差不多，主要差在內容與寫法。」；三級完全相同（範圍不到 30 字）時改成一行「三篇的字數目標都是 120–140 字，三個層級主要差在內容與寫法。」。這一題不提供範文（`site-status` 409）時不顯示。「60 字」是設計沒寫的門檻：§2.4 只定了「不到 30 字三級相同」。
+4. **不是英文作文題目時的播報**（minor；§1.11）：產生中變成失敗時，`aria-live` 原本念 `invalid_output` 的退還原因（「AI 回傳的結果格式有問題，點數已經退還。」），畫面上的 `role="alert"` 卻是「這看起來不是英文作文題目……」。現在 `not_writing_task` 時播報同一句 `NOT_WRITING_TEXT`；`ExemplarSetPage.test.tsx` 多一個「產生中 → 不是英文作文題目」的測試，比對播報區的文字。
+5. **列印時打開收合的「題目」**（minor；§12.3 第 11 點）：原本只靠 `index.css` 的 `details.exemplar-expand::details-content`，不支援的瀏覽器印不出題目。結果頁在 `beforeprint`（以及「列印／存成 PDF」按鈕）把題目的 `<details>` 打開，`afterprint` 收回（只收回列印時打開的，學生原本打開的不動；同學習報告頁 `useExpandForPrint` 的做法，多了收回）。沒有用 `open={printing}`：受控的 `open` 在印完時會把學生自己打開的題目也關掉。列印測試加上題目打開與收回，另有一個測試走瀏覽器選單的 `beforeprint`。
+
+**檢查**（2026-10-24）：`npm run typecheck` 通過；`npm test` 全過（api 36 檔 1,109 項、web 157 檔 1,885 項、shared 18 檔 523 項）；`npm run build -w @gsat/web` 通過；Playwright（先建置，`E2E_PORT=4691`）跑 `writing-exemplars`（桌機與手機各 7 項，多了上面第 1 點的情境）、`writing-bank`、`writing`、`writing-custom`、`mobile-guard`，64 項全過。`AI_ESSAY_EXEMPLARS` 仍是 `off`，三份說明的版本號沒動。
+
+### 12.6 合併前的最後檢查（2026-10-24）
+
+照 CI（`.github/workflows/ci.yml` 的兩個 job）與部署前檢查（`worker-deploy.yml`）全部重跑一次，另外跑 CI 沒有的資料檢查、工具的單元測試與 local-e2e。只改了一處：`wrangler.toml` 的作文範文區塊原本插在學習助手的 effort 與「`SITE_DATA_ORIGIN`（學習助手讀網站公開題目檔的來源）」那行註解之間，把那行註解和學習助手隔開了；改回接在學習助手的設定後面（只移動註解，`[vars]` 的值不變）。
+
+**檢查**：`npm run typecheck` 通過；`npm test` 全過（api 36 檔 1,109 項、web 157 檔 1,885 項、shared 18 檔 523 項）；`npm run build` 通過，Worker 的 dry-run 列出 `AI_ESSAY_EXEMPLARS ("off")`、`AI_EFFORT_EXEMPLARS ("medium")`（Total Upload 3,387.64 KiB／gzip 737.21 KiB）；`npm run test:data` 全過（web 4 檔 50 項、shared 7 檔 217 項）；`npm run check:data -w @gsat/web` 通過；`python3 -m unittest discover tools/tests` 162 項通過；`validate_bank.py --all` 874 份 0 error；`validate_exam.py --all` 66 份 0 error；`link_grammar_refs.py --check`、`normalize_exams.py --check` 通過；Playwright 全部 4 個 project（先 `npm run build -w @gsat/web`，`E2E_PORT=4692`）367 項：330 項通過、37 項依裝置略過、0 失敗（`writing-exemplars` 桌機與手機各 7 項）；`node apps/api/scripts/local-e2e.mjs` 45／45 個步驟通過（作文範文 4 步，假 Anthropic 收到 2 次範文請求）。改了 `wrangler.toml` 之後重跑 `skeleton`、`deploy-summary`、`features` 三支（68 項）與 Worker 的 dry-run，結果相同。
+
+評測 workflow（`exemplars-eval.yml`）不會在一般 CI 跑：沒有 `pull_request` 觸發；`npm test` 只收 `test/**/*.test.ts`，評測本身在 `vitest.parity.config.ts`（只收 `test/parity/**/*.parity.ts`）。`push` 到 `main` 只在改到 `PROBE_PATHS` 時跑 A 組（這個 PR 合併時會跑一次，約 US$0.05，§12.2 第 14 點）；完整評測只有 `workflow_dispatch`，或 `claude/**` 分支上改了 `RUN` 檔（`main` 上改 `RUN` 不跑完整評測）。`AI_ESSAY_EXEMPLARS` 仍是 `off`，三份說明的版本號與文字沒動；§10.1 E2 的「合併前推一次 `RUN` 到 `claude/**` 分支」仍沒有做（這個工作目錄不推送），合併後可以在 Actions 頁面用 `workflow_dispatch`（`cases=gsat-115`、`budget_usd=1`）補跑。

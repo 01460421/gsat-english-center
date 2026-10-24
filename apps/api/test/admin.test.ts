@@ -115,6 +115,8 @@ describe('GET /api/admin/health', () => {
     expect([...EXPECTED_MIGRATIONS]).toEqual(migrationFileNames());
     // 學習助手的四張表（docs/design/learning-assistant.md §4.6）：健康檢查要看得到 0004 有沒有套用。
     expect(EXPECTED_MIGRATIONS).toContain('0004_learning_assistant.sql');
+    // 作文範文的一張表（docs/design/model-essays.md §6.1）。
+    expect(EXPECTED_MIGRATIONS).toContain('0005_essay_exemplars.sql');
   });
 });
 

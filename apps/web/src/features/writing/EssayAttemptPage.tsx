@@ -7,6 +7,7 @@
  *   (b) 拍照（AI 已核准且 features.ocr）：最多 2 張，前端縮圖後預覽 → 逐張 POST /api/submissions/{id}/photos?ord=1|2
  *       → POST /api/ai/essay-ocr → 導到 /writing/submissions/:id（輪詢、確認辨識文字、送批改都在那一頁，離開再回來可以接續）。
  * 草稿（文字、自評、檢核清單）自動存在這台裝置；照片不存。送出前可以先自評（不用 AI）。
+ * 作文範文（docs/design/model-essays.md §1.4）：題目下方「看這題的三個層級範文」（次要樣式、一直出現、只建議先寫；開關關著時不出現）。
  */
 import { PHOTO_MAX_COUNT, type EssayBody, type SelfAssessment } from '@gsat/shared';
 import { ShieldCheck } from 'lucide-react';
@@ -35,6 +36,7 @@ import { useErrorView } from './lib/useErrorView';
 import { HandoffApplied, HandoffOffer } from '../assistant/components/MockWritingHandoff';
 import { useWritingHandoff } from '../assistant/lib/handoff';
 import { deletePhotos, uploadPhoto } from './lib/writingApi';
+import { ExemplarsButton } from './exemplars/components/ExemplarsButton';
 
 export default function EssayAttemptPage() {
   const { examId = '' } = useParams();
@@ -203,6 +205,7 @@ function EssayAttempt({ prompt }: { prompt: EssayPrompt }) {
       <HandoffApplied applied={handoff.applied} />
 
       <EssayPromptView prompt={prompt} />
+      <ExemplarsButton target={title} group={groupId} hint />
 
       {/* 切換按鈕（aria-pressed），和辨識確認的「逐行／整篇」同一種做法；不用 tab 角色（沒有方向鍵操作的分頁會誤導讀屏）。 */}
       <div role="group" aria-label="作答方式" className="flex flex-wrap gap-2">

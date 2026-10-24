@@ -4,6 +4,7 @@
  *      （features/writing/bank/BankListPage.tsx 的 BankPromptList），標示「AI 出題・已通過自動驗證・人工審核中」，
  *      還沒有題目的難度顯示「出題中」；只先列 BANK_PREVIEW 題，其餘按「顯示全部」展開；
  *   2. 自訂題目（docs/design/custom-essay.md §6.1）：一段說明＋「輸入題目開始寫」→ /writing/essay/custom。放在兩份列表中間：
+ *      作文範文的開關打開時，下面多一張「作文範文」卡片（docs/design/model-essays.md §1.4；關著時 render null）。
  *      本站題列表只先列 6 張，手機上滑幾下就看得到；放到歷屆試題（66 題）後面就太遠了；
  *   3. 歷屆試題：和 /writing/essay 同一份列表（features/writing/EssayListPage.tsx 的 EssayPromptList，網址 ?kind=）；
  *      那裡加了新的題目，這裡也會跟著出現。
@@ -27,6 +28,7 @@ import { InfoSection, ModulePage, PageHeader } from '../components/ModulePage';
 import { AiGroupBadge } from '../features/practice/components/AiGroupBadge';
 import { BankPromptList } from '../features/writing/bank/BankListPage';
 import { EssayPromptList } from '../features/writing/EssayListPage';
+import { ExemplarsEntryCard } from '../features/writing/exemplars/components/ExemplarsButton';
 import { CUSTOM_ESSAY_PATH } from '../features/writing/lib/format';
 import { ListOrigin, useListOriginState } from '../features/writing/lib/listOrigin';
 import { useFeatures } from '../lib/api';
@@ -96,6 +98,7 @@ export default function CompositionPage() {
       </ListSection>
       <ListSection id="custom-prompt" title="自訂題目">
         <CustomPromptEntry aiOpen={customOpen} />
+        <ExemplarsEntryCard />
       </ListSection>
       <ListSection id="exam-questions" title="歷屆試題">
         <p className="text-[0.95rem] text-muted">歷屆學測、指考與參考試卷的作文題，依考試分開、新到舊排列。</p>

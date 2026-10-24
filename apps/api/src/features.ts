@@ -6,6 +6,8 @@
  * assistant＝ai 而且 AI_ASSISTANT 是 on；assistantPhoto＝assistant 有值而且 AI_ASSISTANT_PHOTO 也是 on。兩個欄位只在 on 時
  * 出現（值一定是 true）：admin 模式（只有管理員能用）不回任何欄位，公開端點不透露；管理員的使用資格在要登入的
  * /api/me（assistant_preview，src/account/routes.ts）。對某位使用者開不開一律問 assistantAccess（學習助手的端點也用它）。
+ * essayExemplars＝ai 而且 AI_ESSAY_EXEMPLARS 是 on（docs/design/model-essays.md §7.5）；規則同 assistant：只在 on 時出現，
+ * admin 模式不回任何欄位（管理員的預覽在 /api/me 的 exemplars_preview）。對某位使用者開不開一律問 exemplarsAccess。
  * aiPaused 讀今天（台灣日期）的 ai_budget_daily.paused；查詢失敗（例如遷移還沒套用）時當成暫停，
  * 寧可不顯示 AI 按鈕，也不要讓學生按了才收到錯誤。
  */
@@ -42,6 +44,8 @@ export async function computeFeatures(env: Env): Promise<FeaturesResponse> {
     customEssay: ai && config.ai.customEssay,
     // 學習助手：只在對所有人開放（on）時出現；關著或只有管理員預覽（admin）時，回應和沒有這個功能時逐字相同。
     ...(ai && config.ai.assistant === 'on' ? { assistant: true, ...(config.ai.assistantPhoto === 'on' ? { assistantPhoto: true } : {}) } : {}),
+    // 作文範文：同上，只在對所有人開放（on）時出現；關著或 admin 時回應和沒有這個功能時逐字相同。
+    ...(ai && config.ai.essayExemplars === 'on' ? { essayExemplars: true } : {}),
   };
 }
 
@@ -65,6 +69,23 @@ export function assistantPreview(config: AppConfig, role: UserRole): { photo: bo
   if (config.ai.assistant !== 'admin' && config.ai.assistantPhoto !== 'admin') return null;
   const access = assistantAccess(config, role);
   return access.enabled ? { photo: access.photo } : null;
+}
+
+/**
+ * 作文範文對這位使用者開不開（docs/design/model-essays.md §7.5）：AI 已設定，而且開關是 on，或是 admin 而這位是管理員。
+ * role 是 null＝沒登入（只看得到 on 的公開開放）。作文範文的產生端點、/api/me 的預覽資格、/api/ai/quota 的 exemplars 都用這一支。
+ */
+export function exemplarsAccess(config: AppConfig, role: UserRole | null): { enabled: boolean } {
+  const mode = config.ai.essayExemplars;
+  return { enabled: config.ai.configured && (mode === 'on' || (mode === 'admin' && role === 'admin')) };
+}
+
+/**
+ * /api/me 的 exemplars_preview：作文範文是 admin 模式、這位是管理員、AI 已設定時才是 true。開關是 on 的部分前端看
+ * /api/features，所以 on 時沒有這個欄位（回應和沒有這個功能時相同）。
+ */
+export function exemplarsPreview(config: AppConfig, role: UserRole): boolean {
+  return role === 'admin' && config.ai.essayExemplars === 'admin' && exemplarsAccess(config, role).enabled;
 }
 
 export const featureRoutes = new Hono<AppEnv>();

@@ -73,6 +73,10 @@ export const ROUTE_MODES: ReadonlyArray<readonly [pattern: string, mode: WidthMo
   ['/writing/essay/ai', 'list'],
   ['/writing/essay/ai/:code', 'workspace'],
   ['/writing/essay/custom', 'workspace'],
+  // 作文範文（docs/design/model-essays.md §8.3）：一定要在 :examId 之前（否則 /writing/essay/exemplars 會先對到作答頁的 workspace）。
+  // 首頁（表單、確認、清單）預設寬度；結果頁是工作區（寬度不夠時側邊欄自動收合，三欄才放得下）。
+  ['/writing/essay/exemplars', 'default'],
+  ['/writing/essay/exemplars/:id', 'workspace'],
   ['/writing/essay/:examId', 'workspace'],
   ['/writing/submissions/:id', 'workspace'],
   // 學習助手（docs/design/learning-assistant.md §1.9）：首頁與錯題清單放寬、確認頁窄版、貼上題目預設寬度、案例頁是工作區。

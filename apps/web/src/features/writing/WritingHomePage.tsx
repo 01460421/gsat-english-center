@@ -8,6 +8,8 @@
  *   - 說明兩種模式：AI 批改（登入＋核准，扣點數）與自我檢核（任何人、不用 AI）；
  *   - 未登入或未核准時告訴學生怎麼開通（登入 → /ai/apply）；後端沒部署時只顯示「即將開放」；
  *   - 已登入：剩餘點數與我的寫作紀錄（GET /api/submissions?kind=）。
+ *   - 作文範文（docs/design/model-essays.md §1.4）：開關對這位使用者開放時，「自己的題目」多一張「作文範文」卡片
+ *     （ExemplarsEntryCard；關著時 render null，畫面和沒有作文範文時完全相同）。
  * 後端沒部署（features 全關）時這一頁不打任何 API。
  *
  * 桌機（≥ lg，docs/design/desktop-ui.md §5.5）：整頁放寬（bleed），main ≥ ws（58.5rem）時兩欄（container query，一棵樹）：
@@ -27,6 +29,8 @@ import { SubmissionHistory } from './components/SubmissionHistory';
 import { AiBadge, card } from './components/ui';
 import { useAiAccess, useSignedIn } from './lib/access';
 import { useQuota } from './lib/hooks';
+import { ExemplarsEntryCard } from './exemplars/components/ExemplarsButton';
+import { useExemplarsEnabled } from './exemplars/lib/useExemplarsEnabled';
 
 function EntryCard({ to, icon, title, children }: { to: string; icon: ReactNode; title: string; children: ReactNode }) {
   return (
@@ -72,6 +76,8 @@ function ModesList() {
 
 /** 五個入口（三組，各有標題）；手機與桌機共用。 */
 function Entries({ customEssay, compact }: { customEssay: boolean; compact?: boolean }) {
+  // 作文範文的卡片只在開關打開時出現；關著時「自己的題目」的外層與原本一模一樣（手機 0 像素差異）。
+  const exemplars = useExemplarsEnabled();
   return (
     <>
       <ul className="grid gap-3 sm:grid-cols-2">
@@ -114,10 +120,11 @@ function Entries({ customEssay, compact }: { customEssay: boolean; compact?: boo
         </h2>
         {/* 包一層：EntryCard 是 h-full，直接放在這個 section（外層 grid 的項目，高度確定）裡會撐到整個 section 高，
             蓋到下面的「兩種批改方式」。其他入口卡在 li 裡，h-full 是為了同列等高。 */}
-        <div className={compact ? 'grid gap-3 sm:grid-cols-2' : undefined}>
+        <div className={compact ? 'grid gap-3 sm:grid-cols-2' : exemplars ? 'grid gap-3' : undefined}>
           <EntryCard to="/writing/essay/custom" icon={<FilePen aria-hidden="true" className="size-6" />} title="自訂題目">
             {customEssay ? '貼上老師或補習班的作文題目，寫完可以自我檢核或送 AI 批改。' : '貼上老師或補習班的作文題目，寫完可以用檢核清單自我檢核。'}
           </EntryCard>
+          <ExemplarsEntryCard />
         </div>
       </section>
     </>

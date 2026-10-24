@@ -243,3 +243,49 @@
     break-inside: avoid;
   }
 }
+
+/*
+ * 作文範文的列印／存成 PDF（docs/design/model-essays.md §8.3 最後一點）：只在範文的結果頁生效（頁面上有 [data-exemplar-print]），
+ * 其他頁的列印完全不變。結果頁在 beforeprint 時換成列印版（三篇照逐篇的順序全部印出、基礎版後面印常見的錯，文字標籤「✗ 錯誤示範」
+ * 「✓ 正確」黑白也分得出；「你的作文」欄不印）。
+ *   - 一律印成淺色；隱藏 main 以外的導覽、側邊欄、頁首頁尾，以及畫面專用的按鈕與切換（.exemplar-screen-only）。
+ *   - 頁首頁尾的 AI 聲明（.exemplar-print-only）只在列印時出現；收合的「題目」展開（.exemplar-expand）。
+ */
+.exemplar-print-only {
+  display: none;
+}
+
+@media print {
+  :root:root:has([data-exemplar-print]) {
+    color-scheme: light;
+    --bg: #ffffff;
+    --surface: #ffffff;
+    --surface-2: #f2f4f7;
+    --fg: #000000;
+    --muted: #3d4651;
+    --line: #a3abb6;
+    --primary: #1f327f;
+    --primary-soft: #eef1fb;
+    --on-primary: #ffffff;
+    --ok: #1b7a3d;
+    --bad: #b42318;
+  }
+
+  :root:has([data-exemplar-print]) :is(header, nav, aside, footer):not(main *),
+  :root:has([data-exemplar-print]) .exemplar-screen-only {
+    display: none !important;
+  }
+
+  :root:has([data-exemplar-print]) .exemplar-print-only {
+    display: block;
+  }
+
+  :root:has([data-exemplar-print]) details.exemplar-expand::details-content {
+    content-visibility: visible;
+    display: block;
+  }
+
+  :root:has([data-exemplar-print]) .exemplar-avoid-break {
+    break-inside: avoid;
+  }
+}

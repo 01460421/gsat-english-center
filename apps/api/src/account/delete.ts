@@ -44,6 +44,8 @@ export const CASCADE_TABLES = [
   'assist_turns',
   'assist_photos',
   'assist_reports',
+  // 0005：作文範文（docs/design/model-essays.md §6.2）。
+  'exemplar_sets',
 ] as const;
 
 /** user_id 會被設為 NULL（保留但去識別）的表。 */

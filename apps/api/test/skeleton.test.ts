@@ -7,7 +7,7 @@ import { isApiErrorBody, isFeaturesResponse } from '@gsat/shared';
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { app } from '../src/app';
-import { assistantSwitch, autoApprovalCap, CONFIG_DEFAULTS, customEssaySwitch, loadConfig, startupChecks } from '../src/config';
+import { assistantSwitch, autoApprovalCap, CONFIG_DEFAULTS, customEssaySwitch, featureModeSwitch, loadConfig, startupChecks } from '../src/config';
 import type { AiQueueMessage, Env } from '../src/env';
 import { taiwanDay, taiwanMonth } from '../src/time';
 
@@ -189,10 +189,10 @@ describe('設定（src/config.ts）', () => {
     expect(bad.find((c) => c.id === 'workspaces_vs_tier')?.ok).toBe(false);
   });
 
-  it('wrangler.toml 的 [vars] 與 CONFIG_DEFAULTS 一致（避免兩邊預設值走鐘；AI_CUSTOM_ESSAY、AI_ASSISTANT、AI_ASSISTANT_PHOTO 例外，見下面的測試）', () => {
+  it('wrangler.toml 的 [vars] 與 CONFIG_DEFAULTS 一致（避免兩邊預設值走鐘；AI_CUSTOM_ESSAY、AI_ASSISTANT、AI_ASSISTANT_PHOTO、AI_ESSAY_EXEMPLARS 例外，見下面的測試）', () => {
     const toml = readFileSync(new URL('../wrangler.toml', import.meta.url), 'utf8');
     for (const [name, value] of Object.entries(CONFIG_DEFAULTS)) {
-      if (name === 'AI_CUSTOM_ESSAY' || name === 'AI_ASSISTANT' || name === 'AI_ASSISTANT_PHOTO') continue;
+      if (name === 'AI_CUSTOM_ESSAY' || name === 'AI_ASSISTANT' || name === 'AI_ASSISTANT_PHOTO' || name === 'AI_ESSAY_EXEMPLARS') continue;
       const m = toml.match(new RegExp(`^${name}\\s*=\\s*"([^"]*)"`, 'm'));
       expect(m?.[1], `wrangler.toml 缺少或不一致：${name}`).toBe(String(value));
     }
@@ -238,6 +238,43 @@ describe('設定（src/config.ts）', () => {
       // 預設值是參數：解析規則本身不變。
       expect(assistantSwitch('AI_ASSISTANT', undefined, 'admin')).toBe('admin');
       expect(assistantSwitch('AI_ASSISTANT_PHOTO', 'onn', 'on')).toBe('off');
+    } finally {
+      console.warn = warn;
+    }
+  });
+
+  it('AI_ESSAY_EXEMPLARS：程式預設固定是 off；wrangler.toml 現在明確寫 "off"（真模型評測達標之前；docs/design/model-essays.md §7.5）；effort 兩邊都是 medium', () => {
+    // 上線 PR（附達標的評測 run 連結）把 wrangler.toml 那一行改成 "on" 時，連同這裡的 "off" 一起改成允許 off／admin／on
+    // （同上面學習助手的測試）。這個 PR 不上線：開關在程式與 wrangler.toml 都是 off。
+    expect(CONFIG_DEFAULTS.AI_ESSAY_EXEMPLARS).toBe('off');
+    expect(CONFIG_DEFAULTS.AI_EFFORT_EXEMPLARS).toBe('medium');
+    const toml = readFileSync(new URL('../wrangler.toml', import.meta.url), 'utf8');
+    expect(toml.match(/^AI_ESSAY_EXEMPLARS\s*=\s*"([^"]*)"/m)?.[1], 'wrangler.toml 的 [vars] 要明確寫 AI_ESSAY_EXEMPLARS = "off"').toBe('off');
+    expect(toml.match(/^AI_EFFORT_EXEMPLARS\s*=\s*"([^"]*)"/m)?.[1]).toBe('medium');
+    const config = loadConfig(baseEnv);
+    expect(config.ai.essayExemplars).toBe('off');
+    expect(config.ai.effort.exemplars).toBe('medium');
+    expect(loadConfig({ ...baseEnv, AI_EFFORT_EXEMPLARS: 'low' }).ai.effort.exemplars).toBe('low');
+  });
+
+  it('作文範文的開關是 fail closed（同學習助手）：沒設、空白用預設值 off；只認 on、admin，其他一律關並寫 log；featureModeSwitch 三個開關共用', () => {
+    const warnings: unknown[] = [];
+    const warn = console.warn;
+    console.warn = (...args: unknown[]) => void warnings.push(args);
+    try {
+      for (const v of ['on', 'ON', ' on ']) expect(loadConfig({ ...baseEnv, AI_ESSAY_EXEMPLARS: v }).ai.essayExemplars, v).toBe('on');
+      for (const v of ['admin', 'Admin', ' ADMIN ']) expect(loadConfig({ ...baseEnv, AI_ESSAY_EXEMPLARS: v }).ai.essayExemplars, v).toBe('admin');
+      for (const v of [undefined, '', '   ', 'off', 'OFF']) expect(loadConfig({ ...baseEnv, AI_ESSAY_EXEMPLARS: v }).ai.essayExemplars, JSON.stringify(v)).toBe('off');
+      expect(warnings).toEqual([]);
+      for (const v of ['true', '1', 'yes', 'onn', 'admins']) expect(loadConfig({ ...baseEnv, AI_ESSAY_EXEMPLARS: v }).ai.essayExemplars, v).toBe('off');
+      expect(warnings).toHaveLength(5);
+      expect(String((warnings[0] as unknown[])[0])).toContain('AI_ESSAY_EXEMPLARS');
+      // 範文的開關不影響學習助手的兩個開關（反過來也是）。
+      const mixed = loadConfig({ ...baseEnv, AI_ESSAY_EXEMPLARS: 'on', AI_ASSISTANT: 'off' });
+      expect([mixed.ai.essayExemplars, mixed.ai.assistant, mixed.ai.assistantPhoto]).toEqual(['on', 'off', 'off']);
+      // 舊名 assistantSwitch 和 featureModeSwitch 同一條規則。
+      for (const v of [undefined, 'on', 'admin', 'onn']) expect(assistantSwitch('AI_ASSISTANT', v)).toBe(featureModeSwitch('AI_ASSISTANT', v));
+      expect(featureModeSwitch('AI_ESSAY_EXEMPLARS', undefined, 'admin')).toBe('admin');
     } finally {
       console.warn = warn;
     }

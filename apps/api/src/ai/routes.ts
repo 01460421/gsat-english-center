@@ -27,6 +27,7 @@ import {
   ESSAY_FAMILY_TASKS,
   ESSAY_MAX_CHARS,
   ESSAY_MAX_WORDS,
+  EXEMPLAR_LIMITS,
   TRANSLATION_SENTENCE_MAX_CHARS,
   countEnglishWords,
   countParagraphs,
@@ -48,7 +49,9 @@ import { getSessionUser, requireAiApproved, requireUser, type SessionUser } from
 import { loadConfig, type AppConfig } from '../config';
 import type { AppEnv } from '../env';
 import { ApiError } from '../errors';
-import { assistantAccess } from '../features';
+import { taiwanDayStart } from '../assist/repo';
+import { exemplarSetsToday } from '../exemplars/repo';
+import { assistantAccess, exemplarsAccess } from '../features';
 import { groupForSubmission, requireCustomEssayAvailable, storedPromptInput, validateCustomPrompt } from '../submissions/custom';
 import { findSubmission, parseJson, requireSubmission, type SubmissionRow } from '../submissions/repo';
 import { nowSeconds } from '../time';
@@ -335,11 +338,14 @@ aiRoutes.get('/quota', requireUser(), async (c) => {
   // 名額的算法只有一份（A1 的 approvalSummary：只算學生、刪除中的不算）。
   // 學習助手的報告與拍照轉錄的今日次數：只在學習助手對這位使用者開放時才查、才回（關著時回應不變）。
   const assist = assistantAccess(config, user.role).enabled;
-  const [snap, approval, reports, ocr] = await Promise.all([
+  // 作文範文今天建立的組數：只在作文範文對這位使用者開放時才查、才回（關著時回應不變；docs/design/model-essays.md §7.1）。
+  const exemplars = exemplarsAccess(config, user.role).enabled;
+  const [snap, approval, reports, ocr, exemplarSets] = await Promise.all([
     usageSnapshot(c.env.DB, user.id, ESSAY_FAMILY_TASKS, nowMs),
     approvalSummary(c.env, config),
     assist ? usageSnapshot(c.env.DB, user.id, ASSIST_REPORT_FAMILY.tasks, nowMs) : null,
     assist ? usageSnapshot(c.env.DB, user.id, ASSIST_OCR_FAMILY.tasks, nowMs) : null,
+    exemplars ? exemplarSetsToday(c.env.DB, user.id, await userRefFor(config.auth.ledgerSalt, user.id), taiwanDayStart(nowMs)) : null,
   ]);
   const site = siteLimitsMicros(config);
   const dayLimit = (cap: number) => (cap === 0 ? UNLIMITED : cap);
@@ -364,6 +370,7 @@ aiRoutes.get('/quota', requireUser(), async (c) => {
           },
         }
       : {}),
+    ...(exemplarSets !== null ? { exemplars: { day_used: exemplarSets, day_limit: EXEMPLAR_LIMITS.setsPerDay } } : {}),
   };
   return c.json(body);
 });

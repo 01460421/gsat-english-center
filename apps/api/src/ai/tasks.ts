@@ -10,15 +10,16 @@
  *   third    第三位：只有前兩位差距超過門檻（作文 >5、中譯英 >2）才呼叫，框架同第二位
  *   ocr      手寫照片轉錄（只有一位；學習助手的拍照轉錄也是）
  *   tutor    學習助手的解析、追問、報告（docs/design/learning-assistant.md §4.7.1）
+ *   writer   作文範文：一次呼叫寫三個層級的範文與說明（docs/design/model-essays.md §3.1）
  */
 import { AI_TASK_POINTS, ASSIST_LIMITS, assistAnalyzePoints, ESSAY_FAMILY_TASKS, type AiTask, type RaterRole } from '@gsat/shared';
 import type { AiEffort, AppConfig } from '../config';
 import { isPricedModel, worstCaseMicros } from './pricing';
 
-export type CallRole = RaterRole | 'ocr' | 'tutor';
+export type CallRole = RaterRole | 'ocr' | 'tutor' | 'writer';
 
-/** 提示詞框架：第一位的完整批改、第二／三位的「先整體再分項」、OCR、學習助手。 */
-export type PromptFramework = 'analytic' | 'holistic' | 'ocr' | 'assist';
+/** 提示詞框架：第一位的完整批改、第二／三位的「先整體再分項」、OCR、學習助手、作文範文。 */
+export type PromptFramework = 'analytic' | 'holistic' | 'ocr' | 'assist' | 'exemplar';
 
 export interface CallSpec {
   role: CallRole;
@@ -36,9 +37,13 @@ export interface CallSpec {
 
 /**
  * 操作的對象（ai_ops.ref_id 指向哪一張表）：寫作批改是提交；學習助手的轉錄、解析、追問是 assist_turns 的一列，
- * 報告是 assist_reports 的一列（consumer 分流、housekeeping 回收、退還都依它）。
+ * 報告是 assist_reports 的一列；作文範文是 exemplar_sets 的一列（consumer 分流、housekeeping 回收、退還都依它）。
  */
-export type TaskTarget = { kind: 'submission'; submissionKind: 'translation' | 'essay' } | { kind: 'assist_turn' } | { kind: 'assist_report' };
+export type TaskTarget =
+  | { kind: 'submission'; submissionKind: 'translation' | 'essay' }
+  | { kind: 'assist_turn' }
+  | { kind: 'assist_report' }
+  | { kind: 'exemplar_set' };
 
 /** 任務家族每日上限的鍵（UserLimits.familyCaps；guard.ts）。 */
 export const FAMILY_CAP_KEYS = ['essay', 'assist_report', 'assist_ocr'] as const;
@@ -72,7 +77,8 @@ export interface TaskConfig {
 
 /**
  * 逾時（毫秒）：OCR 90 秒、中譯英 120 秒、作文 240 秒（§6.2 第 16 條）；學習助手的轉錄與追問 90 秒、解析 180 秒
- * （題組 2 題以上 240 秒，見 taskConfig）、報告 240 秒（docs/design/learning-assistant.md §4.7.1）。
+ * （題組 2 題以上 240 秒，見 taskConfig）、報告 240 秒（docs/design/learning-assistant.md §4.7.1）；作文範文 240 秒
+ * （docs/design/model-essays.md §3.1）。
  */
 export const TASK_TIMEOUT_MS = {
   essay_ocr: 90_000,
@@ -82,6 +88,7 @@ export const TASK_TIMEOUT_MS = {
   assist_analyze: 180_000,
   assist_followup: 90_000,
   assist_report: 240_000,
+  essay_exemplars: 240_000,
 } as const satisfies Record<AiTask, number>;
 /** 學習助手的題組解析（2 題以上）的逾時。 */
 export const ASSIST_ANALYZE_GROUP_TIMEOUT_MS = 240_000;
@@ -201,6 +208,22 @@ export function taskConfig(task: AiTask, config: AppConfig, size?: { items: numb
         inputTokensEstimate: 17_000,
         calls: [{ role: 'tutor', model: models.default, effort: effort.assist, maxTokens: 22_000, framework: 'assist', systemCacheTtl: '1h' }],
         family: ASSIST_REPORT_FAMILY,
+      };
+    // ── 作文範文（docs/design/model-essays.md §3.1）：一次呼叫寫三篇。模型一律 AI_MODEL_DEFAULT；系統提示用 1 小時快取。──
+    case 'essay_exemplars':
+      return {
+        task,
+        points: AI_TASK_POINTS[task],
+        target: { kind: 'exemplar_set' },
+        timeoutMs: TASK_TIMEOUT_MS[task],
+        maxRetries: SDK_MAX_RETRIES,
+        // 系統提示約 2.4k（估計）＋題目與目標最多約 1.5k（自訂題 1,200 字元）＋餘裕。設計值：E2 用 count_tokens 量最長的合法輸入後定案。
+        inputTokensEstimate: 5_000,
+        // 16,000（含思考）：可見輸出全部欄位寫滿約 6.9k（估計），其餘留給思考。設計值：smoke test 量到思考的 p99 後定案。
+        // 預扣＝5,000 × 1 小時快取寫入單價＋16,000 × 輸出單價（一次產生；內容失敗最多付費產生 2 次，callPolicy.ts 的 contentAttempts）。
+        calls: [{ role: 'writer', model: models.default, effort: effort.exemplars, maxTokens: 16_000, framework: 'exemplar', systemCacheTtl: '1h' }],
+        // 點數已經限制每天的組數；另有每天建立 20 組的上限（docs/design/model-essays.md §4.2）。
+        family: null,
       };
   }
 }

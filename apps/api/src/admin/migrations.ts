@@ -10,4 +10,6 @@ export const EXPECTED_MIGRATIONS: readonly string[] = [
   '0003_custom_essay_prompts.sql',
   // 學習助手的四張表（docs/design/learning-assistant.md §4.6）。
   '0004_learning_assistant.sql',
+  // 作文範文的一張表（docs/design/model-essays.md §6.1）。
+  '0005_essay_exemplars.sql',
 ];
