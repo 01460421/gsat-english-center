@@ -61,13 +61,21 @@ export interface PageMeta {
    * 案例與報告對已登入的人是唯讀模式，從「我的帳號」也連得到）。
    */
   feature?: PageFeature;
+  /**
+   * 學習助手開放英文以外的科目時改用的說明（docs/design/assistant-subjects.md §8.2：國文開放時寫「英文、國文都能問」）；
+   * 用 pageSummary(page, flags) 取，沒有開放其他科目時照原本的 summary。
+   */
+  subjectsSummary?: string;
 }
 
 /** 由功能開關控制的頁面（目前只有學習助手）。 */
 export type PageFeature = 'assistant';
 
-/** 前端目前打開的功能開關（學習助手：features.assistant 或管理員預覽，見 features/assistant/lib/useAssistantEnabled.ts）。 */
-export type PageFeatureFlags = Readonly<Record<PageFeature, boolean>>;
+/**
+ * 前端目前打開的功能開關（學習助手：features.assistant 或管理員預覽，見 features/assistant/lib/useAssistantEnabled.ts）。
+ * assistantSubjects：學習助手對這位使用者開放了英文以外的科目（只換說明文字，不影響要不要列出）。
+ */
+export type PageFeatureFlags = Readonly<Record<PageFeature, boolean>> & { readonly assistantSubjects?: boolean };
 
 export const PAGES = [
   {
@@ -221,6 +229,7 @@ export const PAGES = [
     navLabel: '學習助手',
     // 加強卷（docs/design/weak-paper.md §9.3）開放時加最後一句；不能含其他學習模組的標題（例如「模擬考」）。
     summary: '拍照或從錯題送出一題，AI 說明你錯在哪、正確解法與相關觀念，可以追問，並整理成個人學習報告與讀書計畫；也能依弱點組一份加強卷。',
+    subjectsSummary: '講義、段考的英文、國文題目都能問：拍照、貼上或從錯題送出一題，AI 說明你錯在哪、正確解法與相關觀念，可以追問；也能依弱點組一份加強卷。',
     group: 'exam',
     icon: 'assistant',
     status: 'ready',
@@ -262,6 +271,11 @@ export function isDevPage(page: Pick<PageMeta, 'status'>): boolean {
 /** 這一頁在目前的功能開關下要不要出現在導覽與首頁（沒有 feature 的頁面一律出現）。 */
 export function isPageEnabled(page: Pick<PageMeta, 'path' | 'feature'>, flags: PageFeatureFlags): boolean {
   return page.feature === undefined || flags[page.feature];
+}
+
+/** 頁面的一句話說明：學習助手開放英文以外的科目時用 subjectsSummary（其他頁面一律是 summary）。 */
+export function pageSummary(page: Pick<PageMeta, 'summary' | 'subjectsSummary'>, flags: PageFeatureFlags): string {
+  return flags.assistantSubjects === true && page.subjectsSummary !== undefined ? page.subjectsSummary : page.summary;
 }
 
 /** 導覽與首頁要列出的頁面（依 PAGES 的順序，過濾掉開關關著的功能）。 */
