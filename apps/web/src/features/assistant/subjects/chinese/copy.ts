@@ -24,7 +24,6 @@ export const ZH_COPY = {
   draftQ1: '這是問題（一）的答案（最多 80 字）',
   knownKeySummary: '我有講義答案',
   knownKeyHint: '講義或考卷給的答案（選填）。填了會依它判斷對錯，AI 不同意時會告訴你。',
-  answerSectionRejected: '請刪掉答案與解析再送出（已加亮那一段）；選擇題的答案字母可以填在「我有講義答案」。',
   offTopic: '學習助手的國文模式只回答國文學習與學測國文相關的問題。',
   writingNotice: 'AI 不打分數，示範不是佳作。',
   demoNotOfficial: '本站 AI 示範，不是官方答案',
@@ -40,6 +39,18 @@ export const ZH_COPY = {
   notVerbatim: '這不是原文的文句。',
   copiedRun: '這段和原文相同，題目規定不可抄錄。',
   demoSummary: 'AI 示範答案（先自己改寫一次再看）',
+  /** 拍照確認時的字形題提醒（§1.4、§6.4）。 */
+  ocrFormReminder: '這題的錯字是題目的一部分，請確認轉錄沒有改正它。',
+  /** 國文的開關關著（英文照常）：國文案例是唯讀模式（§7.5）。 */
+  closed: '學習助手的國文模式暫停使用中，暫時不能送出新的國文解析或追問；你之前問過的國文題目仍然可以看與刪除。',
+  doubtPlaceholder: '例如：為什麼 (C) 不對？這句文言怎麼翻？',
+  /** 要問的題號在貼上的文字裡找不到（好幾題時要依題號切開）。 */
+  labelsMissing: (labels: readonly string[]) =>
+    `在題目裡找不到${labels.map((l) => `「${l}」`).join('、')}的題號：題號要寫在那一題的開頭（例如「27.」），或一次只問一題。`,
+  labelsInvalid: '題號只能是數字、國字或圈號，例如 12、34(1)、一；好幾題用頓號分開。',
+  targetMissing: '這段文字有好幾題，請在「要問的題號」填要問哪幾題（選擇題最多 4 題，簡答最多 3 題）。',
+  analyzeSubjectRetry: '改用英文重新建立',
+  homeChineseCard: '講義、段考的國文題目：字音字形、文言、閱讀、簡答與國寫指導。',
 } as const;
 
 /** 「你卡在哪裡」的國文標籤（代碼和英文相同；§8.2）。 */

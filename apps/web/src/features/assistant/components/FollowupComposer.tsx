@@ -27,6 +27,7 @@ export function FollowupComposer({
   disabledReason,
   points,
   onStarted,
+  placeholder = '例如：那 (F) 什麼時候可以用？',
 }: {
   caseId: string;
   /** 已經成功的追問輪數。 */
@@ -41,6 +42,8 @@ export function FollowupComposer({
   disabledReason: string | null;
   points: number;
   onStarted: (accepted: AssistTaskAccepted) => void;
+  /** 輸入框的範例（國文用自己的範例；docs/design/assistant-subjects.md §1.5）。 */
+  placeholder?: string;
 }) {
   const id = useId();
   const draftKey = `followup:${caseId}`;
@@ -122,7 +125,7 @@ export function FollowupComposer({
         aria-describedby={`${id}-count`}
         aria-invalid={length > max || undefined}
         className={inputCls}
-        placeholder="例如：那 (F) 什麼時候可以用？"
+        placeholder={placeholder}
       />
       <p id={`${id}-count`} className={`text-xs tabular-nums ${length > max ? 'font-semibold text-bad' : 'text-muted'}`}>
         {length}／{max} 字・這題還可以追問 {ASSIST_LIMITS.followupsPerCase - rounds} 次

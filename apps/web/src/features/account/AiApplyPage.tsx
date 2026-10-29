@@ -23,6 +23,7 @@ import {
   AI_TASKS,
   ASSIST_LIMITS,
   assistAnalyzePoints,
+  assistPoints,
   type AiApplyBody,
   type AiQuotaResponse,
   type AiStatus,
@@ -37,7 +38,7 @@ import { Link } from 'react-router';
 import { apiPost, needsOnboarding, signedIn, useFeatures, useMe } from '../../lib/api';
 import { errorMessage } from '../../lib/apiErrors';
 import { APP_NAME } from '../../modules';
-import { useAssistantEnabled, useAssistantPhotoEnabled } from '../assistant/lib/useAssistantEnabled';
+import { useAssistantEnabled, useAssistantPhotoEnabled, useAssistantSubjects } from '../assistant/lib/useAssistantEnabled';
 import { AI_STATUS_DESCRIPTIONS, AI_TIER_LABELS } from './labels';
 import { AI_CONSENT_VERSION, AI_PROCESSING_NOTICE } from './policy';
 import { PolicyView } from './PolicyView';
@@ -138,10 +139,37 @@ function taskPoints(quota: AiQuotaResponse | null): Record<AiTask, number> {
   return Object.fromEntries(AI_TASKS.map((task) => [task, pick(task)])) as Record<AiTask, number>;
 }
 
+/** 學習助手國文的點數（設計值，shared 的 assistPoints；後端的 task_points 只有英文的數字）。 */
+function ChinesePointRows({ photo }: { photo: boolean }) {
+  const choice = (n: number) => assistPoints('chinese', 'assist_analyze', { kind: 'zh_choice', items: n });
+  const short = (n: number) => assistPoints('chinese', 'assist_analyze', { kind: 'zh_short', items: n });
+  const rows: Array<[string, string]> = [
+    [`學習助手國文：選擇題解析（每多一題加 ${choice(2) - choice(1)} 點，最多 ${choice(Number.MAX_SAFE_INTEGER)} 點）`, `${choice(1)} 點起`],
+    [`學習助手國文：簡答解析（每多一個小題加 ${short(2) - short(1)} 點，最多 ${short(Number.MAX_SAFE_INTEGER)} 點）`, `${short(1)} 點起`],
+    ['學習助手國文：國寫指導', `${assistPoints('chinese', 'assist_analyze', { kind: 'zh_writing' })} 點`],
+    ['學習助手國文：追問一次', `${assistPoints('chinese', 'assist_followup')} 點`],
+    ...(photo
+      ? [['學習助手國文：拍照轉錄題目', `${assistPoints('chinese', 'assist_ocr', { photos: 1 })} 點（2 張 ${assistPoints('chinese', 'assist_ocr', { photos: 2 })} 點）`] as [string, string]]
+      : []),
+  ];
+  return (
+    <>
+      {rows.map(([task, value]) => (
+        <tr key={task}>
+          <td className="py-1.5 pr-3">{task}</td>
+          <td className="whitespace-nowrap py-1.5 text-right">{value}</td>
+        </tr>
+      ))}
+    </>
+  );
+}
+
 function AboutAi({ quota }: { quota: AiQuotaResponse | null }) {
   const points = taskPoints(quota);
   const assistant = useAssistantEnabled();
   const assistantPhoto = useAssistantPhotoEnabled();
+  // 學習助手的國文（docs/design/assistant-subjects.md §8.1）：開放時點數表多國文的幾列（shared 的 assistPoints 產生）。
+  const chinese = useAssistantSubjects().find((s) => s.subject === 'chinese') ?? null;
   // 管理員（不限點數）的額度不代表一般規則，改顯示預設值。
   const personal = quota !== null && !isUnlimited(quota.points.day_limit) ? quota : null;
   return (
@@ -218,6 +246,7 @@ function AboutAi({ quota }: { quota: AiQuotaResponse | null }) {
                 )}
               </>
             )}
+            {chinese && <ChinesePointRows photo={chinese.photo} />}
           </tbody>
         </table>
       </div>

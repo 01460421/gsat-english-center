@@ -40,10 +40,15 @@ export function studentCell(option: ZhOptionView, labels: ZhJudgeLabels | null, 
     if (s.judged === null) return null;
     return { text: `你判：${zhVerdictText(s.judged, labels)}`, ok: option.verdict === null ? null : s.judged === option.verdict };
   }
+  // 單選：只標學生選的那一個（對或錯）；多選：每一列都有選了、沒選、誤選、漏選。
+  if (!multi) {
+    if (!s.picked) return null;
+    const ok = s.mark === 'ok' ? true : s.mark === 'wrong_pick' ? false : option.verdict === 'yes' ? true : option.verdict === 'no' ? false : null;
+    return { text: '你選的', ok };
+  }
   if (s.mark === 'wrong_pick') return { text: '你誤選', ok: false };
   if (s.mark === 'missed') return { text: '你漏選', ok: false };
-  if (multi) return { text: s.picked ? '你選了' : '你沒選', ok: s.mark === 'ok' ? true : null };
-  return s.picked ? { text: '你選的', ok: s.mark === 'ok' ? true : option.verdict === 'yes' ? true : option.verdict === 'no' ? false : null } : null;
+  return { text: s.picked ? '你選了' : '你沒選', ok: s.mark === 'ok' ? true : null };
 }
 
 function StudentBadge({ cell }: { cell: { text: string; ok: boolean | null } }) {

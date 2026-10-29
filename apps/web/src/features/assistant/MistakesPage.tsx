@@ -28,6 +28,8 @@ import { weakPaperVisible } from './papers/flags';
 import { papersHref } from './papers/params';
 import { rowSummary } from './sources/common';
 import { listMistakes } from './sources';
+import { ZH_COPY } from './subjects/chinese/copy';
+import { useAssistSubjects } from './subjects/useAssistSubjects';
 import type { MistakeRow, MistakeSource } from './sources/types';
 
 const SOURCE_LABELS: Record<MistakeSource, string> = {
@@ -164,6 +166,7 @@ function DesktopTable({ ranked, asked, clusters }: { ranked: RankedRow[]; asked:
 
 function Body() {
   const { rows } = useMistakeRows();
+  const zhOpen = useAssistSubjects().isOpen('chinese');
   const [filters, setFilters] = useState<Filters>(INITIAL);
   const isDesktop = useIsDesktop();
   const id = useId();
@@ -275,6 +278,15 @@ function Body() {
         <p className="text-muted">
           這台裝置上答錯、部分給分、未作答，以及答對但標記過、用了提示的題目。預設依「建議先問」排序：同程度考生大多答對、你卻答錯的題排前面。
         </p>
+        {/* 錯題清單第一版只有英文的站內作答紀錄；國文的解析在首頁篩選（docs/design/assistant-subjects.md §1.6）。 */}
+        {zhOpen && (
+          <p className="text-sm text-muted">
+            {ZH_COPY.mistakesHint}
+            <Link to="/assistant" className="ml-1 font-medium text-primary underline underline-offset-2">
+              到學習助手首頁
+            </Link>
+          </p>
+        )}
       </AssistHeader>
       {isDesktop ? <StickyBar label="篩選">{filterBar}</StickyBar> : filterBar}
       {rows === null ? (

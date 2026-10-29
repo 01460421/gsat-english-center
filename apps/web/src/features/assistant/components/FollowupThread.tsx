@@ -1,10 +1,12 @@
 /**
  * 追問串（docs/design/learning-assistant.md §1.7、§2.7）：每一輪一個 h3，開頭固定一行「你正在和 AI 互動」，
  * 學生的問題、AI 的回答（重點與例句、自我檢查的小問題）、AI 標章與「回報不當內容」。失敗的那一輪說明原因（點數已退還）。
+ * 國文的回覆（kind 'zh_followup'）：例句欄是 example，不包 lang="en"；離題說明用國文的說法（docs/design/assistant-subjects.md §3.5、§8.1）。
  */
 import type { AssistTurnView } from '@gsat/shared';
 import { AiBadge, ASSISTANT_AI_NOTICE, ReportAiContent } from '../../writing/components/ui';
 import { assistRefundMessage } from '../lib/errors';
+import { ZH_COPY } from '../subjects/chinese/copy';
 import { AssistSafetyCare, En, ProcessingNotices } from './parts';
 
 /** 每一輪的標題 id（回覆出來時案例頁把焦點移過去）。 */
@@ -18,6 +20,7 @@ export function FollowupThread({ turns, displayOf }: { turns: readonly AssistTur
     <ol className="space-y-4">
       {turns.map((t, i) => {
         const reply = t.reply;
+        const zh = reply !== undefined && 'kind' in reply && reply.kind === 'zh_followup';
         return (
           <li key={t.id} className="space-y-2 rounded-2xl border border-line bg-surface p-4">
             <h3 id={followupHeadingId(t.id)} tabIndex={-1} className="flex flex-wrap items-center gap-2 font-semibold">
@@ -45,7 +48,7 @@ export function FollowupThread({ turns, displayOf }: { turns: readonly AssistTur
               <div className="space-y-2">
                 {reply.safety_flag !== 'none' && <AssistSafetyCare />}
                 {reply.off_topic ? (
-                  <p>學習助手只回答英文學習與學測相關的問題。</p>
+                  <p>{zh ? ZH_COPY.offTopic : '學習助手只回答英文學習與學測相關的問題。'}</p>
                 ) : (
                   <>
                     <p className="break-words whitespace-pre-line">{reply.reply_zh}</p>
@@ -54,11 +57,13 @@ export function FollowupThread({ turns, displayOf }: { turns: readonly AssistTur
                         {reply.points.map((p, j) => (
                           <li key={j} className="break-words">
                             {p.text_zh}
-                            {p.example_en && (
-                              <span className="block text-[0.95rem]">
-                                <En>{p.example_en}</En>
-                              </span>
-                            )}
+                            {'example_en' in p
+                              ? p.example_en && (
+                                  <span className="block text-[0.95rem]">
+                                    <En>{p.example_en}</En>
+                                  </span>
+                                )
+                              : p.example && <span className="block text-[0.95rem] break-words">{p.example}</span>}
                           </li>
                         ))}
                       </ul>

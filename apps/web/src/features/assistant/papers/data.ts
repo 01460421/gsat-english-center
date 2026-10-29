@@ -114,7 +114,8 @@ export function useRemoteWeaknessData(reportId: string | null = null): RemoteWea
       (report) => !controller.signal.aborted && setData((d) => ({ ...d, report, reportState: report ? 'ok' : 'none' })),
       () => !controller.signal.aborted && setData((d) => ({ ...d, report: null, reportState: 'failed' })),
     );
-    listAssistCases({ signal: controller.signal }).then(
+    // 加強卷只看英文（國文和英文同名的 careless、time 不能當成英文弱點；docs/design/assistant-subjects.md §7.3）。
+    listAssistCases({ subject: 'english', signal: controller.signal }).then(
       (r) =>
         !controller.signal.aborted &&
         setData((d) => ({

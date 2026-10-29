@@ -3,19 +3,20 @@
  *   案例頁：「這是你第 4 題標成『過度推論』的錯題」＋前幾題的連結（AssistCaseDetail.history_line）。
  *   確認頁：還不知道這題的錯因，改列之前問過的題目裡最常見的錯因（GET /api/assist/cases 的 error_counts）。
  * 只有代碼與次數，沒有任何自由文字；認不得的代碼不顯示。
+ * 國文案例的歷史一行只數國文（Worker 算；docs/design/assistant-subjects.md §7.3），代碼用國文的標籤，句尾寫「國文錯題」。
  */
-import type { AssistHistoryLine } from '@gsat/shared';
+import { zhErrorLabel, type AssistHistoryLine, type AssistSubject } from '@gsat/shared';
 import { Link } from 'react-router';
 import { errorLabel } from '../lib/view';
 
-export function HistoryLine({ line, currentId }: { line: AssistHistoryLine | null; currentId?: string }) {
+export function HistoryLine({ line, currentId, subject = 'english' }: { line: AssistHistoryLine | null; currentId?: string; subject?: AssistSubject }) {
   if (!line || line.count < 2) return null;
-  const label = errorLabel(line.code);
+  const label = subject === 'chinese' ? zhErrorLabel(line.code) : errorLabel(line.code);
   if (!label) return null;
   const others = line.case_ids.filter((id) => id !== currentId).slice(0, 3);
   return (
     <p className="text-sm">
-      這是你第 {line.count} 題標成「{label}」的錯題
+      這是你第 {line.count} 題標成「{label}」的{subject === 'chinese' ? '國文' : ''}錯題
       <span className="text-muted">（本站計算）</span>
       {others.length > 0 && (
         <>

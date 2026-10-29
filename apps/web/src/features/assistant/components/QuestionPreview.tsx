@@ -5,12 +5,15 @@
  *   - 學生提供的題目：純文字節點（不解析任何標記），區塊依序列出；
  *   - 每一題列「你的答案 (C)／正確答案 (B)」與對錯（圖示＋文字）；題組逐題列。英文都包 lang="en"。
  * collapsed：手機案例頁預設收合，只顯示題幹與答案，選文收在「看完整題目」裡。
+ * 國文（model.subject 'chinese'，docs/design/assistant-subjects.md §8.3）：不加 lang="en"；區塊的底線標記 ⟦…⟧ 換成底線（ZhText，
+ * 仍是純文字節點）；注釋區塊用小字；解析的引文在區塊裡加亮（blockMarks）；文言、詩詞的選文用襯線字（classical）。
  */
 import { ASSIST_SECTION_LABELS, TIER_LABELS } from '@gsat/shared';
 import { useEffect, useId, useState, type ReactNode } from 'react';
 import { RichText } from '../../exams/components/RichText';
 import type { TextHighlight } from '../../exams/richText';
 import type { PreviewItem, PreviewModel } from '../sources/types';
+import { ZhText, type ZhMark } from '../subjects/chinese/components/ZhText';
 import { AnswerText, VerdictBadge } from './parts';
 
 const BLOCK_KIND_LABELS: Record<string, string> = {
@@ -27,7 +30,12 @@ function itemTitle(item: PreviewItem, model: PreviewModel): string {
   return /^\d/.test(item.display) ? `第 ${item.display} 題` : item.display;
 }
 
-function OptionsList({ options, rich }: { options: Record<string, string>; rich: boolean }) {
+/** 題目文字的 lang：英文 'en'；國文不加（全站根元素本來就是 zh-Hant）。 */
+function textLangOf(model: Pick<PreviewModel, 'subject'>): 'en' | undefined {
+  return model.subject === 'chinese' ? undefined : 'en';
+}
+
+function OptionsList({ options, rich, lang = 'en' }: { options: Record<string, string>; rich: boolean; lang?: 'en' | undefined }) {
   return (
     <ul className="grid grid-cols-1 gap-1 text-[0.95rem]">
       {Object.keys(options)
@@ -35,7 +43,7 @@ function OptionsList({ options, rich }: { options: Record<string, string>; rich:
         .map((letter) => (
           <li key={letter} className="flex gap-1.5">
             <span className="shrink-0 font-semibold">({letter})</span>
-            <span lang="en" className="min-w-0 break-words">
+            <span lang={lang} className="min-w-0 break-words">
               {rich ? <RichText text={options[letter] ?? ''} variant="inline" className="inline" /> : options[letter]}
             </span>
           </li>
@@ -47,6 +55,7 @@ function OptionsList({ options, rich }: { options: Record<string, string>; rich:
 function ItemCard({ item, model, headingLevel }: { item: PreviewItem; model: PreviewModel; headingLevel: 3 | 4 }) {
   const H = headingLevel === 3 ? 'h3' : 'h4';
   const rich = model.trust === 'site';
+  const lang = textLangOf(model);
   const reasons = [item.marked ? '作答時標記過' : null, item.hints ? `用了 ${item.hints} 層提示` : null, item.revealed ? '先看了答案' : null].filter(Boolean);
   return (
     <li className="rounded-xl border border-line bg-surface p-3">
@@ -55,26 +64,26 @@ function ItemCard({ item, model, headingLevel }: { item: PreviewItem; model: Pre
         {item.status !== 'unknown' && <VerdictBadge status={item.status} basis={item.clientJudged ? 'client' : undefined} />}
       </div>
       {item.stem && (
-        <p lang={model.section === 'vocab_word' ? undefined : 'en'} className="mt-1 break-words">
+        <p lang={model.section === 'vocab_word' ? undefined : lang} className="mt-1 break-words">
           {rich ? <RichText text={item.stem} variant="inline" className="inline" /> : item.stem}
         </p>
       )}
       {item.options && Object.keys(item.options).length > 0 && (
         <div className="mt-2">
-          <OptionsList options={item.options} rich={rich} />
+          <OptionsList options={item.options} rich={rich} lang={lang} />
         </div>
       )}
       {(item.studentAnswer !== null || item.correct) && (
         <dl className="mt-2 grid grid-cols-[auto_minmax(0,1fr)] gap-x-3 gap-y-0.5 text-sm">
           <dt className="text-muted">你的答案</dt>
           <dd>
-            <AnswerText value={item.studentAnswer} />
+            <AnswerText value={item.studentAnswer} lang={lang ?? null} />
           </dd>
           {item.correct && item.correct.length > 0 && (
             <>
               <dt className="text-muted">正確答案</dt>
               <dd>
-                <AnswerText value={item.mode === 'single_choice' || item.mode === 'bank_choice' ? item.correct.slice(0, 1) : item.correct} />
+                <AnswerText value={item.mode === 'single_choice' || item.mode === 'bank_choice' ? item.correct.slice(0, 1) : item.correct} lang={lang ?? null} />
                 {(item.mode === 'single_choice' || item.mode === 'bank_choice') && item.correct.length > 1 && (
                   <span className="text-muted">（官方也接受 {item.correct.slice(1).map((l) => `(${l})`).join('、')}）</span>
                 )}
@@ -96,6 +105,8 @@ export function QuestionPreview({
   itemsFilter,
   extra,
   expand = false,
+  blockMarks,
+  classical = false,
 }: {
   model: PreviewModel;
   highlights?: readonly TextHighlight[];
@@ -108,6 +119,10 @@ export function QuestionPreview({
   extra?: ReactNode;
   /** 變成 true 時把收合的題目展開（解析的「在題目中標出這句」）。 */
   expand?: boolean;
+  /** 國文：學生提供的題目區塊裡要加亮的引文（區塊序號 → 位置）。 */
+  blockMarks?: Readonly<Record<number, readonly ZhMark[]>>;
+  /** 國文：選文是文言或詩詞（選文區塊用襯線字）。 */
+  classical?: boolean;
 }) {
   const [open, setOpen] = useState(!collapsible);
   useEffect(() => {
@@ -116,6 +131,8 @@ export function QuestionPreview({
   const bodyId = useId();
   const items = itemsFilter ? model.items.filter((i) => itemsFilter.includes(i.label)) : model.items;
   const meta = [model.section ? ASSIST_SECTION_LABELS[model.section] : null, model.tier ? TIER_LABELS[model.tier] : null].filter(Boolean).join('・');
+  const zh = model.subject === 'chinese';
+  const lang = textLangOf(model);
   const hasBody = Boolean(model.passage || model.figureText || model.sharedOptions || model.instructions || (model.blocks && model.blocks.length > 0));
   return (
     <div className="space-y-3">
@@ -143,7 +160,7 @@ export function QuestionPreview({
                 <RichText text={model.passage} highlights={highlights ?? []} />
               </div>
             ) : (
-              <p lang="en" className="rounded-xl border border-line bg-surface p-3 whitespace-pre-wrap break-words">
+              <p lang={lang} className="rounded-xl border border-line bg-surface p-3 whitespace-pre-wrap break-words">
                 {model.passage}
               </p>
             ))}
@@ -156,10 +173,10 @@ export function QuestionPreview({
           {model.sharedOptions && (
             <div className="rounded-xl border border-line bg-surface p-3">
               <p className="mb-1 text-sm font-semibold">選項</p>
-              <OptionsList options={model.sharedOptions} rich={model.trust === 'site'} />
+              <OptionsList options={model.sharedOptions} rich={model.trust === 'site'} lang={lang} />
             </div>
           )}
-          {model.blocks && model.blocks.length > 0 && (
+          {model.blocks && model.blocks.length > 0 && !zh && (
             <ol className="space-y-2">
               {model.blocks.map((b, i) => (
                 <li key={i} className="rounded-xl border border-line bg-surface p-3" data-block-index={i}>
@@ -172,6 +189,25 @@ export function QuestionPreview({
                   </p>
                 </li>
               ))}
+            </ol>
+          )}
+          {model.blocks && model.blocks.length > 0 && zh && (
+            <ol className="space-y-2">
+              {model.blocks.map((b, i) => {
+                // 注釋、框注（轉錄時放在 passage，label 寫「注釋」「右框」「乙注」）：小字、底色不同。
+                const note = b.kind === 'passage' && b.label !== null && /注|框/.test(b.label);
+                return (
+                  <li key={i} className={`rounded-xl border border-line p-3 ${note ? 'bg-surface-2 text-sm' : 'bg-surface'}`} data-block-index={i}>
+                    <p className="text-xs font-semibold text-muted">
+                      {note ? '注釋' : (BLOCK_KIND_LABELS[b.kind] ?? b.kind)}
+                      {b.label && !(note && b.label === '注釋') ? `・${b.label}` : ''}
+                    </p>
+                    <p className={`mt-1 whitespace-pre-wrap break-words ${classical && b.kind === 'passage' && !note ? 'zh-classical' : ''}`}>
+                      <ZhText text={b.text} marks={blockMarks?.[i] ?? []} />
+                    </p>
+                  </li>
+                );
+              })}
             </ol>
           )}
         </div>

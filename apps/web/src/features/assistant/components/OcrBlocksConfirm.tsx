@@ -10,6 +10,11 @@
  *   - 轉錄跳過的內容（解答、評分說明、範文、個資）列一行說明。
  *   - 送出前在瀏覽器跑同一套檢查（checkAssistQuestion，前後端共用），第一個問題顯示在按鈕上方；Worker 另外比對 D8 指紋。
  * 學生提供的題目是不可信的資料：一律用純文字節點顯示，不解析任何標記。
+ *
+ * 國文（subject='chinese'，docs/design/assistant-subjects.md §6.4）：題目不加 lang="en"；每塊有「標示底線」「取消底線」；
+ * 字形題提醒錯字是題目的一部分，要問的題放大預覽「」與畫線的字；作答欄位換成 ZhQuestionFields（格式、作答、我有講義答案、
+ * 國寫片段）；可以選的題數依格式（選擇 4、簡答 3、國寫 1）；檢查走 checkAssistQuestion(…, 'chinese')，點數用 assistPoints。
+ * 英文（預設）的畫面與送出的內容都和原本相同。
  */
 import {
   ASSIST_INPUT_PROBLEM_MESSAGES,
@@ -22,13 +27,33 @@ import {
   type AssistInputProblem,
   type AssistOcrView,
   type AssistStudentQuestion,
+  type AssistSubject,
   type UpdateAssistQuestionBody,
+  ZH_TARGET_LIMITS,
+  guessZhSection,
+  zhCharLimits,
+  zhShortPartLabels,
 } from '@gsat/shared';
-import { Fragment, useId, useMemo, useState } from 'react';
+import { Fragment, useId, useMemo, useRef, useState } from 'react';
 import { useIsDesktop } from '../../../lib/media';
 import { AiBadge, ErrorMessage, Notice } from '../../writing/components/ui';
 import type { ErrorView } from '../../writing/lib/errors';
 import { OCR_UNCERTAIN_MARK, countUnresolved, markPositions, matchMarks, replaceMarkAt } from '../../writing/lib/ocr';
+import { ZH_COPY, ZH_DOUBT_KINDS, ZH_DOUBT_LABELS } from '../subjects/chinese/copy';
+import { UnderlineTools } from '../subjects/chinese/components/UnderlineTools';
+import { ZhText, type ZhMark } from '../subjects/chinese/components/ZhText';
+import {
+  EMPTY_ZH_FIELDS,
+  buildZhQuestion,
+  effectiveZhFormat,
+  guessZhFormatOf,
+  zhAllText,
+  zhAnalyzePoints,
+  zhAnswerKeys,
+  zhTargetText,
+  type ZhFieldsValue,
+} from '../subjects/chinese/typed';
+import { ZhQuestionFields, zhFieldsBlocker } from '../subjects/chinese/ZhQuestionFields';
 import { DoubtPicker, EMPTY_DOUBT, type DoubtValue } from './DoubtPicker';
 import { inputCls, primaryBtn } from './parts';
 
@@ -84,11 +109,16 @@ export function unresolvedInTargets(blocks: readonly ConfirmBlock[], targets: re
   return blocks.filter((b) => isTargetBlock(b, targets)).reduce((n, b) => n + countUnresolved(b.text), 0);
 }
 
+/** 「」『』裡的字的位置（字形題的預覽加亮用；不含引號本身）。 */
+export function zhQuotedMarks(text: string): ZhMark[] {
+  return [...text.matchAll(/[「『]([^「」『』\n]{1,40})[」』]/gu)].map((m) => ({ start: m.index + 1, end: m.index + 1 + m[1]!.length }));
+}
+
 /** 目前文字裡的 [[?]] 加亮（純文字節點），同一塊有好幾處時標上第幾處。 */
-function Marked({ text, numbered }: { text: string; numbered: boolean }) {
+function Marked({ text, numbered, lang = 'en' }: { text: string; numbered: boolean; lang?: 'en' | undefined }) {
   const parts = text.split(OCR_UNCERTAIN_MARK);
   return (
-    <p lang="en" className="whitespace-pre-wrap break-words text-sm text-muted">
+    <p lang={lang} className="whitespace-pre-wrap break-words text-sm text-muted">
       <span className="sr-only">看不清的位置：</span>
       {parts.map((t, i) => (
         <Fragment key={i}>
@@ -118,6 +148,7 @@ export function OcrBlocksConfirm({
   serverField,
   remaining,
   onSubmit,
+  subject = 'english',
 }: {
   ocr: AssistOcrView;
   busy: boolean;
@@ -129,6 +160,8 @@ export function OcrBlocksConfirm({
   /** 今天還剩幾點（不知道時 null）。 */
   remaining: number | null;
   onSubmit: (body: UpdateAssistQuestionBody) => void;
+  /** 題目的科目（國文不加 lang="en"、換成國文的欄位；預設英文）。 */
+  subject?: AssistSubject;
 }) {
   const id = useId();
   const isDesktop = useIsDesktop();
@@ -144,18 +177,37 @@ export function OcrBlocksConfirm({
   const [hintFirst, setHintFirst] = useState<boolean | null>(null);
   const [doubt, setDoubt] = useState<DoubtValue>(EMPTY_DOUBT);
   const [touched, setTouched] = useState(false);
+  const zh = subject === 'chinese';
+  const textLang = zh ? undefined : 'en';
+  const [fields, setFields] = useState<ZhFieldsValue>(EMPTY_ZH_FIELDS);
+  const editors = useRef<Record<number, HTMLTextAreaElement | null>>({});
 
-  const maxTargets = ASSIST_LIMITS.groupLabelsMax.word_bank;
+  // 國文：格式與子模式由轉錄的文字預填（ZhQuestionFields），可以選的題數依格式。
+  const zhText = useMemo(() => (zh ? zhAllText(blocks.filter((b) => !b.hidden)) : ''), [zh, blocks]);
+  const guess = useMemo(() => guessZhFormatOf(zhText, fields), [zhText, fields]);
+  const { format, mode } = effectiveZhFormat(fields, guess);
+  const maxTargets = zh ? (format === 'choice' ? ZH_TARGET_LIMITS.choice : format === 'short' ? ZH_TARGET_LIMITS.shortQuestions : ZH_TARGET_LIMITS.writing) : ASSIST_LIMITS.groupLabelsMax.word_bank;
   const needTarget = labels.length >= 2 && targets.length === 0;
   const unresolved = unresolvedInTargets(blocks, targets);
   const edited = blocks.some((b, i) => b.text !== original[i]?.text);
-  const { question, sent } = useMemo(() => confirmedQuestion(blocks, targets, answer), [blocks, targets, answer]);
-  const check = useMemo(() => checkAssistQuestion(question), [question]);
+  const confirmed = useMemo(() => confirmedQuestion(blocks, targets, answer), [blocks, targets, answer]);
+  const sent = confirmed.sent;
+  const parts = useMemo(() => (zh && format === 'short' ? zhShortPartLabels(confirmed.question.blocks, targets) : []), [zh, format, confirmed, targets]);
+  const answerKeys = zhAnswerKeys(format, targets, parts);
+  const question = useMemo(
+    () => (zh ? buildZhQuestion({ blocks: confirmed.question.blocks, labels: targets, fields, format, mode, parts }) : confirmed.question),
+    [zh, confirmed, targets, fields, format, mode, parts],
+  );
+  const check = useMemo(() => checkAssistQuestion(question, subject), [question, subject]);
   const firstProblem = !check.ok ? check.problems[0] : undefined;
   const warnings = [...new Set(check.warnings.map((w) => w.code))];
   const targetHasMark = blocks.some((b) => b.kind === 'student_mark' && isTargetBlock(b, targets) && b.text.trim() !== '');
-  const effectiveHint = hintFirst ?? (answer.trim() === '' && !targetHasMark);
-  const points = assistAnalyzePoints('item', Math.max(1, targets.length));
+  const zhAnswered = Object.values(fields.answers).some((v) => v.trim() !== '') || fields.draft.trim() !== '';
+  const effectiveHint = hintFirst ?? ((zh ? !zhAnswered : answer.trim() === '') && !targetHasMark);
+  const points = zh ? zhAnalyzePoints(format, confirmed.question.blocks, targets) : assistAnalyzePoints('item', Math.max(1, targets.length));
+  const zhSection = useMemo(() => (zh ? guessZhSection(zhText) : null), [zh, zhText]);
+  const zhLimits = useMemo(() => (zh && format === 'short' ? zhCharLimits(zhText) : []), [zh, format, zhText]);
+  const zhFieldProblem = zh ? zhFieldsBlocker(fields, format, answerKeys) : null;
   const doubtTooLong = [...doubt.text].length > ASSIST_LIMITS.doubtMaxChars;
   const hiddenCount = original.filter((b) => b.hidden).length;
 
@@ -172,9 +224,9 @@ export function OcrBlocksConfirm({
 
   const submit = () => {
     setTouched(true);
-    if (!check.ok || unresolved > 0 || needTarget || doubtTooLong) return;
+    if (!check.ok || unresolved > 0 || needTarget || doubtTooLong || zhFieldProblem !== null) return;
     const t = doubt.text.trim();
-    onSubmit({ question: check.value, doubt_kinds: doubt.kinds, doubt: t === '' ? null : t, hint_first: effectiveHint });
+    onSubmit({ question: check.value, doubt_kinds: doubt.kinds, doubt: t === '' ? null : t, hint_first: zh && format === 'writing' ? false : effectiveHint });
   };
 
   const problemText = firstProblem ? ASSIST_INPUT_PROBLEM_MESSAGES[firstProblem.code as AssistInputProblem] : null;
@@ -182,7 +234,7 @@ export function OcrBlocksConfirm({
     ? '照片裡有好幾題，請先選要問哪一題。'
     : unresolved > 0
       ? `要問的題目裡還有 ${unresolved} 處看不清的字，請點候選字或直接修改。`
-      : problemText;
+      : (zhFieldProblem ?? problemText);
   const looksRight = unresolved === 0 && !edited && !needTarget;
 
   return (
@@ -208,6 +260,17 @@ export function OcrBlocksConfirm({
             {hiddenCount > 0 && <li>有 {hiddenCount} 段被隱藏（不能修改，送出時不會帶上）。</li>}
           </ul>
         </Notice>
+      )}
+
+      {zh && zhSection?.section === 'zh_form' && (
+        <div role="note" className="space-y-2 rounded-xl border border-badge-fg/30 bg-badge-bg/40 px-4 py-3" data-testid="zh-ocr-form-reminder">
+          <p className="text-sm font-medium">{ZH_COPY.ocrFormReminder}</p>
+          {zhTargetText(confirmed.question.blocks, targets).trim() !== '' && (
+            <p className="text-lg leading-loose whitespace-pre-wrap break-words">
+              <ZhText text={zhTargetText(confirmed.question.blocks, targets)} marks={zhQuotedMarks(zhTargetText(confirmed.question.blocks, targets))} />
+            </p>
+          )}
+        </div>
       )}
 
       {labels.length >= 2 && (
@@ -254,7 +317,7 @@ export function OcrBlocksConfirm({
           const inputId = `${id}-b${i}`;
           const body = (
             <div className="mt-2 space-y-2">
-              {marks.length > 0 && <Marked text={b.text} numbered={marks.length > 1} />}
+              {marks.length > 0 && <Marked text={b.text} numbered={marks.length > 1} lang={textLang} />}
               {target &&
                 marks.map((_, k) => {
                   const candidates = candidatesOf(k);
@@ -266,7 +329,7 @@ export function OcrBlocksConfirm({
                         <button
                           key={c}
                           type="button"
-                          lang="en"
+                          lang={textLang}
                           onClick={() => setText(i, replaceMarkAt(b.text, k, c))}
                           className="inline-flex min-h-11 items-center rounded-full border border-line px-3 lg:hover:bg-surface-2"
                         >
@@ -281,13 +344,27 @@ export function OcrBlocksConfirm({
               </label>
               <textarea
                 id={inputId}
+                ref={(el) => {
+                  editors.current[i] = el;
+                }}
                 value={b.text}
                 rows={Math.min(12, Math.max(2, Math.ceil(b.text.length / 40) + b.text.split('\n').length - 1))}
                 onChange={(e) => setText(i, e.currentTarget.value)}
                 aria-invalid={invalidBlock === i || undefined}
-                lang="en"
+                lang={zh ? 'zh-Hant' : 'en'}
                 className={`field-sizing-content ${inputCls} ${invalidBlock === i ? 'border-bad' : ''}`}
               />
+              {zh && (
+                <UnderlineTools
+                  target={{
+                    get current() {
+                      return editors.current[i] ?? null;
+                    },
+                  }}
+                  value={b.text}
+                  onChange={(next) => setText(i, next)}
+                />
+              )}
             </div>
           );
           const status = marks.length > 0 ? (target ? `要處理 ${marks.length} 處看不清的字` : `${marks.length} 處看不清（送出時標成看不清）`) : null;
@@ -318,24 +395,55 @@ export function OcrBlocksConfirm({
         })}
       </ol>
 
-      <div className="grid gap-4 sm:grid-cols-2">
-        <div>
-          <label htmlFor={`${id}-answer`} className="font-semibold">
-            你的答案（選填）
-          </label>
-          <input id={`${id}-answer`} value={answer} onChange={(e) => setAnswer(e.currentTarget.value)} className={`mt-1 min-h-11 ${inputCls}`} lang="en" autoComplete="off" />
-          {ocr.student_answer_seen !== '' && (
-            <p className="mt-1 text-xs text-muted">
-              照片上看到的作答：<span lang="en">{ocr.student_answer_seen}</span>
-            </p>
-          )}
+      {zh ? (
+        <div className="space-y-2">
+          <ZhQuestionFields
+            value={fields}
+            onChange={setFields}
+            guess={guess}
+            format={format}
+            mode={mode}
+            answerKeys={answerKeys}
+            limits={zhLimits}
+            showQ1={format === 'writing' && (/問題\s*[（(]\s*一\s*[)）]/u.test(zhText) || zhSection?.section === 'zh_writing_reason')}
+          />
+          {ocr.student_answer_seen !== '' && <p className="text-xs text-muted">照片上看到的作答：{ocr.student_answer_seen}</p>}
         </div>
-      </div>
-      <label className="flex min-h-11 cursor-pointer items-center gap-2">
-        <input type="checkbox" checked={effectiveHint} onChange={(e) => setHintFirst(e.currentTarget.checked)} className="size-4 accent-[var(--primary)]" />
-        先給提示就好（完整解析先收起來，按「看完整解析」才展開，不另外扣點）
-      </label>
-      <DoubtPicker value={doubt} onChange={setDoubt} tornOptions={[]} mine={null} showFreeNote={false} kinds={['sentence_unclear', 'unknown_word', 'faster_method', 'guessed']} />
+      ) : (
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label htmlFor={`${id}-answer`} className="font-semibold">
+              你的答案（選填）
+            </label>
+            <input id={`${id}-answer`} value={answer} onChange={(e) => setAnswer(e.currentTarget.value)} className={`mt-1 min-h-11 ${inputCls}`} lang="en" autoComplete="off" />
+            {ocr.student_answer_seen !== '' && (
+              <p className="mt-1 text-xs text-muted">
+                照片上看到的作答：<span lang="en">{ocr.student_answer_seen}</span>
+              </p>
+            )}
+          </div>
+        </div>
+      )}
+      {!(zh && format === 'writing') && (
+        <label className="flex min-h-11 cursor-pointer items-center gap-2">
+          <input type="checkbox" checked={effectiveHint} onChange={(e) => setHintFirst(e.currentTarget.checked)} className="size-4 accent-[var(--primary)]" />
+          先給提示就好（完整解析先收起來，按「看完整解析」才展開，不另外扣點）
+        </label>
+      )}
+      {zh ? (
+        <DoubtPicker
+          value={doubt}
+          onChange={setDoubt}
+          tornOptions={[]}
+          mine={null}
+          showFreeNote={false}
+          kinds={format === 'writing' ? [] : ZH_DOUBT_KINDS}
+          labels={ZH_DOUBT_LABELS}
+          placeholder={ZH_COPY.doubtPlaceholder}
+        />
+      ) : (
+        <DoubtPicker value={doubt} onChange={setDoubt} tornOptions={[]} mine={null} showFreeNote={false} kinds={['sentence_unclear', 'unknown_word', 'faster_method', 'guessed']} />
+      )}
       {warnings.length > 0 && (
         <ul className="space-y-1 rounded-xl border border-badge-fg/30 bg-badge-bg/60 px-4 py-2 text-sm">
           {warnings.map((w) => (

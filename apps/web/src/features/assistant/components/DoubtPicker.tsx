@@ -25,6 +25,8 @@ export function DoubtPicker({
   kinds = ASSIST_DOUBT_KINDS,
   tornQuestion = null,
   tornNote = null,
+  labels = ASSIST_DOUBT_LABELS,
+  placeholder = '例如：為什麼 (F) 不能填在第 3 格？',
 }: {
   value: DoubtValue;
   onChange: (next: DoubtValue) => void;
@@ -39,6 +41,9 @@ export function DoubtPicker({
   tornQuestion?: string | null;
   /** 「猶豫」下面的說明（例如按的是另一題時，怎麼改成問那一題）。 */
   tornNote?: ReactNode;
+  /** 勾選項目的文字（國文用自己的說法，代碼相同；docs/design/assistant-subjects.md §8.2）。 */
+  labels?: Readonly<Record<AssistDoubtKind, string>>;
+  placeholder?: string;
 }) {
   const id = useId();
   const max = ASSIST_LIMITS.doubtMaxChars;
@@ -55,7 +60,7 @@ export function DoubtPicker({
         {shown.map((kind) => {
           const checked = value.kinds.includes(kind);
           const label =
-            kind === 'torn_between' && mine ? `我在 (${mine}) 和另一個選項之間猶豫${tornQuestion ? `（${tornQuestion}）` : ''}` : ASSIST_DOUBT_LABELS[kind];
+            kind === 'torn_between' && mine ? `我在 (${mine}) 和另一個選項之間猶豫${tornQuestion ? `（${tornQuestion}）` : ''}` : labels[kind];
           return (
             <li key={kind} className="min-w-0">
               <label className={`flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border px-3 py-2 ${checked ? 'border-primary bg-primary-soft' : 'border-line'}`}>
@@ -99,7 +104,7 @@ export function DoubtPicker({
           onChange={(e) => onChange({ ...value, text: e.currentTarget.value })}
           aria-describedby={`${id}-count ${id}-note`}
           aria-invalid={length > max || undefined}
-          placeholder="例如：為什麼 (F) 不能填在第 3 格？"
+          placeholder={placeholder}
           className={`mt-1 ${inputCls}`}
         />
         <p id={`${id}-count`} className={`text-xs tabular-nums ${length > max ? 'font-semibold text-bad' : 'text-muted'}`}>

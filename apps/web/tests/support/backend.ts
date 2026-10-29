@@ -18,6 +18,7 @@ import type {
   AssistCaseKind,
   AssistCaseListResponse,
   AssistCaseSummary,
+  AssistDetectedSubject,
   AssistFollowupMode,
   AssistFollowupView,
   AssistOcrView,
@@ -43,8 +44,19 @@ import type {
   PatchAssistCaseBody,
   PublicUser,
   UpdateAssistQuestionBody,
+  ZhAnalysisView,
 } from '@gsat/shared';
+import { assistCaseKindOf, assistPoints, isZhSection, zhShortPartLabels } from '@gsat/shared';
 import { reportDetail as reportDetailFixture } from '../../src/features/assistant/testing/report';
+import {
+  zhClassicalAnalysis,
+  zhFollowupReply,
+  zhFormAnalysis,
+  zhJudgeAnalysis,
+  zhShortAnalysis,
+  zhWordAnalysis,
+  zhWritingAnalysis,
+} from '../../src/features/assistant/testing/zh';
 import { setView as exemplarSetViewFixture } from '../../src/features/writing/exemplars/testing/fixtures';
 
 /** 現行條款版本：要和 src/features/account/policy.ts（以及後端 wrangler.toml）一致，歡迎頁才允許送出。 */
@@ -64,6 +76,12 @@ export const FEATURES_ASSISTANT_ON: FeaturesResponse = { ...FEATURES_ON, assista
 
 /** 學習助手與拍照都打開（AI_ASSISTANT_PHOTO=on；WP-A3）。 */
 export const FEATURES_ASSISTANT_PHOTO_ON: FeaturesResponse = { ...FEATURES_ASSISTANT_ON, assistantPhoto: true };
+
+/** 學習助手的國文也打開（AI_ASSISTANT_SUBJECTS=on；docs/design/assistant-subjects.md §7.5）：國文拍照關著。 */
+export const FEATURES_SUBJECTS_ON: FeaturesResponse = { ...FEATURES_ASSISTANT_ON, assistantSubjects: [{ subject: 'chinese', photo: false }] };
+
+/** 國文與國文拍照都打開（AI_ASSISTANT_PHOTO、AI_ASSISTANT_SUBJECTS_PHOTO 都是 on）。 */
+export const FEATURES_SUBJECTS_PHOTO_ON: FeaturesResponse = { ...FEATURES_ASSISTANT_PHOTO_ON, assistantSubjects: [{ subject: 'chinese', photo: true }] };
 
 /** 作文範文打開（AI_ESSAY_EXEMPLARS=on；docs/design/model-essays.md §7.5）。 */
 export const FEATURES_EXEMPLARS_ON: FeaturesResponse = { ...FEATURES_ON, essayExemplars: true };
@@ -326,7 +344,32 @@ export interface FakeAssistOptions {
   keys?: Record<string, string>;
   /** 拍照轉錄的結果（WP-A3）：預設 FAKE_OCR；'not_english' 時退還 invalid_output、案例回到 draft。 */
   ocr?: AssistOcrView | 'not_english';
+  /** 國文解析時判定是別科（docs/design/assistant-subjects.md §2.5）：退還 invalid_output，turn 帶 detected_subject。 */
+  zhMismatch?: AssistDetectedSubject;
+  /** 國文單選的解析多一個「可能是多選題」提醒（multi_suspect；§5.3）。 */
+  zhMultiSuspect?: boolean;
+  /** 國文的拍照轉錄：預設 FAKE_ZH_OCR；'other_subject' 時退還、刪照片、turn 帶 detected_subject: english（§6.5）。 */
+  zhOcr?: AssistOcrView | 'other_subject';
 }
+
+/** 假的國文拍照轉錄（本站自寫的字形題）：一題四個選項，另有一段被隱藏的答案與詳解。 */
+export const FAKE_ZH_OCR: AssistOcrView = {
+  status: 'ok',
+  blocks: [
+    { kind: 'question', label: '1', text: '下列文句，何者完全沒有錯別字？', unclear: [], hidden: null },
+    {
+      kind: 'options',
+      label: '1',
+      text: '(A) 這家店裝潢普通，價格卻不斐\n(B) 他做事總是按步就班，從不馬虎\n(C) 兩人素昧平生，卻一見如故\n(D) 放假前夕，大家迫不急待地收拾行李',
+      unclear: [],
+      hidden: null,
+    },
+    { kind: 'passage', label: null, text: '這段像答案或詳解，已隱藏。', unclear: [], hidden: 'answer_section' },
+  ],
+  student_answer_seen: '',
+  omitted: ['answer_key'],
+  notices: [],
+};
 
 /**
  * 假的拍照轉錄（本站為測試自己寫的句子）：說明、文章、兩題；第 15 題的題幹有一處看不清（候選 children／chicken），
@@ -366,7 +409,95 @@ function analyzePoints(kind: AssistCaseKind, items: number): number {
 
 function summaryOf(c: AssistCaseDetail): AssistCaseSummary {
   const { id, source, kind, title, section, status, verdict, item_count, wrong_count, understood, error_codes, skill_codes, followups, created_at, updated_at, expires_at } = c;
-  return { id, source, kind, title, section, status, verdict, item_count, wrong_count, understood, error_codes, skill_codes, followups, created_at, updated_at, expires_at };
+  const base = { id, source, kind, title, section, status, verdict, item_count, wrong_count, understood, error_codes, skill_codes, followups, created_at, updated_at, expires_at };
+  return c.subject ? { ...base, subject: c.subject } : base;
+}
+
+/** 國文解析的結算（docs/design/assistant-subjects.md §7.3）：題型、判定、答錯題數、錯因。 */
+function zhSettle(c: AssistCaseDetail, analysis: ZhAnalysisView): void {
+  c.section = analysis.section;
+  if (analysis.kind === 'zh_choice') {
+    const verdicts = analysis.items.map((i) => i.verdict);
+    c.verdict = verdicts.includes('wrong') ? 'wrong' : verdicts.includes('unanswered') ? 'unanswered' : verdicts.every((v) => v === 'correct') ? 'correct' : 'unknown';
+    c.wrong_count = verdicts.filter((v) => v === 'wrong').length;
+    c.error_codes = [...new Set(analysis.items.flatMap((i) => i.diagnosis.error_codes))];
+  } else if (analysis.kind === 'zh_short') {
+    const verdicts = analysis.parts.map((p) => p.verdict);
+    c.verdict = verdicts.includes('wrong') ? 'wrong' : verdicts.includes('partial') ? 'partial' : verdicts.every((v) => v === 'correct') ? 'correct' : 'unanswered';
+    c.wrong_count = verdicts.filter((v) => v === 'wrong' || v === 'partial').length;
+    c.error_codes = c.verdict === 'partial' ? ['zh_partial'] : [];
+  } else {
+    c.verdict = 'unknown';
+    c.wrong_count = 0;
+  }
+}
+
+/** 國文的假解析：依格式、子模式與題目文字挑範例 A–F（docs/design/assistant-subjects.md §1.8）。 */
+function zhAnalysisOf(c: AssistCaseDetail, multiSuspect: boolean): ZhAnalysisView {
+  const first = c.question?.targets[0];
+  const label = first?.label ?? '1';
+  const answer = typeof first?.student_answer === 'string' && first.student_answer !== '' ? first.student_answer : null;
+  if (c.kind === 'zh_short') return zhShortAnalysis({ label, studentAnswer: answer });
+  if (c.kind === 'zh_writing') return zhWritingAnalysis({ draft: c.question?.draft?.text ?? null });
+  const text = (c.question?.blocks ?? []).map((b) => b.text).join('\n');
+  const mode = first?.choice_mode;
+  if (mode === 'judge') return zhJudgeAnalysis({ label, studentAnswer: answer });
+  if (mode === 'multi') return zhWordAnalysis({ label, studentAnswer: answer, key: first?.accepted?.join('') ?? null });
+  if (/錯別字/.test(text)) return zhFormAnalysis({ label, studentAnswer: answer, multiSuspect });
+  return zhClassicalAnalysis({ label, studentAnswer: answer });
+}
+
+/** 國文題目的題號清單（簡答展開成小題；沒有題號時是「1」）。 */
+function zhTargetsOf(question: UpdateAssistQuestionBody['question'], kind: AssistCaseKind): AssistQuestionTarget[] {
+  const labels =
+    kind === 'zh_short'
+      ? zhShortPartLabels(question.blocks, question.target_labels).map((l) => (l === '' ? '1' : l))
+      : question.target_labels.length > 0
+        ? question.target_labels
+        : [question.blocks.find((b) => b.label)?.label ?? '1'];
+  const single = labels.length === 1;
+  return labels.map((label) => {
+    const answer = question.answers?.[label] ?? (single ? (Object.values(question.answers ?? {})[0] ?? null) : null);
+    const key = question.known_key?.[label] ?? (single ? (Object.values(question.known_key ?? {})[0] ?? null) : null);
+    return {
+      label,
+      display_label: label,
+      mode: 'unknown',
+      stem: null,
+      options: null,
+      accepted: key ? [...key] : null,
+      student_answer: answer,
+      verdict: 'unknown',
+      verdict_basis: 'none',
+      explanation: null,
+      stats: null,
+      tags: null,
+      ...(question.choice_mode ? { choice_mode: question.choice_mode } : {}),
+      ...(key ? { key_source: 'student' as const } : {}),
+    };
+  });
+}
+
+/** 國文題目的畫面形狀（學生提供的區塊、題號、科目、國寫片段）。 */
+function zhQuestionView(question: UpdateAssistQuestionBody['question'], kind: AssistCaseKind, origin: string): AssistQuestionView {
+  return {
+    kind,
+    trust: 'student',
+    origin_label: origin,
+    section: null,
+    instructions: null,
+    passage: null,
+    figure_text: null,
+    targets: zhTargetsOf(question, kind),
+    siblings: [],
+    shared_options: null,
+    group_answers: null,
+    elimination: null,
+    tier: null,
+    blocks: question.blocks,
+    subject: 'chinese',
+    ...(question.draft ? { draft: { text: question.draft, target: question.draft_target ?? 'q2' } } : {}),
+  };
 }
 
 /**
@@ -392,8 +523,16 @@ export class FakeAssist {
     private readonly options: FakeAssistOptions = {},
   ) {
     this.handlers = {
-      'GET /api/assist/cases': () =>
-        ok({ cases: [...this.cases.values()].reverse().map(summaryOf), next_cursor: null, error_counts: {} } satisfies AssistCaseListResponse),
+      // ?subject= 只列那一科、錯因次數也只算那一科；不帶時列全部，但錯因次數只算英文（docs/design/assistant-subjects.md §7.2）。
+      'GET /api/assist/cases': (call) => {
+        const subject = call.query.get('subject');
+        const all = [...this.cases.values()].reverse();
+        const cases = subject ? all.filter((c) => (c.subject ?? 'english') === subject) : all;
+        const counted = all.filter((c) => (c.subject ?? 'english') === (subject ?? 'english'));
+        const error_counts: Record<string, number> = {};
+        for (const c of counted) for (const code of c.error_codes) error_counts[code] = (error_counts[code] ?? 0) + 1;
+        return ok({ cases: cases.map(summaryOf), next_cursor: null, error_counts } satisfies AssistCaseListResponse);
+      },
       'POST /api/assist/cases': (call) => this.create(call.json as CreateAssistCaseBody),
       'GET /api/assist/cases/:id': (call) =>
         this.withCase(call, (c) => {
@@ -406,6 +545,8 @@ export class FakeAssist {
           if (body.understood !== undefined) c.understood = body.understood;
           if (body.rating !== undefined) c.rating = body.rating;
           if (body.note !== undefined) c.note = body.note;
+          // 國文已解析的單選改成多選（0 點；畫面依已存的判定重算）。
+          if (body.choice_mode !== undefined && c.question) c.question.targets = c.question.targets.map((t) => ({ ...t, choice_mode: body.choice_mode }));
           c.updated_at = nowSec();
           return ok(c);
         }),
@@ -476,7 +617,14 @@ export class FakeAssist {
 
     const now = nowSec();
     const id = this.nextId('case');
-    const kind: AssistCaseKind = src.source === 'writing' ? 'writing' : src.source === 'vocab' ? 'vocab' : 'item';
+    const zh = (src.source === 'typed' || src.source === 'photo') && src.subject === 'chinese';
+    const kind: AssistCaseKind = zh
+      ? assistCaseKindOf(src.source, 'chinese', src.source === 'typed' ? src.question.format : null)
+      : src.source === 'writing'
+        ? 'writing'
+        : src.source === 'vocab'
+          ? 'vocab'
+          : 'item';
     let section: AssistSection | null = null;
     let title = '學習助手的題目';
     let targets: AssistQuestionTarget[] = [];
@@ -520,6 +668,10 @@ export class FakeAssist {
         elimination: null,
         tier: null,
       };
+    } else if (src.source === 'typed' && zh) {
+      question = zhQuestionView(src.question, kind, '你貼的題目');
+      targets = question.targets;
+      title = `國文・你貼的題目：${(src.question.blocks.find((b) => b.kind === 'question')?.text ?? src.question.blocks[0]?.text ?? '').replace(/\s+/g, ' ').slice(0, 30)}`;
     } else if (src.source === 'typed') {
       const block = src.question.blocks[0];
       const label = src.question.target_labels[0] ?? block?.label ?? '1';
@@ -567,7 +719,7 @@ export class FakeAssist {
       title,
       section,
       status: src.source === 'photo' ? 'draft' : 'ready',
-      verdict: verdicts.includes('wrong') ? 'wrong' : verdicts.length > 0 && verdicts.every((v) => v === 'correct') ? 'correct' : verdicts.length > 0 ? 'unknown' : null,
+      verdict: zh ? null : verdicts.includes('wrong') ? 'wrong' : verdicts.length > 0 && verdicts.every((v) => v === 'correct') ? 'correct' : verdicts.length > 0 ? 'unknown' : null,
       item_count: Math.max(1, targets.length),
       wrong_count: verdicts.filter((v) => v === 'wrong').length,
       understood: null,
@@ -589,6 +741,7 @@ export class FakeAssist {
       pending: null,
       history_line: null,
       flags: { d8_hidden: false, injection: false, safety: null },
+      ...(zh ? { subject: 'chinese' as const } : {}),
     };
     this.cases.set(id, detail);
     if (dedupe) this.bySource.set(dedupe, id);
@@ -607,7 +760,8 @@ export class FakeAssist {
     c.pending = { turn_id: turn.id, kind: 'analyze', op_id: opId, status: 'queued' };
     c.status = 'analyzing';
     this.pendingLeft.set(c.id, this.options.pendingPolls ?? 1);
-    return ok({ op_id: opId, case_id: c.id, turn_id: turn.id, status: 'queued', points: analyzePoints(c.kind, c.item_count) } satisfies AssistTaskAccepted, 202);
+    const points = c.subject === 'chinese' ? assistPoints('chinese', 'assist_analyze', { kind: c.kind, items: c.item_count }) : analyzePoints(c.kind, c.item_count);
+    return ok({ op_id: opId, case_id: c.id, turn_id: turn.id, status: 'queued', points } satisfies AssistTaskAccepted, 202);
   }
 
   /** 轉錄（2 點）：要有照片、狀態 draft；排入佇列，輪詢幾次之後完成（或退還）。 */
@@ -620,11 +774,25 @@ export class FakeAssist {
     c.pending = { turn_id: turn.id, kind: 'ocr', op_id: opId, status: 'queued' };
     c.status = 'ocr_queued';
     this.pendingLeft.set(c.id, this.options.pendingPolls ?? 1);
-    return ok({ op_id: opId, case_id: c.id, turn_id: turn.id, status: 'queued', points: 2 } satisfies AssistTaskAccepted, 202);
+    const photos = (this.photos.get(c.id) ?? []).length === 2 ? 2 : 1;
+    const points = c.subject === 'chinese' ? assistPoints('chinese', 'assist_ocr', { photos }) : 2;
+    return ok({ op_id: opId, case_id: c.id, turn_id: turn.id, status: 'queued', points } satisfies AssistTaskAccepted, 202);
   }
 
   /** 確認轉錄：題目換成學生確認的區塊（非目標區塊的 [[?]] 換成 [unclear]），轉錄只留統計。 */
   private confirmPhoto(c: AssistCaseDetail, body: UpdateAssistQuestionBody): void {
+    if (c.subject === 'chinese') {
+      // 國文：格式決定 kind（確認時可以改），題號、作答、答案鍵照送來的。
+      c.kind = assistCaseKindOf('photo', 'chinese', body.question.format);
+      c.question = zhQuestionView(body.question, c.kind, '你拍的題目');
+      c.item_count = Math.max(1, c.question.targets.length);
+      c.title = `國文・你拍的題目：${(body.question.blocks.find((b) => b.kind === 'question')?.text ?? '').slice(0, 30)}`;
+      for (const t of c.turns) {
+        if (t.kind === 'ocr' && t.ocr && t.ocr.blocks.length > 0) t.ocr = { ...t.ocr, blocks: [], student_answer_seen: '', notices: [], stats: { blocks: t.ocr.blocks.length, unresolved: 0, edited: 0, unclear_kept: 0 } };
+      }
+      this.photos.delete(c.id);
+      return;
+    }
     const blocks = body.question.blocks.map((b) => ({ ...b, text: b.text.split('[[?]]').join('[unclear]') }));
     const labels = body.question.target_labels.length > 0 ? body.question.target_labels : [blocks.find((b) => b.label)?.label ?? ''];
     const targets: AssistQuestionTarget[] = labels.map((label) => ({
@@ -705,7 +873,36 @@ export class FakeAssist {
 
   private finish(c: AssistCaseDetail, turn: AssistTurnView, cacheHit: boolean): void {
     turn.status = 'done';
-    if (turn.kind === 'ocr') {
+    if (turn.kind === 'ocr' && c.subject === 'chinese') {
+      const result = this.options.zhOcr ?? FAKE_ZH_OCR;
+      if (result === 'other_subject') {
+        // 不是國文題目：照英文的規則退還、刪照片、案例回到 draft，turn 帶模型判斷的科目（§6.5）。
+        turn.status = 'failed';
+        turn.failure = 'invalid_output';
+        turn.detected_subject = 'english';
+        c.status = 'draft';
+      } else {
+        turn.ocr = result;
+        c.status = 'ocr_ready';
+      }
+      this.photos.delete(c.id);
+    } else if (turn.kind === 'analyze' && c.subject === 'chinese') {
+      if (this.options.zhMismatch) {
+        // 解析時判定是別科：以 invalid_output 退還（§2.5）。
+        turn.status = 'failed';
+        turn.failure = 'invalid_output';
+        turn.detected_subject = this.options.zhMismatch;
+        c.status = 'failed';
+      } else {
+        const analysis = zhAnalysisOf(c, this.options.zhMultiSuspect === true);
+        turn.analysis = analysis;
+        c.status = 'analyzed';
+        zhSettle(c, analysis);
+      }
+    } else if (turn.kind === 'followup' && c.subject === 'chinese') {
+      turn.reply = zhFollowupReply(turn.mode ?? 'explain');
+      c.followups += 1;
+    } else if (turn.kind === 'ocr') {
       const result = this.options.ocr ?? FAKE_OCR;
       if (result === 'not_english') {
         // 看不出是英文題目：退還 invalid_output、照片刪掉、案例回到 draft（要重拍）。
@@ -743,7 +940,8 @@ function itemAnalysis(c: AssistCaseDetail, cacheHit: boolean): AssistAnalysisVie
   const mine = typeof first?.student_answer === 'string' ? first.student_answer : null;
   return {
     kind: 'item',
-    section: c.section,
+    // 英文案例的 section 一定是英文的大題（國文的題型只出現在國文案例）。
+    section: isZhSection(c.section) ? null : c.section,
     skill_codes: [],
     tested_zh: group ? '依上下文判斷每一格需要的詞性與語意，再用排除法縮小範圍。' : '依上下文判斷作者的意思。',
     structure_zh: group ? '第一段介紹雨傘的起源，第二段說明材質的演變；這兩格的線索都在前後句。' : '',

@@ -193,6 +193,37 @@
 }
 
 /*
+ * 學習助手國文的排版（docs/design/assistant-subjects.md §8.3）：只有國文的元件用到這幾個類別，英文頁面完全不變。
+ *   - .zh-classical：文言與詩詞的原文用系統襯線字（不下載字型，沒有就退回系統預設），行距與字距放寬；白話維持無襯線。
+ *   - .zh-underline／.zh-wavy：題目的底線標記 ⟦…⟧、⟦~…~⟧（ZhText 轉成 <u>）。
+ *   - .zh-bopomofo：注音不換行；長引文與注音另外允許任意斷行，不出現水平捲軸。
+ */
+.zh-classical {
+  font-family: 'Noto Serif TC', 'Source Han Serif TC', 'Songti TC', 'PMingLiU', serif;
+  line-height: 1.9;
+  letter-spacing: 0.02em;
+}
+
+.zh-underline {
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+.zh-wavy {
+  text-decoration-style: wavy;
+}
+
+.zh-bopomofo {
+  white-space: nowrap;
+}
+
+.zh-quote {
+  overflow-wrap: anywhere;
+  quotes: '「' '」' '『' '』';
+}
+
+/*
  * 學習報告的列印／存成 PDF（docs/design/learning-assistant.md §3.5）：只在報告頁生效（頁面上有 [data-report-print]），
  * 其他頁的列印完全不變。
  *   - 一律印成淺色（深色模式的變數在 :root:not([data-theme='light']) 與 [data-theme='dark']，這裡用 :root:root 蓋過）。
