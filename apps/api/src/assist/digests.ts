@@ -11,6 +11,8 @@
  * 寫作批改的彙整（§3.1「D1：寫作批改」）在 loadWritingStats：最近 10 份已批改的提交的分數、錯誤類別、作文四項；
  * 自訂題（custom:essay@1）不算進分數平均（0003 註解、審查 S18），錯誤類別照算。
  * 每一句 SQL 都帶 user_id。
+ * 學習報告第一版只涵蓋英文（docs/design/assistant-subjects.md §7.4）：案例彙整只取英文的案例（ref_json 沒有 subject 就是英文，
+ * repo.ts 的 CASE_SUBJECT_SQL）；報告的提示、facts、計畫與 schema 一個字都不改。
  */
 import {
   ASSIST_LIMITS,
@@ -28,7 +30,7 @@ import { detectInjection } from '../ai/filter';
 import { combineGradingRows, loadGradingRows, parseJson } from '../submissions/repo';
 import type { CaseStats, WritingStats } from './facts';
 import { WRITING_BANK_KEY_PATTERN } from './siteData';
-import { codeList } from './repo';
+import { CASE_SUBJECT_SQL, codeList } from './repo';
 
 /** 一個代表案例（提示裡的一行；存進報告的 input_json）。 */
 export interface CaseDigest {
@@ -118,7 +120,7 @@ export async function loadCaseDigests(db: D1Database, userId: number, now: numbe
   const res = await db
     .prepare(
       `SELECT id, source, title, section, verdict, understood, errors_json, skills_json, updated_at FROM assist_cases
-        WHERE user_id = ?1 AND expires_at > ?2 AND status IN ('analyzed', 'ready', 'failed', 'analyzing')
+        WHERE user_id = ?1 AND expires_at > ?2 AND status IN ('analyzed', 'ready', 'failed', 'analyzing') AND ${CASE_SUBJECT_SQL} = 'english'
         ORDER BY updated_at DESC, id DESC LIMIT ?3`,
     )
     .bind(userId, now, CASES_SCAN_MAX)

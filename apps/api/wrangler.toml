@@ -107,6 +107,16 @@ AI_CUSTOM_ESSAY = "on"
 # 不要在 Cloudflare 儀表板改成 Text 變數：下一次部署會被這裡的 [vars] 蓋回來。
 AI_ASSISTANT = "on"
 AI_ASSISTANT_PHOTO = "on"
+# 學習助手英文以外的科目（docs/design/assistant-subjects.md §7.5；第一版只有國文）：只認 "on"、"admin"，其他任何值都當成關（fail closed）。
+#   AI_ASSISTANT_SUBJECTS        國文的貼上、解析、追問（另外要 AI_ASSISTANT 對這位使用者開放）
+#   AI_ASSISTANT_SUBJECTS_PHOTO  國文的拍照（另外要 AI_ASSISTANT_PHOTO 與 AI_ASSISTANT_SUBJECTS 都對這位使用者開放）
+# 合併時兩個都是 "off"：國文真模型評測（.github/workflows/assistant-subjects-eval.yml）達標的那個 PR 把 AI_ASSISTANT_SUBJECTS 改成 "on"，
+#   AI_ASSISTANT_SUBJECTS_PHOTO 依照片組（J 組）的結果改成 "on" 或維持 "off"。國文不需要任何新的 secret。
+# 緊急關閉：國文整個關＝AI_ASSISTANT_SUBJECTS 改成 "off"（已有的國文案例照常可以看、評分、刪除；已經排隊的照常完成）；
+#   只關國文拍照＝AI_ASSISTANT_SUBJECTS_PHOTO 改成 "off"（不影響英文拍照）；只留給管理員查問題＝改成 "admin"。
+# 這兩行是例外：src/config.ts 的程式預設固定是 off（[vars] 漏設時偏向關），不用跟著改（test/skeleton.test.ts）。
+AI_ASSISTANT_SUBJECTS = "off"
+AI_ASSISTANT_SUBJECTS_PHOTO = "off"
 # 學習助手的 effort：解析與報告、追問（模型一律用 AI_MODEL_DEFAULT）。
 AI_EFFORT_ASSIST = "medium"
 AI_EFFORT_CHAT = "low"

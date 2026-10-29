@@ -15,6 +15,11 @@
 // （對所有人開放／只有管理員能用／關閉）。規則同學習助手：/api/features 只在 on 時有 essayExemplars，所以只比 on，對不起來時印
 // ::warning::；admin 印 ::notice::（用管理員帳號登入確認，查完改回 on）。off（真模型評測達標、上線之前）只有這一列，沒有提醒。
 //
+// 學習助手英文以外的科目（AI_ASSISTANT_SUBJECTS、AI_ASSISTANT_SUBJECTS_PHOTO：off／admin／on；docs/design/assistant-subjects.md §7.5）
+// 多兩列「學習助手國文」「學習助手國文拍照」，寫出 wrangler.toml 的值。國文要學習助手本身也開放、國文拍照另外要學習助手的拍照：
+// /api/features 只在都是 on 時有 assistantSubjects（[{ subject: 'chinese', photo }]），所以只比 on，對不起來時印 ::warning::；
+// admin 印 ::notice::（只有管理員能用，/api/me 的 assistant_preview.subjects）。off（評測達標、上線之前）只有這兩列，沒有提醒。
+//
 // 只讀公開端點的布林與機密的「名稱」，不印任何機密值。buildDeploySummary 是純函式（apps/api/test/deploy-summary.test.ts 測它）。
 import { appendFileSync, readFileSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
@@ -75,14 +80,33 @@ export function exemplarsMode(value) {
   return v === 'on' || v === 'admin' ? v : 'off';
 }
 
+/** apps/api/src/config.ts 的 CONFIG_DEFAULTS.AI_ASSISTANT_SUBJECTS／AI_ASSISTANT_SUBJECTS_PHOTO（兩個都是 off；test/deploy-summary.test.ts 比對兩邊）。 */
+export const SUBJECTS_DEFAULT = 'off';
+
+/** wrangler.toml 的 AI_ASSISTANT_SUBJECTS、AI_ASSISTANT_SUBJECTS_PHOTO：各自回傳設定的字串；沒有那一行回 null（Worker 用預設值 off）。 */
+export function subjectsVarsFrom(wranglerToml) {
+  const read = (name) => {
+    const m = new RegExp(`^[ \\t]*${name}[ \\t]*=[ \\t]*"([^"]*)"`, 'm').exec(wranglerToml);
+    return m ? m[1] : null;
+  };
+  return { subjects: read('AI_ASSISTANT_SUBJECTS'), photo: read('AI_ASSISTANT_SUBJECTS_PHOTO') };
+}
+
+/** 和 apps/api/src/config.ts 的 featureModeSwitch 同一條規則（同 assistantMode）；沒設定或空白用預設值（off）。 */
+export function subjectsMode(value) {
+  const v = value === null || value === undefined || value.trim() === '' ? SUBJECTS_DEFAULT : value.trim().toLowerCase();
+  return v === 'on' || v === 'admin' ? v : 'off';
+}
+
 const MODE_LABELS = { on: '對所有人開放', admin: '只有管理員能用', off: '關閉' };
 
 /**
  * @param {{
- *   features: { auth?: boolean, ai?: boolean, ocr?: boolean, aiPaused?: boolean, customEssay?: boolean, assistant?: boolean, assistantPhoto?: boolean, essayExemplars?: boolean },
+ *   features: { auth?: boolean, ai?: boolean, ocr?: boolean, aiPaused?: boolean, customEssay?: boolean, assistant?: boolean, assistantPhoto?: boolean, essayExemplars?: boolean,
+ *     assistantSubjects?: Array<{ subject: string, photo: boolean }> },
  *   secretNames: string[], proxy: string, vercelTarget: string, appUrl: string, workerUrl: string, workerName: string,
  *   subdomain: string, customEssayVar: string | null, assistantVar?: string | null, assistantPhotoVar?: string | null,
- *   exemplarsVar?: string | null,
+ *   exemplarsVar?: string | null, subjectsVar?: string | null, subjectsPhotoVar?: string | null,
  * }} input
  */
 export function buildDeploySummary(input) {
@@ -120,6 +144,19 @@ export function buildDeploySummary(input) {
   const exemplarsOn = f.essayExemplars === true;
   const expExemplarsOn = f.ai === true && modeE === 'on';
   const exemplarsVarLabel = `AI_ESSAY_EXEMPLARS：${exemplarsVar === null ? `沒有設定，預設 ${EXEMPLARS_DEFAULT}` : JSON.stringify(exemplarsVar)}`;
+  // 學習助手國文：要學習助手本身開放；國文拍照另外要學習助手的拍照與國文拍照（admin 模式時只有管理員能用）。
+  const subjectsVar = input.subjectsVar ?? null;
+  const subjectsPhotoVar = input.subjectsPhotoVar ?? null;
+  const modeS = subjectsMode(subjectsVar);
+  const subjectsPhotoRaw = subjectsMode(subjectsPhotoVar);
+  const modeZh = modeA === 'off' || modeS === 'off' ? 'off' : modeA === 'on' && modeS === 'on' ? 'on' : 'admin';
+  const modeZhP = modeZh === 'off' || modeP === 'off' || subjectsPhotoRaw === 'off' ? 'off' : modeZh === 'on' && modeP === 'on' && subjectsPhotoRaw === 'on' ? 'on' : 'admin';
+  const zhList = Array.isArray(f.assistantSubjects) ? f.assistantSubjects : [];
+  const zhOn = zhList.some((x) => x && x.subject === 'chinese');
+  const zhPhotoOn = zhList.some((x) => x && x.subject === 'chinese' && x.photo === true);
+  const expZhOn = f.ai === true && modeZh === 'on';
+  const expZhPhotoOn = expZhOn && modeZhP === 'on';
+  const subjectsVarLabel = (name, value) => `${name}：${value === null ? `沒有設定，預設 ${SUBJECTS_DEFAULT}` : JSON.stringify(value)}`;
 
   const rows = [
     ['Worker 網址', input.workerUrl],
@@ -131,6 +168,8 @@ export function buildDeploySummary(input) {
     ['學習助手（assistant）', `${modeState(assistantOn, modeA)}（wrangler.toml 的 ${modeVarLabel('AI_ASSISTANT', assistantVar)}）`],
     ['學習助手拍照（assistantPhoto）', `${modeState(assistantPhotoOn, modeP)}（wrangler.toml 的 ${modeVarLabel('AI_ASSISTANT_PHOTO', assistantPhotoVar)}）`],
     ['作文範文（essayExemplars）', `${MODE_LABELS[modeE]}（wrangler.toml 的 ${exemplarsVarLabel}）`],
+    ['學習助手國文（assistantSubjects）', `${MODE_LABELS[modeZh]}（wrangler.toml 的 ${subjectsVarLabel('AI_ASSISTANT_SUBJECTS', subjectsVar)}）`],
+    ['學習助手國文拍照（assistantSubjects.photo）', `${MODE_LABELS[modeZhP]}（wrangler.toml 的 ${subjectsVarLabel('AI_ASSISTANT_SUBJECTS_PHOTO', subjectsPhotoVar)}）`],
     ['AI 全站暫停（aiPaused）', f.aiPaused ? '是' : '否'],
     ['Worker 上的機密（只列名稱）', [...names].join('、') || '（沒有）'],
     [`經 Vercel 代理的 ${input.appUrl}/api/health`, proxyOk ? '已接上' : '還沒接上'],
@@ -160,6 +199,11 @@ export function buildDeploySummary(input) {
       `作文範文（essayExemplars）是「${onOff(exemplarsOn)}」，和 wrangler.toml 的 ${exemplarsVarLabel} 對不起來：新版本可能還沒傳到所有節點，幾分鐘後再打開 ${input.workerUrl}/api/features 確認（只有 "on" 會出現在 /api/features）；確認之前不要解除全站暫停。`,
     );
   }
+  if (f.ai && (zhOn !== expZhOn || zhPhotoOn !== expZhPhotoOn)) {
+    warnings.push(
+      `學習助手國文（assistantSubjects）是「${onOff(zhOn)}／拍照${onOff(zhPhotoOn)}」，和 wrangler.toml 的 ${subjectsVarLabel('AI_ASSISTANT_SUBJECTS', subjectsVar)}、${subjectsVarLabel('AI_ASSISTANT_SUBJECTS_PHOTO', subjectsPhotoVar)} 對不起來：新版本可能還沒傳到所有節點，幾分鐘後再打開 ${input.workerUrl}/api/features 確認（只有都是 "on" 才會出現在 /api/features）；確認之前不要解除全站暫停。`,
+    );
+  }
   const notices = [];
   if (f.ai && !customOn) {
     notices.push(
@@ -179,6 +223,13 @@ export function buildDeploySummary(input) {
     notices.push(
       '作文範文是「只有管理員能用」：admin 模式只有管理員登入後看得到（/api/me 的 exemplars_preview），/api/features 不會出現；學生暫時用不到，通常是緊急時只留給管理員查問題。' +
         `用 ADMIN_EMAIL 的帳號登入後打開 ${input.appUrl}/api/me，應該有 exemplars_preview；查完要對所有學生開放，把 apps/api/wrangler.toml 的 AI_ESSAY_EXEMPLARS 改回 "on"；要完全關閉就改成 "off"。`,
+    );
+  }
+
+  if (f.ai && (modeZh === 'admin' || modeZhP === 'admin')) {
+    notices.push(
+      `學習助手國文是「${MODE_LABELS[modeZh]}」、國文拍照是「${MODE_LABELS[modeZhP]}」：admin 模式只有管理員登入後看得到（/api/me 的 assistant_preview.subjects），/api/features 不會出現；學生暫時用不到國文。` +
+        `用 ADMIN_EMAIL 的帳號登入後打開 ${input.appUrl}/api/me，應該有 assistant_preview.subjects；要對所有學生開放，把 apps/api/wrangler.toml 的 AI_ASSISTANT_SUBJECTS（拍照是 AI_ASSISTANT_SUBJECTS_PHOTO）改成 "on"；要完全關閉就改成 "off"。`,
     );
   }
 
@@ -202,6 +253,7 @@ function main() {
   const env = process.env;
   const toml = readFileSync(env.WRANGLER_TOML || 'apps/api/wrangler.toml', 'utf8');
   const assistantVars = assistantVarsFrom(toml);
+  const subjectsVars = subjectsVarsFrom(toml);
   const s = buildDeploySummary({
     features: JSON.parse(env.FEATURES || '{}'),
     secretNames: (env.SECRET_NAMES || '').split(/\s+/).filter(Boolean),
@@ -215,6 +267,8 @@ function main() {
     assistantVar: assistantVars.assistant,
     assistantPhotoVar: assistantVars.photo,
     exemplarsVar: exemplarsVarFrom(toml),
+    subjectsVar: subjectsVars.subjects,
+    subjectsPhotoVar: subjectsVars.photo,
   });
   for (const [k, v] of s.rows) console.log(`${k}：${v}`);
   for (const w of s.warnings) console.log(`::warning::${w}`);

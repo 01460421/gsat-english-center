@@ -27,20 +27,34 @@
  *
  * 出版社題（docs/design/weak-paper.md §9.6，publisher.ts）：授權已經結束的案例，列表帶 source_ended、詳情遮住題目與解析，
  * 解析與追問回 assist_source_unavailable（不扣點）。
+ *
+ * 科目（docs/design/assistant-subjects.md §2.3、§7）：拍照、貼上的建立案例多收 subject（白名單，沒帶＝英文；寫進 ref_json，
+ * 英文的 ref_json 和以前一樣不寫）與國文的 related_case_id（「同一份題目問另一部分」：同一位使用者、同一科、已確認題目）。
+ * 國文的寫入端點（建立、確認、解析、追問、照片、轉錄）另外檢查：AI_ASSISTANT_SUBJECTS 對這位使用者開放（拍照另外要
+ * AI_ASSISTANT_SUBJECTS_PHOTO），否則 503 not_configured（同現行慣例，不透露預覽）；國文的 D8 指紋讀不到也是 503。兩者都在預扣之前。
+ * 題數一律用 assistItemCount；解析的 turn 在 meta_json 存 {subject, kind, items}，consumer 用同一組算任務設定。
+ * 列表多收 ?subject=，每列帶 subject；不帶 subject 時列表是全部科目，但 error_counts 只算英文（加強卷不吃國文案例，§7.3）。
+ * PATCH 多收 choice_mode（國文已解析的單選改多選，0 點）。讀、評分、刪除只要登入：國文關閉時已有的國文案例照樣可以看與刪。
  */
 import {
   AI_ERROR_MESSAGES,
   ASSIST_LIMITS,
   ASSIST_SECTIONS,
+  assistGroupVerdict,
+  assistItemCount,
   checkAssistText,
+  isAssistSubject,
+  isZhSection,
   type AssistAnalysisView,
   type AssistInputProblem,
   type AssistQuestionView,
+  type AssistSubject,
   type AssistTaskAccepted,
   type AssistTurnKind,
   type AssistVocabView,
   type AssistWritingView,
   type PhotoUploadResponse,
+  type ZhAnalysisView,
 } from '@gsat/shared';
 import { Hono, type Context } from 'hono';
 import { readJsonBody } from '../account/validate';
@@ -55,7 +69,7 @@ import { requireUser, type SessionUser } from '../auth/session';
 import type { AppConfig } from '../config';
 import type { AppEnv } from '../env';
 import { ApiError } from '../errors';
-import { assistantAccess } from '../features';
+import { assistantSubjectAccess } from '../features';
 import { photoOrd, readPhotoFile } from '../submissions/photoUpload';
 import { parseJson } from '../submissions/repo';
 import { nowSeconds } from '../time';
@@ -65,11 +79,13 @@ import { deleteCasePhotos, listCasePhotos, storeCasePhoto } from './photos';
 import { assertCaseAssistable, endedPublisherCaseIds, withPublisherMask } from './publisher';
 import { refundWithAssistRef } from './refund';
 import {
+  caseSubject,
   codeList,
   decodeCursor,
   encodeCursor,
   errorCounts,
   expiresFrom,
+  findCase,
   listCases,
   requireCase,
   taiwanDayStart,
@@ -78,7 +94,12 @@ import {
   CASE_PAGE_SIZE,
   type CaseRow,
 } from './repo';
-import { analyzeCallInput, isCacheable, requestCaseOf } from './requests';
+import { analyzeCallInput, requestCaseOf } from './requests';
+import { requireZhFingerprints, type ZhFingerprints } from './subjects/chinese/d8';
+import { zhContainsHiddenPlaceholder } from './subjects/chinese/ocr';
+import { checkZhText, zhPhotoCase, zhQuestionTitle, zhStudentQuestion, zhTypedCase } from './subjects/chinese/question';
+import { zhChoiceItemVerdict } from './subjects/chinese/settle';
+import { workerSubject } from './subjects/index';
 import { ASSIST_BODY_MAX, analyzeSchema, createCaseSchema, followupSchema, patchCaseSchema, updateQuestionSchema } from './schemas';
 import { buildCase, problemMessage, studentQuestion, studentQuestionTitle, type BuiltCase } from './sources';
 import { sessionUser, writeGate } from './gate';
@@ -105,12 +126,45 @@ function textProblem(problem: { code: AssistInputProblem; start?: number; end?: 
   });
 }
 
-/** 選填的學生文字（疑問、筆記）：null 或空白＝沒填；其他依 checkAssistText（正規化、遮個資、長度、字元與標籤）。 */
-function optionalStudentText(raw: string | null | undefined, max: number, field: string): { text: string | null; masked: boolean } {
+/**
+ * 選填的學生文字（疑問、筆記）：null 或空白＝沒填；其他依 checkAssistText（正規化、遮個資、長度、字元與標籤）。
+ * 國文的案例改用 checkZhText（國文路徑的正規化不用 NFKC；docs/design/assistant-subjects.md §4.1）。
+ */
+function optionalStudentText(raw: string | null | undefined, max: number, field: string, subject: AssistSubject = 'english'): { text: string | null; masked: boolean } {
   if (raw === undefined || raw === null || raw.trim() === '') return { text: null, masked: false };
-  const r = checkAssistText(raw, max);
+  const r = subject === 'chinese' ? checkZhText(raw, max) : checkAssistText(raw, max);
   if (!r.ok) throw textProblem(r.problems[0]!, field);
   return { text: r.value, masked: r.warnings.some((w) => w.code === 'personal_masked') };
+}
+
+/** 503 not_configured（學習助手或這一科對這位使用者沒開：公開端點不透露有預覽）。 */
+function notConfigured(): ApiError {
+  return new ApiError(503, 'not_configured', AI_ERROR_MESSAGES.not_configured);
+}
+
+/**
+ * 建立案例的科目：只有拍照、貼上收前端的 subject（白名單；沒帶＝英文，舊前端照舊）。站內題的科目由 Worker 依題目代號推出
+ * （第一版的站內題都是英文），前端帶了也不採用。
+ */
+function requestedSubject(source: Record<string, unknown>): AssistSubject {
+  if (source['source'] !== 'photo' && source['source'] !== 'typed') return 'english';
+  const raw = source['subject'];
+  if (raw === undefined || raw === null) return 'english';
+  if (!isAssistSubject(raw)) throw new ApiError(400, 'bad_request', '科目不對');
+  return raw;
+}
+
+/**
+ * 英文以外的科目的寫入端點（docs/design/assistant-subjects.md §7.5）：這一科對這位使用者開放（拍照另外要它的拍照開關），
+ * 國文的 D8 指紋讀得到。都在預扣之前；不符合回 503 not_configured。英文回 null（英文照 writeGate 的規則，不另外檢查）。
+ */
+async function subjectGate(db: D1Database, config: AppConfig, user: SessionUser, subject: AssistSubject, opts: { photo?: boolean } = {}): Promise<ZhFingerprints | null> {
+  if (subject === 'english') return null;
+  const access = assistantSubjectAccess(config, user.role, subject);
+  if (!access.enabled || (opts.photo && !access.photo)) throw notConfigured();
+  const zh = await requireZhFingerprints(db);
+  if (!zh) throw notConfigured();
+  return zh;
 }
 
 /** torn_with：要問的題的選項字母，而且不是學生自己的答案；沒勾 torn_between 時忽略。 */
@@ -136,15 +190,29 @@ async function injectionEvent(db: D1Database, codes: readonly string[], ref: str
   }
 }
 
-/** 拒收時另外寫 ops 事件的原因：D8 指紋（官方參考譯文、評分原則）與佳作、範文、評分原則的樣式（§4.16）。 */
-const REJECTION_EVENTS: Readonly<Record<string, string>> = { official_material: 'assist_d8_input', official_like: 'assist_official_like' };
+/**
+ * 拒收時另外寫 ops 事件的原因：D8 指紋（官方參考譯文、評分原則）與佳作、範文、評分原則的樣式（§4.16）；國文的科目不符
+ * （docs/design/assistant-subjects.md §7.7：只記計數、階段與科目，不記題目文字）。
+ */
+const REJECTION_EVENTS: Readonly<Record<string, string>> = {
+  official_material: 'assist_d8_input',
+  official_like: 'assist_official_like',
+  subject_mismatch: 'assist_subject_mismatch',
+};
 
 /**
  * 學生提供的題目或文字被拒收（400 assist_input_invalid）：日誌記 assist_input_rejected {reason}（§4.16）；D8 指紋與佳作樣式
  * 另外寫 ops 事件（只有假名、來源與欄位，沒有學生文字；同一人同一種 1 小時內只寫一筆，不讓重送洗版）。其他錯誤不處理。
  * 失敗只記 log，不改變回應。
  */
-async function inputRejected(db: D1Database, err: unknown, where: 'typed' | 'confirm' | 'site', refOf: () => Promise<string | null>, now: number): Promise<void> {
+async function inputRejected(
+  db: D1Database,
+  err: unknown,
+  where: 'typed' | 'confirm' | 'site',
+  refOf: () => Promise<string | null>,
+  now: number,
+  subject: AssistSubject = 'english',
+): Promise<void> {
   if (!(err instanceof ApiError) || err.code !== 'assist_input_invalid') return;
   const reason = err.detail.reason ?? 'unknown';
   log('assist_input_rejected', { reason, where });
@@ -158,7 +226,20 @@ async function inputRejected(db: D1Database, err: unknown, where: 'typed' | 'con
         `INSERT INTO ops_events (kind, severity, detail_json, created_at) SELECT ?1, 'warn', ?2, ?3
           WHERE NOT EXISTS (SELECT 1 FROM ops_events WHERE kind = ?1 AND created_at > ?3 - 3600 AND json_extract(detail_json, '$.user_ref') = ?4)`,
       )
-      .bind(kind, JSON.stringify({ user_ref: ref, where, field: err.detail.field ?? null, rejected: true }), now, ref)
+      .bind(
+        kind,
+        JSON.stringify({
+          user_ref: ref,
+          where,
+          field: err.detail.field ?? null,
+          rejected: true,
+          // 英文的事件和以前逐字相同；英文以外的科目多帶 subject（科目不符另外帶階段）。
+          ...(subject !== 'english' ? { subject } : {}),
+          ...(kind === 'assist_subject_mismatch' ? { stage: 'input' } : {}),
+        }),
+        now,
+        ref,
+      )
       .run();
   } catch (e) {
     console.error('寫入拒收事件失敗', e);
@@ -173,9 +254,13 @@ assistRoutes.get('/cases', async (c) => {
   const user = await sessionUser(c);
   const now = nowSeconds();
   const section = c.req.query('section') ?? null;
-  if (section !== null && !(ASSIST_SECTIONS as readonly string[]).includes(section)) throw new ApiError(400, 'bad_request', '大題代號不對');
+  if (section !== null && !(ASSIST_SECTIONS as readonly string[]).includes(section) && !isZhSection(section)) throw new ApiError(400, 'bad_request', '大題代號不對');
+  // 科目篩選：不帶＝全部科目（錯因次數只算英文）；帶了就只列那一科、錯因次數也算那一科（docs/design/assistant-subjects.md §7.2、§7.3）。
+  const subjectRaw = c.req.query('subject') ?? null;
+  if (subjectRaw !== null && !isAssistSubject(subjectRaw)) throw new ApiError(400, 'bad_request', '科目不對');
+  const subject = subjectRaw as AssistSubject | null;
   const cursor = decodeCursor(c.req.query('cursor'));
-  const [rows, counts] = await Promise.all([listCases(c.env.DB, user.id, now, { section, cursor }), errorCounts(c.env.DB, user.id, now)]);
+  const [rows, counts] = await Promise.all([listCases(c.env.DB, user.id, now, { section, cursor, subject }), errorCounts(c.env.DB, user.id, now, subject ?? 'english')]);
   const page = rows.slice(0, CASE_PAGE_SIZE);
   const last = page[page.length - 1];
   // 出版社題的授權已經結束的案例帶 source_ended（列表本來就沒有題目文字；docs/design/weak-paper.md §9.6）。
@@ -244,18 +329,33 @@ function questionJsonOf(view: AssistQuestionView | null): string | null {
 assistRoutes.post('/cases', async (c) => {
   const { user, config, fp } = await writeGate(c);
   const body = await readJsonBody(c, createCaseSchema, ASSIST_BODY_MAX.create);
-  // 拍照另外要拍照開關（「貼上文字」照常）。
-  if (body.source.source === 'photo' && !assistantAccess(config, user.role).photo) throw new ApiError(503, 'not_configured', AI_ERROR_MESSAGES.not_configured);
+  const source = body.source as Record<string, unknown> & { source: (typeof body.source)['source'] };
+  const subject = requestedSubject(source);
+  // 拍照另外要拍照開關（「貼上文字」照常）；國文另外要國文的開關（拍照再加國文拍照的開關）與國文指紋。都在建立之前。
+  if (source.source === 'photo' && !assistantSubjectAccess(config, user.role, subject).photo) throw notConfigured();
   const db = c.env.DB;
+  const zh = await subjectGate(db, config, user, subject, { photo: source.source === 'photo' });
   const nowMs = Date.now();
   const now = nowSeconds(nowMs);
+  // 「同一份題目問另一部分」（只有國文的貼上）：前一個案例必須是同一位使用者、同一科、已確認題目。
+  const relatedRaw = source['related_case_id'];
+  let relatedId: string | null = null;
+  if (relatedRaw !== undefined && relatedRaw !== null) {
+    if (subject !== 'chinese' || source.source !== 'typed' || typeof relatedRaw !== 'string' || !/^[0-9a-f-]{36}$/i.test(relatedRaw)) {
+      throw new ApiError(400, 'bad_request', '只有國文貼上的題目可以接著問同一份題目');
+    }
+    const related = await findCase(db, user.id, relatedRaw, now);
+    if (!related || caseSubject(related) !== subject || related.question_json === null) throw new ApiError(400, 'bad_request', '找不到要接著問的那一題，或不是同一科');
+    relatedId = related.id;
+  }
   let doubt: ReturnType<typeof optionalStudentText>;
   let built: BuiltCase;
   try {
-    doubt = optionalStudentText(body.doubt, ASSIST_LIMITS.doubtMaxChars, 'doubt');
-    built = await buildCase(body.source as Parameters<typeof buildCase>[0], { db, userId: user.id, siteData: c.var.siteData, fp });
+    doubt = optionalStudentText(body.doubt, ASSIST_LIMITS.doubtMaxChars, 'doubt', subject);
+    if (zh) built = source.source === 'photo' ? zhPhotoCase() : zhTypedCase(source['question'], fp, zh, relatedId);
+    else built = await buildCase(body.source as Parameters<typeof buildCase>[0], { db, userId: user.id, siteData: c.var.siteData, fp });
   } catch (err) {
-    await inputRejected(db, err, body.source.source === 'typed' ? 'typed' : 'site', () => userRefFor(config.auth.ledgerSalt, user.id), now);
+    await inputRejected(db, err, body.source.source === 'typed' ? 'typed' : 'site', () => userRefFor(config.auth.ledgerSalt, user.id), now, subject);
     throw err;
   }
   const ref = await userRefFor(config.auth.ledgerSalt, user.id);
@@ -340,12 +440,39 @@ assistRoutes.post('/cases', async (c) => {
     throw new ApiError(429, 'assist_limit', `學習助手裡的題目已經有 ${ASSIST_LIMITS.casesLive} 題，請先刪掉一些舊的`, { reason: 'cases_live' });
   }
   await injectionEvent(db, injection, ref);
-  log('assist_case_created', { case_id: id, source: built.source, items: built.itemCount });
+  log('assist_case_created', { case_id: id, source: built.source, subject, items: built.itemCount });
   const row = await requireCase(db, user.id, id, now);
   return c.json(await detailOf(c, row, now, masked ? { masked } : {}), 201);
 });
 
 // ───────────────────────── 修改、刪除 ─────────────────────────
+
+/**
+ * 國文已解析的單選題改成多選（PATCH 的 choice_mode；0 點、不呼叫 AI；docs/design/assistant-subjects.md §5.3）：題目裡單選的題
+ * 改成多選，案例的判定與答錯題數依已存的逐選項判定重算（多選計分）；畫面的計分與逐選項表由前端用 shared 的 zhMultiScore 重算。
+ * 只接受 multi，而且只限國文的選擇題、已經有解析、還有單選的題；否則 400／409。
+ */
+async function switchToMulti(db: D1Database, row: CaseRow, mode: string): Promise<{ questionJson: string; verdict: string | null; wrongCount: number }> {
+  if (mode !== 'multi') throw new ApiError(400, 'bad_request', '只能把單選題改成多選題');
+  if (caseSubject(row) !== 'chinese' || row.kind !== 'zh_choice') throw new ApiError(400, 'bad_request', '只有國文的選擇題可以改成多選題');
+  const question = parseJson<AssistQuestionView>(row.question_json);
+  if (!question || row.analyses < 1 || row.status !== 'analyzed') throw new ApiError(409, 'conflict', '請先等這一題解析完成');
+  if (!question.targets.some((t) => t.choice_mode === 'single')) throw new ApiError(409, 'conflict', '這一題已經是多選題');
+  const updated: AssistQuestionView = {
+    ...question,
+    targets: question.targets.map((t) => (t.choice_mode === 'single' ? { ...t, choice_mode: 'multi' as const, mode: 'multi_select' as const } : t)),
+  };
+  const latest = await db
+    .prepare(`SELECT output_json FROM assist_turns WHERE case_id = ?1 AND user_id = ?2 AND kind = 'analyze' AND status = 'done' ORDER BY seq DESC LIMIT 1`)
+    .bind(row.id, row.user_id)
+    .first<{ output_json: string | null }>();
+  const view = parseJson<ZhAnalysisView>(latest?.output_json ?? null);
+  if (!view || view.kind !== 'zh_choice') return { questionJson: JSON.stringify(updated), verdict: row.verdict, wrongCount: row.wrong_count };
+  const verdicts = view.items.map(
+    (it) => zhChoiceItemVerdict({ student_answer: it.student_answer, answer_key: it.answer_key, choice_mode: 'multi', option_count: it.options.filter((o) => /^[A-E]$/.test(o.option)).length || undefined }).verdict,
+  );
+  return { questionJson: JSON.stringify(updated), verdict: assistGroupVerdict(verdicts), wrongCount: verdicts.filter((v) => v === 'wrong' || v === 'partial').length };
+}
 
 assistRoutes.patch('/cases/:id', async (c) => {
   const user = await sessionUser(c);
@@ -353,7 +480,18 @@ assistRoutes.patch('/cases/:id', async (c) => {
   const db = c.env.DB;
   const now = nowSeconds();
   const row = await requireCase(db, user.id, c.req.param('id'), now);
-  const note = body.note === undefined ? undefined : optionalStudentText(body.note, ASSIST_LIMITS.noteMaxChars, 'note').text;
+  const note = body.note === undefined ? undefined : optionalStudentText(body.note, ASSIST_LIMITS.noteMaxChars, 'note', caseSubject(row)).text;
+  if (body.choice_mode !== undefined) {
+    const next = await switchToMulti(db, row, body.choice_mode);
+    const res = await db
+      .prepare(
+        `UPDATE assist_cases SET question_json = ?1, verdict = ?2, wrong_count = ?3, updated_at = ?4, expires_at = ?5
+          WHERE id = ?6 AND user_id = ?7 AND status = 'analyzed' AND question_json = ?8`,
+      )
+      .bind(next.questionJson, next.verdict, Math.min(8, next.wrongCount), now, expiresFrom(now), row.id, user.id, row.question_json)
+      .run();
+    if ((res.meta.changes ?? 0) !== 1) throw new ApiError(409, 'conflict', '這一題的狀態剛剛改變了，請重新整理');
+  }
   await db
     .prepare(
       `UPDATE assist_cases SET
@@ -401,23 +539,33 @@ assistRoutes.put('/cases/:id/question', async (c) => {
   const db = c.env.DB;
   const now = nowSeconds();
   const row = await requireCase(db, user.id, c.req.param('id'), now);
+  const subject = caseSubject(row);
+  const zh = await subjectGate(db, config, user, subject);
   if (row.trust !== 'student' || (row.source !== 'typed' && row.source !== 'photo')) throw new ApiError(409, 'conflict', '只有你自己提供的題目可以修改');
   if (!['ocr_ready', 'ready', 'failed'].includes(row.status)) throw new ApiError(409, 'conflict', '這一題現在不能修改');
-  // 拍照的題目（WP-A3）：被隱藏的區塊（D8、佳作樣式、長英文）在確認畫面不能編輯、也不送回；送回了就擋下（§2.5）。
+  // 拍照的題目（WP-A3）：被隱藏的區塊（D8、佳作樣式、長英文；國文另有答案段、長文）在確認畫面不能編輯、也不送回；送回了就擋下（§2.5）。
   // 其他規則和貼上的題目相同（重跑全部檢查，含 D8 指紋）；非目標區塊剩下的 [[?]] 換成 [unclear]。
   const photo = row.source === 'photo';
   if (photo) {
     const blocks = (body.question as { blocks?: unknown } | null)?.blocks;
-    const index = Array.isArray(blocks) ? blocks.findIndex((b) => typeof (b as { text?: unknown })?.text === 'string' && containsHiddenPlaceholder((b as { text: string }).text)) : -1;
+    const hidden = (text: string) => containsHiddenPlaceholder(text) || (zh !== null && zhContainsHiddenPlaceholder(text));
+    const index = Array.isArray(blocks) ? blocks.findIndex((b) => typeof (b as { text?: unknown })?.text === 'string' && hidden((b as { text: string }).text)) : -1;
     if (index >= 0) throw new ApiError(400, 'assist_input_invalid', problemMessage('blocks_invalid'), { reason: 'blocks_invalid', field: `blocks[${index}].text` });
   }
-  let s: ReturnType<typeof studentQuestion>;
+  let s: ReturnType<typeof studentQuestion> & { kind: CaseRow['kind']; title: string };
   let doubt: ReturnType<typeof optionalStudentText>;
   try {
-    s = studentQuestion(body.question, fp, { origin: photo ? 'photo' : 'typed' });
-    doubt = optionalStudentText(body.doubt, ASSIST_LIMITS.doubtMaxChars, 'doubt');
+    if (zh) {
+      // 國文：格式在確認時可以改，kind 跟著改（題數依格式：選擇是題數、簡答是小題數、國寫是 1）。
+      const zs = zhStudentQuestion(body.question, fp, zh, { origin: photo ? 'photo' : 'typed' });
+      s = { ...zs, title: zhQuestionTitle(zs.question, photo ? 'photo' : 'typed') };
+    } else {
+      const es = studentQuestion(body.question, fp, { origin: photo ? 'photo' : 'typed' });
+      s = { ...es, kind: row.kind, title: studentQuestionTitle(es.question, photo ? 'photo' : 'typed') };
+    }
+    doubt = optionalStudentText(body.doubt, ASSIST_LIMITS.doubtMaxChars, 'doubt', subject);
   } catch (err) {
-    await inputRejected(db, err, 'confirm', () => userRefFor(config.auth.ledgerSalt, user.id), now);
+    await inputRejected(db, err, 'confirm', () => userRefFor(config.auth.ledgerSalt, user.id), now, subject);
     throw err;
   }
   const doubtKinds = [...new Set(body.doubt_kinds ?? codeList(row.doubt_kinds_json))];
@@ -428,13 +576,13 @@ assistRoutes.put('/cases/:id/question', async (c) => {
     db
       .prepare(
         `UPDATE assist_cases SET question_json = ?1, title = ?2, item_count = ?3, doubt_kinds_json = ?4, doubt_text = ?5, hint_first = ?6,
-                status = 'ready', injection_flag = CASE WHEN ?7 = 1 THEN 1 ELSE injection_flag END, updated_at = ?8, expires_at = ?9
+                status = 'ready', injection_flag = CASE WHEN ?7 = 1 THEN 1 ELSE injection_flag END, updated_at = ?8, expires_at = ?9, kind = ?12
           WHERE id = ?10 AND user_id = ?11 AND status IN ('ocr_ready', 'ready', 'failed')
             AND NOT EXISTS (SELECT 1 FROM assist_turns WHERE case_id = ?10 AND status IN ('queued', 'running'))`,
       )
       .bind(
         questionJsonOf(s.view),
-        studentQuestionTitle(s.question, photo ? 'photo' : 'typed'),
+        s.title,
         Math.max(1, Math.min(8, s.itemCount)),
         JSON.stringify(doubtKinds),
         doubt.text,
@@ -444,6 +592,7 @@ assistRoutes.put('/cases/:id/question', async (c) => {
         expiresFrom(now),
         row.id,
         user.id,
+        s.kind,
       ),
     ...(ocr && !ocr.view.stats
       ? [
@@ -560,14 +709,19 @@ assistRoutes.post('/cases/:id/analyze', async (c) => {
   const db = c.env.DB;
   const now = nowSeconds();
   const row = await requireCase(db, user.id, c.req.param('id'), now);
+  // 國文：開關與國文指紋在預扣之前檢查（503，不扣點）。
+  const subject = caseSubject(row);
+  await subjectGate(db, config, user, subject);
   // 出版社題的授權已經結束或不含 AI 解析：在預扣之前拒收（不扣點；共用快取也不再提供）。
   await assertCaseAssistable(c.var.siteData, row);
   if (!['ready', 'analyzed', 'failed'].includes(row.status)) throw new ApiError(409, 'conflict', '這一題現在不能解析');
   if (row.analyses >= ASSIST_LIMITS.analysesPerCase) throw await analyzeConflict(db, row);
   const question = parseJson<AssistQuestionView>(row.question_json);
   if (!question) throw new ApiError(409, 'conflict', '這一題還沒有題目');
-  const items = row.kind === 'item' ? Math.max(1, question.targets.length) : 1;
-  const tc = taskConfig('assist_analyze', config, { items });
+  // 題數（計點單位）：英文和以前相同（item 是題數、其他 1）；國文選擇是題數、簡答是小題數、國寫是 1。
+  // turn 的 meta_json 存同一組 {subject, kind, items}，consumer 用它算任務設定（預扣與實際呼叫一致）。
+  const items = assistItemCount(subject, row.kind, question);
+  const tc = taskConfig('assist_analyze', config, { subject, kind: row.kind, items });
   if (!taskModelsPriced(tc)) {
     await opsEvent(db, 'ai_model_not_priced', 'error', { task: tc.task, models: tc.calls.map((x) => x.model) });
     throw new ApiError(503, 'not_configured', AI_ERROR_MESSAGES.not_configured);
@@ -575,8 +729,8 @@ assistRoutes.post('/cases/:id/analyze', async (c) => {
   const reqCase = requestCaseOf(row, question);
   const turnId = crypto.randomUUID();
 
-  // 共用快取（§4.7.4）：鍵是實際會送出的整個請求；命中就 0 點、不呼叫。
-  if (isCacheable(reqCase)) {
+  // 共用快取（§4.7.4）：鍵是實際會送出的整個請求；命中就 0 點、不呼叫。國文沒有站內題，一律不進快取。
+  if (workerSubject(subject).cacheable(reqCase)) {
     const input = analyzeCallInput(tc, reqCase, { patterns: null, fp });
     const built = await buildClaudeRequest(input);
     const key = await assistCacheKey({ promptVersion: built.promptVersion, model: input.spec.model, effort: input.spec.effort, d8Version: fp.version, userText: input.content as string });
@@ -619,7 +773,7 @@ assistRoutes.post('/cases/:id/analyze', async (c) => {
               AND (SELECT analyses FROM assist_cases WHERE id = ?2 AND user_id = ?3) < ?7
               AND (SELECT status FROM assist_cases WHERE id = ?2 AND user_id = ?3) IN ('ready', 'analyzed', 'failed')`,
         )
-        .bind(turnId, row.id, user.id, opId, JSON.stringify({ items }), now, ASSIST_LIMITS.analysesPerCase),
+        .bind(turnId, row.id, user.id, opId, JSON.stringify({ subject, kind: row.kind, items }), now, ASSIST_LIMITS.analysesPerCase),
       db
         .prepare(
           `UPDATE assist_cases SET status = 'analyzing', updated_at = ?1, expires_at = ?2
@@ -637,18 +791,20 @@ assistRoutes.post('/cases/:id/followups', async (c) => {
   const db = c.env.DB;
   const now = nowSeconds();
   const row = await requireCase(db, user.id, c.req.param('id'), now);
+  const subject = caseSubject(row);
+  await subjectGate(db, config, user, subject);
   await assertCaseAssistable(c.var.siteData, row);
   if (row.analyses < 1 || row.status === 'analyzing') throw new ApiError(409, 'conflict', '請先等這一題解析完成再追問');
   if (row.followups >= ASSIST_LIMITS.followupsPerCase) {
     throw new ApiError(429, 'assist_limit', `這一題已經追問 ${ASSIST_LIMITS.followupsPerCase} 次，建議開新的一題`, { reason: 'followups_per_case' });
   }
-  const text = checkAssistText(body.text, ASSIST_LIMITS.followupMaxChars);
+  const text = subject === 'chinese' ? checkZhText(body.text, ASSIST_LIMITS.followupMaxChars) : checkAssistText(body.text, ASSIST_LIMITS.followupMaxChars);
   if (!text.ok) throw textProblem(text.problems[0]!, 'text');
   const question = parseJson<AssistQuestionView>(row.question_json);
   const label = body.label ?? null;
   if (label !== null && !(question?.targets ?? []).some((t) => t.label === label)) throw new ApiError(400, 'bad_request', '追問的題號不在這一題裡');
   const injection = detectInjection(text.value);
-  const tc = taskConfig('assist_followup', config);
+  const tc = taskConfig('assist_followup', config, { subject });
   if (!taskModelsPriced(tc)) {
     await opsEvent(db, 'ai_model_not_priced', 'error', { task: tc.task, models: tc.calls.map((x) => x.model) });
     throw new ApiError(503, 'not_configured', AI_ERROR_MESSAGES.not_configured);
@@ -677,12 +833,12 @@ assistRoutes.post('/cases/:id/followups', async (c) => {
       db
         .prepare(
           `INSERT INTO assist_turns (id, case_id, user_id, seq, kind, status, op_id, input_text, label, mode, meta_json, created_at, updated_at)
-           SELECT ?1, ?2, ?3, (SELECT COALESCE(MAX(seq), 0) + 1 FROM assist_turns WHERE case_id = ?2), 'followup', 'queued', ?4, ?5, ?6, ?7, '{}', ?8, ?8
+           SELECT ?1, ?2, ?3, (SELECT COALESCE(MAX(seq), 0) + 1 FROM assist_turns WHERE case_id = ?2), 'followup', 'queued', ?4, ?5, ?6, ?7, ?10, ?8, ?8
             WHERE NOT EXISTS (SELECT 1 FROM assist_turns WHERE case_id = ?2 AND status IN ('queued', 'running'))
               AND (SELECT followups FROM assist_cases WHERE id = ?2 AND user_id = ?3) < ?9
               AND (SELECT analyses FROM assist_cases WHERE id = ?2 AND user_id = ?3) >= 1`,
         )
-        .bind(turnId, row.id, user.id, opId, text.value, label, body.mode, now, ASSIST_LIMITS.followupsPerCase),
+        .bind(turnId, row.id, user.id, opId, text.value, label, body.mode, now, ASSIST_LIMITS.followupsPerCase, subject === 'english' ? '{}' : JSON.stringify({ subject })),
       db
         .prepare(
           `UPDATE assist_cases SET injection_flag = CASE WHEN ?1 = 1 THEN 1 ELSE injection_flag END, updated_at = ?2, expires_at = ?3
@@ -703,9 +859,12 @@ assistRoutes.post('/cases/:id/followups', async (c) => {
 
 // ───────────────────────── 拍照與轉錄（WP-A3） ─────────────────────────
 
-/** 拍照另外要拍照開關（AI_ASSISTANT_PHOTO；admin＝只有管理員）；關著時和學習助手關著一樣回 503。 */
-function assertPhotoAccess(config: AppConfig, user: SessionUser): void {
-  if (!assistantAccess(config, user.role).photo) throw new ApiError(503, 'not_configured', AI_ERROR_MESSAGES.not_configured);
+/**
+ * 拍照另外要拍照開關（AI_ASSISTANT_PHOTO；admin＝只有管理員）；關著時和學習助手關著一樣回 503。
+ * 國文的案例另外要國文拍照的開關（AI_ASSISTANT_SUBJECTS_PHOTO；assistantSubjectAccess）。
+ */
+function assertPhotoAccess(config: AppConfig, user: SessionUser, subject: AssistSubject = 'english'): void {
+  if (!assistantSubjectAccess(config, user.role, subject).photo) throw notConfigured();
 }
 
 assistRoutes.post('/cases/:id/photos', async (c) => {
@@ -716,6 +875,7 @@ assistRoutes.post('/cases/:id/photos', async (c) => {
   const db = c.env.DB;
   const now = nowSeconds();
   const row = await requireCase(db, user.id, c.req.param('id'), now);
+  assertPhotoAccess(config, user, caseSubject(row));
   if (row.source !== 'photo') throw new ApiError(409, 'conflict', '只有拍照的題目可以上傳照片');
   if (row.status !== 'draft') throw new ApiError(409, 'conflict', '這一題目前不能上傳照片');
   const photo = await readPhotoFile(c);
@@ -745,10 +905,14 @@ assistRoutes.post('/cases/:id/ocr', async (c) => {
   const db = c.env.DB;
   const now = nowSeconds();
   const row = await requireCase(db, user.id, c.req.param('id'), now);
+  // 國文：國文拍照的開關與國文指紋在預扣之前檢查；點數依照片張數（1 張 3 點、2 張 4 點），張數存在 turn 的 meta_json。
+  const subject = caseSubject(row);
+  await subjectGate(db, config, user, subject, { photo: true });
   if (row.source !== 'photo') throw new ApiError(409, 'conflict', '只有拍照的題目可以轉錄');
   if (row.status !== 'draft') throw new ApiError(409, 'conflict', '這一題現在不能轉錄');
-  if ((await listCasePhotos(db, user.id, row.id, now)).length === 0) throw new ApiError(409, 'conflict', '請先上傳照片（照片超過 24 小時會自動刪除）');
-  const tc = taskConfig('assist_ocr', config);
+  const photoCount = (await listCasePhotos(db, user.id, row.id, now)).length;
+  if (photoCount === 0) throw new ApiError(409, 'conflict', '請先上傳照片（照片超過 24 小時會自動刪除）');
+  const tc = subject === 'english' ? taskConfig('assist_ocr', config) : taskConfig('assist_ocr', config, { subject, photos: photoCount });
   if (!taskModelsPriced(tc)) {
     await opsEvent(db, 'ai_model_not_priced', 'error', { task: tc.task, models: tc.calls.map((x) => x.model) });
     throw new ApiError(503, 'not_configured', AI_ERROR_MESSAGES.not_configured);
@@ -765,12 +929,12 @@ assistRoutes.post('/cases/:id/ocr', async (c) => {
       db
         .prepare(
           `INSERT INTO assist_turns (id, case_id, user_id, seq, kind, status, op_id, meta_json, created_at, updated_at)
-           SELECT ?1, ?2, ?3, (SELECT COALESCE(MAX(seq), 0) + 1 FROM assist_turns WHERE case_id = ?2), 'ocr', 'queued', ?4, '{}', ?5, ?5
+           SELECT ?1, ?2, ?3, (SELECT COALESCE(MAX(seq), 0) + 1 FROM assist_turns WHERE case_id = ?2), 'ocr', 'queued', ?4, ?6, ?5, ?5
             WHERE NOT EXISTS (SELECT 1 FROM assist_turns WHERE case_id = ?2 AND status IN ('queued', 'running'))
               AND (SELECT status FROM assist_cases WHERE id = ?2 AND user_id = ?3) = 'draft'
               AND EXISTS (SELECT 1 FROM assist_photos WHERE case_id = ?2 AND user_id = ?3 AND expires_at >= ?5)`,
         )
-        .bind(turnId, row.id, user.id, opId, now),
+        .bind(turnId, row.id, user.id, opId, now, subject === 'english' ? '{}' : JSON.stringify({ subject, photos: Math.min(2, photoCount) })),
       db
         .prepare(
           `UPDATE assist_cases SET status = 'ocr_queued', updated_at = ?1, expires_at = ?2

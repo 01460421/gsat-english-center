@@ -8,7 +8,7 @@
  * 系統提示＝共用段落（assist-common.ts）＋這一種的任務段落＋代碼清單＋這一種的「Length limits」。三種各自的系統提示固定、
  * 所有學生共用（1 小時快取）；user 訊息由 src/assist/requests.ts 組（範本版本見下）。
  */
-import type { AssistCaseKind } from '@gsat/shared';
+import type { AssistEnglishCaseKind } from '@gsat/shared';
 import type * as z from 'zod/v4';
 import { assistItemSchema, assistVocabSchema, assistWritingSchema } from '../../assist/analysisSchemas';
 import {
@@ -27,7 +27,7 @@ import {
 } from './assist-common';
 
 /** user 訊息範本的版本（改了範本就換；算進 prompt_version 與共用快取鍵）。 */
-export const ASSIST_ANALYZE_TEMPLATE_VERSIONS: Record<AssistCaseKind, string> = {
+export const ASSIST_ANALYZE_TEMPLATE_VERSIONS: Record<AssistEnglishCaseKind, string> = {
   item: 'assist-analyze-user@3',
   writing: 'assist-writing-user@1',
   vocab: 'assist-vocab-user@1',
@@ -67,7 +67,7 @@ const VOCAB_TASK = `Vocabulary words:
 - Group words that are easily confused or share a collocation, and explain how to tell them apart. Use only entry_id values from <question>.
 - Example sentences are original and at most 20 words.`;
 
-const SYSTEM_TEXT: Record<AssistCaseKind, string> = {
+const SYSTEM_TEXT: Record<AssistEnglishCaseKind, string> = {
   item: [
     ASSIST_ROLE,
     ASSIST_DATA_RULES,
@@ -101,12 +101,12 @@ const SYSTEM_TEXT: Record<AssistCaseKind, string> = {
 };
 
 /** 解析的系統提示（固定；同一種的每一位學生逐位元相同）。 */
-export function assistAnalyzeSystemText(kind: AssistCaseKind): string {
+export function assistAnalyzeSystemText(kind: AssistEnglishCaseKind): string {
   return SYSTEM_TEXT[kind];
 }
 
 /** 解析的輸出 schema。 */
-export function assistAnalyzeSchema(kind: AssistCaseKind): z.ZodType {
+export function assistAnalyzeSchema(kind: AssistEnglishCaseKind): z.ZodType {
   switch (kind) {
     case 'item':
       return assistItemSchema;

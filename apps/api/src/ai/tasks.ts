@@ -12,7 +12,19 @@
  *   tutor    學習助手的解析、追問、報告（docs/design/learning-assistant.md §4.7.1）
  *   writer   作文範文：一次呼叫寫三個層級的範文與說明（docs/design/model-essays.md §3.1）
  */
-import { AI_TASK_POINTS, ASSIST_LIMITS, assistAnalyzePoints, ESSAY_FAMILY_TASKS, type AiTask, type RaterRole } from '@gsat/shared';
+import {
+  AI_TASK_POINTS,
+  ASSIST_LIMITS,
+  assistAnalyzePoints,
+  assistPoints,
+  ESSAY_FAMILY_TASKS,
+  isZhCaseKind,
+  type AiTask,
+  type AssistCaseKind,
+  type AssistSubject,
+  type RaterRole,
+  type ZhCaseKind,
+} from '@gsat/shared';
 import type { AiEffort, AppConfig } from '../config';
 import { isPricedModel, worstCaseMicros } from './pricing';
 
@@ -108,12 +120,95 @@ export const QUEUE_MAX_DELIVERIES = 4;
 export const LEASE_SECONDS = 900;
 
 /**
- * 任務設定。size 只給 assist_analyze 用（{ items }：這次問了幾題）：點數、max_tokens、輸入估計與逾時依題數算
- * （單字案例固定用 1 題的值，呼叫端傳 items: 1）。其他任務忽略 size。
+ * 學習助手任務的大小（docs/design/assistant-subjects.md §2.3、§9.3）：科目、解析種類與計點單位數（assistItemCount）。
+ * routes 預扣與 consumer 呼叫用同一組（存在 turn 的 meta_json），所以預扣與實際呼叫一致。沒有 subject＝英文；
+ * 英文只看 items（kind 不影響英文的數字，和現行完全相同）。photos 只給轉錄用（國文 1 張 3 點、2 張 4 點）。
+ */
+export interface AssistTaskSize {
+  items?: number;
+  subject?: AssistSubject;
+  kind?: AssistCaseKind;
+  photos?: number;
+}
+
+/**
+ * 國文的任務設定（docs/design/assistant-subjects.md §9.3，設計值）：max_tokens 由「每欄寫滿」fixture 的 tokens ÷ 0.6 推出
+ * （留 40% 給思考），輸入估計用最長合法輸入實算；S3 用 count_tokens 與真模型評測實測後寫回這裡（改了 test/assist.zh.rules.test.ts 跟著改）。
+ *   轉錄           8,000、輸入 7,000、90 秒（1 張 3 點、2 張 4 點）
+ *   選擇 n 題      16,000＋7,500(n−1)、輸入 16,000、180 秒（n ≥ 2 是 240 秒）
+ *   簡答 s 個小題  13,000＋2,900(s−1)、輸入 16,000、180 秒（s ≥ 2 是 240 秒）（設計值是＋2,600；6 個小題「每欄寫滿」的估計
+ *                  超過 max_tokens 的 60%，依同一條規則調高，S3 實測後再定）
+ *   國寫           16,000、輸入 13,500、240 秒
+ *   追問           5,000、輸入 12,000、90 秒（上下文不加 5 分鐘快取標記，§3.5）
+ * 點數一律由 shared 的 assistPoints 算（前端顯示、預扣同一份常數）。
+ */
+export const ZH_TASK_SIZES = {
+  ocr: { maxTokens: 8_000, input: 7_000, timeoutMs: 90_000 },
+  zh_choice: { maxTokens: 16_000, perExtra: 7_500, input: 16_000 },
+  zh_short: { maxTokens: 13_000, perExtra: 2_900, input: 16_000 },
+  zh_writing: { maxTokens: 16_000, perExtra: 0, input: 13_500 },
+  followup: { maxTokens: 5_000, input: 12_000, timeoutMs: 90_000 },
+} as const;
+
+/** 國文解析的 max_tokens、輸入估計與逾時（n＝計點單位數，夾到 1 以上）。 */
+export function zhAnalyzeSize(kind: ZhCaseKind, items: number): { maxTokens: number; input: number; timeoutMs: number } {
+  const n = Math.max(1, Math.floor(items));
+  const t = ZH_TASK_SIZES[kind];
+  const timeoutMs = kind === 'zh_writing' || n >= 2 ? ASSIST_ANALYZE_GROUP_TIMEOUT_MS : TASK_TIMEOUT_MS.assist_analyze;
+  return { maxTokens: t.maxTokens + t.perExtra * (n - 1), input: t.input, timeoutMs };
+}
+
+/** 國文的轉錄、解析與追問（英文以外的科目；第一版只有國文）。 */
+function zhAssistConfig(task: 'assist_ocr' | 'assist_analyze' | 'assist_followup', config: AppConfig, size: AssistTaskSize): TaskConfig {
+  const { models, effort } = config.ai;
+  const base = { task, target: { kind: 'assist_turn' } as const, maxRetries: SDK_MAX_RETRIES };
+  if (task === 'assist_ocr') {
+    const photos = size.photos === 2 ? 2 : 1;
+    const t = ZH_TASK_SIZES.ocr;
+    return {
+      ...base,
+      points: assistPoints('chinese', 'assist_ocr', { photos }),
+      timeoutMs: t.timeoutMs,
+      inputTokensEstimate: t.input,
+      calls: [{ role: 'ocr', model: models.default, effort: effort.ocr, maxTokens: t.maxTokens, framework: 'ocr', systemCacheTtl: '1h' }],
+      family: ASSIST_OCR_FAMILY,
+    };
+  }
+  if (task === 'assist_followup') {
+    const t = ZH_TASK_SIZES.followup;
+    return {
+      ...base,
+      points: assistPoints('chinese', 'assist_followup'),
+      timeoutMs: t.timeoutMs,
+      inputTokensEstimate: t.input,
+      calls: [{ role: 'tutor', model: models.default, effort: effort.chat, maxTokens: t.maxTokens, framework: 'assist', systemCacheTtl: '1h' }],
+      family: null,
+    };
+  }
+  const kind: ZhCaseKind = size.kind !== undefined && isZhCaseKind(size.kind) ? size.kind : 'zh_choice';
+  const items = Math.max(1, Math.floor(size.items ?? 1));
+  const t = zhAnalyzeSize(kind, items);
+  return {
+    ...base,
+    points: assistPoints('chinese', 'assist_analyze', { kind, items }),
+    timeoutMs: t.timeoutMs,
+    inputTokensEstimate: t.input,
+    calls: [{ role: 'tutor', model: models.default, effort: effort.assist, maxTokens: t.maxTokens, framework: 'assist', systemCacheTtl: '1h' }],
+    family: null,
+  };
+}
+
+/**
+ * 任務設定。size 只給學習助手用：英文的 assist_analyze 看 { items }（這次問了幾題）：點數、max_tokens、輸入估計與逾時依題數算
+ * （單字案例固定用 1 題的值，呼叫端傳 items: 1）；英文的其他任務忽略 size。英文以外的科目（size.subject，第一版只有國文）
+ * 的轉錄、解析、追問走 zhAssistConfig（docs/design/assistant-subjects.md §9.3）。其他任務忽略 size。
  * 學習助手的 max_tokens 與輸入估計是設計值（§4.7.1），WP-A2／WP-C 用 count_tokens 實測後定案、寫回這裡。
  */
-export function taskConfig(task: AiTask, config: AppConfig, size?: { items: number }): TaskConfig {
+export function taskConfig(task: AiTask, config: AppConfig, size?: AssistTaskSize): TaskConfig {
   const { models, effort } = config.ai;
+  if (size?.subject !== undefined && size.subject !== 'english' && (task === 'assist_ocr' || task === 'assist_analyze' || task === 'assist_followup')) {
+    return zhAssistConfig(task, config, size);
+  }
   switch (task) {
     case 'translation_grade':
       return {

@@ -1,0 +1,28 @@
+{
+  "note": "學習助手國文的系統提示與輸出 schema 的雜湊（docs/design/assistant-subjects.md §11.1、§11.4）。任何影響送出內容的改動（提示、schema、ZH_FIELD_LIMITS、ZH_SECTION_SPECS…）都要一併更新這裡；改了 user 訊息的範本就把對應的 template_version 加一。這個檔一改，A 組（編譯探測）就會自動跑。",
+  "zh_choice": {
+    "template_version": "assist-zh-user@1",
+    "system_sha256": "ec17a056c5dd6ad5cbe442fe295240b97b82435cc647b2b180bd8d95a9046641",
+    "schema_sha256": "9fba3b052e92209beeb0f5d8bc2479129df9ece42028574caeb7011e61de1716"
+  },
+  "zh_short": {
+    "template_version": "assist-zh-user@1",
+    "system_sha256": "b3f54dc8d2317a524805629d315e5525163669746b0c1b748675893aefa4e7ab",
+    "schema_sha256": "dfecffedbdbec3e3a4578000221400a5ed17f09834c88ce24d02bd87d65f6b9d"
+  },
+  "zh_writing": {
+    "template_version": "assist-zh-user@1",
+    "system_sha256": "e43ff00a27ad27b248d333c8cd19de5e47c7a6e45980259949ff8d3d3df93a02",
+    "schema_sha256": "091ee770f63626aa4e869cc9ed1723d95ff193e7ad760a1f393e02c25ff6a60b"
+  },
+  "zh_followup": {
+    "template_version": "assist-zh-followup-user@1",
+    "system_sha256": "9ec1df8f6d8b1b0c29037375139d901b3db5039f747d867d67fd332223276a67",
+    "schema_sha256": "92ffe7d7695b1b32e93863102ddd21252cfacc7f131276bc647a523a3c11dc76"
+  },
+  "zh_ocr": {
+    "template_version": "assist-zh-ocr-user@1",
+    "system_sha256": "a9d632daf3ab4d9de354b2e2e657381b6ce8b5c3adb1aa3300def0ed8a55852c",
+    "schema_sha256": "3035656a8ebd9b5a3dc0dce2892bf007ae77555f4b7cde6ae20ae3a83708b6a9"
+  }
+}

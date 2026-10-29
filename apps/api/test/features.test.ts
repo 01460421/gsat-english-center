@@ -260,3 +260,57 @@ describe('作文範文的開關（AI_ESSAY_EXEMPLARS；docs/design/model-essays.
     expect(body).not.toHaveProperty('assist');
   });
 });
+
+describe('學習助手英文以外的科目（AI_ASSISTANT_SUBJECTS、AI_ASSISTANT_SUBJECTS_PHOTO；docs/design/assistant-subjects.md §7.2、§7.5）', () => {
+  it('/api/features：只在 AI_ASSISTANT 與 AI_ASSISTANT_SUBJECTS 都是 on 時有 assistantSubjects；photo 要兩個拍照開關都 on；off、admin 時回應逐字相同', async () => {
+    const base = await features(aiEnv({ AI_ASSISTANT: 'on', AI_ASSISTANT_PHOTO: 'on' }));
+    expect(base.body).not.toHaveProperty('assistantSubjects');
+    for (const mode of ['off', 'admin', 'onn']) {
+      expect((await quietWarn(() => features(aiEnv({ AI_ASSISTANT: 'on', AI_ASSISTANT_PHOTO: 'on', AI_ASSISTANT_SUBJECTS: mode })))).text, mode).toBe(base.text);
+    }
+    expect((await features(aiEnv({ AI_ASSISTANT: 'on', AI_ASSISTANT_PHOTO: 'on', AI_ASSISTANT_SUBJECTS: 'on' }))).body.assistantSubjects).toEqual([{ subject: 'chinese', photo: false }]);
+    expect((await features(aiEnv({ AI_ASSISTANT: 'on', AI_ASSISTANT_PHOTO: 'on', AI_ASSISTANT_SUBJECTS: 'on', AI_ASSISTANT_SUBJECTS_PHOTO: 'on' }))).body.assistantSubjects).toEqual([{ subject: 'chinese', photo: true }]);
+    // 國文拍照另外要英文的拍照開關。
+    expect((await features(aiEnv({ AI_ASSISTANT: 'on', AI_ASSISTANT_PHOTO: 'off', AI_ASSISTANT_SUBJECTS: 'on', AI_ASSISTANT_SUBJECTS_PHOTO: 'on' }))).body.assistantSubjects).toEqual([{ subject: 'chinese', photo: false }]);
+    // 學習助手本身沒開：國文開著也沒有。
+    expect((await features(aiEnv({ AI_ASSISTANT: 'admin', AI_ASSISTANT_SUBJECTS: 'on' }))).body).not.toHaveProperty('assistantSubjects');
+  });
+
+  it('assistantSubjectAccess：英文就是 assistantAccess；國文要學習助手本身開放、admin 只有管理員；拍照另外要兩個拍照開關', async () => {
+    const { assistantSubjectAccess } = await import('../src/features');
+    const cfg = (vars: Partial<Env>) => loadConfig(aiEnv(vars));
+    const on = cfg({ AI_ASSISTANT: 'on', AI_ASSISTANT_PHOTO: 'on', AI_ASSISTANT_SUBJECTS: 'on', AI_ASSISTANT_SUBJECTS_PHOTO: 'on' });
+    expect(assistantSubjectAccess(on, 'student', 'chinese')).toEqual({ enabled: true, photo: true });
+    expect(assistantSubjectAccess(on, 'student', 'english')).toEqual(assistantAccess(on, 'student'));
+    const admin = cfg({ AI_ASSISTANT: 'on', AI_ASSISTANT_PHOTO: 'on', AI_ASSISTANT_SUBJECTS: 'admin', AI_ASSISTANT_SUBJECTS_PHOTO: 'on' });
+    expect(assistantSubjectAccess(admin, 'student', 'chinese')).toEqual({ enabled: false, photo: false });
+    expect(assistantSubjectAccess(admin, 'admin', 'chinese')).toEqual({ enabled: true, photo: true });
+    expect(assistantSubjectAccess(admin, null, 'chinese')).toEqual({ enabled: false, photo: false });
+    const noBase = cfg({ AI_ASSISTANT: 'off', AI_ASSISTANT_SUBJECTS: 'on' });
+    expect(assistantSubjectAccess(noBase, 'admin', 'chinese').enabled).toBe(false);
+    const noPhoto = cfg({ AI_ASSISTANT: 'on', AI_ASSISTANT_PHOTO: 'on', AI_ASSISTANT_SUBJECTS: 'on', AI_ASSISTANT_SUBJECTS_PHOTO: 'off' });
+    expect(assistantSubjectAccess(noPhoto, 'student', 'chinese')).toEqual({ enabled: true, photo: false });
+  });
+
+  it('/api/me：國文是 admin 模式時管理員的 assistant_preview 多 subjects；學生沒有；科目都是 off 或 on 時沒有 subjects（回應和以前相同）', async () => {
+    const env = aiEnv({ AI_ASSISTANT: 'on', AI_ASSISTANT_PHOTO: 'on', AI_ASSISTANT_SUBJECTS: 'admin', AI_ASSISTANT_SUBJECTS_PHOTO: 'admin' });
+    const admin = insertUser(env.DB, { role: 'admin', aiStatus: 'approved' });
+    const student = insertUser(env.DB, { aiStatus: 'approved' });
+    expect((await me(env, admin)).assistant_preview).toEqual({ photo: true, subjects: [{ subject: 'chinese', photo: true }] });
+    expect(await me(env, student)).not.toHaveProperty('assistant_preview');
+    // 國文開放、只有國文拍照是 admin：管理員的 subjects 和公開的不同（拍照只有他能用）。
+    const photoAdmin = aiEnv({ AI_ASSISTANT: 'on', AI_ASSISTANT_PHOTO: 'on', AI_ASSISTANT_SUBJECTS: 'on', AI_ASSISTANT_SUBJECTS_PHOTO: 'admin' });
+    const admin2 = insertUser(photoAdmin.DB, { role: 'admin', aiStatus: 'approved' });
+    expect((await me(photoAdmin, admin2)).assistant_preview).toEqual({ photo: true, subjects: [{ subject: 'chinese', photo: true }] });
+    for (const mode of ['off', 'on'] as const) {
+      const e = aiEnv({ AI_ASSISTANT: 'on', AI_ASSISTANT_PHOTO: 'on', AI_ASSISTANT_SUBJECTS: mode, AI_ASSISTANT_SUBJECTS_PHOTO: mode });
+      const a = insertUser(e.DB, { role: 'admin', aiStatus: 'approved' });
+      expect(await me(e, a), mode).not.toHaveProperty('assistant_preview');
+    }
+    // 學習助手本身是 admin、國文 off：和以前一樣只有 { photo }。
+    const baseAdmin = aiEnv({ AI_ASSISTANT: 'admin', AI_ASSISTANT_PHOTO: 'on' });
+    const a3 = insertUser(baseAdmin.DB, { role: 'admin', aiStatus: 'approved' });
+    expect((await me(baseAdmin, a3)).assistant_preview).toEqual({ photo: true });
+    expect(assistantPreview(loadConfig(baseAdmin), 'student')).toBeNull();
+  });
+});

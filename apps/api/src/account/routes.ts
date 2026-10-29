@@ -2,7 +2,8 @@
  * /api/me*：目前使用者、首次同意、個資權利（ARCHITECTURE §5、§8.4、§10.2）。負責：後端登入 A1。
  *
  *   GET    /api/me            永遠 200：未登入 {user:null}，已登入 MeResponseSignedIn（@gsat/shared；學習助手是 admin 模式時
- *                             管理員多 assistant_preview，docs/design/learning-assistant.md §4.14；作文範文是 admin 模式時
+ *                             管理員多 assistant_preview，docs/design/learning-assistant.md §4.14；英文以外的科目是 admin 模式時
+ *                             再多 assistant_preview.subjects，docs/design/assistant-subjects.md §7.2；作文範文是 admin 模式時
  *                             管理員多 exemplars_preview，docs/design/model-essays.md §7.5）
  *   PATCH  /api/me            MePatchBody → MeResponseSignedIn（requireUser({ allowPendingConsent: true })）
  *   POST   /api/me/consents   ConsentsPostBody → MeResponseSignedIn（同上；version 必須是現行版本）

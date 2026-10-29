@@ -81,6 +81,13 @@ export interface Env {
   AI_ASSISTANT?: string;
   /** 學習助手的拍照問題目（同樣只認 on、admin；其他一律關）。拍照另外要學習助手本身對這位使用者開放。 */
   AI_ASSISTANT_PHOTO?: string;
+  /**
+   * 學習助手英文以外的科目（第一版只有國文；docs/design/assistant-subjects.md §7.5）：同樣只認 on、admin，其他一律關；
+   * 沒設定時用 config.ts 的預設值 off。真模型評測達標的 PR 才改成 on。另外要 AI_ASSISTANT 本身對這位使用者開放。
+   */
+  AI_ASSISTANT_SUBJECTS?: string;
+  /** 英文以外科目的拍照（同樣只認 on、admin；其他一律關）。另外要 AI_ASSISTANT_PHOTO 與 AI_ASSISTANT_SUBJECTS 都對這位使用者開放。 */
+  AI_ASSISTANT_SUBJECTS_PHOTO?: string;
   /** 學習助手解析與報告的 effort（預設 medium）。 */
   AI_EFFORT_ASSIST?: string;
   /** 學習助手追問的 effort（預設 low；ARCHITECTURE §11 預留的名字）。 */

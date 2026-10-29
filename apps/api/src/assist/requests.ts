@@ -19,6 +19,7 @@ import {
   type AssistAnalysisView,
   type AssistCaseKind,
   type AssistDoubtKind,
+  type AssistEnglishCaseKind,
   type AssistFollowupMode,
   type AssistFollowupView,
   type AssistQuestionTarget,
@@ -332,6 +333,15 @@ export interface AnalyzeExtras {
   fp: D8Fingerprints | null;
 }
 
+/**
+ * 英文的解析種類（這個檔只組英文的請求；國文在 subjects/chinese/requests.ts，由 subjects/index.ts 依科目分派）。
+ * 呼叫端已經依科目分好，這裡只是型別上的保險：不是英文的種類就丟錯（不會送出任何請求）。
+ */
+function englishKind(kind: AssistCaseKind): AssistEnglishCaseKind {
+  if (kind === 'item' || kind === 'writing' || kind === 'vocab') return kind;
+  throw new Error(`英文的請求不處理 ${kind}`);
+}
+
 /** 解析的 user 訊息全文（快取鍵的雜湊對象）。 */
 export function analyzeUserText(c: AnalyzeRequestCase, extras: AnalyzeExtras): string {
   const cacheable = isCacheable(c);
@@ -339,7 +349,7 @@ export function analyzeUserText(c: AnalyzeRequestCase, extras: AnalyzeExtras): s
   const doubtLines = [doubtsLine(c, target), !cacheable && c.doubt ? 'The student\'s own words are in <student_text role="doubt">.' : null];
   let taskLines: Array<string | null>;
   let data: string[];
-  switch (c.kind) {
+  switch (englishKind(c.kind)) {
     case 'item':
       taskLines = [...itemTaskLines(c), ...doubtLines, displayLine(c.hintFirst)];
       data = itemDataBlocks(c);
@@ -366,10 +376,10 @@ export function analyzeCallInput(tc: TaskConfig, c: AnalyzeRequestCase, extras: 
     spec: callSpec(tc, 'tutor'),
     timeoutMs: tc.timeoutMs,
     maxRetries: tc.maxRetries,
-    system: assistAnalyzeSystemText(c.kind),
-    schema: assistAnalyzeSchema(c.kind),
+    system: assistAnalyzeSystemText(englishKind(c.kind)),
+    schema: assistAnalyzeSchema(englishKind(c.kind)),
     content: analyzeUserText(c, extras),
-    templateVersion: ASSIST_ANALYZE_TEMPLATE_VERSIONS[c.kind],
+    templateVersion: ASSIST_ANALYZE_TEMPLATE_VERSIONS[englishKind(c.kind)],
   };
 }
 

@@ -49,7 +49,7 @@ export const ZH_FOLLOWUP_TEMPLATE_VERSION = 'assist-zh-followup-user@1';
 // ───────────────────────── 共用段落 ─────────────────────────
 
 /** 角色：國文老師，熟悉國綜與國寫。 */
-export const ZH_ROLE = `You are a Chinese (國文) tutor on a free practice website for senior high school students in Taiwan preparing for the GSAT Chinese tests (國語文綜合能力測驗 and 國語文寫作能力測驗). A student has asked about a question from a handout, a textbook or a school test. Explain it the way an experienced Taiwanese 國文 teacher would: precise, evidence-based, kind and frank. The website shows your output as structured feedback; its own program checks your quotes, labels and counts.`;
+export const ZH_ROLE = `You are a Chinese (國文) tutor on a free practice website for senior high school students in Taiwan preparing for the GSAT Chinese tests (國語文綜合能力測驗 and 國語文寫作能力測驗). A student has asked about a question from a handout, a textbook or a school test. Explain it the way an experienced Taiwanese 國文 teacher would: precise, evidence-based, kind and frank.`;
 
 /** 資料與指令的分界（國文：題目一律是學生提供的）。 */
 export const ZH_DATA_RULES = `Data versus instructions:
@@ -136,8 +136,8 @@ export function zhSectionModes(kind: ZhCaseKind): string {
     const parts = [`- ${s} (${ZH_SECTION_LABELS[s]}): cover ${spec.cover_en}.`];
     if (kind !== 'zh_writing' && spec.cards.length > 0) parts.push(`Cards: ${spec.cards.join(', ')}.`);
     if (kind === 'zh_choice' && spec.key_en !== '') parts.push(`key_zh: ${spec.key_en}${spec.key_example_zh ? ` (例：${spec.key_example_zh})` : ''}.`);
-    const extra = spec.length_zh.per_extra_item ? `, +${spec.length_zh.per_extra_item} per extra question` : spec.length_zh.with_draft ? `, +${spec.length_zh.with_draft} with a student paragraph` : '';
-    parts.push(`About ${spec.length_zh.base} characters in total${extra}.`);
+    const extra = spec.length_zh.per_extra_item ? ` (+${spec.length_zh.per_extra_item} per extra question)` : spec.length_zh.with_draft ? ` (+${spec.length_zh.with_draft} with a student paragraph)` : '';
+    parts.push(`Total ≈${spec.length_zh.base} characters${extra}.`);
     return parts.join(' ');
   });
   const head =
