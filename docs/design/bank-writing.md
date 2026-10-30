@@ -1105,3 +1105,8 @@ E2E_PORT=<port> npm run test:e2e -w @gsat/web -- --output <scratchpad>/<dir>
 | 12 | 輸入 token 預算偏緊、沒有量 | minor | **接受。** 實測系統提示與最大的 guidance，保守估算已碰到 3,000，所以中譯英提高到 3,500，`ai.rules.test.ts` 的預扣跟著改，並加最壞情況的測試（§5.5、§7.4） |
 | 13 | 缺少幾個測試；`security.test.ts` 會掃到自己；scripts 的測試沒有型別檢查 | minor | **接受，(c) 換做法。** (a)(b) 加進 `bank-writing.data.test.ts`，(b) 用獨立讀檔判斷，不靠選題函式；(d) `tsconfig.scripts.json` 納入 `scripts/*.test.ts` 與 `.d.mts`。(c) 不在 `src/` 放測試再排除自己：`src/` 的 tsconfig 沒有 node 型別，用 `node:fs` 會讓 typecheck 失敗；改放 `apps/web/scripts/source-scan.test.ts`（node 環境、node 型別、本來就不在被掃的 `src/` 裡），樣式也改成只抓程式寫法，註解裡的「innerHTML」不會誤報（§4.6、§7） |
 | 14 | 抽出 `lib/submitFlow.ts` 會改到能用的歷屆送出流程 | minor | **接受。** 本站頁直接呼叫 `lib/submit.ts` 與 `lib/writingApi.ts`，歷屆作答頁不改；抽共用模組另開 PR，並附兩種頁面都跑的測試（§2.5、§11 第 4 點） |
+
+## 13. 後記：作文範文（2026-10-30）
+
+作文範文（docs/design/model-essays.md；2026-10-30 上線）也能產生本站仿真作文的三個層級範文。本站仿真題沿用本文「寫完才對照、對照後鎖定」的做法（model-essays.md §1.5 第 2 步、§10.6 第 8 點）：學生按「產生三個層級的範文」送出時，這一題在這台裝置上的作答就鎖定（`bank/drafts.ts` 的 `markBankEssayRevealed`；伺服器明確拒絕時收回，model-essays.md §12.5 第 1 點）。題庫本身的兩篇範文、評分規準與對照流程不變。
+

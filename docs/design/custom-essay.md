@@ -2281,3 +2281,8 @@ npm run test:local-e2e -w @gsat/api
 ### 站主決定上線就打開（2026-10-18）
 
 站主決定不等評分對照，上線就打開自訂題目批改：`wrangler.toml` 的 `AI_CUSTOM_ESSAY` 是 `"on"`（程式預設仍是 `off`，`[vars]` 漏設時偏向關）。上面「上線順序」的第 3～5 步改成上線後補跑：照 `docs/SETUP-KEYS.md` §8.2 在 GitHub Actions 跑評分對照；達標就記進附錄 A，開關不動；不達標就照 §8.1 改回 `"off"`，調整提示後重跑。同一天上線後補跑，結論是「達標」（附錄 A 第 1 次）。
+
+### 作文範文上線後的拒收訊息（2026-10-30）
+
+作文範文（docs/design/model-essays.md）上線，自訂題目批改照舊不產生範文，所以 `request_to_ai` 的訊息（`packages/shared/src/custom-essay.ts`）從「本站只批改你自己寫的作文，不代寫、也不產生範文。」改成「題目欄只放題目本身。這裡只批改你自己寫的作文、不代寫；想看範文請用「作文範文」。」（只改文字；判斷規則與 `CUSTOM_PROMPT_RULES_VERSION` 不變）。本文 §4、§5 的表格是當時的設計文字，沒有跟著改。
+

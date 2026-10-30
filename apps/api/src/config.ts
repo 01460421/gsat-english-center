@@ -16,9 +16,9 @@ export type AiEffort = (typeof AI_EFFORTS)[number];
 
 /** 預設值（字串形式與 wrangler.toml 的 [vars] 對照）。 */
 export const CONFIG_DEFAULTS = {
-  PRIVACY_POLICY_VERSION: '2026-10-23',
-  TERMS_VERSION: '2026-10-23',
-  AI_CONSENT_VERSION: '2026-10-23',
+  PRIVACY_POLICY_VERSION: '2026-10-30',
+  TERMS_VERSION: '2026-10-30',
+  AI_CONSENT_VERSION: '2026-10-30',
   AI_MODEL_DEFAULT: 'claude-opus-5-5',
   AI_MODEL_SECOND_RATER: 'claude-opus-5-5',
   AI_EFFORT_GRADE: 'medium',

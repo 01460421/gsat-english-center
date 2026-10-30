@@ -301,7 +301,7 @@ describe('deploy-summary.mjs', () => {
     expect(exemplarsVarFrom('# AI_ESSAY_EXEMPLARS = "on" 的說明\n[vars]\nAI_ESSAY_EXEMPLARS = "admin"\n')).toBe('admin');
     expect(exemplarsVarFrom('[vars]\nAPP_ORIGIN = "x"\n')).toBeNull();
     const toml = readFileSync(path.join(REPO, 'apps', 'api', 'wrangler.toml'), 'utf8');
-    // 現在是 "off"（test/skeleton.test.ts 釘住）；上線（on）、緊急關閉（off）、只留給管理員（admin）都只改那一行。
+    // 2026-10-30 上線後是 "on"；緊急關閉（off）、只留給管理員（admin）都只改那一行（部署前的測試不擋任何一種）。
     expect(exemplarsVarFrom(toml)).toMatch(/^(off|admin|on)$/);
     // 現行設定配上對得起來的 /api/features（只有 on 時有 essayExemplars）：沒有作文範文的警告。
     const mode = exemplarsMode(exemplarsVarFrom(toml));
@@ -345,7 +345,7 @@ describe('deploy-summary.mjs', () => {
     expect(admin.notices.some((n) => n.includes('學習助手國文') && n.includes('assistant_preview.subjects'))).toBe(true);
   });
 
-  it('AI_ASSISTANT_SUBJECTS 的判斷和 src/config.ts 的 featureModeSwitch 相同（含預設值 off）；讀 wrangler.toml 的那兩行（現在都是 off）', () => {
+  it('AI_ASSISTANT_SUBJECTS 的判斷和 src/config.ts 的 featureModeSwitch 相同（含預設值 off）；讀 wrangler.toml 的那兩行（2026-10-30 上線後都是 on）', () => {
     expect(SUBJECTS_DEFAULT).toBe(CONFIG_DEFAULTS.AI_ASSISTANT_SUBJECTS);
     expect(SUBJECTS_DEFAULT).toBe(CONFIG_DEFAULTS.AI_ASSISTANT_SUBJECTS_PHOTO);
     const warn = console.warn;
@@ -359,6 +359,16 @@ describe('deploy-summary.mjs', () => {
     // AI_ASSISTANT 的那一行不會被當成 AI_ASSISTANT_SUBJECTS（反過來也是）。
     expect(assistantVarsFrom('[vars]\nAI_ASSISTANT_SUBJECTS = "on"\nAI_ASSISTANT_SUBJECTS_PHOTO = "on"\n')).toEqual({ assistant: null, photo: null });
     const toml = readFileSync(path.join(REPO, 'apps', 'api', 'wrangler.toml'), 'utf8');
-    expect(subjectsVarsFrom(toml)).toEqual({ subjects: 'off', photo: 'off' });
+    // 上線（on）、緊急關閉（off）、只關國文拍照、只留給管理員（admin）都只改那兩行：三種值都讀得到（不把值寫死）。
+    const real = subjectsVarsFrom(toml);
+    expect(real.subjects).toMatch(/^(off|admin|on)$/);
+    expect(real.photo).toMatch(/^(off|admin|on)$/);
+    // 現行設定配上對得起來的 /api/features（國文只在 on 時出現；拍照另外要學習助手的拍照也是 on）：沒有國文的警告。
+    const modeZ = subjectsMode(real.subjects);
+    const modeZP = subjectsMode(real.photo);
+    const base = assistantInput({ assistant: true, assistantPhoto: true }, 'on', 'on');
+    const features = { ...base.features, ...(modeZ === 'on' ? { assistantSubjects: [{ subject: 'chinese', photo: modeZP === 'on' }] } : {}) };
+    const s = buildDeploySummary({ ...base, features, subjectsVar: real.subjects, subjectsPhotoVar: real.photo });
+    expect(s.warnings.some((w) => w.includes('學習助手國文'))).toBe(false);
   });
 });

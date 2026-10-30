@@ -3,7 +3,9 @@
  *
  *   - 說明 AI 批改是什麼、點數規則（AI_TASK_POINTS：中譯英 3、作文 7、照片辨識 2）與上限
  *     （登入後讀 GET /api/ai/quota；讀不到就顯示 wrangler.toml 的預設值）。學習助手對這位使用者開放時
- *     （useAssistantEnabled）另外說明學習助手，點數表多學習助手的幾列（同一個核准、同一份 AI 處理說明）。
+ *     （useAssistantEnabled）另外說明學習助手，點數表多學習助手的幾列（同一個核准、同一份 AI 處理說明）；國文開放時
+ *     多國文的幾列（assistPoints），作文範文開放時（useExemplarsEnabled）多作文範文一列。三份說明的條款不寫學習助手與作文範文的
+ *     點數數字（docs/design/assistant-subjects.md §10），點數只列在這張表與送出前的確認畫面，都由 shared 的常數產生。
  *   - 使用須知（SPEC §8.4「AI 功能使用說明」：能做什麼、不能做什麼、不要放個資、遇到不當內容怎麼辦）。
  *   - 目前狀態（none／pending／waitlist／approved／rejected／suspended）的中文說明；已核准時顯示今日剩餘點數與用量
  *     （管理員的「不限」上限顯示成文字，不印出 10 億）；名額已滿（approval.full）時申請表先說明會排入候補。
@@ -22,6 +24,7 @@ import {
   AI_TASK_POINTS,
   AI_TASKS,
   ASSIST_LIMITS,
+  EXEMPLAR_LIMITS,
   assistAnalyzePoints,
   assistPoints,
   type AiApplyBody,
@@ -39,6 +42,8 @@ import { apiPost, needsOnboarding, signedIn, useFeatures, useMe } from '../../li
 import { errorMessage } from '../../lib/apiErrors';
 import { APP_NAME } from '../../modules';
 import { useAssistantEnabled, useAssistantPhotoEnabled, useAssistantSubjects } from '../assistant/lib/useAssistantEnabled';
+import { EXEMPLARS_PATH, EXEMPLARS_TITLE } from '../writing/exemplars/entry';
+import { useExemplarsEnabled } from '../writing/exemplars/lib/useExemplarsEnabled';
 import { AI_STATUS_DESCRIPTIONS, AI_TIER_LABELS } from './labels';
 import { AI_CONSENT_VERSION, AI_PROCESSING_NOTICE } from './policy';
 import { PolicyView } from './PolicyView';
@@ -78,10 +83,11 @@ export function isAiQuotaResponse(value: unknown): value is AiQuotaResponse {
 
 /**
  * 「同意 AI 處理說明」的勾選文字（申請表與重新同意共用）：和 policy.ts 的 AI 處理說明第一點同一個範圍
- * （docs/design/learning-assistant.md §4.17）。
+ * （docs/design/learning-assistant.md §4.17；2026-10-30 版加上作文範文的題目文字與學習助手的簡答、作文段落、你提供的答案：
+ * docs/design/model-essays.md §6.3、docs/design/assistant-subjects.md §10）。
  */
 export function aiConsentLabel(version: string): string {
-  return `我已閱讀並同意 AI 處理說明（${version} 版）：我的翻譯、作文與手寫照片，以及在學習助手送出的題目照片、題目文字、作答、提問，與產生學習報告時的目標、每週讀書時間、考試與段考日期、我寫的回饋與作答紀錄的摘要，會傳給 Anthropic 的 API 處理，處理地點可能在台灣境外`;
+  return `我已閱讀並同意 AI 處理說明（${version} 版）：我的翻譯、作文與手寫照片，產生作文範文時輸入或貼上的題目文字，在學習助手送出的題目照片、題目文字、作答（含簡答與作文段落）與我提供的答案、提問，以及產生學習報告時的目標、每週讀書時間、考試與段考日期、我寫的回饋與作答紀錄的摘要，會傳給 Anthropic 的 API 處理，處理地點可能在台灣境外`;
 }
 
 function isAiApplyResponse(value: unknown): value is { ai_status: AiStatus } {
@@ -139,11 +145,14 @@ function taskPoints(quota: AiQuotaResponse | null): Record<AiTask, number> {
   return Object.fromEntries(AI_TASKS.map((task) => [task, pick(task)])) as Record<AiTask, number>;
 }
 
-/** 學習助手國文的點數（設計值，shared 的 assistPoints；後端的 task_points 只有英文的數字）。 */
-function ChinesePointRows({ photo }: { photo: boolean }) {
+/**
+ * 學習助手國文的點數表（設計值，shared 的 assistPoints；後端的 task_points 只有英文的數字）。純函式，
+ * AiApplyPage.test.tsx 直接拿 assistPoints 比對每一列（條款不寫數字，數字只在這裡與確認畫面）。
+ */
+export function chinesePointRows(photo: boolean): Array<[string, string]> {
   const choice = (n: number) => assistPoints('chinese', 'assist_analyze', { kind: 'zh_choice', items: n });
   const short = (n: number) => assistPoints('chinese', 'assist_analyze', { kind: 'zh_short', items: n });
-  const rows: Array<[string, string]> = [
+  return [
     [`學習助手國文：選擇題解析（每多一題加 ${choice(2) - choice(1)} 點，最多 ${choice(Number.MAX_SAFE_INTEGER)} 點）`, `${choice(1)} 點起`],
     [`學習助手國文：簡答解析（每多一個小題加 ${short(2) - short(1)} 點，最多 ${short(Number.MAX_SAFE_INTEGER)} 點）`, `${short(1)} 點起`],
     ['學習助手國文：國寫指導', `${assistPoints('chinese', 'assist_analyze', { kind: 'zh_writing' })} 點`],
@@ -152,6 +161,10 @@ function ChinesePointRows({ photo }: { photo: boolean }) {
       ? [['學習助手國文：拍照轉錄題目', `${assistPoints('chinese', 'assist_ocr', { photos: 1 })} 點（2 張 ${assistPoints('chinese', 'assist_ocr', { photos: 2 })} 點）`] as [string, string]]
       : []),
   ];
+}
+
+function ChinesePointRows({ photo }: { photo: boolean }) {
+  const rows = chinesePointRows(photo);
   return (
     <>
       {rows.map(([task, value]) => (
@@ -170,6 +183,10 @@ function AboutAi({ quota }: { quota: AiQuotaResponse | null }) {
   const assistantPhoto = useAssistantPhotoEnabled();
   // 學習助手的國文（docs/design/assistant-subjects.md §8.1）：開放時點數表多國文的幾列（shared 的 assistPoints 產生）。
   const chinese = useAssistantSubjects().find((s) => s.subject === 'chinese') ?? null;
+  // 作文範文（docs/design/model-essays.md §6.3）：開放時說明多一段、點數表多一列。
+  const exemplars = useExemplarsEnabled();
+  const refundable = ['批改', ...(exemplars ? ['產生範文'] : []), ...(assistant ? ['解析'] : [])];
+  const refundText = refundable.length === 1 ? refundable[0] : `${refundable.slice(0, -1).join('、')}或${refundable[refundable.length - 1]}`;
   // 管理員（不限點數）的額度不代表一般規則，改顯示預設值。
   const personal = quota !== null && !isUnlimited(quota.points.day_limit) ? quota : null;
   return (
@@ -190,6 +207,15 @@ function AboutAi({ quota }: { quota: AiQuotaResponse | null }) {
               學習助手
             </Link>
             ：從錯題或你{assistantPhoto ? '拍照、' : ''}貼上的題目請 AI 說明錯在哪、正確解法與相關觀念，可以追問，也可以產生學習報告。
+          </p>
+        )}
+        {exemplars && (
+          <p>
+            核准後也可以使用
+            <Link to={EXEMPLARS_PATH} className="mx-1 font-medium text-primary underline underline-offset-2">
+              {EXEMPLARS_TITLE}
+            </Link>
+            ：輸入或選一個英文作文題目，看 AI 寫的基礎版、穩健版、頂標版三篇範文與說明。範文僅供學習參考，請不要當成自己的作品繳交。
           </p>
         )}
         <p className="text-muted">你正在和 AI 互動：{AI_NOTICE}，不是大考中心的正式評分，也可能有錯誤。</p>
@@ -221,6 +247,12 @@ function AboutAi({ quota }: { quota: AiQuotaResponse | null }) {
               <td className="py-1.5 pr-3">手寫作文照片辨識＊</td>
               <td className="whitespace-nowrap py-1.5 text-right">{points.essay_ocr} 點</td>
             </tr>
+            {exemplars && (
+              <tr>
+                <td className="py-1.5 pr-3">作文範文（三個層級一組；網站上的題目已經有共用的範文時 0 點）</td>
+                <td className="whitespace-nowrap py-1.5 text-right">{points.essay_exemplars} 點</td>
+              </tr>
+            )}
             {assistant && (
               <>
                 <tr>
@@ -262,12 +294,13 @@ function AboutAi({ quota }: { quota: AiQuotaResponse | null }) {
           {personal && !isUnlimited(personal.essays.day_limit) ? personal.essays.day_limit : DEFAULT_AI_LIMITS.essaysDay} 篇作文。
         </li>
         <li className="ml-5 list-disc">同時進行中的批改最多 {quota?.concurrent.limit ?? DEFAULT_AI_LIMITS.concurrent} 個。</li>
+        {exemplars && <li className="ml-5 list-disc">作文範文每天最多 {EXEMPLAR_LIMITS.setsPerDay} 組（共用的範文也算一組）。</li>}
         {assistant && (
           <li className="ml-5 list-disc">
             學習報告每天 {ASSIST_LIMITS.reportsPerDay} 份{assistantPhoto ? `、拍照轉錄每天 ${ASSIST_LIMITS.ocrPerDay} 次` : ''}。
           </li>
         )}
-        <li className="ml-5 list-disc">台灣時間 00:00 重置；批改{assistant ? '或解析' : ''}失敗會全額退還點數。</li>
+        <li className="ml-5 list-disc">台灣時間 00:00 重置；{refundText}失敗會全額退還點數。</li>
       </ul>
       <p className="mt-2 text-sm text-muted">做題、看解析、單字與自評都不花點數。</p>
 

@@ -60,7 +60,7 @@ import {
 import { setView as exemplarSetViewFixture } from '../../src/features/writing/exemplars/testing/fixtures';
 
 /** 現行條款版本：要和 src/features/account/policy.ts（以及後端 wrangler.toml）一致，歡迎頁才允許送出。 */
-export const VERSIONS = { privacy: '2026-10-23', terms: '2026-10-23', ai: '2026-10-23' } as const;
+export const VERSIONS = { privacy: '2026-10-30', terms: '2026-10-30', ai: '2026-10-30' } as const;
 
 /**
  * 假後端的預設：登入、AI、OCR 都開；自訂題目批改關閉（AI_CUSTOM_ESSAY 的程式預設 off，也是只關自訂題時的狀態，

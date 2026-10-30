@@ -244,13 +244,14 @@ describe('設定（src/config.ts）', () => {
     }
   });
 
-  it('AI_ASSISTANT_SUBJECTS、AI_ASSISTANT_SUBJECTS_PHOTO：程式預設固定是 off；wrangler.toml 這個 PR 明確寫 "off"（國文真模型評測達標之前；docs/design/assistant-subjects.md §7.5）', () => {
-    // 上線 PR（附達標的評測 run 連結）把 AI_ASSISTANT_SUBJECTS 改成 "on" 時，連同這裡的 "off" 一起改成允許 off／admin／on（同學習助手的測試）。
+  it('AI_ASSISTANT_SUBJECTS、AI_ASSISTANT_SUBJECTS_PHOTO：程式預設固定是 off；wrangler.toml 明確寫 "off"、"admin" 或 "on"（docs/design/assistant-subjects.md §7.5）', () => {
+    // 目前是 on（2026-10-30 上線）；緊急關閉（off）、只關國文拍照、只留給管理員（admin）都只改 wrangler.toml 那一行，
+    // 部署前的測試不擋任何一種，所以這裡不把值寫死（同學習助手的測試）。漏設時偏向關。
     expect(CONFIG_DEFAULTS.AI_ASSISTANT_SUBJECTS).toBe('off');
     expect(CONFIG_DEFAULTS.AI_ASSISTANT_SUBJECTS_PHOTO).toBe('off');
     const toml = readFileSync(new URL('../wrangler.toml', import.meta.url), 'utf8');
     for (const name of ['AI_ASSISTANT_SUBJECTS', 'AI_ASSISTANT_SUBJECTS_PHOTO']) {
-      expect(toml.match(new RegExp(`^${name}\\s*=\\s*"([^"]*)"`, 'm'))?.[1], `wrangler.toml 的 [vars] 要明確寫 ${name} = "off"`).toBe('off');
+      expect(toml.match(new RegExp(`^${name}\\s*=\\s*"([^"]*)"`, 'm'))?.[1], `wrangler.toml 的 [vars] 要明確寫 ${name} = "off"、"admin" 或 "on"`).toMatch(/^(off|admin|on)$/);
     }
     // 國文不需要新的 secret（短答比對的雜湊不帶金鑰）：wrangler.toml 沒有任何國文 D8 的金鑰設定。
     expect(toml).not.toMatch(/D8_ZH|ZH_D8_KEY/);
@@ -267,13 +268,13 @@ describe('設定（src/config.ts）', () => {
     }
   });
 
-  it('AI_ESSAY_EXEMPLARS：程式預設固定是 off；wrangler.toml 現在明確寫 "off"（真模型評測達標之前；docs/design/model-essays.md §7.5）；effort 兩邊都是 medium', () => {
-    // 上線 PR（附達標的評測 run 連結）把 wrangler.toml 那一行改成 "on" 時，連同這裡的 "off" 一起改成允許 off／admin／on
-    // （同上面學習助手的測試）。這個 PR 不上線：開關在程式與 wrangler.toml 都是 off。
+  it('AI_ESSAY_EXEMPLARS：程式預設固定是 off；wrangler.toml 明確寫 "off"、"admin" 或 "on"（docs/design/model-essays.md §7.5）；effort 兩邊都是 medium', () => {
+    // 目前是 on（2026-10-30 上線）；緊急關閉（off）或只留給管理員（admin）都只改 wrangler.toml 那一行，部署前的測試
+    // 不擋任何一種，所以這裡不把值寫死（同上面學習助手的測試）。漏設時偏向關。
     expect(CONFIG_DEFAULTS.AI_ESSAY_EXEMPLARS).toBe('off');
     expect(CONFIG_DEFAULTS.AI_EFFORT_EXEMPLARS).toBe('medium');
     const toml = readFileSync(new URL('../wrangler.toml', import.meta.url), 'utf8');
-    expect(toml.match(/^AI_ESSAY_EXEMPLARS\s*=\s*"([^"]*)"/m)?.[1], 'wrangler.toml 的 [vars] 要明確寫 AI_ESSAY_EXEMPLARS = "off"').toBe('off');
+    expect(toml.match(/^AI_ESSAY_EXEMPLARS\s*=\s*"([^"]*)"/m)?.[1], 'wrangler.toml 的 [vars] 要明確寫 AI_ESSAY_EXEMPLARS = "off"、"admin" 或 "on"').toMatch(/^(off|admin|on)$/);
     expect(toml.match(/^AI_EFFORT_EXEMPLARS\s*=\s*"([^"]*)"/m)?.[1]).toBe('medium');
     const config = loadConfig(baseEnv);
     expect(config.ai.essayExemplars).toBe('off');

@@ -19,12 +19,12 @@
  *     寫作題庫與歷屆試題的三份索引（重建推薦候選的標題）。學習助手照 wrangler.toml 的 AI_ASSISTANT、AI_ASSISTANT_PHOTO
  *     （2026-10-23 上線後都是 on；緊急時可能是 admin）：由管理員帳號走這段流程（on、admin 兩種模式管理員都能用；off 時這段會失敗），
  *     /api/features 與核准後學生的 /api/ai/quota 照開關檢查。
- *   - 學習助手國文（docs/design/assistant-subjects.md §11.1）：照 wrangler.toml 的 AI_ASSISTANT_SUBJECTS；合併時是 off，這時用 --var
- *     改成 admin，由管理員帳號跑「貼上 → 解析 → 追問 → 用同一份題目問另一部分」（/api/features 照樣沒有 assistantSubjects）。
+ *   - 學習助手國文（docs/design/assistant-subjects.md §11.1）：照 wrangler.toml 的 AI_ASSISTANT_SUBJECTS（2026-10-30 上線後是 on；
+ *     緊急關閉時是 off，這時用 --var 改成 admin），由管理員帳號跑「貼上 → 解析 → 追問 → 用同一份題目問另一部分」。
  *     假 Anthropic 依系統提示開頭（You are a Chinese (國文) tutor）辨識國文的解析與追問，回會通過國文後處理的固定 JSON，
  *     並檢查題目包在 <student_provided_question>、追問的三個 content block 都不加快取標記、同一份題目的請求帶前一題的摘要。
- *   - 作文範文（docs/design/model-essays.md §9.5）：照 wrangler.toml 的 AI_ESSAY_EXEMPLARS；合併時是 off，這時用 --var 改成 admin
- *     （只有管理員能用、/api/features 照樣沒有 essayExemplars），由管理員帳號跑完整段流程。假 Anthropic 依系統提示開頭
+ *   - 作文範文（docs/design/model-essays.md §9.5）：照 wrangler.toml 的 AI_ESSAY_EXEMPLARS（2026-10-30 上線後是 on；緊急關閉時是 off，
+ *     這時用 --var 改成 admin：只有管理員能用、/api/features 照樣沒有 essayExemplars），由管理員帳號跑完整段流程。假 Anthropic 依系統提示開頭
  *     （You write model essays）辨識範文任務，回一份會通過後處理的固定 JSON，並檢查 effort、max_tokens、1 小時快取、送出的 schema
  *     沒有 $ref、自訂題的題目在 <student_text role="task">、送出的內容沒有 email 與暱稱。
  *   - 機密用暫存的 env 檔（--env-file，權限 600，結束時刪除）、端點與允許來源用 --var 傳給 wrangler dev。
@@ -1229,14 +1229,14 @@ async function main() {
   const removeEnvFile = () => rmSync(envFile, { force: true });
   cleanupTasks.push(async () => removeEnvFile());
 
-  // 自訂作文題目、學習助手與作文範文跟著 wrangler.toml 的開關（wrangler dev 讀同一份 [vars]）。作文範文合併時是 off（上線前要先跑
-  // 真模型評測）：這時用 --var 改成 admin，由管理員帳號跑完整段流程；/api/features 照樣沒有 essayExemplars（admin 模式不公開）。
+  // 自訂作文題目、學習助手與作文範文跟著 wrangler.toml 的開關（wrangler dev 讀同一份 [vars]）。作文範文是 off（緊急關閉）時
+  // 用 --var 改成 admin，由管理員帳號跑完整段流程；/api/features 照樣沒有 essayExemplars（admin 模式不公開）。
   const wranglerToml = readFileSync(join(API_DIR, 'wrangler.toml'), 'utf8');
   const exemplarsToml = exemplarsMode(exemplarsVarFrom(wranglerToml));
   const exemplarsOn = exemplarsToml === 'on';
   const exemplarsVar = exemplarsToml === 'off' ? { AI_ESSAY_EXEMPLARS: 'admin' } : {};
   anthropic.state.forbidden.add(EXEMPLAR_CUSTOM_EMAIL);
-  // 學習助手國文：合併時 AI_ASSISTANT_SUBJECTS 是 off（上線前要先跑真模型評測），這時用 --var 改成 admin，由管理員帳號跑國文的流程；
+  // 學習助手國文：AI_ASSISTANT_SUBJECTS 是 off（緊急關閉）時用 --var 改成 admin，由管理員帳號跑國文的流程；
   // /api/features 只在 on 時有 assistantSubjects（同 /api/features 的其他預覽）。
   const subjectsToml = subjectsVarsFrom(wranglerToml);
   const zhToml = subjectsMode(subjectsToml.subjects);

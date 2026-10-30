@@ -839,6 +839,8 @@ CREATE UNIQUE INDEX IF NOT EXISTS idx_exemplar_sets_inflight ON exemplar_sets(us
 
 **站主可以選的例外：只升隱私權說明與服務條款，AI 處理說明不升**（§10.6 第 4 點）。好處：49 位已核准的學生不必再同意一次 AI 處理。風險：自訂題的題目文字送到境外處理，卻不在學生勾選同意的範圍內；萬一有爭議，站上的紀錄會顯示學生同意的版本沒有提到作文範文，而且和學習助手時「改範圍就重新同意」的做法不一致。不建議。
 
+> **後記（2026-10-30）**：照「三份一起升」做，而且和學習助手國文的上線合併成**同一次**升版（版本 2026-10-30；國文的字見 docs/design/assistant-subjects.md §10），學生只要重新同意一次。和上面寫的不同的地方：(1) **點數不寫數字**（站主決定，同國文與雜誌小考卷）：服務條款「三」寫「產生作文範文也會扣點數：送出前的確認畫面會先列出這次要用幾點，AI 申請頁有點數表；網站上的題目已經有共用的範文時 0 點」，8 點列在確認畫面與 AI 申請頁的點數表（`task_points.essay_exemplars`），第 14 天調點數不必升版；(2) 功能清單用「等」（「AI 批改、作文範文、學習助手等 AI 功能」），「三」的標題也是；(3) 保存期限的共用範文寫「同一題已經有共用的範文時 0 點」，不寫「下一位同學 0 點」（寫入條件嚴格，不保證命中）；(4) **雜誌小考卷還沒做，沒有併進這一次**，它上線時要自己再升一次版。實際的文字見 §12.7。
+
 ---
 
 ## 7. 後端
@@ -1540,3 +1542,18 @@ D8 誘餌與照抄題目的誘餌不送真模型：輸入端的指紋擋下、�
 **檢查**：`npm run typecheck` 通過；`npm test` 全過（api 36 檔 1,109 項、web 157 檔 1,885 項、shared 18 檔 523 項）；`npm run build` 通過，Worker 的 dry-run 列出 `AI_ESSAY_EXEMPLARS ("off")`、`AI_EFFORT_EXEMPLARS ("medium")`（Total Upload 3,387.64 KiB／gzip 737.21 KiB）；`npm run test:data` 全過（web 4 檔 50 項、shared 7 檔 217 項）；`npm run check:data -w @gsat/web` 通過；`python3 -m unittest discover tools/tests` 162 項通過；`validate_bank.py --all` 874 份 0 error；`validate_exam.py --all` 66 份 0 error；`link_grammar_refs.py --check`、`normalize_exams.py --check` 通過；Playwright 全部 4 個 project（先 `npm run build -w @gsat/web`，`E2E_PORT=4692`）367 項：330 項通過、37 項依裝置略過、0 失敗（`writing-exemplars` 桌機與手機各 7 項）；`node apps/api/scripts/local-e2e.mjs` 45／45 個步驟通過（作文範文 4 步，假 Anthropic 收到 2 次範文請求）。改了 `wrangler.toml` 之後重跑 `skeleton`、`deploy-summary`、`features` 三支（68 項）與 Worker 的 dry-run，結果相同。
 
 評測 workflow（`exemplars-eval.yml`）不會在一般 CI 跑：沒有 `pull_request` 觸發；`npm test` 只收 `test/**/*.test.ts`，評測本身在 `vitest.parity.config.ts`（只收 `test/parity/**/*.parity.ts`）。`push` 到 `main` 只在改到 `PROBE_PATHS` 時跑 A 組（這個 PR 合併時會跑一次，約 US$0.05，§12.2 第 14 點）；完整評測只有 `workflow_dispatch`，或 `claude/**` 分支上改了 `RUN` 檔（`main` 上改 `RUN` 不跑完整評測）。`AI_ESSAY_EXEMPLARS` 仍是 `off`，三份說明的版本號與文字沒動；§10.1 E2 的「合併前推一次 `RUN` 到 `claude/**` 分支」仍沒有做（這個工作目錄不推送），合併後可以在 Actions 頁面用 `workflow_dispatch`（`cases=gsat-115`、`budget_usd=1`）補跑。
+
+### 12.7 上線（2026-10-30）
+
+和學習助手國文同一個 PR 上線（docs/design/assistant-subjects.md 實作備註「上線（2026-10-30）」）。上線前的完整評測（`RUN`：B–F 全部、上限 US$15）在這個 PR 推上去之前已經在 Actions 跑；PR 說明附綠色 run 的連結。
+
+- **開關**：`wrangler.toml` 的 `AI_ESSAY_EXEMPLARS="on"`（`config.ts` 的程式預設仍是 `off`）。§12.2 第 1 點原本的順序是「先 `admin` 部署、站主在正式站逐則確認常見的錯、再改 `on`」；站主決定和國文同時直接開放，所以改成**上線當天**站主用管理員帳號產生 111–115 共 5 題（§10.2 第 5 步），逐則確認常見的錯，有問題就照 docs/SETUP-KEYS.md §8.5 改成 `admin` 或 `off`。`skeleton.test.ts`、`deploy-summary.test.ts` 改成允許 off／admin／on（緊急關閉只改一行），部署摘要的那一列應該是「對所有人開放」。local-e2e 的作文範文段落自動改跑「開放給所有人」的分支（§12.2 第 8 點）。
+- **說明與條款（§6.3，和國文同一次升版）**：版本 2026-10-30（`policy.ts`、`wrangler.toml`、`config.ts` 三處；前端與 Worker 都比對這個常數，每個人只被要求重新同意一次）。作文範文寫進去的字：
+  - 隱私權說明：重點 2、3、5 加作文範文；「二」新增「作文範文：你輸入或貼上的作文題目（選網站上的題目時只記題目代號）、AI 產生的三篇範文與說明，以及你對範文的評分。」；「三」新增「提供作文範文：依你輸入或選的題目，產生三個層級的範文與說明。」；「四」改名「四、AI 功能與 Anthropic」、新增自訂題目的傳送一點；「六」管理員看不到作文範文的題目與範文；「七」新增範文的保存期限（180 天；網站題目的共用版本 180 天、不含帳號資訊）。
+  - 服務條款：「一」加作文範文；「三」改名「三、AI 批改、作文範文、學習助手等 AI 功能」，加扣點方式（不寫數字）與「作文範文由 AI 產生，僅供學習參考，可能有錯；標示的分數帶是本站設定的目標，不是評分結果。」；「四」加「把 AI 產生的範文當成自己的作品繳交作業、投稿或參加比賽。」；「六」涵蓋作文範文的題目、「免費共用的解析與範文只來自本站題庫與歷屆試題」；重點加一點「作文範文由 AI 產生，僅供學習參考；請不要把範文當成自己的作品繳交。」。
+  - AI 處理說明：第一點「你使用 AI 批改、作文範文、學習助手等 AI 功能時，……產生作文範文時輸入或貼上的題目文字……」，加一點「作文範文由 AI 產生，僅供學習參考，可能有錯；請不要把範文當成自己的作品繳交。」；`aiConsentLabel()` 同一個範圍。已核准的學生要重新同意一次（`changes` 寫明）。
+  - `policy.test.ts`：版本、三份都有作文範文的 `changes`、提到作文範文的段落沒有點數數字、保存期限和 `EXEMPLAR_LIMITS.retentionDays` 一致、不寫「下一位」、沒有考試單位名稱、沒有雜誌小考卷的字。
+- **AI 申請頁**：作文範文開放時說明多一段（連到範文首頁、「請不要當成自己的作品繳交」）、點數表多一列（`task_points.essay_exemplars`，後備是 `AI_TASK_POINTS`）、上限多「作文範文每天最多 20 組」、退還那一句加「產生範文」（`AiApplyPage.test.tsx`）。
+- **`custom-essay.ts:104`**：自訂題目的拒收訊息 `request_to_ai` 改成「題目欄只放題目本身。這裡只批改你自己寫的作文、不代寫；想看範文請用「作文範文」。」（只改文字，`CUSTOM_PROMPT_RULES_VERSION` 不變；`writing-custom.spec.ts` 一起改）。
+- **文件（§10.3）**：`ARCHITECTURE.md`（§6.1 任務表一列、§6.2 第 5 條、§7 第三個例外、§8.2、§8.3 兩列、§8.4、§10.4、§11）、`SPEC.md`（§1.3 第 4 點、§6.9）、`SETUP-KEYS.md` 新 §8.5（§8.4 已經是學習助手國文）、`ROADMAP.md`（已上線的功能、D6 加一項）、`custom-essay.md` 與 `bank-writing.md` 的後記。`DB_SCHEMA.md` 在 E1 已經寫好。
+- **還沒做**：§2.2 的「實測三級分數中位數」（要等這次的評測結果；標示不符時改標示，另一個小 PR）；開關打開後的視覺基準（要附站主同意）；上線當天站主逐則確認常見的錯的紀錄。

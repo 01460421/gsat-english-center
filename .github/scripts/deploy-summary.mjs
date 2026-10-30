@@ -13,12 +13,14 @@
 //
 // 作文範文的開關（AI_ESSAY_EXEMPLARS：off／admin／on；docs/design/model-essays.md §7.6）多一列，寫出 wrangler.toml 的值
 // （對所有人開放／只有管理員能用／關閉）。規則同學習助手：/api/features 只在 on 時有 essayExemplars，所以只比 on，對不起來時印
-// ::warning::；admin 印 ::notice::（用管理員帳號登入確認，查完改回 on）。off（真模型評測達標、上線之前）只有這一列，沒有提醒。
+// ::warning::；admin 印 ::notice::（用管理員帳號登入確認，查完改回 on）。off（緊急關閉）只有這一列，沒有提醒。
+// 2026-10-30 上線後 wrangler.toml 是 on，Summary 是「對所有人開放」、沒有提醒。
 //
 // 學習助手英文以外的科目（AI_ASSISTANT_SUBJECTS、AI_ASSISTANT_SUBJECTS_PHOTO：off／admin／on；docs/design/assistant-subjects.md §7.5）
 // 多兩列「學習助手國文」「學習助手國文拍照」，寫出 wrangler.toml 的值。國文要學習助手本身也開放、國文拍照另外要學習助手的拍照：
 // /api/features 只在都是 on 時有 assistantSubjects（[{ subject: 'chinese', photo }]），所以只比 on，對不起來時印 ::warning::；
-// admin 印 ::notice::（只有管理員能用，/api/me 的 assistant_preview.subjects）。off（評測達標、上線之前）只有這兩列，沒有提醒。
+// admin 印 ::notice::（只有管理員能用，/api/me 的 assistant_preview.subjects）。off（緊急關閉）只有這兩列，沒有提醒。
+// 2026-10-30 上線後 wrangler.toml 兩個都是 on，Summary 兩列都是「對所有人開放」、沒有提醒。
 //
 // 只讀公開端點的布林與機密的「名稱」，不印任何機密值。buildDeploySummary 是純函式（apps/api/test/deploy-summary.test.ts 測它）。
 import { appendFileSync, readFileSync } from 'node:fs';
