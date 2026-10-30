@@ -2169,3 +2169,4 @@ COALESCE(json_extract(ref_json, '$.subject'), 'english')
 - 沒達標兩項，已修：
   1. **輸出 D8 命中 2 欄（F-115-2 的 tested_zh、checklist_zh[2]）**：兩欄都是照國寫題目引用。輸入檢查允許每個區塊 1 個窗口，題目本身的窗口被模型照引時整欄被藏。改成：輸出比對不算題目本身（區塊、文章、說明、國寫附的段落）裡的窗口（`zhQuestionWindows`），題目以外多寫的窗口照樣命中（`d8.zh.test.ts`）。
   2. **簡答示範被拿掉 4／14**：程式的字數含標點（答題卷一格一字），提示只寫「N characters」，模型照字數寫滿再加標點就超過。提示改成「N characters including punctuation」，並要求示範寫到上限的八成左右（`assist-prompts-zh.json` 已更新）。
+- **國文拍照（站主決定，2026-10-30：「拍照也可」）**：J 組沒有全部達標（10 張裡 8 張逐字錯誤率 0–4%；J-02 字形題 3 個錯字被改正 2 個；J-09 直書沒認出題目），站主決定第一版就開拍照。上線 PR 把 `AI_ASSISTANT_SUBJECTS_PHOTO` 改成 "on"。保護措施：確認畫面的字形題提醒（學生對照照片逐字核對）；解析時字形題的錯字少於題目暗示的數量就標 certainty=unsure 並說明可能被自動改正（H-autocorrected 已通過）；轉錄看不出題目時照常退還點數。之後補實拍照片再跑 J 組，看要不要再調轉錄提示。
