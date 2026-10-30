@@ -15,6 +15,7 @@
  * 進到首頁的主程式（理由同 custom-essay.ts）。
  */
 import type { AssistDetectedSubject, AssistSubject } from './assist-subjects';
+import type { ZhExemplarView } from './assist-zh-exemplar';
 import {
   checkZhQuestion,
   type ZhAnalysisView,
@@ -56,8 +57,11 @@ import { EMAIL_RE, PHONE_RE } from './writing-mechanics';
 
 // ───────────────────────── 任務、來源、大題 ─────────────────────────
 
-/** 學習助手的四個 AI 任務（代號同時登記在 writing.ts 的 AI_TASKS）。 */
-export const ASSIST_TASKS = ['assist_ocr', 'assist_analyze', 'assist_followup', 'assist_report'] as const satisfies readonly AiTask[];
+/**
+ * 學習助手的 AI 任務（代號同時登記在 writing.ts 的 AI_TASKS）：轉錄、解析、追問、報告，以及國寫案例的整篇 AI 示範
+ * （assist_zh_exemplar；國寫範文設計 §1：turn 的 kind 仍是 followup，以 meta_json.task＝'zh_exemplar' 區分）。
+ */
+export const ASSIST_TASKS = ['assist_ocr', 'assist_analyze', 'assist_followup', 'assist_report', 'assist_zh_exemplar'] as const satisfies readonly AiTask[];
 export type AssistTask = (typeof ASSIST_TASKS)[number];
 
 /** 這個任務代號是不是學習助手的任務（consumer 依它分流，housekeeping 依它分開回收）。 */
@@ -325,7 +329,11 @@ export interface AssistHistoryLine {
   case_ids: string[];
 }
 
-export type AssistTurnKind = 'ocr' | 'analyze' | 'followup';
+/**
+ * turn 的種類（畫面形狀）。國寫範文的 turn 在資料庫是 followup（assist_turns 的 CHECK 只允許 ocr／analyze／followup），
+ * 以 meta_json.task＝'zh_exemplar' 區分；詳情與匯出回 'zh_exemplar'（國寫範文設計 §1、§9.1）。
+ */
+export type AssistTurnKind = 'ocr' | 'analyze' | 'followup' | 'zh_exemplar';
 export interface AssistTurnView {
   id: string;
   seq: number;
@@ -337,6 +345,8 @@ export interface AssistTurnView {
   ocr?: AssistOcrView;
   analysis?: AssistAnalysisView | AssistWritingView | AssistVocabView | ZhAnalysisView;
   reply?: AssistFollowupView | ZhFollowupView;
+  /** 國寫範文（kind 是 zh_exemplar、status 是 done 才有）。 */
+  exemplar?: ZhExemplarView;
   failure?: AiRefundReason | null;
   /** 國文解析或轉錄判定科目不符而退還時，模型判斷的科目（畫面依它請學生換科目；docs/design/assistant-subjects.md §2.5）。 */
   detected_subject?: AssistDetectedSubject;
@@ -715,6 +725,9 @@ export const ASSIST_LIMITS = {
   casesLive: 500,
   analysesPerCase: 2,
   followupsPerCase: 8,
+  /** 國寫範文：每個案例最多 2 篇（完成＋進行中；失敗不算）、每人每天 3 篇（國寫範文設計 §6）。 */
+  zhExemplarsPerCase: 2,
+  zhExemplarsPerDay: 3,
   reportsPerDay: 2,
   ocrPerDay: 6,
   photosPerCase: 2,

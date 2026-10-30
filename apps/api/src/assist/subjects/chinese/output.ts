@@ -18,7 +18,8 @@
  *      簡答不能有示範的原句；拿掉後少於 2 階時補一階固定提示。
  *   11 確定程度上限（ZH_CERTAINTY_CAPS；模型的題型、該題的 item_type、guessZhSection 任一命中）。
  *   12 字數與不代寫：簡答示範超過字數拿掉（demo_removed）、語譯題示範留空、學生答案字數與抄錄檢查、國寫示範規則、問題（一）示範字數、
- *      等第句、連續漢字上限。
+ *      等第句、連續漢字上限。國寫的示範段另外跑寫作規則（samples.ts 的 zhDemoGuards；國寫範文設計 §10）：比賽語料指紋、比賽套語、
+ *      編造的名言命中就拿掉那一筆（example_rule_removed），驚嘆號與半形標點就地修正。
  *   13 台灣標準（standards.ts；簡體字 ≥ 3 個時回 retry 要求重寫一次）。
  *   14 D8：每一個說明欄位比對英文與國文的 8 字窗口（d8.ts 的 zhD8Hit；題目本身的窗口不算，國寫的解析與追問用長度門檻）與評分原則的句型（zhOfficialStyleHit）；簡答的示範、要點、
  *      檢核與國寫問題（一）的示範、要點另外跑短答比對（zhShortAnswerHit）。命中都算進 meta.d8_hidden（consumer 寫 assist_d8_output）。
@@ -98,9 +99,11 @@ import {
 import { FILTERED_PLACEHOLDER, replaceExamBoard } from '../../../ai/filter';
 import type { ZhAnalysisPostprocessed, ZhFollowupContext, ZhFollowupPostprocessed, ZhOutputContext } from '../types';
 import { zhCheckClassics } from './classics';
+import { zhContestQuestionWindows } from './contest';
 import { zhD8Hit, zhEnglishSetHit, zhOfficialStyleHit, zhQuestionWindows, zhShortAnswerHit, type ZhD8Options } from './d8';
 import { zhCheckQuotes, zhLocateQuote } from './quotes';
 import type { ZhChoiceOutput, ZhFollowupOutput, ZhShortOutput, ZhWritingOutput } from './schemas';
+import { zhDemoGuards } from './samples';
 import { zhChoiceItemVerdict, zhRefreshChoiceItem, zhShortPartVerdict } from './settle';
 import { zhApplyFollowupStandards, zhApplyStandards } from './standards';
 
@@ -129,8 +132,8 @@ export function zhSubjectMismatch(detected: string): AssistDetectedSubject | nul
 
 // ───────────────────────── 共用的清理工具 ─────────────────────────
 
-/** 國文的清理工具：長度（ZH_FIELD_LIMITS）→ 內容過濾 → D8 → 品牌字樣；計數寫進 checks。 */
-class ZhCleaner {
+/** 國文的清理工具：長度（ZH_FIELD_LIMITS）→ 內容過濾 → D8 → 品牌字樣；計數寫進 checks。國寫範文的說明欄位也用它（exemplar.ts）。 */
+export class ZhCleaner {
   readonly checks: ZhChecks = {};
   readonly notices: ZhNotice[] = [];
   readonly meta = { d8_hidden: 0, filtered: 0, truncated: 0 };
@@ -173,7 +176,7 @@ class ZhCleaner {
     return [...items];
   }
 
-  /** 說明欄位：長度 → 過濾 → D8（英文與國文集合）→ 品牌字樣；國寫另外拿掉等第句、截斷過長的連續漢字。 */
+  /** 說明欄位：長度 → 過濾 → D8（英文與國文集合）→ 品牌字樣；國寫（指導與範文）另外拿掉等第句、截斷過長的連續漢字。 */
   text(raw: string, path: string, field: string, opts: { hanRun?: boolean } = {}): string {
     if (raw.trim() === '') return '';
     const max = zhFieldLimit(this.kind, path)?.chars ?? 2_000;
@@ -191,7 +194,7 @@ class ZhCleaner {
       return ZH_D8_HIDDEN_TEXT;
     }
     text = replaceExamBoard(text).text;
-    if (this.kind === 'zh_writing') {
+    if (this.kind === 'zh_writing' || this.kind === 'zh_exemplar') {
       const graded = zhStripGradeSentences(text);
       if (graded.removed > 0) {
         this.count('grade_removed', graded.removed);
@@ -895,6 +898,18 @@ function postWriting(c: ZhCleaner, raw: ZhWritingOutput, q: AssistQuestionView):
     c.notice('example_removed', 'examples');
     c.count('demo_removed', fitted.removed);
   }
+  // 示範段的寫作規則（國寫範文設計 §10）：比賽指紋（題目本身的窗口不算）、比賽套語、要拿掉的引文任一命中就拿掉那一筆；
+  // 驚嘆號與半形標點就地修正；競賽詞彙、高頻人物、通用套語只計數。不重試（示範只是國寫指導的一小部分）。
+  const contest = { set: c.ctx.zh.contest, allowed: zhContestQuestionWindows(q) };
+  const guarded = fitted.kept.flatMap((e) => {
+    if (e.cleaned === '' || e.cleaned === ZH_D8_HIDDEN_TEXT || e.cleaned === FILTERED_PLACEHOLDER) return [e];
+    const text = zhDemoGuards(e.cleaned, q, contest, c.checks);
+    return text === null ? [] : [{ ...e, cleaned: text }];
+  });
+  if (guarded.length < fitted.kept.length) {
+    c.count('example_rule_removed', fitted.kept.length - guarded.length);
+    c.notice('example_rule_removed', 'examples');
+  }
   const draft = q.draft
     ? {
         target: q.draft.target,
@@ -940,7 +955,7 @@ function postWriting(c: ZhCleaner, raw: ZhWritingOutput, q: AssistQuestionView):
       part_zh: c.text(o.part_zh, 'outline[].part_zh', `outline[${i}].part_zh`),
       hint_zh: zhTrimToFirstSentence(c.text(o.hint_zh, 'outline[].hint_zh', `outline[${i}].hint_zh`)),
     })),
-    examples: fitted.kept.map((e) => ({ use_zh: e.use_zh, text: e.cleaned })).filter((e) => e.text !== ''),
+    examples: guarded.map((e) => ({ use_zh: e.use_zh, text: e.cleaned })).filter((e) => e.text !== ''),
     pitfalls_zh: c.textList(raw.pitfalls_zh, 'pitfalls_zh', 'pitfalls_zh'),
     draft,
     checklist_zh: c.textList(raw.checklist_zh, 'checklist_zh', 'checklist_zh'),

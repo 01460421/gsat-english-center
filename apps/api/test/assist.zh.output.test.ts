@@ -26,10 +26,12 @@ import {
   zhBlocks,
   zhChoiceOutput,
   zhDecoyFingerprints,
+  zhExemplarFingerprints,
   zhFollowupOutput,
   zhOcrOutput,
   zhShortOutput,
   zhWritingOutput,
+  ZH_DECOY_CONTEST,
   ZH_DECOY_OFFICIAL,
   ZH_DECOY_SHORT_ANSWER,
   ZH_FORM_SINGLE,
@@ -542,6 +544,45 @@ describe('國寫不代寫（§5.5）', () => {
     expect(v.q1).toMatchObject({ demo_zh: '' });
     expect(v.q1!.points.map((p) => p.quote)).toEqual(['多數學生每天使用手機超過三小時', '']);
     expect(v.notices).toContainEqual({ kind: 'demo_removed', field: 'q1.demo_zh' });
+  });
+});
+
+describe('國寫指導的示範段（國寫範文設計 §10）', () => {
+  it('比賽指紋、比賽套語、編造的名言：整筆拿掉並說明（example_rule_removed）；驚嘆號就地修正；題目本身的句子不算', () => {
+    const q = question(zhBlocks(['question', null, WRITING_REASON]), { format: 'writing' });
+    const r = analyze(
+      zhWritingOutput({
+        section: 'zh_writing_reason',
+        examples: [
+          { use_zh: '開頭', text: `我想起${ZH_DECOY_CONTEST.slice(5, 22)}。` },
+          { use_zh: '轉折', text: '也無風雨也無晴，我終於放下手機。' },
+          { use_zh: '收束', text: '那一小時，我把時間還給了自己！' },
+        ],
+      }),
+      q,
+      { zh: zhExemplarFingerprints() },
+    );
+    const v = writing(r);
+    expect(v.examples).toEqual([{ use_zh: '收束', text: '那一小時，我把時間還給了自己。' }]);
+    expect(v.notices).toContainEqual({ kind: 'example_rule_removed', field: 'examples' });
+    const named = writing(
+      analyze(zhWritingOutput({ section: 'zh_writing_reason', examples: [{ use_zh: '主體段示範', text: '有位哲學家曾說：「人生就是不斷選擇自己要走的路。」所以我放下手機。' }] }), q, {
+        zh: zhExemplarFingerprints(),
+      }),
+    );
+    expect(named.examples).toEqual([]);
+    expect(named.notices).toContainEqual({ kind: 'example_rule_removed', field: 'examples' });
+    // 題目的素材引了誘餌：照引不算抄寫。
+    const quoting = question(zhBlocks(['passage', null, ZH_DECOY_CONTEST], ['question', null, WRITING_REASON]), { format: 'writing' });
+    const kept = writing(analyze(zhWritingOutput({ section: 'zh_writing_reason', examples: [{ use_zh: '開頭', text: `我想起${ZH_DECOY_CONTEST.slice(5, 22)}。` }] }), quoting, { zh: zhExemplarFingerprints() }));
+    expect(kept.examples).toHaveLength(1);
+  });
+
+  it('沒有比賽集合（舊的指紋檔）時只跑套語與引文規則', () => {
+    const q = question(zhBlocks(['question', null, WRITING_REASON]), { format: 'writing' });
+    const v = writing(analyze(zhWritingOutput({ section: 'zh_writing_reason', examples: [{ use_zh: '開頭', text: `我想起${ZH_DECOY_CONTEST.slice(5, 22)}。` }] }), q));
+    expect(v.examples).toHaveLength(1);
+    expect(v.notices).not.toContainEqual({ kind: 'example_rule_removed', field: 'examples' });
   });
 });
 

@@ -189,9 +189,9 @@ describe('設定（src/config.ts）', () => {
     expect(bad.find((c) => c.id === 'workspaces_vs_tier')?.ok).toBe(false);
   });
 
-  it('wrangler.toml 的 [vars] 與 CONFIG_DEFAULTS 一致（避免兩邊預設值走鐘；AI_CUSTOM_ESSAY、AI_ASSISTANT、AI_ASSISTANT_PHOTO、AI_ESSAY_EXEMPLARS、AI_ASSISTANT_SUBJECTS、AI_ASSISTANT_SUBJECTS_PHOTO 例外，見下面的測試）', () => {
+  it('wrangler.toml 的 [vars] 與 CONFIG_DEFAULTS 一致（避免兩邊預設值走鐘；AI_CUSTOM_ESSAY、AI_ASSISTANT、AI_ASSISTANT_PHOTO、AI_ESSAY_EXEMPLARS、AI_ASSISTANT_SUBJECTS、AI_ASSISTANT_SUBJECTS_PHOTO、AI_ZH_EXEMPLAR 例外，見下面的測試）', () => {
     const toml = readFileSync(new URL('../wrangler.toml', import.meta.url), 'utf8');
-    const exceptions = ['AI_CUSTOM_ESSAY', 'AI_ASSISTANT', 'AI_ASSISTANT_PHOTO', 'AI_ESSAY_EXEMPLARS', 'AI_ASSISTANT_SUBJECTS', 'AI_ASSISTANT_SUBJECTS_PHOTO'];
+    const exceptions = ['AI_CUSTOM_ESSAY', 'AI_ASSISTANT', 'AI_ASSISTANT_PHOTO', 'AI_ESSAY_EXEMPLARS', 'AI_ASSISTANT_SUBJECTS', 'AI_ASSISTANT_SUBJECTS_PHOTO', 'AI_ZH_EXEMPLAR'];
     for (const [name, value] of Object.entries(CONFIG_DEFAULTS)) {
       if (exceptions.includes(name)) continue;
       const m = toml.match(new RegExp(`^${name}\\s*=\\s*"([^"]*)"`, 'm'));
@@ -266,6 +266,25 @@ describe('設定（src/config.ts）', () => {
     } finally {
       console.warn = warn;
     }
+  });
+
+  it('AI_ZH_EXEMPLAR：程式預設固定是 off；wrangler.toml 明確寫 "off"、"admin" 或 "on"（國寫範文設計 §7）；fail closed，不影響其他開關', () => {
+    // 後端先以 "off" 合併，前端完成後改成 "on"；緊急關閉或只留給管理員都只改 wrangler.toml 那一行，部署前的測試不擋任何一種。
+    expect(CONFIG_DEFAULTS.AI_ZH_EXEMPLAR).toBe('off');
+    const toml = readFileSync(new URL('../wrangler.toml', import.meta.url), 'utf8');
+    expect(toml.match(/^AI_ZH_EXEMPLAR\s*=\s*"([^"]*)"/m)?.[1], 'wrangler.toml 的 [vars] 要明確寫 AI_ZH_EXEMPLAR = "off"、"admin" 或 "on"').toMatch(/^(off|admin|on)$/);
+    expect(loadConfig(baseEnv).ai.zhExemplar).toBe('off');
+    for (const v of ['on', ' ON ']) expect(loadConfig({ ...baseEnv, AI_ZH_EXEMPLAR: v }).ai.zhExemplar, v).toBe('on');
+    expect(loadConfig({ ...baseEnv, AI_ZH_EXEMPLAR: 'Admin' }).ai.zhExemplar).toBe('admin');
+    const warn = console.warn;
+    console.warn = () => {};
+    try {
+      for (const v of ['true', 'onn', 'yes']) expect(loadConfig({ ...baseEnv, AI_ZH_EXEMPLAR: v }).ai.zhExemplar, v).toBe('off');
+    } finally {
+      console.warn = warn;
+    }
+    const mixed = loadConfig({ ...baseEnv, AI_ZH_EXEMPLAR: 'on' });
+    expect([mixed.ai.assistantSubjects, mixed.ai.essayExemplars]).toEqual(['off', 'off']);
   });
 
   it('AI_ESSAY_EXEMPLARS：程式預設固定是 off；wrangler.toml 明確寫 "off"、"admin" 或 "on"（docs/design/model-essays.md §7.5）；effort 兩邊都是 medium', () => {

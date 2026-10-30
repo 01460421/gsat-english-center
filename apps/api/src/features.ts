@@ -12,6 +12,9 @@
  * 都是 on 時才出現（第一版只有國文）；每一科的 photo 由這裡依 AI_ASSISTANT_PHOTO 與 AI_ASSISTANT_SUBJECTS_PHOTO 算（兩個都 on 才是
  * true），前端只看這裡、不看 shared 的常數。admin 模式不回（管理員的預覽在 /api/me 的 assistant_preview.subjects）。
  * 對某位使用者開不開一律問 assistantSubjectAccess（國文的寫入端點也用它）。
+ * 國文的 exemplar（國寫範文設計 §7）：國文對這位使用者開放而且 AI_ZH_EXEMPLAR 是 on（或 admin 而這位是管理員）時，那一科多一個
+ * exemplar: true；公開端點只在 on 時出現，admin 模式由 /api/me 的 assistant_preview.subjects 帶（和公開清單不同就會出現）。
+ * 對某位使用者開不開一律問 zhExemplarAccess（範文的端點與 /api/ai/quota 也用它）。
  * aiPaused 讀今天（台灣日期）的 ai_budget_daily.paused；查詢失敗（例如遷移還沒套用）時當成暫停，
  * 寧可不顯示 AI 按鈕，也不要讓學生按了才收到錯誤。
  */
@@ -80,11 +83,22 @@ export function assistantSubjectAccess(config: AppConfig, role: UserRole | null,
   return { enabled, photo: enabled && base.photo && allows(config.ai.assistantSubjectsPhoto) };
 }
 
-/** 對這位使用者開放的英文以外科目與各科的拍照（依 ASSIST_SWITCHED_SUBJECTS 的順序）。 */
+/**
+ * 國寫範文對這位使用者開不開（國寫範文設計 §7）：國文對他開放，而且 AI_ZH_EXEMPLAR 是 on，或 admin 而這位是管理員。
+ * role 是 null＝沒登入（只看得到 on 的公開開放）。範文的端點、/api/features、/api/me 與 /api/ai/quota 都用這一支。
+ */
+export function zhExemplarAccess(config: AppConfig, role: UserRole | null): { enabled: boolean } {
+  const mode = config.ai.zhExemplar;
+  return { enabled: assistantSubjectAccess(config, role, 'chinese').enabled && (mode === 'on' || (mode === 'admin' && role === 'admin')) };
+}
+
+/** 對這位使用者開放的英文以外科目與各科的拍照、國寫範文（依 ASSIST_SWITCHED_SUBJECTS 的順序；exemplar 只在開放時出現）。 */
 function subjectsFor(config: AppConfig, role: UserRole | null): AssistSubjectAvailability[] {
   return ASSIST_SWITCHED_SUBJECTS.flatMap((subject) => {
     const access = assistantSubjectAccess(config, role, subject);
-    return access.enabled ? [{ subject, photo: access.photo }] : [];
+    if (!access.enabled) return [];
+    const exemplar = subject === 'chinese' && zhExemplarAccess(config, role).enabled;
+    return [{ subject, photo: access.photo, ...(exemplar ? { exemplar: true } : {}) }];
   });
 }
 

@@ -4,11 +4,14 @@
  *   - d8-fingerprints.json 的 zh 鍵：解碼、壞檔一律回 null（fail closed）；打包的真檔解得開、筆數在下限以上；英文的集合與版本不變；
  *   - 比對：輸入同一區塊 ≥ 2 個不同窗口才算、輸出 1 個就算、樣板遮掉不算、異體字碼也對得上；評分原則的句型；短答 3 字組包含率；
  *   - 產生器的 buildZhD8Bundle、buildZhClassics。
+ *   - 比賽語料指紋（國寫範文設計 §5.3）：Worker 的雜湊和 zh-contest-fingerprint.mjs 逐位元相同；zh.contest 是必填（沒有、筆數不符或
+ *     少於下限 → 整個國文集合 null）；打包的真檔解得開。
  * 誘餌都是本站自寫的句子（helpers/zh.ts），不用任何官方文字；真檔只有雜湊。
  */
 import { beforeEach, describe, expect, it } from 'vitest';
 import { packFingerprints } from '../../../packages/shared/scripts/d8-fingerprint.mjs';
 import * as zmjs from '../../../packages/shared/scripts/d8-zh-fingerprint.mjs';
+import * as contestMjs from '../../../packages/shared/scripts/zh-contest-fingerprint.mjs';
 import { buildZhClassics, buildZhD8Bundle, ZH_CLASSICS_MAX_BYTES } from '../scripts/build-writing-prompts.mjs';
 import fpJson from '../src/generated/d8-fingerprints.json';
 import {
@@ -16,6 +19,9 @@ import {
   d8Fingerprints,
   d8Hash,
   d8HanWindows,
+  D8_ZH_CONTEST_MIN,
+  D8_ZH_CONTEST_WINDOW,
+  d8ZhContestHash,
   d8ZhFingerprints,
   d8ZhGramHash,
   d8ZhWindowHash,
@@ -43,6 +49,9 @@ describe('Worker 的國文雜湊與遮罩和產生器逐字串相同', () => {
   });
 });
 
+/** 合成的比賽語料指紋（25,000 筆以上的假雜湊；不是任何作品）。 */
+const CONTEST_HASHES = Array.from({ length: D8_ZH_CONTEST_MIN }, (_, i) => i * 7919 + 1);
+
 /** 和產生器輸出同格式的 zh 鍵（誘餌造的）。 */
 function zhBundle(official = [ZH_DECOY_OFFICIAL], short = [ZH_DECOY_SHORT_ANSWER]) {
   const windows = new Set(official.flatMap((t) => zmjs.zhD8Windows(t).map(zmjs.zhD8WindowHash)));
@@ -59,6 +68,7 @@ function zhBundle(official = [ZH_DECOY_OFFICIAL], short = [ZH_DECOY_SHORT_ANSWER
       official: { version: 'o1', count: windows.size, fp: packFingerprints(windows) },
       short: { version: 's1', count: sets.length, sets },
       boilerplate: BOILERPLATE,
+      contest: { version: 'c1', count: CONTEST_HASHES.length, fp: packFingerprints(CONTEST_HASHES) },
     },
     zh_version: 'test-zh-bundle',
   };
@@ -73,6 +83,15 @@ describe('zh 鍵的解碼（parseZhFingerprints）', () => {
     expect(zh.short[0]!.set.size).toBe(zmjs.zhD8Grams(ZH_DECOY_SHORT_ANSWER).length);
     expect(zh.boilerplate).toEqual(BOILERPLATE);
     expect(zh.threshold).toBe(0.6);
+    expect(zh.contest.size).toBe(CONTEST_HASHES.length);
+  });
+
+  it('比賽語料：Worker 的雜湊、窗口長度與下限和產生器（zh-contest-fingerprint.mjs）相同', () => {
+    expect(D8_ZH_CONTEST_WINDOW).toBe(contestMjs.ZH_CONTEST_WINDOW);
+    expect(D8_ZH_CONTEST_MIN).toBe(contestMjs.ZH_CONTEST_MIN_WINDOWS);
+    const stream = contestMjs.zhContestHanStream('放學後的操場只剩下風聲，我把球拍收進背袋。');
+    for (const w of contestMjs.zhContestWindows(stream)) expect(d8ZhContestHash(w)).toBe(contestMjs.zhContestWindowHash(w));
+    expect(d8ZhContestHash('一二三四五六七八九十甲乙')).not.toBe(d8ZhWindowHash('一二三四五六七八九十甲乙'));
   });
 
   it('壞檔一律回 null（fail closed）', () => {
@@ -92,6 +111,11 @@ describe('zh 鍵的解碼（parseZhFingerprints）', () => {
       (b) => (b.zh.short.sets = []),
       (b) => (b.zh.short.sets[0].fp = packFingerprints([1, 2, 3])),
       (b) => (b.zh.boilerplate = [1]),
+      // 比賽語料指紋是必填：沒有、筆數不符、少於下限都是壞檔。
+      (b) => delete b.zh.contest,
+      (b) => (b.zh.contest.count += 1),
+      (b) => (b.zh.contest = { version: 'c1', count: 3, fp: packFingerprints([1, 2, 3]) }),
+      (b) => (b.zh.contest.fp = 7),
     ];
     for (const [i, mutate] of bad.entries()) {
       const b = structuredClone(good);
@@ -108,6 +132,7 @@ describe('zh 鍵的解碼（parseZhFingerprints）', () => {
     expect(zh.short.length).toBeGreaterThanOrEqual(zmjs.ZH_D8_MIN_COUNTS.shortSets);
     expect(zh.short.every((s) => s.set.size >= zmjs.ZH_D8_SHORT_MIN_GRAMS)).toBe(true);
     expect(zh.boilerplate.length).toBeGreaterThan(10);
+    expect(zh.contest.size).toBeGreaterThanOrEqual(D8_ZH_CONTEST_MIN);
     const { zh: _zh, zh_version: _v, ...english } = fpJson as Record<string, unknown>;
     const en = parseFingerprints(english)!;
     expect(d8Fingerprints()).toEqual(en);
@@ -203,6 +228,8 @@ describe('產生器（build-writing-prompts.mjs）', () => {
     const parsed = parseZhFingerprints(bundle)!;
     expect(parsed.windows.size).toBe(bundle.zh.official.count);
     expect(parsed.short).toHaveLength(bundle.zh.short.count);
+    expect(parsed.contest.size).toBe(bundle.zh.contest.count);
+    expect(Object.keys(bundle.zh.contest).sort()).toEqual(['count', 'fp', 'version']);
     // 只有雜湊、筆數與「年度＋子題」（子題是題號加上題本的小題標籤），沒有答案文字。
     for (const set of bundle.zh.short.sets) {
       expect(Object.keys(set).sort()).toEqual(['alt', 'fp', 'grams', 'item', 'year']);

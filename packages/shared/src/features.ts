@@ -18,7 +18,8 @@
  *   assistantSubjects 英文以外的科目（docs/design/assistant-subjects.md §7.2、§7.5）：AI_ASSISTANT 與 AI_ASSISTANT_SUBJECTS
  *            都是 on 時才出現；每一科的 photo 由 Worker 依 AI_ASSISTANT_PHOTO 與 AI_ASSISTANT_SUBJECTS_PHOTO 算，前端只看這裡，
  *            不看 shared 的常數（Worker 與前端分開部署時，不會出現「前端顯示拍照、Worker 拒收」）。admin 模式不回
- *            （管理員的預覽在 /api/me 的 assistant_preview.subjects）。
+ *            （管理員的預覽在 /api/me 的 assistant_preview.subjects）。每一科另有選填的 exemplar（國寫範文；只有國文、只在
+ *            AI_ZH_EXEMPLAR 對這位使用者開放時是 true，國寫範文設計 §7）。
  *
  * Worker 還沒部署時，Vercel 代理會回 HTML 或 404：前端 api() 包裝把它當成 not_configured，
  * 改用 FEATURES_OFF，整站照常運作，只是不顯示登入與 AI。
@@ -47,33 +48,42 @@ export interface FeaturesResponse {
 export const ASSIST_SWITCHED_SUBJECTS = ['chinese'] as const;
 export type AssistSwitchedSubject = (typeof ASSIST_SWITCHED_SUBJECTS)[number];
 
-/** 一個科目對這位使用者開不開拍照（科目出現在清單裡＝可以貼上）。 */
+/**
+ * 一個科目對這位使用者開不開拍照（科目出現在清單裡＝可以貼上）。exemplar：國寫範文（只有國文；只在開放時出現、值一定是 true，
+ * 沒有這個欄位＝沒開放）。
+ */
 export interface AssistSubjectAvailability {
   subject: AssistSwitchedSubject;
   photo: boolean;
+  exemplar?: boolean;
 }
 
 /** API 回的原始形狀：subject 可能是較新的 Worker 才有的科目（前端不認得的略過，不讓整個回應失效）。 */
 export interface AssistSubjectAvailabilityRaw {
   subject: string;
   photo: boolean;
+  exemplar?: boolean;
 }
 
-/** 科目清單的形狀檢查：陣列（最多 10 項），每項是 { subject: 字串, photo: 布林 }。 */
+/** 科目清單的形狀檢查：陣列（最多 10 項），每項是 { subject: 字串, photo: 布林 }，exemplar 可以不存在，存在時是布林。 */
 export function isAssistSubjectAvailabilityList(value: unknown): value is AssistSubjectAvailabilityRaw[] {
   return (
     Array.isArray(value) &&
     value.length <= 10 &&
-    value.every((v) => typeof v === 'object' && v !== null && typeof (v as Record<string, unknown>)['subject'] === 'string' && typeof (v as Record<string, unknown>)['photo'] === 'boolean')
+    value.every((v) => {
+      if (typeof v !== 'object' || v === null) return false;
+      const r = v as Record<string, unknown>;
+      return typeof r['subject'] === 'string' && typeof r['photo'] === 'boolean' && (r['exemplar'] === undefined || typeof r['exemplar'] === 'boolean');
+    })
   );
 }
 
-/** 只留前端認得的科目（去重，順序照 API）。 */
+/** 只留前端認得的科目（去重，順序照 API）；exemplar 只在是 true 時帶上。 */
 export function assistSubjectAvailability(list: readonly AssistSubjectAvailabilityRaw[] | undefined | null): AssistSubjectAvailability[] {
   const out: AssistSubjectAvailability[] = [];
   for (const item of list ?? []) {
     if ((ASSIST_SWITCHED_SUBJECTS as readonly string[]).includes(item.subject) && !out.some((o) => o.subject === item.subject)) {
-      out.push({ subject: item.subject as AssistSwitchedSubject, photo: item.photo });
+      out.push({ subject: item.subject as AssistSwitchedSubject, photo: item.photo, ...(item.exemplar === true ? { exemplar: true } : {}) });
     }
   }
   return out;

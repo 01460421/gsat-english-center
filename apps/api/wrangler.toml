@@ -120,6 +120,12 @@ AI_ASSISTANT_PHOTO = "on"
 # 這兩行是例外：src/config.ts 的程式預設固定是 off（[vars] 漏設時偏向關），不用跟著改（test/skeleton.test.ts）。
 AI_ASSISTANT_SUBJECTS = "on"
 AI_ASSISTANT_SUBJECTS_PHOTO = "on"
+# 學習助手的國寫範文（國文國寫案例的「看一篇 AI 示範」；docs/design/assistant-subjects.md「國寫範文」）：只認 "on"、"admin"，
+#   其他任何值都當成關（fail closed）。另外要 AI_ASSISTANT_SUBJECTS 對這位使用者開放。
+# 目前是 "off"（後端先合併；前端完成後改成 "on"，站主決定不跑真模型評測）。
+# 緊急關閉：改成 "off" 部署（按鈕消失、端點 503；已有的範文照常可以看與刪除；已經排隊的照常完成）；只留給管理員＝"admin"。
+# 這一行是例外：src/config.ts 的程式預設固定是 off（[vars] 漏設時偏向關），不用跟著改（test/skeleton.test.ts）。
+AI_ZH_EXEMPLAR = "off"
 # 學習助手的 effort：解析與報告、追問（模型一律用 AI_MODEL_DEFAULT）。
 AI_EFFORT_ASSIST = "medium"
 AI_EFFORT_CHAT = "low"

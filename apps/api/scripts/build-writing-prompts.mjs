@@ -35,6 +35,8 @@
  *     han、en、version 不變，所以英文的快取鍵不變。讀檔時用 readZhFingerprintFile 檢查格式、筆數與版本，筆數低於下限就失敗。
  *   - apps/api/src/generated/zh-classics.json（不進版控）：data/d8/zh-public-classics.txt 的公有領域古文（篇名、作者、原文），
  *     Worker 用來核對題目以外的古文名句與默寫（≤ 300 KB）。
+ *   - 國寫範文（設計「國寫範文」§5.3）：data/d8/zh-contest.fp.json（比賽語料的 12 字窗口，只有雜湊）併進 zh 鍵的 contest，
+ *     zh_version 跟著變；用 readZhContestFile 檢查，筆數低於下限就失敗（Worker 的 parseZhFingerprints 也把它當成必填）。
  *
  * 只用 Node 22 內建模組（零依賴）。
  */
@@ -75,6 +77,7 @@ import {
   parseClassics,
   readZhFingerprintFile,
 } from '../../../packages/shared/scripts/d8-zh-fingerprint.mjs';
+import { ZH_CONTEST_FILE, ZH_CONTEST_MIN_WINDOWS, readZhContestFile } from '../../../packages/shared/scripts/zh-contest-fingerprint.mjs';
 
 // 受保護片段的收集搬到 bank-select.mjs（選題的 D8 比對用同一份），這裡轉匯出，既有的匯入不用改。
 export { restrictedFragments };
@@ -519,7 +522,8 @@ export function buildD8Fingerprints(exams, bank, options = {}) {
 
 /**
  * 國文的 D8 集合（併進 d8-fingerprints.json 的 zh 鍵與 zh_version；§5.7）。兩份指紋檔用 readZhFingerprintFile 檢查（格式、筆數、版本），
- * 樣板清單用 parseBoilerplate 讀（NFKC、去空白、長的在前）。任何一份讀不了、格式不對或筆數低於下限就丟錯（呼叫端讓產生器失敗）。
+ * 樣板清單用 parseBoilerplate 讀（NFKC、去空白、長的在前）；比賽語料指紋（國寫範文 §5.3）用 readZhContestFile 檢查。
+ * 任何一份讀不了、格式不對或筆數低於下限就丟錯（呼叫端讓產生器失敗）。
  * 回傳的物件只有雜湊、筆數、「年度＋子題」與公開的樣板字樣。
  * @param {string} [repoRoot]
  */
@@ -533,6 +537,9 @@ export function buildZhD8Bundle(repoRoot = REPO_ROOT) {
     throw new Error(`國文指紋筆數低於下限（8 字窗口 ${official.set.size}／${ZH_D8_MIN_COUNTS.windows}、短答 ${short.sets.length}／${ZH_D8_MIN_COUNTS.shortSets} 組）`);
   }
   const boilerplate = parseBoilerplate(readFileSync(path.join(repoRoot, ZH_D8_BOILERPLATE_FILE), 'utf8'));
+  const contestRaw = JSON.parse(readFileSync(path.join(repoRoot, ZH_CONTEST_FILE), 'utf8'));
+  const contest = readZhContestFile(contestRaw);
+  if (contest.set.size < ZH_CONTEST_MIN_WINDOWS) throw new Error(`比賽語料指紋筆數低於下限（${contest.set.size}／${ZH_CONTEST_MIN_WINDOWS}）`);
   /** @type {Array<{ year: string, item: string, alt: number, grams: number, fp: string }>} */
   const sets = shortRaw.sets.map((/** @type {{ year: string, item: string, alt: number, grams: number, fp: string }} */ s) => ({ year: s.year, item: s.item, alt: s.alt, grams: s.grams, fp: s.fp }));
   const zh = {
@@ -543,8 +550,9 @@ export function buildZhD8Bundle(repoRoot = REPO_ROOT) {
     official: { version: official.version, count: official.set.size, fp: /** @type {string} */ (officialRaw.fp) },
     short: { version: short.version, count: sets.length, sets },
     boilerplate,
+    contest: { version: contest.version, count: contest.set.size, fp: /** @type {string} */ (contestRaw.fp) },
   };
-  return { zh, zh_version: sha256([official.version, short.version, boilerplate.join('\n')].join('|')).slice(0, 12) };
+  return { zh, zh_version: sha256([official.version, short.version, boilerplate.join('\n'), contest.version].join('|')).slice(0, 12) };
 }
 
 /**
@@ -635,7 +643,7 @@ function main() {
     process.exit(1);
   }
   console.log(
-    `[writing-prompts] 國文 D8 指紋：8 字窗口 ${zhBundle.zh.official.count}、短答 ${zhBundle.zh.short.count} 組、樣板 ${zhBundle.zh.boilerplate.length} 個（版本 ${zhBundle.zh_version}）；古文語料 ${classics.works.length} 篇`,
+    `[writing-prompts] 國文 D8 指紋：8 字窗口 ${zhBundle.zh.official.count}、短答 ${zhBundle.zh.short.count} 組、樣板 ${zhBundle.zh.boilerplate.length} 個、比賽語料 ${zhBundle.zh.contest.count} 個（版本 ${zhBundle.zh_version}）；古文語料 ${classics.works.length} 篇`,
   );
   const json = JSON.stringify(bank);
   const bankCount = Object.values(bank.groups).filter((g) => g.origin === 'bank').length;

@@ -15,6 +15,8 @@
  *     5. 說明欄位的字碼統一（ZH_TW_FORM_MAP：内→內、着→著…；tw_form_replaced）。quote、卡片的 head 與學生的文字不改（那是原文）。
  *     6. 回傳替換後仍在的簡體專用字（不同的字；≥ 3 個時 output.ts 要求重寫一次，simplified_retry）。
  *   zhApplyFollowupStandards  追問的說明欄位：字碼統一與簡體字。
+ *   zhApplyExemplarStandards  國寫範文（國寫範文設計 §5.1 第 4 步）：全部文字欄位（含段落本文）的字碼統一與簡體字；簡體字 ≥ 3 個時
+ *                             exemplar.ts 要求重寫一次（R3）。修辭名稱不換：範文的說明用「比喻」這類一般用語（方法卡也這樣寫）。
  */
 import {
   guessZhSection,
@@ -37,6 +39,7 @@ import {
   type ZhCardView,
   type ZhCertainty,
   type ZhChecks,
+  type ZhExemplarView,
   type ZhChoiceItemView,
   type ZhChoiceView,
   type ZhFollowupView,
@@ -44,7 +47,7 @@ import {
   type ZhRowFlag,
 } from '@gsat/shared';
 import type { ZhOutputContext } from '../types';
-import { zhExplainFields, zhFollowupFields, type ZhTextField } from './fields';
+import { zhExemplarFields, zhExplainFields, zhFollowupFields, type ZhTextField } from './fields';
 
 export interface ZhStandardsResult<V> {
   view: V;
@@ -389,4 +392,9 @@ export function zhApplyStandards<V extends ZhAnalysisView>(view: V, ctx: ZhOutpu
 /** 追問的台灣標準：說明欄位的字碼統一與簡體字。 */
 export function zhApplyFollowupStandards(view: ZhFollowupView, checks: ZhChecks): ZhStandardsResult<ZhFollowupView> {
   return { view, simplified: applyForms(zhFollowupFields(view), checks) };
+}
+
+/** 國寫範文的台灣標準：全部文字欄位（含段落本文）的字碼統一與簡體字。 */
+export function zhApplyExemplarStandards(view: ZhExemplarView, checks: ZhChecks): ZhStandardsResult<ZhExemplarView> {
+  return { view, simplified: applyForms(zhExemplarFields(view), checks) };
 }

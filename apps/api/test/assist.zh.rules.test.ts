@@ -29,7 +29,18 @@ import { describe, expect, it } from 'vitest';
 import { buildClaudeRequest, outgoingJsonSchema, type ClaudeCallInput } from '../src/ai/client';
 import { STRUCTURAL_TAGS } from '../src/ai/filter';
 import { assistAnalyzeSchema, assistAnalyzeSystemText, ASSIST_ANALYZE_TEMPLATE_VERSIONS } from '../src/ai/prompts/assist-analyze';
-import { assistZhFollowupSchema, assistZhFollowupSystemText, assistZhSchema, assistZhSystemText, zhLengthLimits, ZH_ANALYZE_TEMPLATE_VERSIONS, ZH_FOLLOWUP_TEMPLATE_VERSION } from '../src/ai/prompts/assist-zh';
+import {
+  assistZhExemplarSchema,
+  assistZhExemplarSystemText,
+  assistZhFollowupSchema,
+  assistZhFollowupSystemText,
+  assistZhSchema,
+  assistZhSystemText,
+  zhLengthLimits,
+  ZH_ANALYZE_TEMPLATE_VERSIONS,
+  ZH_EXEMPLAR_TEMPLATE_VERSION,
+  ZH_FOLLOWUP_TEMPLATE_VERSION,
+} from '../src/ai/prompts/assist-zh';
 import { ASSIST_ZH_OCR_TEMPLATE_VERSION, assistZhOcrSchema, assistZhOcrSystemText } from '../src/ai/prompts/assist-zh-ocr';
 import { reserveMicros, taskConfig } from '../src/ai/tasks';
 import { CONFIG_DEFAULTS, loadConfig } from '../src/config';
@@ -43,13 +54,14 @@ const FIXTURE = new URL('./fixtures/assist-prompts-zh.json', import.meta.url);
 const sha256 = async (s: string) => [...new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s)))].map((b) => b.toString(16).padStart(2, '0')).join('');
 const ANALYZE_KINDS: ZhCaseKind[] = ['zh_choice', 'zh_short', 'zh_writing'];
 
-/** 國文的五份輸出：系統提示、送出前的 schema、範本版本。 */
+/** 國文的六份輸出（三種解析、追問、轉錄、國寫範文）：系統提示、送出前的 schema、範本版本。 */
 const OUTPUTS: Record<ZhOutputKind, { system: string; schema: Record<string, unknown>; template: string }> = {
   zh_choice: { system: assistZhSystemText('zh_choice'), schema: outgoingJsonSchema(assistZhSchema('zh_choice'), { inlineRefs: true }), template: ZH_ANALYZE_TEMPLATE_VERSIONS.zh_choice },
   zh_short: { system: assistZhSystemText('zh_short'), schema: outgoingJsonSchema(assistZhSchema('zh_short'), { inlineRefs: true }), template: ZH_ANALYZE_TEMPLATE_VERSIONS.zh_short },
   zh_writing: { system: assistZhSystemText('zh_writing'), schema: outgoingJsonSchema(assistZhSchema('zh_writing'), { inlineRefs: true }), template: ZH_ANALYZE_TEMPLATE_VERSIONS.zh_writing },
   zh_followup: { system: assistZhFollowupSystemText(), schema: outgoingJsonSchema(assistZhFollowupSchema, { inlineRefs: true }), template: ZH_FOLLOWUP_TEMPLATE_VERSION },
   zh_ocr: { system: assistZhOcrSystemText(), schema: outgoingJsonSchema(assistZhOcrSchema, { inlineRefs: true }), template: ASSIST_ZH_OCR_TEMPLATE_VERSION },
+  zh_exemplar: { system: assistZhExemplarSystemText(), schema: outgoingJsonSchema(assistZhExemplarSchema, { inlineRefs: true }), template: ZH_EXEMPLAR_TEMPLATE_VERSION },
 };
 
 const FIXTURE_NOTE =
@@ -102,6 +114,8 @@ describe('§3.1 國文 schema 的大小預算（送出前、攤開後；要加�
     zh_writing: { leaves: 32, arrays: 14, objectArrays: 6, depth: 2, root: 19 },
     zh_followup: { leaves: 9, arrays: 3, objectArrays: 1, depth: 2, root: 8 },
     zh_ocr: { leaves: 8, arrays: 4, objectArrays: 2, depth: 3, root: 5 },
+    // 國寫範文設計 §3.1：15 葉、全部陣列 5、物件陣列 3、深度 2、根欄位 8。
+    zh_exemplar: { leaves: 15, arrays: 5, objectArrays: 3, depth: 2, root: 8 },
   };
 
   it.each(ZH_OUTPUT_KINDS)('%s：釘住確切數字，而且在 ASSIST_SCHEMA_BUDGET 之內', (kind) => {
@@ -152,6 +166,7 @@ describe('§3.1 國文 schema 的大小預算（送出前、攤開後；要加�
       zh_writing: ['safety_flag'],
       zh_followup: ['safety_flag'],
       zh_ocr: ['status', 'blocks[].kind', 'omitted[]'],
+      zh_exemplar: ['safety_flag'],
     });
   });
 });
@@ -190,7 +205,7 @@ describe('§3.7 國文的系統提示與 schema 的雜湊（fixtures/assist-prom
       for (const part of CONFIG_DEFAULTS.AI_MODEL_DEFAULT.split('-').filter((p) => p.length >= 4)) expect(system.toLowerCase()).not.toContain(part);
       const han = system.match(/\p{Script=Han}/gu)?.length ?? 0;
       const estimate = Math.ceil((system.length - han) / 4 + han * 1.3);
-      const budget = { zh_choice: 5_500, zh_short: 5_000, zh_writing: 5_000, zh_followup: 2_000, zh_ocr: 2_500 }[kind];
+      const budget = { zh_choice: 5_500, zh_short: 5_000, zh_writing: 5_000, zh_followup: 2_000, zh_ocr: 2_500, zh_exemplar: 4_000 }[kind];
       expect(estimate, `${kind} 的系統提示約 ${estimate} tokens`).toBeLessThanOrEqual(budget);
     }
     expect(OUTPUTS.zh_writing.system).toContain('never give a grade or a score');

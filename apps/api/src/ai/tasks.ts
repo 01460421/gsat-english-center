@@ -10,7 +10,7 @@
  *   third    第三位：只有前兩位差距超過門檻（作文 >5、中譯英 >2）才呼叫，框架同第二位
  *   ocr      手寫照片轉錄（只有一位；學習助手的拍照轉錄也是）
  *   tutor    學習助手的解析、追問、報告（docs/design/learning-assistant.md §4.7.1）
- *   writer   作文範文：一次呼叫寫三個層級的範文與說明（docs/design/model-essays.md §3.1）
+ *   writer   作文範文：一次呼叫寫三個層級的範文與說明（docs/design/model-essays.md §3.1）；學習助手的國寫範文也是（一篇整篇示範）
  */
 import {
   AI_TASK_POINTS,
@@ -58,7 +58,7 @@ export type TaskTarget =
   | { kind: 'exemplar_set' };
 
 /** 任務家族每日上限的鍵（UserLimits.familyCaps；guard.ts）。 */
-export const FAMILY_CAP_KEYS = ['essay', 'assist_report', 'assist_ocr'] as const;
+export const FAMILY_CAP_KEYS = ['essay', 'assist_report', 'assist_ocr', 'assist_zh_exemplar'] as const;
 export type FamilyCapKey = (typeof FAMILY_CAP_KEYS)[number];
 
 /** 計入同一個每日上限的任務（RESERVE_SQL 的家族任務清單 ?13）與上限的鍵。 */
@@ -70,6 +70,8 @@ export interface TaskFamily {
 export const ESSAY_FAMILY: TaskFamily = { tasks: ESSAY_FAMILY_TASKS, capKey: 'essay' };
 export const ASSIST_REPORT_FAMILY: TaskFamily = { tasks: ['assist_report'], capKey: 'assist_report' };
 export const ASSIST_OCR_FAMILY: TaskFamily = { tasks: ['assist_ocr'], capKey: 'assist_ocr' };
+/** 國寫範文：每人每天 3 篇（國寫範文設計 §6；失敗退還的不算）。 */
+export const ASSIST_ZH_EXEMPLAR_FAMILY: TaskFamily = { tasks: ['assist_zh_exemplar'], capKey: 'assist_zh_exemplar' };
 
 export interface TaskConfig {
   task: AiTask;
@@ -89,8 +91,8 @@ export interface TaskConfig {
 
 /**
  * 逾時（毫秒）：OCR 90 秒、中譯英 120 秒、作文 240 秒（§6.2 第 16 條）；學習助手的轉錄與追問 90 秒、解析 180 秒
- * （題組 2 題以上 240 秒，見 taskConfig）、報告 240 秒（docs/design/learning-assistant.md §4.7.1）；作文範文 240 秒
- * （docs/design/model-essays.md §3.1）。
+ * （題組 2 題以上 240 秒，見 taskConfig）、報告 240 秒（docs/design/learning-assistant.md §4.7.1）；作文範文與國寫範文 240 秒
+ * （docs/design/model-essays.md §3.1；國寫範文設計 §6）。
  */
 export const TASK_TIMEOUT_MS = {
   essay_ocr: 90_000,
@@ -101,6 +103,7 @@ export const TASK_TIMEOUT_MS = {
   assist_followup: 90_000,
   assist_report: 240_000,
   essay_exemplars: 240_000,
+  assist_zh_exemplar: 240_000,
 } as const satisfies Record<AiTask, number>;
 /** 學習助手的題組解析（2 題以上）的逾時。 */
 export const ASSIST_ANALYZE_GROUP_TIMEOUT_MS = 240_000;
@@ -140,7 +143,8 @@ export interface AssistTaskSize {
  *                  超過 max_tokens 的 60%，依同一條規則調高，S3 實測後再定）
  *   國寫           16,000、輸入 13,500、240 秒
  *   追問           5,000、輸入 12,000、90 秒（上下文不加 5 分鐘快取標記，§3.5）
- * 點數一律由 shared 的 assistPoints 算（前端顯示、預扣同一份常數）。
+ *   國寫範文       14,000、輸入 13,500、240 秒（國寫範文設計 §6：「每欄寫滿」約 5.2k tokens，占 37%，其餘留給思考）
+ * 點數一律由 shared 的 assistPoints 算（前端顯示、預扣同一份常數）；國寫範文是 AI_TASK_POINTS.assist_zh_exemplar（8 點）。
  */
 export const ZH_TASK_SIZES = {
   ocr: { maxTokens: 8_000, input: 7_000, timeoutMs: 90_000 },
@@ -148,6 +152,7 @@ export const ZH_TASK_SIZES = {
   zh_short: { maxTokens: 13_000, perExtra: 2_900, input: 16_000 },
   zh_writing: { maxTokens: 16_000, perExtra: 0, input: 13_500 },
   followup: { maxTokens: 5_000, input: 12_000, timeoutMs: 90_000 },
+  exemplar: { maxTokens: 14_000, input: 13_500, timeoutMs: 240_000 },
 } as const;
 
 /** 國文解析的 max_tokens、輸入估計與逾時（n＝計點單位數，夾到 1 以上）。 */
@@ -320,11 +325,30 @@ export function taskConfig(task: AiTask, config: AppConfig, size?: AssistTaskSiz
         // 點數已經限制每天的組數；另有每天建立 20 組的上限（docs/design/model-essays.md §4.2）。
         family: null,
       };
+    // ── 學習助手的國寫範文（國寫範文設計 §6）：一次呼叫寫一篇整篇示範與標注。對象是 assist_turns 的一列（kind 是 followup）。──
+    case 'assist_zh_exemplar': {
+      const t = ZH_TASK_SIZES.exemplar;
+      return {
+        task,
+        points: AI_TASK_POINTS[task],
+        target: { kind: 'assist_turn' },
+        timeoutMs: t.timeoutMs,
+        maxRetries: SDK_MAX_RETRIES,
+        // 系統提示約 3.3k＋題目（最長 6,000 字約 7.8k）＋國寫指導摘要 ≤ 1.3k＋<task>（預扣＝13,500 × 1 小時快取寫入單價＋14,000 × 輸出單價）。
+        inputTokensEstimate: t.input,
+        calls: [{ role: 'writer', model: models.default, effort: effort.assist, maxTokens: t.maxTokens, framework: 'exemplar', systemCacheTtl: '1h' }],
+        family: ASSIST_ZH_EXEMPLAR_FAMILY,
+      };
+    }
   }
 }
 
 /** 學習助手家族的每日上限（UserLimits.familyCaps；設計值在 ASSIST_LIMITS）。 */
-export const ASSIST_FAMILY_DAY_CAPS = { assist_report: ASSIST_LIMITS.reportsPerDay, assist_ocr: ASSIST_LIMITS.ocrPerDay } as const;
+export const ASSIST_FAMILY_DAY_CAPS = {
+  assist_report: ASSIST_LIMITS.reportsPerDay,
+  assist_ocr: ASSIST_LIMITS.ocrPerDay,
+  assist_zh_exemplar: ASSIST_LIMITS.zhExemplarsPerDay,
+} as const;
 
 /** 取得某個角色的呼叫設定。 */
 export function callSpec(tc: TaskConfig, role: CallRole): CallSpec {

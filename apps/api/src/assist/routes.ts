@@ -10,6 +10,7 @@
  *   PUT    /cases/{id}/question           修改學生提供的題目（ocr_ready、ready、failed 才能改）         AI 核准＋開關
  *   POST   /cases/{id}/analyze            解析（6 點起；共用快取命中 0 點、回 200）→ 202                AI 核准＋開關
  *   POST   /cases/{id}/followups          追問（3 點）→ 202                                              AI 核准＋開關
+ *   POST   /cases/{id}/zh-exemplar        國寫範文（8 點；國文國寫案例、國寫指導完成後）→ 202             AI 核准＋國寫範文開關
  *   POST   /cases/{id}/photos?ord=1|2     題目照片（multipart，欄位 photo；只限拍照的題目、draft）        AI 核准＋拍照開關（WP-A3）
  *   DELETE /cases/{id}/photos             刪掉這一題的照片（轉錄進行中 409）                             登入（WP-A3）
  *   POST   /cases/{id}/ocr                轉錄（2 點）→ 202；照片在結算時刪除                             AI 核准＋拍照開關（WP-A3）
@@ -35,6 +36,11 @@
  * 題數一律用 assistItemCount；解析的 turn 在 meta_json 存 {subject, kind, items}，consumer 用同一組算任務設定。
  * 列表多收 ?subject=，每列帶 subject；不帶 subject 時列表是全部科目，但 error_counts 只算英文（加強卷不吃國文案例，§7.3）。
  * PATCH 多收 choice_mode（國文已解析的單選改多選，0 點）。讀、評分、刪除只要登入：國文關閉時已有的國文案例照樣可以看與刪。
+ *
+ * 國寫範文（國寫範文設計 §7）：檢查順序是 writeGate → 案例 → 國文的國寫案例（否則 400）→ 國文的開關與指紋 → AI_ZH_EXEMPLAR
+ * （否則 503）→ 國寫指導已完成而且不是離題（否則 409）→ 每案例最多 2 篇（完成＋進行中；429 assist_limit）→ 預扣（每天 3 篇是
+ * 任務家族上限，429 daily_limit）→ 寫 turn（kind 是 followup、meta_json.task＝'zh_exemplar'、沒有學生文字）。案例只更新時間，
+ * 不動 followups 與狀態；範文不進追問的上下文（追問只讀 input_text 不是 NULL 的 followup）。
  */
 import {
   AI_ERROR_MESSAGES,
@@ -69,7 +75,7 @@ import { requireUser, type SessionUser } from '../auth/session';
 import type { AppConfig } from '../config';
 import type { AppEnv } from '../env';
 import { ApiError } from '../errors';
-import { assistantSubjectAccess } from '../features';
+import { assistantSubjectAccess, zhExemplarAccess } from '../features';
 import { photoOrd, readPhotoFile } from '../submissions/photoUpload';
 import { parseJson } from '../submissions/repo';
 import { nowSeconds } from '../time';
@@ -854,6 +860,80 @@ assistRoutes.post('/cases/:id/followups', async (c) => {
         : []),
     ],
     conflict: followupConflict,
+  });
+});
+
+// ───────────────────────── 國寫範文（國寫範文設計 §7） ─────────────────────────
+
+/** 這個案例的國寫範文篇數（完成＋進行中；失敗的不算）。 */
+const ZH_EXEMPLAR_COUNT_SQL = `SELECT COUNT(*) AS n FROM assist_turns
+  WHERE case_id = ?1 AND user_id = ?2 AND kind = 'followup' AND json_extract(meta_json, '$.task') = 'zh_exemplar' AND status IN ('queued', 'running', 'done')`;
+
+function zhExemplarLimitError(): ApiError {
+  return new ApiError(429, 'assist_limit', `這一題已經看過 ${ASSIST_LIMITS.zhExemplarsPerCase} 篇示範`, { reason: 'zh_exemplars_per_case' });
+}
+
+assistRoutes.post('/cases/:id/zh-exemplar', async (c) => {
+  const { user, config } = await writeGate(c);
+  await readJsonBody(c, analyzeSchema, ASSIST_BODY_MAX.small);
+  const db = c.env.DB;
+  const now = nowSeconds();
+  const row = await requireCase(db, user.id, c.req.param('id'), now);
+  const subject = caseSubject(row);
+  if (subject !== 'chinese' || row.kind !== 'zh_writing') throw new ApiError(400, 'bad_request', '只有國寫的題目可以看 AI 示範');
+  await subjectGate(db, config, user, subject);
+  if (!zhExemplarAccess(config, user.role).enabled) throw notConfigured();
+  // 國寫指導要先完成（最新一次解析是國寫指導、不是離題）：示範沿用學生剛看過的要件與架構。
+  const latest = await db
+    .prepare(`SELECT output_json FROM assist_turns WHERE case_id = ?1 AND user_id = ?2 AND kind = 'analyze' AND status = 'done' ORDER BY seq DESC LIMIT 1`)
+    .bind(row.id, user.id)
+    .first<{ output_json: string | null }>();
+  const analysis = parseJson<ZhAnalysisView>(latest?.output_json ?? null);
+  if (row.status !== 'analyzed' || !analysis || analysis.kind !== 'zh_writing' || analysis.off_topic) throw new ApiError(409, 'conflict', '請先等國寫指導完成');
+  const count = await db.prepare(ZH_EXEMPLAR_COUNT_SQL).bind(row.id, user.id).first<{ n: number }>();
+  if ((count?.n ?? 0) >= ASSIST_LIMITS.zhExemplarsPerCase) throw zhExemplarLimitError();
+  const tc = taskConfig('assist_zh_exemplar', config);
+  if (!taskModelsPriced(tc)) {
+    await opsEvent(db, 'ai_model_not_priced', 'error', { task: tc.task, models: tc.calls.map((x) => x.model) });
+    throw new ApiError(503, 'not_configured', AI_ERROR_MESSAGES.not_configured);
+  }
+  const turnId = crypto.randomUUID();
+  const conflict = async (): Promise<ApiError> => {
+    const cur = await db
+      .prepare(`SELECT (SELECT COUNT(*) FROM assist_turns WHERE case_id = ?1 AND status IN ('queued', 'running')) AS inflight, (${ZH_EXEMPLAR_COUNT_SQL}) AS n`)
+      .bind(row.id, user.id)
+      .first<{ inflight: number; n: number }>();
+    if ((cur?.inflight ?? 0) > 0) return new ApiError(409, 'conflict', '這一題正在處理中，請稍候');
+    if ((cur?.n ?? 0) >= ASSIST_LIMITS.zhExemplarsPerCase) return zhExemplarLimitError();
+    return new ApiError(409, 'conflict', '這一題的狀態剛剛改變了，請重新整理');
+  };
+  return enqueueTurn(c, {
+    user,
+    config,
+    row,
+    tc,
+    kind: 'zh_exemplar',
+    turnId,
+    statements: (opId) => [
+      db
+        .prepare(
+          `INSERT INTO assist_turns (id, case_id, user_id, seq, kind, status, op_id, input_text, label, mode, meta_json, created_at, updated_at)
+           SELECT ?1, ?2, ?3, (SELECT COALESCE(MAX(seq), 0) + 1 FROM assist_turns WHERE case_id = ?2), 'followup', 'queued', ?4, NULL, NULL, NULL, ?5, ?6, ?6
+            WHERE NOT EXISTS (SELECT 1 FROM assist_turns WHERE case_id = ?2 AND status IN ('queued', 'running'))
+              AND (SELECT COUNT(*) FROM assist_turns WHERE case_id = ?2 AND user_id = ?3 AND kind = 'followup'
+                     AND json_extract(meta_json, '$.task') = 'zh_exemplar' AND status IN ('queued', 'running', 'done')) < ?7
+              AND (SELECT analyses FROM assist_cases WHERE id = ?2 AND user_id = ?3) >= 1
+              AND (SELECT status FROM assist_cases WHERE id = ?2 AND user_id = ?3) = 'analyzed'`,
+        )
+        .bind(turnId, row.id, user.id, opId, JSON.stringify({ subject: 'chinese', task: 'zh_exemplar' }), now, ASSIST_LIMITS.zhExemplarsPerCase),
+      db
+        .prepare(
+          `UPDATE assist_cases SET updated_at = ?1, expires_at = ?2
+            WHERE id = ?3 AND user_id = ?4 AND EXISTS (SELECT 1 FROM assist_turns WHERE id = ?5 AND op_id = ?6)`,
+        )
+        .bind(now, expiresFrom(now), row.id, user.id, turnId, opId),
+    ],
+    conflict,
   });
 });
 

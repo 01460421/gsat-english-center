@@ -6,7 +6,8 @@
  * 內部欄位（租約、重試次數、op_id、注入旗標）不匯出。所有查詢都帶 user_id = ?（防 IDOR）。
  * 學習助手（docs/design/learning-assistant.md §4.17）：assist.cases 是每個案例的題目、疑問、筆記、全部解析與追問（turns），
  * assist.reports 是每一版報告（facts、逐週計畫與內容）。照片不匯出；租約、重試次數、op_id、快取鍵、去重鍵、注入旗標、
- * 提示版本與 meta 不匯出。沒有任何學習助手資料時不帶 assist（回應和學習助手上線前相同）。
+ * 提示版本與 meta 不匯出。沒有任何學習助手資料時不帶 assist（回應和學習助手上線前相同）。國寫範文的 turn 在資料庫是 followup，
+ * 匯出時 kind 寫成 zh_exemplar（和詳情相同；output_json 照常匯出；國寫範文設計 §9.2）。
  * 作文範文（docs/design/model-essays.md §6.2）：exemplars 是每一組的 id、來源、題組 id、自訂題的題目、標題、狀態、output、評分、
  * 建立與更新時間；題目、標題（自訂題是題目開頭）與 output 顯示時重查 D8（exemplars/visible.ts、repo.ts 的 visibleTitle，和列表、
  * 詳情同一支）。快取鍵與代、去重鍵、op_id、租約、內容失敗次數、meta、
@@ -68,7 +69,8 @@ export async function buildExport(db: D1Database, userId: number): Promise<MeExp
       .bind(userId),
     db
       .prepare(
-        `SELECT case_id, id, seq, kind, status, input_text, label, mode, output_json, failure, cache_hit, created_at, updated_at
+        `SELECT case_id, id, seq, CASE WHEN json_extract(meta_json, '$.task') = 'zh_exemplar' THEN 'zh_exemplar' ELSE kind END AS kind,
+                status, input_text, label, mode, output_json, failure, cache_hit, created_at, updated_at
          FROM assist_turns WHERE user_id = ? ORDER BY case_id, seq`,
       )
       .bind(userId),

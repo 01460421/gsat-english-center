@@ -16,6 +16,16 @@ import {
   zhD8OfficialHitCount,
   zhShortContainment,
 } from '../scripts/d8-zh-fingerprint.mjs';
+import { readZhContestFile, ZH_CONTEST_FILE, zhContestHitCount } from '../scripts/zh-contest-fingerprint.mjs';
+import {
+  ZH_CLICHE_EXAMPLES,
+  ZH_CONTEST_STOCK_PATTERNS,
+  ZH_EXEMPLAR_D8_TEXT,
+  ZH_EXEMPLAR_LABEL,
+  ZH_EXEMPLAR_NOTE_HIDDEN_TEXT,
+  ZH_EXEMPLAR_OVERLAP_TEXT,
+  ZH_EXEMPLAR_TRIMMED_TEXT,
+} from './assist-zh-exemplar';
 import {
   ZH_CARD_COLUMNS,
   ZH_CARD_LABELS,
@@ -58,6 +68,14 @@ function selfWrittenTexts(): string[] {
     ...zhWritingMethodCardTexts(),
     ...Object.values(ZH_DRAFT_CHECK_INFO).map((i) => i.label_zh),
     ...ZH_CLICHE_GROUPS.map((g) => g.advice_zh),
+    // 國寫範文的固定標籤、固定說明與避用清單的標籤（國寫範文設計 §3.2、§4）。
+    ZH_EXEMPLAR_LABEL,
+    ZH_EXEMPLAR_TRIMMED_TEXT,
+    ZH_EXEMPLAR_OVERLAP_TEXT,
+    ZH_EXEMPLAR_D8_TEXT,
+    ZH_EXEMPLAR_NOTE_HIDDEN_TEXT,
+    ...ZH_CONTEST_STOCK_PATTERNS.map((p) => p.label),
+    ...ZH_CLICHE_EXAMPLES,
     ...(['zh_writing_reason', 'zh_writing_emotion', 'zh_other'] as const).flatMap((section) =>
       [
         zhDraftChecks(`隨著時代的進步，${'我'.repeat(800)}，一但開始就不能停！真的不能停！\n有人等待；有人出發；有人回頭；有人不選。`, section),
@@ -117,5 +135,15 @@ describe('D8 國文指紋：本站自寫的文字', () => {
     if (official.kind !== 'zh-official') return;
     const papers = readFileSync(new URL('./fixtures/zh-papers-public.txt', import.meta.url), 'utf8');
     expect(zhD8OfficialHitCount(papers, official.set)).toBe(0);
+  });
+});
+
+describe('比賽語料指紋：本站自寫的文字（國寫範文設計 §5.3）', () => {
+  const contest = readZhContestFile(JSON.parse(readFileSync(path.join(REPO, ZH_CONTEST_FILE), 'utf8')));
+
+  it('本站自寫、會出現在系統提示或畫面上的國文文字：12 字窗口 0 命中（逐段，也試整串接起來）', () => {
+    const texts = selfWrittenTexts();
+    for (const t of texts) expect(zhContestHitCount(t, contest.set).windows, t).toBe(0);
+    expect(zhContestHitCount(texts.join(''), contest.set).windows).toBe(0);
   });
 });

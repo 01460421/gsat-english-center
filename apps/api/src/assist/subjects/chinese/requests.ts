@@ -1,6 +1,6 @@
 /**
- * 國文的呼叫輸入（docs/design/assistant-subjects.md §3.5、§3.8、§6.1）：解析的 user 訊息、追問的三個 content block、轉錄。
- * 範本版本 assist-zh-user@1、assist-zh-followup-user@1、assist-zh-ocr-user@1（prompts/assist-zh.ts、assist-zh-ocr.ts）。
+ * 國文的呼叫輸入（docs/design/assistant-subjects.md §3.5、§3.8、§6.1）：解析的 user 訊息、追問的三個 content block、轉錄、國寫範文。
+ * 範本版本 assist-zh-user@1、assist-zh-followup-user@1、assist-zh-ocr-user@1、assist-zh-exemplar-user@1（prompts/assist-zh.ts、assist-zh-ocr.ts）。
  * 英文的 src/assist/requests.ts 一個字都不改：兩邊由 subjects/index.ts 依科目分派。
  *
  *   - 沿用現有的結構標籤，不加新標籤：<task>、<student_provided_question>、<student_text role="answer|draft|doubt|question">、
@@ -18,6 +18,9 @@ import type { BetaContentBlockParam } from '@anthropic-ai/sdk/resources/beta/mes
 import {
   guessZhSection,
   isZhCaseKind,
+  ZH_LINE_CELLS,
+  type ZhExemplarLimits,
+  type ZhExemplarSection,
   zhParseJudgeCombos,
   zhVerdictText,
   type AssistQuestionTarget,
@@ -31,7 +34,17 @@ import {
 import type { ClaudeCallInput } from '../../../ai/client';
 import { neutralizeTags } from '../../../ai/filter';
 import { taskBlock } from '../../../ai/prompts/common';
-import { assistZhFollowupSchema, assistZhFollowupSystemText, assistZhSchema, assistZhSystemText, ZH_ANALYZE_TEMPLATE_VERSIONS, ZH_FOLLOWUP_TEMPLATE_VERSION } from '../../../ai/prompts/assist-zh';
+import {
+  assistZhExemplarSchema,
+  assistZhExemplarSystemText,
+  assistZhFollowupSchema,
+  assistZhFollowupSystemText,
+  assistZhSchema,
+  assistZhSystemText,
+  ZH_ANALYZE_TEMPLATE_VERSIONS,
+  ZH_EXEMPLAR_TEMPLATE_VERSION,
+  ZH_FOLLOWUP_TEMPLATE_VERSION,
+} from '../../../ai/prompts/assist-zh';
 import { ASSIST_ZH_OCR_TEMPLATE_VERSION, assistZhOcrSchema, assistZhOcrSystemText, assistZhOcrUserText } from '../../../ai/prompts/assist-zh-ocr';
 import { callSpec, type TaskConfig } from '../../../ai/tasks';
 import { toBase64 } from '../../../submissions/images';
@@ -336,6 +349,73 @@ export function zhFollowupCallInput(tc: TaskConfig, r: ZhFollowupRequest): Claud
     schema: assistZhFollowupSchema,
     content: zhFollowupContent(r),
     templateVersion: ZH_FOLLOWUP_TEMPLATE_VERSION,
+  };
+}
+
+// ───────────────────────── 國寫範文（國寫範文設計 §2） ─────────────────────────
+
+/** 國寫範文 <analysis_digest> 的上限（字）。 */
+export const ZH_EXEMPLAR_DIGEST_CHARS = 1_000;
+
+export interface ZhExemplarRequest {
+  /** 案例存的題目（全部區塊：素材、圖表文字、引導問題；不含學生的段落）。 */
+  question: Pick<AssistQuestionView, 'blocks'>;
+  /** 題型（最新一次國寫指導的 section；看不出來時由 run.ts 決定）。 */
+  section: ZhExemplarSection;
+  /** 前一次國寫指導的摘要（digest.ts 的 zhAnalysisDigest，≤ 1,000 字）。 */
+  digest: string;
+  /** 國寫指導有沒有問題（一）（知性而且有，才要寫問題（一））。 */
+  hasQ1: boolean;
+  limits: ZhExemplarLimits;
+}
+
+/** 題目指定的題目（「以「…」為題」）；題目自訂回 'own'；沒有題目回 null。 */
+export function zhExemplarTitleRule(question: Pick<AssistQuestionView, 'blocks'>): { title: string } | 'own' | null {
+  const text = (question.blocks ?? []).map((b) => b.text).join('\n');
+  const given = /以\s*[「『]([^「」『』\n]{1,16})[」』]\s*為題/u.exec(text);
+  if (given) return { title: given[1]!.trim() };
+  if (/題目自訂|自訂題目|自訂標題|自行命題|自訂一個題目/u.test(text)) return 'own';
+  return null;
+}
+
+/** 國寫範文的 <task> 各行（網站寫的；只有程式產生的值）。 */
+export function zhExemplarTaskLines(r: Pick<ZhExemplarRequest, 'question' | 'section' | 'hasQ1' | 'limits'>): string[] {
+  const lines = [`Subject: Chinese (國文). Output: one model answer for a 國寫 task (${r.section}). Never write a grade or a score.`];
+  const L = r.limits;
+  const linesNote = L.body.lines !== null ? `, at most ${L.body.lines} lines of ${ZH_LINE_CELLS} cells` : '';
+  if (r.section === 'zh_writing_reason') {
+    if (r.hasQ1 && L.q1) lines.push(`問題（一）: at most ${L.q1.maxChars} characters including punctuation.`);
+    else lines.push('問題（一） does not apply: leave q1 empty.');
+    lines.push(`問題（二）: at most ${L.body.maxChars} characters including punctuation${linesNote}.`);
+  } else {
+    lines.push('問題（一） does not apply: leave q1 empty.');
+    lines.push(
+      'The essay must fit one side of the answer sheet: 38 lines of 22 cells; each paragraph starts with two empty cells. Aim for 650–750 characters including punctuation in 4–5 paragraphs.',
+    );
+    if (L.body.maxChars !== null) lines.push(`The task also limits the essay to at most ${L.body.maxChars} characters including punctuation.`);
+    if (L.body.lines !== null) lines.push(`The task also limits the essay to at most ${L.body.lines} lines of ${ZH_LINE_CELLS} cells.`);
+  }
+  const title = zhExemplarTitleRule(r.question);
+  lines.push(title === null ? 'No title.' : title === 'own' ? 'Write a title of at most 12 characters.' : `Title given: 「${title.title.replace(/[「」]/gu, '')}」`);
+  return lines;
+}
+
+/** 國寫範文的 user 訊息：<task>、<student_provided_question>（全部區塊）、<analysis_digest>。不送學生的段落、疑問或錯因。 */
+export function zhExemplarUserText(r: ZhExemplarRequest): string {
+  const digest = [...r.digest].slice(0, ZH_EXEMPLAR_DIGEST_CHARS).join('');
+  return [taskBlock(zhExemplarTaskLines(r)), block('student_provided_question', zhQuestionBody(r.question)), block('analysis_digest', digest)].join('\n');
+}
+
+export function zhExemplarCallInput(tc: TaskConfig, r: ZhExemplarRequest): ClaudeCallInput {
+  return {
+    task: tc.task,
+    spec: callSpec(tc, 'writer'),
+    timeoutMs: tc.timeoutMs,
+    maxRetries: tc.maxRetries,
+    system: assistZhExemplarSystemText(),
+    schema: assistZhExemplarSchema,
+    content: zhExemplarUserText(r),
+    templateVersion: ZH_EXEMPLAR_TEMPLATE_VERSION,
   };
 }
 

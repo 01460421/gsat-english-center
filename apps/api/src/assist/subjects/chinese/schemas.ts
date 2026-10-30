@@ -12,6 +12,7 @@
  *       zh_writing 32 葉、全部陣列 14、物件陣列 6、深度 2、根欄位 19
  *       追問        9 葉、全部陣列 3、物件陣列 1、深度 2、根欄位 8
  *       轉錄        8 葉、全部陣列 4、物件陣列 2、深度 3、根欄位 5
+ *       國寫範文   15 葉、全部陣列 5、物件陣列 3、深度 2、根欄位 8（國寫範文設計 §3.1）
  *     加欄位時那個測試會先失敗：改的人要同時更新數字與設計文件 §3.1 的表。
  *   - 小列舉（判定、確定程度、覆蓋程度、片段檢核狀態、追問模式、科目、卡片種類）一律是字串，由程式正規化（§3.1、§5.1 第 2 步）：
  *     列舉的值 SDK 會搬進說明、不受 grammar 約束，寫錯一個值就要付費重試。只有 safety_flag 與轉錄的 status、區塊種類、
@@ -284,6 +285,53 @@ export const zhFollowupSchema = z.object({
   safety_flag: safety(),
 });
 export type ZhFollowupOutput = z.infer<typeof zhFollowupSchema>;
+
+// ───────────────────────── 國寫範文（國寫範文設計 §3.1） ─────────────────────────
+
+/**
+ * 一篇完整的國寫示範：知性＝問題（一）答案＋問題（二）段落；情意＝全文的段落。每段帶段落作用、方法卡與技巧；另有「這篇怎麼寫」、
+ * 要件對照與寫完自我檢查。沒有任何等第或分數欄位。方法卡、要件對照的段號由程式正規化與檢查（exemplar.ts）。
+ */
+export const zhExemplarSchema = z.object({
+  title_zh: z.string().describe(lim('zh_exemplar', 'title_zh', 'the title: the given one when <task> gives a title, your own when <task> asks for one, otherwise empty')),
+  q1: z
+    .object({
+      answer_zh: z.string().describe(lim('zh_exemplar', 'q1.answer_zh', 'the answer to 問題（一） within the limit in <task>, from the material only')),
+      material_quotes: z.array(z.string()).describe(lim('zh_exemplar', 'q1.material_quotes', 'short phrases the answer copies exactly from the material')),
+    })
+    .describe('問題（一） of an analytical task; all empty when <task> says 問題（一） does not apply'),
+  paragraphs: z
+    .array(
+      z.object({
+        text: z.string().describe('the paragraph as it would be written on the answer sheet, without the two leading empty cells'),
+        role_zh: z.string().describe(lim('zh_exemplar', 'paragraphs[].role_zh', 'what this paragraph does')),
+        card: z.string().describe('the id of the main method card this paragraph shows: task, thesis, material, structure or style'),
+        technique_zh: z.string().describe(lim('zh_exemplar', 'paragraphs[].technique_zh', 'how this paragraph uses that card, quoting at most 12 characters of it in 「」')),
+      }),
+    )
+    .describe(lim('zh_exemplar', 'paragraphs', '問題（二） of an analytical task, or the whole emotional essay, in order')),
+  notes: z
+    .array(
+      z.object({
+        card: z.string().describe('a method card id'),
+        text_zh: z.string().describe(lim('zh_exemplar', 'notes[].text_zh', 'how the answer was built, so the student can reuse the method with their own material')),
+      }),
+    )
+    .describe(lim('zh_exemplar', 'notes')),
+  coverage: z
+    .array(
+      z.object({
+        point_zh: z.string().describe(lim('zh_exemplar', 'coverage[].point_zh', 'a requirement from <analysis_digest>')),
+        paragraph: z.number().int().describe('the paragraph that answers it: 1 for the first paragraph, 0 for 問題（一）'),
+        quote: z.string().describe(lim('zh_exemplar', 'coverage[].quote', 'words copied exactly from that paragraph')),
+      }),
+    )
+    .describe(lim('zh_exemplar', 'coverage', 'one row per requirement')),
+  self_check_zh: z.array(z.string()).describe(lim('zh_exemplar', 'self_check_zh', 'questions the student can ask of their own essay')),
+  off_topic: offTopic(),
+  safety_flag: safety(),
+});
+export type ZhExemplarOutput = z.infer<typeof zhExemplarSchema>;
 
 // ───────────────────────── 拍照轉錄（§3.5、§6.2） ─────────────────────────
 

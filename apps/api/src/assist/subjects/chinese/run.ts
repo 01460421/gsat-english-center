@@ -11,10 +11,16 @@
  *   runZhFollowup  上下文用 digest.ts 的摘要（≤ 1,000 字）、題目截到 3,000 字、先前問答 ≤ 1,200 字（不加快取標記）。
  *   runZhOcr       國文轉錄（assist-zh-ocr 提示＋ocr.ts 的組裝）：status other_subject → meta_json 記 detected_subject，以 invalid_output
  *                  退還（refund.ts 同時刪照片，同英文 not_english_question 的規則）；成功時同英文的結算（ocr_ready、刪照片）。
+ *   runZhExemplar  國寫範文（國寫範文設計 §2、§5、§5.6）：最新一次國寫指導的摘要＋題目全部區塊（不送學生的段落）→ callWithPolicy
+ *                  → 後處理（exemplar.ts）。重寫只有三種（比賽指紋、超過硬限制、簡體字），一個操作跨投遞最多付費產生 2 次
+ *                  （ai_calls 的內容失敗＋turn 的 meta_json.content_failures）。結算：turn 改 done、寫 output_json 與 meta（task 仍是
+ *                  zh_exemplar）；案例只更新 updated_at／expires_at、d8_hidden、safety_flag（不動 followups、analyses、狀態）。
+ *                  讀不到比賽語料指紋或國寫指導 → 退還 internal；內容失敗（離題、隱藏太多、超過上限太多）→ 退還 invalid_output。
  * ops 事件的 detail 都帶 subject；日誌只記 op id、任務、狀態與數字，不記題目、學生文字或解析內容。
  */
 import {
   ASSIST_LIMITS,
+  zhExemplarLimits,
   guessZhSection,
   isZhCaseKind,
   isZhErrorCode,
@@ -38,10 +44,11 @@ import { chineseSubject } from '../index';
 import type { ZhAnalysisPostprocessed, ZhFollowupPostprocessed, ZhOcrAssembled } from '../types';
 import { zhAnalysisDigest, zhRelatedDigest } from './digest';
 import type { ZhFingerprints } from './d8';
+import { postprocessZhExemplar, zhExemplarSectionOf, type ZhExemplarPostprocessed } from './exemplar';
 import { assembleZhOcr } from './ocr';
 import { postprocessZhAnalysis, postprocessZhFollowup, zhSubjectMismatch } from './output';
-import { zhFollowupCallInput, zhStudentPatternsText, type ZhFollowupRound } from './requests';
-import type { ZhAnalysisOutput, ZhFollowupOutput, ZhOcrOutput } from './schemas';
+import { ZH_EXEMPLAR_DIGEST_CHARS, zhExemplarCallInput, zhFollowupCallInput, zhStudentPatternsText, type ZhFollowupRound } from './requests';
+import type { ZhAnalysisOutput, ZhExemplarOutput, ZhFollowupOutput, ZhOcrOutput } from './schemas';
 import { zhSettlement } from './settle';
 
 /** turn 的 output_json 上限（assist_turns 的 CHECK）。 */
@@ -312,6 +319,139 @@ export async function runZhFollowup(ctx: ZhCtx & { question: AssistQuestionView 
     ],
   });
   if (state.filter) await recordFiltered(ctx, state.filter);
+  log('ai_settled', { op_id: op.id, task: op.task, subject: 'chinese', settled });
+  return { kind: 'done' };
+}
+
+// ───────────────────────── 國寫範文 ─────────────────────────
+
+/** 一個國寫範文的操作最多付費產生幾次（國寫範文設計 §5.6；同英文作文範文）。 */
+export const ZH_EXEMPLAR_CONTENT_ATTEMPTS = 2;
+
+/**
+ * 這個操作已有的內容失敗次數（跨 Queue 投遞累計；同 exemplars/attempts.ts）：ai_calls 裡截斷或格式不符的呼叫，加上語意檢查要求重寫時
+ * 記在 turn 的 meta_json.content_failures（只認還指向這個操作的那一列）。?1 op_id ?2 turn id ?3 user_id。
+ */
+export const ZH_EXEMPLAR_FAILURES_SQL = `SELECT
+    (SELECT COUNT(*) FROM ai_calls WHERE op_id = ?1
+       AND (stop_reason = 'max_tokens' OR error_code IN ('schema_mismatch', 'invalid_json', 'unexpected_stop')))
+  + COALESCE((SELECT json_extract(meta_json, '$.content_failures') FROM assist_turns WHERE id = ?2 AND user_id = ?3 AND op_id = ?1), 0) AS n`;
+
+export async function zhExemplarContentFailures(db: D1Database, ref: { opId: string; turnId: string; userId: number }): Promise<number> {
+  const row = await db.prepare(ZH_EXEMPLAR_FAILURES_SQL).bind(ref.opId, ref.turnId, ref.userId).first<{ n: number }>();
+  return Math.max(0, Math.floor(Number(row?.n ?? 0)));
+}
+
+/** 語意檢查要求重寫時加 1（回傳重寫原因之前執行；上限 4）。只改還指向這個操作、還在進行中的那一列。 */
+function bumpExemplarFailure(db: D1Database, ref: { opId: string; turnId: string; userId: number }): D1PreparedStatement {
+  return db
+    .prepare(
+      `UPDATE assist_turns SET meta_json = json_set(meta_json, '$.content_failures', MIN(COALESCE(json_extract(meta_json, '$.content_failures'), 0) + 1, 4))
+        WHERE id = ?1 AND user_id = ?2 AND op_id = ?3 AND status IN ('queued', 'running')`,
+    )
+    .bind(ref.turnId, ref.userId, ref.opId);
+}
+
+export async function runZhExemplar(ctx: ZhCtx & { question: AssistQuestionView }): Promise<Action> {
+  const { db, caseRow, question, fp, zh, tc, op, turn } = ctx;
+  // 比賽語料指紋是必填（打包的真檔一定有；讀不到就不呼叫模型）。
+  if (!zh.contest || zh.contest.size === 0 || caseRow.kind !== 'zh_writing') return { kind: 'refund', reason: 'internal' };
+  const analysis = await latestZhAnalysis(db, op.user_id, caseRow.id, turn.seq);
+  if (!analysis || analysis.kind !== 'zh_writing' || analysis.off_topic) return { kind: 'refund', reason: 'internal' };
+  const section = zhExemplarSectionOf(analysis, question);
+  const limits = zhExemplarLimits(question, section);
+  const hasQ1 = section === 'zh_writing_reason' && analysis.q1 !== null;
+  const input = zhExemplarCallInput(tc, { question, section, digest: zhAnalysisDigest(analysis, ZH_EXEMPLAR_DIGEST_CHARS), hasQ1, limits });
+  ctx.callInput = () => input;
+  const ref = { opId: op.id, turnId: turn.id, userId: op.user_id };
+  const failures = await zhExemplarContentFailures(db, ref);
+  const remaining = ZH_EXEMPLAR_CONTENT_ATTEMPTS - failures;
+  if (remaining <= 0) return { kind: 'refund', reason: 'invalid_output' };
+  const state: { post: ZhExemplarPostprocessed | null; filter: OutputFilter | null; model: string; promptVersion: string; json: string; attempts: number; retries: number } = {
+    post: null,
+    filter: null,
+    model: input.spec.model,
+    promptVersion: '',
+    json: '',
+    attempts: 0,
+    retries: 0,
+  };
+  const result = await callWithPolicy(
+    ctx,
+    input,
+    async (data, _callId, model, promptVersion) => {
+      state.attempts += 1;
+      const filter = new OutputFilter();
+      const post = postprocessZhExemplar(data as ZhExemplarOutput, { question, section, limits, hasQ1, filter, fp, zh, allowRetry: failures + state.attempts < ZH_EXEMPLAR_CONTENT_ATTEMPTS });
+      if (post.retry) {
+        // 語意檢查要求重寫：先記下（跨投遞的內容失敗次數），再回傳原因讓 callWithPolicy 決定在這次重寫或交回 Queue。
+        state.retries += 1;
+        log('assist_zh_exemplar_retry', { op_id: op.id, reason: post.retry });
+        await bumpExemplarFailure(db, ref).run();
+        return post.retry;
+      }
+      if (post.view) {
+        const json = JSON.stringify(post.view);
+        if (json.length > OUTPUT_JSON_MAX_CHARS) return 'output_too_large';
+        state.json = json;
+      }
+      Object.assign(state, { post, filter, model, promptVersion });
+      return null;
+    },
+    { contentAttempts: remaining },
+  );
+  if (!result.ok) return actionForFailures([result]);
+  const post = state.post!;
+  if (state.filter) await recordFiltered(ctx, state.filter);
+  if (post.safety !== 'none') {
+    // 內容失敗也要留下身心安全旗標（退還之前就記；同一個操作同一個類別只寫一次）。
+    await db
+      .prepare(
+        `INSERT INTO ai_safety_events (op_id, kind, category, user_ref) SELECT ?1, 'wellbeing_flag', ?2, ?3
+          WHERE NOT EXISTS (SELECT 1 FROM ai_safety_events WHERE op_id = ?1 AND kind = 'wellbeing_flag' AND category = ?2)`,
+      )
+      .bind(op.id, post.safety, ctx.userRef)
+      .run();
+  }
+  if (post.failure || !post.view) {
+    log('assist_zh_exemplar_unusable', { op_id: op.id, reason: post.failure, checks: Object.keys(post.checks).length });
+    return { kind: 'refund', reason: 'invalid_output' };
+  }
+  const meta = {
+    subject: 'chinese',
+    task: 'zh_exemplar',
+    section,
+    filter_version: FILTER_VERSION,
+    d8_fp: fp.version,
+    zh_fp: zh.version,
+    counts: post.meta,
+    checks: post.checks,
+    content_failures: failures + state.retries,
+  };
+  const nowMs = ctx.now();
+  const now = nowSeconds(nowMs);
+  const settled = await settleOp(db, {
+    opId: op.id,
+    nowMs,
+    extra: (token) => [
+      db
+        .prepare(
+          `UPDATE assist_turns SET status = 'done', output_json = ?1, prompt_version = ?2, served_model = ?3, meta_json = ?4, lease_until = NULL, updated_at = ?5
+            WHERE id = ?6 AND user_id = ?7 AND op_id = ?8 AND EXISTS (SELECT 1 FROM ai_ops WHERE id = ?8 AND settle_token = ?9)`,
+        )
+        .bind(state.json, state.promptVersion, state.model, JSON.stringify(meta).slice(0, 4096), now, turn.id, op.user_id, op.id, token),
+      db
+        .prepare(
+          `UPDATE assist_cases SET safety_flag = COALESCE(?1, safety_flag), d8_hidden = CASE WHEN ?2 = 1 THEN 1 ELSE d8_hidden END, updated_at = ?3, expires_at = ?4
+            WHERE id = ?5 AND user_id = ?6 AND EXISTS (SELECT 1 FROM ai_ops WHERE id = ?7 AND settle_token = ?8)`,
+        )
+        .bind(post.safety === 'none' ? null : post.safety, post.meta.d8_hidden > 0 ? 1 : 0, now, now + ASSIST_LIMITS.retentionDays * 86_400, caseRow.id, op.user_id, op.id, token),
+      ...(post.meta.d8_hidden > 0 ? [opsEventIfSettled(db, op.id, token, 'assist_d8_output', { op_id: op.id, subject: 'chinese', fields: post.meta.d8_hidden })] : []),
+      ...(post.meta.contest_hidden > 0
+        ? [opsEventIfSettled(db, op.id, token, 'assist_zh_exemplar_overlap', { op_id: op.id, paragraphs: post.meta.contest_hidden, attempt: failures + state.attempts })]
+        : []),
+    ],
+  });
   log('ai_settled', { op_id: op.id, task: op.task, subject: 'chinese', settled });
   return { kind: 'done' };
 }

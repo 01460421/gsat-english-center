@@ -41,7 +41,7 @@ export interface UserLimits {
   capMonth: number;
   /**
    * 任務家族的每日上限；0＝不限（docs/design/learning-assistant.md §4.7.2）：作文篇數（AI_ESSAY_USER_DAY）、
-   * 學習報告份數、拍照轉錄次數（ASSIST_LIMITS）。RESERVE_SQL 一個字都不改，只是依任務傳不同的清單與上限。
+   * 學習報告份數、拍照轉錄次數、國寫範文篇數（ASSIST_LIMITS）。RESERVE_SQL 一個字都不改，只是依任務傳不同的清單與上限。
    */
   familyCaps: Record<FamilyCapKey, number>;
   capConc: number;
@@ -58,7 +58,7 @@ export function userLimits(config: AppConfig, user: Pick<SessionUser, 'role' | '
     return {
       capDay: UNLIMITED,
       capMonth: UNLIMITED,
-      familyCaps: { essay: 0, assist_report: 0, assist_ocr: 0 },
+      familyCaps: { essay: 0, assist_report: 0, assist_ocr: 0, assist_zh_exemplar: 0 },
       capConc: Math.max(1, l.concurrentUser),
       unlimited,
       refundCap: UNLIMITED,

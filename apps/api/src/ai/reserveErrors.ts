@@ -3,7 +3,7 @@
  * 從 routes.ts 搬來，寫作批改的回應一個字都不變。
  *
  *   - 個人額度（點數、篇數、同時任務）429、全站（暫停、預算）503；message 是 AI_ERROR_MESSAGES 的中文。
- *   - 學習助手的家族上限（每天 2 份報告、6 次拍照轉錄）同樣是 daily_limit，另外帶 error.reason（任務代號），
+ *   - 學習助手的家族上限（每天 2 份報告、6 次拍照轉錄、3 篇國寫範文）同樣是 daily_limit，另外帶 error.reason（任務代號），
  *     前端依它改字（「今天已經產生 2 份學習報告」）。作文的 daily_limit 不帶 reason（回應不變）。
  *   - 每日退還上限（guard.ts 的 AI_REFUNDS_PER_DAY）回 429 rate_limited，第一次擋下時寫 ops_events（同一人同一天只寫一次）。
  */
@@ -29,6 +29,7 @@ export const REFUND_LIMIT_MESSAGE = `今天 AI 無法完成的次數太多了（
 const ASSIST_DAILY_LIMIT_MESSAGES: Partial<Record<AiTask, string>> = {
   assist_report: `今天已經產生 ${ASSIST_LIMITS.reportsPerDay} 份學習報告，明天再試`,
   assist_ocr: `今天的拍照轉錄已經 ${ASSIST_LIMITS.ocrPerDay} 次，可以改用「貼上文字」`,
+  assist_zh_exemplar: `今天已經產生 ${ASSIST_LIMITS.zhExemplarsPerDay} 篇國寫範文，明天再試`,
 };
 
 /** 預扣失敗 → 錯誤回應。每日退還上限第一次擋下時寫 ops_events（同一人同一天只寫一次）。 */
