@@ -64,7 +64,7 @@ export const QUOTA: AiQuotaResponse = {
   site: { paused: false, budget_available: true },
   approval: { cap: 49, approved: 10, full: false },
   resets_at: { day: '2026-10-08T16:00:00Z', month: '2026-10-31T16:00:00Z' },
-  task_points: { translation_grade: 3, essay_grade: 7, essay_ocr: 2, assist_ocr: 2, assist_analyze: 6, assist_followup: 3, assist_report: 10, essay_exemplars: 8 },
+  task_points: { translation_grade: 3, essay_grade: 7, essay_ocr: 2, assist_ocr: 2, assist_analyze: 6, assist_followup: 3, assist_report: 10, essay_exemplars: 8, assist_zh_exemplar: 8 },
 };
 
 const REF = {

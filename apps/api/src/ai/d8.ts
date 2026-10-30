@@ -277,11 +277,16 @@ export function maskD8(text: string, fp: Pick<D8Fingerprints, 'han' | 'en'>, rep
 // （樣板字串）併進同一個檔的另一個鍵 zh，版本是 zh_version。英文的 han、en、version 一個字都不動，所以英文的快取鍵不變（§2.4）。
 // 雜湊和 packages/shared/scripts/d8-zh-fingerprint.mjs 相同：不帶金鑰，cyrb53 加網域前綴 'zh8:'／'zs3:'（站主決定：受保護的文件
 // 本來就由官方公開刊登，反推雜湊得不到沒公開的東西；本站要守的是不顯示、不重製）。國文集合只用在國文案例（subjects/chinese/d8.ts）。
+// 國寫範文另有比賽語料的 12 字窗口（zh.contest；設計「國寫範文」§5.3，產生器是 packages/shared/scripts/zh-contest-fingerprint.mjs，
+// 雜湊 cyrb53('ze12:'＋窗口)），比對在 subjects/chinese/contest.ts。它是必填：讀不到或筆數不足時整個國文集合是 null（fail closed）。
 
 export const D8_ZH_FORMAT = 'gsat-d8-zh/v1';
 /** 短答比對的字組長度與每一組至少幾個字組（同產生器）。 */
 export const D8_ZH_GRAM = 3;
 export const D8_ZH_SHORT_MIN_GRAMS = 5;
+/** 比賽語料指紋：窗口長度與筆數下限（同產生器的 ZH_CONTEST_WINDOW、ZH_CONTEST_MIN_WINDOWS；d8.zh.test.ts 對照）。 */
+export const D8_ZH_CONTEST_WINDOW = 12;
+export const D8_ZH_CONTEST_MIN = 25_000;
 
 /** 國文集合（解碼後）。 */
 export interface D8ZhFingerprints {
@@ -295,6 +300,8 @@ export interface D8ZhFingerprints {
   boilerplate: string[];
   /** 短答比對的門檻（任一組的包含率 ≥ 這個值就算命中）。 */
   threshold: number;
+  /** 比賽語料的 12 字窗口雜湊（cyrb53('ze12:'＋窗口)；語料端只存起點 ≡ 0 (mod 4) 的窗口）。 */
+  contest: Set<number>;
 }
 
 /** 國文 8 字窗口的雜湊（同產生器的 zhD8WindowHash）。 */
@@ -307,9 +314,14 @@ export function d8ZhGramHash(gram: string): number {
   return cyrb53(`zs3:${gram}`);
 }
 
+/** 比賽語料 12 字窗口的雜湊（同產生器 zh-contest-fingerprint.mjs 的 zhContestWindowHash）。 */
+export function d8ZhContestHash(window: string): number {
+  return cyrb53(`ze12:${window}`);
+}
+
 /**
  * 檢查並解碼國文集合（純函式；json 是整個 d8-fingerprints.json）。壞檔回 null：沒有 zh 鍵、格式或版本不對、base64 解不開、
- * 筆數和檔頭不符、任何一組短答少於 5 個字組、樣板不是字串陣列。
+ * 筆數和檔頭不符、任何一組短答少於 5 個字組、樣板不是字串陣列、比賽語料指紋（contest）沒有或少於下限。
  */
 export function parseZhFingerprints(json: unknown): D8ZhFingerprints | null {
   if (typeof json !== 'object' || json === null) return null;
@@ -321,6 +333,7 @@ export function parseZhFingerprints(json: unknown): D8ZhFingerprints | null {
   const short = zh['short'] as Record<string, unknown> | undefined;
   const threshold = zh['threshold'];
   const boilerplate = zh['boilerplate'];
+  const contest = zh['contest'] as Record<string, unknown> | undefined;
   if (
     zh['format'] !== D8_ZH_FORMAT ||
     zh['han_window'] !== D8_HAN_WINDOW ||
@@ -334,7 +347,10 @@ export function parseZhFingerprints(json: unknown): D8ZhFingerprints | null {
     typeof official['fp'] !== 'string' ||
     typeof short !== 'object' ||
     short === null ||
-    !Array.isArray(short['sets'])
+    !Array.isArray(short['sets']) ||
+    typeof contest !== 'object' ||
+    contest === null ||
+    typeof contest['fp'] !== 'string'
   ) {
     return null;
   }
@@ -350,7 +366,9 @@ export function parseZhFingerprints(json: unknown): D8ZhFingerprints | null {
       sets.push({ year: s['year'], item: s['item'], alt: typeof s['alt'] === 'number' ? s['alt'] : 0, set });
     }
     if (sets.length === 0 || sets.length !== short['count']) return null;
-    return { version, windows, short: sets, boilerplate: boilerplate as string[], threshold };
+    const contestSet = new Set(unpack(contest['fp'] as string));
+    if (contestSet.size < D8_ZH_CONTEST_MIN || contestSet.size !== contest['count']) return null;
+    return { version, windows, short: sets, boilerplate: boilerplate as string[], threshold, contest: contestSet };
   } catch {
     return null;
   }

@@ -692,8 +692,8 @@ export function zhCardAllowed(section: ZhSection, card: ZhCardKind): boolean {
 
 // ───────────────────────── 模型輸出的欄位上限（§3.2–§3.5） ─────────────────────────
 
-/** 有欄位上限的國文輸出：三種解析、追問與轉錄。 */
-export const ZH_OUTPUT_KINDS = ['zh_choice', 'zh_short', 'zh_writing', 'zh_followup', 'zh_ocr'] as const;
+/** 有欄位上限的國文輸出：三種解析、追問、轉錄與國寫範文（國寫範文設計 §3.1）。 */
+export const ZH_OUTPUT_KINDS = ['zh_choice', 'zh_short', 'zh_writing', 'zh_followup', 'zh_ocr', 'zh_exemplar'] as const;
 export type ZhOutputKind = (typeof ZH_OUTPUT_KINDS)[number];
 
 /** 選擇與簡答共用的頭段（題型卡的列數上限依卡的種類另外截斷，ZH_CARD_ROW_MAX）。 */
@@ -809,6 +809,21 @@ export const ZH_FIELD_LIMITS = {
     'blocks[].text': { chars: 3_000 },
     'blocks[].unclear[].candidates': { max: 3 },
     student_answer_seen: { chars: 300 },
+  },
+  // 國寫範文（國寫範文設計 §3.1）：段落本文不截斷（總長由字數與格數的檢查管）；問題（一）的硬限制由程式依題目決定（預設 80）。
+  zh_exemplar: {
+    title_zh: { chars: 16 },
+    'q1.answer_zh': { chars: 120 },
+    'q1.material_quotes': { max: 2, chars: 40 },
+    paragraphs: { min: 2, max: 6 },
+    'paragraphs[].role_zh': { chars: 20 },
+    'paragraphs[].technique_zh': { chars: 60 },
+    notes: { min: 2, max: 4 },
+    'notes[].text_zh': { chars: 120 },
+    coverage: { max: 5 },
+    'coverage[].point_zh': { chars: 40 },
+    'coverage[].quote': { chars: 30 },
+    self_check_zh: { min: 3, max: 5, chars: 40 },
   },
 } as const satisfies Record<ZhOutputKind, Record<string, AssistFieldLimit>>;
 
@@ -2143,6 +2158,8 @@ export const ZH_NOTICE_KINDS = [
   'grade_removed',
   'notes_removed',
   'simplified_kept',
+  'example_rule_removed',
+  'exemplar_over_limit',
 ] as const;
 export type ZhNoticeKind = AssistNotice['kind'] | (typeof ZH_NOTICE_KINDS)[number];
 
@@ -2161,6 +2178,8 @@ export const ZH_NOTICE_TEXT: Record<(typeof ZH_NOTICE_KINDS)[number], string> = 
   grade_removed: 'AI 不打等第或分數，已拿掉那一句。',
   notes_removed: '已拿掉引用題目沒有的注釋的那一句。',
   simplified_kept: '這則解析裡有簡體字，寫法請以教育部標準字為準。',
+  example_rule_removed: '有一筆示範不符合本站的示範規則（和已發表的文章相同、用了套語，或引文查不到出處），已省略。',
+  exemplar_over_limit: '這篇示範比答案卷的字數或格數多一些，考試時要再刪減。',
 };
 
 /** 一題（或一列）的程式提醒：確定程度上限、逐項和答案不一致、可能是多選、錯字數不符、讀音前後不一致…。 */
@@ -2400,6 +2419,30 @@ export const ZH_CHECK_COUNTERS = [
   'grade_removed',
   'enum_normalized',
   'enum_unknown',
+  // 國寫範文與國寫指導的示範段（國寫範文設計 §5、§10）。
+  'punct_fixed',
+  'exclaim_replaced',
+  'contest_retry',
+  'contest_hidden',
+  'contest_overlap_removed',
+  'over_limit_retry',
+  'over_limit_kept',
+  'under_target',
+  'material_quote_long',
+  'attribution_removed',
+  'quote_unmarked',
+  'stock_line_removed',
+  'cliche',
+  'contest_word',
+  'overused_figure',
+  'claim_removed',
+  'contest_mention_removed',
+  'coverage_quote_miss',
+  'card_unknown',
+  'paragraph_trimmed',
+  'example_rule_removed',
+  // 情意範文含敏感事件用字的句子（只計數，ops 事件 assist_zh_exemplar_sensitive）。
+  'sensitive_event',
 ] as const;
 export type ZhCheckCounter = (typeof ZH_CHECK_COUNTERS)[number];
 export type ZhChecks = Partial<Record<ZhCheckCounter, number>>;

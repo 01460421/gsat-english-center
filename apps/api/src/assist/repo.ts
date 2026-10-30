@@ -8,6 +8,8 @@
  * 科目（docs/design/assistant-subjects.md §7.1、§7.3）：不加遷移，科目寫在 ref_json.subject，沒有這個鍵就是英文；SQL 一律用
  * CASE_SUBJECT_SQL 這個式子。列表不帶科目時回全部科目；錯因次數（errorCounts）與歷史一行只算同一科，不帶科目時只算英文
  * （國文和英文同名的 careless、time、knowledge_gap 不會進英文的弱點與加強卷）。
+ * 國寫範文（國寫範文設計 §1、§9.1）：turn 在資料庫是 followup（assist_turns 的 CHECK 只允許 ocr／analyze／followup），
+ * meta_json.task＝'zh_exemplar'；畫面形狀的 kind 是 'zh_exemplar'（toTurnView、toDetail 的 pending 都用 turnKindOf）。
  */
 import {
   AI_REFUND_REASONS,
@@ -39,6 +41,7 @@ import {
   type AssistWritingView,
   type OptionLetter,
   type ZhAnalysisView,
+  type ZhExemplarView,
   type ZhFollowupView,
   type ZhSection,
 } from '@gsat/shared';
@@ -86,7 +89,8 @@ export interface TurnRow {
   case_id: string;
   user_id: number;
   seq: number;
-  kind: AssistTurnKind;
+  /** 資料庫的種類（ocr／analyze／followup；國寫範文也是 followup，見 turnKindOf）。 */
+  kind: Exclude<AssistTurnKind, 'zh_exemplar'>;
   status: 'queued' | 'running' | 'done' | 'failed';
   op_id: string | null;
   input_text: string | null;
@@ -203,15 +207,29 @@ function detectedSubjectOf(metaJson: string): AssistDetectedSubject | null {
   return typeof v === 'string' && (ASSIST_DETECTED_SUBJECTS as readonly string[]).includes(v) ? (v as AssistDetectedSubject) : null;
 }
 
-/** 一個 turn 的畫面形狀（解析的 cache_hit 由 turn 帶；追問帶學生的問題、題號與模式）。 */
+/** turn 的 meta_json 是不是國寫範文（task＝'zh_exemplar'）。 */
+export function isZhExemplarMeta(metaJson: string | null): boolean {
+  return parseJson<{ task?: unknown }>(metaJson)?.task === 'zh_exemplar';
+}
+
+/** 畫面形狀的種類：國寫範文的 followup turn 是 'zh_exemplar'，其他照資料庫。 */
+export function turnKindOf(row: Pick<TurnRow, 'kind' | 'meta_json'>): AssistTurnKind {
+  return row.kind === 'followup' && isZhExemplarMeta(row.meta_json) ? 'zh_exemplar' : row.kind;
+}
+
+/** 一個 turn 的畫面形狀（解析的 cache_hit 由 turn 帶；追問帶學生的問題、題號與模式；國寫範文帶 exemplar）。 */
 export function toTurnView(row: TurnRow): AssistTurnView {
-  const view: AssistTurnView = { id: row.id, seq: row.seq, kind: row.kind, status: row.status, created_at: row.created_at };
+  const kind = turnKindOf(row);
+  const view: AssistTurnView = { id: row.id, seq: row.seq, kind, status: row.status, created_at: row.created_at };
   if (row.status === 'failed') {
     view.failure = failureOf(row.failure);
     const detected = detectedSubjectOf(row.meta_json);
     if (detected) view.detected_subject = detected;
   }
-  if (row.kind === 'analyze') {
+  if (kind === 'zh_exemplar') {
+    const exemplar = parseJson<ZhExemplarView>(row.output_json);
+    if (exemplar && row.status === 'done') view.exemplar = exemplar;
+  } else if (row.kind === 'analyze') {
     view.cache_hit = row.cache_hit === 1;
     const analysis = parseJson<AssistAnalysisView | AssistWritingView | AssistVocabView | ZhAnalysisView>(row.output_json);
     if (analysis && row.status === 'done') view.analysis = { ...analysis, cache_hit: row.cache_hit === 1 };
@@ -307,7 +325,7 @@ export async function toDetail(db: D1Database, row: CaseRow, now: number, extra:
     note: row.note_text,
     rating: row.rating,
     turns: turns.map(toTurnView),
-    pending: inflight ? { turn_id: inflight.id, kind: inflight.kind, op_id: inflight.op_id, status: inflight.status as 'queued' | 'running' } : null,
+    pending: inflight ? { turn_id: inflight.id, kind: turnKindOf(inflight), op_id: inflight.op_id, status: inflight.status as 'queued' | 'running' } : null,
     history_line: history,
     flags: { d8_hidden: row.d8_hidden === 1, injection: row.injection_flag === 1, safety: row.safety_flag },
     ...(extra.masked ? { masked: true } : {}),

@@ -51,7 +51,7 @@ import type { AppEnv } from '../env';
 import { ApiError } from '../errors';
 import { taiwanDayStart } from '../assist/repo';
 import { exemplarSetsToday } from '../exemplars/repo';
-import { assistantAccess, exemplarsAccess } from '../features';
+import { assistantAccess, exemplarsAccess, zhExemplarAccess } from '../features';
 import { groupForSubmission, requireCustomEssayAvailable, storedPromptInput, validateCustomPrompt } from '../submissions/custom';
 import { findSubmission, parseJson, requireSubmission, type SubmissionRow } from '../submissions/repo';
 import { nowSeconds } from '../time';
@@ -61,7 +61,7 @@ import { refundOp, reserveOp, siteLimitsMicros, UNLIMITED, usageSnapshot, userLi
 import { reclaimStaleOps } from './housekeeping';
 import { opsEvent, userRefFor } from './ledger';
 import { reserveFailure } from './reserveErrors';
-import { ASSIST_OCR_FAMILY, ASSIST_REPORT_FAMILY, reserveMicros, taskConfig, taskModelsPriced } from './tasks';
+import { ASSIST_OCR_FAMILY, ASSIST_REPORT_FAMILY, ASSIST_ZH_EXEMPLAR_FAMILY, reserveMicros, taskConfig, taskModelsPriced } from './tasks';
 
 export const aiRoutes = new Hono<AppEnv>();
 
@@ -340,12 +340,15 @@ aiRoutes.get('/quota', requireUser(), async (c) => {
   const assist = assistantAccess(config, user.role).enabled;
   // 作文範文今天建立的組數：只在作文範文對這位使用者開放時才查、才回（關著時回應不變；docs/design/model-essays.md §7.1）。
   const exemplars = exemplarsAccess(config, user.role).enabled;
-  const [snap, approval, reports, ocr, exemplarSets] = await Promise.all([
+  // 國寫範文今天的篇數：只在國寫範文對這位使用者開放時才查、才回（國寫範文設計 §7）。
+  const zhExemplars = assist && zhExemplarAccess(config, user.role).enabled;
+  const [snap, approval, reports, ocr, exemplarSets, zhExemplarOps] = await Promise.all([
     usageSnapshot(c.env.DB, user.id, ESSAY_FAMILY_TASKS, nowMs),
     approvalSummary(c.env, config),
     assist ? usageSnapshot(c.env.DB, user.id, ASSIST_REPORT_FAMILY.tasks, nowMs) : null,
     assist ? usageSnapshot(c.env.DB, user.id, ASSIST_OCR_FAMILY.tasks, nowMs) : null,
     exemplars ? exemplarSetsToday(c.env.DB, user.id, await userRefFor(config.auth.ledgerSalt, user.id), taiwanDayStart(nowMs)) : null,
+    zhExemplars ? usageSnapshot(c.env.DB, user.id, ASSIST_ZH_EXEMPLAR_FAMILY.tasks, nowMs) : null,
   ]);
   const site = siteLimitsMicros(config);
   const dayLimit = (cap: number) => (cap === 0 ? UNLIMITED : cap);
@@ -367,6 +370,7 @@ aiRoutes.get('/quota', requireUser(), async (c) => {
           assist: {
             reports: { day_used: reports.familyToday, day_limit: dayLimit(limits.familyCaps.assist_report) },
             ocr: { day_used: ocr.familyToday, day_limit: dayLimit(limits.familyCaps.assist_ocr) },
+            ...(zhExemplarOps ? { zh_exemplars: { day_used: zhExemplarOps.familyToday, day_limit: dayLimit(limits.familyCaps.assist_zh_exemplar) } } : {}),
           },
         }
       : {}),

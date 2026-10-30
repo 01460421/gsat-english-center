@@ -5,8 +5,10 @@
  *   - 位置優先用 Worker 算好的 range（where: 'blocks'，ref 是區塊序號，索引是原始文字）；沒有或對不上時，前端用 shared 的
  *     zhFindQuote（去標點、去標記的比對，和 Worker 同一支）在題目區塊裡找，找不到就不加亮（說明照樣顯示）。
  *   - 引文的 id 由題號與位置組成（step、opt、kp…），解析畫面與案例頁用同一組 id。
+ *   - 國寫範文（國寫範文設計 §8）問題（一）的素材引文（id 帶範文的 turn id）另外傳進來（extra）：只在學生按下那一句時才標，
+ *     不和解析的引文一起淡色加亮（左欄平常的樣子不因為看了示範而改變）。
  */
-import { zhFindQuote, type AssistQuestionBlock, type AssistQuoteRange, type ZhAnalysisView } from '@gsat/shared';
+import { zhFindQuote, type AssistQuestionBlock, type AssistQuoteRange, type AssistTurnView, type ZhAnalysisView } from '@gsat/shared';
 import type { ZhMark } from './components/ZhText';
 
 export interface ZhQuoteRef {
@@ -22,6 +24,7 @@ export const zhQuoteId = {
   card: (card: number, row: number) => `card:${card}:${row}`,
   requirement: (i: number) => `req:${i}`,
   q1: (i: number) => `q1:${i}`,
+  exemplar: (turnId: string, i: number) => `ex:${turnId}:${i}`,
 };
 
 /** 解析裡全部可以在題目裡加亮的引文（依畫面順序）。 */
@@ -52,6 +55,18 @@ export function zhQuoteRefs(analysis: ZhAnalysisView): ZhQuoteRef[] {
   return out;
 }
 
+/** 國寫範文問題（一）的素材引文（完成的範文、依 turn 的順序）。 */
+export function zhExemplarQuoteRefs(turns: readonly AssistTurnView[]): ZhQuoteRef[] {
+  const out: ZhQuoteRef[] = [];
+  for (const t of turns) {
+    if (t.kind !== 'zh_exemplar' || t.status !== 'done' || !t.exemplar?.q1) continue;
+    t.exemplar.q1.quotes.forEach((q, i) => {
+      if (q.quote.trim() !== '') out.push({ id: zhQuoteId.exemplar(t.id, i), quote: q.quote, range: q.range });
+    });
+  }
+  return out;
+}
+
 /** 一句引文在題目區塊裡的位置（區塊序號、原始文字的索引）；找不到回 null。 */
 export function resolveZhQuote(ref: Pick<ZhQuoteRef, 'quote' | 'range'>, blocks: readonly AssistQuestionBlock[]): { block: number; start: number; end: number } | null {
   const r = ref.range;
@@ -69,18 +84,19 @@ export function resolveZhQuote(ref: Pick<ZhQuoteRef, 'quote' | 'range'>, blocks:
 
 /**
  * 左欄每個區塊要加亮的位置（全部引文淡色、按下的那一句加深）。activeOnly（先看提示）時只標按下的那一句：還沒展開完整解析前，
- * 逐選項與證據鏈的引文一起加亮等於提前露出答案。
+ * 逐選項與證據鏈的引文一起加亮等於提前露出答案。extra（國寫範文的素材引文）一律只標按下的那一句。
  */
 export function zhBlockMarks(
   analysis: ZhAnalysisView | null,
   blocks: readonly AssistQuestionBlock[] | undefined,
   activeId: string | null,
-  opts: { activeOnly?: boolean } = {},
+  opts: { activeOnly?: boolean; extra?: readonly ZhQuoteRef[] } = {},
 ): Record<number, ZhMark[]> {
   const out: Record<number, ZhMark[]> = {};
   if (!analysis || !blocks || blocks.length === 0) return out;
-  for (const ref of zhQuoteRefs(analysis)) {
-    if (opts.activeOnly && ref.id !== activeId) continue;
+  const refs = [...zhQuoteRefs(analysis).map((ref) => ({ ref, activeOnly: opts.activeOnly === true })), ...(opts.extra ?? []).map((ref) => ({ ref, activeOnly: true }))];
+  for (const { ref, activeOnly } of refs) {
+    if (activeOnly && ref.id !== activeId) continue;
     const at = resolveZhQuote(ref, blocks);
     if (!at) continue;
     (out[at.block] ??= []).push({ start: at.start, end: at.end, active: ref.id === activeId });
@@ -88,10 +104,10 @@ export function zhBlockMarks(
   return out;
 }
 
-/** 這句引文能不能在左欄標出來（id → 是否找得到原文）。 */
-export function zhLocatable(analysis: ZhAnalysisView | null, blocks: readonly AssistQuestionBlock[] | undefined): Set<string> {
+/** 這句引文能不能在左欄標出來（id → 是否找得到原文）；extra 是國寫範文的素材引文。 */
+export function zhLocatable(analysis: ZhAnalysisView | null, blocks: readonly AssistQuestionBlock[] | undefined, extra: readonly ZhQuoteRef[] = []): Set<string> {
   const out = new Set<string>();
   if (!analysis || !blocks) return out;
-  for (const ref of zhQuoteRefs(analysis)) if (resolveZhQuote(ref, blocks)) out.add(ref.id);
+  for (const ref of [...zhQuoteRefs(analysis), ...extra]) if (resolveZhQuote(ref, blocks)) out.add(ref.id);
   return out;
 }

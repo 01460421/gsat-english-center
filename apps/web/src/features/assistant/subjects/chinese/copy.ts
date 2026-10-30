@@ -65,6 +65,71 @@ export const ZH_COPY = {
   draftChecksNote: '程式依固定規則比對，不送 AI；沒列出的不代表沒有問題。',
 } as const;
 
+/**
+ * 國寫範文（「看一篇 AI 示範」；國寫範文設計 §8）的文案。點數與上限一律由 shared 的常數帶進來，這裡不寫數字。
+ * 固定標籤是 shared 的 ZH_EXEMPLAR_LABEL（「AI 示範，不是得獎作品」），不在這裡另寫一份。
+ */
+export const ZH_EXEMPLAR_COPY = {
+  title: 'AI 示範',
+  /** 按鈕上方的一行：先照架構自己寫，再對照示範。 */
+  intro: '建議先照上面的架構自己寫一段，再對照示範。',
+  button: (points: number) => `看一篇 AI 示範（${points} 點）`,
+  again: (points: number) => `再看一篇 AI 示範（${points} 點）`,
+  retry: (points: number) => `再試一次（${points} 點）`,
+  perCaseFull: (n: number) => `這一題已經看過 ${n} 篇示範。`,
+  confirmTitle: '確認點數',
+  confirmPoints: (points: number, left: number | null) => `這次會用 ${points} 點${left !== null ? `（今天還有 ${left} 點）` : ''}；沒有完成會全額退還。`,
+  confirmWhat: 'AI 會依題目寫一篇完整示範，逐段標出段落作用與方法卡；不打分數。',
+  confirmNotWork: '示範是 AI 寫的，不是得獎作品，也不是官方佳作；請不要當成自己的作品繳交。',
+  confirmDaily: (used: number, limit: number) => `國寫的 AI 示範每天最多 ${limit} 篇，今天已經看過 ${used} 篇。`,
+  confirmOk: (points: number) => `確定，用 ${points} 點`,
+  cancel: '取消',
+  dayShort: (left: number, points: number) => `今天剩 ${left} 點，AI 示範要 ${points} 點；明天再來看。`,
+  /** 試用帳號：國寫指導加範文超過一天的點數，不能同一天完成。 */
+  trialShort: (left: number, points: number, guide: number, dayLimit: number) =>
+    `今天剩 ${left} 點，AI 示範要 ${points} 點。試用帳號每天 ${dayLimit} 點：國寫指導（${guide} 點）加 AI 示範（${points} 點）要 ${guide + points} 點，不能在同一天完成，明天再來看。`,
+  monthShort: (left: number, points: number) => `本月剩 ${left} 點，AI 示範要 ${points} 點；下個月 1 日重置。`,
+  dailyFull: (limit: number) => `今天已經看過 ${limit} 篇國寫的 AI 示範，明天再試。`,
+  /** 開關剛關掉（503 not_configured）。 */
+  unavailable: '國寫的 AI 示範暫停使用中，已經看過的示範照常可以看。',
+  failed: '點數已經退還。',
+  pendingLive: (queued: boolean) => (queued ? '示範排隊中…' : 'AI 正在寫示範（約 1–2 分鐘）…'),
+  doneLive: '示範寫好了。',
+  failedLive: '這篇示範沒有完成，點數已經退還。',
+  deleteBusy: '示範產生中，完成後才能刪除。',
+  followupBusy: 'AI 示範產生中，完成後才能追問。',
+  followupBusyStopped: '自動更新已停止：按上方的「再試一次」看示範有沒有完成，完成後才能追問。',
+  pick: '切換示範',
+  pickItem: (n: number) => `第 ${n} 篇`,
+  q1: '問題（一）',
+  q2: '問題（二）',
+  essay: '全文',
+  role: '段落作用',
+  card: '方法卡',
+  technique: '這段怎麼寫：',
+  hiddenNotice: (similar: number, omitted: number) =>
+    omitted === 0
+      ? `有 ${similar} 段被程式隱藏（和已發表的文章或受保護的官方文字太像），這篇示範不完整。`
+      : similar === 0
+        ? `有 ${omitted} 段不符合本站的示範規則，已省略，這篇示範不完整。`
+        : `有 ${similar + omitted} 段被程式隱藏或省略（和已發表的文章或受保護的官方文字太像，或不符合本站的示範規則），這篇示範不完整。`,
+  q1Hidden: {
+    contest: '這個答案和已發表的文章有一長串文字相同，已隱藏。',
+    d8: '這個答案和受保護的官方文字太像，已隱藏。',
+    over_limit: '這個答案重寫後仍超過字數限制，已省略。',
+  },
+  notes: '這篇怎麼寫',
+  coverage: '要件對照',
+  coverageTo: (paragraph: number) => (paragraph === 0 ? '問題（一）' : `第 ${paragraph} 段`),
+  selfCheck: '寫完自我檢查',
+  totals: (han: number, chars: number, cells: number, sheet: number) => `漢字 ${han} 字／含標點 ${chars} 字／約 ${cells} 格（一面 ${sheet} 格）`,
+  overChars: (n: number) => `考試時要刪減 ${n} 字`,
+  overCells: (n: number) => `考試時要刪減約 ${n} 格`,
+  limitChars: (n: number) => `題目限 ${n} 字以內`,
+  limitCharsDefault: (n: number) => `題目沒寫字數，本站以 ${n} 字為上限`,
+  noCopy: '看懂每段的作用之後，換成自己的經驗與句子重寫；國寫是手寫考試，這裡不提供整篇複製。',
+} as const;
+
 /** 「你卡在哪裡」的國文標籤（代碼和英文相同；§8.2）。 */
 export const ZH_DOUBT_LABELS: Record<AssistDoubtKind, string> = {
   why_not_mine: '為什麼不是我選的',

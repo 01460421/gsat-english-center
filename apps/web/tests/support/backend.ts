@@ -46,13 +46,15 @@ import type {
   UpdateAssistQuestionBody,
   ZhAnalysisView,
 } from '@gsat/shared';
-import { assistCaseKindOf, assistPoints, isZhSection, zhShortPartLabels } from '@gsat/shared';
+import { AI_TASK_POINTS, ASSIST_LIMITS, assistCaseKindOf, assistPoints, isZhSection, zhShortPartLabels, type AiRefundReason } from '@gsat/shared';
 import { reportDetail as reportDetailFixture } from '../../src/features/assistant/testing/report';
 import {
   zhClassicalAnalysis,
+  zhEmotionExemplar,
   zhFollowupReply,
   zhFormAnalysis,
   zhJudgeAnalysis,
+  zhReasonExemplar,
   zhShortAnalysis,
   zhWordAnalysis,
   zhWritingAnalysis,
@@ -79,6 +81,9 @@ export const FEATURES_ASSISTANT_PHOTO_ON: FeaturesResponse = { ...FEATURES_ASSIS
 
 /** 學習助手的國文也打開（AI_ASSISTANT_SUBJECTS=on；docs/design/assistant-subjects.md §7.5）：國文拍照關著。 */
 export const FEATURES_SUBJECTS_ON: FeaturesResponse = { ...FEATURES_ASSISTANT_ON, assistantSubjects: [{ subject: 'chinese', photo: false }] };
+
+/** 國文的國寫範文也打開（AI_ZH_EXEMPLAR=on；國寫範文設計 §7）：國文那一筆多 exemplar: true。 */
+export const FEATURES_ZH_EXEMPLAR_ON: FeaturesResponse = { ...FEATURES_ASSISTANT_ON, assistantSubjects: [{ subject: 'chinese', photo: false, exemplar: true }] };
 
 /** 國文與國文拍照都打開（AI_ASSISTANT_PHOTO、AI_ASSISTANT_SUBJECTS_PHOTO 都是 on）。 */
 export const FEATURES_SUBJECTS_PHOTO_ON: FeaturesResponse = { ...FEATURES_ASSISTANT_PHOTO_ON, assistantSubjects: [{ subject: 'chinese', photo: true }] };
@@ -130,7 +135,7 @@ export const QUOTA: AiQuotaResponse = {
   site: { paused: false, budget_available: true },
   approval: { cap: 49, approved: 12, full: false },
   resets_at: { day: '2026-10-09T16:00:00Z', month: '2026-10-31T16:00:00Z' },
-  task_points: { translation_grade: 3, essay_grade: 7, essay_ocr: 2, assist_ocr: 2, assist_analyze: 6, assist_followup: 3, assist_report: 10, essay_exemplars: 8 },
+  task_points: { translation_grade: 3, essay_grade: 7, essay_ocr: 2, assist_ocr: 2, assist_analyze: 6, assist_followup: 3, assist_report: 10, essay_exemplars: 8, assist_zh_exemplar: 8 },
 };
 
 export const ADMIN_HEALTH: AdminHealthResponse = {
@@ -350,6 +355,8 @@ export interface FakeAssistOptions {
   zhMultiSuspect?: boolean;
   /** 國文的拍照轉錄：預設 FAKE_ZH_OCR；'other_subject' 時退還、刪照片、turn 帶 detected_subject: english（§6.5）。 */
   zhOcr?: AssistOcrView | 'other_subject';
+  /** 國寫範文的結果（國寫範文設計 §8）：預設依題型回本站自寫的示範；給退還原因時那一篇失敗（點數退還、案例狀態不動）。 */
+  zhExemplarFailure?: AiRefundReason;
 }
 
 /** 假的國文拍照轉錄（本站自寫的字形題）：一題四個選項，另有一段被隱藏的答案與詳解。 */
@@ -573,6 +580,7 @@ export class FakeAssist {
           return ok(c);
         }),
       'POST /api/assist/cases/:id/analyze': (call) => this.withCase(call, (c) => this.analyze(c)),
+      'POST /api/assist/cases/:id/zh-exemplar': (call) => this.withCase(call, (c) => this.zhExemplar(c)),
       'POST /api/assist/cases/:id/followups': (call) => this.withCase(call, (c) => this.followup(c, call.json as CreateAssistFollowupBody)),
       // 拍照（WP-A3）：照片只記張數（不解析 multipart）；轉錄排入佇列 → 輪詢完成。
       'POST /api/assist/cases/:id/photos': (call) =>
@@ -768,6 +776,25 @@ export class FakeAssist {
     return ok({ op_id: opId, case_id: c.id, turn_id: turn.id, status: 'queued', points } satisfies AssistTaskAccepted, 202);
   }
 
+  /**
+   * 國寫範文（8 點；國寫範文設計 §7）：國文的國寫案例、國寫指導完成後；每一題最多 2 篇（完成＋進行中，429 assist_limit）。
+   * turn 的種類是 zh_exemplar（Worker 的資料庫是 followup，詳情回 zh_exemplar），排入佇列 → 輪詢完成。
+   */
+  private zhExemplar(c: AssistCaseDetail): Reply {
+    if (c.subject !== 'chinese' || c.kind !== 'zh_writing') return apiError(400, 'bad_request');
+    if (c.pending || c.status !== 'analyzed') return apiError(409, 'conflict');
+    const counted = c.turns.filter((t) => t.kind === 'zh_exemplar' && t.status !== 'failed').length;
+    if (counted >= ASSIST_LIMITS.zhExemplarsPerCase) {
+      return { status: 429, json: { error: { code: 'assist_limit', message: 'e2e assist_limit', reason: 'zh_exemplars_per_case' } } };
+    }
+    const turn: AssistTurnView = { id: this.nextId('turn'), seq: c.turns.length + 1, kind: 'zh_exemplar', status: 'queued', created_at: nowSec() };
+    c.turns.push(turn);
+    const opId = this.nextId('op');
+    c.pending = { turn_id: turn.id, kind: 'zh_exemplar', op_id: opId, status: 'queued' };
+    this.pendingLeft.set(c.id, this.options.pendingPolls ?? 1);
+    return ok({ op_id: opId, case_id: c.id, turn_id: turn.id, status: 'queued', points: AI_TASK_POINTS.assist_zh_exemplar } satisfies AssistTaskAccepted, 202);
+  }
+
   /** 轉錄（2 點）：要有照片、狀態 draft；排入佇列，輪詢幾次之後完成（或退還）。 */
   private ocr(c: AssistCaseDetail): Reply {
     if (c.pending || c.source !== 'photo' || c.status !== 'draft') return apiError(409, 'conflict');
@@ -902,6 +929,14 @@ export class FakeAssist {
         turn.analysis = analysis;
         c.status = 'analyzed';
         zhSettle(c, analysis);
+      }
+    } else if (turn.kind === 'zh_exemplar') {
+      // 國寫範文：只動 turn（案例的狀態、追問次數都不變）；失敗時退還。
+      if (this.options.zhExemplarFailure) {
+        turn.status = 'failed';
+        turn.failure = this.options.zhExemplarFailure;
+      } else {
+        turn.exemplar = c.section === 'zh_writing_reason' ? zhReasonExemplar() : zhEmotionExemplar();
       }
     } else if (turn.kind === 'followup' && c.subject === 'chinese') {
       turn.reply = zhFollowupReply(turn.mode ?? 'explain');

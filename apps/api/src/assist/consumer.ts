@@ -29,6 +29,8 @@
  * 英文走這個檔原本的 runAnalyze、runFollowup 與 ocr.ts 的 runAssistOcr（一個字都不改）；國文走 subjects/chinese/run.ts
  * （另外要國文的 D8 指紋，讀不到以 internal 退還）。任務設定一律用 turn 的 meta_json 存的 {subject, kind, items}
  * （routes 預扣時用的同一組；沒有 subject＝英文，舊的 turn 沒有這幾個鍵時照題目重算，和現行相同）。
+ * 國寫範文（assist_zh_exemplar；國寫範文設計 §7）：turn 的 kind 是 followup、meta_json.task 是 zh_exemplar，只有國文的國寫案例；
+ * 走 subjects/chinese/run.ts 的 runZhExemplar。任務和 turn 對不上（範文的 turn 給了追問的任務，或反過來）一律以 internal 退還。
  */
 import {
   ASSIST_LIMITS,
@@ -79,7 +81,7 @@ import { codeList, mergeCodes, type CaseRow, type TurnRow } from './repo';
 import { runAssistOcr } from './ocr';
 import { analyzeCallInput, followupCallInput, isCacheable, requestCaseOf, studentPatternsText, type FollowupRound } from './requests';
 import { requireZhFingerprints } from './subjects/chinese/d8';
-import { runZhAnalyze, runZhFollowup, runZhOcr } from './subjects/chinese/run';
+import { runZhAnalyze, runZhExemplar, runZhFollowup, runZhOcr } from './subjects/chinese/run';
 import { subjectOfCase } from './subjects/index';
 
 /** 學習助手的任務 → 操作對象所在的表與 turn 的種類（報告沒有 turn）。 */
@@ -88,6 +90,8 @@ const TASK_TARGETS: Record<AssistTask, { table: Extract<LeaseTable, 'assist_turn
   assist_analyze: { table: 'assist_turns', kind: 'analyze' },
   assist_followup: { table: 'assist_turns', kind: 'followup' },
   assist_report: { table: 'assist_reports', kind: null },
+  // 國寫範文的 turn 在資料庫是 followup（meta_json.task＝'zh_exemplar'；國寫範文設計 §1）。
+  assist_zh_exemplar: { table: 'assist_turns', kind: 'followup' },
 };
 
 /** 學習助手內容退還的計數與告警（ops_events 的 kind）。 */
@@ -261,8 +265,13 @@ export async function handleAssistMessage(env: Env, msg: Message<AiQueueMessage>
 
   // 科目：國文走 subjects/chinese/run.ts（另外要國文的 D8 指紋；讀不到就不處理）。任務設定用 turn 存的 {subject, kind, items}。
   const subject = caseRow ? subjectOfCase(caseRow) : 'english';
-  const turnMeta = turn ? (parseJson<{ subject?: unknown; kind?: unknown; items?: unknown; photos?: unknown }>(turn.meta_json) ?? {}) : {};
+  const turnMeta = turn ? (parseJson<{ subject?: unknown; kind?: unknown; items?: unknown; photos?: unknown; task?: unknown }>(turn.meta_json) ?? {}) : {};
   const metaItems = typeof turnMeta.items === 'number' && Number.isFinite(turnMeta.items) ? turnMeta.items : null;
+  // 國寫範文與追問共用 followup 的 turn：任務和 meta_json.task 要對得上，範文只有國文。
+  if ((task === 'assist_zh_exemplar') !== (turnMeta.task === 'zh_exemplar') || (task === 'assist_zh_exemplar' && subject !== 'chinese')) {
+    log('assist_question_invalid', { op_id: op.id, task, subject });
+    return fail('internal');
+  }
   if (subject === 'chinese') {
     if (!turn || !caseRow || (turnMeta.subject !== undefined && (!isAssistSubject(turnMeta.subject) || turnMeta.subject !== subject))) {
       log('assist_question_invalid', { op_id: op.id, task, subject });
@@ -281,7 +290,7 @@ export async function handleAssistMessage(env: Env, msg: Message<AiQueueMessage>
       }
       const items = metaItems ?? assistItemCount(subject, caseRow.kind, question);
       const ctx = { ...(await callBase({ subject, kind: caseRow.kind, items })), turn, caseRow, question, fp, zh };
-      action = task === 'assist_analyze' ? await runZhAnalyze(ctx) : await runZhFollowup(ctx);
+      action = task === 'assist_analyze' ? await runZhAnalyze(ctx) : task === 'assist_zh_exemplar' ? await runZhExemplar(ctx) : await runZhFollowup(ctx);
     }
     return finish(action, () => db.prepare('UPDATE assist_turns SET lease_until = NULL WHERE id = ?1 AND user_id = ?2 AND op_id = ?3').bind(turn.id, turn.user_id, op.id).run());
   }

@@ -46,6 +46,11 @@ export interface ZhFingerprints {
   boilerplate?: readonly string[];
   /** 短答比對的門檻（沒給用 0.6）。 */
   threshold?: number;
+  /**
+   * 比賽語料的 12 字窗口雜湊（國寫範文 §5.3；contest.ts 比對）。打包的真檔一定有（parseZhFingerprints 當成必填）；
+   * 測試沒給時國寫指導的示範段不檢查，國寫範文的 consumer 當成讀不到而退還（fail closed）。
+   */
+  contest?: ReadonlySet<number>;
 }
 
 /** 短答比對的預設門檻（設計值，§5.7；評測自編題誤攔 > 10% 時改 0.7）。 */

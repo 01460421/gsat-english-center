@@ -50,6 +50,8 @@ export interface ZhD8Bundle {
     official: { version: string; count: number; fp: string };
     short: { version: string; count: number; sets: Array<{ year: string; item: string; alt: number; grams: number; fp: string }> };
     boilerplate: string[];
+    /** 比賽語料的 12 字窗口（國寫範文 §5.3；只有雜湊）。 */
+    contest: { version: string; count: number; fp: string };
   };
   zh_version: string;
 }

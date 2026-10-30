@@ -23,6 +23,10 @@
  *     緊急關閉時是 off，這時用 --var 改成 admin），由管理員帳號跑「貼上 → 解析 → 追問 → 用同一份題目問另一部分」。
  *     假 Anthropic 依系統提示開頭（You are a Chinese (國文) tutor）辨識國文的解析與追問，回會通過國文後處理的固定 JSON，
  *     並檢查題目包在 <student_provided_question>、追問的三個 content block 都不加快取標記、同一份題目的請求帶前一題的摘要。
+ *   - 國寫範文（docs/design/assistant-subjects.md「國寫範文」§7）：照 wrangler.toml 的 AI_ZH_EXEMPLAR（上線後是 on；緊急關閉時是 off，
+ *     這時用 --var 改成 admin），由管理員帳號跑「國寫題 → 國寫指導 → AI 示範（8 點）」。假 Anthropic 依系統提示裡的「Model answer (國寫範文):」辨識範文任務，
+ *     回一篇會通過後處理的本站自寫示範，並檢查 max_tokens 14,000、<task>／<student_provided_question>／<analysis_digest> 三段、
+ *     沒有學生的文字；詳情的 turn 是 zh_exemplar、案例的追問次數不變、/api/ai/quota 的 assist.zh_exemplars 記一篇。
  *   - 作文範文（docs/design/model-essays.md §9.5）：照 wrangler.toml 的 AI_ESSAY_EXEMPLARS（2026-10-30 上線後是 on；緊急關閉時是 off，
  *     這時用 --var 改成 admin：只有管理員能用、/api/features 照樣沒有 essayExemplars），由管理員帳號跑完整段流程。假 Anthropic 依系統提示開頭
  *     （You write model essays）辨識範文任務，回一份會通過後處理的固定 JSON，並檢查 effort、max_tokens、1 小時快取、送出的 schema
@@ -52,6 +56,8 @@ import {
   exemplarsVarFrom,
   subjectsMode,
   subjectsVarsFrom,
+  zhExemplarMode,
+  zhExemplarVarFrom,
 } from '../../../.github/scripts/deploy-summary.mjs';
 
 const API_DIR = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -377,6 +383,62 @@ function zhFollowupOutput() {
     new_error_codes: ['zh_literal'],
     understood_check_zh: '「拾金不昧」的昧是什麼意思？',
     followup_chips_zh: [],
+    off_topic: false,
+    safety_flag: 'none',
+  };
+}
+
+// ───────────────────────── 國寫指導與國寫範文（本站自己寫的題目與文章） ─────────────────────────
+
+/** 國寫情意題（本站自寫的題目）。 */
+const ZH_WRITING_QUESTION = '以「那一扇窗」為題，寫一篇文章，描述與這扇窗有關的經驗，並抒發你的感受與體會。（文長不限）';
+const ZH_EXEMPLAR_POINTS = 8;
+
+/** 國寫指導的假輸出（會通過國文的後處理：要件的引文出自題目、不給等第）。 */
+function zhWritingOutputE2E() {
+  return {
+    section: 'zh_writing_emotion',
+    detected_subject: 'chinese',
+    skill_codes: ['zs:W2'],
+    tested_zh: '寫一扇具體的窗與相關的經驗、感受。',
+    material_zh: '',
+    requirements: [{ point_zh: '寫一扇具體的窗', quote: '那一扇窗', how_zh: '先決定是哪一扇窗。' }],
+    q1: { points_zh: [], quotes: [], frame_zh: '', demo_zh: '' },
+    stances_zh: ['窗讓我看見外面'],
+    angles_zh: ['補習班教室的窗'],
+    outline: [{ part_zh: '場景', hint_zh: '寫窗外看見什麼。' }],
+    examples: [{ use_zh: '開頭', text: '補習班的窗戶永遠關著，我只能從榜單的縫隙裡看天色。' }],
+    pitfalls_zh: ['只寫窗的樣子沒有經驗。'],
+    draft_checks: [],
+    typos: [],
+    checklist_zh: ['有沒有回扣題目？'],
+    doubt_replies: [],
+    followup_chips_zh: [],
+    off_topic: false,
+    safety_flag: 'none',
+  };
+}
+
+/** 國寫範文的假輸出：本站自寫的四段（不是任何人的作品）。 */
+const ZH_EXEMPLAR_PARAGRAPHS_E2E = [
+  '補習班的教室在大樓的七樓，靠走廊那一側有一扇窗，玻璃上貼滿了榜單，只留下一條細細的縫。每天傍晚，我都從那條縫裡看天色慢慢變暗。',
+  '高二那年冬天，數學考卷發回來，我盯著紅色的分數，不敢抬頭。坐在旁邊的同學忽然撕下一角榜單，窗外的路燈一下子亮進來，照在我的桌上。',
+  '那道光不大，卻讓我看見自己握筆的手還在發抖。我想起國中時在操場上跑步的樣子，那時候我不怕輸，只怕自己沒有跑完。',
+  '後來我常常望向那個缺口。窗沒有變大，榜單也沒有變少，但我知道，只要願意把一角撕開，光就會找到路進來。',
+];
+function zhExemplarOutputE2E() {
+  const cards = ['material', 'task', 'structure', 'thesis'];
+  const roles = ['場景', '事件', '轉折', '體會'];
+  return {
+    title_zh: '那一扇窗',
+    q1: { answer_zh: '', material_quotes: [] },
+    paragraphs: ZH_EXEMPLAR_PARAGRAPHS_E2E.map((text, i) => ({ text, role_zh: roles[i], card: cards[i], technique_zh: '用「細細的縫」寫出看不見外面的感覺。' })),
+    notes: [
+      { card: 'material', text_zh: '用補習班的一扇窗當作貼身的材料，讀者看得見場景。' },
+      { card: 'structure', text_zh: '從場景、事件到體會，一段只做一件事。' },
+    ],
+    coverage: [{ point_zh: '寫一扇具體的窗', paragraph: 1, quote: '有一扇窗' }],
+    self_check_zh: ['我寫的是哪一扇窗？', '有沒有一件具體的事？', '最後一段有沒有回扣題目？'],
     off_topic: false,
     safety_flag: 'none',
   };
@@ -833,7 +895,7 @@ function ocrOutput() {
  * state.gapNext 讓下一個中譯英的第二位評分者把每個部分都判成漏譯（兩位差距 >2，觸發第三位）。
  */
 async function startFakeAnthropic({ apiKey }) {
-  const state = { requests: [], problems: [], faults: [], served: { ok: 0, rate_limited: 0, refusal: 0 }, gapNext: false, forbidden: new Set(), base: '', zhAnalyze: [] };
+  const state = { requests: [], problems: [], faults: [], served: { ok: 0, rate_limited: 0, refusal: 0 }, gapNext: false, forbidden: new Set(), base: '', zhAnalyze: [], zhExemplar: [] };
   const server = createServer(async (req, res) => {
     try {
       const raw = (await readBody(req)).toString();
@@ -861,7 +923,9 @@ async function startFakeAnthropic({ apiKey }) {
           : system.startsWith('You are a Chinese (國文) tutor')
           ? system.includes('Follow-up questions:')
             ? 'assist_zh_followup'
-            : 'assist_zh_analyze'
+            : system.includes('Model answer (國寫範文):')
+              ? 'assist_zh_exemplar'
+              : 'assist_zh_analyze'
           : system.startsWith('You are a study advisor')
             ? 'assist_report'
             : system.includes('Chinese-to-English translation')
@@ -920,7 +984,13 @@ async function startFakeAnthropic({ apiKey }) {
         // 國文解析（docs/design/assistant-subjects.md §3.8）：題目一律是學生提供的，包在 <student_provided_question>；不進共用快取。
         if (!userText.startsWith('<task>\n') || !userText.includes('<student_provided_question>')) p('國文解析請求沒有 <task> 或 <student_provided_question>');
         if (userText.includes('<site_explanation>')) p('國文解析請求不該有 <site_explanation>');
-        state.zhAnalyze.push({ related: userText.includes('Related case:') });
+        if (!userText.includes('composition guidance (國寫)')) state.zhAnalyze.push({ related: userText.includes('Related case:') });
+      } else if (task === 'assist_zh_exemplar') {
+        // 國寫範文（國寫範文設計 §2）：max_tokens 14,000；<task>、題目全部區塊、國寫指導的摘要；沒有學生的文字（段落、疑問）。
+        if (body.max_tokens !== 14_000) p(`max_tokens=${body.max_tokens}`);
+        if (!userText.startsWith('<task>\n') || !userText.includes('<student_provided_question>') || !userText.includes('<analysis_digest>')) p('範文請求沒有 <task>、題目或摘要');
+        if (userText.includes('<student_text')) p('範文請求不該有學生的文字');
+        state.zhExemplar.push({ title: userText.includes('Title given: 「那一扇窗」') });
       } else if (task === 'assist_zh_followup') {
         // 國文追問（§3.5）：三個 content block（上下文、對話、這一輪），都不加快取標記；問題包在 <student_text role="question">。
         if (!Array.isArray(content) || content.length !== 3 || content.some((b) => b.cache_control)) p('國文追問的 content 應該是 3 個 block、都不加 cache_control');
@@ -934,7 +1004,7 @@ async function startFakeAnthropic({ apiKey }) {
         for (const tag of ['<history_facts>', '<case_digests>', '<practice_candidates>', '<student_text role="feedback">']) if (!userText.includes(tag)) p(`報告請求沒有 ${tag}`);
         if (!/\nc1 \| /.test(userText)) p('報告請求的代表案例沒有用短代號');
         if (!userText.includes(`${ASSIST_WB_REF} | word_bank`)) p('報告請求的候選沒有由伺服器重建');
-      } else if (task !== 'ocr' && task !== 'assist_zh_analyze' && !userText.includes('<student_text')) p('學生文字沒有包在 <student_text>');
+      } else if (task !== 'ocr' && task !== 'assist_zh_analyze' && task !== 'assist_zh_exemplar' && !userText.includes('<student_text')) p('學生文字沒有包在 <student_text>');
       for (const s of state.forbidden) if (raw.includes(s)) p(`請求含有身分資訊（${s.slice(0, 3)}…）`);
       if (task === 'ocr' || task === 'assist_ocr') {
         if (images.length === 0) p('OCR 沒有附照片');
@@ -977,7 +1047,9 @@ async function startFakeAnthropic({ apiKey }) {
       } else if (task === 'assist_followup') {
         output = assistFollowupOutput();
       } else if (task === 'assist_zh_analyze') {
-        output = zhChoiceOutput(userText);
+        output = userText.includes('composition guidance (國寫)') ? zhWritingOutputE2E() : zhChoiceOutput(userText);
+      } else if (task === 'assist_zh_exemplar') {
+        output = zhExemplarOutputE2E();
       } else if (task === 'assist_zh_followup') {
         output = zhFollowupOutput();
       } else if (task === 'assist_report') {
@@ -1241,6 +1313,9 @@ async function main() {
   const subjectsToml = subjectsVarsFrom(wranglerToml);
   const zhToml = subjectsMode(subjectsToml.subjects);
   const subjectsVar = zhToml === 'off' ? { AI_ASSISTANT_SUBJECTS: 'admin' } : {};
+  // 國寫範文：AI_ZH_EXEMPLAR 是 off（程式預設、緊急關閉）時用 --var 改成 admin，由管理員帳號跑；/api/features 只在 on 時有 exemplar。
+  const zhExemplarToml = zhExemplarMode(zhExemplarVarFrom(wranglerToml));
+  const zhExemplarVar = zhExemplarToml === 'off' ? { AI_ZH_EXEMPLAR: 'admin' } : {};
 
   let dev = null;
   try {
@@ -1266,6 +1341,7 @@ async function main() {
           SITE_DATA_ORIGIN: site.state.base,
           ...exemplarsVar,
           ...subjectsVar,
+          ...zhExemplarVar,
         },
       });
       cleanupTasks.push(async () => {
@@ -1303,7 +1379,7 @@ async function main() {
           ...(assistantOn ? { assistant: true } : {}),
           ...(assistantPhotoOn ? { assistantPhoto: true } : {}),
           ...(exemplarsOn ? { essayExemplars: true } : {}),
-          ...(zhOn ? { assistantSubjects: [{ subject: 'chinese', photo: zhPhotoOn }] } : {}),
+          ...(zhOn ? { assistantSubjects: [{ subject: 'chinese', photo: zhPhotoOn, ...(zhExemplarToml === 'on' ? { exemplar: true } : {}) }] } : {}),
         };
         same(r.json, expected, 'features');
       },
@@ -1568,7 +1644,7 @@ async function main() {
       same([q.json.essays.day_used, q.json.concurrent.active], [2, 0], '今日作文篇數（退還的不算）與進行中任務');
       check(q.json.points.day_limit >= 100_000_000, '管理員的上限應該是「不限」');
       // task_points 列出全部任務（含學習助手的四種與作文範文；AI_TASK_POINTS）。
-      same(q.json.task_points, { ...POINTS, assist_ocr: 2, assist_analyze: 6, assist_followup: 3, assist_report: 10, essay_exemplars: EXEMPLAR_POINTS }, 'task_points');
+      same(q.json.task_points, { ...POINTS, assist_ocr: 2, assist_analyze: 6, assist_followup: 3, assist_report: 10, essay_exemplars: EXEMPLAR_POINTS, assist_zh_exemplar: ZH_EXEMPLAR_POINTS }, 'task_points');
       return `day_used=${q.json.points.day_used}、essays=${q.json.essays.day_used}、上限 ${q.json.points.day_limit}（不限）`;
     });
 
@@ -1775,7 +1851,8 @@ async function main() {
       same(c.status, 'analyzed', '國文案例狀態');
       const a = c.turns[0].analysis;
       same([a.kind, a.section, a.items[0].verdict, a.items[0].answer_key?.from], ['zh_choice', 'zh_form', 'wrong', 'ai'], '國文解析');
-      same(a.items[0].answer_key?.certainty, 'likely', '字形題的確定程度上限（最高「可能」）');
+      // 字形已依評測拿掉確定程度上限（ZH_CERTAINTY_CAPS 只剩字音）：保留模型自己的確定程度。
+      same(a.items[0].answer_key?.certainty, 'sure', '字形題保留模型的確定程度');
       same(a.cards[0]?.kind, 'form', '字形卡');
       same([c.section, c.verdict, c.wrong_count, c.error_codes], ['zh_form', 'wrong', 1, ['zh_form_homophone']], '結算寫回 section、verdict、wrong_count、錯因');
       const list = await http(BASE, 'GET', '/api/assist/cases?subject=chinese', { jar: admin });
@@ -1819,6 +1896,40 @@ async function main() {
       const list = await http(BASE, 'GET', '/api/assist/cases?subject=chinese', { jar: admin });
       same(list.json.cases.map((x) => x.id).sort(), [S.zhCase, S.zhRelated].sort(), '國文的兩個案例');
       return `${c.title}`;
+    });
+
+    // ── 國寫範文（國寫範文設計 §7）：管理員帳號（on 或 admin 模式都能用）──
+    await step(`國寫範文：國寫題 → 國寫指導（zh_writing）→ POST …/zh-exemplar → 202（${ZH_EXEMPLAR_POINTS} 點）→ 輪詢到範文完成`, async () => {
+      const created = await http(BASE, 'POST', '/api/assist/cases', {
+        jar: admin,
+        json: { source: { source: 'typed', subject: 'chinese', question: { blocks: [{ kind: 'question', label: null, text: ZH_WRITING_QUESTION }], target_labels: [], format: 'writing' } } },
+      });
+      expectStatus(created, 201, '建立國寫案例');
+      same([created.json.subject, created.json.kind], ['chinese', 'zh_writing'], '國寫案例');
+      S.zhWriting = created.json.id;
+      // 國寫指導還沒完成：409，不扣點。
+      expectError(await http(BASE, 'POST', `/api/assist/cases/${S.zhWriting}/zh-exemplar`, { jar: admin, json: {} }), 409, 'conflict', '國寫指導之前要範文');
+      const a = await http(BASE, 'POST', `/api/assist/cases/${S.zhWriting}/analyze`, { jar: admin, json: {} });
+      expectStatus(a, 202, '國寫 analyze');
+      S.zhWritingPoints = a.json.points;
+      const guided = await waitForCase(admin, S.zhWriting, (x) => x.status === 'analyzed' || x.status === 'failed');
+      same([guided.status, guided.turns[0].analysis?.kind], ['analyzed', 'zh_writing'], '國寫指導');
+      const before = await http(BASE, 'GET', '/api/ai/quota', { jar: admin });
+      const r = await http(BASE, 'POST', `/api/assist/cases/${S.zhWriting}/zh-exemplar`, { jar: admin, json: {} });
+      expectStatus(r, 202, 'zh-exemplar');
+      same([r.json.status, r.json.points], ['queued', ZH_EXEMPLAR_POINTS], '送出國寫範文');
+      const c = await waitForCase(admin, S.zhWriting, (x) => x.turns.some((t) => t.kind === 'zh_exemplar' && (t.status === 'done' || t.status === 'failed')));
+      const turn = c.turns.find((t) => t.kind === 'zh_exemplar');
+      same([turn.status, turn.exemplar?.kind, turn.exemplar?.title_zh, turn.exemplar?.paragraphs.length], ['done', 'zh_exemplar', '那一扇窗', 4], '國寫範文');
+      same(turn.exemplar.paragraphs.map((x) => x.hidden), [null, null, null, null], '範文段落都照顯示');
+      same([c.status, c.followups], ['analyzed', 0], '案例的狀態與追問次數不變');
+      same(anthropic.state.zhExemplar, [{ title: true }], '範文請求帶題目指定的題目');
+      const op = await http(BASE, 'GET', `/api/ai/ops/${r.json.op_id}`, { jar: admin });
+      same([op.json.status, op.json.points_charged], ['settled', ZH_EXEMPLAR_POINTS], '國寫範文的 ai_ops');
+      const after = await http(BASE, 'GET', '/api/ai/quota', { jar: admin });
+      same(after.json.assist?.zh_exemplars?.day_used, (before.json.assist?.zh_exemplars?.day_used ?? 0) + 1, '/api/ai/quota 的國寫範文篇數');
+      same(after.json.task_points.assist_zh_exemplar, ZH_EXEMPLAR_POINTS, 'task_points 的國寫範文點數');
+      return `${turn.exemplar.totals.chars} 字、扣 ${op.json.points_charged} 點`;
     });
 
     // ── 作文範文（docs/design/model-essays.md §9.5）：管理員帳號（on 或 admin 模式都能用）──
@@ -2013,12 +2124,22 @@ async function main() {
       const u = await http(BASE, 'GET', '/api/admin/usage', { jar: admin });
       expectStatus(u, 200, '/api/admin/usage');
       // 批改 15 個任務（19＋學生 30 點）＋學習助手的解析、追問、拍照轉錄與學習報告（4 個任務）＋國文的兩次解析與一次追問（3 個任務）
-      // ＋作文範文 2 組（共用快取命中不算任務）。
+      // ＋國寫指導與國寫範文（2 個任務）＋作文範文 2 組（共用快取命中不算任務）。
       same(
         [u.json.totals.ops, u.json.totals.points, u.json.totals.refunded_ops],
         [
-          24,
-          19 + STUDENT_DAY_LIMIT + ASSIST_POINTS.analyze + ASSIST_POINTS.followup + ASSIST_POINTS.ocr + ASSIST_REPORT_POINTS + 2 * ZH_POINTS.analyze + ZH_POINTS.followup + 2 * EXEMPLAR_POINTS,
+          26,
+          19 +
+            STUDENT_DAY_LIMIT +
+            ASSIST_POINTS.analyze +
+            ASSIST_POINTS.followup +
+            ASSIST_POINTS.ocr +
+            ASSIST_REPORT_POINTS +
+            2 * ZH_POINTS.analyze +
+            ZH_POINTS.followup +
+            S.zhWritingPoints +
+            ZH_EXEMPLAR_POINTS +
+            2 * EXEMPLAR_POINTS,
           1,
         ],
         '用量（ops、點數、退還）',
@@ -2061,8 +2182,18 @@ async function main() {
       same(
         [usage.json.totals.ops, usage.json.totals.points],
         [
-          24,
-          19 + STUDENT_DAY_LIMIT + ASSIST_POINTS.analyze + ASSIST_POINTS.followup + ASSIST_POINTS.ocr + ASSIST_REPORT_POINTS + 2 * ZH_POINTS.analyze + ZH_POINTS.followup + 2 * EXEMPLAR_POINTS,
+          26,
+          19 +
+            STUDENT_DAY_LIMIT +
+            ASSIST_POINTS.analyze +
+            ASSIST_POINTS.followup +
+            ASSIST_POINTS.ocr +
+            ASSIST_REPORT_POINTS +
+            2 * ZH_POINTS.analyze +
+            ZH_POINTS.followup +
+            S.zhWritingPoints +
+            ZH_EXEMPLAR_POINTS +
+            2 * EXEMPLAR_POINTS,
         ],
         '刪帳號後帳本仍保留（去識別）',
       );
@@ -2142,7 +2273,7 @@ async function main() {
       same(anonymized.n, 10, '刪帳號後學生的 ai_ops 去識別保留');
       same(deletions.n, 1, 'deletion_log');
       same(submissions.n, 3, '學生的提交隨帳號刪除（只剩管理員的 3 份）');
-      same([turns.n, turns.done], [6, 6], '學習助手的 turn（英文的解析、追問、拍照轉錄；國文的兩次解析與一次追問）');
+      same([turns.n, turns.done], [8, 8], '學習助手的 turn（英文的解析、追問、拍照轉錄；國文的兩次解析與一次追問；國寫指導與國寫範文）');
       same(sharedCache.n, 2, '站內題的解析與網站題目的範文寫進共用快取');
       same([assistPhotos.n, ocrText.n], [0, 0], '題目照片已刪、確認後的轉錄只留統計');
       same([reports.n, reports.done], [1, 1], '學習報告（完成、租約已放掉）');

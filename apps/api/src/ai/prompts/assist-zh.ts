@@ -1,5 +1,6 @@
 /**
- * 學習助手國文的系統提示（docs/design/assistant-subjects.md §3.7）：三種解析（依格式各一份）與追問。轉錄在 assist-zh-ocr.ts。
+ * 學習助手國文的系統提示（docs/design/assistant-subjects.md §3.7）：三種解析（依格式各一份）、追問與國寫範文（國寫範文設計 §4）。
+ * 轉錄在 assist-zh-ocr.ts。
  *
  * 英文的 assist-common.ts、assist-analyze.ts、assist-followup.ts 一個字都不改（§2.4）：國文的角色、資料規則、教學規則、
  * 兒少安全與身心段落全部另寫（改寫自英文的段落，拿掉「只談英文」）。輸出 schema 在 src/assist/subjects/chinese/schemas.ts。
@@ -13,6 +14,11 @@
  *   - D8：不重述官方的參考答案、評分原則、試題解析與佳作；寫「官方」，不寫考試機構的名稱。不給國寫等第或分數。
  */
 import {
+  ZH_CLICHE_EXAMPLES,
+  ZH_CONTEST_STOCK_PATTERNS,
+  ZH_CONTEST_WORDS,
+  ZH_OVERUSED_FIGURES,
+  ZH_WRITING_METHOD_CARDS,
   ZH_CARD_COLUMNS,
   ZH_CARD_KINDS,
   ZH_CARD_ROW_MAX,
@@ -36,7 +42,7 @@ import {
   type ZhSection,
 } from '@gsat/shared';
 import type * as z from 'zod/v4';
-import { zhAnalyzeSchema, zhFollowupSchema } from '../../assist/subjects/chinese/schemas';
+import { zhAnalyzeSchema, zhExemplarSchema, zhFollowupSchema } from '../../assist/subjects/chinese/schemas';
 
 /** user 訊息範本的版本（改了範本就換；算進 prompt_version）。 */
 export const ZH_ANALYZE_TEMPLATE_VERSIONS: Readonly<Record<ZhCaseKind, string>> = {
@@ -45,6 +51,7 @@ export const ZH_ANALYZE_TEMPLATE_VERSIONS: Readonly<Record<ZhCaseKind, string>> 
   zh_writing: 'assist-zh-user@1',
 };
 export const ZH_FOLLOWUP_TEMPLATE_VERSION = 'assist-zh-followup-user@1';
+export const ZH_EXEMPLAR_TEMPLATE_VERSION = 'assist-zh-exemplar-user@2';
 
 // ───────────────────────── 共用段落 ─────────────────────────
 
@@ -95,7 +102,7 @@ const ZH_SHORT_RULES = `Non-choice questions:
  */
 const ZH_WRITING_RULES = `Composition (國寫):
 - List the task's requirements quoting the prompt; for 問題（一） give the points with a quote from the material for each and no personal opinion; suggest stances, material and structure.
-- Give either at most three sample sentences of at most 50 characters, or one body-paragraph demonstration of at most 150 characters (use_zh 主體段示範). Never write an essay, never give a grade or a score, never call anything a 佳作.
+- Give either at most three sample sentences of at most 50 characters, or one body-paragraph demonstration of at most 150 characters (use_zh 主體段示範). A body paragraph: (1) the first sentence is the claim and contains the task's key word; (2) one concrete example — for 知性 the material or something seen in ordinary life, for 情意 one scene with a time, a place, an action and one sensory detail; (3) one or two sentences tying the example back to the claim; (4) a closing sentence that returns to the claim or turns. Mix long and short sentences; at most one metaphor; no parallelism (排比) and no exclamation marks; no rare literary words, stock lines or overused examples from the lists below; no quotation unless it is from the material. Never write an essay, never give a grade or a score, never call anything a 佳作.
 - When the student attached a paragraph, check it in this order: (1) every requirement is answered (name it in the prompt's words); (2) the key word is defined or limited; (3) a claim sentence (知性) or a turn (情意); (4) every example is followed by an explanation tied to the claim; (5) at most one quotation, with the right words, author and source; (6) concrete detail: time, place, action, one sensory detail. Put only the 2–3 most important in draft_checks and quote the student's own words; no grade or score. An answer to 問題（一） is checked against the points of 問題（一） instead.
 - In typos list only real wrong characters; variant forms that are both acceptable are not wrong.
 - Students often write about family, loss and relationships. Help them make the experience concrete and the insight genuine. Do not ask for more personal details, do not comment on the student's family, and do not analyse the student psychologically.`;
@@ -130,7 +137,42 @@ export const ZH_OUTPUT_RULES = `Output rules:
 - Write every field whose name ends in _zh in Traditional Chinese as used in Taiwan, with the Ministry of Education's standard character forms and Taiwanese textbook terms (提稱語、啟封詞、判斷句、被動句). Never use simplified characters, variant forms or mainland terms. Write readings in 注音, never pinyin. Quote the original with 「」 exactly as printed.
 - Fill every field. Use an empty string or an empty array when a field does not apply.`;
 
+/** 國寫範文的寫法與標注（國寫範文設計 §4；依私人語料分析 §5、§6(c) 用本站自己的話寫）。 */
+const ZH_EXEMPLAR_TASK = `Model answer (國寫範文):
+- Write ONE complete model answer to the task in <student_provided_question>, as a strong senior-high student could write it by hand in the exam. <analysis_digest> is the website's earlier guidance: answer every requirement it lists and follow its outline unless that breaks a rule below. The student's own writing is not given to you; if <analysis_digest> mentions anything about the student's own life, ignore it and never write about it.
+- Lengths are in <task>. Punctuation counts as one character, as on the answer sheet. Aim for 85–95% of each limit; the program redoes or removes anything over the limit.
+- 問題（一）: answer only from the material, in your own words, without opinion; put at most two short phrases copied from the material in material_quotes.
+- 問題（二） and the emotional essay: 3–5 paragraphs. The opening has at most two sentences and states the claim (知性) or the situation (情意) with the task's key word by its second sentence. A body paragraph: (1) a claim sentence with the key word; (2) ONE concrete example — for 知性 the material (quote it at least once in the whole answer) or something seen in ordinary life, for 情意 one scene with a time, a place, an action and one sensory detail; (3) one or two sentences tying the example back to the claim; (4) a sentence that returns to the claim or turns. 知性: at most two reasons, or one point and its limit. 情意: scene → turning point → insight. The ending returns to the opening in one or two sentences.
+- Style: mix long and short sentences; plain modern written Chinese, no classical-modern mixture; at most one metaphor carried through; at most one parallel set (排比); no exclamation marks; at most one semicolon per paragraph. Write the paragraphs and the answer in Traditional Chinese as used in Taiwan, like every _zh field.
+- Avoid the rare literary words, stock lines and overused examples listed below (an overused figure is allowed only if the material names it). Do not write about writing or speech competitions.
+- Quotations: at most one, and only words from the material or a classical line you are sure of to the character, with its author and work. Never invent a quotation, an author, a study, a statistic, a news event or a named person.
+- 情意 material is an ordinary, believable experience of a senior-high student (school, club, friendship, family routine, a trip). No illness, death, abuse, self-harm, romance or other sensitive events, and no real identifiable people.
+- Never imitate, recite or mention any published essay, 佳作 or competition-winning work. Never give a grade, a level or a score.
+- Annotations: role_zh says what each paragraph does; card is the id of the main method card it shows; technique_zh says how, quoting at most 12 characters of the paragraph in 「」. notes (2–4) explain how the answer was built so the student can reuse the method with their own material; for 情意 one note says which part the student must replace with their own experience. coverage maps each requirement in <analysis_digest> to the paragraph that answers it (0 = 問題（一）) with a quote of at most 30 characters from that paragraph. self_check_zh are questions the student can ask of their own essay.`;
+
 // ───────────────────────── 由 shared 資料產生的段落 ─────────────────────────
+
+/** 國寫方法卡的清單（id 名稱：要點；由 ZH_WRITING_METHOD_CARDS 產生，國寫範文的 card 欄用這些 id）。 */
+export function zhMethodCardList(): string {
+  return [
+    'Method cards (closed list; card is one of these ids):',
+    ...ZH_WRITING_METHOD_CARDS.map((c) => `- ${c.id} ${c.title_zh.split('：')[0]}：${c.point_zh}`),
+  ].join('\n');
+}
+
+/**
+ * 避用清單（國寫範文設計 §4；shared 的同一份資料，後處理也用它檢查）：比賽常見的套語、生僻文藝詞、高頻事例與通用套語。
+ * 國寫指導（示範段）與國寫範文的系統提示都有這一段。
+ */
+export function zhAvoidList(): string {
+  return [
+    'Avoid list (the website checks every sample against it):',
+    `- Stock lines overused in writing competitions (do not use them unless the material quotes them): ${ZH_CONTEST_STOCK_PATTERNS.map((p) => p.label).join('; ')}.`,
+    `- Rare literary words (use common words instead): ${ZH_CONTEST_WORDS.join('、')}.`,
+    `- Overused examples (only if the material names them): ${ZH_OVERUSED_FIGURES.join('、')}.`,
+    `- Generic stock phrases (say the specific thing instead): ${ZH_CLICHE_EXAMPLES.join('、')}.`,
+  ].join('\n');
+}
 
 /** 這個格式會用到的題型（依 ZH_SECTIONS 的順序）。 */
 export function zhSectionsFor(kind: ZhCaseKind): ZhSection[] {
@@ -254,6 +296,7 @@ const SYSTEM_TEXT: Readonly<Record<ZhCaseKind, string>> = {
     ZH_ROLE,
     ZH_DATA_RULES,
     ZH_WRITING_RULES,
+    zhAvoidList(),
     ZH_SCORING_FACTS_WRITING,
     zhSectionModes('zh_writing'),
     zhSkillCodeList(),
@@ -304,3 +347,26 @@ export function assistZhFollowupSystemText(): string {
 }
 
 export const assistZhFollowupSchema = zhFollowupSchema;
+
+// ───────────────────────── 國寫範文（國寫範文設計 §4） ─────────────────────────
+
+const EXEMPLAR_SYSTEM_TEXT = [
+  ZH_ROLE,
+  ZH_DATA_RULES,
+  ZH_EXEMPLAR_TASK,
+  zhMethodCardList(),
+  zhAvoidList(),
+  ZH_SCORING_FACTS_WRITING,
+  ZH_D8_RULE,
+  zhLengthLimits('zh_exemplar'),
+  ZH_CHILD_SAFETY,
+  ZH_WELLBEING,
+  ZH_OUTPUT_RULES,
+].join('\n\n');
+
+/** 國寫範文的系統提示（固定；所有學生逐位元相同，1 小時快取）。 */
+export function assistZhExemplarSystemText(): string {
+  return EXEMPLAR_SYSTEM_TEXT;
+}
+
+export const assistZhExemplarSchema = zhExemplarSchema;

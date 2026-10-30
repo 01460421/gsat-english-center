@@ -58,6 +58,7 @@ export const AI_TASK_LABELS: Record<AiTask, string> = {
   assist_followup: '學習助手追問',
   assist_report: '學習報告',
   essay_exemplars: '作文範文',
+  assist_zh_exemplar: '學習助手國寫範文',
 };
 
 /** /auth/google/callback 失敗時帶回 /account?auth_error=<代碼>。 */

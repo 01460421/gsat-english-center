@@ -1448,6 +1448,7 @@ Anthropic 未成年人指引要求的監控與回報（04 文件 §7.5）：AI �
 - 清理接在 housekeeping（`purgeExpiredAssist`）：到期的照片、案例、報告分批刪除；進行中的案例與報告不刪（等結算或回收）。
 - 會增加的列舉（`source`、`section`、`kind`、`verdict`）不設 CHECK；JSON 欄位都是 `json_valid` 加長度上限；時間是 Unix 秒。
 - **國文（docs/design/assistant-subjects.md §7.1；2026-10-30 上線，沒有結構改動、沒有遷移）**：科目放在 `ref_json.subject`（`'chinese'`；沒有這個鍵就是英文），「用同一份題目問另一部分」的前一個案例放在 `ref_json.related_case_id`；查詢一律用 `COALESCE(json_extract(ref_json, '$.subject'), 'english')`（`assist/repo.ts`），列表不帶科目時預設只算英文。`kind` 多 `zh_choice`／`zh_short`／`zh_writing`，`section` 多 `zh_*` 的題型；子模式、字數限制、學生作答、已知答案與國寫片段在 `question_json`；國文的錯因與技能代碼照樣放 `errors_json`、`skills_json`。解析結算時把國文的 `section`、`verdict`（依當時的答案鍵重算，不信任存下的值；國寫是 `unknown`）與 `wrong_count` 寫回。匯出的案例多 `subject`。`assist_reports` 不變（學習報告只涵蓋英文）。沒有科目的索引：每人 ≤ 500 個案例，先用 `(user_id, updated_at)` 縮小範圍；需要時再加 generated column。
+- **國寫範文（docs/design/assistant-subjects.md「國寫範文」§9.1；2026-10-30 開放，沒有結構改動、沒有遷移）**：國寫案例（`kind='zh_writing'`）上的「看一篇 AI 示範」存成同一個案例的一筆 `assist_turns`：`kind` 仍是 `'followup'`（0004 的 CHECK 只允許 ocr／analyze／followup，SQLite 改 CHECK 要重建表），`input_text`、`label`、`mode` 是 NULL，`meta_json` 是 `{"subject":"chinese","task":"zh_exemplar"}`，結算後加 `section`、filter／D8／國文指紋版本、`counts`（D8 與比賽語料隱藏的段數）、`checks`（後處理最後一次的計數）與 `content_failures`（語意檢查要求重寫的次數，跨投遞累計，上限 4）；`output_json` 是 `ZhExemplarView`（一篇約 6–10 KB）。讀取時依 `json_extract(meta_json,'$.task')='zh_exemplar'` 換算成 `kind: 'zh_exemplar'`（`repo.ts` 的詳情與進行中、`account/export.ts` 的匯出用同一個 `CASE WHEN`）。範文**不動** `assist_cases.followups`（追問的點數與上限不受影響）；追問的上下文只取 `input_text` 不是 NULL 的 followup，不會帶到範文。每個案例最多 2 篇（完成＋進行中，失敗不算）是 INSERT 的條件；結算只更新案例的 `updated_at`、`expires_at`、`d8_hidden`、`safety_flag`；退還時 turn 改成 `failed`，案例狀態不動。刪除隨案例 CASCADE，180 天到期照案例的 `expires_at`。
 
 | 欄位 | 型別與約束 | 說明 |
 |---|---|---|
@@ -1493,7 +1494,7 @@ Anthropic 未成年人指引要求的監控與回報（04 文件 §7.5）：AI �
 | `case_id` | `TEXT NOT NULL REFERENCES assist_cases(id) ON DELETE CASCADE` | 案例 |
 | `user_id` | `INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE` | 使用者 |
 | `seq` | `INTEGER NOT NULL CHECK (seq >= 1)` | 案例裡的第幾次 |
-| `kind` | `TEXT NOT NULL CHECK (kind IN ('ocr','analyze','followup'))` | 轉錄、解析、追問 |
+| `kind` | `TEXT NOT NULL CHECK (kind IN ('ocr','analyze','followup'))` | 轉錄、解析、追問（國寫範文也是 `followup`，以 `meta_json.task='zh_exemplar'` 區分） |
 | `status` | `TEXT NOT NULL CHECK (status IN ('queued','running','done','failed'))` | 狀態 |
 | `op_id` | `TEXT` | ai_ops.id（共用快取命中時為 NULL） |
 | `input_text` | `TEXT CHECK (input_text IS NULL OR length(input_text) <= 500)` | 追問內容（遮過個資） |
@@ -1504,7 +1505,7 @@ Anthropic 未成年人指引要求的監控與回報（04 文件 §7.5）：AI �
 | `cache_hit` | `INTEGER NOT NULL DEFAULT 0 CHECK (cache_hit IN (0,1))` | 共用快取命中（0 點） |
 | `prompt_version` | `TEXT` | 提示詞版本 |
 | `served_model` | `TEXT` | 實際服務的模型 |
-| `meta_json` | `TEXT NOT NULL DEFAULT '{}' CHECK (json_valid(meta_json) AND length(meta_json) <= 4096)` | filter／D8 版本、cache_key、隱藏區塊序號、上限處理數 |
+| `meta_json` | `TEXT NOT NULL DEFAULT '{}' CHECK (json_valid(meta_json) AND length(meta_json) <= 4096)` | filter／D8 版本、cache_key、隱藏區塊序號、上限處理數；國寫範文另有 `task`、`section`、`checks`、`content_failures` |
 | `lease_until` | `INTEGER` | consumer 的租約到期時間 |
 | `tries` | `INTEGER NOT NULL DEFAULT 0 CHECK (tries BETWEEN 0 AND 5)` | consumer 處理過幾次 |
 | `created_at` | `INTEGER NOT NULL DEFAULT (unixepoch())` | 建立時間 |

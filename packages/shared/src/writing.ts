@@ -588,6 +588,7 @@ export interface EssayGradingResult {
  * assist_analyze 這裡是一題的點數，題組依 assistAnalyzePoints（每多一題加 2，最多 14）。
  * essay_exemplars 是作文範文（docs/design/model-essays.md §3.1、§4.1；exemplars.ts 的 EXEMPLAR_TASKS）：
  * 網站題目已經有共用的範文時 0 點（不建立操作，不經這張表）。
+ * assist_zh_exemplar 是學習助手國寫案例的整篇 AI 示範（國寫範文設計 §6；assist.ts 的 ASSIST_TASKS）：8 點，同英文作文範文。
  */
 export const AI_TASKS = [
   'translation_grade',
@@ -598,6 +599,7 @@ export const AI_TASKS = [
   'assist_followup',
   'assist_report',
   'essay_exemplars',
+  'assist_zh_exemplar',
 ] as const;
 export type AiTask = (typeof AI_TASKS)[number];
 
@@ -610,6 +612,7 @@ export const AI_TASK_POINTS = {
   assist_followup: 3,
   assist_report: 10,
   essay_exemplars: 8,
+  assist_zh_exemplar: 8,
 } as const satisfies Record<AiTask, number>;
 
 /** 計入「作文每天篇數」的任務家族（AI_ESSAY_USER_DAY，預設 3 篇）。OCR 不算篇數。 */
@@ -679,6 +682,8 @@ export interface AiQuotaResponse {
   assist?: {
     reports: { day_used: number; day_limit: number };
     ocr: { day_used: number; day_limit: number };
+    /** 國寫範文今天產生的篇數與每日上限（國寫範文設計 §7）；只在國寫範文對這位使用者開放時才有。 */
+    zh_exemplars?: { day_used: number; day_limit: number };
   };
   /**
    * 作文範文今天建立的組數與每日上限（docs/design/model-essays.md §7.1）。只在作文範文對這位使用者開放時才有

@@ -9,7 +9,7 @@ export interface DeploySummaryInput {
     assistant?: boolean;
     assistantPhoto?: boolean;
     essayExemplars?: boolean;
-    assistantSubjects?: Array<{ subject: string; photo: boolean }>;
+    assistantSubjects?: Array<{ subject: string; photo: boolean; exemplar?: boolean }>;
   };
   secretNames: string[];
   proxy: string;
@@ -27,6 +27,8 @@ export interface DeploySummaryInput {
   /** wrangler.toml 的 AI_ASSISTANT_SUBJECTS、AI_ASSISTANT_SUBJECTS_PHOTO（沒有那一行或省略＝null，Worker 用預設值 off）。 */
   subjectsVar?: string | null;
   subjectsPhotoVar?: string | null;
+  /** wrangler.toml 的 AI_ZH_EXEMPLAR（學習助手國寫範文；沒有那一行或省略＝null，Worker 用預設值 off）。 */
+  zhExemplarVar?: string | null;
 }
 
 export type AssistantMode = 'off' | 'admin' | 'on';
@@ -51,4 +53,7 @@ export declare function exemplarsMode(value: string | null | undefined): Assista
 export declare const SUBJECTS_DEFAULT: string;
 export declare function subjectsVarsFrom(wranglerToml: string): { subjects: string | null; photo: string | null };
 export declare function subjectsMode(value: string | null | undefined): AssistantMode;
+export declare const ZH_EXEMPLAR_DEFAULT: string;
+export declare function zhExemplarVarFrom(wranglerToml: string): string | null;
+export declare function zhExemplarMode(value: string | null | undefined): AssistantMode;
 export declare function buildDeploySummary(input: DeploySummaryInput): DeploySummary;

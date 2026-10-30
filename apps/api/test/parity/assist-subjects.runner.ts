@@ -2,14 +2,17 @@
  * 學習助手國文真模型評測的執行步驟（docs/design/assistant-subjects.md §11.4）。呼叫模型的函式由外面傳進來：assist-subjects.parity.ts
  * 傳真的（buildClaudeRequest → executeClaudeCall），test/assist-subjects.parity-summary.test.ts 傳假的，所以這裡的流程不需要金鑰就測得到。
  *
- *   runProbe     A 組：zh_choice、zh_short、zh_writing、追問、轉錄各一份，完整的系統提示與 schema、最短的題目、max_tokens 64；
- *                回應不是錯誤（400 等）就通過。
+ *   runProbe     A 組：zh_choice、zh_short、zh_writing、追問、轉錄、國寫範文各一份，完整的系統提示與 schema、最短的題目、
+ *                max_tokens 64；回應不是錯誤（400 等）就通過。
  *   runCase      其他組的一題，和正式站同一套函式：
  *                  解析  studentQuestionOf → zhStudentQuestion（路由的輸入檢查與 D8）→ 疑問的 checkZhText → chineseSubject 的請求
  *                        → 呼叫 → 科目不符（zhSubjectMismatch，正式站以 invalid_output 退還）→ postprocessZhAnalysis；
  *                        截斷、格式不符、簡體字太多（後處理回 retry）、output_json 太大最多付費 2 次（同 callWithPolicy）；拒答與 API 錯誤不重試。
  *                  追問  先拿同一次執行裡 base 題的解析（沒有就先解析一次）→ zhFollowupCallInput（解析摘要 zhAnalysisDigest）→ postprocessZhFollowup。
  *                  轉錄  照片 → chineseSubject.ocr 的請求 → assembleZhOcr。
+ *                  國寫範文  先拿同一次執行裡 base 題的國寫指導（沒有就先解析一次）→ zhExemplarCallInput（題型、上限、問題（一）與摘要
+ *                        同 run.ts 的 runZhExemplar）→ postprocessZhExemplar；比賽語料指紋、超過硬限制、簡體字要求重寫時付費再寫一次
+ *                        （同一個操作最多 2 次），內容失敗（離題、超過太多、隱藏太多）以那個代碼結束（正式站以 invalid_output 退還）。
  *   casesProblems  花錢之前檢查題目集：每一題都組得出來（不被輸入規則或 D8 擋下）、格式與題數對、base 與照片都在、檢查代碼都認得。
  * 結果只有代碼、計數、對錯、tokens、花費與延遲；模型寫的文字不離開這支程式。
  */
@@ -19,8 +22,10 @@ import {
   ASSIST_LIMITS,
   countZhChars,
   normalizeZhChoiceLetters,
+  zhExemplarLimits,
   zhLabelKey,
   type PhotoMime,
+  type ZhExemplarSection,
   type ZhAnalysisView,
   type ZhChoiceItemView,
   type ZhChoiceView,
@@ -31,24 +36,28 @@ import type { CallOutcome, ClaudeCallInput } from '../../src/ai/client';
 import type { D8Fingerprints } from '../../src/ai/d8';
 import { detectInjection, OutputFilter } from '../../src/ai/filter';
 import { usagePricingOf } from '../../src/ai/pricing';
-import { assistZhFollowupSystemText, assistZhSystemText } from '../../src/ai/prompts/assist-zh';
+import { assistZhExemplarSystemText, assistZhFollowupSystemText, assistZhSystemText } from '../../src/ai/prompts/assist-zh';
 import { taskConfig, type TaskConfig } from '../../src/ai/tasks';
 import type { AppConfig } from '../../src/config';
 import { ApiError } from '../../src/errors';
 import type { AnalyzeRequestCase } from '../../src/assist/requests';
 import { chineseSubject } from '../../src/assist/subjects';
 import { zhD8MatchedWindows, zhOfficialStyleHit, zhQuestionWindows, zhShortAnswerHit, type ZhFingerprints } from '../../src/assist/subjects/chinese/d8';
-import { zhAnalysisDigest } from '../../src/assist/subjects/chinese/digest';
+import { zhAnalysisDigest, zhExemplarDigest } from '../../src/assist/subjects/chinese/digest';
+import { postprocessZhExemplar, zhExemplarSectionOf } from '../../src/assist/subjects/chinese/exemplar';
 import { assembleZhOcr } from '../../src/assist/subjects/chinese/ocr';
 import { postprocessZhAnalysis, postprocessZhFollowup, zhSubjectMismatch } from '../../src/assist/subjects/chinese/output';
 import { checkZhText, zhStudentQuestion } from '../../src/assist/subjects/chinese/question';
-import { zhFollowupCallInput } from '../../src/assist/subjects/chinese/requests';
-import type { ZhAnalysisOutput, ZhFollowupOutput, ZhOcrOutput } from '../../src/assist/subjects/chinese/schemas';
+import { ZH_EXEMPLAR_DIGEST_CHARS, zhExemplarCallInput, zhExemplarTitleRule, zhFollowupCallInput, zhQuestionBody } from '../../src/assist/subjects/chinese/requests';
+import type { ZhAnalysisOutput, ZhExemplarOutput, ZhFollowupOutput, ZhOcrOutput } from '../../src/assist/subjects/chinese/schemas';
 import {
   ADVERSARIAL_CHECKS,
+  EXEMPLAR_CHECKS,
   STOP_FAILURES,
   allCases,
   choiceItemMetrics,
+  exemplarMetrics,
+  exemplarProseView,
   formMetrics,
   goldenSetFrom,
   leaksAnswer,
@@ -65,6 +74,7 @@ import {
   type CallMetric,
   type CaseResult,
   type EvalCase,
+  type ExemplarCase,
   type FollowupCase,
   type GoldenIndex,
   type GoldenSet,
@@ -443,20 +453,28 @@ export async function runAnalyze(deps: RunDeps, c: AnalyzeCase): Promise<{ resul
 
 // ───────────────────────── 追問 ─────────────────────────
 
+/**
+ * base 題的解析：同一次執行裡有就沿用，沒有就先解析一次（費用與呼叫結果記在 result，代碼加「base:」）。解析失敗回失敗代碼：
+ * 暫時失敗照原代碼（下次重跑），其他是 base_failed。
+ */
+async function baseAnalysis(deps: RunDeps, base: AnalyzeCase, result: CaseResult): Promise<{ req: AnalyzeRequestCase; view: ZhAnalysisView } | { failure: string }> {
+  const found = deps.views.get(base.key);
+  if (found) return found;
+  const first = await runAnalyze(deps, base);
+  result.ops.push(...first.result.ops);
+  result.attempts.push(...first.result.attempts.map((a) => `base:${a}`));
+  const after = deps.views.get(base.key);
+  if (after) return after;
+  const f = first.result.failure ?? 'invalid_output';
+  return { failure: STOP_FAILURES.has(f) || f === 'api_error' || f === 'timeout' ? f : 'base_failed' };
+}
+
 /** 追問：base 題的解析（同一次執行裡有就沿用，沒有就先解析一次，費用算在這一題）→ 追問一輪。 */
 export async function runFollowup(deps: RunDeps, c: FollowupCase): Promise<CaseResult> {
   const result = emptyResult(c);
-  let base = deps.views.get(c.base.key) ?? null;
-  if (!base) {
-    const first = await runAnalyze(deps, c.base);
-    result.ops.push(...first.result.ops);
-    result.attempts.push(...first.result.attempts.map((a) => `base:${a}`));
-    base = deps.views.get(c.base.key) ?? null;
-    if (!base) {
-      const f = first.result.failure ?? 'invalid_output';
-      return { ...result, failure: STOP_FAILURES.has(f) || f === 'api_error' || f === 'timeout' ? f : 'base_failed', checks: Object.fromEntries(c.checks.map((k) => [k, false])) };
-    }
-  }
+  const found = await baseAnalysis(deps, c.base, result);
+  if ('failure' in found) return { ...result, failure: found.failure, checks: Object.fromEntries(c.checks.map((k) => [k, false])) };
+  const base = found;
   const text = checkZhText(c.message, ASSIST_LIMITS.followupMaxChars);
   if (!text.ok) return { ...result, failure: 'input_rejected', input_rejected: text.problems[0]!.code };
   result.injection_flags = detectInjection(text.value);
@@ -501,6 +519,123 @@ export async function runFollowup(deps: RunDeps, c: FollowupCase): Promise<CaseR
     else if (check === 'd8_hits_0') result.checks[check] = (post.checks.d8_hidden ?? 0) === 0;
     else if (check === 'answers_in_chinese') result.checks[check] = mostlyChinese(shown);
     else result.checks[check] = false;
+  }
+  return result;
+}
+
+// ───────────────────────── 國寫範文 ─────────────────────────
+
+export interface BuiltExemplar {
+  tc: TaskConfig;
+  input: ClaudeCallInput;
+  section: ZhExemplarSection;
+  limits: ReturnType<typeof zhExemplarLimits>;
+  hasQ1: boolean;
+}
+
+/**
+ * 國寫範文的請求（和 run.ts 的 runZhExemplar 同一套）：題型取國寫指導的 section，上限依題目，知性而且國寫指導有問題（一）才寫問題（一），
+ * 摘要是 zhExemplarDigest（≤ 1,000 字；附過段落時不帶大綱提示）。國寫指導不是國寫或離題時回 null（正式站的端點回 409）。
+ */
+export function buildExemplar(base: { req: AnalyzeRequestCase; view: ZhAnalysisView }, config: AppConfig): BuiltExemplar | null {
+  const analysis = base.view;
+  if (analysis.kind !== 'zh_writing' || analysis.off_topic) return null;
+  const question = base.req.question;
+  const section = zhExemplarSectionOf(analysis, question);
+  const limits = zhExemplarLimits(question, section);
+  const hasQ1 = section === 'zh_writing_reason' && analysis.q1 !== null;
+  const tc = taskConfig('assist_zh_exemplar', config);
+  const input = zhExemplarCallInput(tc, { question, section, digest: zhExemplarDigest(analysis, Boolean(question.draft), ZH_EXEMPLAR_DIGEST_CHARS), hasQ1, limits });
+  return { tc, input, section, limits, hasQ1 };
+}
+
+/** 模型原始輸出裡第 i 段（畫面上的段落順序；後處理先拿掉空白的段落）的路徑。 */
+function rawParagraphPath(raw: ZhExemplarOutput, i: number): string | null {
+  let n = -1;
+  for (const [j, p] of raw.paragraphs.entries()) {
+    if (p.text.trim() === '') continue;
+    n += 1;
+    if (n === i) return `paragraphs[${j}].text`;
+  }
+  return null;
+}
+
+export async function runExemplar(deps: RunDeps, c: ExemplarCase): Promise<CaseResult> {
+  const result = emptyResult(c);
+  const allFalse = () => Object.fromEntries(c.checks.map((k) => [k, false]));
+  // 同 run.ts：比賽語料指紋是必填，讀不到就不呼叫模型（正式站以 internal 退還；這裡記 site_data，下次重跑）。
+  if (!deps.zh.contest || deps.zh.contest.size === 0) return { ...result, failure: 'site_data', checks: allFalse() };
+  const found = await baseAnalysis(deps, c.base, result);
+  if ('failure' in found) return { ...result, failure: found.failure, checks: allFalse() };
+  const built = buildExemplar(found, deps.config);
+  if (!built) return { ...result, failure: 'base_failed', checks: allFalse() };
+  const question = found.req.question;
+  // 同 run.ts：每一次付費產生都算（截斷、格式不符也算），還能再寫一次（第 1 次）時才要求重寫，第 2 次改用隱藏、提醒或退還。
+  const run = await runOp(deps.exec, built.input, built.tc, 'zh_exemplar', 'exemplar', (data, attempt) => {
+    const raw = data as ZhExemplarOutput;
+    const post = postprocessZhExemplar(raw, { question, section: built.section, limits: built.limits, hasQ1: built.hasQ1, filter: new OutputFilter(), fp: deps.fp, zh: deps.zh, allowRetry: attempt + 1 < CONTENT_ATTEMPTS });
+    if (post.retry) return { ok: false, problem: post.retry };
+    if (post.failure || !post.view) return { ok: false, problem: `stop:${post.failure ?? 'invalid_output'}` };
+    if (JSON.stringify(post.view).length > OUTPUT_JSON_MAX_CHARS) return { ok: false, problem: 'output_too_large' };
+    return { ok: true, value: { raw, post } };
+  });
+  result.ops.push(run.op);
+  result.attempts.push(...run.attempts);
+  if (!run.value) {
+    result.failure = run.failure ?? 'invalid_output';
+    result.checks = allFalse();
+    return result;
+  }
+  const { raw, post } = run.value;
+  const view = post.view!;
+  result.ok = true;
+  result.counts = { ...post.checks };
+  const stats = rawFieldStats(raw, 'zh_exemplar');
+  result.fields = { total: stats.total, over: stats.over };
+  result.scan = viewScan(exemplarProseView(view));
+  // D8 隱藏的段落、問題（一）與說明欄位（只有路徑；遮罩後的原文給人工判斷是不是誤藏）。
+  result.d8_fields = [
+    ...view.paragraphs.flatMap((p, i) => (p.hidden === 'd8' ? [rawParagraphPath(raw, i) ?? `paragraphs[${i}]`] : [])),
+    ...(view.q1?.hidden === 'd8' ? ['q1.answer_zh'] : []),
+    ...view.notices.filter((n) => n.kind === 'd8_hidden').map((n) => n.field),
+  ];
+  if (result.d8_fields.length > 0) result.d8_masked = maskD8Fields(raw, result.d8_fields, deps.zh, question);
+  const m = exemplarMetrics(view, { expected: c.section, limits: built.limits, titleRule: zhExemplarTitleRule(question), questionText: zhQuestionBody(question), attempts: run.attempts });
+  result.exemplar = m;
+  const counts = post.checks;
+  for (const check of c.checks) {
+    switch (check) {
+      case 'within_limits':
+        result.checks[check] = m.within_limits && (counts.over_limit_kept ?? 0) === 0;
+        break;
+      case 'contest_hits_0':
+        result.checks[check] = m.contest_retries === 0 && m.hidden_contest === 0 && (counts.contest_overlap_removed ?? 0) === 0 && view.q1?.hidden !== 'contest';
+        break;
+      case 'no_grade':
+        result.checks[check] = (counts.grade_removed ?? 0) === 0 && m.grade_sentences === 0;
+        break;
+      case 'no_contest_mention':
+        result.checks[check] = (counts.contest_mention_removed ?? 0) === 0 && m.contest_mentions === 0;
+        break;
+      case 'q1_shown':
+        result.checks[check] = m.q1 === 'shown';
+        break;
+      case 'material_quoted':
+        result.checks[check] = m.material_quotes > 0;
+        break;
+      case 'title_own':
+        result.checks[check] = m.title === 'own' && m.title_chars > 0 && m.title_chars <= 16;
+        break;
+      case 'quotes_verified':
+        result.checks[check] = (counts.attribution_removed ?? 0) === 0 && (counts.classic_misquote ?? 0) === 0;
+        break;
+      case 'no_sensitive_events':
+        result.checks[check] = m.sensitive === 0;
+        break;
+      default:
+        // 不認得的代碼在花錢之前由 casesProblems 擋下。
+        result.checks[check] = false;
+    }
   }
   return result;
 }
@@ -553,8 +688,17 @@ export async function runOcr(deps: RunDeps, c: OcrCase): Promise<CaseResult> {
 
 // ───────────────────────── A 組 ─────────────────────────
 
-/** A 組的追問沒有真的解析：摘要放一句固定的英文（這一組只看系統提示與 schema 能不能編譯）。 */
+/** A 組的追問與國寫範文沒有真的解析：摘要放一句固定的英文（這一組只看系統提示與 schema 能不能編譯）。 */
 const PROBE_DIGEST = 'Probe run: no earlier analysis is available.';
+
+/** A 組的國寫範文：base 題的題目、題目集寫的題型（國寫題的 section；沒有就當知性）、一句固定的摘要；知性題寫問題（一）。 */
+export function exemplarProbeInput(p: ProbeCase, b: BuiltAnalyze, config: AppConfig): { tc: TaskConfig; input: ClaudeCallInput } {
+  const s = p.analyze?.question.items[0]?.section;
+  const section: ZhExemplarSection = s === 'zh_writing_emotion' ? 'zh_writing_emotion' : 'zh_writing_reason';
+  const tc = taskConfig('assist_zh_exemplar', config);
+  const limits = zhExemplarLimits(b.req.question, section);
+  return { tc, input: zhExemplarCallInput(tc, { question: b.req.question, section, digest: PROBE_DIGEST, hasQ1: section === 'zh_writing_reason', limits }) };
+}
 
 export async function runProbe(deps: Omit<RunDeps, 'views'>, probes: readonly ProbeCase[], zhState: ProbeResult['zh_fingerprints']): Promise<ProbeResult> {
   const runs: ProbeRun[] = [];
@@ -570,7 +714,11 @@ export async function runProbe(deps: Omit<RunDeps, 'views'>, probes: readonly Pr
     } else if (p.analyze) {
       const b = buildAnalyze(p.analyze, deps);
       if (!('rejected' in b)) {
-        if (p.followup) {
+        if (p.task === 'zh_exemplar') {
+          const probe = exemplarProbeInput(p, b, deps.config);
+          tc = probe.tc;
+          input = probe.input;
+        } else if (p.followup) {
           tc = taskConfig('assist_followup', deps.config, { subject: 'chinese' });
           input = zhFollowupCallInput(tc, { case: b.req, digest: PROBE_DIGEST, rounds: [], question: p.followup.message, mode: p.followup.mode, label: b.req.question.targets[0]?.label ?? null });
         } else {
@@ -597,6 +745,7 @@ export async function runProbe(deps: Omit<RunDeps, 'views'>, probes: readonly Pr
 export async function runCase(deps: RunDeps, c: EvalCase): Promise<CaseResult> {
   if (c.kind === 'analyze') return (await runAnalyze(deps, c)).result;
   if (c.kind === 'followup') return runFollowup(deps, c);
+  if (c.kind === 'exemplar') return runExemplar(deps, c);
   return runOcr(deps, c);
 }
 
@@ -638,6 +787,7 @@ export function casesProblems(golden: GoldenSet, cases: readonly EvalCase[], dep
   if (opts.probe) {
     for (const p of probeCases(golden)) {
       if (p.analyze) checkAnalyze(p.analyze, `A:${p.id}`);
+      if (p.task === 'zh_exemplar' && p.analyze?.task !== 'zh_writing') problems.push(`A:${p.id}：國寫範文的 base 不是國寫題`);
       if (p.photo && !photoOf(deps.goldenDir, p.photo.image)) problems.push(`A:${p.id}：找不到照片 ${p.photo.image}`);
     }
   }
@@ -647,6 +797,13 @@ export function casesProblems(golden: GoldenSet, cases: readonly EvalCase[], dep
       checkAnalyze(c.base, `${c.key}（base）`);
       for (const check of c.checks) if (!(ADVERSARIAL_CHECKS as readonly string[]).includes(check)) problems.push(`${c.key}：不認得的檢查 ${check}`);
       if (c.target !== null && !c.base.question.items.some((it) => zhLabelKey(it.label) === zhLabelKey(c.target!))) problems.push(`${c.key}：base 沒有第 ${c.target} 題`);
+    } else if (c.kind === 'exemplar') {
+      checkAnalyze(c.base, `${c.key}（國寫指導）`);
+      if (c.base.task !== 'zh_writing') problems.push(`${c.key}：base 不是國寫題（${c.base.task}）`);
+      const s = c.base.question.items[0]?.section;
+      if (s !== c.section) problems.push(`${c.key}：題型寫 ${c.section}，題目是 ${s ?? '（沒有）'}`);
+      if (c.checks.length === 0) problems.push(`${c.key}：沒有檢查代碼`);
+      for (const check of c.checks) if (!(EXEMPLAR_CHECKS as readonly string[]).includes(check)) problems.push(`${c.key}：不認得的檢查 ${check}`);
     } else if (!c.skip) {
       const file = path.join(deps.goldenDir, c.photo.image);
       if (!photoOf(deps.goldenDir, c.photo.image)) problems.push(`${c.key}：找不到照片 ${c.photo.image}`);
@@ -657,6 +814,12 @@ export function casesProblems(golden: GoldenSet, cases: readonly EvalCase[], dep
 }
 
 /** 單元測試用：A 組送出的系統提示（確認用的是正式的那一份）。 */
-export function probeSystemTexts(): Record<'zh_choice' | 'zh_short' | 'zh_writing' | 'zh_followup', string> {
-  return { zh_choice: assistZhSystemText('zh_choice'), zh_short: assistZhSystemText('zh_short'), zh_writing: assistZhSystemText('zh_writing'), zh_followup: assistZhFollowupSystemText() };
+export function probeSystemTexts(): Record<'zh_choice' | 'zh_short' | 'zh_writing' | 'zh_followup' | 'zh_exemplar', string> {
+  return {
+    zh_choice: assistZhSystemText('zh_choice'),
+    zh_short: assistZhSystemText('zh_short'),
+    zh_writing: assistZhSystemText('zh_writing'),
+    zh_followup: assistZhFollowupSystemText(),
+    zh_exemplar: assistZhExemplarSystemText(),
+  };
 }

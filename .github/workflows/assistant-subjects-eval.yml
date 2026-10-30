@@ -2,10 +2,11 @@
 #
 # 為什麼要跑：假模型的單元測試測不出 Anthropic 端的限制（學習助手上線時，輸出格式的 grammar 太大，解析與報告全部被 400 拒收），
 # 也量不到國文真正的正確率、讀音與字形、成本與延遲。這支 workflow 用真模型跑 apps/api/test/parity/assist-subjects.parity.ts：
-#   A 組  zh_choice、zh_short、zh_writing、追問、轉錄各一份：完整的系統提示與 schema、最短的題目、max_tokens 64；
+#   A 組  zh_choice、zh_short、zh_writing、追問、轉錄、國寫範文各一份：完整的系統提示與 schema、最短的題目、max_tokens 64；
 #         回應不是 400 就通過；不過就停，其他組不跑（約 US$0.1）。
-#   B–J   選擇 58（另跑選項重排、題號改掉的重排版 58，門檻以重排版為準）、沒看過的題 12、給答案 10、題組 3、簡答 8、國寫 5、
-#         追問 6、對抗 6、照片 14（3 張手機實拍還沒拍的跳過）。題目集在 apps/api/test/fixtures/assist-zh-golden/。完整評測約 US$21（估計）。
+#   B–K   選擇 58（另跑選項重排、題號改掉的重排版 58，門檻以重排版為準）、沒看過的題 12、給答案 10、題組 3、簡答 8、國寫 5、
+#         追問 6、對抗 6、照片 14（3 張手機實拍還沒拍的跳過）、國寫範文 6（K 組，各含前置的國寫指導；只跑 K 組約 US$2.5）。
+#         題目集在 apps/api/test/fixtures/assist-zh-golden/。完整評測約 US$23（估計）。
 #   請求、送出與後處理都用正式站的同一套函式（組題目、建請求、client.ts 的送出與攤開、國文後處理與轉錄組裝）。
 #
 # 只有一種觸發方式：站主在 Actions 頁面按 Run workflow（workflow_dispatch，預算上限 US$40）。
@@ -48,7 +49,7 @@ on:
         type: boolean
         default: true
       cases:
-        description: 只跑這些題目（題目 id 或組別 A、B、BS、BP、C、D、E、F、G、H、J，逗號分隔；空白＝全部）
+        description: 只跑這些題目（題目 id 或組別 A、B、BS、BP、C、D、E、F、G、H、J、K，逗號分隔；空白＝全部；K＝國寫範文，約 US$2.5）
         type: string
         required: false
         default: ''

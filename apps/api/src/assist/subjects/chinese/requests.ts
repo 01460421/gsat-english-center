@@ -1,6 +1,6 @@
 /**
- * 國文的呼叫輸入（docs/design/assistant-subjects.md §3.5、§3.8、§6.1）：解析的 user 訊息、追問的三個 content block、轉錄。
- * 範本版本 assist-zh-user@1、assist-zh-followup-user@1、assist-zh-ocr-user@1（prompts/assist-zh.ts、assist-zh-ocr.ts）。
+ * 國文的呼叫輸入（docs/design/assistant-subjects.md §3.5、§3.8、§6.1）：解析的 user 訊息、追問的三個 content block、轉錄、國寫範文。
+ * 範本版本 assist-zh-user@1、assist-zh-followup-user@1、assist-zh-ocr-user@1、assist-zh-exemplar-user@2（prompts/assist-zh.ts、assist-zh-ocr.ts）。
  * 英文的 src/assist/requests.ts 一個字都不改：兩邊由 subjects/index.ts 依科目分派。
  *
  *   - 沿用現有的結構標籤，不加新標籤：<task>、<student_provided_question>、<student_text role="answer|draft|doubt|question">、
@@ -18,6 +18,9 @@ import type { BetaContentBlockParam } from '@anthropic-ai/sdk/resources/beta/mes
 import {
   guessZhSection,
   isZhCaseKind,
+  ZH_LINE_CELLS,
+  type ZhExemplarLimits,
+  type ZhExemplarSection,
   zhParseJudgeCombos,
   zhVerdictText,
   type AssistQuestionTarget,
@@ -31,7 +34,17 @@ import {
 import type { ClaudeCallInput } from '../../../ai/client';
 import { neutralizeTags } from '../../../ai/filter';
 import { taskBlock } from '../../../ai/prompts/common';
-import { assistZhFollowupSchema, assistZhFollowupSystemText, assistZhSchema, assistZhSystemText, ZH_ANALYZE_TEMPLATE_VERSIONS, ZH_FOLLOWUP_TEMPLATE_VERSION } from '../../../ai/prompts/assist-zh';
+import {
+  assistZhExemplarSchema,
+  assistZhExemplarSystemText,
+  assistZhFollowupSchema,
+  assistZhFollowupSystemText,
+  assistZhSchema,
+  assistZhSystemText,
+  ZH_ANALYZE_TEMPLATE_VERSIONS,
+  ZH_EXEMPLAR_TEMPLATE_VERSION,
+  ZH_FOLLOWUP_TEMPLATE_VERSION,
+} from '../../../ai/prompts/assist-zh';
 import { ASSIST_ZH_OCR_TEMPLATE_VERSION, assistZhOcrSchema, assistZhOcrSystemText, assistZhOcrUserText } from '../../../ai/prompts/assist-zh-ocr';
 import { callSpec, type TaskConfig } from '../../../ai/tasks';
 import { toBase64 } from '../../../submissions/images';
@@ -336,6 +349,112 @@ export function zhFollowupCallInput(tc: TaskConfig, r: ZhFollowupRequest): Claud
     schema: assistZhFollowupSchema,
     content: zhFollowupContent(r),
     templateVersion: ZH_FOLLOWUP_TEMPLATE_VERSION,
+  };
+}
+
+// ───────────────────────── 國寫範文（國寫範文設計 §2） ─────────────────────────
+
+/** 國寫範文 <analysis_digest> 的上限（字）。 */
+export const ZH_EXEMPLAR_DIGEST_CHARS = 1_000;
+
+export interface ZhExemplarRequest {
+  /** 案例存的題目（全部區塊：素材、圖表文字、引導問題；不含學生的段落）。 */
+  question: Pick<AssistQuestionView, 'blocks'>;
+  /** 題型（最新一次國寫指導的 section；看不出來時由 run.ts 決定）。 */
+  section: ZhExemplarSection;
+  /** 前一次國寫指導的摘要（digest.ts 的 zhAnalysisDigest，≤ 1,000 字）。 */
+  digest: string;
+  /** 國寫指導有沒有問題（一）（知性而且有，才要寫問題（一））。 */
+  hasQ1: boolean;
+  limits: ZhExemplarLimits;
+}
+
+/** 題目指定的題目（「以「…」為題」）；題目自訂回 'own'；沒有題目回 null。 */
+export function zhExemplarTitleRule(question: Pick<AssistQuestionView, 'blocks'>): { title: string } | 'own' | null {
+  const text = (question.blocks ?? []).map((b) => b.text).join('\n');
+  const given = /以\s*[「『]([^「」『』\n]{1,16})[」』]\s*為題/u.exec(text);
+  if (given) return { title: given[1]!.trim() };
+  if (/題目自訂|自訂題目|自訂標題|自行命題|自訂一個題目/u.test(text)) return 'own';
+  return null;
+}
+
+/**
+ * 有行數規定時，每段預留的格數（段首兩格＋最後一行沒寫滿的格）。隨機長度的段落平均約 13 格，但模型常把段落寫得一樣長，
+ * 每段都剛好多出一行時接近 21 格；取 19：400 字、至多 19 行（418 格）時目標上緣 342 字，四段一樣長也寫得進。
+ */
+export const ZH_EXEMPLAR_CELLS_PER_PARAGRAPH = 19;
+/** 情意全文的預設目標（字，含標點）與段數（題目沒有另外規定字數或行數時；同 <task> 原本的寫法）。 */
+const ZH_EMOTION_AIM = { chars: [650, 750], paragraphs: [4, 5] } as const;
+
+/**
+ * 範文主體（知性的問題（二）、情意的全文）要模型瞄準的字數與段數（國寫範文設計 §5.2）。答題卷每段首空兩格、段末不滿一行也算
+ * 一整行，所以題目有行數規定時，字數還沒到上限格子就先用完（例如 400 字、至多 19 行＝418 格：四段各 90 字就要 440 格）。
+ * 有行數規定時目標上緣取「字數上限的 95%」與「格數 − 每段預留 × 最多段數」較小的那一個，知性題少寫一段（3–4 段）；
+ * 情意題另有字數規定時上緣不超過字數上限的 95%。沒有另外規定時和原本相同（知性 85–95%、3–5 段；情意 650–750 字、4–5 段）。
+ */
+export function zhExemplarBodyAim(L: ZhExemplarLimits): { chars: [number, number]; paragraphs: [number, number] } {
+  const cellsCap = (paragraphs: number) => (L.body.lines !== null ? L.body.maxCells - ZH_EXEMPLAR_CELLS_PER_PARAGRAPH * paragraphs : Infinity);
+  if (L.section === 'zh_writing_reason') {
+    const maxChars = L.body.maxChars ?? L.body.maxCells;
+    const paragraphs: [number, number] = L.body.lines !== null ? [3, 4] : [3, 5];
+    const hi = Math.max(0, Math.min(Math.floor(maxChars * 0.95), cellsCap(paragraphs[1])));
+    return { chars: [Math.max(0, Math.min(Math.floor(maxChars * 0.85), hi - 30)), hi], paragraphs };
+  }
+  const [lo0, hi0] = ZH_EMOTION_AIM.chars;
+  const paragraphs: [number, number] = [...ZH_EMOTION_AIM.paragraphs];
+  const hi = Math.max(0, Math.min(hi0, L.body.maxChars !== null ? Math.floor(L.body.maxChars * 0.95) : hi0, cellsCap(paragraphs[1])));
+  return { chars: [Math.max(0, Math.min(lo0, hi - (hi0 - lo0))), hi], paragraphs };
+}
+
+/** 國寫範文的 <task> 各行（網站寫的；只有程式產生的值）。 */
+export function zhExemplarTaskLines(r: Pick<ZhExemplarRequest, 'question' | 'section' | 'hasQ1' | 'limits'>): string[] {
+  const lines = [`Subject: Chinese (國文). Output: one model answer for a 國寫 task (${r.section}). Never write a grade or a score.`];
+  const L = r.limits;
+  const aim = zhExemplarBodyAim(L);
+  if (r.section === 'zh_writing_reason') {
+    if (r.hasQ1 && L.q1) lines.push(`問題（一）: at most ${L.q1.maxChars} characters including punctuation.`);
+    else lines.push('問題（一） does not apply: leave q1 empty.');
+    if (L.body.lines === null) lines.push(`問題（二）: at most ${L.body.maxChars} characters including punctuation.`);
+    else {
+      // 行數規定：說明格子怎麼算，並給扣掉段首與段末空格之後的目標（取代系統提示的 85–95%）。
+      lines.push(
+        `問題（二）: at most ${L.body.maxChars} characters including punctuation, at most ${L.body.lines} lines of ${ZH_LINE_CELLS} cells. ` +
+          `Each paragraph starts with two empty cells and its last line counts as a full line, so the lines run out before the characters: ` +
+          `write ${aim.paragraphs[0]}–${aim.paragraphs[1]} paragraphs and aim for ${aim.chars[0]}–${aim.chars[1]} characters including punctuation (this replaces the 85–95% target).`,
+      );
+    }
+  } else {
+    lines.push('問題（一） does not apply: leave q1 empty.');
+    lines.push(
+      'The essay must fit one side of the answer sheet: 38 lines of 22 cells; each paragraph starts with two empty cells. Aim for 650–750 characters including punctuation in 4–5 paragraphs.',
+    );
+    if (L.body.maxChars !== null) lines.push(`The task also limits the essay to at most ${L.body.maxChars} characters including punctuation.`);
+    if (L.body.lines !== null) lines.push(`The task also limits the essay to at most ${L.body.lines} lines of ${ZH_LINE_CELLS} cells.`);
+    if (aim.chars[1] !== ZH_EMOTION_AIM.chars[1]) {
+      lines.push(`Because of these limits, aim for ${aim.chars[0]}–${aim.chars[1]} characters including punctuation instead (a paragraph's last line counts as a full line).`);
+    }
+  }
+  const title = zhExemplarTitleRule(r.question);
+  lines.push(title === null ? 'No title.' : title === 'own' ? 'Write a title of at most 12 characters.' : `Title given: 「${title.title.replace(/[「」]/gu, '')}」`);
+  return lines;
+}
+
+/** 國寫範文的 user 訊息：<task>、<student_provided_question>（全部區塊）、<analysis_digest>。不送學生的段落、疑問或錯因。 */
+export function zhExemplarUserText(r: ZhExemplarRequest): string {
+  const digest = [...r.digest].slice(0, ZH_EXEMPLAR_DIGEST_CHARS).join('');
+  return [taskBlock(zhExemplarTaskLines(r)), block('student_provided_question', zhQuestionBody(r.question)), block('analysis_digest', digest)].join('\n');
+}
+
+export function zhExemplarCallInput(tc: TaskConfig, r: ZhExemplarRequest): ClaudeCallInput {
+  return {
+    task: tc.task,
+    spec: callSpec(tc, 'writer'),
+    timeoutMs: tc.timeoutMs,
+    maxRetries: tc.maxRetries,
+    system: assistZhExemplarSystemText(),
+    schema: assistZhExemplarSchema,
+    content: zhExemplarUserText(r),
+    templateVersion: ZH_EXEMPLAR_TEMPLATE_VERSION,
   };
 }
 

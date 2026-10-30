@@ -89,6 +89,11 @@ export interface Env {
   AI_ASSISTANT_SUBJECTS?: string;
   /** 英文以外科目的拍照（同樣只認 on、admin；其他一律關）。另外要 AI_ASSISTANT_PHOTO 與 AI_ASSISTANT_SUBJECTS 都對這位使用者開放。 */
   AI_ASSISTANT_SUBJECTS_PHOTO?: string;
+  /**
+   * 學習助手的國寫範文（國寫範文設計 §7）：同樣只認 on、admin，其他一律關；沒設定時用 config.ts 的預設值 off。
+   * 另外要國文（AI_ASSISTANT_SUBJECTS）對這位使用者開放。緊急關閉＝改成 "off" 部署（docs/SETUP-KEYS.md §8.4）。
+   */
+  AI_ZH_EXEMPLAR?: string;
   /** 學習助手解析與報告的 effort（預設 medium）。 */
   AI_EFFORT_ASSIST?: string;
   /** 學習助手追問的 effort（預設 low；ARCHITECTURE §11 預留的名字）。 */

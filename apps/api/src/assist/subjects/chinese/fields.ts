@@ -8,7 +8,7 @@
  *
  * 走訪直接改 view（view 是後處理剛組出來的物件，還沒有交給別人）。
  */
-import type { AssistQuoteRange, ZhAnalysisView, ZhFollowupView } from '@gsat/shared';
+import type { AssistQuoteRange, ZhAnalysisView, ZhExemplarView, ZhFollowupView } from '@gsat/shared';
 
 /** 一個說明欄位。label：這一欄屬於哪一題（逐題的欄位才有；整組共用的是 null）；card：卡片的欄位才有。 */
 export interface ZhTextField {
@@ -132,6 +132,26 @@ export function zhFollowupFields(view: ZhFollowupView): ZhTextField[] {
   });
   field(out, 'understood_check_zh', v, 'understood_check_zh');
   list(out, 'followup_chips_zh', view.followup_chips_zh);
+  return out;
+}
+
+/**
+ * 國寫範文的文字欄位（國寫範文設計 §5.1 第 4 步的字碼統一與簡體字）：題目、問題（一）答案、每一段的本文（隱藏的段落是固定說明，
+ * 不在內）、段落作用、技巧、這篇怎麼寫、要件、自我檢查。要件對照的 quote 是段落原文，不在內。
+ */
+export function zhExemplarFields(view: ZhExemplarView): ZhTextField[] {
+  const out: ZhTextField[] = [];
+  field(out, 'title_zh', view as unknown as Record<string, unknown>, 'title_zh');
+  if (view.q1 && view.q1.hidden === null) field(out, 'q1.answer_zh', view.q1 as unknown as Record<string, unknown>, 'answer_zh');
+  view.paragraphs.forEach((p, i) => {
+    const o = p as unknown as Record<string, unknown>;
+    if (p.hidden === null) field(out, `paragraphs[${i}].text`, o, 'text');
+    field(out, `paragraphs[${i}].role_zh`, o, 'role_zh');
+    field(out, `paragraphs[${i}].technique_zh`, o, 'technique_zh');
+  });
+  view.notes.forEach((n, i) => field(out, `notes[${i}].text_zh`, n as unknown as Record<string, unknown>, 'text_zh'));
+  view.coverage.forEach((r, i) => field(out, `coverage[${i}].point_zh`, r as unknown as Record<string, unknown>, 'point_zh'));
+  list(out, 'self_check_zh', view.self_check_zh);
   return out;
 }
 

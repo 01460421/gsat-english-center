@@ -31,6 +31,8 @@ export * from './assist-methods';
 export * from './assist-report';
 // 國寫方法卡與附段落的程式檢查（docs/design/assistant-subjects.md 實作備註）。
 export * from './assist-methods-zh';
+// 國寫範文：畫面形狀、字數與格數、避用清單（docs/design/assistant-subjects.md「國寫範文」）。
+export * from './assist-zh-exemplar';
 // 作文範文：三個層級的規格、字數目標、對照數字與 API 型別（同樣直接轉匯出、不經 writing.ts；docs/design/model-essays.md §7.2）。
 export * from './connectives';
 export * from './exemplars';

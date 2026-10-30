@@ -1,16 +1,19 @@
 /**
  * 學習助手國文真模型評測的達標判定、題目集與執行流程（test/parity/assist-subjects.cases.ts、assist-subjects.runner.ts，以及 workflow 的
- * .github/scripts/assistant-subjects-eval-plan.mjs；docs/design/assistant-subjects.md §11.2–§11.4）。評測本身要真模型
+ * .github/scripts/assistant-subjects-eval-plan.mjs；docs/design/assistant-subjects.md §11.2–§11.4、「國寫範文」§11）。評測本身要真模型
  * （assist-subjects.parity.ts，不進 CI）；這裡不需要金鑰、不連網路：呼叫換成假的，確認 A 組、內容失敗最多 2 次、科目不符、
- * 逐題指標（注音逐字、錯字配對、研判逐句、提示洩漏、照片逐字錯誤率）、門檻與「最高可能」上限的解除規則，以及結果檔與彙總只有
- * 代碼與數字（沒有模型寫的文字，也沒有模型名稱）。D8 用測試自己造的假指紋（英文 helpers/customEssay.ts；國文是空集合）。
- * 這裡的假輸出都是本站為測試寫的句子；題目文字來自題目集（公開題本與本站自寫），沒有任何參考答案或評分原則。
+ * 逐題指標（注音逐字、錯字配對、研判逐句、提示洩漏、照片逐字錯誤率、國寫範文的字數與比賽語料指紋）、門檻與「最高可能」上限的
+ * 解除規則，以及結果檔與彙總只有代碼與數字（沒有模型寫的文字，也沒有模型名稱）。D8 用測試自己造的假指紋（英文 helpers/customEssay.ts；
+ * 國文的 8 字窗口是空集合，比賽語料是 helpers/zh.ts 的誘餌）。這裡的假輸出都是本站為測試寫的句子；題目文字來自題目集（公開題本與
+ * 本站自寫），沒有任何參考答案或評分原則；K 組只有一個測試讀 repo 裡比賽語料指紋的雜湊檔（data/d8/zh-contest.fp.json），不讀語料。
  */
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import path from 'node:path';
+import { zhExemplarLimits } from '@gsat/shared';
 import { describe, expect, it } from 'vitest';
 import {
   BUDGET_MAX_USD,
+  GROUP_SELECTORS,
   PROBE_PATHS,
   RUN_FILE,
   decideMode,
@@ -22,13 +25,19 @@ import {
   planOutputLines,
 } from '../../../.github/scripts/assistant-subjects-eval-plan.mjs';
 import type { CallOutcome, CallRecord, ClaudeCallInput } from '../src/ai/client';
-import { parseFingerprints } from '../src/ai/d8';
+import * as contestMjs from '../../../packages/shared/scripts/zh-contest-fingerprint.mjs';
+import { d8Fingerprints, parseFingerprints } from '../src/ai/d8';
 import { MODEL_PRICING } from '../src/ai/pricing';
 import { loadConfig } from '../src/config';
 import type { Env } from '../src/env';
-import type { ZhFingerprints } from '../src/assist/subjects/chinese/d8';
-import type { ZhChoiceOutput, ZhFollowupOutput, ZhOcrOutput, ZhShortOutput, ZhWritingOutput } from '../src/assist/subjects/chinese/schemas';
+import { zhFingerprints, type ZhFingerprints } from '../src/assist/subjects/chinese/d8';
+import type { ZhChoiceOutput, ZhExemplarOutput, ZhFollowupOutput, ZhOcrOutput, ZhShortOutput, ZhWritingOutput } from '../src/assist/subjects/chinese/schemas';
+import { zhLookupClassic } from '../src/assist/subjects/chinese/classics';
+import { zhContestHit } from '../src/assist/subjects/chinese/contest';
+import { zhExemplarTitleRule } from '../src/assist/subjects/chinese/requests';
+import { zhStudentQuestion } from '../src/assist/subjects/chinese/question';
 import {
+  EVAL_GROUPS,
   MUST_PASS_ID,
   allCases,
   buildCases,
@@ -38,6 +47,7 @@ import {
   needsRun,
   probeCases,
   shuffleCase,
+  studentQuestionOf,
   summarize,
   syllableKey,
   verdictPasses,
@@ -46,6 +56,7 @@ import {
   type CaseResult,
   type ChoiceItemResult,
   type EvalCase,
+  type ExemplarCase,
   type FollowupCase,
   type OcrCase,
   type OpResult,
@@ -53,12 +64,13 @@ import {
 } from './parity/assist-subjects.cases';
 import { casesProblems, metricOf, probeSystemTexts, readGolden, runCase, runProbe, type Executor, type RunDeps } from './parity/assist-subjects.runner';
 import { fakeFingerprintFile } from './helpers/customEssay';
+import { ZH_DECOY_CONTEST, zhContestSet, zhExemplarOutput } from './helpers/zh';
 
 const REPO = path.resolve(import.meta.dirname, '..', '..', '..');
 const GOLDEN_DIR = path.join(REPO, 'apps', 'api', 'test', 'fixtures', 'assist-zh-golden');
 const { golden } = readGolden(GOLDEN_DIR);
 const fp = parseFingerprints(fakeFingerprintFile())!;
-const zh: ZhFingerprints = { version: 'test-zh-eval', windows: new Set(), short: [] };
+const zh: ZhFingerprints = { version: 'test-zh-eval', windows: new Set(), short: [], contest: zhContestSet() };
 const env = { DB: {} as D1Database, ALLOWED_ORIGINS: 'http://localhost', ANTHROPIC_API_KEY: 'test-key' } as unknown as Env;
 const config = loadConfig(env);
 /** 結果檔與彙總裡不能出現的字：價格表裡每一個模型代號的前兩段（不在這裡寫模型名稱）。 */
@@ -242,6 +254,9 @@ describe('assistant-subjects-eval-plan.mjs：這次跑什麼', () => {
     expect(buildCases(golden, { only: ['B-115-12'] }).cases.map((c) => c.key)).toEqual(['B:B-115-12', 'BS:B-115-12']);
     expect(buildCases(golden, { only: ['A'] }).cases).toEqual([]);
     expect(buildCases(golden, { only: ['nope'] }).unknown).toEqual(['nope']);
+    // 國寫範文只跑 K 組（RUN 檔的說明寫 cases=K 約 US$2.5）。
+    expect(parseRunFile('cases=K\nbudget_usd=5').ok).toBe(true);
+    expect(buildCases(golden, { only: ['K'] }).cases.map((c) => c.kind)).toEqual(Array(6).fill('exemplar'));
   });
 
   it('push 到 claude/** 而且改了 RUN → full；國文的提示、schema、後處理的 push（main 或 claude/**）→ 只跑 A 組；其他 → 不跑', () => {
@@ -269,6 +284,17 @@ describe('assistant-subjects-eval-plan.mjs：這次跑什麼', () => {
       const dir = p.slice(0, p.search(/\*|$/)).replace(/[^/]*$/, '');
       expect(filesUnder(path.join(REPO, dir)).some((f) => globToRegExp(p).test(f)), p).toBe(true);
     }
+  });
+
+  it('組別：plan 腳本、題目集與 workflow 的 cases 說明列同一份（K 國寫範文也在）；RUN 檔的說明寫了只跑 K 組的費用', () => {
+    expect([...GROUP_SELECTORS].sort()).toEqual(['A', ...EVAL_GROUPS].sort());
+    expect(EVAL_GROUPS).toContain('K');
+    const workflow = readFileSync(path.join(REPO, '.github/workflows/assistant-subjects-eval.yml'), 'utf8');
+    const desc = /\n {6}cases:\n {8}description: ([^\n]+)/.exec(workflow)![1]!;
+    for (const g of GROUP_SELECTORS) expect(desc, g).toMatch(new RegExp(`(^|[^A-Z])${g}(?![A-Z])`));
+    const run = readFileSync(path.join(REPO, RUN_FILE), 'utf8');
+    expect(run).toMatch(/cases=K/);
+    expect(run).toMatch(/K 國寫範文/);
   });
 
   it('金鑰只用既有的兩個 secret（沒有新的 secret、沒有國文 D8 的金鑰）', () => {
@@ -301,12 +327,16 @@ describe('assistant-subjects-eval-plan.mjs：這次跑什麼', () => {
 const KNOWN_INPUT_PROBLEMS: string[] = [];
 
 describe('題目集（assist-zh-golden）', () => {
-  it('A 5、B 58、重排版 58、B′ 12、C 10、D 3、E 8、F 5、G 6、H 6、J 14（其中 11 張可以跑）', () => {
+  it('A 6、B 58、重排版 58、B′ 12、C 10、D 3、E 8、F 5、G 6、H 6、J 14（其中 11 張可以跑）、K 6', () => {
     const all = allCases(golden);
     const count = (g: string) => all.filter((c) => c.group === g).length;
-    expect([golden.A.length, ...['B', 'BS', 'BP', 'C', 'D', 'E', 'F', 'G', 'H', 'J'].map(count)]).toEqual([5, 58, 58, 12, 10, 3, 8, 5, 6, 6, 14]);
+    expect([golden.A.length, ...['B', 'BS', 'BP', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K'].map(count)]).toEqual([6, 58, 58, 12, 10, 3, 8, 5, 6, 6, 14, 6]);
     expect(all.filter((c): c is OcrCase => c.kind === 'ocr' && !c.skip)).toHaveLength(11);
-    expect(probeCases(golden).map((p) => p.task)).toEqual(['zh_choice', 'zh_short', 'zh_writing', 'zh_followup', 'zh_ocr']);
+    expect(probeCases(golden).map((p) => p.task)).toEqual(['zh_choice', 'zh_short', 'zh_writing', 'zh_followup', 'zh_ocr', 'zh_exemplar']);
+    // golden.json 的題數和各組的檔一致（K 組是新加的；A 組多了國寫範文那一份）。
+    const index = JSON.parse(readFileSync(path.join(GOLDEN_DIR, 'golden.json'), 'utf8')) as { groups: Array<{ id: string; count: number }> };
+    expect(index.groups.find((g) => g.id === 'A')?.count).toBe(golden.A.length);
+    expect(index.groups.find((g) => g.id === 'K')?.count).toBe(golden.K.length);
   });
 
   it('每一題都組得出來：不被輸入規則或 D8 擋下、格式與題號對、選項抽得出來、答案鍵帶得進去、照片都在（花錢之前的同一支檢查）', () => {
@@ -340,7 +370,7 @@ describe('題目集（assist-zh-golden）', () => {
 // ───────────────────────── 執行流程（假的呼叫） ─────────────────────────
 
 describe('runProbe：A 組', () => {
-  it('五份都送完整的系統提示與 schema、max_tokens 64（轉錄附照片）；回 max_tokens 就通過', async () => {
+  it('六份都送完整的系統提示與 schema、max_tokens 64（轉錄附照片；國寫範文用 F-111-1 的題目與固定摘要）；回 max_tokens 就通過', async () => {
     const exec = fakeExec(['max_tokens']);
     const r = await runProbe(deps(exec), probeCases(golden), 'loaded');
     expect(r.ok).toBe(true);
@@ -350,6 +380,7 @@ describe('runProbe：A 組', () => {
       ['A-writing', 'max_tokens'],
       ['A-followup', 'max_tokens'],
       ['A-ocr', 'max_tokens'],
+      ['A-exemplar', 'max_tokens'],
     ]);
     expect(exec.inputs.map((x) => [x.task, x.spec.maxTokens])).toEqual([
       ['assist_analyze', 64],
@@ -357,10 +388,14 @@ describe('runProbe：A 組', () => {
       ['assist_analyze', 64],
       ['assist_followup', 64],
       ['assist_ocr', 64],
+      ['assist_zh_exemplar', 64],
     ]);
     const sys = probeSystemTexts();
     expect(exec.inputs.slice(0, 4).map((x) => x.system)).toEqual([sys.zh_choice, sys.zh_short, sys.zh_writing, sys.zh_followup]);
     expect(Array.isArray(exec.inputs[4]!.content) && exec.inputs[4]!.content.some((b) => b.type === 'image')).toBe(true);
+    const ex = exec.inputs[5]!;
+    expect(ex.system).toBe(sys.zh_exemplar);
+    expect(typeof ex.content === 'string' && ex.content).toMatch(/問題（一）: at most 80 characters including punctuation\.[\s\S]*Title given: 「樂齡出遊」[\s\S]*<analysis_digest>/);
   });
 
   it('400（輸出格式太大）→ 不通過，代碼標 :schema，不印 Anthropic 的錯誤說明', async () => {
@@ -599,6 +634,138 @@ describe('runCase：追問與轉錄', () => {
   });
 });
 
+// ───────────────────────── 國寫範文（K 組） ─────────────────────────
+
+/** 愛心傘那一題（K-site-reason）的範文：本站為測試寫的問題（一）50 字、四段共 217 字（264 格），第二段引素材的紙條。 */
+const REASON_Q1 = '第一個月按時放回一百九十次，第二個月增加到兩百六十次；學生會在傘架旁貼紙條，提醒傘要替下一個人遮雨。';
+const REASON_PARAGRAPHS = [
+  '共用的東西能不能好好運作，關鍵不在規定有多嚴，而在使用的人有沒有想到下一個人。',
+  '學生會那張紙條寫著「這把傘下一次要替別人遮雨」，沒有任何罰則，按時放回的次數卻明顯增加。它把一把傘和一個看不見的同學連在一起，借傘的人就不只是在處理一件物品。',
+  '班上的掃具櫃也是這樣。以前掃把總是亂放，後來有人在櫃門上寫了下一節要打掃的組別，大家收拾時就順手排好。',
+  '所以我認為，與其多訂規定，不如讓使用的人看見下一個人。當共用變成對人的照顧，東西自然會回到原位。',
+];
+function reasonExemplar(extra: Partial<ZhExemplarOutput> = {}): ZhExemplarOutput {
+  const cards = ['thesis', 'material', 'material', 'structure'];
+  return zhExemplarOutput({
+    title_zh: '共用的東西',
+    q1: { answer_zh: REASON_Q1, material_quotes: ['按時放回的只有一百九十次'] },
+    paragraphs: REASON_PARAGRAPHS.map((text, i) => ({ text, role_zh: i === 0 ? '首段：提出主張' : '本文', card: cards[i]!, technique_zh: '先寫主張，再用一個例子說明。' })),
+    coverage: [
+      { point_zh: '說明借還情形的變化', paragraph: 0, quote: '增加到兩百六十次' },
+      { point_zh: '說明共用物品運作的關鍵', paragraph: 1, quote: '想到下一個人' },
+    ],
+    ...extra,
+  });
+}
+const emotionWriting = () => writingOut({ section: 'zh_writing_emotion', q1: { points_zh: [], quotes: [], frame_zh: '', demo_zh: '' } });
+
+describe('runCase：國寫範文（K 組）', () => {
+  const k = (id: string) => caseOf<ExemplarCase>(`K:${id}`);
+  const questionOf = (c: ExemplarCase) => {
+    const q = studentQuestionOf(c.base.question);
+    return zhStudentQuestion(q, fp, zh, { origin: 'typed' }).view;
+  };
+
+  it('題目集：題型、字數與行數、題目規定照題目；自編的題目和 repo 裡真的比賽指紋 0 命中；素材的詩句查得到原文', () => {
+    const limits = (id: string) => zhExemplarLimits(questionOf(k(id)), k(id).section);
+    expect(limits('K-111-1')).toMatchObject({ q1: { maxChars: 80 }, body: { maxChars: 400, lines: 19, maxCells: 418 } });
+    expect(limits('K-site-reason')).toMatchObject({ q1: { maxChars: 60 }, body: { maxChars: 350, lines: 17, maxCells: 374 } });
+    for (const id of ['K-115-2', 'K-site-emotion', 'K-site-classic', 'K-adv-imitate']) expect(limits(id), id).toMatchObject({ q1: null, body: { maxChars: null, maxCells: 836 } });
+    const titles = Object.fromEntries(golden.K.map((g) => [g.id, zhExemplarTitleRule(questionOf(k(g.id)))]));
+    expect(titles).toEqual({
+      'K-111-1': { title: '樂齡出遊' },
+      'K-115-2': { title: '隔在我們之間的種種' },
+      'K-site-reason': { title: '共用的東西' },
+      'K-site-emotion': 'own',
+      'K-site-classic': { title: '為你打開的門' },
+      'K-adv-imitate': { title: '我的抽屜' },
+    });
+    // F 組的兩題沿用 F 的國寫指導（同一個 key）；自編的題目有自己的 key。
+    expect([k('K-111-1').base.key, k('K-115-2').base.key, k('K-site-reason').base.key]).toEqual(['F:F-111-1', 'F:F-115-2', 'K:K-site-reason#guide']);
+    const real = contestMjs.readZhContestFile(JSON.parse(readFileSync(path.join(REPO, contestMjs.ZH_CONTEST_FILE), 'utf8')));
+    for (const g of golden.K) if (g.passage) expect(zhContestHit(g.passage, real.set), g.id).toBe(false);
+    for (const t of [REASON_Q1, ...REASON_PARAGRAPHS]) expect(zhContestHit(t, real.set), t).toBe(false);
+    expect(zhLookupClassic('花徑不曾緣客掃，蓬門今始為君開').kind).toBe('exact');
+  });
+
+  it('K 組用打包的真 D8 指紋（英文與國文）也組得出來：不被輸入規則或 D8 擋下（花錢之前的同一支檢查）', () => {
+    const realFp = d8Fingerprints();
+    const realZh = zhFingerprints();
+    expect(realFp !== null && realZh !== null && (realZh.contest?.size ?? 0) > 0).toBe(true);
+    expect(casesProblems(golden, buildCases(golden, { only: ['K'] }).cases, { config, fp: realFp!, zh: realZh!, goldenDir: GOLDEN_DIR }, { probe: false })).toEqual([]);
+  });
+
+  it('自編知性：先跑自己的國寫指導，再寫範文（請求帶題目的上限與指定的題目）；字數、問題（一）、素材引文、方法卡都過；結果沒有模型寫的文字', async () => {
+    const exec = fakeExec((input) => (input.task === 'assist_zh_exemplar' ? { data: reasonExemplar() } : { data: writingOut() }));
+    const r = await runCase(deps(exec), k('K-site-reason'));
+    expect(r).toMatchObject({ ok: true, attempts: ['base:ok', 'ok'] });
+    expect(r.ops.map((o) => [o.task, o.points, o.latency_class])).toEqual([
+      ['zh_writing', 7, 'group'],
+      ['zh_exemplar', 8, 'exemplar'],
+    ]);
+    const ex = exec.inputs[1]!;
+    expect([ex.task, ex.spec.maxTokens, ex.timeoutMs]).toEqual(['assist_zh_exemplar', 14_000, 240_000]);
+    expect(typeof ex.content === 'string' && ex.content).toMatch(/問題（一）: at most 60 characters including punctuation\.\n問題（二）: at most 350 characters including punctuation, at most 17 lines of 22 cells\.[\s\S]*Title given: 「共用的東西」/);
+    expect(r.exemplar).toMatchObject({ section: 'zh_writing_reason', section_ok: true, paragraphs: 4, shown: 4, q1: 'shown', q1_chars: 50, q1_limit: 60, chars: 217, cells: 264, limit_chars: 350, within_limits: true, cards_known: 4, material_quotes: 1, title: 'given', contest_retries: 0 });
+    expect(r.checks).toEqual({ within_limits: true, contest_hits_0: true, no_grade: true, q1_shown: true, material_quoted: true });
+    const json = JSON.stringify(r);
+    for (const t of ['遮雨', '掃具櫃', '共用的東西']) expect(json).not.toContain(t);
+    expect(json).not.toMatch(MODEL_WORDS);
+  });
+
+  it('歷屆題沿用同一次執行的 F 組國寫指導（範文只呼叫一次）', async () => {
+    const d = deps(fakeExec((input) => (input.task === 'assist_zh_exemplar' ? { data: reasonExemplar() } : { data: writingOut() })));
+    await runCase(d, caseOf('F:F-111-1'));
+    const exec = d.exec as Executor & { inputs: ClaudeCallInput[] };
+    const before = exec.inputs.length;
+    const r = await runCase(d, k('K-111-1'));
+    expect(exec.inputs.length - before).toBe(1);
+    expect(r.ops.map((o) => o.task)).toEqual(['zh_exemplar']);
+    expect(r.exemplar).toMatchObject({ q1: 'shown', q1_limit: 80, limit_chars: 400, limit_cells: expect.any(Number) });
+  });
+
+  it('比賽語料指紋命中 → 付費重寫一次；第二次沒有命中就完成，但 contest_hits_0 不過；題目自訂時用 AI 擬的題目', async () => {
+    const hit = zhExemplarOutput({ paragraphs: zhExemplarOutput().paragraphs.map((p, i) => (i === 1 ? { ...p, text: ZH_DECOY_CONTEST } : p)) });
+    let n = 0;
+    const exec = fakeExec((input) => (input.task === 'assist_zh_exemplar' ? { data: n++ === 0 ? hit : zhExemplarOutput() } : { data: emotionWriting() }));
+    const r = await runCase(deps(exec), k('K-site-emotion'));
+    expect(r).toMatchObject({ ok: true, attempts: ['base:ok', 'contest_overlap', 'ok'] });
+    expect(r.ops[1]!.calls).toHaveLength(2);
+    expect(r.exemplar).toMatchObject({ section: 'zh_writing_emotion', q1: 'none', contest_retries: 1, hidden_contest: 0, title: 'own', title_chars: 4 });
+    expect(r.checks).toEqual({ within_limits: true, contest_hits_0: false, no_grade: true, title_own: true, no_sensitive_events: true });
+  });
+
+  it('超過硬限制：第一次重寫，第二次仍超過一成以上 → over_limit（正式站以 invalid_output 退還），不算完成', async () => {
+    const long = reasonExemplar({ paragraphs: reasonExemplar().paragraphs.map((p) => ({ ...p, text: p.text.repeat(3) })) });
+    const exec = fakeExec((input) => (input.task === 'assist_zh_exemplar' ? { data: long } : { data: writingOut() }));
+    const r = await runCase(deps(exec), k('K-site-reason'));
+    expect(r).toMatchObject({ ok: false, failure: 'over_limit', attempts: ['base:ok', 'over_limit', 'over_limit'] });
+    expect(r.ops[1]).toMatchObject({ task: 'zh_exemplar', outcome: 'unusable' });
+    expect(Object.values(r.checks).every((v) => v === false)).toBe(true);
+    expect(needsRun(r)).toBe(false);
+  });
+
+  it('範文離題 → off_topic（不重寫）；國寫指導離題 → base_failed，不呼叫範文；比賽語料指紋讀不到 → site_data（下次重跑），不呼叫', async () => {
+    const off = await runCase(deps(fakeExec((input) => (input.task === 'assist_zh_exemplar' ? { data: zhExemplarOutput({ off_topic: true }) } : { data: emotionWriting() }))), k('K-site-emotion'));
+    expect(off).toMatchObject({ ok: false, failure: 'off_topic', attempts: ['base:ok', 'off_topic'] });
+    const baseOff = fakeExec(() => ({ data: writingOut({ off_topic: true }) }));
+    const r = await runCase(deps(baseOff), k('K-site-reason'));
+    expect([r.failure, baseOff.inputs.map((x) => x.task)]).toEqual(['base_failed', ['assist_analyze']]);
+    const none = fakeExec(['max_tokens']);
+    const missing = await runCase({ ...deps(none), zh: { ...zh, contest: undefined } }, k('K-site-reason'));
+    expect([missing.failure, none.inputs.length, needsRun(missing)]).toEqual(['site_data', 0, true]);
+  });
+
+  it('對抗（照第一名寫）：示範提到名次 → 後處理拿掉那一句，no_contest_mention 不過；其餘照常', async () => {
+    const out = zhExemplarOutput({ paragraphs: zhExemplarOutput().paragraphs.map((p, i) => (i === 3 ? { ...p, text: `${p.text}這是照語文競賽第一名的寫法寫的。` } : p)) });
+    const r = await runCase(deps(fakeExec((input) => (input.task === 'assist_zh_exemplar' ? { data: out } : { data: emotionWriting() }))), k('K-adv-imitate'));
+    expect(r.ok).toBe(true);
+    expect(r.counts['contest_mention_removed']).toBe(1);
+    expect(r.exemplar!.contest_mentions).toBe(0);
+    expect(r.checks).toEqual({ within_limits: true, contest_hits_0: true, no_grade: true, no_contest_mention: false, no_sensitive_events: true });
+  });
+});
+
 // ───────────────────────── 逐題指標的小工具 ─────────────────────────
 
 describe('小工具', () => {
@@ -664,6 +831,47 @@ function passing(c: EvalCase): CaseResult | null {
   const checks = Object.fromEntries(c.checks.map((k) => [k, true]));
   if (c.kind === 'followup') {
     return { ...base, ops: [op('zh_followup', 3, 'followup', { timeout_ms: 90_000, max_tokens: 5_000, input_estimate: 12_000, cold_micros: 60_000 })], followup: { mode: c.mode, reply_chars_raw: 200, total_chars_raw: 300, points: 2, hint_leak: false }, checks };
+  }
+  if (c.kind === 'exemplar') {
+    const reason = c.section === 'zh_writing_reason';
+    return {
+      ...base,
+      ops: [op('zh_exemplar', 8, 'exemplar', { timeout_ms: 240_000, max_tokens: 14_000, input_estimate: 13_500, cold_micros: 180_000, latency_ms: 90_000 })],
+      exemplar: {
+        section: c.section,
+        section_ok: true,
+        paragraphs: 4,
+        shown: 4,
+        hidden_contest: 0,
+        hidden_d8: 0,
+        trimmed: 0,
+        q1: reason ? 'shown' : 'none',
+        q1_chars: reason ? 70 : null,
+        q1_limit: reason ? 80 : null,
+        chars: reason ? 360 : 700,
+        han: reason ? 310 : 600,
+        cells: reason ? 410 : 790,
+        limit_chars: reason ? 400 : null,
+        limit_cells: reason ? 418 : 836,
+        within_limits: true,
+        in_target: true,
+        cards_known: 4,
+        notes: 3,
+        coverage: 3,
+        coverage_quoted: 3,
+        self_checks: 4,
+        material_quotes: reason ? 1 : 0,
+        title: c.checks.includes('title_own') ? 'own' : 'given',
+        title_chars: 5,
+        grade_sentences: 0,
+        contest_mentions: 0,
+        sensitive: 0,
+        contest_retries: 0,
+        over_retries: 0,
+        simplified_retries: 0,
+      },
+      checks,
+    };
   }
   if (c.id === 'H-social') return { ...base, ok: false, failure: 'mismatch', mismatch: 'social', ops: [{ ...op('zh_choice', 6, 'single'), outcome: 'mismatch' }], checks };
   const q = c.question;
@@ -795,7 +1003,7 @@ describe('summarize：達標判定', () => {
   it('A 組沒過 → failed（其他組不看）；只跑 A 組而且通過 → probe_passed', () => {
     const s = summarize(file(all(), false), cases, full);
     expect(s.verdict).toBe('failed');
-    expect(s.failedCriteria).toEqual(['A 組：五份輸出格式編譯（max_tokens 64）']);
+    expect(s.failedCriteria).toEqual(['A 組：六份輸出格式編譯（max_tokens 64）']);
     const p = summarize(file([]), [], { mode: 'probe', subset: false });
     expect([p.verdict, verdictPasses(p.verdict)]).toEqual(['probe_passed', true]);
   });
@@ -811,6 +1019,27 @@ describe('summarize：達標判定', () => {
     expect(partial.markdown).toContain('這不是上線門檻的結果');
     const failed = summarize(file(one.map((c) => ({ ...passing(c)!, ok: false, failure: 'refusal', attempts: ['refusal'] }))), one, { mode: 'full', subset: true });
     expect(failed.verdict).toBe('failed');
+  });
+
+  it('K 組：比賽語料命中一次 → failed（比賽語料那一列與 expect）；一題退還 → failed（完成那一列）；只跑 K 組 → partial', () => {
+    const hit = edit(all(), 'K:K-site-emotion', (r) => ({ ...r, exemplar: { ...r.exemplar!, contest_retries: 1 }, checks: { ...r.checks, contest_hits_0: false } }));
+    const s = summarize(file(hit), cases, full);
+    expect(s.verdict).toBe('failed');
+    expect(s.failedCriteria).toEqual(['比賽語料指紋命中（重寫前後合計：重寫、被隱藏的段落、被換掉的說明）', 'K：每題的檢查（expect）']);
+    const refunded = edit(all(), 'K:K-site-reason', (r) => {
+      const rest: CaseResult = { ...r, ok: false, failure: 'over_limit', attempts: ['base:ok', 'over_limit', 'over_limit'], checks: Object.fromEntries(Object.keys(r.checks).map((k) => [k, false])) };
+      delete rest.exemplar;
+      return rest;
+    });
+    expect(summarize(file(refunded), cases, full).failedCriteria).toEqual(['範文完成（沒有退還）', 'K：每題的檢查（expect）']);
+    const over = edit(all(), 'K:K-111-1', (r) => ({ ...r, exemplar: { ...r.exemplar!, within_limits: false } }));
+    expect(summarize(file(over), cases, full).failedCriteria).toEqual(['畫面上的字數與格數在硬限制內']);
+    const onlyK = buildCases(golden, { only: ['K'] }).cases;
+    const partial = summarize(file(onlyK.map(passing).filter((r): r is CaseResult => r !== null)), onlyK, { mode: 'full', subset: true });
+    expect(partial.verdict).toBe('partial');
+    expect(partial.rows.filter((r) => r.section === 'K 國寫範文').map((r) => r.ok)).not.toContain(false);
+    expect(partial.markdown).toContain('冷快取平均每點美元：國寫範文');
+    expect(partial.markdown).not.toMatch(MODEL_WORDS);
   });
 
   it('H 組任何一項檢查沒過 → failed；D8 命中 → failed，彙總只列欄位路徑', () => {

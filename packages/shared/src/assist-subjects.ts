@@ -64,6 +64,8 @@ export interface AssistSubjectProfile {
   formats: Readonly<Record<string, AssistFormatSpec>>;
   ocrPoints(photos: 1 | 2): number;
   followupPoints: number;
+  /** 國寫範文的點數（只有國文；國寫範文設計 §6）；沒有這個功能的科目是 null。 */
+  exemplarPoints: number | null;
   /** 進不進學習報告（第一版只有英文；§7.4）。 */
   inReport: boolean;
   render: readonly AssistRenderNeed[];
@@ -93,6 +95,7 @@ export const ASSIST_SUBJECT_PROFILES: Readonly<Record<AssistSubject, AssistSubje
     },
     ocrPoints: () => AI_TASK_POINTS.assist_ocr,
     followupPoints: AI_TASK_POINTS.assist_followup,
+    exemplarPoints: null,
     inReport: true,
     render: [],
   },
@@ -110,6 +113,7 @@ export const ASSIST_SUBJECT_PROFILES: Readonly<Record<AssistSubject, AssistSubje
     },
     ocrPoints: (photos) => (photos === 2 ? 4 : 3),
     followupPoints: 3,
+    exemplarPoints: AI_TASK_POINTS.assist_zh_exemplar,
     inReport: false,
     render: ['bopomofo', 'underline_marks', 'serif_classical'],
   },

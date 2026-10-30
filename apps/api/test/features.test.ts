@@ -314,3 +314,59 @@ describe('學習助手英文以外的科目（AI_ASSISTANT_SUBJECTS、AI_ASSISTA
     expect(assistantPreview(loadConfig(baseAdmin), 'student')).toBeNull();
   });
 });
+
+describe('國寫範文的開關（AI_ZH_EXEMPLAR；國寫範文設計 §7）', () => {
+  const ON = { AI_ASSISTANT: 'on', AI_ASSISTANT_PHOTO: 'on', AI_ASSISTANT_SUBJECTS: 'on', AI_ASSISTANT_SUBJECTS_PHOTO: 'on' } as const;
+
+  it('/api/features：on 時國文多 exemplar: true；off（程式預設）與 admin 時回應和沒有這個功能時逐字相同', async () => {
+    const base = await features(aiEnv(ON));
+    expect(base.body.assistantSubjects).toEqual([{ subject: 'chinese', photo: true }]);
+    for (const mode of ['off', 'admin', 'bogus'] as const) {
+      const env = aiEnv({ ...ON, AI_ZH_EXEMPLAR: mode });
+      const admin = insertUser(env.DB, { role: 'admin', aiStatus: 'approved' });
+      expect((await quietWarn(() => features(env))).text, mode).toBe(base.text);
+      const cookie = await cookieFor(admin);
+      expect((await quietWarn(() => features(env, cookie))).text, mode).toBe(base.text);
+    }
+    expect((await features(aiEnv({ ...ON, AI_ZH_EXEMPLAR: 'on' }))).body.assistantSubjects).toEqual([{ subject: 'chinese', photo: true, exemplar: true }]);
+    // 國文本身沒開：範文也沒有。
+    expect((await features(aiEnv({ AI_ASSISTANT: 'on', AI_ZH_EXEMPLAR: 'on' }))).body).not.toHaveProperty('assistantSubjects');
+  });
+
+  it('/api/me：admin 模式時管理員的 assistant_preview.subjects 帶 exemplar；學生沒有；on 時誰都沒有 assistant_preview', async () => {
+    const env = aiEnv({ ...ON, AI_ZH_EXEMPLAR: 'admin' });
+    const admin = insertUser(env.DB, { role: 'admin', aiStatus: 'approved' });
+    const student = insertUser(env.DB, { aiStatus: 'approved' });
+    expect((await me(env, admin)).assistant_preview).toEqual({ photo: true, subjects: [{ subject: 'chinese', photo: true, exemplar: true }] });
+    expect(await me(env, student)).not.toHaveProperty('assistant_preview');
+    const on = aiEnv({ ...ON, AI_ZH_EXEMPLAR: 'on' });
+    const admin2 = insertUser(on.DB, { role: 'admin', aiStatus: 'approved' });
+    expect(await me(on, admin2)).not.toHaveProperty('assistant_preview');
+  });
+
+  it('zhExemplarAccess：國文對這位使用者開放，而且 on，或 admin 而這位是管理員', async () => {
+    const { zhExemplarAccess } = await import('../src/features');
+    const cfg = (vars: Partial<Env>) => loadConfig(aiEnv(vars));
+    expect(zhExemplarAccess(cfg({ ...ON, AI_ZH_EXEMPLAR: 'on' }), 'student')).toEqual({ enabled: true });
+    expect(zhExemplarAccess(cfg({ ...ON, AI_ZH_EXEMPLAR: 'on' }), null)).toEqual({ enabled: true });
+    expect(zhExemplarAccess(cfg({ ...ON, AI_ZH_EXEMPLAR: 'admin' }), 'student')).toEqual({ enabled: false });
+    expect(zhExemplarAccess(cfg({ ...ON, AI_ZH_EXEMPLAR: 'admin' }), 'admin')).toEqual({ enabled: true });
+    expect(zhExemplarAccess(cfg(ON), 'admin')).toEqual({ enabled: false });
+    expect(zhExemplarAccess(cfg({ AI_ASSISTANT: 'on', AI_ASSISTANT_SUBJECTS: 'admin', AI_ZH_EXEMPLAR: 'on' }), 'student')).toEqual({ enabled: false });
+  });
+
+  it('/api/ai/quota：開放時 assist 多 zh_exemplars（每天 3 篇；退還的不算）；關著時沒有，其他欄位照舊', async () => {
+    const quota = async (env: TestEnv, user: Parameters<typeof cookieFor>[0]) => (await (await call(env, 'GET', '/api/ai/quota', { cookie: await cookieFor(user) })).json()) as AiQuotaResponse;
+    const env = aiEnv({ ...ON, AI_ZH_EXEMPLAR: 'on' });
+    const student = insertUser(env.DB, { aiStatus: 'approved' });
+    seedAssistOp(env.DB, student.id, 'assist_zh_exemplar', crypto.randomUUID(), { points: 8 });
+    const refunded = seedAssistOp(env.DB, student.id, 'assist_zh_exemplar', crypto.randomUUID(), { points: 8 });
+    env.DB.sqlite.prepare("UPDATE ai_ops SET status = 'refunded', points_charged = 0 WHERE id = ?").run(refunded);
+    const body = await quota(env, student);
+    expect(body.assist).toEqual({ reports: { day_used: 0, day_limit: 2 }, ocr: { day_used: 0, day_limit: 6 }, zh_exemplars: { day_used: 1, day_limit: 3 } });
+    expect(body.task_points.assist_zh_exemplar).toBe(8);
+    const off = aiEnv(ON);
+    const s2 = insertUser(off.DB, { aiStatus: 'approved' });
+    expect((await quota(off, s2)).assist).toEqual({ reports: { day_used: 0, day_limit: 2 }, ocr: { day_used: 0, day_limit: 6 } });
+  });
+});

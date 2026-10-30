@@ -8,7 +8,8 @@
 import type { AssistQuestionBlock, AssistStudentQuestion } from '@gsat/shared';
 import { d8HanWindows, d8ZhGramHash, d8ZhWindowHash } from '../../src/ai/d8';
 import type { ZhFingerprints } from '../../src/assist/subjects/chinese/d8';
-import type { ZhChoiceOutput, ZhFollowupOutput, ZhOcrOutput, ZhShortOutput, ZhWritingOutput } from '../../src/assist/subjects/chinese/schemas';
+import type { ZhChoiceOutput, ZhExemplarOutput, ZhFollowupOutput, ZhOcrOutput, ZhShortOutput, ZhWritingOutput } from '../../src/assist/subjects/chinese/schemas';
+import * as contestMjs from '../../../../packages/shared/scripts/zh-contest-fingerprint.mjs';
 import type { Env } from '../../src/env';
 import type { TestD1 } from './d1';
 import type { TestEnv } from './ai';
@@ -208,6 +209,57 @@ export function zhOcrOutput(extra: Partial<ZhOcrOutput> = {}): ZhOcrOutput {
     ],
     student_answer_seen: '',
     omitted: ['answer_key'],
+    ...extra,
+  };
+}
+
+// ───────────────────────── 國寫範文（國寫範文設計 §5） ─────────────────────────
+
+/**
+ * 本站自寫的誘餌「比賽作品」（不是任何得獎作品，也不是任何人寫的作文）：只給比賽語料指紋的自動測試使用。
+ * 比賽語料本身不在 repo；測試一律用這段造集合。
+ */
+export const ZH_DECOY_CONTEST = '這段文字是本站為了測試比賽指紋而自己編寫的假作品內容任何真正的作文都不會這樣寫因為它沒有意思';
+
+/** 用誘餌造的比賽語料指紋集合：直接用產生器（zh-contest-fingerprint.mjs）的漢字流、12 字窗口（起點每 4 字取一個）與雜湊。 */
+export function zhContestSet(texts: string[] = [ZH_DECOY_CONTEST], stride: number = contestMjs.ZH_CONTEST_STRIDE): Set<number> {
+  const out = new Set<number>();
+  for (const t of texts) for (const w of contestMjs.zhContestWindows(contestMjs.zhContestHanStream(t), stride)) out.add(contestMjs.zhContestWindowHash(w));
+  return out;
+}
+
+/** 國寫範文要的國文指紋：fakeZhFingerprints() 加上誘餌造的比賽語料集合（範文缺比賽集合時以 internal 退還）。 */
+export function zhExemplarFingerprints(extra: Partial<ZhFingerprints> = {}): ZhFingerprints {
+  return { ...fakeZhFingerprints(), contest: zhContestSet(), ...extra };
+}
+
+/** 情意題（ZH_WRITING_PROMPT）的範文段落：本站自寫的四段。 */
+export const ZH_EXEMPLAR_PARAGRAPHS = [
+  '補習班的教室在大樓的七樓，靠走廊那一側有一扇窗，玻璃上貼滿了榜單，只留下一條細細的縫。每天傍晚，我都從那條縫裡看天色慢慢變暗。',
+  '高二那年冬天，數學考卷發回來，我盯著紅色的分數，不敢抬頭。坐在旁邊的同學忽然撕下一角榜單，窗外的路燈一下子亮進來，照在我的桌上。',
+  '那道光不大，卻讓我看見自己握筆的手還在發抖。我想起國中時在操場上跑步的樣子，那時候我不怕輸，只怕自己沒有跑完。',
+  '後來我常常望向那個缺口。窗沒有變大，榜單也沒有變少，但我知道，只要願意把一角撕開，光就會找到路進來。',
+] as const;
+
+/** 國寫範文的模型輸出（預設是情意題 ZH_WRITING_PROMPT 的四段）。 */
+export function zhExemplarOutput(extra: Partial<ZhExemplarOutput> = {}): ZhExemplarOutput {
+  const cards = ['material', 'task', 'structure', 'thesis'];
+  const roles = ['場景', '事件', '轉折', '體會'];
+  return {
+    title_zh: '那一扇窗',
+    q1: { answer_zh: '', material_quotes: [] },
+    paragraphs: ZH_EXEMPLAR_PARAGRAPHS.map((text, i) => ({ text, role_zh: roles[i]!, card: cards[i]!, technique_zh: '用「細細的縫」寫出看不見外面的感覺。' })),
+    notes: [
+      { card: 'material', text_zh: '用補習班的一扇窗當作貼身的材料，讀者看得見場景。' },
+      { card: 'structure', text_zh: '從場景、事件到體會，一段只做一件事。' },
+    ],
+    coverage: [
+      { point_zh: '寫一扇具體的窗', paragraph: 1, quote: '有一扇窗' },
+      { point_zh: '抒發感受與體會', paragraph: 4, quote: '光就會找到路進來' },
+    ],
+    self_check_zh: ['我寫的是哪一扇窗？', '有沒有一件具體的事？', '最後一段有沒有回扣題目？'],
+    off_topic: false,
+    safety_flag: 'none',
     ...extra,
   };
 }

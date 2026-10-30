@@ -1,15 +1,21 @@
 /**
  * 國文解析的假資料（單元測試與 e2e 的假後端共用；docs/design/assistant-subjects.md §1.8 範例 A–F）。
  * 題目與解析都是本站自寫的（文言與古文只取公有領域的原文），不引任何官方解析、評分原則或參考答案。
+ * 國寫範文（國寫範文設計 §3.2）的示範也是本站為測試自寫的短文，不取自任何比賽作品或佳作。
  */
 import {
+  ZH_EXEMPLAR_OVERLAP_TEXT,
   ZH_MULTI_STRATEGY,
   ZH_SECTION_SPECS,
+  ZH_SHEET_CELLS,
   countZhChars,
   zhMultiScore,
+  zhSheetCells,
   type AssistVerdict,
   type ZhChoiceItemView,
   type ZhChoiceView,
+  type ZhExemplarParagraph,
+  type ZhExemplarView,
   type ZhFollowupView,
   type ZhOptionView,
   type ZhSection,
@@ -67,6 +73,13 @@ export const ZH_SAMPLE_QUESTIONS = {
   ].join('\n'),
   /** 範例 E：國寫情意（題目本站自寫）。 */
   writing: '請以「那一扇窗」為題，寫一篇文章，描述與這扇窗有關的經驗，並抒發你的感受與體會。（文長不限）',
+  /** 國寫知性（題目與素材本站自寫；國寫範文的知性示範用）。 */
+  writingReason: [
+    '閱讀下文，回答問題。',
+    '某校討論午休時要不要開放圖書館的自習區。贊成的同學說：「午休是一天裡最安靜的時段，最適合讀書。」反對的同學說：「午休應該讓身體休息，下午上課才有精神。」',
+    '問題（一）：依上文，贊成與反對的理由各是什麼？（文長限 80 字以內）',
+    '問題（二）：你認為午休時間應該怎麼使用？請提出看法並說明理由。（文長限 400 字以內）',
+  ].join('\n'),
 } as const;
 
 function typeSteps(section: ZhSection, labels: string[]): ZhTypeSteps {
@@ -446,5 +459,124 @@ export function zhFollowupReply(mode: 'hint' | 'explain'): ZhFollowupView {
     off_topic: false,
     safety_flag: 'none',
     notices: [],
+  };
+}
+
+// ───────────────────────── 國寫範文（國寫範文設計 §3.2） ─────────────────────────
+
+function exemplarTotals(paragraphs: readonly ZhExemplarParagraph[], limitChars: number | null, limitCells: number): ZhExemplarView['totals'] {
+  const texts = paragraphs.filter((p) => p.hidden === null).map((p) => p.text);
+  const count = texts.reduce((sum, t) => ({ chars: sum.chars + countZhChars(t).chars, han: sum.han + countZhChars(t).han }), { chars: 0, han: 0 });
+  return { chars: count.chars, han: count.han, cells: zhSheetCells(texts), limit_chars: limitChars, limit_chars_from_question: limitChars !== null, limit_cells: limitCells };
+}
+
+/**
+ * 情意「那一扇窗」的 AI 示範（四段：場景、經驗、轉折、體會）。hidden：第 3 段被比賽語料指紋隱藏（換成固定說明、要件對照拿掉
+ * 指向它的那一列）；overLimit：格數比一面多（「考試時要刪減」標紅）。
+ */
+export function zhEmotionExemplar(opts: { hidden?: boolean; overLimit?: boolean } = {}): ZhExemplarView {
+  const paragraphs: ZhExemplarParagraph[] = [
+    {
+      text: '高二那年，我的座位靠著教室後排的一扇窗。窗框的綠漆剝落了一角，窗外是籃球場和一排還沒長高的樟樹。',
+      hidden: null,
+      role_zh: '首段：交代場景並點題',
+      card: 'task',
+      technique_zh: '第二句就寫到「窗框的綠漆」，把題目的窗放進真實的座位。',
+    },
+    {
+      text: '段考前一週，我每天留到晚自習。下午五點多，夕陽斜斜照進來，把桌上的考卷染成橘色；我只盯著錯題，連窗外的運球聲都嫌吵，乾脆把窗簾拉上。',
+      hidden: null,
+      role_zh: '第二段：寫一件具體的事',
+      card: 'material',
+      technique_zh: '時間、地點、動作，再加上「運球聲」這個聲音。',
+    },
+    {
+      text: '有一天停電，教室暗了下來，同學陸續收拾書包。我拉開窗簾想借一點光，才發現樟樹已經長過二樓，葉子在風裡翻出淡淡的銀白。我每天坐在這裡，卻很久沒有看過窗外。',
+      hidden: null,
+      role_zh: '第三段：轉折',
+      card: 'structure',
+      technique_zh: '用停電做轉折，窗從「嫌吵」變成「看見」。',
+    },
+    {
+      text: '後來讀書累了，我會抬頭看一眼那扇窗。錯題沒有馬上變少，但我知道，窗不只讓光進來，也提醒我把頭抬起來。',
+      hidden: null,
+      role_zh: '結尾：回到開頭的窗',
+      card: 'thesis',
+      technique_zh: '回到同一扇窗，寫出從低頭到抬頭的變化。',
+    },
+  ];
+  if (opts.hidden) paragraphs[2] = { ...paragraphs[2]!, text: ZH_EXEMPLAR_OVERLAP_TEXT, hidden: 'contest', technique_zh: '' };
+  const totals = exemplarTotals(paragraphs, null, ZH_SHEET_CELLS);
+  return {
+    kind: 'zh_exemplar',
+    section: 'zh_writing_emotion',
+    title_zh: '那一扇窗',
+    q1: null,
+    paragraphs,
+    totals: opts.overLimit ? { ...totals, cells: ZH_SHEET_CELLS + 44 } : totals,
+    notes: [
+      { card: 'structure', text_zh: '四段照「場景→經驗→轉折→體會」排：開頭兩句就寫到窗，結尾回到同一扇窗。' },
+      { card: 'material', text_zh: '只寫一個場景，寫出時間、地點、動作和一個聲音；換成你自己的經驗時，保留這四樣。' },
+      { card: 'thesis', text_zh: '體會寫成前後的變化（從低頭到抬頭），不喊口號。' },
+    ],
+    coverage: [
+      { point_zh: '寫一扇具體的窗', paragraph: 1, quote: '窗框的綠漆剝落了一角' },
+      { point_zh: '寫和它有關的經驗', paragraph: 2, quote: '乾脆把窗簾拉上' },
+      ...(opts.hidden ? [] : [{ point_zh: '寫窗的意義怎麼改變', paragraph: 3, quote: '很久沒有看過窗外' }]),
+      { point_zh: '寫感受與體會', paragraph: 4, quote: '也提醒我把頭抬起來' },
+    ],
+    self_check_zh: ['開頭兩句內寫到題目的窗了嗎？', '經驗段有沒有時間、地點、動作和一個感官細節？', '轉折前後，窗的意義有沒有改變？', '結尾有沒有回到開頭的畫面？'],
+    notices: opts.overLimit ? [{ kind: 'exemplar_over_limit', field: 'paragraphs' }] : [],
+    off_topic: false,
+    safety_flag: 'none',
+  };
+}
+
+/** 知性（午休與自習區）的 AI 示範：問題（一）的答案與素材引文，問題（二）三段。 */
+export function zhReasonExemplar(): ZhExemplarView {
+  const answer = '贊成的理由是午休最安靜，最適合讀書；反對的理由是午休應該讓身體休息，下午上課才有精神。';
+  const paragraphs: ZhExemplarParagraph[] = [
+    {
+      text: '午休怎麼用，不必全校只有一種答案。我認為應該開放自習區，同時讓需要休息的同學可以安心趴睡。',
+      hidden: null,
+      role_zh: '首段：提出主張',
+      card: 'thesis',
+      technique_zh: '第二句就寫出主張，並補上「同時」的條件。',
+    },
+    {
+      text: '以我們班為例，段考前總有幾位同學利用午休整理筆記，翻書聲卻吵醒了想睡的人。開放自習區以後，兩種需要分在兩個地方，各自都有安靜。',
+      hidden: null,
+      role_zh: '本文：舉生活見聞',
+      card: 'material',
+      technique_zh: '用班上的「翻書聲」當例子，再扣回主張。',
+    },
+    {
+      text: '開放不等於鼓勵每個人都去讀書。學校可以只開放到一點，提醒大家留一點時間休息，下午才不會撐不住。',
+      hidden: null,
+      role_zh: '結尾：補上限制',
+      card: 'structure',
+      technique_zh: '結尾補一個限制，回到「休息」這個反方理由。',
+    },
+  ];
+  const q1Cells = zhSheetCells([answer]);
+  return {
+    kind: 'zh_exemplar',
+    section: 'zh_writing_reason',
+    title_zh: '',
+    q1: { answer_zh: answer, count: countZhChars(answer), limit: 80, quotes: [{ quote: '最適合讀書', range: null }], hidden: null },
+    paragraphs,
+    totals: exemplarTotals(paragraphs, 400, ZH_SHEET_CELLS - q1Cells),
+    notes: [
+      { card: 'task', text_zh: '問題（一）只整理素材裡兩方的理由，不加自己的看法。' },
+      { card: 'thesis', text_zh: '問題（二）的主張加一個條件，比只選一邊更完整。' },
+    ],
+    coverage: [
+      { point_zh: '說明贊成與反對的理由', paragraph: 0, quote: '最適合讀書' },
+      { point_zh: '提出自己的看法並說明理由', paragraph: 1, quote: '我認為應該開放自習區' },
+    ],
+    self_check_zh: ['問題（一）兩方的理由都寫到了嗎？', '問題（二）的主張在第一段就說清楚了嗎？', '例子後面有沒有一句扣回主張？'],
+    notices: [],
+    off_topic: false,
+    safety_flag: 'none',
   };
 }

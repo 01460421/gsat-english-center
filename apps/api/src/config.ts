@@ -4,7 +4,8 @@
  * 路由與業務邏輯一律呼叫 loadConfig(c.env)，不直接讀 c.env 的設定值。
  * 預設值與 wrangler.toml 的 [vars] 相同（§6.3「正式開放」的值）；wrangler.toml 是給站主看的「實際部署值」，
  * 這裡的預設值是 [vars] 漏設時的保險。兩邊一致由 test/skeleton.test.ts 檢查（例外：AI_CUSTOM_ESSAY、AI_ASSISTANT、
- * AI_ASSISTANT_PHOTO、AI_ESSAY_EXEMPLARS、AI_ASSISTANT_SUBJECTS、AI_ASSISTANT_SUBJECTS_PHOTO 這裡固定是 off，實際開關看 wrangler.toml）。
+ * AI_ASSISTANT_PHOTO、AI_ESSAY_EXEMPLARS、AI_ASSISTANT_SUBJECTS、AI_ASSISTANT_SUBJECTS_PHOTO、AI_ZH_EXEMPLAR 這裡固定是 off，
+ * 實際開關看 wrangler.toml）。
  *
  * 機密只回「有沒有設」與值本身（給需要的模組用），**絕不放進任何回應**；/api/features、/api/admin/health 只回布林。
  */
@@ -40,6 +41,9 @@ export const CONFIG_DEFAULTS = {
   // wrangler.toml 那一行。effort 預設 medium（兩邊一致）。
   AI_ESSAY_EXEMPLARS: 'off',
   AI_EFFORT_EXEMPLARS: 'medium',
+  // 學習助手的國寫範文（國寫範文設計 §7）：同上，程式的預設固定是 off（fail closed）；開放、只留給管理員、緊急關閉都只改
+  // wrangler.toml 那一行。另外要國文（AI_ASSISTANT_SUBJECTS）也對這位使用者開放。
+  AI_ZH_EXEMPLAR: 'off',
   AI_POINTS_USER_DAY: 30,
   AI_POINTS_USER_MONTH: 300,
   AI_POINTS_TRIAL_DAY: 10,
@@ -88,7 +92,7 @@ export const ASSISTANT_MODES = FEATURE_MODES;
 export type AssistantMode = FeatureMode;
 
 /** 用三態開關的設定名稱。 */
-export type FeatureModeName = 'AI_ASSISTANT' | 'AI_ASSISTANT_PHOTO' | 'AI_ESSAY_EXEMPLARS' | 'AI_ASSISTANT_SUBJECTS' | 'AI_ASSISTANT_SUBJECTS_PHOTO';
+export type FeatureModeName = 'AI_ASSISTANT' | 'AI_ASSISTANT_PHOTO' | 'AI_ESSAY_EXEMPLARS' | 'AI_ASSISTANT_SUBJECTS' | 'AI_ASSISTANT_SUBJECTS_PHOTO' | 'AI_ZH_EXEMPLAR';
 
 export interface AppConfig {
   urls: {
@@ -144,6 +148,11 @@ export interface AppConfig {
      * exemplarsAccess 判斷（admin 模式只有管理員）。關閉時新的產生回 503；已經排入 Queue 的照常完成；讀、評分、刪除照常。
      */
     essayExemplars: FeatureMode;
+    /**
+     * 學習助手的國寫範文（AI_ZH_EXEMPLAR；fail closed，見 featureModeSwitch；國寫範文設計 §7）。對某位使用者開不開由 features.ts 的
+     * zhExemplarAccess 判斷（另外要國文對他開放）。關閉時新的範文回 503；已經排入 Queue 的照常完成；已有的範文照常可以看與刪除。
+     */
+    zhExemplar: FeatureMode;
     limits: {
       pointsUserDay: number;
       pointsUserMonth: number;
@@ -205,7 +214,7 @@ export function customEssaySwitch(value: string | undefined, fallback: string = 
 }
 
 /**
- * 三態開關（AI_ASSISTANT、AI_ASSISTANT_PHOTO、AI_ESSAY_EXEMPLARS、AI_ASSISTANT_SUBJECTS、AI_ASSISTANT_SUBJECTS_PHOTO）：沒設定（或只有空白）時用預設值；去頭尾空白、轉小寫後只認
+ * 三態開關（AI_ASSISTANT、AI_ASSISTANT_PHOTO、AI_ESSAY_EXEMPLARS、AI_ASSISTANT_SUBJECTS、AI_ASSISTANT_SUBJECTS_PHOTO、AI_ZH_EXEMPLAR）：沒設定（或只有空白）時用預設值；去頭尾空白、轉小寫後只認
  * on、admin，其他任何值（off、true、打錯的字）一律當成關，不是 off 的另外寫 log。同 customEssaySwitch 的 fail closed：
  * 這是緊急關閉這些功能的唯一開關，打錯字時要偏向關。
  */
@@ -284,6 +293,7 @@ export function loadConfig(env: Env): AppConfig {
       assistantSubjects: featureModeSwitch('AI_ASSISTANT_SUBJECTS', env.AI_ASSISTANT_SUBJECTS),
       assistantSubjectsPhoto: featureModeSwitch('AI_ASSISTANT_SUBJECTS_PHOTO', env.AI_ASSISTANT_SUBJECTS_PHOTO),
       essayExemplars: featureModeSwitch('AI_ESSAY_EXEMPLARS', env.AI_ESSAY_EXEMPLARS),
+      zhExemplar: featureModeSwitch('AI_ZH_EXEMPLAR', env.AI_ZH_EXEMPLAR),
       limits: {
         pointsUserDay: num('AI_POINTS_USER_DAY', env.AI_POINTS_USER_DAY, D.AI_POINTS_USER_DAY),
         pointsUserMonth,

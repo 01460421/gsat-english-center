@@ -12,7 +12,9 @@
  *   8. 首頁的國文篩選與錯因統計；用同一份題目問另一部分（related_case_id）；
  *   9. 開關關著：沒有科目 chip、首頁只有一個按鈕；英文的送出內容不變；
  *  10. 手機 375／320 px 與桌機沒有水平捲動；
- *  11. 國文拍照：拍照前的點數確認（轉錄＋解析＝總點數）、確認畫面的字形題提醒與國文欄位；轉錄判定是英文時請學生換科目再拍。
+ *  11. 國文拍照：拍照前的點數確認（轉錄＋解析＝總點數）、確認畫面的字形題提醒與國文欄位；轉錄判定是英文時請學生換科目再拍；
+ *  12. 國寫範文（國寫範文設計 §8）：國寫指導完成 → 看一篇 AI 示範 → 行內確認 8 點 → 等待 → 結果（固定標籤、方法卡 chip、
+ *      沒有複製或列印）；失敗時退還說明與「再試一次」。國寫範文沒開時沒有按鈕。
  * 題目與解析都是本站自寫的範例（src/features/assistant/testing/zh.ts），不含任何官方解析或參考答案。
  */
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
@@ -22,6 +24,8 @@ import {
   FEATURES_ASSISTANT_ON,
   FEATURES_SUBJECTS_ON,
   FEATURES_SUBJECTS_PHOTO_ON,
+  FEATURES_ZH_EXEMPLAR_ON,
+  QUOTA,
   collectErrors,
   expectNoHorizontalOverflow,
   fakeAssist,
@@ -34,8 +38,14 @@ const APPROVED = signedInMe({ ai_status: 'approved' });
 
 const isMobile = (testInfo: TestInfo) => testInfo.project.name === 'mobile';
 
+/** 學習助手的額度多國寫範文今天的篇數（GET /api/ai/quota 的 assist.zh_exemplars；國寫範文開放時才有）。 */
+const QUOTA_ZH_EXEMPLAR = {
+  ...QUOTA,
+  assist: { reports: { day_used: 0, day_limit: 2 }, ocr: { day_used: 0, day_limit: 6 }, zh_exemplars: { day_used: 0, day_limit: 3 } },
+};
+
 async function setup(page: Page, options: FakeAssistOptions = {}, features = FEATURES_SUBJECTS_ON) {
-  const backend = await fakeBackend(page, { features, me: APPROVED });
+  const backend = await fakeBackend(page, { features, me: APPROVED, quota: QUOTA_ZH_EXEMPLAR });
   const assist = fakeAssist(backend, options);
   return { backend, assist };
 }
@@ -364,5 +374,71 @@ test('國文拍照：轉錄判定是英文題目 → 退點、刪照片，請學
   await page.getByRole('button', { name: '上傳並轉錄（3 點）' }).click();
   await expect(page.getByRole('alert')).toContainText('這張看起來是英文題目，請把科目改成「英文」再拍一次。點數已經退還，照片也已經刪除。');
   await expect(page.getByRole('button', { name: /用剛才的照片再轉錄一次/ })).toHaveCount(0);
+  expect(errors).toEqual([]);
+});
+
+/** 國寫題 → 國寫指導（貼上情意題，不附段落）→ 案例頁。 */
+async function writingCase(page: Page) {
+  await page.goto('/assistant/new?subject=chinese');
+  await paste(page, ZH_SAMPLE_QUESTIONS.writing);
+  await expect(page.getByTestId('zh-format-summary')).toHaveText('國寫指導（依題目判斷）');
+  await submitAndWait(page);
+  await expect(page.getByText('AI 不打分數，示範不是佳作。')).toBeVisible();
+}
+
+test('國寫範文：國寫指導 → 看一篇 AI 示範 → 確認 8 點 → 等待 → 結果（固定標籤、方法卡、要件對照；沒有複製或列印）', async ({ page }, testInfo) => {
+  const errors = collectErrors(page);
+  const { backend } = await setup(page, { pendingPolls: 2 }, FEATURES_ZH_EXEMPLAR_ON);
+  await writingCase(page);
+
+  const section = page.locator('section#zh-exemplar');
+  await expect(section.getByText('建議先照上面的架構自己寫一段，再對照示範。')).toBeVisible();
+  await section.getByRole('button', { name: '看一篇 AI 示範（8 點）' }).click();
+  const panel = section.getByRole('group', { name: '確認點數' });
+  await expect(panel.getByText('這次會用 8 點（今天還有 20 點）；沒有完成會全額退還。')).toBeVisible();
+  await expect(panel.getByText('示範是 AI 寫的，不是得獎作品，也不是官方佳作；請不要當成自己的作品繳交。')).toBeVisible();
+  await expectNoHorizontalOverflow(page, isMobile(testInfo));
+  await panel.getByRole('button', { name: '確定，用 8 點' }).click();
+
+  // 等待：進度列在範文那一塊；完成後出現固定標籤。
+  await expect(section.getByText('AI 正在寫示範…')).toBeVisible();
+  const label = section.getByTestId('zh-exemplar-label');
+  await expect(label).toHaveText('AI 示範，不是得獎作品');
+  expect(backend.callsTo('POST', '/api/assist/cases/case-1/zh-exemplar').map((c) => c.json)).toEqual([{}]);
+
+  // 結果：每段的段落作用、方法卡（按下展開要點）、這段怎麼寫；要件對照與自我檢查。
+  const first = section.locator('[data-zh-exemplar-paragraph="1"]');
+  await expect(first).toContainText('段落作用：首段：交代場景並點題');
+  await expect(first.getByText('題目的每個關鍵詞都要寫到。', { exact: false })).toBeHidden();
+  await first.getByRole('button', { name: '方法卡：審題' }).click();
+  await expect(first.getByText('題目的每個關鍵詞都要寫到。', { exact: false })).toBeVisible();
+  await expect(section.getByRole('heading', { name: '要件對照' })).toBeVisible();
+  await expect(section.getByText('→ 第 1 段「窗框的綠漆剝落了一角」')).toBeVisible();
+  await expect(section.getByTestId('zh-exemplar-totals')).toContainText('（一面 836 格）');
+  await expect(page.getByRole('button', { name: /複製|列印/ })).toHaveCount(0);
+  await expect(section.getByRole('button', { name: '再看一篇 AI 示範（8 點）' })).toBeVisible();
+  await expectNoHorizontalOverflow(page, isMobile(testInfo));
+  expect(errors).toEqual([]);
+});
+
+test('國寫範文：失敗時說明退還、「再試一次（8 點）」', async ({ page }) => {
+  const errors = collectErrors(page);
+  await setup(page, { zhExemplarFailure: 'timeout' }, FEATURES_ZH_EXEMPLAR_ON);
+  await writingCase(page);
+  const section = page.locator('section#zh-exemplar');
+  await section.getByRole('button', { name: '看一篇 AI 示範（8 點）' }).click();
+  await section.getByRole('button', { name: '確定，用 8 點' }).click();
+  await expect(section.getByTestId('zh-exemplar-failed')).toHaveText('AI 回應逾時，點數已經退還。');
+  await expect(section.getByRole('button', { name: '再試一次（8 點）' })).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test('國寫範文沒開（國文開著）：國寫指導之後沒有「看一篇 AI 示範」', async ({ page }) => {
+  const errors = collectErrors(page);
+  await setup(page);
+  await writingCase(page);
+  await expect(page.getByRole('heading', { name: /題目要你做的事/ })).toBeVisible();
+  await expect(page.getByRole('button', { name: /AI 示範/ })).toHaveCount(0);
+  await expect(page.locator('section#zh-exemplar')).toHaveCount(0);
   expect(errors).toEqual([]);
 });

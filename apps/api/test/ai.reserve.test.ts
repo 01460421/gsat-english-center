@@ -14,7 +14,7 @@ import { ESSAY_GROUP, STUDENT_ESSAY, call, makeEnv, seedUser } from './helpers/a
 const NOW = Date.parse('2026-10-08T04:00:00Z');
 
 /** 家族上限：只有作文篇數（學習助手的報告與轉錄不限；那兩個的測試在下面另外寫）。 */
-const caps = (essay: number) => ({ essay, assist_report: 0, assist_ocr: 0 });
+const caps = (essay: number) => ({ essay, assist_report: 0, assist_ocr: 0, assist_zh_exemplar: 0 });
 
 function input(db: TestD1, userId: number, over: Partial<ReserveInput> = {}): ReserveInput {
   const config = loadConfig(makeEnv({}, db));
@@ -136,13 +136,13 @@ describe('原子預扣（一句 SQL）', () => {
   it('等級與個別覆寫：試用 10 點／天；管理員不限點數與篇數；users.ai_points_day 覆寫', () => {
     const config = loadConfig(makeEnv());
     expect(userLimits(config, { role: 'student', aiTier: 'trial', aiPointsDay: null, aiPointsMonth: null })).toMatchObject({ capDay: 10, capMonth: 300 });
-    expect(userLimits(config, { role: 'student', aiTier: 'standard', aiPointsDay: 5, aiPointsMonth: null })).toMatchObject({ capDay: 5, familyCaps: { essay: 3, assist_report: 2, assist_ocr: 6 }, capConc: 2 });
+    expect(userLimits(config, { role: 'student', aiTier: 'standard', aiPointsDay: 5, aiPointsMonth: null })).toMatchObject({ capDay: 5, familyCaps: { essay: 3, assist_report: 2, assist_ocr: 6, assist_zh_exemplar: 3 }, capConc: 2 });
     expect(userLimits(config, { role: 'admin', aiTier: 'standard', aiPointsDay: null, aiPointsMonth: null })).toMatchObject({ capDay: UNLIMITED, familyCaps: caps(0), capConc: 2 });
   });
 });
 
 describe('學習助手的家族上限（報告每天 2 份、拍照轉錄 6 次；RESERVE_SQL 不改）', () => {
-  const limits = { capDay: 1000, capMonth: 10_000, familyCaps: { essay: 3, assist_report: 2, assist_ocr: 6 }, capConc: 9, unlimited: false };
+  const limits = { capDay: 1000, capMonth: 10_000, familyCaps: { essay: 3, assist_report: 2, assist_ocr: 6, assist_zh_exemplar: 3 }, capConc: 9, unlimited: false };
   const report = { task: 'assist_report' as const, family: ASSIST_REPORT_FAMILY, points: 10, limits };
   const ocr = { task: 'assist_ocr' as const, family: ASSIST_OCR_FAMILY, points: 2, limits };
 
@@ -184,7 +184,7 @@ describe('學習助手的家族上限（報告每天 2 份、拍照轉錄 6 次�
     const env = makeEnv();
     const admin = seedUser(env.DB);
     const adminLimits = userLimits(loadConfig(env), { role: 'admin', aiTier: 'standard', aiPointsDay: null, aiPointsMonth: null });
-    expect(adminLimits.familyCaps).toEqual({ essay: 0, assist_report: 0, assist_ocr: 0 });
+    expect(adminLimits.familyCaps).toEqual({ essay: 0, assist_report: 0, assist_ocr: 0, assist_zh_exemplar: 0 });
     for (let i = 0; i < 3; i += 1) {
       expect(await reserveOp(env.DB, input(env.DB, admin.id, { ...report, limits: adminLimits }))).toEqual({ ok: true });
       finishAll(env.DB);
