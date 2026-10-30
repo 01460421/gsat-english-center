@@ -1,0 +1,20 @@
+# 學習助手國文真模型評測的觸發檔（docs/design/assistant-subjects.md §11.4 第 1 點；.github/workflows/assistant-subjects-eval.yml 讀這個檔）。
+# 改這個檔、推到 claude/** 分支，就會用下面的參數跑評測（和合併後 Actions 頁面的 Run workflow 同一個 job、同一個預算上限）。
+# 只有改到這個檔的 push 才會跑完整評測；只改其他檔不會（改到國文的提示、schema 或後處理時另外自動只跑 A 組）。
+# 每一行是「名稱=值」，# 開頭是註解，不認得的名稱會讓 workflow 失敗（沒有花費）。
+#
+#   request           這次的說明（隨便寫；只改這一行也算改了這個檔，可以用來重跑同樣的參數）
+#   budget_usd        累計花費上限（美元，大於 0、不超過 40；含之前中斷的那幾次）。完整評測約 US$21（估計），建議 25。
+#   resume            true＝接著上次中斷的結果跑（已完成的題目不重新花錢）；false＝從頭開始
+#   allow_online_key  true＝沒有 ANTHROPIC_PARITY_API_KEY 時改用正式站的 ANTHROPIC_API_KEY（花費算進 online workspace 的每月上限）
+#   cases             只跑這些題目（題目 id 或組別，逗號分隔；空白＝全部）。組別：A 編譯探測、B 選擇、BS 重排版、BP 沒看過的題、
+#                     C 給答案、D 題組、E 簡答、F 國寫、G 追問、H 對抗、J 照片。A 組一定先跑，只寫 A 就是只跑 A 組。
+#                     只跑一部分時結論寫「部分」，不能拿來當上線門檻（上線 PR 要附完整評測的綠色 run）。
+#
+# 目前的值：S1 第一次推上去，只確認 workflow 跑得起來、五份輸出格式都編譯得過（只跑 A 組，上限 US$1；A 組只要約 US$0.1）。
+# 還沒有 dev 金鑰時用正式站的金鑰（只有 A 組的五次 64 tokens 呼叫）。完整評測（S3）把 cases 清空、budget_usd 改成 25。
+request=S1 第一次推上去：只跑 A 組，確認 workflow 與五份輸出格式（上限 US$1）
+budget_usd=1
+resume=false
+allow_online_key=true
+cases=A

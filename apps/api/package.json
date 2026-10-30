@@ -23,6 +23,8 @@
     "parity:assist": "vitest run --config vitest.parity.config.ts assist.parity",
     "preparity:exemplars": "node scripts/build-writing-prompts.mjs",
     "parity:exemplars": "vitest run --config vitest.parity.config.ts exemplars.parity",
+    "preparity:assist-subjects": "node scripts/build-writing-prompts.mjs && node scripts/build-assist-data.mjs",
+    "parity:assist-subjects": "vitest run --config vitest.parity.config.ts assist-subjects.parity",
     "db:migrations:create": "wrangler d1 migrations create gsat-english",
     "db:migrate:local": "wrangler d1 migrations apply gsat-english --local",
     "db:migrate:remote": "wrangler d1 migrations apply gsat-english --remote"

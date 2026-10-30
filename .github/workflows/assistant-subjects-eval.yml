@@ -1,0 +1,272 @@
+# 學習助手國文的真模型評測：開放國文之前必跑，上線 PR 要附綠色 run 的連結。設計：docs/design/assistant-subjects.md §11.2–§11.4。
+#
+# 為什麼要跑：假模型的單元測試測不出 Anthropic 端的限制（學習助手上線時，輸出格式的 grammar 太大，解析與報告全部被 400 拒收），
+# 也量不到國文真正的正確率、讀音與字形、成本與延遲。這支 workflow 用真模型跑 apps/api/test/parity/assist-subjects.parity.ts：
+#   A 組  zh_choice、zh_short、zh_writing、追問、轉錄各一份：完整的系統提示與 schema、最短的題目、max_tokens 64；
+#         回應不是 400 就通過；不過就停，其他組不跑（約 US$0.1）。
+#   B–J   選擇 58（另跑選項重排、題號改掉的重排版 58，門檻以重排版為準）、沒看過的題 12、給答案 10、題組 3、簡答 8、國寫 5、
+#         追問 6、對抗 6、照片 14（3 張手機實拍還沒拍的跳過）。題目集在 apps/api/test/fixtures/assist-zh-golden/。完整評測約 US$21（估計）。
+#   請求、送出與後處理都用正式站的同一套函式（組題目、建請求、client.ts 的送出與攤開、國文後處理與轉錄組裝）。
+#
+# 三種觸發方式（同一個 job、同一個 concurrency group、同樣的預算上限 US$40）：
+#   1. 代理的入口：改 apps/api/test/fixtures/assist-zh-golden/RUN（參數寫在檔頭）並推到 claude/** 分支。
+#      只有改到 RUN 檔的 push 才跑完整評測。推分支本來就需要 repo 的寫入權限，和手動觸發的權限相同。
+#   2. 自動只跑 A 組：push（main 或 claude/**）改到國文的提示、schema、組請求與後處理、它們引用的 shared 檔、client.ts（送出前攤開 $ref）。
+#      清單和 .github/scripts/assistant-subjects-eval-plan.mjs 的 PROBE_PATHS 相同（單元測試比對兩邊）。
+#   3. Actions 頁面的 Run workflow（workflow_dispatch；合併進 main 之後才有按鈕）。輸入同 RUN 檔。評測不依賴這個按鈕。
+# 不在一般 CI 裡跑（.github/workflows/ci.yml 的 npm test 只收 *.test.ts）；pull_request 不會觸發。
+#
+# 金鑰（GitHub repo secrets，同作文範文與學習助手的評測；這支 workflow 不需要任何新的 secret）：
+#   ANTHROPIC_PARITY_API_KEY  建議。Anthropic Console 的 dev workspace（自己的每月上限）裡的金鑰。
+#   ANTHROPIC_API_KEY         正式站的金鑰。完整評測只有上面那個沒設、而且 allow_online_key 是 true 才會用；
+#                             自動只跑 A 組時（64 tokens）沒有 dev 金鑰就直接用它。
+#   金鑰只放在「跑評測」那一步的環境變數；其他步驟只看「有沒有設」。log、Summary、artifact 都不印金鑰。
+#   國文的 D8 指紋（data/d8/zh-official.fp.json、zh-short.fp.json）不帶金鑰，評測也不需要另外的金鑰。
+#
+# 結果：
+#   - 執行結果：達標、只跑 A 組而且通過、只跑部分題目而且正常是綠的；不達標、A 組沒過、還沒跑完是紅的。
+#   - Summary：開頭一行是結論，第二行是字音、字形「最高可能」的上限要不要解除，第三行是國文拍照能不能開；下面是每一項門檻、
+#     原版與重排版的差距、各任務的冷快取每點美元、每一題的代碼、計數、花費與延遲。
+#   - artifact「assistant-subjects-eval」（保留 30 天）：assist-subjects.json 與 assist-subjects.md。
+#   - 快取：結果目錄每次都存起來（key 含程式、題目集與指紋的雜湊＋這次的執行編號；不含 RUN 檔，改 RUN 重跑可以接著上次的結果）。
+# 這個 repo 是公開的：log、Summary 與 artifact 只有代碼、計數、對錯、tokens、花費與延遲，不存模型寫的任何文字（萬一模型重現了受保護的
+# 官方文字，也不會進 artifact），也不放 Anthropic 的錯誤說明與模型名稱。題目集只有公開題本的題目文字、選擇題答案字母與選答率、
+# 本站自寫或改寫的題目；沒有學生資料，也沒有國綜非選擇題參考答案、評分原則、佳作或試卷解析（D8；官方簡答只以雜湊比對）。
+name: 學習助手國文真模型評測
+run-name: 學習助手國文真模型評測（${{ github.event_name == 'workflow_dispatch' && format('手動，累計上限 {0} 美元', inputs.budget_usd) || format('push 到 {0}', github.ref_name) }}）
+
+on:
+  workflow_dispatch:
+    inputs:
+      budget_usd:
+        description: 累計花費上限（美元，大於 0、不超過 40；含之前中斷的那幾次）
+        type: string
+        required: true
+        default: '25'
+      allow_online_key:
+        description: 沒有 ANTHROPIC_PARITY_API_KEY 時，改用正式站的 ANTHROPIC_API_KEY（花費算進 online workspace 的每月上限）
+        type: boolean
+        default: false
+      resume:
+        description: 接著上次中斷的結果跑（已完成的不重新花錢）
+        type: boolean
+        default: true
+      cases:
+        description: 只跑這些題目（題目 id 或組別 A、B、BS、BP、C、D、E、F、G、H、J，逗號分隔；空白＝全部）
+        type: string
+        required: false
+        default: ''
+  push:
+    branches: [main, 'claude/**']
+    paths:
+      - apps/api/test/fixtures/assist-zh-golden/RUN
+      - apps/api/test/fixtures/assist-prompts-zh.json
+      - apps/api/src/ai/prompts/assist-zh*.ts
+      - apps/api/src/ai/prompts/assist-common.ts
+      - apps/api/src/assist/subjects/**
+      - packages/shared/src/assist-zh.ts
+      - packages/shared/src/assist-subjects.ts
+      - packages/shared/src/assist.ts
+      - apps/api/src/ai/client.ts
+
+permissions:
+  contents: read
+
+# 同一時間只跑一次（兩次同時跑會重複花錢）。後到的排隊，不取消正在跑的。
+concurrency:
+  group: assistant-subjects-eval
+  cancel-in-progress: false
+
+jobs:
+  eval:
+    name: 評測
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    defaults:
+      run:
+        shell: bash
+    env:
+      RESULTS_DIR: apps/api/test/parity/.results
+    steps:
+      # 比對這次 push 改了哪些檔（新分支和 main 的分叉點比），所以要完整的歷史。
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      # 不需要金鑰：依觸發方式決定 mode（full／probe／none）與參數（dispatch 的輸入或 RUN 檔），不合法就在花錢之前失敗。
+      - name: 決定這次跑什麼
+        id: plan
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          GIT_REF: ${{ github.ref }}
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.sha }}
+          INPUT_BUDGET_USD: ${{ inputs.budget_usd }}
+          INPUT_RESUME: ${{ inputs.resume }}
+          INPUT_ALLOW_ONLINE_KEY: ${{ inputs.allow_online_key }}
+          INPUT_CASES: ${{ inputs.cases }}
+        run: |
+          changed="$RUNNER_TEMP/changed-files.txt"
+          : > "$changed"
+          if [ "$EVENT_NAME" = "push" ]; then
+            base="$BEFORE"
+            if [ -z "$base" ] || [ "$base" = "0000000000000000000000000000000000000000" ] || ! git cat-file -e "${base}^{commit}" 2>/dev/null; then
+              base="$(git merge-base origin/main "$AFTER" 2>/dev/null || true)"
+            fi
+            if [ -n "$base" ] && [ "$base" != "$AFTER" ]; then
+              git diff --name-only "$base" "$AFTER" > "$changed"
+            else
+              git show --name-only --pretty=format: "$AFTER" > "$changed"
+            fi
+            echo "這次 push 改到的檔（只列評測相關的）："
+            grep -E '^(apps/api/(test/fixtures/(assist-zh-golden/RUN|assist-prompts-zh\.json)|src/ai/prompts/assist-(zh[^/]*|common)\.ts|src/assist/subjects/.+|src/ai/client\.ts)|packages/shared/src/assist(-zh|-subjects)?\.ts)$' "$changed" || echo "（沒有）"
+          fi
+          CHANGED_FILES_PATH="$changed" node .github/scripts/assistant-subjects-eval-plan.mjs | tee -a "$GITHUB_OUTPUT"
+
+      - name: 檢查金鑰
+        id: key
+        if: steps.plan.outputs.mode != 'none'
+        env:
+          HAS_PARITY_KEY: ${{ secrets.ANTHROPIC_PARITY_API_KEY != '' }}
+          HAS_ONLINE_KEY: ${{ secrets.ANTHROPIC_API_KEY != '' }}
+          MODE: ${{ steps.plan.outputs.mode }}
+          ALLOW_ONLINE_KEY: ${{ steps.plan.outputs.allow_online_key }}
+          BUDGET: ${{ steps.plan.outputs.budget }}
+        run: |
+          use_online=false
+          if [ "$HAS_PARITY_KEY" = "true" ]; then
+            source="ANTHROPIC_PARITY_API_KEY（dev workspace）"
+          elif [ "$HAS_ONLINE_KEY" = "true" ] && { [ "$MODE" = "probe" ] || [ "$ALLOW_ONLINE_KEY" = "true" ]; }; then
+            source="ANTHROPIC_API_KEY（正式站的 online workspace）"
+            use_online=true
+            echo "::warning::沒有 ANTHROPIC_PARITY_API_KEY，這次用正式站的 ANTHROPIC_API_KEY：花費（最多 US\$$BUDGET）算進 online workspace 的每月上限。"
+          else
+            echo "::error::沒有可以用的金鑰，評測沒有執行（沒有金鑰時測試會略過，不能當成通過）。完整評測要 ANTHROPIC_PARITY_API_KEY，或 allow_online_key=true 再用正式站的金鑰（docs/SETUP-KEYS.md §8.2、§8.4）。"
+            exit 1
+          fi
+          echo "金鑰：$source；模式：$MODE；累計花費上限：US\$$BUDGET"
+          {
+            echo "source=$source"
+            echo "use_online=$use_online"
+          } >> "$GITHUB_OUTPUT"
+
+      # 會影響結果的程式與資料：提示、組請求與後處理、呼叫、設定預設值、題目集（RUN 檔以外）、D8 指紋與古文語料。
+      # RUN 檔不算（改 RUN 重跑要接著上次的結果）。
+      - name: 決定快取的 key
+        id: cache_key
+        if: steps.plan.outputs.mode == 'full'
+        run: echo "prefix=assistant-subjects-eval-${{ hashFiles('apps/api/src/**', '!apps/api/src/generated/**', 'apps/api/scripts/build-writing-prompts.mjs', 'apps/api/test/parity/assist-subjects.*', 'apps/api/test/fixtures/assist-zh-golden/**', '!apps/api/test/fixtures/assist-zh-golden/RUN', 'packages/shared/src/**', '!packages/shared/src/**/*.test.ts', 'data/d8/**') }}" >> "$GITHUB_OUTPUT"
+
+      - name: 安裝套件（依 package-lock.json）
+        if: steps.plan.outputs.mode != 'none'
+        run: npm ci
+
+      - name: 取回上次的結果
+        id: restore
+        if: steps.plan.outputs.mode == 'full' && steps.plan.outputs.resume == 'true'
+        uses: actions/cache/restore@v6
+        with:
+          path: apps/api/test/parity/.results
+          key: ${{ steps.cache_key.outputs.prefix }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: |
+            ${{ steps.cache_key.outputs.prefix }}-
+
+      # 不需要金鑰：建 D8 指紋（英文與國文）、古文語料與學習助手的目標資料（單元測試經由 src/app.ts 匯入 src/assist/facts.ts，
+      # 它讀 src/generated/assist-targets.json；這個檔不進 git，只有 build-assist-data.mjs 會寫），再跑達標判定、題目集與執行流程的
+      # 單元測試（假模型、不需要網路）。題目集對真實指紋的檢查在評測本身花錢之前做（同一支 casesProblems）。
+      - name: 準備資料、確認達標判定（不需要金鑰）
+        if: steps.plan.outputs.mode != 'none'
+        env:
+          MATCHED: ${{ steps.restore.outputs.cache-matched-key }}
+        run: |
+          rm -f "$RESULTS_DIR/assist-subjects.md"
+          if [ -f "$RESULTS_DIR/assist-subjects.json" ]; then echo "接著上次的結果跑（快取：$MATCHED）"; else echo "從頭開始"; fi
+          npm run prompts -w @gsat/api
+          cd apps/api
+          node scripts/build-assist-data.mjs
+          npx vitest run test/assist-subjects.parity-summary.test.ts
+
+      - name: 跑評測（真模型）
+        id: eval
+        if: steps.plan.outputs.mode != 'none'
+        timeout-minutes: 150
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_PARITY_API_KEY || (steps.key.outputs.use_online == 'true' && secrets.ANTHROPIC_API_KEY) || '' }}
+          PARITY_BUDGET_USD: ${{ steps.plan.outputs.budget }}
+          PARITY_TIME_LIMIT_MINUTES: '130'
+          ASSIST_SUBJECTS_EVAL_MODE: ${{ steps.plan.outputs.mode }}
+          ASSIST_SUBJECTS_EVAL_CASES: ${{ steps.plan.outputs.cases }}
+        run: |
+          if [ -z "$ANTHROPIC_API_KEY" ]; then
+            echo "::error::這一步拿不到金鑰（見「檢查金鑰」），不執行。"
+            exit 1
+          fi
+          npm run parity:assist-subjects -w @gsat/api
+
+      - name: 寫 Summary
+        id: results
+        if: always()
+        env:
+          MODE: ${{ steps.plan.outputs.mode }}
+          PLAN: ${{ steps.plan.outcome }}
+          KEY: ${{ steps.key.outcome }}
+          EVAL: ${{ steps.eval.outcome }}
+          KEY_SOURCE: ${{ steps.key.outputs.source }}
+          BUDGET: ${{ steps.plan.outputs.budget }}
+          RESUME: ${{ steps.plan.outputs.resume }}
+          CASES: ${{ steps.plan.outputs.cases }}
+          MATCHED: ${{ steps.restore.outputs.cache-matched-key }}
+        run: |
+          {
+            if [ "$MODE" = "none" ]; then
+              echo "# 學習助手國文真模型評測"
+              echo
+              echo "**沒有執行**：這次 push 沒有改到 RUN 檔（claude/** 分支）或國文的提示、schema、後處理，沒有花費。"
+            elif [ -f "$RESULTS_DIR/assist-subjects.md" ]; then
+              cat "$RESULTS_DIR/assist-subjects.md"
+            else
+              echo "# 學習助手國文真模型評測"
+              echo
+              if [ "$PLAN" != "success" ] || [ "$KEY" != "success" ]; then
+                echo "**沒有執行**：參數或金鑰有問題（見上方的錯誤訊息），沒有花費。"
+              elif [ "$EVAL" = "skipped" ]; then
+                echo "**沒有開始評測**：前面的步驟失敗（見失敗的那一步），沒有花費。"
+              else
+                echo "**中途停止**（逾時、被取消或程式錯誤），沒有產生彙總。已完成的題目有存起來：resume 保持 true，再推一次 RUN 會接著跑。"
+              fi
+            fi
+            echo
+            echo "---"
+            echo
+            echo "- 模式：${MODE:-（沒有決定）}；金鑰：${KEY_SOURCE:-（沒有）}；累計花費上限：US\$${BUDGET:-（無效）}；題目：${CASES:-全部}"
+            if [ "$MODE" = "full" ]; then
+              if [ "$RESUME" = "true" ]; then echo "- 接續上次的結果：${MATCHED:-沒有找到，從頭開始}"; else echo "- 從頭開始（resume=false）"; fi
+            fi
+            echo "- 國文還沒開放（AI_ASSISTANT_SUBJECTS=\"off\"）：上線 PR 要附完整評測的綠色 run 的連結；國文拍照另外看 J 組（docs/design/assistant-subjects.md §11.3、§12.3）。"
+          } >> "$GITHUB_STEP_SUMMARY"
+          if [ -f "$RESULTS_DIR/assist-subjects.json" ]; then echo "json=true" >> "$GITHUB_OUTPUT"; else echo "json=false" >> "$GITHUB_OUTPUT"; fi
+
+      - name: 存結果給下一次接著跑
+        if: always() && steps.plan.outputs.mode == 'full' && steps.results.outputs.json == 'true'
+        uses: actions/cache/save@v6
+        with:
+          path: apps/api/test/parity/.results
+          key: ${{ steps.cache_key.outputs.prefix }}-${{ github.run_id }}-${{ github.run_attempt }}
+
+      - name: 上傳結果（artifact）
+        if: always() && steps.results.outputs.json == 'true'
+        uses: actions/upload-artifact@v7
+        with:
+          name: assistant-subjects-eval
+          path: |
+            apps/api/test/parity/.results/assist-subjects.json
+            apps/api/test/parity/.results/assist-subjects.md
+          include-hidden-files: true
+          if-no-files-found: warn
+          overwrite: true
+          retention-days: 30

@@ -1814,31 +1814,34 @@ COALESCE(json_extract(ref_json, '$.subject'), 'english')
 **三種觸發，共用同一個 job、同一個 concurrency group（`assistant-subjects-eval`，不取消進行中的）、同樣的預算上限**：
 
 1. **代理的入口**：在 `claude/**` 分支改 `apps/api/test/fixtures/assist-zh-golden/RUN` 並推上去，就跑完整評測。
-   - `RUN` 檔的格式同作文範文：`request`、`budget_usd`、`resume`、`allow_online_key`、`cases`。
+   - `RUN` 檔的格式同作文範文：`request`、`budget_usd`、`resume`、`allow_online_key`、`cases`（題目 id，或組別 `A`、`B`、`BS`〔重排版〕、`BP`〔B′〕、`C`–`H`、`J`；只寫 `A`＝只跑 A 組）。
    - 只有改到 `RUN` 檔的 push 才跑完整評測。推分支本來就需要 repo 的寫入權限，和手動觸發相同。
    - **實作分支命名成 `claude/assistant-subjects`**（或把 commit 推到這個名稱），`RUN` 觸發才有效。
+   - S1 第一次推上去時，`RUN` 只跑 A 組、上限 US$1（確認 workflow 跑得起來、五份輸出格式都編譯得過；原本列的「A 組＋字音、字形、研判各 2 題、US$1.5」改到 S3 的第一次完整評測一起看）。
 2. **自動只跑 A 組**：在 `main` 或 `claude/**` 上，push 改到下列檔案時，只跑 A 組（約 US$0.1）。清單和 `.github/scripts/assistant-subjects-eval-plan.mjs` 的 `PROBE_PATHS` 相同，plan 腳本的單元測試比對兩邊。
    - `apps/api/test/fixtures/assist-prompts-zh.json`：國文五份提示與 schema 的雜湊；**任何影響送出內容的改動都必須更新它**（`assist.prompts.test.ts` 強制），所以這一條就涵蓋了提示、schema、`ZH_FIELD_LIMITS`、`ZH_SECTION_SPECS` 等所有來源。
    - `apps/api/src/ai/prompts/assist-zh*.ts`、`apps/api/src/ai/prompts/assist-common.ts`（國文段落改寫自它）
    - `apps/api/src/assist/subjects/**`
    - `packages/shared/src/assist-zh.ts`、`packages/shared/src/assist-subjects.ts`、`packages/shared/src/assist.ts`（`ASSIST_SAFETY_FLAGS`、`ASSIST_BLOCK_KINDS`、`ASSIST_OCR_OMITTED` 在這裡）
    - `apps/api/src/ai/client.ts`（送出與攤開）
-3. **`workflow_dispatch`**：合併進 main 之後，站主也可以在 Actions 頁按「Run workflow」。
+3. **`workflow_dispatch`**：合併進 main 之後，站主也可以在 Actions 頁按「Run workflow」（輸入同 `RUN` 檔）。評測本身不依賴這個按鈕。
 
 **金鑰**：
 - 優先用 `ANTHROPIC_PARITY_API_KEY`（dev workspace）。沒有時要 `allow_online_key=true` 才用正式站的金鑰；A 組（64 tokens）例外，直接退回正式站金鑰。金鑰只放在「跑評測」那一步。
-- 短答比對的金鑰（§5.7）：評測用 repo secret `ASSIST_D8_ZH_KEY`（和 Worker 的同一個值），只放在「跑評測」那一步。
+- **沒有其他金鑰**（站主決定，覆蓋 §5.7 與 §15 Q10 原本的「帶金鑰的雜湊」）：國文的 8 字窗口與短答 3 字組都用和英文 D8 相同的不帶金鑰雜湊（`d8-fingerprint.mjs` 的 cyrb53，加 `zh8:`／`zs3:` 網域前綴，7 位元組，排序去重後 base64），所以評測、Worker 與站主都不需要設定任何新的 secret。理由：受保護的國文來源本來就由官方公開，反推雜湊得不到任何沒公開的內容；我們守的是「本站不顯示、不重述」。
+- 完整評測一定要有正式的國文指紋（`npm run prompts` 打包；讀不到就在花錢之前失敗）。只跑 A 組時，指紋還沒接上也可以跑（用空的國文集合組題目，A 組只看輸出格式）。
 
 **工具**：
-- `apps/api/test/parity/assist-subjects.cases.ts`（案例、檢查與彙總，純函式；含注音逐字比對、錯字配對、重排版產生、冷快取換算）。
-- `apps/api/test/parity/assist-subjects.parity.ts`（跑評測）。
-- 兩者都用**正式的程式路徑**：`checkZhQuestion`、建案例、`workerSubject('chinese')` 的請求組法、`client.ts` 的送出與攤開、後處理、`checks` 計數。
-- `apps/api/test/assist-subjects.parity-summary.test.ts`：達標判定的單元測試，不需要金鑰。
+- `apps/api/test/parity/assist-subjects.cases.ts`（題目集、案例、逐題指標、門檻與彙總，純函式；含重排版產生、注音逐字比對、（錯字 → 正字）配對、研判逐句、提示洩漏、照片逐字錯誤率、冷快取換算）。
+- `apps/api/test/parity/assist-subjects.runner.ts`（一題的執行步驟；呼叫模型的函式由外面傳進來，單元測試傳假的）。
+- `apps/api/test/parity/assist-subjects.parity.ts`（跑評測）：先 A 組，再全部的解析、追問（沿用同一次執行的解析）、照片；解析可以同時跑幾題（`ASSIST_SUBJECTS_EVAL_CONCURRENCY`，預設 4，完整評測約 200 次呼叫）。花錢之前先用同一支 `casesProblems` 檢查每一題都組得出來。
+- 三者都用**正式的程式路徑**：`zhStudentQuestion`（`checkZhQuestion` 與輸入 D8）、`workerSubject('chinese')` 的請求組法、`client.ts` 的送出與攤開、`postprocessZhAnalysis`／`postprocessZhFollowup`／`assembleZhOcr`、`checks` 計數；內容失敗最多付費 2 次（同 `callWithPolicy`），科目不符照正式站以 `invalid_output` 退還（不算進每點成本）。
+- `apps/api/test/assist-subjects.parity-summary.test.ts`：plan 腳本、題目集（每一題都組得出來）、執行流程（假模型）與達標判定的單元測試，不需要金鑰、不連網路，跟著 `npm test` 跑。
 - `package.json` 加 `parity:assist-subjects`。
 
 **結果**：
-- 只有計數、旗標、答對與否、逐字比對的對錯、tokens、花費（實際與冷快取換算）、延遲。**不存模型輸出的全文**：repo 是公開的，萬一模型重現了受保護的文字，不能放進 artifact。
-- Summary 開頭一行是結論：達標、不達標或還沒跑完；第二行是字音、字形的上限要不要解除。
+- 只有計數、旗標、答對與否、逐字比對的對錯、tokens、花費（實際與冷快取換算）、延遲。**不存模型輸出的全文**：repo 是公開的，萬一模型重現了受保護的文字，不能放進 artifact。被 D8 隱藏的欄位只記路徑（要判斷是不是誤藏，由開發者在本機重跑同一題查看）。
+- Summary 開頭一行是結論：達標、不達標或還沒跑完；第二行是字音、字形的上限要不要解除；第三行是國文拍照能不能開（J 組；還有手機實拍沒拍時是「部分」，先維持 `off`）。
 - artifact `assistant-subjects-eval` 保留 30 天。結果可以續跑。
 
 **預算**：完整評測約 US$21（估計）。
