@@ -645,6 +645,11 @@ export interface CaseResult {
   scan: { exam_board: number; pinyin: number; mainland_rhetoric: number; simplified: number };
   /** 被 D8 隱藏的欄位路徑（只有路徑，人工到本機重跑查看是不是誤藏）。 */
   d8_fields: string[];
+  /**
+   * 被 D8 隱藏的欄位的模型原文，命中的字換成 □（受保護的文字不進結果）：看上下文判斷是誤藏（照題目改寫、通用說法）還是模型背出官方文字。
+   * windows 是命中的 8 字窗口數，run 是命中的最長連續字數（越長越像背誦）；by 是命中的比對（zh8：國文集合、style：評分句型、english：英文集合）。
+   */
+  d8_masked?: Array<{ field: string; text: string | null; windows: number; run: number; by: 'zh8' | 'style' | 'english' }>;
   /** 這一組的程式檢查（true＝通過）。 */
   checks: Record<string, boolean>;
   /** 跳過（照片還沒拍）。 */
@@ -1595,6 +1600,7 @@ export function summarize(file: ResultsFile, cases: readonly EvalCase[], opts: S
     `- 簡答的短答比對：官方題的示範被攔下 ${blocked(eOfficial)}／${partsOf(eOfficial)}；自編題被誤攔 ${blocked(eSite)}／${partsOf(eSite)}（${pctText(siteBlock)}${siteBlock !== null && siteBlock > C.siteShortFalseBlockFlag ? '，超過 10%：門檻改成 70%（§5.7）' : ''}）。`,
     `- 退還的操作（拒答、格式不符、科目不符、看不清）花費 US$${fmt(refunded, 3)}，不算進每點美元。`,
     `- 被 D8 隱藏的欄位（只有路徑；要看是不是誤藏，請開發者在本機用同一題重跑）：${done.filter((r) => r.d8_fields.length > 0).map((r) => `${r.key}：${r.d8_fields.join('、')}`).join('；') || '（沒有）'}`,
+    ...done.flatMap((r) => (r.d8_masked ?? []).map((m) => `  - ${r.key} ${m.field}（${m.by}；命中 ${m.windows} 個窗口，最長連續 ${m.run} 字）：${m.text ?? '（原文找不到這個欄位）'}`)),
     `- B′ 的答案只經開發者對照教育部辭典與公有領域原文確認，沒有請站主確認（§15 Q15）。`,
     '- **人工檢查**（開發者，寫在上線 PR）：成語題的出處沒有捏造（不確定時寫「出處待查」算合格）；111 #6 的格律說明只講被問的字、入聲有標明；113 #26、115 #14 的第 1 步引了題幹的定義。站主在開放後 3 天內抽 10 份解析（§11.3）。',
     '',

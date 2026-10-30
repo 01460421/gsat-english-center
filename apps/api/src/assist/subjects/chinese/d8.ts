@@ -130,6 +130,13 @@ export function zhQuestionWindows(question: Partial<Pick<AssistQuestionView, 'bl
   return out;
 }
 
+/** 評測工具用（看是不是誤藏）：這段文字命中國文集合的窗口，扣掉 allowed。呼叫端只能拿它來遮罩，不能輸出窗口本身。 */
+export function zhD8MatchedWindows(text: string, zh: ZhFingerprints, allowed?: ReadonlySet<string>): string[] {
+  return windowHits(text, zh)
+    .filter((w) => !allowed?.has(w.window))
+    .map((w) => w.window);
+}
+
 /** 輸出比對（§5.7）：這段文字有沒有任何一個 8 字窗口命中國文集合（先扣樣板）；allowed 裡的窗口（題目本身的，zhQuestionWindows）不算。 */
 export function zhD8Hit(text: string, zh: ZhFingerprints, allowed?: ReadonlySet<string>): boolean {
   return windowHits(text, zh).some((w) => !allowed?.has(w.window));

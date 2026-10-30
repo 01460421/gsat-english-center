@@ -37,7 +37,7 @@ import type { AppConfig } from '../../src/config';
 import { ApiError } from '../../src/errors';
 import type { AnalyzeRequestCase } from '../../src/assist/requests';
 import { chineseSubject } from '../../src/assist/subjects';
-import { zhShortAnswerHit, type ZhFingerprints } from '../../src/assist/subjects/chinese/d8';
+import { zhD8MatchedWindows, zhOfficialStyleHit, zhQuestionWindows, zhShortAnswerHit, type ZhFingerprints } from '../../src/assist/subjects/chinese/d8';
 import { zhAnalysisDigest } from '../../src/assist/subjects/chinese/digest';
 import { assembleZhOcr } from '../../src/assist/subjects/chinese/ocr';
 import { postprocessZhAnalysis, postprocessZhFollowup, zhSubjectMismatch } from '../../src/assist/subjects/chinese/output';
@@ -270,6 +270,48 @@ function passageOf(req: AnalyzeRequestCase): string {
   return (req.question.blocks ?? []).filter((b) => b.kind === 'passage').map((b) => b.text).join('\n');
 }
 
+/** 模型原始輸出裡某個欄位（路徑同後處理的 notice，例如 requirements[2].point_zh）的字串；找不到回 null。 */
+function rawAt(root: unknown, field: string): string | null {
+  let cur: unknown = root;
+  for (const part of field.split('.')) {
+    const m = /^([^[\]]+)((?:\[\d+\])*)$/.exec(part);
+    if (!m) return null;
+    cur = (cur as Record<string, unknown> | undefined)?.[m[1]!];
+    for (const idx of m[2]!.matchAll(/\[(\d+)\]/g)) cur = (cur as unknown[] | undefined)?.[Number(idx[1])];
+  }
+  return typeof cur === 'string' ? cur : null;
+}
+
+/**
+ * 被 D8 隱藏的欄位：模型原文（NFKC、去空白）裡命中的字換成 □，記命中窗口數與最長連續命中字數（看是誤藏還是背誦）。
+ * 受保護的文字不進結果：命中的字全部遮掉；國文集合沒命中時記下是哪一種比對（評分句型或英文集合）。
+ */
+function maskD8Fields(raw: unknown, fields: readonly string[], zh: ZhFingerprints, question: Parameters<typeof zhQuestionWindows>[0]): NonNullable<CaseResult['d8_masked']> {
+  const allowed = zhQuestionWindows(question, zh);
+  return fields.map((field) => {
+    const text = rawAt(raw, field);
+    if (text === null) return { field, text: null, windows: 0, run: 0, by: 'zh8' as const };
+    const norm = text.normalize('NFKC').replace(/\s+/gu, '');
+    const windows = zhD8MatchedWindows(text, zh, allowed);
+    const hit = new Array<boolean>([...norm].length).fill(false);
+    const chars = [...norm];
+    for (const w of windows) {
+      const wc = [...w];
+      for (let i = 0; i + wc.length <= chars.length; i += 1) {
+        if (wc.every((ch, j) => chars[i + j] === ch)) for (let j = 0; j < wc.length; j += 1) hit[i + j] = true;
+      }
+    }
+    let run = 0;
+    let cur = 0;
+    for (const h of hit) {
+      cur = h ? cur + 1 : 0;
+      run = Math.max(run, cur);
+    }
+    const by = windows.length > 0 ? ('zh8' as const) : zhOfficialStyleHit(text) ? ('style' as const) : ('english' as const);
+    return { field, text: chars.map((ch, i) => (hit[i] ? '□' : ch)).join(''), windows: windows.length, run, by };
+  });
+}
+
 /** 一份解析的全部指標（view 是後處理之後、raw 是模型原始輸出；兩者都不存）。 */
 function fillAnalysis(result: CaseResult, c: AnalyzeCase, b: BuiltAnalyze, raw: ZhAnalysisOutput, post: ReturnType<typeof postprocessZhAnalysis>, deps: Pick<RunDeps, 'zh'>): void {
   const view = post.view;
@@ -278,6 +320,7 @@ function fillAnalysis(result: CaseResult, c: AnalyzeCase, b: BuiltAnalyze, raw: 
   result.fields = { total: stats.total, over: stats.over };
   result.scan = viewScan(view);
   result.d8_fields = view.notices.filter((n) => n.kind === 'd8_hidden').map((n) => n.field);
+  if (result.d8_fields.length > 0) result.d8_masked = maskD8Fields(raw, result.d8_fields, deps.zh, b.req.question);
   result.quotes = quoteCounts(view, post.checks.quote_misses ?? 0);
   const prose = proseStrings(view);
   if (view.kind === 'zh_choice') {
