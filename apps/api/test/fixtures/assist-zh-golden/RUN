@@ -11,10 +11,10 @@
 #                     C 給答案、D 題組、E 簡答、F 國寫、G 追問、H 對抗、J 照片。A 組一定先跑，只寫 A 就是只跑 A 組。
 #                     只跑一部分時結論寫「部分」，不能拿來當上線門檻（上線 PR 要附完整評測的綠色 run）。
 #
-# 目前的值：S1 第一次推上去，只確認 workflow 跑得起來、五份輸出格式都編譯得過（只跑 A 組，上限 US$1；A 組只要約 US$0.1）。
-# 還沒有 dev 金鑰時用正式站的金鑰（只有 A 組的五次 64 tokens 呼叫）。完整評測（S3）把 cases 清空、budget_usd 改成 25。
-request=S1 第一次推上去：只跑 A 組，確認 workflow 與五份輸出格式（上限 US$1）
-budget_usd=1
-resume=false
+# 目前的值：S3 完整評測（cases 清空＝全部組別，上限 US$25，估計約 US$21）。A 組已在 S1 確認五份輸出格式都編譯得過（US$0.26）。
+# 還沒有 dev 金鑰，用正式站的金鑰（花費算進 online workspace 的每月上限）。中斷時 resume=true，改 request 這一行再推一次就接著跑。
+request=S3 完整評測：全部組別（A–J），審查修正（c8c5e5e）之後；上限 US$25，中斷時再推一次會接著跑
+budget_usd=25
+resume=true
 allow_online_key=true
-cases=A
+cases=
