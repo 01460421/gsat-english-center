@@ -7,25 +7,19 @@
 #        B–D 用本站自己的作文批改給每一篇範文打分；E、F 只做程式檢查（判成不是寫作題、不洩漏系統提示、注入旗標、照網站的字數）。
 #        G 組（B 組的 3 題用 effort low 比較，也批改）選填。完整評測約 US$11（估計）。
 #
-# 三種觸發方式（同一個 job、同一個 concurrency group、同樣的預算上限 US$100）：
-#   1. Actions 頁面的 Run workflow（workflow_dispatch）。輸入：
+# 只有一種觸發方式：站主在 Actions 頁面按 Run workflow（workflow_dispatch，預算上限 US$100）。輸入：
 #        budget_usd        累計花費上限（美元，大於 0、不超過 100；含之前中斷的那幾次）。預設 15。
 #        allow_online_key  沒有 ANTHROPIC_PARITY_API_KEY 時，才允許改用正式站的 ANTHROPIC_API_KEY。預設不允許。
 #        resume            接著上次中斷的結果跑（已完成的題目不重新花錢）。預設是。
 #        effort_sweep      另外跑 G 組（B 組的 3 題用 effort low，只給站主參考）。預設否。
 #        cases             只跑這些題目（題目 id 或組別字母，逗號分隔；空白＝B–F 全部）。只跑一部分時結論是「部分」，不是上線門檻。
-#   2. 代理的入口：改 apps/api/test/fixtures/exemplars-golden/RUN（參數同上，格式寫在檔頭）並推到 claude/** 分支。
-#      只有改到 RUN 檔的 push 才跑完整評測。推分支本來就需要 repo 的寫入權限，和手動觸發的權限相同。
-#   3. 自動只跑 A 組：push（main 或 claude/**）改到會改變送出的輸出格式或系統提示的檔：apps/api/src/exemplars/schema.ts、
-#      apps/api/src/ai/prompts/exemplars.ts，以及它們引用的 apps/api/src/ai/prompts/essay.ts（評分描述、safety_flag 的 enum）、
-#      apps/api/src/ai/prompts/common.ts、apps/api/src/ai/client.ts（送出前攤開 $ref）、packages/shared/src/exemplars.ts（層級、欄位上限）、
-#      packages/shared/src/bank.ts（亮點的 kind）。清單和 .github/scripts/exemplars-eval-plan.mjs 的 PROBE_PATHS 相同（單元測試比對兩邊）。
+#   原本推 RUN 檔或改到範文提示、輸出格式的 push 也會自動跑，站主 2026-10-30 決定不再自動花 API，push 觸發已拿掉
+#   （exemplars.parity-summary.test.ts 檢查沒有任何自動觸發）。RUN 檔留著當參數說明，改它不會觸發評測。
 # 不在一般 CI 裡跑（.github/workflows/ci.yml 的 npm test 只收 *.test.ts）；pull_request 不會觸發。
 #
 # 金鑰（GitHub repo secrets，同學習助手與自訂作文題目的評測）：
 #   ANTHROPIC_PARITY_API_KEY  建議。Claude Console 的 dev workspace（自己的每月上限）裡的金鑰。
-#   ANTHROPIC_API_KEY         正式站的金鑰。完整評測只有上面那個沒設、而且 allow_online_key 是 true 才會用；
-#                             只跑 A 組時（64 tokens）沒有 dev 金鑰就直接用它。
+#   ANTHROPIC_API_KEY         正式站的金鑰。只有上面那個沒設、而且 allow_online_key 是 true 才會用（只跑 A 組也一樣）。
 #   金鑰只放在「跑評測」那一步的環境變數；其他步驟只看「有沒有設」。log、Summary、artifact 都不印金鑰。
 #
 # 結果：

@@ -8,18 +8,14 @@
 #         追問 6、對抗 6、照片 14（3 張手機實拍還沒拍的跳過）。題目集在 apps/api/test/fixtures/assist-zh-golden/。完整評測約 US$21（估計）。
 #   請求、送出與後處理都用正式站的同一套函式（組題目、建請求、client.ts 的送出與攤開、國文後處理與轉錄組裝）。
 #
-# 三種觸發方式（同一個 job、同一個 concurrency group、同樣的預算上限 US$40）：
-#   1. 代理的入口：改 apps/api/test/fixtures/assist-zh-golden/RUN（參數寫在檔頭）並推到 claude/** 分支。
-#      只有改到 RUN 檔的 push 才跑完整評測。推分支本來就需要 repo 的寫入權限，和手動觸發的權限相同。
-#   2. 自動只跑 A 組：push（main 或 claude/**）改到國文的提示、schema、組請求與後處理、它們引用的 shared 檔、client.ts（送出前攤開 $ref）。
-#      清單和 .github/scripts/assistant-subjects-eval-plan.mjs 的 PROBE_PATHS 相同（單元測試比對兩邊）。
-#   3. Actions 頁面的 Run workflow（workflow_dispatch；合併進 main 之後才有按鈕）。輸入同 RUN 檔。評測不依賴這個按鈕。
+# 只有一種觸發方式：站主在 Actions 頁面按 Run workflow（workflow_dispatch，預算上限 US$40）。
+#   原本推 RUN 檔或改到國文提示的 push 也會自動跑，站主 2026-10-30 決定不再自動花 API，push 觸發已拿掉
+#   （assist-subjects.parity-summary.test.ts 檢查沒有任何自動觸發）。RUN 檔留著當參數說明，改它不會觸發評測。
 # 不在一般 CI 裡跑（.github/workflows/ci.yml 的 npm test 只收 *.test.ts）；pull_request 不會觸發。
 #
 # 金鑰（GitHub repo secrets，同作文範文與學習助手的評測；這支 workflow 不需要任何新的 secret）：
 #   ANTHROPIC_PARITY_API_KEY  建議。Anthropic Console 的 dev workspace（自己的每月上限）裡的金鑰。
-#   ANTHROPIC_API_KEY         正式站的金鑰。完整評測只有上面那個沒設、而且 allow_online_key 是 true 才會用；
-#                             自動只跑 A 組時（64 tokens）沒有 dev 金鑰就直接用它。
+#   ANTHROPIC_API_KEY         正式站的金鑰。只有上面那個沒設、而且 allow_online_key 是 true 才會用（只跑 A 組也一樣）。
 #   金鑰只放在「跑評測」那一步的環境變數；其他步驟只看「有沒有設」。log、Summary、artifact 都不印金鑰。
 #   國文的 D8 指紋（data/d8/zh-official.fp.json、zh-short.fp.json）不帶金鑰，評測也不需要另外的金鑰。
 #

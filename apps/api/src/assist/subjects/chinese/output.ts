@@ -523,8 +523,6 @@ function zhOptionChecks(view: ZhChoiceView, q: AssistQuestionView, c: ZhCleaner)
   for (const it of view.items) {
     const t = q.targets.find((x) => x.label === it.label);
     if (!t || it.diagnosis.summary_zh === ZH_MISSING_ITEM_TEXT) continue;
-    // 模型自己寫的確定程度（下面的檢查會再調低；字形題的「不確定」要看模型自己的判斷）。
-    const modelCertainty = it.answer_key?.from === 'ai' ? it.answer_key.certainty : null;
     const combos = it.choice_mode === 'judge' ? judgeCombos(t) : null;
     const student = it.student_answer;
     const keyLetters = it.answer_key ? [...it.answer_key.text] : [];
@@ -593,9 +591,9 @@ function zhOptionChecks(view: ZhChoiceView, q: AssistQuestionView, c: ZhCleaner)
       const gaps = letterOptions.some((o) => o.verdict === null);
       const rows = view.cards.filter((card) => card.kind === 'form' && (card.for_label === it.label || (card.for_label === '' && view.items.length === 1))).reduce((sum, card) => sum + card.rows.length, 0);
       if ((gaps ? counted > wrongSentences : counted !== wrongSentences) || rows < wrongSentences) {
-        // 模型自己已經標「不確定」（懷疑錯字被輸入法改正了）又數不合：選項裡找不到的「正字」沒辦法核對，可能是把寫對的詞說成錯的
-        // （評測 H-autocorrected），這種列拿掉，只留「錯字可能被自動改正」的提醒，不教錯的字形。
-        if (modelCertainty === 'unsure') {
+        // 數不合（錯字可能被輸入法或轉錄改正了，或模型自己數錯）：題目裡找不到的「正字」沒辦法核對，可能是把寫對的詞說成錯的
+        // （評測 H-autocorrected：模型不一定先標「不確定」），這種列一律拿掉，只留「錯字可能被自動改正」的提醒，不教錯的字形。
+        {
           // 比對時拿掉底線標記、引號與空白（題目常把被問的字寫成 素「昧」平生）。
           const plain = (s: string) => zhStripMarks(s).replace(/[「」『』\s]/gu, '');
           const optionText = plain([questionText, ...Object.values(t.options ?? {})].join('\n'));

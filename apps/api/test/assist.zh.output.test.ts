@@ -729,7 +729,7 @@ describe('D8 國文版（§5.7）', () => {
     expect(r.tainted).toBe(true);
   });
 
-  it('字形題：模型自己標「不確定」又數不合（懷疑錯字被自動改正）→ 選項裡找不到的「正字」那幾列拿掉（form_rows_unverified）；模型確定時不拿', () => {
+  it('字形題：數不合（錯字可能被自動改正）→ 題目裡找不到的「正字」那幾列拿掉（form_rows_unverified），不論模型標的確定程度；數得合時不拿', () => {
     const q = question(zhBlocks(['question', null, ZH_FORM_SINGLE]));
     const unsure = zhChoiceOutput([{ label: '', answer: 'C', options: ['A', 'B', 'C', 'D'], yes: ['A', 'C'] }]);
     unsure.items[0]!.answer.certainty = 'unsure';
@@ -741,10 +741,17 @@ describe('D8 國文版（§5.7）', () => {
     expect(r.checks.form_count_mismatch).toBe(1);
     expect(choice(r).items[0]!.warnings).toContain('form_count_mismatch');
 
+    // 模型標「確定」也一樣拿（評測裡模型不一定先標「不確定」）。
     const sure = zhChoiceOutput([{ label: '', answer: 'C', options: ['A', 'B', 'C', 'D'], yes: ['A', 'C'] }]);
     const r2 = analyze(sure, q, { zh });
-    expect(choice(r2).cards.find((c) => c.kind === 'form')!.rows).toHaveLength(3);
-    expect(r2.checks.form_rows_unverified).toBeUndefined();
+    expect(choice(r2).cards.find((c) => c.kind === 'form')!.rows).toHaveLength(0);
+    expect(r2.checks.form_rows_unverified).toBe(3);
+
+    // 數得合（3 句有錯字、1 句全對）：正字不在題目裡是正常的，不拿。
+    const ok = zhChoiceOutput([{ label: '', answer: 'C', options: ['A', 'B', 'C', 'D'], yes: ['C'] }]);
+    const r3 = analyze(ok, q, { zh });
+    expect(choice(r3).cards.find((c) => c.kind === 'form')!.rows).toHaveLength(3);
+    expect(r3.checks.form_rows_unverified).toBeUndefined();
   });
 
   it('短答比對命中（誘餌答案）：拿掉示範、要點換成固定說明（short_answer_hidden）；英文案例不受國文集合影響', () => {
