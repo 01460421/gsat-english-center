@@ -729,6 +729,24 @@ describe('D8 國文版（§5.7）', () => {
     expect(r.tainted).toBe(true);
   });
 
+  it('字形題：模型自己標「不確定」又數不合（懷疑錯字被自動改正）→ 選項裡找不到的「正字」那幾列拿掉（form_rows_unverified）；模型確定時不拿', () => {
+    const q = question(zhBlocks(['question', null, ZH_FORM_SINGLE]));
+    const unsure = zhChoiceOutput([{ label: '', answer: 'C', options: ['A', 'B', 'C', 'D'], yes: ['A', 'C'] }]);
+    unsure.items[0]!.answer.certainty = 'unsure';
+    unsure.cards[0]!.rows[0] = { head: '我們素「昧」平生', a: '素昧平生', b: '昧：不明白', note: '' };
+    const r = analyze(unsure, q, { zh });
+    const form = choice(r).cards.find((c) => c.kind === 'form')!;
+    expect(form.rows.map((row) => row.a)).toEqual(['素昧平生']);
+    expect(r.checks.form_rows_unverified).toBe(2);
+    expect(r.checks.form_count_mismatch).toBe(1);
+    expect(choice(r).items[0]!.warnings).toContain('form_count_mismatch');
+
+    const sure = zhChoiceOutput([{ label: '', answer: 'C', options: ['A', 'B', 'C', 'D'], yes: ['A', 'C'] }]);
+    const r2 = analyze(sure, q, { zh });
+    expect(choice(r2).cards.find((c) => c.kind === 'form')!.rows).toHaveLength(3);
+    expect(r2.checks.form_rows_unverified).toBeUndefined();
+  });
+
   it('短答比對命中（誘餌答案）：拿掉示範、要點換成固定說明（short_answer_hidden）；英文案例不受國文集合影響', () => {
     const q = question(zhBlocks(['passage', null, ZH_SHORT_PASSAGE], ['question', '34', ZH_SHORT_QUESTION]), { format: 'short', target_labels: ['34'] });
     const out = zhShortOutput(['34']);

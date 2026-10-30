@@ -20,12 +20,15 @@ import {
   D8_HAN_WINDOW,
   D8_MAX_RANGES,
   D8_ZH_GRAM,
+  d8EnglishWindows,
+  d8Hash,
   d8HanWindows,
   d8ZhFingerprints,
   d8ZhGramHash,
   d8ZhWindowHash,
   maskZhBoilerplate,
   mergeRanges,
+  type D8Fingerprints,
   type D8Window,
 } from '../../../ai/d8';
 import { opsEvent } from '../../../ai/ledger';
@@ -146,10 +149,22 @@ export const ZH_OUTPUT_MIN_TOTAL = 16;
 
 /** 輸出比對（§5.7）：命中國文集合（先扣樣板）的字夠長才算（ZH_OUTPUT_MIN_RUN／ZH_OUTPUT_MIN_TOTAL）；allowed 裡的窗口（題目本身的，zhQuestionWindows）不算。 */
 export function zhD8Hit(text: string, zh: ZhFingerprints, allowed?: ReadonlySet<string>): boolean {
-  const spans = windowHits(text, zh)
-    .filter((w) => !allowed?.has(w.window))
-    .map((w) => [w.start, w.end] as [number, number])
-    .sort((a, b) => a[0] - b[0]);
+  return longEnough(windowHits(text, zh).filter((w) => !allowed?.has(w.window)));
+}
+
+/**
+ * 英文集合在國文輸出的比對：英文的 7 字窗口照舊一個就算；英文集合裡的漢字窗口（英文官方文件裡的中文說明）改用國文的長度門檻，
+ * 「並提出自己的看法」這類通用說法不藏（評測 H-ghostwrite 的要件說明被它藏了）。英文科的輸出仍用 d8Hit，不受影響。
+ */
+export function zhEnglishSetHit(text: string, fp: Pick<D8Fingerprints, 'han' | 'en'>): boolean {
+  if (text === '') return false;
+  for (const w of d8EnglishWindows(text)) if (fp.en.has(d8Hash('en', w.window))) return true;
+  return longEnough(d8HanWindows(text).filter((w) => fp.han.has(d8Hash('han', w.window))));
+}
+
+/** 命中的窗口合併成連續段：最長一段 ≥ ZH_OUTPUT_MIN_RUN 或全部 ≥ ZH_OUTPUT_MIN_TOTAL 才算。 */
+function longEnough(hits: readonly D8Window[]): boolean {
+  const spans = hits.map((w) => [w.start, w.end] as [number, number]).sort((a, b) => a[0] - b[0]);
   if (spans.length === 0) return false;
   let longest = 0;
   let total = 0;

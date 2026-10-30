@@ -12,7 +12,9 @@ import * as zmjs from '../../../packages/shared/scripts/d8-zh-fingerprint.mjs';
 import { buildZhClassics, buildZhD8Bundle, ZH_CLASSICS_MAX_BYTES } from '../scripts/build-writing-prompts.mjs';
 import fpJson from '../src/generated/d8-fingerprints.json';
 import {
+  d8EnglishWindows,
   d8Fingerprints,
+  d8Hash,
   d8HanWindows,
   d8ZhFingerprints,
   d8ZhGramHash,
@@ -22,7 +24,7 @@ import {
   parseZhFingerprints,
   resetD8ForTests,
 } from '../src/ai/d8';
-import { zhD8Hit, zhOfficialMaterialHits, zhOfficialStyleHit, zhQuestionWindows, zhShortAnswerContainment, zhShortAnswerHit } from '../src/assist/subjects/chinese/d8';
+import { zhD8Hit, zhEnglishSetHit, zhOfficialMaterialHits, zhOfficialStyleHit, zhQuestionWindows, zhShortAnswerContainment, zhShortAnswerHit } from '../src/assist/subjects/chinese/d8';
 import { ZH_DECOY_OFFICIAL, ZH_DECOY_SHORT_ANSWER, ZH_SHORT_PASSAGE, zhDecoyFingerprints } from './helpers/zh';
 
 beforeEach(() => resetD8ForTests());
@@ -150,6 +152,18 @@ describe('比對（subjects/chinese/d8.ts）', () => {
     // 國寫附的段落也算題目本身；沒有命中的題目回空集合。
     expect(zhQuestionWindows({ blocks: [{ kind: 'question', label: null, text: '請寫一篇文章' }], draft: { text: inQuestion, target: 'q2' } }, zh).size).toBe(7);
     expect(zhQuestionWindows({ blocks: [{ kind: 'question', label: null, text: '請寫一篇文章' }], draft: null }, zh).size).toBe(0);
+  });
+
+  it('英文集合在國文輸出：英文 7 字窗口一個就算；英文集合裡的漢字窗口要夠長（同國文的門檻）', () => {
+    const han = '請在文章中舉例並提出自己的看法說明理由';
+    const fp = {
+      han: new Set(d8HanWindows(han).map((w) => d8Hash('han', w.window))),
+      en: new Set(d8EnglishWindows('students should give one clear example and explain why').map((w) => d8Hash('en', w.window))),
+    };
+    expect(zhEnglishSetHit('問題(二)須舉例,並提出自己的看法', fp)).toBe(false);
+    expect(zhEnglishSetHit(`抄錄：${han}`, fp)).toBe(true);
+    expect(zhEnglishSetHit('原文 students should give one clear example and explain why 請注意', fp)).toBe(true);
+    expect(zhEnglishSetHit('', fp)).toBe(false);
   });
 
   it('異體字碼也對得上（比對的副本套 ZH_TW_FORM_MAP；原文不改）', () => {

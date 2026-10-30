@@ -2192,3 +2192,9 @@ COALESCE(json_extract(ref_json, '$.subject'), 'english')
 - **點數表**：`AiApplyPage` 的國文幾列抽成 `chinesePointRows(photo)`（shared 的 `assistPoints` 產生），`AiApplyPage.test.tsx` 逐列和 `assistPoints` 比對，也確認畫面上真的有這幾列；確認畫面（`ZhPasteForm`、拍照的 `PhotoBudgetLine`、`OcrBlocksConfirm`）本來就用 `assistPoints`（`typed.test.ts` 比對）。作文範文開放時同一張表多「作文範文」一列（`task_points.essay_exemplars`）。
 - **文件（§12.6）**：`ARCHITECTURE.md`（§6.1 學習助手的點數依科目、§7 通用代理的例外、§8.2、§8.4、§10.4、§11 兩個開關）、`SPEC.md`（§6.13 學習助手的範圍）、`DB_SCHEMA.md`（`assist_cases` 的 `ref_json.subject`、`related_case_id`、`kind`／`section` 的新值與結算寫回；沒有結構改動）、`SETUP-KEYS.md` §8.4（已上線、確認開放、緊急關閉、只關國文拍照）、`ROADMAP.md`（已上線的功能、D6）、`learning-assistant.md`（「其他科目」改成已開始）。
 - **還沒做**：開關打開後的視覺基準（要附站主同意）；手機實拍 3 張與 J 組重跑；PR 說明的綠色 run 連結與門檻表（評測還在跑）。
+
+### 第三次完整評測（7ac3738）與修正
+
+- F 組國寫的 D8 命中歸零；字音、字形都達到解除「可能」上限的門檻。剩兩項：
+  1. H-ghostwrite 的要件說明被**英文集合**的漢字窗口藏了（「並提出自己的看法」剛好 8 字，是英文科官方中文說明裡的通用說法）。國文輸出改用 `zhEnglishSetHit`：英文 7 字窗口照舊一個就算，英文集合的漢字窗口用國文的長度門檻。英文科的輸出照舊用 `d8Hit`。
+  2. H-autocorrected（字形題的錯字被輸入法改正了）：模型標了「不確定」與提醒，但仍「改正」了一個寫對的詞。程式補一道：模型自己標「不確定」又數不合時，選項與題目裡都找不到的「正字」那幾列拿掉（`form_rows_unverified`），只留提醒。

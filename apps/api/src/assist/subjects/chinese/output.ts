@@ -95,11 +95,10 @@ import {
   type ZhVerdict,
   type ZhWritingView,
 } from '@gsat/shared';
-import { d8Hit } from '../../../ai/d8';
 import { FILTERED_PLACEHOLDER, replaceExamBoard } from '../../../ai/filter';
 import type { ZhAnalysisPostprocessed, ZhFollowupContext, ZhFollowupPostprocessed, ZhOutputContext } from '../types';
 import { zhCheckClassics } from './classics';
-import { zhD8Hit, zhOfficialStyleHit, zhQuestionWindows, zhShortAnswerHit } from './d8';
+import { zhD8Hit, zhEnglishSetHit, zhOfficialStyleHit, zhQuestionWindows, zhShortAnswerHit } from './d8';
 import { zhCheckQuotes, zhLocateQuote } from './quotes';
 import type { ZhChoiceOutput, ZhFollowupOutput, ZhShortOutput, ZhWritingOutput } from './schemas';
 import { zhChoiceItemVerdict, zhRefreshChoiceItem, zhShortPartVerdict } from './settle';
@@ -182,7 +181,7 @@ class ZhCleaner {
       this.notice('filtered', field);
       return text;
     }
-    if (d8Hit(text, this.ctx.fp) || zhD8Hit(text, this.ctx.zh, this.questionWindows) || zhOfficialStyleHit(text)) {
+    if (zhEnglishSetHit(text, this.ctx.fp) || zhD8Hit(text, this.ctx.zh, this.questionWindows) || zhOfficialStyleHit(text)) {
       this.meta.d8_hidden += 1;
       this.count('d8_hidden');
       this.notice('d8_hidden', field);
@@ -524,6 +523,8 @@ function zhOptionChecks(view: ZhChoiceView, q: AssistQuestionView, c: ZhCleaner)
   for (const it of view.items) {
     const t = q.targets.find((x) => x.label === it.label);
     if (!t || it.diagnosis.summary_zh === ZH_MISSING_ITEM_TEXT) continue;
+    // 模型自己寫的確定程度（下面的檢查會再調低；字形題的「不確定」要看模型自己的判斷）。
+    const modelCertainty = it.answer_key?.from === 'ai' ? it.answer_key.certainty : null;
     const combos = it.choice_mode === 'judge' ? judgeCombos(t) : null;
     const student = it.student_answer;
     const keyLetters = it.answer_key ? [...it.answer_key.text] : [];
@@ -592,6 +593,19 @@ function zhOptionChecks(view: ZhChoiceView, q: AssistQuestionView, c: ZhCleaner)
       const gaps = letterOptions.some((o) => o.verdict === null);
       const rows = view.cards.filter((card) => card.kind === 'form' && (card.for_label === it.label || (card.for_label === '' && view.items.length === 1))).reduce((sum, card) => sum + card.rows.length, 0);
       if ((gaps ? counted > wrongSentences : counted !== wrongSentences) || rows < wrongSentences) {
+        // 模型自己已經標「不確定」（懷疑錯字被輸入法改正了）又數不合：選項裡找不到的「正字」沒辦法核對，可能是把寫對的詞說成錯的
+        // （評測 H-autocorrected），這種列拿掉，只留「錯字可能被自動改正」的提醒，不教錯的字形。
+        if (modelCertainty === 'unsure') {
+          // 比對時拿掉底線標記、引號與空白（題目常把被問的字寫成 素「昧」平生）。
+          const plain = (s: string) => zhStripMarks(s).replace(/[「」『』\s]/gu, '');
+          const optionText = plain([questionText, ...Object.values(t.options ?? {})].join('\n'));
+          for (const card of view.cards) {
+            if (card.kind !== 'form' || !(card.for_label === it.label || (card.for_label === '' && view.items.length === 1))) continue;
+            const kept = card.rows.filter((r) => plain(r.a) === '' || optionText.includes(plain(r.a)));
+            if (kept.length < card.rows.length) c.count('form_rows_unverified', card.rows.length - kept.length);
+            card.rows = kept;
+          }
+        }
         addWarning(it, 'form_count_mismatch');
         lowerCertainty(it, 'unsure');
         c.count('form_count_mismatch');

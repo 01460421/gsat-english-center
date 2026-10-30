@@ -2378,6 +2378,7 @@ export const ZH_CHECK_COUNTERS = [
   'inconsistent',
   'multi_suspect',
   'form_count_mismatch',
+  'form_rows_unverified',
   'stem_rule_missing',
   'notes_unmatched',
   'classic_misquote',
