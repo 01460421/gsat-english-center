@@ -127,14 +127,14 @@ AI_EFFORT_CHAT = "low"
 # 作文範文（docs/design/model-essays.md §7.5；輸入或選一個作文題目，AI 寫出基礎版、穩健版、頂標版三篇範文）。
 # 只認 "on"、"admin"，其他任何值都當成關（fail closed）：
 #   off（關）／admin（只有管理員帳號能用，緊急時查問題用；公開的 /api/features 不透露）／on（開放給已核准的學生）
-# 目前是 "on"（2026-10-30 上線，和學習助手國文同一個 PR；三份說明同一次升版）：上線前的完整真模型評測（設計文件 §9.6）
-#   在這個 PR 推上去時還在跑，結果與 run 連結補在設計文件 §12.7 與 PR 說明。改了範文的提示、輸出格式、層級規格或後處理，
-#   上線後也要重跑評測（docs/SETUP-KEYS.md §8.5）。
+# 目前是 "admin"（2026-10-30）：上線前的完整真模型評測（設計文件 §9.6）沒有達標（三個層級的分數帶與層級差、輸出長度），
+#   範文先只開給管理員；說明與條款已經在 2026-10-30 那一次升版寫進作文範文，修好、評測達標後改成 "on" 不必再升版。
+#   改了範文的提示、輸出格式、層級規格或後處理，要重跑評測（docs/SETUP-KEYS.md §8.5）。
 # 緊急關閉：先在 /admin 按「AI 全站暫停」止血，再把這一行改成 "off" 推到 main（只留給管理員查問題：改成 "admin"）。
 #   已經排隊的照常完成；學生仍然可以看與刪除之前的範文。
 # 這一行是例外：src/config.ts 的程式預設固定是 off（[vars] 漏設時偏向關），不用跟著改（test/skeleton.test.ts）。
 # 不要在 Cloudflare 儀表板改成 Text 變數：下一次部署會被這裡的 [vars] 蓋回來。
-AI_ESSAY_EXEMPLARS = "on"
+AI_ESSAY_EXEMPLARS = "admin"
 # 作文範文的 effort（模型一律用 AI_MODEL_DEFAULT）。
 AI_EFFORT_EXEMPLARS = "medium"
 
