@@ -7,7 +7,8 @@
  *   requireZhFingerprints   routes.ts 的國文寫入端點在**預扣之前**呼叫（讀不到 → 503 not_configured，fail closed）；
  *                           consumer 的國文解析、追問、轉錄也呼叫（讀不到 → 退還 internal）。
  *   zhOfficialMaterialHits  subjects/chinese/question.ts 的輸入檢查、ocr.ts 的隱藏：同一區塊 ≥ 2 個不同窗口才算（先扣樣板）。
- *   zhD8Hit                 國文後處理（output.ts）的每一個說明欄位：任一窗口命中就換成固定說明。
+ *   zhD8Hit                 國文後處理（output.ts）的每一個說明欄位：任一窗口命中就換成固定說明（題目本身的窗口不算）；
+ *                           只有國寫（解析與追問）用長度門檻（lenient，ZH_OUTPUT_MIN_RUN／ZH_OUTPUT_MIN_TOTAL）。
  *   zhOfficialStyleHit      同上：模型寫出評分原則的句型（滿分答案、部分給分答案、等級加分數區間、三等六級的評分、佳作評語）。
  *   zhShortAnswerHit        短答逐子題比對：只用在簡答題（zh_short）的示範、要點、檢核，國寫問題（一）的示範與要點，以及簡答案例的
  *                           追問。不需要先辨識是哪一題：任一子題的 3 字組集合有 ≥ 門檻（0.6）出現在這一欄就算命中。
@@ -141,25 +142,36 @@ export function zhD8MatchedWindows(text: string, zh: ZhFingerprints, allowed?: R
 }
 
 /**
- * 輸出比對的門檻（評測 2026-10-30）：命中的字連成一段 ≥ 12 字，或全部命中的字 ≥ 16 字才算。模型照題目改寫要求（「指出兩件活動在……的不同」）
- * 時，常和官方解說同一句改寫共用一小段（實測 1 段 10 字），那是誤藏；背出評分原則、參考答案或解說會留下長段或多段。
+ * 國寫輸出的門檻（評測 2026-10-30）：命中的字連成一段 ≥ 12 字，或全部命中的字 ≥ 16 字才算。模型照題目改寫國寫的要求（「指出兩件活動在……
+ * 的不同」）時，常和官方解說同一句改寫共用一小段（實測 1 段 10 字），那是誤藏；背出評分原則或解說會留下長段或多段。
+ * 只用在國寫：簡答的官方參考答案多半是一句 8–11 字的短句，用這個門檻會整句漏出來（上線前審查），所以選擇、簡答與它們的追問照舊一個窗口就藏。
  */
 export const ZH_OUTPUT_MIN_RUN = 12;
 export const ZH_OUTPUT_MIN_TOTAL = 16;
 
-/** 輸出比對（§5.7）：命中國文集合（先扣樣板）的字夠長才算（ZH_OUTPUT_MIN_RUN／ZH_OUTPUT_MIN_TOTAL）；allowed 裡的窗口（題目本身的，zhQuestionWindows）不算。 */
-export function zhD8Hit(text: string, zh: ZhFingerprints, allowed?: ReadonlySet<string>): boolean {
-  return longEnough(windowHits(text, zh).filter((w) => !allowed?.has(w.window)));
+/** 輸出比對的寬嚴：lenient 只給國寫的解析與追問（見 ZH_OUTPUT_MIN_RUN）；其他一律任一窗口就算。 */
+export interface ZhD8Options {
+  lenient?: boolean;
 }
 
 /**
- * 英文集合在國文輸出的比對：英文的 7 字窗口照舊一個就算；英文集合裡的漢字窗口（英文官方文件裡的中文說明）改用國文的長度門檻，
- * 「並提出自己的看法」這類通用說法不藏（評測 H-ghostwrite 的要件說明被它藏了）。英文科的輸出仍用 d8Hit，不受影響。
+ * 輸出比對（§5.7）：命中國文集合（先扣樣板）的窗口，扣掉 allowed（題目本身的，zhQuestionWindows）之後任一個就算；
+ * lenient 時要夠長才算（ZH_OUTPUT_MIN_RUN／ZH_OUTPUT_MIN_TOTAL）。
  */
-export function zhEnglishSetHit(text: string, fp: Pick<D8Fingerprints, 'han' | 'en'>): boolean {
+export function zhD8Hit(text: string, zh: ZhFingerprints, allowed?: ReadonlySet<string>, opts: ZhD8Options = {}): boolean {
+  const hits = windowHits(text, zh).filter((w) => !allowed?.has(w.window));
+  return opts.lenient ? longEnough(hits) : hits.length > 0;
+}
+
+/**
+ * 英文集合在國文輸出的比對：英文的 7 字窗口一個就算；英文集合裡的漢字窗口（英文官方文件裡的中文說明）也是一個就算，只有國寫（lenient）
+ * 改用國文的長度門檻，「並提出自己的看法」這類通用說法不藏（評測 H-ghostwrite 的要件說明被它藏了）。英文科的輸出仍用 d8Hit，不受影響。
+ */
+export function zhEnglishSetHit(text: string, fp: Pick<D8Fingerprints, 'han' | 'en'>, opts: ZhD8Options = {}): boolean {
   if (text === '') return false;
   for (const w of d8EnglishWindows(text)) if (fp.en.has(d8Hash('en', w.window))) return true;
-  return longEnough(d8HanWindows(text).filter((w) => fp.han.has(d8Hash('han', w.window))));
+  const han = d8HanWindows(text).filter((w) => fp.han.has(d8Hash('han', w.window)));
+  return opts.lenient ? longEnough(han) : han.length > 0;
 }
 
 /** 命中的窗口合併成連續段：最長一段 ≥ ZH_OUTPUT_MIN_RUN 或全部 ≥ ZH_OUTPUT_MIN_TOTAL 才算。 */

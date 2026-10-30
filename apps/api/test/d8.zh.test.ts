@@ -121,11 +121,15 @@ describe('比對（subjects/chinese/d8.ts）', () => {
   it('輸入：同一區塊 ≥ 2 個不同窗口才算；位置是學生文字裡的位置', () => {
     const one = `題目：${ZH_DECOY_OFFICIAL.slice(0, 8)}。`;
     expect(zhOfficialMaterialHits(zh, one)).toEqual([]);
-    // 輸出只有 1 個窗口（8 字）不算：要連成 ≥ 12 字或總共 ≥ 16 字（ZH_OUTPUT_MIN_RUN／ZH_OUTPUT_MIN_TOTAL）。
-    expect(zhD8Hit(one, zh)).toBe(false);
-    expect(zhD8Hit(`題目：${ZH_DECOY_OFFICIAL.slice(0, 12)}。`, zh)).toBe(true);
-    expect(zhD8Hit(`題目：${ZH_DECOY_OFFICIAL.slice(0, 11)}。`, zh)).toBe(false);
-    expect(zhD8Hit(`甲：${ZH_DECOY_OFFICIAL.slice(0, 8)}。乙：${ZH_DECOY_OFFICIAL.slice(20, 28)}。`, zh)).toBe(true);
+    // 輸出（選擇、簡答）：1 個窗口（8 字）就算。
+    expect(zhD8Hit(one, zh)).toBe(true);
+    expect(zhD8Hit('題目：完全沒有命中的句子。', zh)).toBe(false);
+    // 國寫（lenient）：要連成 ≥ 12 字或總共 ≥ 16 字（ZH_OUTPUT_MIN_RUN／ZH_OUTPUT_MIN_TOTAL）。
+    const lenient = { lenient: true };
+    expect(zhD8Hit(one, zh, undefined, lenient)).toBe(false);
+    expect(zhD8Hit(`題目：${ZH_DECOY_OFFICIAL.slice(0, 12)}。`, zh, undefined, lenient)).toBe(true);
+    expect(zhD8Hit(`題目：${ZH_DECOY_OFFICIAL.slice(0, 11)}。`, zh, undefined, lenient)).toBe(false);
+    expect(zhD8Hit(`甲：${ZH_DECOY_OFFICIAL.slice(0, 8)}。乙：${ZH_DECOY_OFFICIAL.slice(20, 28)}。`, zh, undefined, lenient)).toBe(true);
     const text = `下面是我抄的講義：${ZH_DECOY_OFFICIAL}。`;
     const ranges = zhOfficialMaterialHits(zh, text);
     expect(ranges).toHaveLength(1);
@@ -154,15 +158,17 @@ describe('比對（subjects/chinese/d8.ts）', () => {
     expect(zhQuestionWindows({ blocks: [{ kind: 'question', label: null, text: '請寫一篇文章' }], draft: null }, zh).size).toBe(0);
   });
 
-  it('英文集合在國文輸出：英文 7 字窗口一個就算；英文集合裡的漢字窗口要夠長（同國文的門檻）', () => {
+  it('英文集合在國文輸出：英文 7 字窗口一個就算；英文集合裡的漢字窗口也是一個就算，國寫（lenient）要夠長', () => {
     const han = '請在文章中舉例並提出自己的看法說明理由';
     const fp = {
       han: new Set(d8HanWindows(han).map((w) => d8Hash('han', w.window))),
       en: new Set(d8EnglishWindows('students should give one clear example and explain why').map((w) => d8Hash('en', w.window))),
     };
-    expect(zhEnglishSetHit('問題(二)須舉例,並提出自己的看法', fp)).toBe(false);
-    expect(zhEnglishSetHit(`抄錄：${han}`, fp)).toBe(true);
+    expect(zhEnglishSetHit('問題(二)須舉例,並提出自己的看法', fp)).toBe(true);
+    expect(zhEnglishSetHit('問題(二)須舉例,並提出自己的看法', fp, { lenient: true })).toBe(false);
+    expect(zhEnglishSetHit(`抄錄：${han}`, fp, { lenient: true })).toBe(true);
     expect(zhEnglishSetHit('原文 students should give one clear example and explain why 請注意', fp)).toBe(true);
+    expect(zhEnglishSetHit('原文 students should give one clear example and explain why 請注意', fp, { lenient: true })).toBe(true);
     expect(zhEnglishSetHit('', fp)).toBe(false);
   });
 

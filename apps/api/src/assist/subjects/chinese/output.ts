@@ -20,7 +20,7 @@
  *   12 字數與不代寫：簡答示範超過字數拿掉（demo_removed）、語譯題示範留空、學生答案字數與抄錄檢查、國寫示範規則、問題（一）示範字數、
  *      等第句、連續漢字上限。
  *   13 台灣標準（standards.ts；簡體字 ≥ 3 個時回 retry 要求重寫一次）。
- *   14 D8：每一個說明欄位比對英文與國文的 8 字窗口（d8.ts 的 zhD8Hit）與評分原則的句型（zhOfficialStyleHit）；簡答的示範、要點、
+ *   14 D8：每一個說明欄位比對英文與國文的 8 字窗口（d8.ts 的 zhD8Hit；題目本身的窗口不算，國寫的解析與追問用長度門檻）與評分原則的句型（zhOfficialStyleHit）；簡答的示範、要點、
  *      檢核與國寫問題（一）的示範、要點另外跑短答比對（zhShortAnswerHit）。命中都算進 meta.d8_hidden（consumer 寫 assist_d8_output）。
  *   15 長度：每一欄依 ZH_FIELD_LIMITS 截斷、卡片列數依 ZH_CARD_ROW_MAX 與合計上限截斷。
  *   16 checks 計數：寫進 turn 的 meta_json（給評測與監看，不顯示）。
@@ -98,7 +98,7 @@ import {
 import { FILTERED_PLACEHOLDER, replaceExamBoard } from '../../../ai/filter';
 import type { ZhAnalysisPostprocessed, ZhFollowupContext, ZhFollowupPostprocessed, ZhOutputContext } from '../types';
 import { zhCheckClassics } from './classics';
-import { zhD8Hit, zhEnglishSetHit, zhOfficialStyleHit, zhQuestionWindows, zhShortAnswerHit } from './d8';
+import { zhD8Hit, zhEnglishSetHit, zhOfficialStyleHit, zhQuestionWindows, zhShortAnswerHit, type ZhD8Options } from './d8';
 import { zhCheckQuotes, zhLocateQuote } from './quotes';
 import type { ZhChoiceOutput, ZhFollowupOutput, ZhShortOutput, ZhWritingOutput } from './schemas';
 import { zhChoiceItemVerdict, zhRefreshChoiceItem, zhShortPartVerdict } from './settle';
@@ -144,12 +144,15 @@ class ZhCleaner {
 
   /** 題目本身命中國文集合的窗口：模型照題目引用時不算 D8 命中（zhQuestionWindows）。 */
   readonly questionWindows: ReadonlySet<string>;
+  /** D8 的寬嚴（d8.ts 的 ZhD8Options）：只有國寫案例（解析與追問）用長度門檻，選擇、簡答一個窗口就藏。 */
+  readonly d8: ZhD8Options;
 
   constructor(
     readonly kind: ZhOutputKind,
-    readonly ctx: Pick<ZhOutputContext, 'filter' | 'fp' | 'zh'> & { question?: ZhOutputContext['question'] },
+    readonly ctx: Pick<ZhOutputContext, 'filter' | 'fp' | 'zh' | 'kind'> & { question?: ZhOutputContext['question'] },
   ) {
     this.questionWindows = ctx.question ? zhQuestionWindows(ctx.question, ctx.zh) : new Set();
+    this.d8 = { lenient: ctx.kind === 'zh_writing' };
   }
 
   count(counter: ZhCheckCounter, n = 1): void {
@@ -181,7 +184,7 @@ class ZhCleaner {
       this.notice('filtered', field);
       return text;
     }
-    if (zhEnglishSetHit(text, this.ctx.fp) || zhD8Hit(text, this.ctx.zh, this.questionWindows) || zhOfficialStyleHit(text)) {
+    if (zhEnglishSetHit(text, this.ctx.fp, this.d8) || zhD8Hit(text, this.ctx.zh, this.questionWindows, this.d8) || zhOfficialStyleHit(text)) {
       this.meta.d8_hidden += 1;
       this.count('d8_hidden');
       this.notice('d8_hidden', field);

@@ -714,7 +714,7 @@ describe('台灣標準（§5.6）', () => {
 describe('D8 國文版（§5.7）', () => {
   const zh = zhDecoyFingerprints();
 
-  it('說明欄位命中 ≥ 12 字的連續段或評分原則句型 → 換成固定說明、算進 d8_hidden；只共用 10 字的改寫不藏', () => {
+  it('選擇、簡答：說明欄位任一個窗口命中（題目本身的不算）或評分原則句型 → 換成固定說明、算進 d8_hidden', () => {
     const q = question(zhBlocks(['question', null, ZH_FORM_SINGLE]));
     const out = zhChoiceOutput([{ label: '', answer: 'C', options: ['A', 'B', 'C', 'D'], yes: ['C'] }]);
     out.passage_zh = `這段話：${ZH_DECOY_OFFICIAL.slice(0, 14)}。`;
@@ -722,11 +722,32 @@ describe('D8 國文版（§5.7）', () => {
     out.score_tips_zh = ['滿分答案要寫出兩個要點。', '錯字和正字成對記。'];
     const r = analyze(out, q, { zh });
     expect(choice(r).passage_zh).toBe(ZH_D8_HIDDEN_TEXT);
-    expect(choice(r).method.steps_zh[0]).toBe(`只共用一小段：${ZH_DECOY_OFFICIAL.slice(20, 30)}。`);
+    expect(choice(r).method.steps_zh[0]).toBe(ZH_D8_HIDDEN_TEXT);
     expect(choice(r).score_tips_zh).toEqual([ZH_D8_HIDDEN_TEXT, '錯字和正字成對記。']);
-    expect(r.meta.d8_hidden).toBe(2);
-    expect(r.checks.d8_hidden).toBe(2);
+    expect(r.meta.d8_hidden).toBe(3);
+    expect(r.checks.d8_hidden).toBe(3);
     expect(r.tainted).toBe(true);
+
+    // 簡答：官方參考答案多半是一句 8–11 字的短句；放在提示或框架裡（不跑短答比對的欄位）也要藏（上線前審查）。
+    const sq = question(zhBlocks(['passage', null, ZH_SHORT_PASSAGE], ['question', '34', ZH_SHORT_QUESTION]), { format: 'short', target_labels: ['34'] });
+    const so = zhShortOutput(['34']);
+    so.parts[0]!.frame_zh = `可以寫：${ZH_DECOY_OFFICIAL.slice(30, 40)}。`;
+    const sr = analyze(so, sq, { zh });
+    expect(short(sr).parts[0]!.frame_zh).toBe(ZH_D8_HIDDEN_TEXT);
+    expect(sr.meta.d8_hidden).toBe(1);
+  });
+
+  it('國寫：命中的字連成 ≥ 12 字或總共 ≥ 16 字才藏；只共用 10 字的改寫不藏（照題目改寫要件時的誤藏）', () => {
+    const q = question(zhBlocks(['question', null, WRITING_REASON]), { format: 'writing' });
+    const out = zhWritingOutput({
+      section: 'zh_writing_reason',
+      tested_zh: `只共用一小段：${ZH_DECOY_OFFICIAL.slice(20, 30)}。`,
+      checklist_zh: [`這段話：${ZH_DECOY_OFFICIAL.slice(0, 12)}。`, '有沒有回扣題目？'],
+    });
+    const r = analyze(out, q, { zh });
+    expect(writing(r).tested_zh).toBe(`只共用一小段：${ZH_DECOY_OFFICIAL.slice(20, 30)}。`);
+    expect(writing(r).checklist_zh).toEqual([ZH_D8_HIDDEN_TEXT, '有沒有回扣題目？']);
+    expect(r.meta.d8_hidden).toBe(1);
   });
 
   it('字形題：數不合（錯字可能被自動改正）→ 題目裡找不到的「正字」那幾列拿掉（form_rows_unverified），不論模型標的確定程度；數得合時不拿', () => {
@@ -799,6 +820,17 @@ describe('國文追問（§3.5）', () => {
     expect(sound.view.reply_zh).toBe('想想「枇」的聲旁。');
     expect(sound.checks.hint_leak_removed).toBe(1);
     expect(postprocessZhFollowup(zhFollowupOutput({ reply_zh: '想想「枇」的聲旁。它念ㄆㄧˊ。', mode_used: 'hint' }), ctx).view.reply_zh).toBe('想想「枇」的聲旁。它念ㄆㄧˊ。');
+  });
+
+  it('追問的 D8 寬嚴跟著案例：簡答、選擇案例一個窗口就藏，國寫案例要夠長才藏', () => {
+    const zh = zhDecoyFingerprints();
+    const reply = `可以這樣想：${ZH_DECOY_OFFICIAL.slice(20, 30)}。`;
+    const base = { mode: 'explain' as const, filter: new OutputFilter(), fp: FP, zh, answers: {} };
+    const sq = question(zhBlocks(['passage', null, ZH_SHORT_PASSAGE], ['question', '34', ZH_SHORT_QUESTION]), { format: 'short', target_labels: ['34'] });
+    expect(postprocessZhFollowup(zhFollowupOutput({ reply_zh: reply }), { ...base, kind: 'zh_short', question: sq }).view.reply_zh).toBe(ZH_D8_HIDDEN_TEXT);
+    expect(postprocessZhFollowup(zhFollowupOutput({ reply_zh: reply }), { ...base, kind: 'zh_choice', question: q }).view.reply_zh).toBe(ZH_D8_HIDDEN_TEXT);
+    const wq = question(zhBlocks(['question', null, WRITING_REASON]), { format: 'writing' });
+    expect(postprocessZhFollowup(zhFollowupOutput({ reply_zh: reply }), { ...base, kind: 'zh_writing', question: wq }).view.reply_zh).toBe(reply);
   });
 
   it('講解模式可以說答案；簡答案例的追問跑短答比對', () => {
