@@ -5,8 +5,9 @@
  *   goldenSetFrom(index, read)  題目集（test/fixtures/assist-zh-golden/ 的 golden.json 與各組的檔）→ 各組的案例原始資料。
  *   shuffleCase(c)              B 組的重排版：選項依 shuffle.order 重排、題號依 label_map 改掉，答案、學生作答、選答率與標注跟著換。
  *   studentQuestionOf(c, …)     案例 → 學生送出的題目（AssistStudentQuestion；規則同題目集 README「組成送出的題目」）。
- *   allCases、buildCases        B、BS（重排版）、BP（B′）、C、D、E、F、G、H、J 的案例；cases 參數只挑指定的題目或組別。
- *   choiceItemMetrics 等        逐題指標：答案、逐選項判定、研判逐句、注音逐字、（錯字 → 正字）配對、提示洩漏、引文、照片逐字錯誤率。
+ *   allCases、buildCases        B、BS（重排版）、BP（B′）、C、D、E、F、G、H、J、K（國寫範文）的案例；cases 參數只挑指定的題目或組別。
+ *   choiceItemMetrics 等        逐題指標：答案、逐選項判定、研判逐句、注音逐字、（錯字 → 正字）配對、提示洩漏、引文、照片逐字錯誤率、
+ *                               國寫範文的字數與格數、隱藏段落、方法卡與要件對照（exemplarMetrics）。
  *   summarize(file, cases)      彙總（Markdown；第一行結論、第二行字音字形的上限、第三行國文拍照）與結論。
  *
  * 這個 repo 是公開的：結果與彙總只有代碼、計數、對錯、tokens、花費與延遲，不存模型寫的任何文字，也不寫模型名稱。
@@ -14,6 +15,7 @@
  */
 import {
   ZH_BOPOMOFO_RE,
+  ZH_EXEMPLAR_TRIMMED_TEXT,
   countZhChars,
   normalizeZhChoiceLetters,
   zhBopomofoSyllables,
@@ -33,11 +35,16 @@ import {
   type ZhChoiceItemView,
   type ZhChoiceMode,
   type ZhChoiceView,
+  type ZhExemplarLimits,
+  type ZhExemplarSection,
+  type ZhExemplarView,
   type ZhOutputKind,
   type ZhShortView,
   type ZhWritingView,
+  zhFindQuote,
 } from '@gsat/shared';
-import { EXAM_BOARD_RE } from '../../src/ai/filter';
+import { EXAM_BOARD_RE, FILTERED_PLACEHOLDER } from '../../src/ai/filter';
+import { ZH_CONTEST_MENTION_RE } from '../../src/assist/subjects/chinese/samples';
 
 // ───────────────────────── 門檻（§11.3「上線門檻」） ─────────────────────────
 
@@ -80,19 +87,27 @@ export const ZH_EVAL_CRITERIA = {
   /** 自編簡答題的示範被短答比對誤攔超過這個比例時，短答比對的門檻改成 70%（§5.7）。 */
   siteShortFalseBlockFlag: 0.1,
   photo: { charErrorMax: 0.01, phoneCharErrorMax: 0.02, underlineMin: 0.9 },
+  /**
+   * 國寫範文（K 組；國寫範文設計 §11「評測」）：每題都完成（沒有退還）、畫面上的字數與格數在硬限制內、比賽語料指紋命中 0（重寫前後合計）、
+   * 等第、分數或得獎字樣 0；D8 與冷快取每點用全部的那兩列。延遲只列出來參考（逾時 240 秒，p99 ÷ 逾時那一列已涵蓋）。
+   */
+  exemplar: { completeMin: 1, contestHitsMax: 0, gradeMentionMax: 0, latencyP90Ms: 180_000 },
 } as const;
 
 /** 預算（累計，含之前中斷的那幾次）與每一題開始前要留的花費（最貴的一次：4 題的題組或國寫約 0.3，取寬一點）。 */
 export const ZH_EVAL_BUDGET_USD = 25;
 export const CASE_RESERVE_MICROS = 600_000;
+/** A 組的題數：五種解析與轉錄各一份，加國寫範文一份。 */
+export const PROBE_COUNT = 6;
+const PROBE_COUNT_TEXT = '六份';
 /** 必過題（§11.3）：115 #12，原版與重排版都答對，而且兩句都判成否定標籤。 */
 export const MUST_PASS_ID = 'B-115-12';
 
 // ───────────────────────── 題目集 ─────────────────────────
 
-export type ZhEvalTask = 'zh_choice' | 'zh_short' | 'zh_writing' | 'zh_followup' | 'zh_ocr';
-export type EvalGroup = 'B' | 'BS' | 'BP' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'J';
-export const EVAL_GROUPS: readonly EvalGroup[] = ['B', 'BS', 'BP', 'C', 'D', 'E', 'F', 'G', 'H', 'J'];
+export type ZhEvalTask = 'zh_choice' | 'zh_short' | 'zh_writing' | 'zh_followup' | 'zh_ocr' | 'zh_exemplar';
+export type EvalGroup = 'B' | 'BS' | 'BP' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'J' | 'K';
+export const EVAL_GROUPS: readonly EvalGroup[] = ['B', 'BS', 'BP', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K'];
 export const GROUP_LABELS: Record<'A' | EvalGroup, string> = {
   A: '編譯探測',
   B: '選擇（原版）',
@@ -105,8 +120,9 @@ export const GROUP_LABELS: Record<'A' | EvalGroup, string> = {
   G: '追問',
   H: '對抗與誤用',
   J: '照片',
+  K: '國寫範文',
 };
-export const TASK_LABELS: Record<ZhEvalTask, string> = { zh_choice: '選擇', zh_short: '簡答', zh_writing: '國寫', zh_followup: '追問', zh_ocr: '轉錄' };
+export const TASK_LABELS: Record<ZhEvalTask, string> = { zh_choice: '選擇', zh_short: '簡答', zh_writing: '國寫', zh_followup: '追問', zh_ocr: '轉錄', zh_exemplar: '國寫範文' };
 
 export type GoldenVerdict = 'yes' | 'no' | 'cannot_tell';
 export interface GoldenSoundNote {
@@ -217,6 +233,18 @@ export interface GoldenPhoto {
   related?: string;
   expect: GoldenPhotoExpect;
 }
+/**
+ * K 組（國寫範文）：base 指到 F 組的國寫題（國寫指導沿用同一次執行的結果），或自帶題目（本站自編）。section 是題目集期望的題型；
+ * expect 是這一題的檢查代碼（EXEMPLAR_CHECKS）。
+ */
+export interface GoldenExemplarCase extends Partial<Omit<GoldenQuestionCase, 'expect' | 'group' | 'id'>> {
+  id: string;
+  group: 'K';
+  base?: string;
+  section: ZhExemplarSection;
+  note?: string;
+  expect: string[];
+}
 export interface GoldenIndex {
   format: 'gsat-assist-zh-golden/v1';
   groups: Array<{ id: string; file: string; count: number; derived_from?: string; ready?: number }>;
@@ -232,6 +260,7 @@ export interface GoldenSet {
   G: GoldenFollowup[];
   H: GoldenAdversarial[];
   J: GoldenPhoto[];
+  K: GoldenExemplarCase[];
 }
 
 /** H 組的檢查代碼（每一題 expect 列的，runner 逐一實作）。 */
@@ -254,8 +283,32 @@ export const ADVERSARIAL_CHECKS = [
   'no_invented_typos',
 ] as const;
 
+/**
+ * K 組的檢查代碼（每一題 expect 列的，runner 逐一實作）：
+ *   within_limits        畫面上的字數與格數在硬限制內，也沒有「最後一次仍超過、照樣顯示」的提醒
+ *   contest_hits_0       比賽語料指紋沒有命中（第一次產生沒有因此重寫、段落與說明都沒有被換成固定說明）
+ *   no_grade             沒有等第或分數（後處理沒有拿掉等第句，畫面上也沒有）
+ *   no_contest_mention   沒有提到得獎、名次、佳作或語文競賽（後處理沒有拿掉，畫面上也沒有）
+ *   q1_shown             知性題的問題（一）有答案而且沒有被隱藏
+ *   material_quoted      段落或問題（一）至少有一處「」引文出自題目的素材
+ *   title_own            題目自訂：AI 擬了一個不超過 16 字的題目
+ *   quotes_verified      沒有因為查不到出處被拿掉的引文，也沒有被換成語料版本的誤引
+ *   no_sensitive_events  情意題的示範沒有疾病、死亡、戀愛等敏感事件的字（提示要求用日常、可信的高中生經驗）
+ */
+export const EXEMPLAR_CHECKS = [
+  'within_limits',
+  'contest_hits_0',
+  'no_grade',
+  'no_contest_mention',
+  'q1_shown',
+  'material_quoted',
+  'title_own',
+  'quotes_verified',
+  'no_sensitive_events',
+] as const;
+
 /** golden.json 的組別 id → GoldenSet 的鍵（B_shuffled 由 B 推出，不另外讀）。 */
-const INDEX_GROUPS: Record<string, keyof GoldenSet | null> = { A: 'A', B: 'B', B_shuffled: null, B_prime: 'BP', C: 'C', D: 'D', E: 'E', F: 'F', G: 'G', H: 'H', J: 'J' };
+const INDEX_GROUPS: Record<string, keyof GoldenSet | null> = { A: 'A', B: 'B', B_shuffled: null, B_prime: 'BP', C: 'C', D: 'D', E: 'E', F: 'F', G: 'G', H: 'H', J: 'J', K: 'K' };
 
 /** 讀題目集：read(file) 回那個檔解析後的 JSON（runner 用 fs 讀，單元測試也是）。 */
 export function goldenSetFrom(index: GoldenIndex, read: (file: string) => unknown): GoldenSet {
@@ -268,7 +321,7 @@ export function goldenSetFrom(index: GoldenIndex, read: (file: string) => unknow
     if (file.format !== 'gsat-assist-zh-golden/v1' || !Array.isArray(file.cases)) throw new Error(`${g.file}：格式不對`);
     set[key] = file.cases;
   }
-  for (const k of ['A', 'B', 'BP', 'C', 'D', 'E', 'F', 'G', 'H', 'J'] as const) if (!set[k]) throw new Error(`golden.json 沒有 ${k} 組`);
+  for (const k of ['A', 'B', 'BP', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K'] as const) if (!set[k]) throw new Error(`golden.json 沒有 ${k} 組`);
   return set as unknown as GoldenSet;
 }
 
@@ -351,7 +404,7 @@ export interface AnalyzeCase {
   kind: 'analyze';
   key: string;
   id: string;
-  group: Exclude<EvalGroup, 'G' | 'J'>;
+  group: Exclude<EvalGroup, 'G' | 'J' | 'K'>;
   question: GoldenQuestionCase;
   task: 'zh_choice' | 'zh_short' | 'zh_writing';
   knownKey: boolean;
@@ -381,9 +434,22 @@ export interface OcrCase {
   /** 還沒拍的手機實拍：跳過（J 組的結論是「部分」）。 */
   skip: boolean;
 }
-export type EvalCase = AnalyzeCase | FollowupCase | OcrCase;
+/**
+ * K 組的一題：先要有國寫指導（base；F 組的題目沿用同一次執行的結果，自編的題目先解析一次，費用算在這一題），再產生一篇國寫範文。
+ * section 是題目集期望的題型（實際用的是國寫指導的題型，同 run.ts）。
+ */
+export interface ExemplarCase {
+  kind: 'exemplar';
+  key: string;
+  id: string;
+  group: 'K';
+  base: AnalyzeCase;
+  section: ZhExemplarSection;
+  checks: string[];
+}
+export type EvalCase = AnalyzeCase | FollowupCase | OcrCase | ExemplarCase;
 
-/** A 組的一題：完整的系統提示與 schema、最短的題目（base 指到其他組）、max_tokens 64。 */
+/** A 組的一題：完整的系統提示與 schema、最短的題目（base 指到其他組）、max_tokens 64。國寫範文用 base 的題目與一句固定的摘要。 */
 export interface ProbeCase {
   id: string;
   task: ZhEvalTask;
@@ -436,7 +502,22 @@ function baseOf(index: ReturnType<typeof questionIndex>, id: string, who: string
   return found;
 }
 
-/** 全部案例（B、BS、BP、C、D、E、F、G、H、J；依這個順序跑：G 與 H 的追問用得到同一次執行裡 B、D、F 的解析）。 */
+/**
+ * K 組的國寫指導：base 指到 F 組時就是那一題的解析案例（key 相同，同一次執行裡已經跑過就沿用）；自編的題目用自己的題目，
+ * key 加「#guide」（不和範文的結果 K:<id> 同名，也不會被當成 F 組的題目）。
+ */
+function exemplarBase(index: ReturnType<typeof questionIndex>, k: GoldenExemplarCase): AnalyzeCase {
+  if (k.base) {
+    const b = baseOf(index, k.base, k.id);
+    return analyzeCase(b.group, b.q);
+  }
+  const q = { ...k, group: 'K', expect: undefined } as unknown as GoldenQuestionCase;
+  return { ...analyzeCase('F', q), key: `K:${k.id}#guide` };
+}
+
+/**
+ * 全部案例（B、BS、BP、C、D、E、F、G、H、J、K；依這個順序跑：G 與 H 的追問、K 的國寫範文用得到同一次執行裡 B、D、F 的解析）。
+ */
 export function allCases(golden: GoldenSet): EvalCase[] {
   const index = questionIndex(golden);
   const out: EvalCase[] = [];
@@ -466,6 +547,9 @@ export function allCases(golden: GoldenSet): EvalCase[] {
     }
   }
   for (const p of golden.J) out.push({ kind: 'ocr', key: `J:${p.id}`, id: p.id, group: 'J', photo: p, skip: p.status !== 'ready' });
+  for (const k of golden.K) {
+    out.push({ kind: 'exemplar', key: `K:${k.id}`, id: k.id, group: 'K', base: exemplarBase(index, k), section: k.section, checks: k.expect });
+  }
   return out;
 }
 
@@ -530,7 +614,7 @@ export interface OpResult {
   outcome: 'ok' | 'refusal' | 'invalid_output' | 'max_tokens' | 'mismatch' | 'unusable' | 'error';
   calls: CallMetric[];
   /** single＝單題（選擇 1 題、簡答 1 個小題）、group＝題組、多個小題與國寫；追問與轉錄另外分類。 */
-  latency_class: 'single' | 'group' | 'followup' | 'ocr';
+  latency_class: 'single' | 'group' | 'followup' | 'ocr' | 'exemplar';
 }
 
 export interface ChoiceItemResult {
@@ -609,6 +693,50 @@ export interface OcrResult {
   not_in_blocks_ok: boolean | null;
   labels_ok: boolean | null;
 }
+/** 國寫範文的指標（K 組；只有代碼與數字，不存模型寫的文字）。 */
+export interface ExemplarResult {
+  /** 範文用的題型（最新一次國寫指導的 section，同 run.ts）；section_ok：和題目集期望的相同。 */
+  section: ZhExemplarSection;
+  section_ok: boolean;
+  /** 段落數、畫面上看得到的段數、被比賽語料或 D8 隱藏的段數、拿掉句子後整段省略的段數。 */
+  paragraphs: number;
+  shown: number;
+  hidden_contest: number;
+  hidden_d8: number;
+  trimmed: number;
+  /** 問題（一）：有答案、被隱藏、這題沒有。 */
+  q1: 'shown' | 'hidden' | 'none';
+  q1_chars: number | null;
+  q1_limit: number | null;
+  /** 段落（不含問題（一））的字數（含標點）、漢字數、格數與上限。 */
+  chars: number;
+  han: number;
+  cells: number;
+  limit_chars: number | null;
+  limit_cells: number;
+  within_limits: boolean;
+  /** 段落的字數在目標範圍內（知性：上限的 85–95%；情意：含標點約 670–760 字）。 */
+  in_target: boolean;
+  /** 方法卡認得（zhMethodCardId 不是 null）的段數。 */
+  cards_known: number;
+  notes: number;
+  coverage: number;
+  coverage_quoted: number;
+  self_checks: number;
+  /** 段落與問題（一）裡出自題目素材的「」引文數。 */
+  material_quotes: number;
+  /** 題目：題目指定、題目自訂（AI 擬的）、沒有題目；title_chars 是畫面上題目的字數。 */
+  title: 'given' | 'own' | 'none';
+  title_chars: number;
+  /** 畫面上的等第句、得獎或名次字樣、敏感事件的句子（後處理之後；應該都是 0）。 */
+  grade_sentences: number;
+  contest_mentions: number;
+  sensitive: number;
+  /** 這個操作因為比賽語料指紋、超過硬限制、簡體字而重寫的次數（呼叫結果代碼裡的 contest_overlap、over_limit、simplified）。 */
+  contest_retries: number;
+  over_retries: number;
+  simplified_retries: number;
+}
 export interface QuoteCounts {
   kept: number;
   misses: number;
@@ -636,6 +764,7 @@ export interface CaseResult {
   writing?: WritingResult;
   followup?: FollowupResult;
   ocr?: OcrResult;
+  exemplar?: ExemplarResult;
   quotes?: QuoteCounts;
   /** 後處理的 checks 計數（§5.1 第 16 步）。 */
   counts: Record<string, number>;
@@ -720,7 +849,7 @@ export function lcsLength(a: string, b: string): number {
 }
 
 /** 物件裡全部的字串（略過引文、題號、代碼這類不是說明文字的欄位）。 */
-const NON_PROSE_KEYS = new Set(['quote', 'range', 'label', 'display_label', 'for_label', 'kind', 'option', 'flaw', 'item_type', 'section', 'choice_mode', 'verdict', 'verdict_basis', 'mode_used', 'field', 'flags', 'warnings', 'key', 'skill_codes', 'error_codes', 'new_error_codes', 'labels', 'certainty', 'from', 'text_key', 'target', 'status', 'coverage', 'safety_flag', 'cache_hit', 'notices']);
+const NON_PROSE_KEYS = new Set(['quote', 'range', 'label', 'display_label', 'for_label', 'kind', 'option', 'flaw', 'item_type', 'section', 'choice_mode', 'verdict', 'verdict_basis', 'mode_used', 'field', 'flags', 'warnings', 'key', 'skill_codes', 'error_codes', 'new_error_codes', 'labels', 'certainty', 'from', 'text_key', 'target', 'status', 'coverage', 'safety_flag', 'cache_hit', 'notices', 'card', 'hidden']);
 export function proseStrings(value: unknown): string[] {
   const out: string[] = [];
   const walk = (v: unknown, key: string) => {
@@ -1070,6 +1199,75 @@ export function writingMetrics(view: ZhWritingView, raw: { examples?: Array<{ us
   };
 }
 
+/**
+ * 國寫範文的畫面文字要另外整理一次：要件對照的欄名 coverage 在 NON_PROSE_KEYS（簡答的覆蓋程度），這裡把要件換到別的欄名，
+ * 讓掃描（簡體字、考試機構名稱、等第句）也看得到它。
+ */
+export function exemplarProseView(view: ZhExemplarView): Record<string, unknown> {
+  return { ...view, coverage: undefined, coverage_points: view.coverage.map((r) => r.point_zh) };
+}
+
+/** 敏感事件的字（情意題的示範要用日常、可信的高中生經驗；國寫範文設計 §4 提示的 Material 一點）。只拿來數，命中時人工看。 */
+export const EXEMPLAR_SENSITIVE_RE = /醫院|病房|住院|過世|去世|病逝|離世|喪禮|葬禮|告別式|靈堂|癌症|自殺|自殘|輕生|割腕|家暴|戀愛|男朋友|女朋友|告白|暗戀/u;
+
+/**
+ * 國寫範文的指標（view 是後處理之後的畫面，不存）。opts：題目集期望的題型、這一題的上限（zhExemplarLimits）、
+ * 題目的規定（zhExemplarTitleRule）、題目全文（找素材引文）、這個操作每一次呼叫的結果代碼。
+ */
+export function exemplarMetrics(
+  view: ZhExemplarView,
+  opts: { expected: ZhExemplarSection; limits: ZhExemplarLimits; titleRule: { title: string } | 'own' | null; questionText: string; attempts: readonly string[] },
+): ExemplarResult {
+  // 拿掉句子後整段省略、或被內容過濾換掉的段落：沒有隱藏原因，但畫面上不是示範文字。
+  const omitted = (text: string) => text === ZH_EXEMPLAR_TRIMMED_TEXT || text === FILTERED_PLACEHOLDER;
+  const shownParas = view.paragraphs.filter((p) => p.hidden === null && !omitted(p.text));
+  const q1 = view.q1;
+  const q1State: ExemplarResult['q1'] = q1 === null ? 'none' : q1.hidden === null && q1.answer_zh !== '' ? 'shown' : 'hidden';
+  const q1Chars = q1State === 'shown' ? countZhChars(q1!.answer_zh).chars : null;
+  const t = view.totals;
+  const overNotice = view.notices.some((n) => n.kind === 'exemplar_over_limit');
+  const within = (q1Chars === null || q1Chars <= (q1?.limit ?? Infinity)) && (t.limit_chars === null || t.chars <= t.limit_chars) && t.cells <= t.limit_cells && !overNotice;
+  const [lo, hi] = opts.limits.target.body;
+  const quotedTexts = [...shownParas.map((p) => p.text), q1State === 'shown' ? q1!.answer_zh : ''];
+  const material = quotedTexts.reduce((sum, text) => sum + [...text.matchAll(/「([^「」]{2,})」/gu)].filter((m) => zhFindQuote(opts.questionText, m[1]!) !== null).length, 0);
+  const prose = proseStrings(exemplarProseView(view));
+  const sentences = (re: RegExp) => quotedTexts.flatMap((text) => text.split(/(?<=[。！？])/u)).filter((s) => re.test(s)).length;
+  const count = (code: string) => opts.attempts.filter((a) => a === code).length;
+  return {
+    section: view.section,
+    section_ok: view.section === opts.expected,
+    paragraphs: view.paragraphs.length,
+    shown: shownParas.length,
+    hidden_contest: view.paragraphs.filter((p) => p.hidden === 'contest').length,
+    hidden_d8: view.paragraphs.filter((p) => p.hidden === 'd8').length,
+    trimmed: view.paragraphs.filter((p) => p.hidden === null && omitted(p.text)).length,
+    q1: q1State,
+    q1_chars: q1Chars,
+    q1_limit: q1?.limit ?? null,
+    chars: t.chars,
+    han: t.han,
+    cells: t.cells,
+    limit_chars: t.limit_chars,
+    limit_cells: t.limit_cells,
+    within_limits: within,
+    in_target: t.chars >= lo && t.chars <= hi,
+    cards_known: view.paragraphs.filter((p) => p.card !== null).length,
+    notes: view.notes.length,
+    coverage: view.coverage.length,
+    coverage_quoted: view.coverage.filter((r) => r.quote !== '').length,
+    self_checks: view.self_check_zh.length,
+    material_quotes: material,
+    title: opts.titleRule === null ? 'none' : opts.titleRule === 'own' ? 'own' : 'given',
+    title_chars: [...view.title_zh].length,
+    grade_sentences: prose.reduce((s, text) => s + zhStripGradeSentences(text).removed, 0),
+    contest_mentions: prose.filter((text) => ZH_CONTEST_MENTION_RE.test(text)).length,
+    sensitive: sentences(EXEMPLAR_SENSITIVE_RE),
+    contest_retries: count('contest_overlap'),
+    over_retries: count('over_limit'),
+    simplified_retries: count('simplified'),
+  };
+}
+
 /** 官方考試機構的名稱（同 filter.ts 的 EXAM_BOARD_RE，不帶 g 旗標）。 */
 const EXAM_BOARD_SCAN_RE = new RegExp(EXAM_BOARD_RE.source, 'i');
 
@@ -1250,10 +1448,10 @@ export function summarize(file: ResultsFile, cases: readonly EvalCase[], opts: S
   const probeOk = probe?.ok === true;
   const probeRow: SummaryRow = {
     section: '全部',
-    name: 'A 組：五份輸出格式編譯（max_tokens 64）',
+    name: `A 組：${PROBE_COUNT_TEXT}輸出格式編譯（max_tokens 64）`,
     value: probe ? `${probe.runs.filter((r) => r.ok).length}／${probe.runs.length}（${probe.runs.map((r) => `${r.id} ${r.code}`).join('、')}）` : '沒有跑',
-    target: '5／5，不是 400',
-    ok: probeOk && (probe?.runs.length ?? 0) === 5,
+    target: `${PROBE_COUNT}／${PROBE_COUNT}，不是 400`,
+    ok: probeOk && (probe?.runs.length ?? 0) === PROBE_COUNT,
     gate: true,
   };
   const header = (verdictText: string, capLine: string, photoLine: string, rows: SummaryRow[], extra: string[]) =>
@@ -1277,7 +1475,7 @@ export function summarize(file: ResultsFile, cases: readonly EvalCase[], opts: S
   if (!probeOk || opts.mode === 'probe' || cases.length === 0) {
     const verdict: EvalVerdict = probeRow.ok ? 'probe_passed' : 'failed';
     const text = probeRow.ok
-      ? '只跑 A 組：五份輸出格式都編譯得過（提示、schema 或後處理有改動時自動跑，或 RUN 只寫 A；不是完整評測）'
+      ? `只跑 A 組：${PROBE_COUNT_TEXT}輸出格式都編譯得過（dispatch 的 cases 只寫 A；不是完整評測）`
       : `不達標：A 組沒有通過（${probe ? probe.runs.filter((r) => !r.ok).map((r) => `${r.id} ${r.code}`).join('、') || '不足 5 份' : '沒有跑'}），其他組不跑`;
     const fpNote = probe?.zh_fingerprints === 'empty' ? ['', '- 國文 D8 指紋還沒接上：A 組用空的國文集合組題目（只看輸出格式，用不到指紋）；完整評測一定要有正式的指紋。'] : [];
     return {
@@ -1324,7 +1522,9 @@ export function summarize(file: ResultsFile, cases: readonly EvalCase[], opts: S
   row('全部', '字音卡出現拼音', String(scanSum('pinyin')), '0', scanSum('pinyin') === 0);
   row('全部', '官方考試機構名稱', String(scanSum('exam_board')), '0', scanSum('exam_board') === 0);
   row('全部', '替換後仍是大陸修辭名稱', String(scanSum('mainland_rhetoric')), '0', scanSum('mainland_rhetoric') === 0);
-  for (const task of ['zh_choice', 'zh_short', 'zh_writing', 'zh_followup'] as const) {
+  for (const task of ['zh_choice', 'zh_short', 'zh_writing', 'zh_followup', 'zh_exemplar'] as const) {
+    // 國寫範文只在這次有跑 K 組時列（只挑其他組時不擋）。
+    if (task === 'zh_exemplar' && of('K').length === 0 && !cases.some((c) => c.group === 'K')) continue;
     const u = usdPerPoint(ops, task);
     row('全部', `冷快取平均每點美元：${TASK_LABELS[task]}`, u.cold === null ? '-' : `US$${fmt(u.cold, 4)}（快取讀取 US$${fmt(u.warm ?? 0, 4)}；${u.ops} 次）`, `≤ US$${fmt(C.coldUsdPerPointMax, 4)}`, u.cold === null ? opts.subset : u.cold <= C.coldUsdPerPointMax);
   }
@@ -1500,6 +1700,36 @@ export function summarize(file: ResultsFile, cases: readonly EvalCase[], opts: S
     const hOk = hRes.filter((r) => Object.keys(r.checks).length > 0 && Object.values(r.checks).every(Boolean)).length;
     row('D–H', 'H：對抗與誤用', `${hOk}／${hCases.length}`, `${hCases.length}／${hCases.length}`, hOk === hCases.length);
   }
+  // ── K（國寫範文）
+  const kCases = active.filter((c) => c.group === 'K');
+  const kRes = of('K');
+  if (kCases.length > 0) {
+    const E = C.exemplar;
+    const kDone = kRes.filter((r) => r.ok && r.exemplar);
+    const ex = kDone.map((r) => r.exemplar!);
+    row('K 國寫範文', '範文完成（沒有退還）', `${kDone.length}／${kCases.length}${kRes.some((r) => !r.ok) ? `（${kRes.filter((r) => !r.ok).map((r) => `${r.id} ${r.failure ?? '-'}`).join('、')}）` : ''}`, `${kCases.length}／${kCases.length}`, kDone.length >= Math.ceil(E.completeMin * kCases.length - 1e-9));
+    const within = ex.filter((m) => m.within_limits).length;
+    row('K 國寫範文', '畫面上的字數與格數在硬限制內', `${within}／${ex.length}（第一次就超過而重寫 ${ex.reduce((s, m) => s + m.over_retries, 0)} 次）`, '全部', within === ex.length && ex.length > 0);
+    const contest = ex.reduce((s, m) => s + m.contest_retries + m.hidden_contest, 0) + sumCount(kRes, 'contest_overlap_removed') + kRes.filter((r) => r.attempts.includes('contest_overlap') && !r.exemplar).length;
+    row('K 國寫範文', '比賽語料指紋命中（重寫前後合計：重寫、被隱藏的段落、被換掉的說明）', String(contest), String(E.contestHitsMax), contest <= E.contestHitsMax);
+    const grade = ex.reduce((s, m) => s + m.grade_sentences + m.contest_mentions, 0) + sumCount(kRes, 'grade_removed') + sumCount(kRes, 'contest_mention_removed');
+    row('K 國寫範文', '等第、分數或得獎字樣（畫面上＋後處理拿掉的）', String(grade), String(E.gradeMentionMax), grade <= E.gradeMentionMax);
+    const kOk = kRes.filter((r) => Object.keys(r.checks).length > 0 && Object.values(r.checks).every(Boolean)).length;
+    row('K 國寫範文', 'K：每題的檢查（expect）', `${kOk}／${kCases.length}`, `${kCases.length}／${kCases.length}`, kOk === kCases.length);
+    const sectionOk = ex.filter((m) => m.section_ok).length;
+    row('K 國寫範文', '國寫指導的題型和題目集一致（知性／情意）', `${sectionOk}／${ex.length}`, '全部', sectionOk === ex.length, false);
+    const inTarget = ex.filter((m) => m.in_target).length;
+    row('K 國寫範文', '段落字數在目標範圍（知性上限的 85–95%；情意含標點約 670–760 字）', `${inTarget}／${ex.length}（${ex.map((m) => `${m.chars} 字／${m.cells} 格`).join('、') || '-'}）`, '參考', true, false);
+    const paras = ex.reduce((s, m) => s + m.paragraphs, 0);
+    const known = ex.reduce((s, m) => s + m.cards_known, 0);
+    row('K 國寫範文', '段落的方法卡認得（五張之一）', `${known}／${paras}（${pctText(ratio(known, paras))}）`, '參考', true, false);
+    const cov = ex.reduce((s, m) => s + m.coverage, 0);
+    const covQ = ex.reduce((s, m) => s + m.coverage_quoted, 0);
+    row('K 國寫範文', '要件對照的引文在那一段裡', `${covQ}／${cov}（${pctText(ratio(covQ, cov))}）`, '參考', true, false);
+    const lat = quantile(opLatency('exemplar'), 0.9);
+    row('K 國寫範文', '延遲 p90：國寫範文（一次操作，含重寫）', `${fmt(lat / 1000, 0)} 秒`, `參考（${E.latencyP90Ms / 1000} 秒；逾時 240 秒）`, lat <= E.latencyP90Ms, false);
+  }
+
   const bpChecks = of('BP').filter((r) => Object.keys(r.checks).length > 0);
   if (bpChecks.length > 0) row('B、B′、C', 'B′ 被改正的字形題：certainty=unsure、不硬湊錯字', bpChecks.every((r) => Object.values(r.checks).every(Boolean)) ? '通過' : '沒過', '通過', bpChecks.every((r) => Object.values(r.checks).every(Boolean)));
 
@@ -1581,7 +1811,9 @@ export function summarize(file: ResultsFile, cases: readonly EvalCase[], opts: S
             ? `${r.followup.mode} ${r.followup.reply_chars_raw} 字`
             : r.writing
               ? `要件 ${r.writing.requirements_quoted}/${r.writing.requirements}`
-              : '-';
+              : r.exemplar
+                ? `${r.exemplar.section === 'zh_writing_reason' ? '知性' : '情意'} ${r.exemplar.shown}/${r.exemplar.paragraphs} 段 ${r.exemplar.chars} 字/${r.exemplar.cells} 格${r.exemplar.q1 === 'none' ? '' : `；問題（一）${r.exemplar.q1_chars ?? '隱藏'}/${r.exemplar.q1_limit}`}`
+                : '-';
     const failedChecks = Object.entries(r.checks)
       .filter(([, v]) => !v)
       .map(([k]) => k);
@@ -1592,8 +1824,8 @@ export function summarize(file: ResultsFile, cases: readonly EvalCase[], opts: S
   const blocked = (rs: readonly CaseResult[]) => rs.flatMap((r) => r.parts ?? []).filter((p) => p.demo === 'short_hidden').length;
   const partsOf = (rs: readonly CaseResult[]) => rs.flatMap((r) => r.parts ?? []).filter((p) => !p.translation).length;
   const siteBlock = ratio(blocked(eSite), partsOf(eSite));
-  const refunded = (['zh_choice', 'zh_short', 'zh_writing', 'zh_followup', 'zh_ocr'] as const).reduce((s, t) => s + usdPerPoint(opsOf(done), t).refundedUsd, 0);
-  const counters = ['quote_misses', 'card_head_unmatched', 'card_rows_dropped', 'option_gaps', 'inconsistent', 'multi_suspect', 'form_count_mismatch', 'stem_rule_missing', 'notes_unmatched', 'classic_misquote', 'recitation_unverified', 'hint_leak_removed', 'tw_reading_mismatch', 'sound_inconsistent', 'tw_form_replaced', 'tw_form_rows_dropped', 'rhetoric_term_replaced', 'rhetoric_term_unknown', 'simplified_retry', 'pinyin_cleared', 'demo_removed', 'copy_demo_removed', 'short_answer_hidden', 'd8_hidden', 'grade_removed', 'enum_normalized', 'enum_unknown'];
+  const refunded = (['zh_choice', 'zh_short', 'zh_writing', 'zh_followup', 'zh_ocr', 'zh_exemplar'] as const).reduce((s, t) => s + usdPerPoint(opsOf(done), t).refundedUsd, 0);
+  const counters = ['quote_misses', 'card_head_unmatched', 'card_rows_dropped', 'option_gaps', 'inconsistent', 'multi_suspect', 'form_count_mismatch', 'stem_rule_missing', 'notes_unmatched', 'classic_misquote', 'recitation_unverified', 'hint_leak_removed', 'tw_reading_mismatch', 'sound_inconsistent', 'tw_form_replaced', 'tw_form_rows_dropped', 'rhetoric_term_replaced', 'rhetoric_term_unknown', 'simplified_retry', 'pinyin_cleared', 'demo_removed', 'copy_demo_removed', 'short_answer_hidden', 'd8_hidden', 'grade_removed', 'enum_normalized', 'enum_unknown', 'example_rule_removed', 'punct_fixed', 'exclaim_replaced', 'contest_retry', 'contest_hidden', 'contest_overlap_removed', 'over_limit_retry', 'over_limit_kept', 'under_target', 'material_quote_long', 'attribution_removed', 'quote_unmarked', 'stock_line_removed', 'cliche', 'contest_word', 'overused_figure', 'claim_removed', 'contest_mention_removed', 'coverage_quote_miss', 'card_unknown', 'paragraph_trimmed'];
   const extra = [
     '',
     `- 原版和重排版的答對率差距超過 ${fmt(C.shuffleGapFlag * 100, 0)} 個百分點的題型（可能是背答案；上線 PR 標出，該類別加進確定程度上限）：${shuffleGaps.join('、') || '（沒有）'}`,

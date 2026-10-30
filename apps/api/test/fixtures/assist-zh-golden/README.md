@@ -1,13 +1,13 @@
 # 國文學習助手：真模型評測題目集
 
-設計依據：`docs/design/assistant-subjects.md` §11.2（題目集）、§11.3（上線門檻）。這個資料夾只放題目與期望，**評測工具（讀這些檔、送真模型、算門檻）與觸發用的 `RUN` 檔由評測的工作包另外建立**。
+設計依據：`docs/design/assistant-subjects.md` §11.2（題目集）、§11.3（上線門檻）；K 組是同一份文件「國寫範文」§11。這個資料夾只放題目與期望，**評測工具（讀這些檔、送真模型、算門檻）與觸發用的 `RUN` 檔由評測的工作包另外建立**。
 
 ## 檔案
 
 | 檔案 | 組 | 題數 | 內容 |
 |---|---|---|---|
 | `golden.json` | — | — | 索引：每組的檔名、題數、內容與主要檢查 |
-| `a-probe.json` | A 編譯探測 | 5 | 五種任務各一份最短題目（`base` 指到其他組），`max_tokens` 64 |
+| `a-probe.json` | A 編譯探測 | 6 | 五種任務與國寫範文各一份最短題目（`base` 指到其他組），`max_tokens` 64 |
 | `b-choice.json` | B 選擇（不給答案）＋B 重排版 | 58＋58 | 111–115 國綜與 101–110 學測國文的選擇題；重排版由每題的 `shuffle` 產生 |
 | `b-unseen.json` | B′ 沒看過的題 | 12 | 本站自寫或改寫 |
 | `c-key.json` | C 選擇（給答案） | 10 | B 的 10 題＋官方答案當答案鍵 |
@@ -17,6 +17,7 @@
 | `g-followup.json` | G 追問 | 6 | 提示、講解各 3 |
 | `h-adversarial.json` | H 對抗與誤用 | 6 | |
 | `j-photos.json`＋`photos/` | J 照片 | 14 | 11 張已備妥，3 張手機實拍還沒拍 |
+| `k-exemplar.json` | K 國寫範文 | 6 | 歷屆知性 1、歷屆情意 1（國寫指導沿用 F 組）、自編知性 1、自編情意 1、素材含名句 1、對抗 1；**還沒有跑過**（站主決定國寫範文不跑真模型評測就上線） |
 
 每個 JSON 的最外層都是 `{ "format": "gsat-assist-zh-golden/v1", "group": "<組>", "cases": [...] }`。
 
@@ -36,8 +37,8 @@
 
 | 欄位 | 說明 |
 |---|---|
-| `id` | 案例代號：`B-<年度>-<題號>`、`BP-<nn>`、`C-<nn>`、`D-…`、`E-…`、`F-<年度>-<1 知性／2 情意>`、`G-…`、`H-…`、`J-<nn>` |
-| `group` | `A`／`B`／`B_prime`／`C`／`D`／`E`／`F`／`G`／`H`／`J` |
+| `id` | 案例代號：`B-<年度>-<題號>`、`BP-<nn>`、`C-<nn>`、`D-…`、`E-…`、`F-<年度>-<1 知性／2 情意>`、`G-…`、`H-…`、`J-<nn>`、`K-…` |
+| `group` | `A`／`B`／`B_prime`／`C`／`D`／`E`／`F`／`G`／`H`／`J`／`K` |
 | `origin` | `official`（公開題本）或 `site`（本站自寫、改寫） |
 | `source` | 出處說明（給人看的） |
 | `format` | `choice`／`short`／`writing`（對應 `ZhFormat`） |
@@ -85,10 +86,19 @@
 
 ### A、C、G、H 的 `base` 案例
 
-- A：`kind`（`zh_choice`、`zh_short`、`zh_writing`、`zh_followup`、`zh_ocr`）、`max_tokens`；`A-ocr` 用 `J-04` 的圖。
+- A：`kind`（`zh_choice`、`zh_short`、`zh_writing`、`zh_followup`、`zh_ocr`、`zh_exemplar`）、`max_tokens`；`A-ocr` 用 `J-04` 的圖；`A-exemplar` 用 `F-111-1` 的題目與一句固定的摘要（不先跑國寫指導）。
 - C：`known_key: "official"`＝把 base 題的 `key` 當成學生在「我有講義答案」填的答案鍵。
 - G：`mode`（`hint`／`explain`）、`message`、`target`（題組裡要問的題號）。
 - H：`request.doubt`、`request.draft`、`followup` 與 `expect`（檢查代碼，評測工具逐一實作）；`H-social`、`H-autocorrected` 自帶題目。
+
+### 國寫範文（K）
+
+- 每一題先要有國寫指導，再產生一篇範文（和正式站一樣：範文只送題目全部區塊與國寫指導的摘要，不送學生的段落）。
+- `base`：指到 F 組的國寫題時，國寫指導沿用同一次執行裡 F 組的結果（沒有就先解析一次，費用算在這一題）；沒有 `base` 的題目自帶 `passage` 與 `items`（格式同 F 組，本站自編）。
+- `section`：題目集期望的題型（`zh_writing_reason`／`zh_writing_emotion`）。範文實際用的是國寫指導判斷的題型（同 `run.ts`），兩者不同時彙總另外列出。
+- `expect`：這一題的檢查代碼（`EXEMPLAR_CHECKS`）：`within_limits`、`contest_hits_0`、`no_grade`、`no_contest_mention`、`q1_shown`、`material_quoted`、`title_own`、`quotes_verified`、`no_sensitive_events`，說明在 `test/parity/assist-subjects.cases.ts`。
+- 六題：K-111-1（111 知性，問題（一）80 字、問題（二）400 字至多 19 行、題目指定）、K-115-2（115 情意，題目指定、沒有字數限制）、K-site-reason（自編知性，問題（一）60 字至多 3 行、問題（二）350 字至多 17 行）、K-site-emotion（自編情意，題目自訂）、K-site-classic（自編情意，素材引杜甫〈客至〉，公有領域古文，查得到原文）、K-adv-imitate（自編情意，最後一行是學生貼上的「照某一年語文競賽第一名的作文寫」）。
+- 自編題目、素材與單元測試的假範文都和 `data/d8/zh-contest.fp.json`（比賽語料指紋，只有雜湊）0 命中（`assist-subjects.parity-summary.test.ts`）；題目集沒有任何比賽作品的文字、題目、作者或學校。
 
 ### 照片（J）
 

@@ -4,13 +4,14 @@
  *   ANTHROPIC_API_KEY=<dev workspace 的金鑰> npm run parity:assist-subjects -w @gsat/api
  *
  * 站主不用在自己的電腦跑：GitHub Actions 的「學習助手國文真模型評測」（.github/workflows/assistant-subjects-eval.yml）用 GitHub secret 的
- * 金鑰跑這支工具——在 claude/** 分支改 RUN 檔（test/fixtures/assist-zh-golden/RUN）推上去，或國文的提示、schema、後處理改動時自動只跑
- * A 組。Summary 顯示結論，結果目錄存成 artifact 並快取起來給下一次接著跑。
+ * 金鑰跑這支工具——只有站主在 Actions 頁面手動按 Run workflow 才會跑（站主 2026-10-30：不再自動花 API；參數說明在 RUN 檔）。
+ * Summary 顯示結論，結果目錄存成 artifact 並快取起來給下一次接著跑。
  *
  * 單元測試全部用假模型，測不出 Anthropic 端的限制（輸出格式的 grammar 太大會被 400 拒收），也量不到真正的正確率與成本。
  * 這支工具用真模型、和 Worker 同一套函式（assist-subjects.runner.ts）：
- *   A 組  五份輸出格式各一次、max_tokens 64：回應不是 400 就通過；**不過就停**，其他組不跑。
- *   B–J   題目集（test/fixtures/assist-zh-golden/）：先跑全部的解析，再跑追問（沿用同一次執行的解析），最後跑照片。
+ *   A 組  六份輸出格式各一次（五種解析與轉錄、國寫範文）、max_tokens 64：回應不是 400 就通過；**不過就停**，其他組不跑。
+ *   B–K   題目集（test/fixtures/assist-zh-golden/）：先跑全部的解析，再跑追問與國寫範文（沿用同一次執行的解析；K 組自編的題目
+ *         先跑自己的國寫指導），最後跑照片。
  *         解析可以同時跑幾題（ASSIST_SUBJECTS_EVAL_CONCURRENCY，預設 4）：完整評測約 200 次呼叫，一題一題跑會超過 Actions 的時間上限。
  * 門檻與彙總在 assist-subjects.cases.ts（單元測試 test/assist-subjects.parity-summary.test.ts 驗證達標判定與執行流程）。
  *
@@ -57,7 +58,7 @@ import {
   type EvalStop,
   type ResultsFile,
 } from './assist-subjects.cases';
-import { buildAnalyze, casesProblems, readGolden, runCase, runProbe, type Executor, type RunDeps } from './assist-subjects.runner';
+import { buildAnalyze, casesProblems, exemplarProbeInput, readGolden, runCase, runProbe, type Executor, type RunDeps } from './assist-subjects.runner';
 
 const OUT_DIR = process.env['PARITY_OUT'] ?? path.join(import.meta.dirname, '.results');
 const RESULTS_FILE = path.join(OUT_DIR, 'assist-subjects.json');
@@ -76,14 +77,17 @@ function positiveEnv(name: string, fallback: number | null): number | null {
 /** 國文指紋還沒接上時，A 組用的空集合（只看輸出格式）。 */
 const EMPTY_ZH: ZhFingerprints = { version: 'empty', windows: new Set(), short: [] };
 
-/** 會影響結果的設定的雜湊（不存模型名稱本身）：五份請求的 prompt version（系統提示＋schema）、任務設定、題目集、指紋版本。 */
+/** 會影響結果的設定的雜湊（不存模型名稱本身）：六份請求的 prompt version（系統提示＋schema）、任務設定、題目集、指紋版本。 */
 async function evalFingerprint(deps: Pick<RunDeps, 'config' | 'fp' | 'zh'>, goldenTexts: readonly string[], probe: ReturnType<typeof probeCases>): Promise<string> {
   const parts: unknown[] = [goldenTexts, ZH_TASK_SIZES, deps.fp.version, deps.zh.version];
   for (const task of ['assist_analyze', 'assist_followup', 'assist_ocr'] as const) parts.push(taskConfig(task, deps.config, { subject: 'chinese' }).calls);
+  parts.push(taskConfig('assist_zh_exemplar', deps.config).calls);
   for (const p of probe) {
     if (!p.analyze) continue;
     const b = buildAnalyze(p.analyze, deps);
-    if (!('rejected' in b)) parts.push((await buildClaudeRequest(b.input)).promptVersion);
+    if ('rejected' in b) continue;
+    parts.push((await buildClaudeRequest(b.input)).promptVersion);
+    if (p.task === 'zh_exemplar') parts.push((await buildClaudeRequest(exemplarProbeInput(p, b, deps.config).input)).promptVersion);
   }
   const ocr = chineseSubject.ocr.callInput(taskConfig('assist_ocr', deps.config, { subject: 'chinese', photos: 1 }), [{ mime: 'image/png', bytes: new Uint8Array([0]) }]);
   parts.push((await buildClaudeRequest(ocr)).promptVersion, chineseSubject.followup.templateVersion);
@@ -91,7 +95,7 @@ async function evalFingerprint(deps: Pick<RunDeps, 'config' | 'fp' | 'zh'>, gold
 }
 
 describe.skipIf(!API_KEY && !process.env['CI'])('學習助手國文真模型評測', () => {
-  it('A 組先跑（不過就停），再依 §11.2 跑 B–J，結果存檔並印出彙總；結論不通過時失敗', async () => {
+  it('A 組先跑（不過就停），再依 §11.2 跑 B–K，結果存檔並印出彙總；結論不通過時失敗', async () => {
     if (!API_KEY) throw new Error('沒有 ANTHROPIC_API_KEY：在 CI 上不能略過評測（略過會被當成通過）。');
     const envMode = (process.env['ASSIST_SUBJECTS_EVAL_MODE']?.trim() || 'full') as 'full' | 'probe';
     if (envMode !== 'full' && envMode !== 'probe') throw new Error('ASSIST_SUBJECTS_EVAL_MODE 要是 full 或 probe');
@@ -147,8 +151,8 @@ describe.skipIf(!API_KEY && !process.env['CI'])('學習助手國文真模型評�
     } else if (cases.length > 0) {
       const pending = cases.filter((c) => !(c.kind === 'ocr' && c.skip) && needsRun(results.cases[c.key]));
       console.log(`[assist-subjects-eval] 共 ${cases.length} 題，這次要跑 ${pending.length} 題（同時 ${concurrency} 題）；已花費 US$${fmt(results.spent_micros / 1e6)}，上限 US$${fmt(budgetMicros / 1e6)}`);
-      // 先解析、再追問（沿用這次的解析）、最後照片。
-      const phases = [pending.filter((c) => c.kind === 'analyze'), pending.filter((c) => c.kind === 'followup'), pending.filter((c) => c.kind === 'ocr')];
+      // 先解析、再追問與國寫範文（沿用這次的解析）、最後照片。
+      const phases = [pending.filter((c) => c.kind === 'analyze'), pending.filter((c) => c.kind === 'followup' || c.kind === 'exemplar'), pending.filter((c) => c.kind === 'ocr')];
       let inflight = 0;
       for (const phase of phases) {
         let next = 0;

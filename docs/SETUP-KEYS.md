@@ -278,22 +278,24 @@ workflow 會依序：型別檢查與測試 → 檢查 token 與 workers.dev 子�
 
 另外一個相關設定 `SITE_DATA_ORIGIN`：Worker 讀公開題目檔（站內題目、單字）的來源，沒設定就是 `APP_ORIGIN`（正式站）。**正式站不要設**；只有本機的端對端測試會把它指到假的靜態檔伺服器。
 
-### 8.4 學習助手國文的開關與真模型評測（已上線；緊急關閉、只關國文拍照、改了提示要重跑評測）
+### 8.4 學習助手國文的開關與真模型評測（已上線；緊急關閉、只關國文拍照、國寫範文、重產比賽語料指紋、改了提示要重跑評測）
 
-學習助手的國文（設計見 [design/assistant-subjects.md](design/assistant-subjects.md) §7.5、§11）有兩個開關，都在 `apps/api/wrangler.toml` 的 `[vars]`，值和 §8.3 一樣只認 `"off"`／`"admin"`／`"on"`（其他任何值都當成 `"off"`）：
+學習助手的國文（設計見 [design/assistant-subjects.md](design/assistant-subjects.md) §7.5、§11 與「國寫範文」一節）有三個開關，都在 `apps/api/wrangler.toml` 的 `[vars]`，值和 §8.3 一樣只認 `"off"`／`"admin"`／`"on"`（其他任何值都當成 `"off"`）：
 
 | 開關 | 控制什麼 | 還要什麼也開放 |
 |---|---|---|
 | `AI_ASSISTANT_SUBJECTS` | 國文的貼上、解析、追問（英文以外的科目；第一版只有國文） | `AI_ASSISTANT` |
 | `AI_ASSISTANT_SUBJECTS_PHOTO` | 國文的拍照 | `AI_ASSISTANT`、`AI_ASSISTANT_PHOTO`、`AI_ASSISTANT_SUBJECTS` |
+| `AI_ZH_EXEMPLAR` | 國寫範文：國寫案例看過國寫指導之後的「看一篇 AI 示範」（8 點、每天 3 篇、同一題 2 篇） | `AI_ASSISTANT`、`AI_ASSISTANT_SUBJECTS` |
 
 - **目前兩個都是 `"on"`（2026-10-30 上線，和作文範文同一個 PR）**：國文的貼上、解析、追問與拍照都開放給已核准的學生。拍照的照片組（J 組）沒有全部達標，站主決定第一版就開拍照（「拍照也可」）；保護措施（確認畫面的字形題提醒、錯字少於題目暗示的數量時標「不確定」、轉錄看不出題目時退點）與之後要補的手機實拍見 [design/assistant-subjects.md](design/assistant-subjects.md) 的實作備註。`/api/features` 只在 `"on"` 時有 `"assistantSubjects":[{"subject":"chinese","photo":…}]`；`"admin"` 時公開端點不透露，管理員登入後 `/api/me` 的 `assistant_preview` 多一個 `subjects`。每次部署的 **Summary** 有「學習助手國文」「學習助手國文拍照」兩列，寫出 `wrangler.toml` 的值，應該都是「對所有人開放」。
 - 上線時三份說明同一次升版（2026-10-30，和作文範文共用這一次；國文的點數不寫在說明裡，調點數不必再升版）：所有人下次登入要重新同意隱私權說明與服務條款，已申請（等核准、候補）或已核准的學生下次使用 AI 前要在 `/ai/apply` 重新同意 AI 處理說明（未滿 18 歲的也要再勾一次已告知父母或監護人）。
 - **不需要設定任何金鑰**：國文的 D8 指紋（`data/d8/zh-official.fp.json`、`zh-short.fp.json`）只有雜湊、不帶金鑰，部署時跟著程式一起打包。國文沒有新的 Worker secret，也沒有新的 GitHub secret；評測用的金鑰就是 §8.2 第 1 步的 `ANTHROPIC_PARITY_API_KEY`（沒有時才用正式站的 `ANTHROPIC_API_KEY`）。
 - 指紋讀不到（打包壞掉）時，國文的寫入端點在預扣之前一律回「暫停」，不扣點、不會漏放受保護的文字；英文不受影響。
+- **國寫範文目前是 `"on"`（2026-10-30 開放）**：站主決定直接開放給已核准的學生、**不跑真模型評測**（評測題目的 K 組已經放進題目集，只能由站主在 Actions 頁面手動執行，見第 1 步）。`/api/features` 只在國文與國寫範文都是 `"on"` 時，國文那一筆多 `"exemplar":true`；`"admin"` 時公開端點不透露，管理員的 `/api/me` 的 `assistant_preview.subjects` 有。部署的 **Summary** 有「學習助手國寫範文（assistantSubjects.exemplar）」一列，應該是「對所有人開放」。條款不必升版（只送案例已存的題目與本站的國寫指導摘要，結果存在學習助手的案例裡；設計「國寫範文」§9.3）。比賽語料指紋（`data/d8/zh-contest.fp.json`）只有雜湊、不帶金鑰，沒有新的 secret；它是國文指紋的必填部分，缺了就整個國文指紋當成讀不到（上一點：寫入端點回「暫停」），萬一到了背景處理才發現，範文以系統錯誤退還點數、不呼叫 AI。部署後第一次請用管理員帳號在一個國寫案例看完國寫指導、按一次「看一篇 AI 示範」確認。
 
 1. **跑真模型評測**（會花 API，**只有站主手動按才會跑**；上線前四次完整評測的結果與 run 連結在 [design/assistant-subjects.md](design/assistant-subjects.md) 實作備註「上線（2026-10-30）」之後幾節；之後改了國文的提示、輸出格式或後處理，由站主決定要不要重跑；GitHub Actions 上跑，不用在自己的電腦裝任何東西）：
-   - 站主在 GitHub 的 Actions 頁面選「學習助手國文真模型評測」（`.github/workflows/assistant-subjects-eval.yml`），按 **Run workflow**。輸入：`budget_usd`（累計上限，完整評測約 US$21，建議 25，最多 40）、`allow_online_key`、`resume`、`cases`（空白＝全部；只寫 `A`＝只確認五份輸出格式編譯得過，約 US$0.1）。
+   - 站主在 GitHub 的 Actions 頁面選「學習助手國文真模型評測」（`.github/workflows/assistant-subjects-eval.yml`），按 **Run workflow**。輸入：`budget_usd`（累計上限，完整評測約 US$23，建議 25，最多 40）、`allow_online_key`、`resume`、`cases`（空白＝全部；只寫 `A`＝只確認六份輸出格式編譯得過，約 US$0.1；只寫 `K`＝國寫範文的 6 題，各含前置的國寫指導，約 US$2.5，`budget_usd` 填 5）。國寫範文上線時這一組**還沒有跑過**。
    - **不會自動跑**（站主 2026-10-30：不要再自動花 API）：推 `RUN` 檔、改國文的提示都不會觸發；`RUN` 檔只留著當參數說明。開發者（或代理）不能自己觸發評測。
    - 看結果：這次執行頁面下方的 **Summary**：第一行是結論（達標、不達標、還沒跑完），第二行是字音、字形「AI 判斷，請查教育部辭典」的上限要不要解除，第三行是國文拍照能不能開；下面是每一項門檻。完整結果在 artifact `assistant-subjects-eval`（保留 30 天）。結果只有計數、對錯、花費與延遲，不存 AI 寫的文字（這個 repo 是公開的）。
    - **還沒跑完**：到時間或預算上限時結論會寫「還沒跑完」；`resume` 保持勾選、再按一次 Run workflow，已經完成的題目不會重新花錢。
@@ -304,7 +306,17 @@ workflow 會依序：型別檢查與測試 → 檢查 token 與 workers.dev 子�
    2. 只關國文：把 `AI_ASSISTANT_SUBJECTS` 改成 `"off"`（或只留給管理員查問題的 `"admin"`），推到 main，等部署跑完。英文的學習助手照常；國文的科目選項與「問國文題」按鈕消失，已有的國文案例照樣可以看、評「懂了嗎」、刪除，新的國文解析與追問不會出現；已經在排隊的照常完成（點數已經預扣）。
    3. 確認：Summary 的「學習助手國文」是「關閉」（`admin` 時是「只有管理員能用」）、「注意」裡沒有「對不起來」；`/api/features` 沒有 `"assistantSubjects"`。確認之後再到 `/admin` 解除全站暫停。
 4. **只關國文拍照**（例如轉錄把字形題的錯字改正了）：把 `AI_ASSISTANT_SUBJECTS_PHOTO` 改成 `"off"` 推到 main。國文貼上照常，英文的拍照也不受影響，不用改程式；`/api/features` 的國文那一筆變成 `"photo":false`。
-5. **不要**在 Cloudflare 儀表板的 Variables and Secrets 改這兩個值：下一次部署會被 `wrangler.toml` 的 `[vars]` 蓋回去（同 §8.1 第 3 點）。改回 `"on"` 之前，如果改過國文的提示或後處理，先照第 1 步重跑一次評測。
+5. **緊急關閉國寫範文**（範文和已發表的作品太像、出現不適合的內容、費用異常、學生拿來交作業的回報）：
+   1. 立即止血同第 3 步的 1（「AI 全站暫停」會一起停掉英文與國文的所有 AI 功能）。
+   2. 只關範文：把 `AI_ZH_EXEMPLAR` 改成 `"off"`，推到 main，等部署跑完。「看一篇 AI 示範」的按鈕消失、`POST …/zh-exemplar` 回「暫停」（503，不扣點）；國寫指導、其他國文功能與英文都照常；**已經產生的範文照常可以看、跟著案例刪除**；已經在排隊的照常完成（點數已經預扣，失敗照樣退還）。
+   3. **只留給管理員**查問題：改成 `"admin"`。學生的按鈕消失，管理員登入後照樣看得到、可以產生。
+   4. 確認：Summary 的「學習助手國寫範文」是「關閉」（`admin` 時是「只有管理員能用」）、「注意」裡沒有「對不起來」；`/api/features` 的國文那一筆沒有 `"exemplar"`。`src/config.ts` 的程式預設固定是 `off`，不用改。
+6. **重產比賽語料指紋**（國寫範文用的 `data/d8/zh-contest.fp.json`；只有站主取得新一年的語文競賽作品集、放進自己電腦上的私人語料目錄時才做；語料是未成年人的作品，**永遠不放進 repo**，repo 裡只有雜湊）：
+   1. 在 repo 根目錄跑 `node packages/shared/scripts/zh-contest-fingerprint.mjs --source <語料目錄>`（或先設環境變數 `ZH_CONTEST_SOURCE_DIR` 再跑，不加參數）。腳本只讀年度資料夾裡的 `rank-*.txt`（丟掉第一行的題目），印出的只有每年的篇數與窗口數；筆數低於 25,000 會失敗（代表目錄不完整或讀錯了檔）。
+   2. 自我檢查：`node packages/shared/scripts/zh-contest-fingerprint.mjs --check <語料目錄>`，每一篇都要命中（只印每個檔案的命中段數，不印文字）。
+   3. `npm run typecheck`、`npm test`、`npm run test:data`、`npm run build`（打包時把指紋併進 Worker；`apps/api/test/assist.zh.exemplar.test.ts` 確認系統提示與真指紋 0 命中）。
+   4. **只提交** `data/d8/zh-contest.fp.json`（`git status` 確認沒有任何語料檔被加進來），推到 main 部署。指紋的 `version` 會跟著變，國文的指紋版本（`zh_version`）也會變；英文不受影響。
+7. **不要**在 Cloudflare 儀表板的 Variables and Secrets 改這三個值：下一次部署會被 `wrangler.toml` 的 `[vars]` 蓋回去（同 §8.1 第 3 點）。改回 `"on"` 之前，如果改過國文的提示或後處理，先照第 1 步重跑一次評測（國寫範文是 K 組）。
 
 ### 8.5 作文範文的開關與真模型評測（目前只開給管理員；緊急關閉、改了提示要重跑評測）
 

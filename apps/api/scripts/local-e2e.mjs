@@ -23,8 +23,8 @@
  *     緊急關閉時是 off，這時用 --var 改成 admin），由管理員帳號跑「貼上 → 解析 → 追問 → 用同一份題目問另一部分」。
  *     假 Anthropic 依系統提示開頭（You are a Chinese (國文) tutor）辨識國文的解析與追問，回會通過國文後處理的固定 JSON，
  *     並檢查題目包在 <student_provided_question>、追問的三個 content block 都不加快取標記、同一份題目的請求帶前一題的摘要。
- *   - 國寫範文（docs/design/assistant-subjects.md「國寫範文」§7）：照 wrangler.toml 的 AI_ZH_EXEMPLAR（目前是 off，這時用 --var 改成
- *     admin），由管理員帳號跑「國寫題 → 國寫指導 → AI 示範（8 點）」。假 Anthropic 依系統提示裡的「Model answer (國寫範文):」辨識範文任務，
+ *   - 國寫範文（docs/design/assistant-subjects.md「國寫範文」§7）：照 wrangler.toml 的 AI_ZH_EXEMPLAR（上線後是 on；緊急關閉時是 off，
+ *     這時用 --var 改成 admin），由管理員帳號跑「國寫題 → 國寫指導 → AI 示範（8 點）」。假 Anthropic 依系統提示裡的「Model answer (國寫範文):」辨識範文任務，
  *     回一篇會通過後處理的本站自寫示範，並檢查 max_tokens 14,000、<task>／<student_provided_question>／<analysis_digest> 三段、
  *     沒有學生的文字；詳情的 turn 是 zh_exemplar、案例的追問次數不變、/api/ai/quota 的 assist.zh_exemplars 記一篇。
  *   - 作文範文（docs/design/model-essays.md §9.5）：照 wrangler.toml 的 AI_ESSAY_EXEMPLARS（2026-10-30 上線後是 on；緊急關閉時是 off，
@@ -1313,7 +1313,7 @@ async function main() {
   const subjectsToml = subjectsVarsFrom(wranglerToml);
   const zhToml = subjectsMode(subjectsToml.subjects);
   const subjectsVar = zhToml === 'off' ? { AI_ASSISTANT_SUBJECTS: 'admin' } : {};
-  // 國寫範文：AI_ZH_EXEMPLAR 是 off（程式預設、上線前）時用 --var 改成 admin，由管理員帳號跑；/api/features 只在 on 時有 exemplar。
+  // 國寫範文：AI_ZH_EXEMPLAR 是 off（程式預設、緊急關閉）時用 --var 改成 admin，由管理員帳號跑；/api/features 只在 on 時有 exemplar。
   const zhExemplarToml = zhExemplarMode(zhExemplarVarFrom(wranglerToml));
   const zhExemplarVar = zhExemplarToml === 'off' ? { AI_ZH_EXEMPLAR: 'admin' } : {};
 

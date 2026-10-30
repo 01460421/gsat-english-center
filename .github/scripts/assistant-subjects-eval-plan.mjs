@@ -35,13 +35,13 @@ export const PROBE_PATHS = [
   'apps/api/src/ai/client.ts',
 ];
 export const RUN_KEYS = ['request', 'budget_usd', 'resume', 'allow_online_key', 'cases'];
-/** 累計花費上限（美元）：預設 25、最高 40（§11.4「預算」；完整評測估計約 US$21）。 */
+/** 累計花費上限（美元）：預設 25、最高 40（§11.4「預算」；完整評測估計約 US$23，其中國寫範文的 K 組約 US$2.5）。 */
 export const BUDGET_MAX_USD = 40;
 export const DEFAULT_BUDGET_USD = 25;
 /** A 組只有五次 64 tokens 的呼叫：預算上限固定 1 美元。 */
 export const PROBE_BUDGET_USD = 1;
-/** 組別：A 編譯探測、B 選擇、BS 重排版、BP 沒看過的題（B′）、C 給答案、D 題組、E 簡答、F 國寫、G 追問、H 對抗、J 照片。 */
-export const GROUP_SELECTORS = ['A', 'B', 'BS', 'BP', 'C', 'D', 'E', 'F', 'G', 'H', 'J'];
+/** 組別：A 編譯探測、B 選擇、BS 重排版、BP 沒看過的題（B′）、C 給答案、D 題組、E 簡答、F 國寫、G 追問、H 對抗、J 照片、K 國寫範文。 */
+export const GROUP_SELECTORS = ['A', 'B', 'BS', 'BP', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K'];
 
 /** paths 篩選的寫法 → 正規表示式（「**」任何字元、「*」不跨「/」）。 */
 export function globToRegExp(glob) {

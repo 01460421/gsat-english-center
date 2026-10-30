@@ -404,7 +404,7 @@ describe('deploy-summary.mjs', () => {
     expect(admin.notices.some((n) => n.includes('學習助手國寫範文') && n.includes('AI_ZH_EXEMPLAR'))).toBe(true);
   });
 
-  it('AI_ZH_EXEMPLAR 的判斷和 src/config.ts 的 featureModeSwitch 相同（含預設值 off）；讀 wrangler.toml 的那一行', () => {
+  it('AI_ZH_EXEMPLAR 的判斷和 src/config.ts 的 featureModeSwitch 相同（含預設值 off）；讀 wrangler.toml 的那一行（上線後是 on）', () => {
     expect(ZH_EXEMPLAR_DEFAULT).toBe(CONFIG_DEFAULTS.AI_ZH_EXEMPLAR);
     const warn = console.warn;
     console.warn = () => {};
@@ -416,6 +416,18 @@ describe('deploy-summary.mjs', () => {
     expect(zhExemplarVarFrom('# AI_ZH_EXEMPLAR = "on" 的說明\n[vars]\nAI_ZH_EXEMPLAR = "admin"\n')).toBe('admin');
     expect(zhExemplarVarFrom('[vars]\nAPP_ORIGIN = "x"\n')).toBeNull();
     const toml = readFileSync(path.join(REPO, 'apps', 'api', 'wrangler.toml'), 'utf8');
-    expect(zhExemplarVarFrom(toml)).toMatch(/^(off|admin|on)$/);
+    // 上線（on）、緊急關閉（off）、只留給管理員（admin）都只改那一行：三種值都讀得到（不把值寫死）。
+    const real = zhExemplarVarFrom(toml);
+    expect(real).toMatch(/^(off|admin|on)$/);
+    // 現行設定配上對得起來的 /api/features（國文照它的兩行；exemplar 只在國文與範文都是 on 時出現）：沒有國寫範文的警告；
+    // on 時那一列是「對所有人開放」（國寫範文設計 §12 工作包 3 的驗收）。
+    const zh = subjectsVarsFrom(toml);
+    const zhOn = subjectsMode(zh.subjects) === 'on';
+    const exOn = zhOn && zhExemplarMode(real) === 'on';
+    const base = { ...assistantInput({ assistant: true, assistantPhoto: true }, 'on', 'on'), subjectsVar: zh.subjects, subjectsPhotoVar: zh.photo };
+    const features = { ...base.features, ...(zhOn ? { assistantSubjects: [{ subject: 'chinese', photo: subjectsMode(zh.photo) === 'on', ...(exOn ? { exemplar: true } : {}) }] } : {}) };
+    const s = buildDeploySummary({ ...base, features, zhExemplarVar: real });
+    expect(s.warnings.some((w) => w.includes('學習助手國寫範文'))).toBe(false);
+    if (exOn) expect(row(s, '學習助手國寫範文（assistantSubjects.exemplar）')).toBe('對所有人開放（wrangler.toml 的 AI_ZH_EXEMPLAR："on"）');
   });
 });
