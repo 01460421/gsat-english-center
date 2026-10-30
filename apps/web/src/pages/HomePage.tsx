@@ -74,7 +74,7 @@ function useHomeGroups(): { id: string; label: string; pages: PageMeta[] }[] {
       const pages = modules.filter((p) => p.group === g.id);
       return g.label && pages.length > 0 ? [{ id: g.id, label: g.label, pages }] : [];
     });
-  }, [flags.assistant, flags.assistantSubjects]);
+  }, [flags.assistant, flags.assistantSubjects, flags.zhExemplar]);
 }
 
 /**

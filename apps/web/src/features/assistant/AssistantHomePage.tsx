@@ -11,6 +11,8 @@
  *   - 多科目（docs/design/assistant-subjects.md §1.2、§1.6、§7.3、§8.2）：國文對這位使用者開放時，第一張卡換成「問英文題」「問國文題」
  *     兩張（各連到 /assistant/new?subject=…），點數說明多一行國文。最近的解析裡有國文時，每列前面有科目標籤，上方多「全部／英文／國文」
  *     篩選（GET /api/assist/cases?subject=）；選國文時上方是國文錯因統計（程式算，0 點）。只有英文時畫面和原本相同。
+ *   - 國寫範文（docs/design/assistant-subjects.md「國寫範文」的「獨立頁」）：國寫範文開放時，「問國文題」後面多一張「國寫範文」卡
+ *     （/zh-writing），國文的點數那一行多國寫範文的點數；沒開時畫面和原本相同。
  */
 import {
   ASSIST_SECTION_LABELS,
@@ -22,7 +24,7 @@ import {
   type AssistCaseSummary,
   type AssistSubject,
 } from '@gsat/shared';
-import { BookOpenText, ChevronRight, ClipboardPaste, Crosshair, FileText, ListChecks } from 'lucide-react';
+import { BookOpenText, ChevronRight, ClipboardPaste, Crosshair, Feather, FileText, ListChecks } from 'lucide-react';
 import { useEffect, useId, useState, type ReactNode } from 'react';
 import { Link } from 'react-router';
 import { useSignedIn } from '../writing/lib/access';
@@ -34,9 +36,11 @@ import { weakPaperVisible } from './papers/flags';
 import { useAssistantPhotoEnabled } from './lib/useAssistantEnabled';
 import { caseSubject } from './subjects';
 import { zhVerdictLabel } from './subjects/chinese/caseTag';
+import { ZH_EXEMPLAR_POINTS } from './subjects/chinese/exemplar';
 import { ZH_COPY } from './subjects/chinese/copy';
 import { ZhErrorStats } from './subjects/chinese/components/ZhErrorStats';
 import { useAssistSubjects } from './subjects/useAssistSubjects';
+import { ZH_WRITING_COPY, ZH_WRITING_PATH, ZH_WRITING_TITLE } from './zhWriting/labels';
 
 const DATE = new Intl.DateTimeFormat('zh-TW', { timeZone: 'Asia/Taipei', month: 'numeric', day: 'numeric' });
 const UNDERSTOOD_TEXT = { yes: '懂了', partly: '還有點不懂', no: '不懂' } as const;
@@ -235,8 +239,8 @@ function PapersCard() {
   );
 }
 
-/** 國文的點數（shared 的 assistPoints；國文開放時列在英文那一行下面）。 */
-function ChinesePointsLine({ photo }: { photo: boolean }) {
+/** 國文的點數（shared 的 assistPoints；國文開放時列在英文那一行下面）。國寫範文開放時多「國寫範文一篇 8 點」。 */
+function ChinesePointsLine({ photo, exemplar }: { photo: boolean; exemplar: boolean }) {
   const choice = (n: number) => assistPoints('chinese', 'assist_analyze', { kind: 'zh_choice', items: n });
   const short = (n: number) => assistPoints('chinese', 'assist_analyze', { kind: 'zh_short', items: n });
   return (
@@ -244,7 +248,8 @@ function ChinesePointsLine({ photo }: { photo: boolean }) {
       國文：選擇題 {choice(1)} 點起（每多一題加 {choice(2) - choice(1)} 點，最多 {choice(Number.MAX_SAFE_INTEGER)} 點）、簡答 {short(1)} 點起（每多一個小題加{' '}
       {short(2) - short(1)} 點，最多 {short(Number.MAX_SAFE_INTEGER)} 點）、國寫指導 {assistPoints('chinese', 'assist_analyze', { kind: 'zh_writing' })} 點、追問一次{' '}
       {assistPoints('chinese', 'assist_followup')} 點
-      {photo ? `、拍照轉錄 1 張 ${assistPoints('chinese', 'assist_ocr', { photos: 1 })} 點（2 張 ${assistPoints('chinese', 'assist_ocr', { photos: 2 })} 點）` : ''}。
+      {photo ? `、拍照轉錄 1 張 ${assistPoints('chinese', 'assist_ocr', { photos: 1 })} 點（2 張 ${assistPoints('chinese', 'assist_ocr', { photos: 2 })} 點）` : ''}
+      {exemplar ? `、國寫範文（AI 示範）一篇 ${ZH_EXEMPLAR_POINTS} 點` : ''}。
       國文的解析目前不列入學習報告。
     </p>
   );
@@ -297,6 +302,14 @@ function HomeBody() {
                 {ZH_COPY.homeChineseCard}
               </ActionCard>
             </li>
+            {/* 國寫範文的獨立頁（assistant-subjects.md「國寫範文」的「獨立頁」）：國寫範文開放時才有這張卡。 */}
+            {subjects.exemplar('chinese') && (
+              <li className="min-w-0">
+                <ActionCard to={ZH_WRITING_PATH} icon={<Feather aria-hidden="true" className="size-5" />} title={ZH_WRITING_TITLE}>
+                  {ZH_WRITING_COPY.assistantCard}
+                </ActionCard>
+              </li>
+            )}
           </>
         ) : (
           <li className="min-w-0">
@@ -324,7 +337,7 @@ function HomeBody() {
         {photo ? '、拍照轉錄一次用 2 點' : ''}。
         作答紀錄只存在這台裝置；你選擇送出的題目、作答與疑問才會傳到本站伺服器。
       </p>
-      {zhOpen && <ChinesePointsLine photo={subjects.photo('chinese')} />}
+      {zhOpen && <ChinesePointsLine photo={subjects.photo('chinese')} exemplar={subjects.exemplar('chinese')} />}
     </div>
   );
 }

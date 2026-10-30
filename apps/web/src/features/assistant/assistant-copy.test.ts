@@ -14,6 +14,7 @@ import { ASSISTANT_AI_NOTICE, AiBadge, AiNotice, ReportAiContent } from '../writ
 import { reportPlainText } from './lib/printText';
 import { REPORT_AI_DISCLAIMER } from './reportFormat';
 import { ZH_EXEMPLAR_COPY } from './subjects/chinese/copy';
+import { ZH_WRITING_COPY } from './zhWriting/labels';
 import { reportDetail } from './testing/report';
 
 const FILES = import.meta.glob<string>(['./**/*.{ts,tsx}', '!./**/*.test.{ts,tsx}'], { query: '?raw', import: 'default', eager: true });
@@ -69,6 +70,15 @@ describe('學習助手的文案', () => {
         './subjects/chinese/ZhExemplarSection.tsx',
         './subjects/chinese/ZhExemplarView.tsx',
         './subjects/chinese/exemplar.ts',
+        // 國寫範文的獨立頁（assistant-subjects.md「國寫範文」的「獨立頁」）。
+        './zhWriting/ZhWritingPage.tsx',
+        './zhWriting/ZhWritingResultPage.tsx',
+        './zhWriting/labels.ts',
+        './zhWriting/lib.ts',
+        './zhWriting/components/PastPrompts.tsx',
+        './zhWriting/components/PasteForm.tsx',
+        './zhWriting/components/ZhWritingAccess.tsx',
+        './zhWriting/components/ZhWritingHistory.tsx',
       ]),
     );
   });
@@ -134,6 +144,23 @@ describe('學習助手的文案', () => {
     expect(all.replace(/不打分數/g, '')).not.toMatch(/分數|評分|等第|級分/);
     expect(all.replace(/不是得獎作品/g, '')).not.toMatch(/得獎|特優|第一名/);
     expect(all).toContain('不是得獎作品');
+    expect(all).not.toMatch(FORBIDDEN);
+  });
+
+  it('國寫範文的獨立頁：點數不寫死在畫面程式裡；文案不宣稱分數或評分、不提得獎，不寫考試機構的名稱', () => {
+    const files = Object.keys(FILES).filter((f) => f.startsWith('./zhWriting/'));
+    expect(files.length).toBeGreaterThanOrEqual(8);
+    for (const file of files) {
+      const code = (FILES[file] ?? '').replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
+      expect(code, file).not.toMatch(/\d+\s*點/);
+    }
+    const texts = Object.values(ZH_WRITING_COPY).flatMap((v): string[] =>
+      typeof v === 'string' ? [v] : typeof v === 'function' ? [String((v as (...n: unknown[]) => unknown)(8, 20, 7, 10))] : Object.values(v as Record<string, string>),
+    );
+    const all = texts.join('\n');
+    // 貼上題目的說明是「不要貼範文、佳作、評分說明或答案」（叫學生不要貼的東西），不算宣稱。
+    expect(ZH_WRITING_COPY.pasteIntro).toContain('不要貼範文、佳作、評分說明或答案');
+    expect(all.replace(ZH_WRITING_COPY.pasteIntro, '')).not.toMatch(/分數|評分|等第|級分|得獎|特優|第一名|佳作/);
     expect(all).not.toMatch(FORBIDDEN);
   });
 

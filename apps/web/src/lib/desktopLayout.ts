@@ -90,6 +90,10 @@ export const ROUTE_MODES: ReadonlyArray<readonly [pattern: string, mode: WidthMo
   // 學習報告：預設寬度；ws 寬度起左側加目錄（報告內容自己排）。
   ['/assistant/report', 'default'],
   ['/assistant/report/:version', 'default'],
+  // 國寫範文的獨立頁（docs/design/assistant-subjects.md「國寫範文」的「獨立頁」）：首頁（選題、貼上、確認、清單）與結果頁都是預設寬度
+  // （結果頁一欄：題目收合在上面、示範在下面，不必自動收合側邊欄）。
+  ['/zh-writing', 'default'],
+  ['/zh-writing/:id', 'default'],
 ];
 
 /**

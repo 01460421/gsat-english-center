@@ -40,6 +40,14 @@ export function assistantSubjectsOf(features: FeaturesResponse, me: MeResponse):
   return out;
 }
 
+/**
+ * 國寫範文對目前的使用者開不開（純函式，測試用）：國文那一筆有 exemplar: true（公開的 /api/features，或管理員預覽）。
+ * 學習助手或國文沒開時一定是 false（國寫範文跟著兩個總開關）。導覽的「國寫範文」與獨立頁的送出都看這一支。
+ */
+export function zhExemplarEnabledOf(features: FeaturesResponse, me: MeResponse): boolean {
+  return assistantSubjectsOf(features, me).some((s) => s.subject === 'chinese' && s.exemplar === true);
+}
+
 export function useAssistantEnabled(): boolean {
   const features = useFeatures();
   const { me } = useMe();
@@ -59,10 +67,26 @@ export function useAssistantSubjects(): AssistSubjectAvailability[] {
   return assistantSubjectsOf(features, me);
 }
 
-/** 導覽與首頁過濾頁面用的開關集合（modules.ts 的 navPages）；assistantSubjects 只換學習助手卡片的說明。 */
+/** 國寫範文對目前的使用者開不開（國寫範文的獨立頁、學習助手首頁的入口）。 */
+export function useZhExemplarEnabled(): boolean {
+  const features = useFeatures();
+  const { me } = useMe();
+  return zhExemplarEnabledOf(features, me);
+}
+
+/**
+ * 導覽與首頁過濾頁面用的開關集合（modules.ts 的 navPages）；assistantSubjects 只換學習助手卡片的說明。
+ * zhExemplar 只在打開時才帶（關著時物件和原本一模一樣）。
+ */
 export function usePageFeatureFlags(): PageFeatureFlags {
   const features = useFeatures();
   const { me } = useMe();
   const assistant = assistantEnabledOf(features, me);
-  return assistantSubjectsOf(features, me).length > 0 ? { assistant, assistantSubjects: true } : { assistant };
+  const subjects = assistantSubjectsOf(features, me);
+  const zhExemplar = subjects.some((s) => s.subject === 'chinese' && s.exemplar === true);
+  return {
+    assistant,
+    ...(subjects.length > 0 ? { assistantSubjects: true } : {}),
+    ...(zhExemplar ? { zhExemplar: true } : {}),
+  };
 }

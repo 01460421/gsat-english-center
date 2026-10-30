@@ -19,11 +19,15 @@ import {
   type AssistSubject,
   type AssistTaskAccepted,
   type CreateAssistCaseBody,
+  type CreateZhExemplarBody,
   type CreateAssistFollowupBody,
   type CreateAssistReportBody,
   type PatchAssistCaseBody,
   type PhotoUploadResponse,
   type UpdateAssistQuestionBody,
+  type ZhExemplarAccepted,
+  type ZhExemplarListItem,
+  type ZhExemplarListResponse,
 } from '@gsat/shared';
 import { ApiRequestError, api } from '../../../lib/api';
 
@@ -123,6 +127,44 @@ export async function startAssistFollowup(id: string, body: CreateAssistFollowup
  */
 export async function startZhExemplar(id: string): Promise<AssistTaskAccepted> {
   return expect(await api(`${casePath(id)}/zh-exemplar`, { method: 'POST', body: {} }), isTaskAccepted);
+}
+
+// ── 國寫範文的獨立頁（docs/design/assistant-subjects.md「國寫範文」的「獨立頁」）──
+
+/**
+ * POST /api/assist/zh-exemplars：歷屆題目（past）、貼上的題目（paste）或同一個案例再看一篇（case）→ 202（8 點）；
+ * 同一題已經有一篇正在產生時 200 existing（不扣點）。之後輪詢 GET /api/assist/cases/{case_id}。
+ * 輸入檢查同國文的貼上（400 assist_input_invalid，field 是 prompt／material／limits）；每案例 2 篇（429 assist_limit）、
+ * 每天 3 篇（429 daily_limit）、開關關著 503 not_configured。
+ */
+export async function createZhExemplar(body: CreateZhExemplarBody): Promise<ZhExemplarAccepted> {
+  return expect(await api('/api/assist/zh-exemplars', { method: 'POST', body }), isTaskAccepted);
+}
+
+const ZH_EXEMPLAR_TURN_STATUSES = ['queued', 'running', 'done', 'failed'] as const;
+
+export function isZhExemplarListItem(v: unknown): v is ZhExemplarListItem {
+  if (!isObject(v)) return false;
+  const latest = v['latest'];
+  return (
+    typeof v['case_id'] === 'string' &&
+    typeof v['title'] === 'string' &&
+    (v['origin'] === 'past' || v['origin'] === 'paste' || v['origin'] === 'assistant') &&
+    typeof v['exemplars'] === 'number' &&
+    typeof v['remaining'] === 'number' &&
+    typeof v['updated_at'] === 'number' &&
+    (latest === null || (isObject(latest) && typeof latest['turn_id'] === 'string' && (ZH_EXEMPLAR_TURN_STATUSES as readonly unknown[]).includes(latest['status'])))
+  );
+}
+
+function isZhExemplarList(v: unknown): v is ZhExemplarListResponse {
+  return isObject(v) && Array.isArray(v['items']) && v['items'].every(isZhExemplarListItem) && (v['next_cursor'] === null || typeof v['next_cursor'] === 'string');
+}
+
+/** GET /api/assist/zh-exemplars?cursor=：「我的國寫範文」（新到舊，每頁 20；只要登入，開關關著也能看）。 */
+export async function listZhExemplars(opts: { cursor?: string | null; signal?: AbortSignal } = {}): Promise<ZhExemplarListResponse> {
+  const qs = opts.cursor ? `?${new URLSearchParams({ cursor: opts.cursor }).toString()}` : '';
+  return expect(await api(`/api/assist/zh-exemplars${qs}`, withSignal(opts.signal)), isZhExemplarList);
 }
 
 // ── 拍照問題目（WP-A3）：照片一次一張（multipart，欄位 photo），再送轉錄（2 點）。──
