@@ -1,11 +1,22 @@
 /**
  * zh_writing（國寫指導）的畫面（docs/design/assistant-subjects.md §1.7、§1.8 範例 E、§3.4、§5.5）：
  *   這題在考什麼 → 素材（知性）或題目的意象與引導（情意）→ 題目要你做的事（每一點引題目原文）→ 問題（一）怎麼答（只有知性）
- *   → 立場或立意 → 取材方向 → 段落架構 → 示範（AI 示範，不是佳作）→ 常見失分 → 你附的段落（要件檢核、錯別字）→ 寫完自我檢查
- *   → 這類題的解法。
+ *   → 立場或立意 → 取材方向 → 段落架構 → 示範（AI 示範，不是佳作）→ 常見失分 → 你附的段落（要件檢核、錯別字、程式檢查）
+ *   → 寫完自我檢查 → 這類題的解法 → 國寫方法卡（本站整理，先收合）。
  * 不顯示等第或分數（schema 沒有這種欄位，後處理也拿掉含等第的句子）；頁首另加「AI 不打分數，示範不是佳作」。
+ * 程式檢查（zhDraftChecks）在畫面上用題目裡的段落原文算：不送 AI、不花點數，舊的案例也看得到。
  */
-import type { ZhWritingView as ZhWritingAnalysis } from '@gsat/shared';
+import {
+  ZH_DRAFT_CHECK_INFO,
+  ZH_WRITING_METHOD_CARDS,
+  zhDraftCheckIdsFor,
+  zhDraftChecks,
+  zhErrorLabel,
+  zhMethodCardLines,
+  type ZhSection,
+  type ZhWritingView as ZhWritingAnalysis,
+} from '@gsat/shared';
+import { ChevronDown } from 'lucide-react';
 import { AnalysisSection } from '../../components/parts';
 import { CharCount } from './components/CharCount';
 import { LocateQuote } from './components/LocateQuote';
@@ -27,7 +38,75 @@ function List({ items }: { items: readonly string[] }) {
 
 const circled = (i: number) => String.fromCharCode(0x2460 + i);
 
-export function ZhWritingView({ analysis, common }: { analysis: ZhWritingAnalysis; common: ZhViewCommonProps }) {
+/** 你附的段落的程式檢查：有發現時逐項列（標籤、錯因、具體說明），沒有時一行說明這一段真的檢查了哪幾項。 */
+function DraftProgramChecks({ text, section, target }: { text: string; section: ZhSection; target: 'q1' | 'q2' }) {
+  const findings = zhDraftChecks(text, section, { target });
+  return (
+    <div className="space-y-1 border-t border-line pt-3" data-zh-draft-program>
+      <h3 className="font-semibold">{ZH_COPY.draftChecksTitle}</h3>
+      {findings.length > 0 ? (
+        <ul className="space-y-2">
+          {findings.map((f) => (
+            <li key={f.id} className="space-y-0.5 rounded-xl bg-surface-2 px-3 py-2" data-zh-draft-check={f.id}>
+              <p className="flex flex-wrap items-center gap-2">
+                <span className="font-medium">{f.label_zh}</span>
+                <span className="text-xs text-muted">{zhErrorLabel(f.code)}</span>
+              </p>
+              <p className="break-words">{f.detail_zh}</p>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="break-words">{ZH_COPY.draftChecksNone(zhDraftCheckIdsFor(section, target, text).map((id) => ZH_DRAFT_CHECK_INFO[id].label_zh))}</p>
+      )}
+      <p className="text-xs text-muted">{ZH_COPY.draftChecksNote}</p>
+    </div>
+  );
+}
+
+/** 國寫方法卡（本站整理，先收合）：每張卡列要點、這一型的做法（題型不明時知性、情意都列）與一個練習。 */
+function MethodCards({ section }: { section: ZhSection }) {
+  const lines = zhMethodCardLines(section);
+  return (
+    <details className="group rounded-2xl border border-line bg-surface px-4 py-2" data-zh-method-cards>
+      {/* flex 會拿掉瀏覽器內建的展開三角形：改放一個會轉向的箭頭，看得出可以展開（Safari 的內建記號另外藏起來）。 */}
+      <summary className="flex min-h-11 cursor-pointer items-center justify-between gap-2 font-semibold [&::-webkit-details-marker]:hidden">
+        {ZH_COPY.methodCardsSummary}
+        <ChevronDown aria-hidden="true" className="size-4 shrink-0 text-muted transition-transform group-open:rotate-180" />
+      </summary>
+      <div className="space-y-3 pb-2">
+        <ul className="space-y-3">
+          {ZH_WRITING_METHOD_CARDS.map((card) => (
+            <li key={card.id} className="space-y-1 rounded-xl bg-surface-2 px-3 py-2" data-method-card={card.id}>
+              <p className="font-semibold break-words">{card.title_zh}</p>
+              <p className="break-words">{card.point_zh}</p>
+              {lines.reason && (
+                <p className="text-[0.95rem] break-words">
+                  <span className="font-medium">{ZH_COPY.methodCardsReason}：</span>
+                  {card.reason_zh}
+                </p>
+              )}
+              {lines.emotion && (
+                <p className="text-[0.95rem] break-words">
+                  <span className="font-medium">{ZH_COPY.methodCardsEmotion}：</span>
+                  {card.emotion_zh}
+                </p>
+              )}
+              <p className="text-[0.95rem] break-words text-muted">
+                <span className="font-medium">{ZH_COPY.methodCardsPractice}：</span>
+                {card.practice_zh}
+              </p>
+            </li>
+          ))}
+        </ul>
+        <p className="text-xs text-muted">{ZH_COPY.methodCardsSource}</p>
+      </div>
+    </details>
+  );
+}
+
+/** draftText：學生附的段落原文（在題目裡；解析只有字數與 AI 的檢核）。沒有時不顯示程式檢查。 */
+export function ZhWritingView({ analysis, common, draftText = null }: { analysis: ZhWritingAnalysis; common: ZhViewCommonProps; draftText?: string | null }) {
   if (analysis.off_topic) return <ZhOffTopic />;
   const reason = analysis.section === 'zh_writing_reason';
   const q1Notice = fieldNotice(analysis.notices, 'q1.demo_zh');
@@ -170,7 +249,8 @@ export function ZhWritingView({ analysis, common }: { analysis: ZhWritingAnalysi
               </ul>
             </div>
           )}
-          <p className="text-xs text-muted">只檢查要件與錯別字，不打等第或分數。</p>
+          <p className="text-xs text-muted">{ZH_COPY.draftNote}</p>
+          {draftText !== null && draftText.trim() !== '' && <DraftProgramChecks text={draftText} section={analysis.section} target={analysis.draft.target} />}
         </AnalysisSection>
       )}
       {analysis.checklist_zh.length > 0 && (
@@ -186,6 +266,7 @@ export function ZhWritingView({ analysis, common }: { analysis: ZhWritingAnalysi
         </AnalysisSection>
       )}
       <TypeStepsSection method={null} typeSteps={analysis.type_steps} single />
+      <MethodCards section={analysis.section} />
     </div>
   );
 }

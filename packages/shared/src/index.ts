@@ -29,6 +29,8 @@ export * from './assist-zh-data';
 // 學習報告：方法庫、計畫骨架、facts 與報告內容的型別（docs/design/learning-assistant.md §3）。
 export * from './assist-methods';
 export * from './assist-report';
+// 國寫方法卡與附段落的程式檢查（docs/design/assistant-subjects.md 實作備註）。
+export * from './assist-methods-zh';
 // 作文範文：三個層級的規格、字數目標、對照數字與 API 型別（同樣直接轉匯出、不經 writing.ts；docs/design/model-essays.md §7.2）。
 export * from './connectives';
 export * from './exemplars';

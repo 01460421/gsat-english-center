@@ -173,6 +173,23 @@ describe('CasePage（國文）', () => {
     expect(document.body.textContent).not.toMatch(/[ABC][＋+]?\s*級|級分|等第：/);
   });
 
+  it('國寫附了段落：題目裡的段落原文交給程式檢查（不花點數）；國寫方法卡先收合', async () => {
+    const draft = '在這個資訊爆炸的時代，一但停下來就會落後！';
+    const base = zhCase();
+    renderCase(
+      zhCase({
+        kind: 'zh_writing',
+        section: 'zh_writing_emotion',
+        question: { ...base.question!, kind: 'zh_writing', draft: { text: draft, target: 'q2' } },
+        turns: [analyzeTurn(zhWritingAnalysis({ draft }))],
+      }),
+    );
+    const program = within(await screen.findByRole('region', { name: /你附的段落/ })).getByRole('heading', { name: '程式檢查（不花點數）' }).parentElement!;
+    expect(program).toHaveTextContent('「一但」應寫「一旦」');
+    expect(program).toHaveTextContent('「在這個資訊爆炸的時代」這類句子放進哪篇文章都說得通');
+    expect(screen.getByText('國寫方法卡').closest('details')).not.toHaveAttribute('open');
+  });
+
   it('解析時判定是社會科：說明已退還、只開放英文、國文；沒有「再試一次」', async () => {
     const failed: AssistTurnView = { id: 't1', seq: 1, kind: 'analyze', status: 'failed', failure: 'invalid_output', detected_subject: 'social', created_at: 1_790_000_000 };
     renderCase(zhCase({ status: 'failed', turns: [failed] }));

@@ -89,11 +89,15 @@ const ZH_SHORT_RULES = `Non-choice questions:
 - Count the required elements, locate the evidence, give a sentence frame, and write a sample answer within the limit. Punctuation counts as one character, as on the answer sheet; aim for about 80% of the limit, because the program removes a sample answer that is even one character over. The sample answer is your own; never present it as an official answer.
 - Check the student's answer element by element (coverage, what is missing, subject, key words and wrong characters). Do not give a score; the program counts the characters.`;
 
-/** 國寫的規則（只放在 zh_writing）。 */
+/**
+ * 國寫的規則（只放在 zh_writing）。附段落的檢核順序是國寫回饋清單的 AI 那一半（審題、關鍵詞、主張或轉折、例子後的說明、
+ * 引文、具體細節）；開頭長度、驚嘆號、分號、常見錯字、套語與字數由程式檢查（shared 的 zhDraftChecks，畫面另列，不花點數）。
+ */
 const ZH_WRITING_RULES = `Composition (國寫):
 - List the task's requirements quoting the prompt; for 問題（一） give the points with a quote from the material for each and no personal opinion; suggest stances, material and structure.
 - Give either at most three sample sentences of at most 50 characters, or one body-paragraph demonstration of at most 150 characters (use_zh 主體段示範). Never write an essay, never give a grade or a score, never call anything a 佳作.
-- When the student attached a paragraph, check it against the requirements (quote the student's own words) and list only real wrong characters; variant forms that are both acceptable are not wrong.
+- When the student attached a paragraph, check it in this order: (1) every requirement is answered (name it in the prompt's words); (2) the key word is defined or limited; (3) a claim sentence (知性) or a turn (情意); (4) every example is followed by an explanation tied to the claim; (5) at most one quotation, with the right words, author and source; (6) concrete detail: time, place, action, one sensory detail. Put only the 2–3 most important in draft_checks and quote the student's own words; no grade or score. An answer to 問題（一） is checked against the points of 問題（一） instead.
+- In typos list only real wrong characters; variant forms that are both acceptable are not wrong.
 - Students often write about family, loss and relationships. Help them make the experience concrete and the insight genuine. Do not ask for more personal details, do not comment on the student's family, and do not analyse the student psychologically.`;
 
 /** 計分事實（國綜；國寫另一段）。 */

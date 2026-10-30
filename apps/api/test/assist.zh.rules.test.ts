@@ -195,6 +195,16 @@ describe('§3.7 國文的系統提示與 schema 的雜湊（fixtures/assist-prom
     }
     expect(OUTPUTS.zh_writing.system).toContain('never give a grade or a score');
   });
+
+  it('國寫附段落的回饋清單：依序檢核六項、只寫最重要的 2–3 項、不給分；只在國寫的提示裡', () => {
+    const writing = OUTPUTS.zh_writing.system;
+    const order = ['(1) every requirement is answered', '(2) the key word is defined or limited', '(3) a claim sentence (知性) or a turn (情意)', '(4) every example is followed by an explanation', '(5) at most one quotation', '(6) concrete detail'];
+    const at = order.map((s) => writing.indexOf(s));
+    for (const [i, pos] of at.entries()) expect(pos, order[i]).toBeGreaterThan(0);
+    expect([...at].sort((a, b) => a - b)).toEqual(at);
+    expect(writing).toContain('only the 2–3 most important in draft_checks');
+    for (const kind of ['zh_choice', 'zh_short', 'zh_followup'] as const) expect(OUTPUTS[kind].system).not.toContain('(2) the key word is defined or limited');
+  });
 });
 
 /** 一個國文案例（組請求用；題目是本站自寫的句子）。 */

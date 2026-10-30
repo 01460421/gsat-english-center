@@ -47,6 +47,7 @@ export function ZhAnalysis({ detail, analysis, sourceNote, locatable, onLocate, 
     );
   }
   if (analysis.kind === 'zh_short') return <ZhShortView analysis={analysis} common={common} />;
-  if (analysis.kind === 'zh_writing') return <ZhWritingView analysis={analysis} common={common} />;
+  // 學生附的段落只存在題目裡（解析只有字數與 AI 的檢核）：程式檢查要用原文。
+  if (analysis.kind === 'zh_writing') return <ZhWritingView analysis={analysis} common={common} draftText={detail.question?.draft?.text ?? null} />;
   return null;
 }
