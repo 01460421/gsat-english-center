@@ -13,8 +13,8 @@
 #
 # 目前的值：S3 完整評測（cases 清空＝全部組別，上限 US$25，估計約 US$21）。A 組已在 S1 確認五份輸出格式都編譯得過（US$0.26）。
 # 還沒有 dev 金鑰，用正式站的金鑰（花費算進 online workspace 的每月上限）。中斷時 resume=true，改 request 這一行再推一次就接著跑。
-request=診斷：只跑 F 組（國寫），記下被 D8 隱藏的欄位（命中的字遮掉），判斷是誤藏還是背出官方文字
-budget_usd=2
+request=S3 完整評測第三次：輸出 D8 改成命中 ≥ 12 字連續段或總共 ≥ 16 字才藏之後；全部組別，上限 US$25，中斷時再推一次會接著跑
+budget_usd=25
 resume=false
 allow_online_key=true
-cases=F
+cases=

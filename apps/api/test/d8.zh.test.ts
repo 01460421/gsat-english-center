@@ -119,7 +119,11 @@ describe('比對（subjects/chinese/d8.ts）', () => {
   it('輸入：同一區塊 ≥ 2 個不同窗口才算；位置是學生文字裡的位置', () => {
     const one = `題目：${ZH_DECOY_OFFICIAL.slice(0, 8)}。`;
     expect(zhOfficialMaterialHits(zh, one)).toEqual([]);
-    expect(zhD8Hit(one, zh)).toBe(true);
+    // 輸出只有 1 個窗口（8 字）不算：要連成 ≥ 12 字或總共 ≥ 16 字（ZH_OUTPUT_MIN_RUN／ZH_OUTPUT_MIN_TOTAL）。
+    expect(zhD8Hit(one, zh)).toBe(false);
+    expect(zhD8Hit(`題目：${ZH_DECOY_OFFICIAL.slice(0, 12)}。`, zh)).toBe(true);
+    expect(zhD8Hit(`題目：${ZH_DECOY_OFFICIAL.slice(0, 11)}。`, zh)).toBe(false);
+    expect(zhD8Hit(`甲：${ZH_DECOY_OFFICIAL.slice(0, 8)}。乙：${ZH_DECOY_OFFICIAL.slice(20, 28)}。`, zh)).toBe(true);
     const text = `下面是我抄的講義：${ZH_DECOY_OFFICIAL}。`;
     const ranges = zhOfficialMaterialHits(zh, text);
     expect(ranges).toHaveLength(1);
@@ -136,15 +140,15 @@ describe('比對（subjects/chinese/d8.ts）', () => {
   });
 
   it('輸出：題目本身的窗口（學生貼上的、國寫附的段落）照題目引用不算；題目以外多寫的窗口照樣命中', () => {
-    const inQuestion = ZH_DECOY_OFFICIAL.slice(0, 8);
-    const beyond = ZH_DECOY_OFFICIAL.slice(-8);
+    const inQuestion = ZH_DECOY_OFFICIAL.slice(0, 14);
+    const beyond = ZH_DECOY_OFFICIAL.slice(-14);
     const allowed = zhQuestionWindows({ blocks: [{ kind: 'question', label: null, text: `題目：${inQuestion}，請說明。` }] }, zh);
-    expect(allowed.size).toBe(1);
+    expect(allowed.size).toBe(7);
     expect(zhD8Hit(`這題考「${inQuestion}」`, zh, allowed)).toBe(false);
     expect(zhD8Hit(`這題考「${inQuestion}」`, zh)).toBe(true);
     expect(zhD8Hit(`這題考「${inQuestion}」，也就是${beyond}`, zh, allowed)).toBe(true);
     // 國寫附的段落也算題目本身；沒有命中的題目回空集合。
-    expect(zhQuestionWindows({ blocks: [{ kind: 'question', label: null, text: '請寫一篇文章' }], draft: { text: inQuestion, target: 'q2' } }, zh).size).toBe(1);
+    expect(zhQuestionWindows({ blocks: [{ kind: 'question', label: null, text: '請寫一篇文章' }], draft: { text: inQuestion, target: 'q2' } }, zh).size).toBe(7);
     expect(zhQuestionWindows({ blocks: [{ kind: 'question', label: null, text: '請寫一篇文章' }], draft: null }, zh).size).toBe(0);
   });
 

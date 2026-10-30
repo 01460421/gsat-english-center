@@ -137,9 +137,33 @@ export function zhD8MatchedWindows(text: string, zh: ZhFingerprints, allowed?: R
     .map((w) => w.window);
 }
 
-/** 輸出比對（§5.7）：這段文字有沒有任何一個 8 字窗口命中國文集合（先扣樣板）；allowed 裡的窗口（題目本身的，zhQuestionWindows）不算。 */
+/**
+ * 輸出比對的門檻（評測 2026-10-30）：命中的字連成一段 ≥ 12 字，或全部命中的字 ≥ 16 字才算。模型照題目改寫要求（「指出兩件活動在……的不同」）
+ * 時，常和官方解說同一句改寫共用一小段（實測 1 段 10 字），那是誤藏；背出評分原則、參考答案或解說會留下長段或多段。
+ */
+export const ZH_OUTPUT_MIN_RUN = 12;
+export const ZH_OUTPUT_MIN_TOTAL = 16;
+
+/** 輸出比對（§5.7）：命中國文集合（先扣樣板）的字夠長才算（ZH_OUTPUT_MIN_RUN／ZH_OUTPUT_MIN_TOTAL）；allowed 裡的窗口（題目本身的，zhQuestionWindows）不算。 */
 export function zhD8Hit(text: string, zh: ZhFingerprints, allowed?: ReadonlySet<string>): boolean {
-  return windowHits(text, zh).some((w) => !allowed?.has(w.window));
+  const spans = windowHits(text, zh)
+    .filter((w) => !allowed?.has(w.window))
+    .map((w) => [w.start, w.end] as [number, number])
+    .sort((a, b) => a[0] - b[0]);
+  if (spans.length === 0) return false;
+  let longest = 0;
+  let total = 0;
+  let [start, end] = spans[0]!;
+  for (const [s, e] of [...spans.slice(1), [Infinity, Infinity] as [number, number]]) {
+    if (s <= end) {
+      end = Math.max(end, e);
+      continue;
+    }
+    longest = Math.max(longest, end - start);
+    total += end - start;
+    [start, end] = [s, e];
+  }
+  return longest >= ZH_OUTPUT_MIN_RUN || total >= ZH_OUTPUT_MIN_TOTAL;
 }
 
 /** 評分原則的句型（§4.2 的第 2–4 類，加上考生佳作）：模型把它寫進說明時，整欄換成固定說明。 */

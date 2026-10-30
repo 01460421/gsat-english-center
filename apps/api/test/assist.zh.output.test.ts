@@ -714,13 +714,15 @@ describe('台灣標準（§5.6）', () => {
 describe('D8 國文版（§5.7）', () => {
   const zh = zhDecoyFingerprints();
 
-  it('說明欄位命中 8 字窗口或評分原則句型 → 換成固定說明、算進 d8_hidden', () => {
+  it('說明欄位命中 ≥ 12 字的連續段或評分原則句型 → 換成固定說明、算進 d8_hidden；只共用 10 字的改寫不藏', () => {
     const q = question(zhBlocks(['question', null, ZH_FORM_SINGLE]));
     const out = zhChoiceOutput([{ label: '', answer: 'C', options: ['A', 'B', 'C', 'D'], yes: ['C'] }]);
-    out.passage_zh = `這段話：${ZH_DECOY_OFFICIAL.slice(0, 10)}。`;
+    out.passage_zh = `這段話：${ZH_DECOY_OFFICIAL.slice(0, 14)}。`;
+    out.method.steps_zh = [`只共用一小段：${ZH_DECOY_OFFICIAL.slice(20, 30)}。`, ...out.method.steps_zh.slice(1)];
     out.score_tips_zh = ['滿分答案要寫出兩個要點。', '錯字和正字成對記。'];
     const r = analyze(out, q, { zh });
     expect(choice(r).passage_zh).toBe(ZH_D8_HIDDEN_TEXT);
+    expect(choice(r).method.steps_zh[0]).toBe(`只共用一小段：${ZH_DECOY_OFFICIAL.slice(20, 30)}。`);
     expect(choice(r).score_tips_zh).toEqual([ZH_D8_HIDDEN_TEXT, '錯字和正字成對記。']);
     expect(r.meta.d8_hidden).toBe(2);
     expect(r.checks.d8_hidden).toBe(2);
