@@ -174,7 +174,7 @@ describe('CasePage（國文）', () => {
   });
 
   it('國寫附了段落：題目裡的段落原文交給程式檢查（不花點數）；國寫方法卡先收合', async () => {
-    const draft = '在這個資訊爆炸的時代，我們一但停下來就會落後！';
+    const draft = '在這個資訊爆炸的時代，一但停下來就會落後！';
     const base = zhCase();
     renderCase(
       zhCase({

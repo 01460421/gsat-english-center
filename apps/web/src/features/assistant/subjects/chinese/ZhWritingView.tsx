@@ -16,6 +16,7 @@ import {
   type ZhSection,
   type ZhWritingView as ZhWritingAnalysis,
 } from '@gsat/shared';
+import { ChevronDown } from 'lucide-react';
 import { AnalysisSection } from '../../components/parts';
 import { CharCount } from './components/CharCount';
 import { LocateQuote } from './components/LocateQuote';
@@ -37,7 +38,7 @@ function List({ items }: { items: readonly string[] }) {
 
 const circled = (i: number) => String.fromCharCode(0x2460 + i);
 
-/** 你附的段落的程式檢查：有發現時逐項列（標籤、錯因、具體說明），沒有時一行說明檢查了哪幾項。 */
+/** 你附的段落的程式檢查：有發現時逐項列（標籤、錯因、具體說明），沒有時一行說明這一段真的檢查了哪幾項。 */
 function DraftProgramChecks({ text, section, target }: { text: string; section: ZhSection; target: 'q1' | 'q2' }) {
   const findings = zhDraftChecks(text, section, { target });
   return (
@@ -56,7 +57,7 @@ function DraftProgramChecks({ text, section, target }: { text: string; section: 
           ))}
         </ul>
       ) : (
-        <p className="break-words">{ZH_COPY.draftChecksNone(zhDraftCheckIdsFor(section, target).map((id) => ZH_DRAFT_CHECK_INFO[id].label_zh))}</p>
+        <p className="break-words">{ZH_COPY.draftChecksNone(zhDraftCheckIdsFor(section, target, text).map((id) => ZH_DRAFT_CHECK_INFO[id].label_zh))}</p>
       )}
       <p className="text-xs text-muted">{ZH_COPY.draftChecksNote}</p>
     </div>
@@ -67,8 +68,12 @@ function DraftProgramChecks({ text, section, target }: { text: string; section: 
 function MethodCards({ section }: { section: ZhSection }) {
   const lines = zhMethodCardLines(section);
   return (
-    <details className="rounded-2xl border border-line bg-surface px-4 py-2" data-zh-method-cards>
-      <summary className="flex min-h-11 cursor-pointer items-center font-semibold">{ZH_COPY.methodCardsSummary}</summary>
+    <details className="group rounded-2xl border border-line bg-surface px-4 py-2" data-zh-method-cards>
+      {/* flex 會拿掉瀏覽器內建的展開三角形：改放一個會轉向的箭頭，看得出可以展開（Safari 的內建記號另外藏起來）。 */}
+      <summary className="flex min-h-11 cursor-pointer items-center justify-between gap-2 font-semibold [&::-webkit-details-marker]:hidden">
+        {ZH_COPY.methodCardsSummary}
+        <ChevronDown aria-hidden="true" className="size-4 shrink-0 text-muted transition-transform group-open:rotate-180" />
+      </summary>
       <div className="space-y-3 pb-2">
         <ul className="space-y-3">
           {ZH_WRITING_METHOD_CARDS.map((card) => (
@@ -244,7 +249,7 @@ export function ZhWritingView({ analysis, common, draftText = null }: { analysis
               </ul>
             </div>
           )}
-          <p className="text-xs text-muted">只檢查要件與錯別字，不打等第或分數。</p>
+          <p className="text-xs text-muted">{ZH_COPY.draftNote}</p>
           {draftText !== null && draftText.trim() !== '' && <DraftProgramChecks text={draftText} section={analysis.section} target={analysis.draft.target} />}
         </AnalysisSection>
       )}

@@ -57,6 +57,8 @@ export const ZH_COPY = {
   methodCardsEmotion: '情意題',
   methodCardsPractice: '練習',
   methodCardsSource: ZH_METHOD_CARDS_SOURCE_ZH,
+  /** 「你附的段落」的說明：AI 的檢核與程式檢查都適用（只指出要改的地方，不評分）。 */
+  draftNote: '只指出要改的地方，不打等第或分數。',
   /** 「你附的段落」裡的程式檢查（shared 的 zhDraftChecks；不送 AI、不花點數）。 */
   draftChecksTitle: '程式檢查（不花點數）',
   draftChecksNone: (labels: readonly string[]) => `程式沒有找到這幾種常見問題：${labels.join('、')}。`,

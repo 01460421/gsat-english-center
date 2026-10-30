@@ -5,7 +5,8 @@
  *   ZhText              底線標記換成 <u>（不經 innerHTML）、報讀「畫線：」、加亮。
  *   CharCount、ZhErrorStats、PhotoBudgetLine、MultiScoreLine。
  *   先看提示：卡片、診斷、左欄的引文加亮都等展開完整解析（或按下那一句）才出現；研判題的「推出組合」。
- *   ZhWritingView       國寫方法卡（先收合、依題型列知性或情意、來源說明）、你附的段落的程式檢查（有附才有、沒有發現時一行說明）。
+ *   ZhWritingView       國寫方法卡（先收合、有展開箭頭、依題型列知性或情意、來源說明）、你附的段落的程式檢查（有附才有、
+ *                       沒有發現時一行說明這一段真的檢查了哪幾項）、說明句不只講要件與錯別字。
  */
 import { ZH_CARD_COLUMNS, ZH_CARD_KINDS, ZH_WRITING_METHOD_CARDS, zhMultiScore, type ZhCardView, type ZhOptionView } from '@gsat/shared';
 import { render, screen, within } from '@testing-library/react';
@@ -221,7 +222,10 @@ describe('ZhWritingView：國寫方法卡與程式檢查', () => {
   it('國寫方法卡先收合；五張卡都有要點與練習；情意題只列「情意題」那一行；有來源說明', () => {
     render(<ZhWritingView analysis={zhWritingAnalysis()} common={common} />);
     expect(cards()).not.toHaveAttribute('open');
-    expect(within(cards()).getByText('國寫方法卡').tagName).toBe('SUMMARY');
+    const summary = within(cards()).getByText('國寫方法卡');
+    expect(summary.tagName).toBe('SUMMARY');
+    // flex 的 summary 沒有內建三角形：另有一個不報讀的箭頭。
+    expect(summary.querySelector('svg[aria-hidden="true"]')).not.toBeNull();
     expect(cards().querySelectorAll('[data-method-card]')).toHaveLength(5);
     for (const card of ZH_WRITING_METHOD_CARDS) {
       expect(within(cards()).getByText(card.title_zh)).not.toBeVisible();
@@ -256,17 +260,24 @@ describe('ZhWritingView：國寫方法卡與程式檢查', () => {
     expect(items[0]).toHaveTextContent('「一但」應寫「一旦」');
     expect(items[1]).toHaveTextContent('這一段有 2 個驚嘆號（「我們一但放棄就回不去了！」）');
     expect(within(program).getByText('程式依固定規則比對，不送 AI；沒列出的不代表沒有問題。')).toBeInTheDocument();
+    // 說明句涵蓋 AI 的檢核與程式檢查，只保證不評分。
+    expect(within(section).getByText('只指出要改的地方，不打等第或分數。')).toBeInTheDocument();
+    expect(section).not.toHaveTextContent('只檢查要件與錯別字');
   });
 
-  it('附了段落但沒有發現：一行說明檢查了哪幾項（問題（一）的答案不列字數與開頭）', () => {
+  it('附了段落但沒有發現：一行說明這一段真的檢查了哪幾項（片段不列字數、一段不列開頭；問題（一）也不列分號）', () => {
     const text = '選擇不是逃避，而是知道自己要往哪裡走。';
     const { unmount } = render(<ZhWritingView analysis={zhWritingAnalysis({ draft: text })} common={common} draftText={text} />);
-    expect(screen.getByText('程式沒有找到這幾種常見問題：字數偏多、開頭太長、常見錯字、套語、驚嘆號太多、分號串排比。')).toBeInTheDocument();
+    expect(screen.getByText('程式沒有找到這幾種常見問題：常見錯字、套語、驚嘆號太多、分號串排比。')).toBeInTheDocument();
     expect(document.querySelectorAll('[data-zh-draft-check]')).toHaveLength(0);
     unmount();
+    const two = `${text}\n${text}`;
+    const r2 = render(<ZhWritingView analysis={zhWritingAnalysis({ draft: two })} common={common} draftText={two} />);
+    expect(screen.getByText('程式沒有找到這幾種常見問題：開頭太長、常見錯字、套語、驚嘆號太多、分號串排比。')).toBeInTheDocument();
+    r2.unmount();
     const q1 = zhWritingAnalysis({ draft: text });
     render(<ZhWritingView analysis={{ ...q1, draft: { ...q1.draft!, target: 'q1' } }} common={common} draftText={text} />);
-    expect(screen.getByText('程式沒有找到這幾種常見問題：常見錯字、套語、驚嘆號太多、分號串排比。')).toBeInTheDocument();
+    expect(screen.getByText('程式沒有找到這幾種常見問題：常見錯字、套語、驚嘆號太多。')).toBeInTheDocument();
   });
 
   it('沒有附段落：沒有程式檢查（即使傳了文字）；有附段落但拿不到原文：只顯示 AI 的檢核', () => {

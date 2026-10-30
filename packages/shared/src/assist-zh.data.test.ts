@@ -30,7 +30,7 @@ import {
   ZH_SKILL_LABELS,
   zhSelfWrittenStepTexts,
 } from './assist-zh';
-import { ZH_DRAFT_CHECK_INFO, zhDraftChecks, zhWritingMethodCardTexts } from './assist-methods-zh';
+import { ZH_CLICHE_GROUPS, ZH_DRAFT_CHECK_INFO, zhDraftChecks, zhWritingMethodCardTexts } from './assist-methods-zh';
 import { ASSIST_DETECTED_SUBJECTS, assistSubjectMismatchText } from './assist-subjects';
 import { ASSIST_INPUT_PROBLEM_MESSAGES } from './assist';
 
@@ -53,11 +53,18 @@ function selfWrittenTexts(): string[] {
     ...Object.values(ZH_ROW_FLAG_TEXT),
     ...Object.values(ASSIST_INPUT_PROBLEM_MESSAGES),
     ...ASSIST_DETECTED_SUBJECTS.flatMap((s) => (['input', 'analyze', 'ocr'] as const).map((stage) => assistSubjectMismatchText(s, stage))),
-    // 國寫方法卡與附段落的程式檢查（說明句用一段六項都會中的本站自寫段落產生）。
+    // 國寫方法卡與附段落的程式檢查。說明句用本站自寫的段落產生：一次最多 5 筆，所以分三段，合起來每一種說明句
+    // （各題型的字數與開頭、錯字、套語、單段與多段的驚嘆號、分號，問題（一）的驚嘆號）都至少出現一次；套語各組的建議另外直接列。
     ...zhWritingMethodCardTexts(),
     ...Object.values(ZH_DRAFT_CHECK_INFO).map((i) => i.label_zh),
-    ...(['zh_writing_reason', 'zh_writing_emotion'] as const).flatMap((section) =>
-      zhDraftChecks(`隨著時代的進步，${'我'.repeat(800)}，一但開始就不能停！真的不能停！\n有人等待；有人出發；有人回頭；有人不選。`, section).map((f) => f.detail_zh),
+    ...ZH_CLICHE_GROUPS.map((g) => g.advice_zh),
+    ...(['zh_writing_reason', 'zh_writing_emotion', 'zh_other'] as const).flatMap((section) =>
+      [
+        zhDraftChecks(`隨著時代的進步，${'我'.repeat(800)}，一但開始就不能停！真的不能停！\n有人等待；有人出發；有人回頭；有人不選。`, section),
+        zhDraftChecks('有人等待；有人出發；有人回頭；有人不選。好!真好!', section),
+        zhDraftChecks('好！\n真好！', section),
+        zhDraftChecks('好!真好!一但開始，讓我受益良多。', section, { target: 'q1' }),
+      ].flatMap((fs) => fs.map((f) => f.detail_zh)),
     ),
   ].filter((t) => t !== '');
 }
