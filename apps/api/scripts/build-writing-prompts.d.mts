@@ -57,3 +57,10 @@ export interface ZhD8Bundle {
 }
 export declare function buildZhD8Bundle(repoRoot?: string): ZhD8Bundle;
 export declare function buildZhClassics(repoRoot?: string): { format: 'zh-classics/v1'; version: string; works: Array<{ title: string; author: string; text: string }> };
+
+// 國寫範文的獨立頁（設計「國寫範文」的「獨立頁」）。
+export declare const ZH_WRITING_PROMPTS_FILE: string;
+export declare const ZH_WRITING_PROMPTS_OUT_FILE: string;
+export declare const ZH_WRITING_PROMPTS_FORMAT: 'gsat-zh-writing-prompts/v1';
+export declare const ZH_WRITING_PROMPTS_MIN: number;
+export declare function buildZhWritingPrompts(file?: string): Json;

@@ -286,7 +286,7 @@ workflow 會依序：型別檢查與測試 → 檢查 token 與 workers.dev 子�
 |---|---|---|
 | `AI_ASSISTANT_SUBJECTS` | 國文的貼上、解析、追問（英文以外的科目；第一版只有國文） | `AI_ASSISTANT` |
 | `AI_ASSISTANT_SUBJECTS_PHOTO` | 國文的拍照 | `AI_ASSISTANT`、`AI_ASSISTANT_PHOTO`、`AI_ASSISTANT_SUBJECTS` |
-| `AI_ZH_EXEMPLAR` | 國寫範文：國寫案例看過國寫指導之後的「看一篇 AI 示範」（8 點、每天 3 篇、同一題 2 篇） | `AI_ASSISTANT`、`AI_ASSISTANT_SUBJECTS` |
+| `AI_ZH_EXEMPLAR` | 國寫範文：國寫案例看過國寫指導之後的「看一篇 AI 示範」，以及不必先看國寫指導的國寫範文獨立頁（選歷屆國寫或貼上題目；8 點、每天 3 篇、同一題 2 篇） | `AI_ASSISTANT`、`AI_ASSISTANT_SUBJECTS` |
 
 - **目前兩個都是 `"on"`（2026-10-30 上線，和作文範文同一個 PR）**：國文的貼上、解析、追問與拍照都開放給已核准的學生。拍照的照片組（J 組）沒有全部達標，站主決定第一版就開拍照（「拍照也可」）；保護措施（確認畫面的字形題提醒、錯字少於題目暗示的數量時標「不確定」、轉錄看不出題目時退點）與之後要補的手機實拍見 [design/assistant-subjects.md](design/assistant-subjects.md) 的實作備註。`/api/features` 只在 `"on"` 時有 `"assistantSubjects":[{"subject":"chinese","photo":…}]`；`"admin"` 時公開端點不透露，管理員登入後 `/api/me` 的 `assistant_preview` 多一個 `subjects`。每次部署的 **Summary** 有「學習助手國文」「學習助手國文拍照」兩列，寫出 `wrangler.toml` 的值，應該都是「對所有人開放」。
 - 上線時三份說明同一次升版（2026-10-30，和作文範文共用這一次；國文的點數不寫在說明裡，調點數不必再升版）：所有人下次登入要重新同意隱私權說明與服務條款，已申請（等核准、候補）或已核准的學生下次使用 AI 前要在 `/ai/apply` 重新同意 AI 處理說明（未滿 18 歲的也要再勾一次已告知父母或監護人）。
@@ -308,7 +308,7 @@ workflow 會依序：型別檢查與測試 → 檢查 token 與 workers.dev 子�
 4. **只關國文拍照**（例如轉錄把字形題的錯字改正了）：把 `AI_ASSISTANT_SUBJECTS_PHOTO` 改成 `"off"` 推到 main。國文貼上照常，英文的拍照也不受影響，不用改程式；`/api/features` 的國文那一筆變成 `"photo":false`。
 5. **緊急關閉國寫範文**（範文和已發表的作品太像、出現不適合的內容、費用異常、學生拿來交作業的回報）：
    1. 立即止血同第 3 步的 1（「AI 全站暫停」會一起停掉英文與國文的所有 AI 功能）。
-   2. 只關範文：把 `AI_ZH_EXEMPLAR` 改成 `"off"`，推到 main，等部署跑完。「看一篇 AI 示範」的按鈕消失、`POST …/zh-exemplar` 回「暫停」（503，不扣點）；國寫指導、其他國文功能與英文都照常；**已經產生的範文照常可以看、跟著案例刪除**；已經在排隊的照常完成（點數已經預扣，失敗照樣退還）。
+   2. 只關範文：把 `AI_ZH_EXEMPLAR` 改成 `"off"`，推到 main，等部署跑完。「看一篇 AI 示範」的按鈕與國寫範文的獨立頁的送出都消失、`POST …/zh-exemplar` 與 `POST /api/assist/zh-exemplars` 回「暫停」（503，不扣點）；「我的國寫範文」列表照常可以看；國寫指導、其他國文功能與英文都照常；**已經產生的範文照常可以看、跟著案例刪除**；已經在排隊的照常完成（點數已經預扣，失敗照樣退還）。
    3. **只留給管理員**查問題：改成 `"admin"`。學生的按鈕消失，管理員登入後照樣看得到、可以產生。
    4. 確認：Summary 的「學習助手國寫範文」是「關閉」（`admin` 時是「只有管理員能用」）、「注意」裡沒有「對不起來」；`/api/features` 的國文那一筆沒有 `"exemplar"`。`src/config.ts` 的程式預設固定是 `off`，不用改。
 6. **重產比賽語料指紋**（國寫範文用的 `data/d8/zh-contest.fp.json`；只有站主取得新一年的語文競賽作品集、放進自己電腦上的私人語料目錄時才做；語料是未成年人的作品，**永遠不放進 repo**，repo 裡只有雜湊）：

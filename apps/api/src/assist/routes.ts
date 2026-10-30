@@ -11,6 +11,8 @@
  *   POST   /cases/{id}/analyze            解析（6 點起；共用快取命中 0 點、回 200）→ 202                AI 核准＋開關
  *   POST   /cases/{id}/followups          追問（3 點）→ 202                                              AI 核准＋開關
  *   POST   /cases/{id}/zh-exemplar        國寫範文（8 點；國文國寫案例、國寫指導完成後）→ 202             AI 核准＋國寫範文開關
+ *   GET    /zh-exemplars?cursor=          「我的國寫範文」（獨立頁建立的案例＋有範文的國寫案例；新到舊，每頁 20）    登入
+ *   POST   /zh-exemplars                  國寫範文的獨立頁：歷屆題目／貼上題目／同一案例再一篇（8 點）→ 202     AI 核准＋國寫範文開關
  *   POST   /cases/{id}/photos?ord=1|2     題目照片（multipart，欄位 photo；只限拍照的題目、draft）        AI 核准＋拍照開關（WP-A3）
  *   DELETE /cases/{id}/photos             刪掉這一題的照片（轉錄進行中 409）                             登入（WP-A3）
  *   POST   /cases/{id}/ocr                轉錄（2 點）→ 202；照片在結算時刪除                             AI 核准＋拍照開關（WP-A3）
@@ -41,6 +43,13 @@
  * （否則 503）→ 國寫指導已完成而且不是離題（否則 409）→ 每案例最多 2 篇（完成＋進行中；429 assist_limit）→ 預扣（每天 3 篇是
  * 任務家族上限，429 daily_limit）→ 寫 turn（kind 是 followup、meta_json.task＝'zh_exemplar'、沒有學生文字）。案例只更新時間，
  * 不動 followups 與狀態；範文不進追問的上下文（追問只讀 input_text 不是 NULL 的 followup）。
+ *
+ * 國寫範文的獨立頁（docs/design/assistant-subjects.md「國寫範文」的「獨立頁」；subjects/chinese/standalone.ts）：不必先有國寫指導。
+ * 檢查順序 writeGate → 本體 → 國文的開關與指紋 → AI_ZH_EXEMPLAR（503）→ 題目（歷屆題目的代號或貼上的題目，走國文貼上的同一套
+ * 檢查；400）→ 同一題的案例（去重鍵）：有就在那個案例上再加一篇（有一篇正在產生時回 200 existing、不扣點；每案例 2 篇 429），
+ * 沒有就預扣（每天 3 篇，429 daily_limit）後在同一個 batch 裡建立案例（status ready、kind zh_writing、ref_json.origin＝'zh_exemplar'）
+ * 與範文的 turn（建立案例的每日 30 個、總數 500 個上限照舊，429 assist_limit）。寫不進去就以 internal 退還。獨立頁的案例不能改題目
+ * （PUT …/question 409），學生之後仍可在學習助手對它要國寫指導或追問。
  */
 import {
   AI_ERROR_MESSAGES,
@@ -61,6 +70,8 @@ import {
   type AssistWritingView,
   type PhotoUploadResponse,
   type ZhAnalysisView,
+  type ZhExemplarAccepted,
+  type ZhExemplarListResponse,
 } from '@gsat/shared';
 import { Hono, type Context } from 'hono';
 import { readJsonBody } from '../account/validate';
@@ -105,8 +116,9 @@ import { requireZhFingerprints, type ZhFingerprints } from './subjects/chinese/d
 import { zhContainsHiddenPlaceholder } from './subjects/chinese/ocr';
 import { checkZhText, zhPhotoCase, zhQuestionTitle, zhStudentQuestion, zhTypedCase } from './subjects/chinese/question';
 import { zhChoiceItemVerdict } from './subjects/chinese/settle';
+import { listZhExemplarCases, toZhExemplarListItem, zhPastCase, zhPasteCase, zhStandaloneRef, type ZhStandaloneCase } from './subjects/chinese/standalone';
 import { workerSubject } from './subjects/index';
-import { ASSIST_BODY_MAX, analyzeSchema, createCaseSchema, followupSchema, patchCaseSchema, updateQuestionSchema } from './schemas';
+import { ASSIST_BODY_MAX, analyzeSchema, createCaseSchema, createZhExemplarSchema, followupSchema, patchCaseSchema, updateQuestionSchema } from './schemas';
 import { buildCase, problemMessage, studentQuestion, studentQuestionTitle, type BuiltCase } from './sources';
 import { sessionUser, writeGate } from './gate';
 import { mountReportRoutes } from './reports';
@@ -322,6 +334,15 @@ function casesTodaySql(userParam: string, dayStartParam: string, refParam: strin
                   AND json_extract(detail_json, '$.user_ref') = ${refParam}))`;
 }
 
+/** 建立案例被上限擋下（每天 30 個或總數 500 個）：依今天的建立數回 429 assist_limit 的哪一種。 */
+async function caseCapError(db: D1Database, userId: number, dayStart: number, ref: string | null): Promise<ApiError> {
+  const today = await db.prepare(`SELECT ${casesTodaySql('?1', '?2', '?3')} AS n`).bind(userId, dayStart, ref).first<{ n: number }>();
+  if ((today?.n ?? 0) >= ASSIST_LIMITS.casesPerDay) {
+    return new ApiError(429, 'assist_limit', `今天已經送出 ${ASSIST_LIMITS.casesPerDay} 題，明天再繼續`, { reason: 'cases_per_day' });
+  }
+  return new ApiError(429, 'assist_limit', `學習助手裡的題目已經有 ${ASSIST_LIMITS.casesLive} 題，請先刪掉一些舊的`, { reason: 'cases_live' });
+}
+
 /** question_json 太大（長篇閱讀＋解析）：先丟排除法表與沒問的題的題幹；還是太大就不支援。 */
 function questionJsonOf(view: AssistQuestionView | null): string | null {
   if (!view) return null;
@@ -438,13 +459,7 @@ assistRoutes.post('/cases', async (c) => {
     }
     throw err;
   }
-  if (changes !== 1) {
-    const today = await db.prepare(`SELECT ${casesTodaySql('?1', '?2', '?3')} AS n`).bind(user.id, dayStart, ref).first<{ n: number }>();
-    if ((today?.n ?? 0) >= ASSIST_LIMITS.casesPerDay) {
-      throw new ApiError(429, 'assist_limit', `今天已經送出 ${ASSIST_LIMITS.casesPerDay} 題，明天再繼續`, { reason: 'cases_per_day' });
-    }
-    throw new ApiError(429, 'assist_limit', `學習助手裡的題目已經有 ${ASSIST_LIMITS.casesLive} 題，請先刪掉一些舊的`, { reason: 'cases_live' });
-  }
+  if (changes !== 1) throw await caseCapError(db, user.id, dayStart, ref);
   await injectionEvent(db, injection, ref);
   log('assist_case_created', { case_id: id, source: built.source, subject, items: built.itemCount });
   const row = await requireCase(db, user.id, id, now);
@@ -548,6 +563,8 @@ assistRoutes.put('/cases/:id/question', async (c) => {
   const subject = caseSubject(row);
   const zh = await subjectGate(db, config, user, subject);
   if (row.trust !== 'student' || (row.source !== 'typed' && row.source !== 'photo')) throw new ApiError(409, 'conflict', '只有你自己提供的題目可以修改');
+  // 國寫範文獨立頁的案例：範文是照這一題寫的，改了題目就對不上（要換題目請重新送出一題）。
+  if (zhStandaloneRef(row.ref_json)) throw new ApiError(409, 'conflict', '國寫範文的題目不能修改，要換題目請重新送出一題');
   if (!['ocr_ready', 'ready', 'failed'].includes(row.status)) throw new ApiError(409, 'conflict', '這一題現在不能修改');
   // 拍照的題目（WP-A3）：被隱藏的區塊（D8、佳作樣式、長英文；國文另有答案段、長文）在確認畫面不能編輯、也不送回；送回了就擋下（§2.5）。
   // 其他規則和貼上的題目相同（重跑全部檢查，含 D8 指紋）；非目標區塊剩下的 [[?]] 換成 [unclear]。
@@ -641,6 +658,8 @@ async function enqueueTurn(
     statements: (opId: string) => D1PreparedStatement[];
     /** turn 寫不進去時，回 409 還是 429。 */
     conflict: () => Promise<ApiError>;
+    /** 怎樣算寫進去了（預設第一句改了 1 列；獨立頁同時建立案例與 turn，要兩句都改了 1 列）。 */
+    inserted?: (results: D1Result[]) => boolean;
   },
 ): Promise<Response> {
   const { user, config, row, tc, turnId } = args;
@@ -672,7 +691,7 @@ async function enqueueTurn(
   let inserted = false;
   try {
     const results = await db.batch(args.statements(opId));
-    inserted = results[0]?.meta.changes === 1;
+    inserted = args.inserted ? args.inserted(results) : results[0]?.meta.changes === 1;
   } catch (err) {
     console.error('寫入學習助手的 turn 失敗，退還點數', opId, err);
   }
@@ -869,34 +888,63 @@ assistRoutes.post('/cases/:id/followups', async (c) => {
 const ZH_EXEMPLAR_COUNT_SQL = `SELECT COUNT(*) AS n FROM assist_turns
   WHERE case_id = ?1 AND user_id = ?2 AND kind = 'followup' AND json_extract(meta_json, '$.task') = 'zh_exemplar' AND status IN ('queued', 'running', 'done')`;
 
+/** 範文的 turn 的 meta_json（建立時；結算時 consumer 換成完整的 meta）。 */
+const ZH_EXEMPLAR_TURN_META = JSON.stringify({ subject: 'chinese', task: 'zh_exemplar' });
+
+/**
+ * 在既有的案例上加一篇範文的 INSERT：學習助手的案例要先有國寫指導（analyses ≥ 1、狀態 analyzed，同設計 §7）；獨立頁的案例只要題目
+ * 已經確認（ready、analyzed、failed 都可以：學生可能之後在學習助手要過國寫指導）。兩句都是完整的靜態字串。
+ * ?1 turn ?2 案例 ?3 user ?4 op ?5 meta ?6 now ?7 每案例上限。
+ */
+const ZH_EXEMPLAR_INSERT_HEAD = `INSERT INTO assist_turns (id, case_id, user_id, seq, kind, status, op_id, input_text, label, mode, meta_json, created_at, updated_at)
+           SELECT ?1, ?2, ?3, (SELECT COALESCE(MAX(seq), 0) + 1 FROM assist_turns WHERE case_id = ?2), 'followup', 'queued', ?4, NULL, NULL, NULL, ?5, ?6, ?6
+            WHERE NOT EXISTS (SELECT 1 FROM assist_turns WHERE case_id = ?2 AND status IN ('queued', 'running'))
+              AND (SELECT COUNT(*) FROM assist_turns WHERE case_id = ?2 AND user_id = ?3 AND kind = 'followup'
+                     AND json_extract(meta_json, '$.task') = 'zh_exemplar' AND status IN ('queued', 'running', 'done')) < ?7`;
+const ZH_EXEMPLAR_INSERT_AFTER_GUIDANCE = `${ZH_EXEMPLAR_INSERT_HEAD}
+              AND (SELECT analyses FROM assist_cases WHERE id = ?2 AND user_id = ?3) >= 1
+              AND (SELECT status FROM assist_cases WHERE id = ?2 AND user_id = ?3) = 'analyzed'`;
+const ZH_EXEMPLAR_INSERT_STANDALONE = `${ZH_EXEMPLAR_INSERT_HEAD}
+              AND (SELECT status FROM assist_cases WHERE id = ?2 AND user_id = ?3 AND question_json IS NOT NULL) IN ('ready', 'analyzed', 'failed')`;
+
 function zhExemplarLimitError(): ApiError {
   return new ApiError(429, 'assist_limit', `這一題已經看過 ${ASSIST_LIMITS.zhExemplarsPerCase} 篇示範`, { reason: 'zh_exemplars_per_case' });
 }
 
-assistRoutes.post('/cases/:id/zh-exemplar', async (c) => {
-  const { user, config } = await writeGate(c);
-  await readJsonBody(c, analyzeSchema, ASSIST_BODY_MAX.small);
-  const db = c.env.DB;
-  const now = nowSeconds();
-  const row = await requireCase(db, user.id, c.req.param('id'), now);
-  const subject = caseSubject(row);
-  if (subject !== 'chinese' || row.kind !== 'zh_writing') throw new ApiError(400, 'bad_request', '只有國寫的題目可以看 AI 示範');
-  await subjectGate(db, config, user, subject);
-  if (!zhExemplarAccess(config, user.role).enabled) throw notConfigured();
-  // 國寫指導要先完成（最新一次解析是國寫指導、不是離題）：示範沿用學生剛看過的要件與架構。
-  const latest = await db
-    .prepare(`SELECT output_json FROM assist_turns WHERE case_id = ?1 AND user_id = ?2 AND kind = 'analyze' AND status = 'done' ORDER BY seq DESC LIMIT 1`)
-    .bind(row.id, user.id)
-    .first<{ output_json: string | null }>();
-  const analysis = parseJson<ZhAnalysisView>(latest?.output_json ?? null);
-  if (row.status !== 'analyzed' || !analysis || analysis.kind !== 'zh_writing' || analysis.off_topic) throw new ApiError(409, 'conflict', '請先等國寫指導完成');
-  const count = await db.prepare(ZH_EXEMPLAR_COUNT_SQL).bind(row.id, user.id).first<{ n: number }>();
-  if ((count?.n ?? 0) >= ASSIST_LIMITS.zhExemplarsPerCase) throw zhExemplarLimitError();
+/** 國寫範文的任務設定（模型不在價格表 → 503，同其他學習助手任務）。 */
+async function zhExemplarTaskConfig(db: D1Database, config: AppConfig): Promise<TaskConfig> {
   const tc = taskConfig('assist_zh_exemplar', config);
   if (!taskModelsPriced(tc)) {
     await opsEvent(db, 'ai_model_not_priced', 'error', { task: tc.task, models: tc.calls.map((x) => x.model) });
     throw new ApiError(503, 'not_configured', AI_ERROR_MESSAGES.not_configured);
   }
+  return tc;
+}
+
+/** 國寫指導要先完成（最新一次解析是國寫指導、不是離題）：學習助手的案例要範文的前提（示範沿用學生剛看過的要件與架構）。 */
+async function assertZhGuidanceDone(db: D1Database, row: CaseRow, userId: number): Promise<void> {
+  const latest = await db
+    .prepare(`SELECT output_json FROM assist_turns WHERE case_id = ?1 AND user_id = ?2 AND kind = 'analyze' AND status = 'done' ORDER BY seq DESC LIMIT 1`)
+    .bind(row.id, userId)
+    .first<{ output_json: string | null }>();
+  const analysis = parseJson<ZhAnalysisView>(latest?.output_json ?? null);
+  if (row.status !== 'analyzed' || !analysis || analysis.kind !== 'zh_writing' || analysis.off_topic) throw new ApiError(409, 'conflict', '請先等國寫指導完成');
+}
+
+/**
+ * 在一個既有的國寫案例上排一篇範文（學習助手的端點與獨立頁共用）：每案例上限 → 任務設定 → 預扣 → 寫 turn → 排入 Queue。
+ * afterGuidance：學習助手的案例（INSERT 另外要求國寫指導已完成）；否則是獨立頁的案例。案例只更新時間，不動 followups 與狀態。
+ */
+async function enqueueZhExemplar(
+  c: Context<AppEnv>,
+  args: { user: SessionUser; config: AppConfig; row: CaseRow; afterGuidance: boolean },
+): Promise<Response> {
+  const { user, config, row } = args;
+  const db = c.env.DB;
+  const now = nowSeconds();
+  const count = await db.prepare(ZH_EXEMPLAR_COUNT_SQL).bind(row.id, user.id).first<{ n: number }>();
+  if ((count?.n ?? 0) >= ASSIST_LIMITS.zhExemplarsPerCase) throw zhExemplarLimitError();
+  const tc = await zhExemplarTaskConfig(db, config);
   const turnId = crypto.randomUUID();
   const conflict = async (): Promise<ApiError> => {
     const cur = await db
@@ -916,16 +964,8 @@ assistRoutes.post('/cases/:id/zh-exemplar', async (c) => {
     turnId,
     statements: (opId) => [
       db
-        .prepare(
-          `INSERT INTO assist_turns (id, case_id, user_id, seq, kind, status, op_id, input_text, label, mode, meta_json, created_at, updated_at)
-           SELECT ?1, ?2, ?3, (SELECT COALESCE(MAX(seq), 0) + 1 FROM assist_turns WHERE case_id = ?2), 'followup', 'queued', ?4, NULL, NULL, NULL, ?5, ?6, ?6
-            WHERE NOT EXISTS (SELECT 1 FROM assist_turns WHERE case_id = ?2 AND status IN ('queued', 'running'))
-              AND (SELECT COUNT(*) FROM assist_turns WHERE case_id = ?2 AND user_id = ?3 AND kind = 'followup'
-                     AND json_extract(meta_json, '$.task') = 'zh_exemplar' AND status IN ('queued', 'running', 'done')) < ?7
-              AND (SELECT analyses FROM assist_cases WHERE id = ?2 AND user_id = ?3) >= 1
-              AND (SELECT status FROM assist_cases WHERE id = ?2 AND user_id = ?3) = 'analyzed'`,
-        )
-        .bind(turnId, row.id, user.id, opId, JSON.stringify({ subject: 'chinese', task: 'zh_exemplar' }), now, ASSIST_LIMITS.zhExemplarsPerCase),
+        .prepare(args.afterGuidance ? ZH_EXEMPLAR_INSERT_AFTER_GUIDANCE : ZH_EXEMPLAR_INSERT_STANDALONE)
+        .bind(turnId, row.id, user.id, opId, ZH_EXEMPLAR_TURN_META, now, ASSIST_LIMITS.zhExemplarsPerCase),
       db
         .prepare(
           `UPDATE assist_cases SET updated_at = ?1, expires_at = ?2
@@ -935,6 +975,165 @@ assistRoutes.post('/cases/:id/zh-exemplar', async (c) => {
     ],
     conflict,
   });
+}
+
+assistRoutes.post('/cases/:id/zh-exemplar', async (c) => {
+  const { user, config } = await writeGate(c);
+  await readJsonBody(c, analyzeSchema, ASSIST_BODY_MAX.small);
+  const db = c.env.DB;
+  const now = nowSeconds();
+  const row = await requireCase(db, user.id, c.req.param('id'), now);
+  const subject = caseSubject(row);
+  if (subject !== 'chinese' || row.kind !== 'zh_writing') throw new ApiError(400, 'bad_request', '只有國寫的題目可以看 AI 示範');
+  await subjectGate(db, config, user, subject);
+  if (!zhExemplarAccess(config, user.role).enabled) throw notConfigured();
+  await assertZhGuidanceDone(db, row, user.id);
+  return enqueueZhExemplar(c, { user, config, row, afterGuidance: true });
+});
+
+// ───────────────────────── 國寫範文的獨立頁 ─────────────────────────
+
+assistRoutes.get('/zh-exemplars', async (c) => {
+  const user = await sessionUser(c);
+  const now = nowSeconds();
+  const cursor = decodeCursor(c.req.query('cursor'));
+  const rows = await listZhExemplarCases(c.env.DB, user.id, now, cursor, CASE_PAGE_SIZE + 1);
+  const page = rows.slice(0, CASE_PAGE_SIZE);
+  const last = page[page.length - 1];
+  const body: ZhExemplarListResponse = { items: page.map(toZhExemplarListItem), next_cursor: rows.length > CASE_PAGE_SIZE && last ? encodeCursor(last) : null };
+  return c.json(body);
+});
+
+/** 案例已經有一篇範文正在產生：回那一篇（200 existing，不另外扣點）；進行中的是別的任務（國寫指導、追問）→ 409。沒有進行中回 null。 */
+async function inflightZhExemplar(db: D1Database, row: CaseRow, userId: number, points: number): Promise<ZhExemplarAccepted | null> {
+  const t = await db
+    .prepare(`SELECT id, op_id, kind, meta_json FROM assist_turns WHERE case_id = ?1 AND user_id = ?2 AND status IN ('queued', 'running') LIMIT 1`)
+    .bind(row.id, userId)
+    .first<{ id: string; op_id: string | null; kind: string; meta_json: string }>();
+  if (!t) return null;
+  if (t.kind !== 'followup' || parseJson<{ task?: unknown }>(t.meta_json)?.task !== 'zh_exemplar') throw new ApiError(409, 'conflict', '這一題正在處理中，請稍候');
+  return { op_id: t.op_id, case_id: row.id, turn_id: t.id, status: 'queued', points, existing: true };
+}
+
+/**
+ * 建立獨立頁的案例並排入第一篇範文（同一個 batch：案例、turn、每日建立數的紀錄；兩句都寫進去才算）。預扣在前（每天 3 篇的家族上限
+ * 先擋），寫不進去（建立案例的上限、同一題剛好同時建立）就以 internal 退還。
+ */
+async function createZhExemplarCase(
+  c: Context<AppEnv>,
+  args: { user: SessionUser; config: AppConfig; built: ZhStandaloneCase; ref: string | null },
+): Promise<Response> {
+  const { user, config, built, ref } = args;
+  const db = c.env.DB;
+  const nowMs = Date.now();
+  const now = nowSeconds(nowMs);
+  const dayStart = taiwanDayStart(nowMs);
+  const tc = await zhExemplarTaskConfig(db, config);
+  const questionJson = questionJsonOf(built.view);
+  if (built.refJson.length > REF_JSON_MAX_CHARS) throw new ApiError(400, 'bad_request', '題目的設定太長');
+  const caseId = crypto.randomUUID();
+  const turnId = crypto.randomUUID();
+  await deleteExpiredDuplicate(db, user.id, built.dedupeKey, now);
+  // enqueueTurn 用的案例列（只用到 id 與 user_id）。
+  const row = { id: caseId, user_id: user.id } as CaseRow;
+  const res = await enqueueTurn(c, {
+    user,
+    config,
+    row,
+    tc,
+    kind: 'zh_exemplar',
+    turnId,
+    statements: (opId) => [
+      db
+        .prepare(
+          `INSERT INTO assist_cases (id, user_id, source, kind, ref_json, dedupe_key, trust, section, title, item_count, wrong_count, question_json,
+                                     doubt_kinds_json, torn_with, doubt_text, hint_first, signals_json, status, verdict, skills_json, injection_flag,
+                                     created_at, updated_at, expires_at)
+           SELECT ?1, ?2, 'typed', 'zh_writing', ?3, ?4, 'student', ?5, ?6, 1, 0, ?7, '[]', NULL, NULL, 0, '{}', 'ready', 'unknown', '[]', ?8, ?9, ?9, ?10
+            WHERE ${casesTodaySql('?2', '?11', '?13')} < ?12
+              AND (SELECT COUNT(*) FROM assist_cases WHERE user_id = ?2) < ?14`,
+        )
+        .bind(
+          caseId,
+          user.id,
+          built.refJson,
+          built.dedupeKey,
+          built.section,
+          built.title,
+          questionJson,
+          built.injection.length > 0 ? 1 : 0,
+          now,
+          expiresFrom(now),
+          dayStart,
+          ASSIST_LIMITS.casesPerDay,
+          ref,
+          ASSIST_LIMITS.casesLive,
+        ),
+      db
+        .prepare(
+          `INSERT INTO assist_turns (id, case_id, user_id, seq, kind, status, op_id, input_text, label, mode, meta_json, created_at, updated_at)
+           SELECT ?1, ?2, ?3, 1, 'followup', 'queued', ?4, NULL, NULL, NULL, ?5, ?6, ?6
+            WHERE EXISTS (SELECT 1 FROM assist_cases WHERE id = ?2 AND user_id = ?3)`,
+        )
+        .bind(turnId, caseId, user.id, opId, ZH_EXEMPLAR_TURN_META, now),
+      // 建立紀錄（每日上限的計數；同 POST /cases：學生刪不掉，只有假名、沒有內容）。
+      ...(ref
+        ? [
+            db
+              .prepare(`INSERT INTO ops_events (kind, severity, detail_json, created_at, acked_at) SELECT ?1, 'info', ?2, ?3, ?3 WHERE EXISTS (SELECT 1 FROM assist_cases WHERE id = ?4 AND user_id = ?5)`)
+              .bind(CASE_CREATED_MARK, JSON.stringify({ user_ref: ref }), now, caseId, user.id),
+          ]
+        : []),
+    ],
+    inserted: (results) => results[0]?.meta.changes === 1 && results[1]?.meta.changes === 1,
+    conflict: async () => {
+      // 同一題剛好同時建立（唯一索引）：那一個請求會排入範文。
+      if (await existingCase(db, user.id, built.dedupeKey, now)) return new ApiError(409, 'conflict', '這一題正在處理中，請稍候');
+      return caseCapError(db, user.id, dayStart, ref);
+    },
+  });
+  await injectionEvent(db, built.injection, ref);
+  log('assist_case_created', { case_id: caseId, source: 'typed', subject: 'chinese', items: 1, zh_exemplar: built.via });
+  return res;
+}
+
+assistRoutes.post('/zh-exemplars', async (c) => {
+  const { user, config, fp } = await writeGate(c);
+  const body = await readJsonBody(c, createZhExemplarSchema, ASSIST_BODY_MAX.create);
+  const db = c.env.DB;
+  const zh = (await subjectGate(db, config, user, 'chinese'))!;
+  if (!zhExemplarAccess(config, user.role).enabled) throw notConfigured();
+  const now = nowSeconds();
+  const points = taskConfig('assist_zh_exemplar', config).points;
+
+  // 同一個案例再看一篇（失敗後重試、第二篇）：獨立頁的案例，或已經有國寫指導的學習助手國寫案例。
+  if (body.source === 'case') {
+    const row = await requireCase(db, user.id, body.case_id, now);
+    if (caseSubject(row) !== 'chinese' || row.kind !== 'zh_writing') throw new ApiError(400, 'bad_request', '只有國寫的題目可以看 AI 示範');
+    const standalone = zhStandaloneRef(row.ref_json) !== null;
+    const existing = await inflightZhExemplar(db, row, user.id, points);
+    if (existing) return c.json(existing, 200);
+    if (!standalone) await assertZhGuidanceDone(db, row, user.id);
+    return enqueueZhExemplar(c, { user, config, row, afterGuidance: !standalone });
+  }
+
+  // 歷屆題目或貼上的題目：國文貼上的同一套檢查（被拒時同學習助手的貼上：400、寫拒收事件）。
+  const ref = await userRefFor(config.auth.ledgerSalt, user.id);
+  let built: ZhStandaloneCase;
+  try {
+    built = body.source === 'past' ? await zhPastCase(body.prompt_id, fp, zh) : await zhPasteCase(body, fp, zh);
+  } catch (err) {
+    await inputRejected(db, err, 'typed', async () => ref, now, 'chinese');
+    throw err;
+  }
+  // 同一題已經有案例（180 天內）：在那個案例上再加一篇；有一篇正在產生就回那一篇。
+  const row = await existingCase(db, user.id, built.dedupeKey, now);
+  if (row) {
+    const existing = await inflightZhExemplar(db, row, user.id, points);
+    if (existing) return c.json(existing, 200);
+    return enqueueZhExemplar(c, { user, config, row, afterGuidance: false });
+  }
+  return createZhExemplarCase(c, { user, config, built, ref });
 });
 
 // ───────────────────────── 拍照與轉錄（WP-A3） ─────────────────────────

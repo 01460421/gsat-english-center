@@ -37,6 +37,9 @@
  *     Worker 用來核對題目以外的古文名句與默寫（≤ 300 KB）。
  *   - 國寫範文（設計「國寫範文」§5.3）：data/d8/zh-contest.fp.json（比賽語料的 12 字窗口，只有雜湊）併進 zh 鍵的 contest，
  *     zh_version 跟著變；用 readZhContestFile 檢查，筆數低於下限就失敗（Worker 的 parseZhFingerprints 也把它當成必填）。
+ *   - 國寫範文的獨立頁（設計「國寫範文」的「獨立頁」）：data/zh-writing/prompts.json（111–115 學測國寫十題的題本文字）原樣複製成
+ *     apps/api/src/generated/zh-writing-prompts.json（不進版控）；格式、題數、代號不對就失敗。Worker 只接受這份檔裡的代號，
+ *     題目文字一律由伺服器端決定（同上面的題目庫）。詳細的守衛在 shared 的 isZhWritingPromptFile（Worker 讀檔時再檢查一次）。
  *
  * 只用 Node 22 內建模組（零依賴）。
  */
@@ -91,6 +94,11 @@ export const UNPUBLISH_FILE = path.join(REPO_ROOT, 'data', 'unpublish.jsonl');
 export const OUT_FILE = path.join(API_DIR, 'src', 'generated', 'writing-prompts.json');
 export const D8_OUT_FILE = path.join(API_DIR, 'src', 'generated', 'd8-fingerprints.json');
 export const ZH_CLASSICS_OUT_FILE = path.join(API_DIR, 'src', 'generated', 'zh-classics.json');
+export const ZH_WRITING_PROMPTS_FILE = path.join(REPO_ROOT, 'data', 'zh-writing', 'prompts.json');
+export const ZH_WRITING_PROMPTS_OUT_FILE = path.join(API_DIR, 'src', 'generated', 'zh-writing-prompts.json');
+/** 歷屆國寫題目的格式與題數（111–115 每年兩題）。 */
+export const ZH_WRITING_PROMPTS_FORMAT = 'gsat-zh-writing-prompts/v1';
+export const ZH_WRITING_PROMPTS_MIN = 10;
 /** 國文集合在 d8-fingerprints.json 裡的格式（Worker 的 parseZhFingerprints 檢查同一個值）。 */
 export const D8_ZH_FORMAT = 'gsat-d8-zh/v1';
 /** 古文語料打包的上限（§5.2：Worker 打包，約 300 KB 以內）與篇數下限（少於下限代表語料檔被改壞了）。 */
@@ -570,6 +578,33 @@ export function buildZhClassics(repoRoot = REPO_ROOT) {
   return out;
 }
 
+/**
+ * 國寫範文獨立頁的歷屆題目（data/zh-writing/prompts.json）：粗略檢查格式、題數與代號（zh-{學年度}-{1|2}、不重複、和 year／number
+ * 一致），原樣回傳（逐欄的守衛在 shared 的 isZhWritingPromptFile，Worker 讀檔時再檢查一次）。不對就丟錯。
+ * @param {string} [file]
+ */
+export function buildZhWritingPrompts(file = ZH_WRITING_PROMPTS_FILE) {
+  const raw = JSON.parse(readFileSync(file, 'utf8'));
+  if (!isObject(raw) || raw.format !== ZH_WRITING_PROMPTS_FORMAT || !Array.isArray(raw.prompts)) throw new Error('歷屆國寫題目檔的格式不對');
+  /** @type {Set<string>} */
+  const ids = new Set();
+  for (const p of raw.prompts) {
+    const ok =
+      isObject(p) &&
+      typeof p.id === 'string' &&
+      /^zh-1\d{2}-[12]$/.test(p.id) &&
+      p.id === `zh-${p.year}-${p.number}` &&
+      (p.section === (p.number === 1 ? 'zh_writing_reason' : 'zh_writing_emotion')) &&
+      Array.isArray(p.material) &&
+      typeof p.prompt === 'string' &&
+      !ids.has(p.id);
+    if (!ok) throw new Error(`歷屆國寫題目檔有一題的欄位不對（${isObject(p) ? String(p.id) : '?'}）`);
+    ids.add(p.id);
+  }
+  if (ids.size < ZH_WRITING_PROMPTS_MIN) throw new Error(`歷屆國寫題目只有 ${ids.size} 題（下限 ${ZH_WRITING_PROMPTS_MIN}）`);
+  return raw;
+}
+
 /** 內容沒變就不寫檔，避免 wrangler dev／vitest 的檔案監看無謂重跑。回傳是否寫了。 @param {string} file @param {string} content */
 function writeIfChanged(file, content) {
   if (existsSync(file) && readFileSync(file, 'utf8') === content) return false;
@@ -634,12 +669,15 @@ function main() {
   let zhBundle;
   /** @type {ReturnType<typeof buildZhClassics>} */
   let classics;
+  /** @type {Json} */
+  let zhPrompts;
   try {
     zhBundle = buildZhD8Bundle();
     classics = buildZhClassics();
+    zhPrompts = buildZhWritingPrompts();
   } catch (err) {
     // 國文集合讀不了時不產生任何檔案（fail closed）；訊息只有檔名與筆數，不含任何受保護文字。
-    console.error(`[writing-prompts] 失敗：國文 D8 指紋或古文語料讀不了（${err instanceof Error ? err.message : String(err)}）`);
+    console.error(`[writing-prompts] 失敗：國文 D8 指紋、古文語料或歷屆國寫題目讀不了（${err instanceof Error ? err.message : String(err)}）`);
     process.exit(1);
   }
   console.log(
@@ -656,6 +694,9 @@ function main() {
   }
   if (writeIfChanged(D8_OUT_FILE, JSON.stringify({ ...fp, ...zhBundle }))) console.log(`[writing-prompts] 已產生 ${path.relative(REPO_ROOT, D8_OUT_FILE)}`);
   if (writeIfChanged(ZH_CLASSICS_OUT_FILE, JSON.stringify(classics))) console.log(`[writing-prompts] 已產生 ${path.relative(REPO_ROOT, ZH_CLASSICS_OUT_FILE)}`);
+  if (writeIfChanged(ZH_WRITING_PROMPTS_OUT_FILE, JSON.stringify(zhPrompts))) {
+    console.log(`[writing-prompts] 已產生 ${path.relative(REPO_ROOT, ZH_WRITING_PROMPTS_OUT_FILE)}（歷屆國寫 ${zhPrompts.prompts.length} 題）`);
+  }
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) main();

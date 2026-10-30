@@ -16,12 +16,17 @@
  *                  （ai_calls 的內容失敗＋turn 的 meta_json.content_failures）。結算：turn 改 done、寫 output_json 與 meta（task 仍是
  *                  zh_exemplar）；案例只更新 updated_at／expires_at、d8_hidden、safety_flag（不動 followups、analyses、狀態）。
  *                  讀不到比賽語料指紋或國寫指導 → 退還 internal；內容失敗（離題、隱藏太多、超過上限太多）→ 退還 invalid_output。
+ *                  國寫範文的獨立頁建立的案例（ref_json.origin＝'zh_exemplar'，standalone.ts）不需要國寫指導：題型與學生填的字數規定讀
+ *                  ref_json；有可用的國寫指導（學生之後在學習助手要過）時照樣帶摘要，沒有就不帶（user 範本 standalone@1，請模型自己找
+ *                  要件）；知性題要不要寫問題（一）看題目有沒有「問題（一）」。其餘（重寫、後處理、退還、結算）完全相同。
  *                  ops 事件：比賽指紋隱藏段落（assist_zh_exemplar_overlap）、情意寫到敏感事件（assist_zh_exemplar_sensitive，只有句數）。
  * ops 事件的 detail 都帶 subject；日誌只記 op id、任務、狀態與數字，不記題目、學生文字或解析內容。
  */
 import {
   ASSIST_LIMITS,
+  zhApplyPasteLimits,
   zhExemplarLimits,
+  zhHasWritingQ1,
   guessZhSection,
   isZhCaseKind,
   isZhErrorCode,
@@ -49,6 +54,7 @@ import { postprocessZhExemplar, zhExemplarSectionOf, type ZhExemplarPostprocesse
 import { assembleZhOcr } from './ocr';
 import { postprocessZhAnalysis, postprocessZhFollowup, zhSubjectMismatch } from './output';
 import { ZH_EXEMPLAR_DIGEST_CHARS, zhExemplarCallInput, zhFollowupCallInput, zhStudentPatternsText, type ZhFollowupRound } from './requests';
+import { zhStandaloneRef } from './standalone';
 import type { ZhAnalysisOutput, ZhExemplarOutput, ZhFollowupOutput, ZhOcrOutput } from './schemas';
 import { zhSettlement } from './settle';
 
@@ -357,12 +363,17 @@ export async function runZhExemplar(ctx: ZhCtx & { question: AssistQuestionView 
   const { db, caseRow, question, fp, zh, tc, op, turn } = ctx;
   // 比賽語料指紋是必填（打包的真檔一定有；讀不到就不呼叫模型）。
   if (!zh.contest || zh.contest.size === 0 || caseRow.kind !== 'zh_writing') return { kind: 'refund', reason: 'internal' };
-  const analysis = await latestZhAnalysis(db, op.user_id, caseRow.id, turn.seq);
-  if (!analysis || analysis.kind !== 'zh_writing' || analysis.off_topic) return { kind: 'refund', reason: 'internal' };
-  const section = zhExemplarSectionOf(analysis, question);
-  const limits = zhExemplarLimits(question, section);
-  const hasQ1 = section === 'zh_writing_reason' && analysis.q1 !== null;
-  const input = zhExemplarCallInput(tc, { question, section, digest: zhExemplarDigest(analysis, Boolean(question.draft), ZH_EXEMPLAR_DIGEST_CHARS), hasQ1, limits });
+  const latest = await latestZhAnalysis(db, op.user_id, caseRow.id, turn.seq);
+  const analysis = latest && latest.kind === 'zh_writing' && !latest.off_topic ? latest : null;
+  // 獨立頁建立的案例：題型與字數規定在 ref_json，國寫指導可有可無。學習助手的案例照舊一定要有國寫指導。
+  const standalone = zhStandaloneRef(caseRow.ref_json);
+  if (!standalone && !analysis) return { kind: 'refund', reason: 'internal' };
+  const section = standalone ? standalone.section : zhExemplarSectionOf(analysis!, question);
+  const limits = standalone ? zhApplyPasteLimits(zhExemplarLimits(question, section), standalone.limits) : zhExemplarLimits(question, section);
+  const questionText = (question.blocks ?? []).map((b) => b.text).join('\n');
+  const hasQ1 = section === 'zh_writing_reason' && (standalone ? zhHasWritingQ1(questionText) || (analysis?.q1 ?? null) !== null : analysis!.q1 !== null);
+  const digest = analysis ? zhExemplarDigest(analysis, Boolean(question.draft), ZH_EXEMPLAR_DIGEST_CHARS) : null;
+  const input = zhExemplarCallInput(tc, { question, section, digest, hasQ1, limits });
   ctx.callInput = () => input;
   const ref = { opId: op.id, turnId: turn.id, userId: op.user_id };
   const failures = await zhExemplarContentFailures(db, ref);
@@ -430,6 +441,7 @@ export async function runZhExemplar(ctx: ZhCtx & { question: AssistQuestionView 
     counts: post.meta,
     checks: post.checks,
     content_failures: state.generation - 1,
+    ...(standalone ? { standalone: standalone.via, digest: digest !== null } : {}),
   };
   const nowMs = ctx.now();
   const now = nowSeconds(nowMs);

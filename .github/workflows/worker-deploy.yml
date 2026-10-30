@@ -43,6 +43,8 @@ on:
       - 'data/bank/v1/translation/**'
       - 'data/bank/v1/composition/**'
       - 'data/unpublish.jsonl'
+      # 國寫範文獨立頁的歷屆國寫題目（Worker 打包；docs/design/assistant-subjects.md「國寫範文」的「獨立頁」）。
+      - 'data/zh-writing/**'
       - 'package-lock.json'
       - '.github/workflows/worker-deploy.yml'
 
