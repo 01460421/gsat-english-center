@@ -99,7 +99,7 @@ import { d8Hit } from '../../../ai/d8';
 import { FILTERED_PLACEHOLDER, replaceExamBoard } from '../../../ai/filter';
 import type { ZhAnalysisPostprocessed, ZhFollowupContext, ZhFollowupPostprocessed, ZhOutputContext } from '../types';
 import { zhCheckClassics } from './classics';
-import { zhD8Hit, zhOfficialStyleHit, zhShortAnswerHit } from './d8';
+import { zhD8Hit, zhOfficialStyleHit, zhQuestionWindows, zhShortAnswerHit } from './d8';
 import { zhCheckQuotes, zhLocateQuote } from './quotes';
 import type { ZhChoiceOutput, ZhFollowupOutput, ZhShortOutput, ZhWritingOutput } from './schemas';
 import { zhChoiceItemVerdict, zhRefreshChoiceItem, zhShortPartVerdict } from './settle';
@@ -143,10 +143,15 @@ class ZhCleaner {
     this.notice('short_answer_hidden', field);
   }
 
+  /** 題目本身命中國文集合的窗口：模型照題目引用時不算 D8 命中（zhQuestionWindows）。 */
+  readonly questionWindows: ReadonlySet<string>;
+
   constructor(
     readonly kind: ZhOutputKind,
-    readonly ctx: Pick<ZhOutputContext, 'filter' | 'fp' | 'zh'>,
-  ) {}
+    readonly ctx: Pick<ZhOutputContext, 'filter' | 'fp' | 'zh'> & { question?: ZhOutputContext['question'] },
+  ) {
+    this.questionWindows = ctx.question ? zhQuestionWindows(ctx.question, ctx.zh) : new Set();
+  }
 
   count(counter: ZhCheckCounter, n = 1): void {
     if (n > 0) this.checks[counter] = (this.checks[counter] ?? 0) + n;
@@ -177,7 +182,7 @@ class ZhCleaner {
       this.notice('filtered', field);
       return text;
     }
-    if (d8Hit(text, this.ctx.fp) || zhD8Hit(text, this.ctx.zh) || zhOfficialStyleHit(text)) {
+    if (d8Hit(text, this.ctx.fp) || zhD8Hit(text, this.ctx.zh, this.questionWindows) || zhOfficialStyleHit(text)) {
       this.meta.d8_hidden += 1;
       this.count('d8_hidden');
       this.notice('d8_hidden', field);

@@ -15,7 +15,7 @@
  * 比對的正規形式同英文（d8HanWindows：NFKC → 去空白 → 連續漢字，不跨標點）；另外把文字套 ZH_TW_FORM_MAP 再切一次，模型把標準字
  * 寫成異體字碼時也對得上（官方文件本來就是標準字，多切一次不會多擋）。
  */
-import { ZH_TW_FORM_MAP, zhOfficialLikeHits } from '@gsat/shared';
+import { ZH_TW_FORM_MAP, zhOfficialLikeHits, type AssistQuestionView } from '@gsat/shared';
 import {
   D8_HAN_WINDOW,
   D8_MAX_RANGES,
@@ -118,9 +118,21 @@ export function zhOfficialMaterialHits(zh: ZhFingerprints, text: string): Array<
   );
 }
 
-/** 輸出比對（§5.7）：這段文字有沒有任何一個 8 字窗口命中國文集合（先扣樣板）。 */
-export function zhD8Hit(text: string, zh: ZhFingerprints): boolean {
-  return windowHits(text, zh).length > 0;
+/**
+ * 題目本身（學生貼上或轉錄確認過的區塊，加上國寫附的段落）裡命中國文集合的窗口。輸出比對時不算：這段文字學生手上本來就有，
+ * 輸入檢查也已經限制每個區塊最多 1 個窗口；模型照題目引用（國寫的要件、「這題考什麼」）不該因此整欄被藏。題目以外多寫的窗口照樣命中。
+ */
+export function zhQuestionWindows(question: Partial<Pick<AssistQuestionView, 'blocks' | 'draft' | 'passage' | 'instructions'>>, zh: ZhFingerprints): Set<string> {
+  const out = new Set<string>();
+  for (const text of [...(question.blocks ?? []).map((b) => b.text), question.passage ?? '', question.instructions ?? '', question.draft?.text ?? '']) {
+    for (const w of windowHits(text, zh)) out.add(w.window);
+  }
+  return out;
+}
+
+/** 輸出比對（§5.7）：這段文字有沒有任何一個 8 字窗口命中國文集合（先扣樣板）；allowed 裡的窗口（題目本身的，zhQuestionWindows）不算。 */
+export function zhD8Hit(text: string, zh: ZhFingerprints, allowed?: ReadonlySet<string>): boolean {
+  return windowHits(text, zh).some((w) => !allowed?.has(w.window));
 }
 
 /** 評分原則的句型（§4.2 的第 2–4 類，加上考生佳作）：模型把它寫進說明時，整欄換成固定說明。 */

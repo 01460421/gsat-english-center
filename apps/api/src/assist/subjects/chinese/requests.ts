@@ -128,7 +128,7 @@ const COPY_TEXT: Record<ZhCharLimit['copy'], string> = {
 };
 
 function limitText(l: ZhCharLimit): string {
-  const size = l.max === null ? 'no length limit' : l.min !== null ? `${l.min}–${l.max} characters` : `${l.max} characters`;
+  const size = l.max === null ? 'no length limit' : l.min !== null ? `${l.min}–${l.max} characters including punctuation` : `${l.max} characters including punctuation`;
   return `${size}${l.scope === 'total' ? ' in total' : l.scope === 'each' ? ' each' : ''}, ${COPY_TEXT[l.copy]}`;
 }
 

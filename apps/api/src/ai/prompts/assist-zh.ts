@@ -86,7 +86,7 @@ const ZH_DIAGNOSE_SHORT = `- Answer every doubt the student raised, and make eve
 /** 非選擇題的規則（只放在 zh_short）。 */
 const ZH_SHORT_RULES = `Non-choice questions:
 - Follow the copying rule given in <task>. "Must copy": the sample answer is words copied exactly from the text. "No rule": key words from the text are fine, but build a sentence that answers what is asked (for example the purpose, not the content). "Must not copy": paraphrase.
-- Count the required elements, locate the evidence, give a sentence frame, and write a sample answer within the limit. The sample answer is your own; never present it as an official answer.
+- Count the required elements, locate the evidence, give a sentence frame, and write a sample answer within the limit. Punctuation counts as one character, as on the answer sheet; aim for about 80% of the limit, because the program removes a sample answer that is even one character over. The sample answer is your own; never present it as an official answer.
 - Check the student's answer element by element (coverage, what is missing, subject, key words and wrong characters). Do not give a score; the program counts the characters.`;
 
 /** 國寫的規則（只放在 zh_writing）。 */

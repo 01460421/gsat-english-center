@@ -22,7 +22,7 @@ import {
   parseZhFingerprints,
   resetD8ForTests,
 } from '../src/ai/d8';
-import { zhD8Hit, zhOfficialMaterialHits, zhOfficialStyleHit, zhShortAnswerContainment, zhShortAnswerHit } from '../src/assist/subjects/chinese/d8';
+import { zhD8Hit, zhOfficialMaterialHits, zhOfficialStyleHit, zhQuestionWindows, zhShortAnswerContainment, zhShortAnswerHit } from '../src/assist/subjects/chinese/d8';
 import { ZH_DECOY_OFFICIAL, ZH_DECOY_SHORT_ANSWER, ZH_SHORT_PASSAGE, zhDecoyFingerprints } from './helpers/zh';
 
 beforeEach(() => resetD8ForTests());
@@ -133,6 +133,19 @@ describe('比對（subjects/chinese/d8.ts）', () => {
     expect(fp.windows.size).toBeGreaterThan(0);
     expect(zhD8Hit('可以查重編國語辭典修訂本的解釋', fp)).toBe(false);
     expect(zhD8Hit('可以查重編國語辭典修訂本的解釋', { ...fp, boilerplate: [] })).toBe(true);
+  });
+
+  it('輸出：題目本身的窗口（學生貼上的、國寫附的段落）照題目引用不算；題目以外多寫的窗口照樣命中', () => {
+    const inQuestion = ZH_DECOY_OFFICIAL.slice(0, 8);
+    const beyond = ZH_DECOY_OFFICIAL.slice(-8);
+    const allowed = zhQuestionWindows({ blocks: [{ kind: 'question', label: null, text: `題目：${inQuestion}，請說明。` }] }, zh);
+    expect(allowed.size).toBe(1);
+    expect(zhD8Hit(`這題考「${inQuestion}」`, zh, allowed)).toBe(false);
+    expect(zhD8Hit(`這題考「${inQuestion}」`, zh)).toBe(true);
+    expect(zhD8Hit(`這題考「${inQuestion}」，也就是${beyond}`, zh, allowed)).toBe(true);
+    // 國寫附的段落也算題目本身；沒有命中的題目回空集合。
+    expect(zhQuestionWindows({ blocks: [{ kind: 'question', label: null, text: '請寫一篇文章' }], draft: { text: inQuestion, target: 'q2' } }, zh).size).toBe(1);
+    expect(zhQuestionWindows({ blocks: [{ kind: 'question', label: null, text: '請寫一篇文章' }], draft: null }, zh).size).toBe(0);
   });
 
   it('異體字碼也對得上（比對的副本套 ZH_TW_FORM_MAP；原文不改）', () => {

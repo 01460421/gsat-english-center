@@ -199,7 +199,7 @@ describe('國文解析：請求、後處理骨架與結算寫回（§3.7、§3.8
     const req = fake.requests[0]!;
     expect(req.system).toBe(assistZhSystemText('zh_short'));
     expect(req.body.max_tokens).toBe(13_000);
-    expect(req.userText).toContain('Character limits found in the question: 34: 20 characters, no copying rule.');
+    expect(req.userText).toContain('Character limits found in the question: 34: 20 characters including punctuation, no copying rule.');
     expect(req.userText).toContain('<student_text role="answer" label="34">\n不要告訴外面的人\n</student_text>');
     const d = await detail(s, caseId);
     expect(d).toMatchObject({ kind: 'zh_short', section: 'zh_short_answer', verdict: 'partial', wrong_count: 1 });
