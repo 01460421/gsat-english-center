@@ -896,7 +896,8 @@ export function normalizeZhFollowupMode(value: unknown): 'hint' | 'explain' | nu
  * 確定程度上限（§5.1 第 11 步）：沒有答案鍵時，模型的 section、該題的 item_type、guessZhSection(題目) 任一落在這裡，
  * 該題 certainty 最高 likely。字音、字形預設在裡面（評測的逐字門檻過了才由上線 PR 拿掉，§11.3）。
  */
-export const ZH_CERTAINTY_CAPS: readonly ZhSection[] = ['zh_sound', 'zh_form'];
+// 評測（2026-10-30，三次完整評測）：字形三次都達到解除門檻（錯字配對 35／35），拿掉；字音三次裡有一次沒達到（審定音），保留「可能」。
+export const ZH_CERTAINTY_CAPS: readonly ZhSection[] = ['zh_sound'];
 
 /** 上限生效時畫面加的說明：字音、字形是「請查教育部辭典」，其他是「請查證」。 */
 export type ZhCapNote = 'dictionary' | 'verify';

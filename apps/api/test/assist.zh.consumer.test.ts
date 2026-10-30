@@ -142,9 +142,9 @@ describe('國文解析：請求、後處理骨架與結算寫回（§3.7、§3.8
     expect(a.cards.map((c: any) => [c.kind, c.for_label])).toEqual([['form', '']]);
     const it0 = a.items[0];
     expect(it0).toMatchObject({ label: '', item_type: 'zh_form', choice_mode: 'single', verdict: 'wrong', verdict_basis: 'ai_answer', student_answer: 'A' });
-    // 字形預設在確定程度上限裡：最高「可能」，畫面加「請查教育部辭典」。
-    expect(it0.answer_key).toEqual({ from: 'ai', text: 'C', certainty: 'likely' });
-    expect(it0.warnings).toContain('cap_dictionary');
+    // 字形已依評測拿掉確定程度上限（ZH_CERTAINTY_CAPS 只剩字音）：保留模型自己的確定程度，不加「請查教育部辭典」。
+    expect(it0.answer_key).toEqual({ from: 'ai', text: 'C', certainty: 'sure' });
+    expect(it0.warnings).not.toContain('cap_dictionary');
     expect(it0.options.map((o: any) => [o.option, o.verdict, o.student?.picked])).toEqual([
       ['A', 'no', true],
       ['B', 'no', false],

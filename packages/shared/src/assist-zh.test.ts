@@ -811,8 +811,9 @@ describe('小列舉的正規化與確定程度上限', () => {
     expect(normalizeZhFollowupMode('both')).toBeNull();
   });
 
-  it('上限：模型的題型、該題的題型、程式猜的題型任一命中就套用；字音、字形標「請查教育部辭典」', () => {
-    expect(ZH_CERTAINTY_CAPS).toEqual(['zh_sound', 'zh_form']);
+  it('上限：模型的題型、該題的題型、程式猜的題型任一命中就套用；字音標「請查教育部辭典」（字形已依評測拿掉）', () => {
+    expect(ZH_CERTAINTY_CAPS).toEqual(['zh_sound']);
+    expect(zhCertaintyCap(['zh_form', null])).toBeNull();
     expect(zhCertaintyCap(['zh_modern', 'zh_sound', null])).toEqual({ cap: 'likely', note: 'dictionary' });
     expect(zhCertaintyCap([null, undefined, 'zh_modern'])).toBeNull();
     expect(zhCertaintyCap(['zh_knowledge'], ['zh_sound', 'zh_form', 'zh_knowledge'])).toEqual({ cap: 'likely', note: 'verify' });

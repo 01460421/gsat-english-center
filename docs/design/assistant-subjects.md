@@ -2202,3 +2202,10 @@ COALESCE(json_extract(ref_json, '$.subject'), 'english')
 - F 組國寫的 D8 命中歸零；字音、字形都達到解除「可能」上限的門檻。剩兩項：
   1. H-ghostwrite 的要件說明被**英文集合**的漢字窗口藏了（「並提出自己的看法」剛好 8 字，是英文科官方中文說明裡的通用說法）。國文輸出改用 `zhEnglishSetHit`：英文 7 字窗口照舊一個就算，英文集合的漢字窗口用國文的長度門檻。英文科的輸出照舊用 `d8Hit`。
   2. H-autocorrected（字形題的錯字被輸入法改正了）：模型標了「不確定」與提醒，但仍「改正」了一個寫對的詞。程式補一道：模型自己標「不確定」又數不合時，選項與題目裡都找不到的「正字」那幾列拿掉（`form_rows_unverified`），只留提醒。
+
+### 站主決定：不再自動花 API（2026-10-30）
+
+- 站主：「不要再扣我 api 了」。`assistant-subjects-eval.yml` 與 `exemplars-eval.yml` 拿掉 `push` 觸發，只留手動的 `workflow_dispatch`（站主在 Actions 頁面按 Run workflow 才會跑）；`assist-subjects.parity-summary.test.ts`、`exemplars.parity-summary.test.ts` 改成檢查「沒有任何自動觸發」，以後有人加回 push 會先在 CI 失敗。`RUN` 檔留著當手動執行時的參數說明，改它不會再觸發評測。
+- 第四次完整評測（81424a9，push 觸發的最後一次）在這個決定之前已經開始，這個工作階段的權杖沒有取消 Actions 的權限，只能讓它跑完。
+- 上線依據：第三次完整評測（7ac3738）除了兩項之外全部達標，那兩項（英文集合的漢字窗口、字形題「不確定又數不合」）都改成程式保證並有單元測試，不再靠重跑評測確認。
+- 確定程度上限：字形三次完整評測都達到解除門檻，從 `ZH_CERTAINTY_CAPS` 拿掉；字音有一次沒達到，保留「可能」與「請查教育部辭典」。

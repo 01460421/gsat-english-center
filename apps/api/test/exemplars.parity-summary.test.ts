@@ -148,7 +148,7 @@ describe('exemplars-eval-plan.mjs：這次跑什麼', () => {
     expect(decideMode({ event: 'pull_request', ref: 'refs/pull/1/merge', changed: [RUN_FILE] })).toBe('none');
   });
 
-  it('A 組的自動觸發：PROBE_PATHS 涵蓋輸出格式與系統提示引用的檔，和 workflow 的 on.push.paths（RUN 檔以外）完全相同', () => {
+  it('不自動花錢（站主 2026-10-30）：PROBE_PATHS 涵蓋輸出格式與系統提示引用的檔；workflow 只有手動的 workflow_dispatch，沒有 push 觸發', () => {
     for (const p of [
       'apps/api/src/exemplars/schema.ts',
       'apps/api/src/ai/prompts/exemplars.ts',
@@ -161,11 +161,9 @@ describe('exemplars-eval-plan.mjs：這次跑什麼', () => {
       expect(PROBE_PATHS).toContain(p);
     }
     const workflow = readFileSync(path.join(REPO, '.github/workflows/exemplars-eval.yml'), 'utf8');
-    const block = /\n {2}push:\n {4}branches: .*\n {4}paths:\n((?: {6}- .*\n)+)/.exec(workflow);
-    expect(block, 'workflow 的 on.push.paths').not.toBeNull();
-    const paths = block![1]!.trim().split('\n').map((l) => l.trim().replace(/^- /, ''));
-    expect(paths.filter((p) => p !== RUN_FILE).sort()).toEqual([...PROBE_PATHS].sort());
-    expect(paths).toContain(RUN_FILE);
+    const on = /\non:\n([\s\S]*?)\n(?:permissions|concurrency|env|jobs):/.exec(workflow)![1]!;
+    expect(on).toMatch(/^ {2}workflow_dispatch:/m);
+    expect(on).not.toMatch(/^ {2}(push|pull_request|schedule|workflow_run):/m);
     for (const p of PROBE_PATHS) expect(existsSync(path.join(REPO, p)), p).toBe(true);
   });
 

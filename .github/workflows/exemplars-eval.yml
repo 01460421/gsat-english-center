@@ -64,17 +64,7 @@ on:
         type: string
         required: false
         default: ''
-  push:
-    branches: [main, 'claude/**']
-    paths:
-      - apps/api/test/fixtures/exemplars-golden/RUN
-      - apps/api/src/exemplars/schema.ts
-      - apps/api/src/ai/prompts/exemplars.ts
-      - apps/api/src/ai/prompts/essay.ts
-      - apps/api/src/ai/prompts/common.ts
-      - apps/api/src/ai/client.ts
-      - packages/shared/src/exemplars.ts
-      - packages/shared/src/bank.ts
+  # push 觸發已拿掉（站主 2026-10-30：不要再自動花正式站的 API）。要跑評測只能由站主在 Actions 頁面手動按 Run workflow。
 
 permissions:
   contents: read
