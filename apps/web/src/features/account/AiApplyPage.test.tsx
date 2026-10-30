@@ -3,7 +3,7 @@
  */
 import { screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { AI_TASK_POINTS, EXEMPLAR_LIMITS, assistPoints, type AiQuotaResponse } from '@gsat/shared';
+import { AI_TASK_POINTS, ASSIST_LIMITS, EXEMPLAR_LIMITS, assistPoints, type AiQuotaResponse } from '@gsat/shared';
 import { afterEach, describe, expect, it } from 'vitest';
 import { chinesePointRows } from './AiApplyPage';
 import { resetOnboardingRedirectForTests } from './RequireAccount';
@@ -132,6 +132,35 @@ describe('說明與開關', () => {
     expect(within(table).getByRole('row', { name: /學習助手英文：拍照轉錄題目.*2 點/ })).toBeInTheDocument();
     expect(within(table).getByRole('row', { name: /學習助手：學習報告.*10 點/ })).toBeInTheDocument();
     expect(within(table).queryByRole('row', { name: /^學習助手：(解析|追問一次|拍照轉錄題目)/ })).not.toBeInTheDocument();
+  });
+
+  it('國寫範文開放時（國寫範文設計 §8）：國文的幾列多「國寫範文」一列（點數是 AI_TASK_POINTS）與每天、每題的篇數；沒開時沒有', async () => {
+    // 純函式：只在 exemplar 時多一列，點數只來自 shared 的常數。
+    expect(chinesePointRows(false, true)).toContainEqual(['學習助手國文：國寫範文（整篇 AI 示範）', `${AI_TASK_POINTS.assist_zh_exemplar} 點`]);
+    expect(chinesePointRows(false).map(([task]) => task)).not.toContain('學習助手國文：國寫範文（整篇 AI 示範）');
+
+    mockApi({
+      'GET /api/features': { ...FEATURES_ON, assistant: true, assistantSubjects: [{ subject: 'chinese', photo: false, exemplar: true }] },
+      'GET /api/me': signedInMe({ user: { ai_status: 'pending' } }),
+    });
+    const main = await openApply();
+    await within(main).findByRole('link', { name: '學習助手' });
+    const table = within(main).getByRole('table');
+    expect(within(table).getByRole('row', { name: new RegExp(`學習助手國文：國寫範文.整篇 AI 示範.*${AI_TASK_POINTS.assist_zh_exemplar} 點`) })).toBeInTheDocument();
+    expect(
+      within(main).getByText(`國寫範文每天最多 ${ASSIST_LIMITS.zhExemplarsPerDay} 篇、同一題最多 ${ASSIST_LIMITS.zhExemplarsPerCase} 篇（要先看過那一題的國寫指導）。`),
+    ).toBeInTheDocument();
+  });
+
+  it('國寫範文沒開（國文開著）：點數表沒有「國寫範文」那一列', async () => {
+    mockApi({
+      'GET /api/features': { ...FEATURES_ON, assistant: true, assistantSubjects: [{ subject: 'chinese', photo: false }] },
+      'GET /api/me': signedInMe({ user: { ai_status: 'pending' } }),
+    });
+    const main = await openApply();
+    await within(main).findByRole('link', { name: '學習助手' });
+    expect(within(main).getByRole('row', { name: /學習助手國文：國寫指導/ })).toBeInTheDocument();
+    expect(within(main).queryByText(/國寫範文/)).not.toBeInTheDocument();
   });
 
   it('作文範文開放時：說明多一段（連到作文範文）、點數表多一列（點數是 task_points／AI_TASK_POINTS）、每天的組數上限；關著時沒有', async () => {

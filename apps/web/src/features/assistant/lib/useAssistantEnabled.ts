@@ -26,13 +26,16 @@ export function assistantPhotoEnabledOf(features: FeaturesResponse, me: MeRespon
 /**
  * 對目前的使用者開放的英文以外科目（純函式，測試用）：公開的 assistantSubjects 與管理員預覽的 subjects 合併，
  * 同一科出現兩次時拍照取「任一邊開」。學習助手本身沒開時一律是空的（國文跟著學習助手的總開關）。
+ * 國寫範文（exemplar；國寫範文設計 §7）同樣取任一邊開：開關是 admin 時只有管理員的預覽帶 exemplar: true；沒開時不帶這個欄位。
  */
 export function assistantSubjectsOf(features: FeaturesResponse, me: MeResponse): AssistSubjectAvailability[] {
   if (!assistantEnabledOf(features, me)) return [];
   const preview = me.user !== null ? (me.assistant_preview?.subjects ?? []) : [];
+  const all = [...(features.assistantSubjects ?? []), ...preview];
   const out: AssistSubjectAvailability[] = [];
-  for (const item of assistSubjectAvailability([...(features.assistantSubjects ?? []), ...preview])) {
-    out.push({ ...item, photo: [...(features.assistantSubjects ?? []), ...preview].some((s) => s.subject === item.subject && s.photo) });
+  for (const item of assistSubjectAvailability(all)) {
+    const exemplar = all.some((s) => s.subject === item.subject && s.exemplar === true);
+    out.push({ subject: item.subject, photo: all.some((s) => s.subject === item.subject && s.photo), ...(exemplar ? { exemplar: true } : {}) });
   }
   return out;
 }

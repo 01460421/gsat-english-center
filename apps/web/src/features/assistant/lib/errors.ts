@@ -2,7 +2,7 @@
  * 學習助手的錯誤文案（docs/design/learning-assistant.md §5.7）：依錯誤代碼與 error.reason 細分，其他（登入、同意、額度、
  * 連線、閘道錯誤）沿用寫作頁的 describeError，說法和 AI 批改一致。畫面一律顯示這裡的中文，不顯示後端的英文 message。
  */
-import { AI_REFUND_REASONS, ASSIST_INPUT_PROBLEM_MESSAGES, PUBLISHER_ASSIST_ENDED_TEXT, PUBLISHER_ASSIST_NO_SCOPE_TEXT, type AiRefundReason } from '@gsat/shared';
+import { AI_REFUND_REASONS, ASSIST_INPUT_PROBLEM_MESSAGES, ASSIST_LIMITS, PUBLISHER_ASSIST_ENDED_TEXT, PUBLISHER_ASSIST_NO_SCOPE_TEXT, type AiRefundReason } from '@gsat/shared';
 import { ApiRequestError, isGatewayError } from '../../../lib/api';
 import { API_ERROR_MESSAGES } from '../../../lib/apiErrors';
 import { describeError, messageFor, type DescribeContext, type ErrorView } from '../../writing/lib/errors';
@@ -24,12 +24,15 @@ export const ASSIST_LIMIT_MESSAGES = {
   cases_per_day: '今天已經送出 30 題，明天再繼續。',
   cases_live: '學習助手裡的題目已經有 500 題，請先刪掉一些舊的。',
   photos: '照片已經到上限，請先刪掉舊的照片再上傳。',
+  // 國寫範文（國寫範文設計 §6）：完成＋進行中的算進去，失敗的不算。
+  zh_exemplars_per_case: `這一題已經看過 ${ASSIST_LIMITS.zhExemplarsPerCase} 篇 AI 示範。`,
 } as const;
 
 /** daily_limit 依任務（error.reason 是任務代號）。 */
 export const ASSIST_DAILY_LIMIT_MESSAGES = {
   assist_report: '今天已經產生 2 份學習報告，明天再試。',
   assist_ocr: '今天的拍照轉錄已經 6 次，可以改用「貼上文字」。',
+  assist_zh_exemplar: `今天已經看過 ${ASSIST_LIMITS.zhExemplarsPerDay} 篇國寫的 AI 示範，明天再試。`,
 } as const;
 
 /** 解析或追問失敗（turn 的 failure；點數一律全額退還）。 */

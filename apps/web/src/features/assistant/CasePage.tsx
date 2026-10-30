@@ -15,6 +15,8 @@
  *   - 多科目（docs/design/assistant-subjects.md §8.1）：解析元件、左欄引文加亮、推薦練習（國文沒有）、重試與追問的點數都經過
  *     科目登記表（subjects/index.ts）；國文的開關另外決定這一題是不是唯讀（國文關著時英文照常）。國文另有頁首的「國文｜字形・單選」、
  *     解析時判定科目不符的退還說明，以及「用同一份題目問另一部分」。
+ *   - 科目登記表的 CaseExtras（選填，英文沒有）放在解析之後、「回報 AI 內容」之前：國文的國寫案例是「看一篇 AI 示範」
+ *     （國寫範文設計 §8）。範文的進度列放在那一塊（頁首只放解析與轉錄的進度），寫好或失敗時常駐的 live region 照樣唸出來。
  */
 import {
   PUBLISHER_ASSIST_ENDED_TEXT,
@@ -48,8 +50,9 @@ import { assistRefundMessage } from './lib/errors';
 import { useAssistCasePoller, useAssistErrorView } from './lib/pollers';
 import { followupTurns, latestAnalysis, previewFromView } from './lib/view';
 import { caseSubject, webSubject } from './subjects';
-import { ZH_COPY, ZH_FOLLOWUP_PLACEHOLDER } from './subjects/chinese/copy';
+import { ZH_COPY, ZH_EXEMPLAR_COPY, ZH_FOLLOWUP_PLACEHOLDER } from './subjects/chinese/copy';
 import { zhCaseTag, zhClassicalCase } from './subjects/chinese/caseTag';
+import { zhExemplarHeadingId } from './subjects/chinese/ZhExemplarView';
 import { useAssistSubjects } from './subjects/useAssistSubjects';
 import { APP_NAME } from '../../modules';
 
@@ -70,6 +73,7 @@ function mismatchOf(turn: AssistTurnView | null): Exclude<AssistDetectedSubject,
 function pendingText(pending: AssistPendingTask): string {
   if (pending.kind === 'followup') return pending.status === 'queued' ? '追問排隊中…' : 'AI 正在回答你的追問…';
   if (pending.kind === 'ocr') return '照片轉錄中…';
+  if (pending.kind === 'zh_exemplar') return ZH_EXEMPLAR_COPY.pendingLive(pending.status === 'queued');
   return pending.status === 'queued' ? '解析排隊中…' : 'AI 正在解析…';
 }
 
@@ -184,6 +188,15 @@ function CaseView({ detail, poller }: { detail: AssistCaseDetail; poller: Return
       setAnnouncement('照片轉錄完成。');
       return;
     }
+    if (finished.kind === 'zh_exemplar') {
+      const failed = turn?.status === 'failed';
+      setAnnouncement(failed ? ZH_EXEMPLAR_COPY.failedLive : ZH_EXEMPLAR_COPY.doneLive);
+      // 焦點還在範文那一塊（送出後放在它的標題）或已經丟到 body：移到這一篇的標籤；學生去操作別的東西了就不搶。
+      if (turn && !failed && (focusLost || active?.closest('[data-zh-exemplar-section]') || active?.id === 'zh-exemplar-h')) {
+        document.getElementById(zhExemplarHeadingId(turn.id))?.focus();
+      }
+      return;
+    }
     if (!analysis) {
       if ((turn ?? lastAnalyze)?.status === 'failed') setAnnouncement('解析沒有完成，點數已經退還。');
       return;
@@ -194,10 +207,10 @@ function CaseView({ detail, poller }: { detail: AssistCaseDetail; poller: Return
 
   // 證據句與引文：左欄加亮（全部淡色、按下的那一句加深），按下時捲過去。英文是選文裡的解法步驟；國文是題目區塊裡的引文。
   const highlights = useMemo(
-    () => registry.highlightsOf(analysis, detail.question, locate?.id ?? null, detail.hint_first),
-    [registry, analysis, detail.question, locate, detail.hint_first],
+    () => registry.highlightsOf(analysis, detail.question, locate?.id ?? null, detail.hint_first, detail.turns),
+    [registry, analysis, detail.question, locate, detail.hint_first, detail.turns],
   );
-  const locatable = useMemo(() => registry.locatableOf(analysis, detail.question), [registry, analysis, detail.question]);
+  const locatable = useMemo(() => registry.locatableOf(analysis, detail.question, detail.turns), [registry, analysis, detail.question, detail.turns]);
   useEffect(() => {
     if (!locate) return;
     const frame = requestAnimationFrame(() => {
@@ -241,6 +254,7 @@ function CaseView({ detail, poller }: { detail: AssistCaseDetail; poller: Return
 
   const recommendations = registry.recommendationsOf(analysis, detail);
   const Analysis = registry.Analysis;
+  const CaseExtras = registry.CaseExtras ?? null;
   const mismatch = mismatchOf(lastAnalyze);
 
   const analysisBlock = (
@@ -248,7 +262,7 @@ function CaseView({ detail, poller }: { detail: AssistCaseDetail; poller: Return
       <h2 ref={analysisHeadingRef} tabIndex={-1} className="sr-only">
         解析
       </h2>
-      {pending && pending.kind !== 'followup' && (
+      {pending && (pending.kind === 'analyze' || pending.kind === 'ocr') && (
         <AssistStatus key={pending.turn_id} pending={pending} speed={poller.snapshot.speed} group={groupCase} connectionError={connectionError} stopped={stopped} live={false} />
       )}
       {/* 拍照的題目還沒確認轉錄（WP-A3）：照片、轉錄與確認都在 /assistant/new。 */}
@@ -299,6 +313,19 @@ function CaseView({ detail, poller }: { detail: AssistCaseDetail; poller: Return
           locatable={locatable}
           onLocate={(id) => setLocate((cur) => ({ id, n: (cur?.n ?? 0) + 1 }))}
           onUpdated={poller.accept}
+        />
+      )}
+      {analysis && CaseExtras && (
+        <CaseExtras
+          detail={detail}
+          analysis={analysis}
+          closed={closed}
+          ready={ready}
+          ended={ended}
+          poll={{ speed: poller.snapshot.speed, connectionError, stopped }}
+          onStarted={onStarted}
+          locatable={locatable}
+          onLocate={(id) => setLocate((cur) => ({ id, n: (cur?.n ?? 0) + 1 }))}
         />
       )}
       {analysis && <ReportAiContent variant="assistant" />}
@@ -399,7 +426,7 @@ function CaseView({ detail, poller }: { detail: AssistCaseDetail; poller: Return
           disabled={busy || pending !== null}
         />
       </div>
-      {pending && <p className="text-right text-xs text-muted">解析進行中，完成後才能刪除。</p>}
+      {pending && <p className="text-right text-xs text-muted">{pending.kind === 'zh_exemplar' ? ZH_EXEMPLAR_COPY.deleteBusy : '解析進行中，完成後才能刪除。'}</p>}
     </div>
   );
 

@@ -2,7 +2,8 @@
  * 學習助手每一科對目前的使用者開不開、能不能拍照（docs/design/assistant-subjects.md §7.5、§8.1）：
  *   英文：沿用 useAssistantEnabled／useAssistantPhotoEnabled（AI_ASSISTANT、AI_ASSISTANT_PHOTO）；
  *   國文：/api/features 的 assistantSubjects（開關 on），或管理員的 /api/me 的 assistant_preview.subjects（開關 admin），
- *         拍照看同一筆的 photo（Worker 依 AI_ASSISTANT_PHOTO 與 AI_ASSISTANT_SUBJECTS_PHOTO 算好）。
+ *         拍照看同一筆的 photo（Worker 依 AI_ASSISTANT_PHOTO 與 AI_ASSISTANT_SUBJECTS_PHOTO 算好），國寫範文看同一筆的 exemplar
+ *         （Worker 依 AI_ZH_EXEMPLAR 算好；國寫範文設計 §7）。
  * 前端只看 API，不看 shared 的常數：Worker 與前端分開部署時，不會出現「前端顯示國文、Worker 拒收」的時段。
  * 另外記住上次選的科目（localStorage gsat-assist:v1:last-subject；讀寫都包 try/catch，讀不到就用英文）。
  */
@@ -15,6 +16,8 @@ export interface AssistSubjectsState {
   isOpen: (subject: AssistSubject) => boolean;
   /** 這一科能不能拍照。 */
   photo: (subject: AssistSubject) => boolean;
+  /** 這一科有沒有開放「看一篇 AI 示範」（只有國文的國寫）。 */
+  exemplar: (subject: AssistSubject) => boolean;
 }
 
 export function useAssistSubjects(): AssistSubjectsState {
@@ -26,6 +29,7 @@ export function useAssistSubjects(): AssistSubjectsState {
     open,
     isOpen: (s) => open.includes(s),
     photo: (s) => (s === 'english' ? englishPhoto : others.some((o) => o.subject === s && o.photo)),
+    exemplar: (s) => s !== 'english' && others.some((o) => o.subject === s && o.exemplar === true),
   };
 }
 

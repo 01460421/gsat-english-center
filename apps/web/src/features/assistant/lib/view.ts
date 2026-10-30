@@ -89,3 +89,10 @@ export function latestAnalysis(turns: readonly AssistTurnView[]): { turn: Assist
 export function followupTurns(turns: readonly AssistTurnView[]): AssistTurnView[] {
   return turns.filter((t) => t.kind === 'followup');
 }
+
+/**
+ * 國寫範文的 turn（依 seq；國寫範文設計 §8）。資料庫裡是 followup，詳情回的種類是 zh_exemplar，所以不會混進追問串。
+ */
+export function exemplarTurns(turns: readonly AssistTurnView[]): AssistTurnView[] {
+  return turns.filter((t) => t.kind === 'zh_exemplar');
+}

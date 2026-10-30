@@ -4,7 +4,8 @@
  *   - 說明 AI 批改是什麼、點數規則（AI_TASK_POINTS：中譯英 3、作文 7、照片辨識 2）與上限
  *     （登入後讀 GET /api/ai/quota；讀不到就顯示 wrangler.toml 的預設值）。學習助手對這位使用者開放時
  *     （useAssistantEnabled）另外說明學習助手，點數表多學習助手的幾列（同一個核准、同一份 AI 處理說明）；國文開放時
- *     多國文的幾列（assistPoints），作文範文開放時（useExemplarsEnabled）多作文範文一列。三份說明的條款不寫學習助手與作文範文的
+ *     多國文的幾列（assistPoints；國寫範文開放時再多「國寫範文」一列，AI_TASK_POINTS），作文範文開放時（useExemplarsEnabled）
+ *     多作文範文一列。三份說明的條款不寫學習助手與作文範文的
  *     點數數字（docs/design/assistant-subjects.md §10），點數只列在這張表與送出前的確認畫面，都由 shared 的常數產生。
  *   - 使用須知（SPEC §8.4「AI 功能使用說明」：能做什麼、不能做什麼、不要放個資、遇到不當內容怎麼辦）。
  *   - 目前狀態（none／pending／waitlist／approved／rejected／suspended）的中文說明；已核准時顯示今日剩餘點數與用量
@@ -148,8 +149,9 @@ function taskPoints(quota: AiQuotaResponse | null): Record<AiTask, number> {
 /**
  * 學習助手國文的點數表（設計值，shared 的 assistPoints；後端的 task_points 只有英文的數字）。純函式，
  * AiApplyPage.test.tsx 直接拿 assistPoints 比對每一列（條款不寫數字，數字只在這裡與確認畫面）。
+ * exemplar：國寫範文對這位使用者開放時多一列（國寫範文設計 §8；點數是 AI_TASK_POINTS.assist_zh_exemplar）。
  */
-export function chinesePointRows(photo: boolean): Array<[string, string]> {
+export function chinesePointRows(photo: boolean, exemplar = false): Array<[string, string]> {
   const choice = (n: number) => assistPoints('chinese', 'assist_analyze', { kind: 'zh_choice', items: n });
   const short = (n: number) => assistPoints('chinese', 'assist_analyze', { kind: 'zh_short', items: n });
   return [
@@ -157,14 +159,15 @@ export function chinesePointRows(photo: boolean): Array<[string, string]> {
     [`學習助手國文：簡答解析（每多一個小題加 ${short(2) - short(1)} 點，最多 ${short(Number.MAX_SAFE_INTEGER)} 點）`, `${short(1)} 點起`],
     ['學習助手國文：國寫指導', `${assistPoints('chinese', 'assist_analyze', { kind: 'zh_writing' })} 點`],
     ['學習助手國文：追問一次', `${assistPoints('chinese', 'assist_followup')} 點`],
+    ...(exemplar ? [['學習助手國文：國寫範文（整篇 AI 示範）', `${AI_TASK_POINTS.assist_zh_exemplar} 點`] as [string, string]] : []),
     ...(photo
       ? [['學習助手國文：拍照轉錄題目', `${assistPoints('chinese', 'assist_ocr', { photos: 1 })} 點（2 張 ${assistPoints('chinese', 'assist_ocr', { photos: 2 })} 點）`] as [string, string]]
       : []),
   ];
 }
 
-function ChinesePointRows({ photo }: { photo: boolean }) {
-  const rows = chinesePointRows(photo);
+function ChinesePointRows({ photo, exemplar }: { photo: boolean; exemplar: boolean }) {
+  const rows = chinesePointRows(photo, exemplar);
   return (
     <>
       {rows.map(([task, value]) => (
@@ -280,7 +283,7 @@ function AboutAi({ quota }: { quota: AiQuotaResponse | null }) {
                 )}
               </>
             )}
-            {chinese && <ChinesePointRows photo={chinese.photo} />}
+            {chinese && <ChinesePointRows photo={chinese.photo} exemplar={chinese.exemplar === true} />}
           </tbody>
         </table>
       </div>
@@ -300,6 +303,11 @@ function AboutAi({ quota }: { quota: AiQuotaResponse | null }) {
         {assistant && (
           <li className="ml-5 list-disc">
             學習報告每天 {ASSIST_LIMITS.reportsPerDay} 份{assistantPhoto ? `、拍照轉錄每天 ${ASSIST_LIMITS.ocrPerDay} 次` : ''}。
+          </li>
+        )}
+        {chinese?.exemplar === true && (
+          <li className="ml-5 list-disc">
+            國寫範文每天最多 {ASSIST_LIMITS.zhExemplarsPerDay} 篇、同一題最多 {ASSIST_LIMITS.zhExemplarsPerCase} 篇（要先看過那一題的國寫指導）。
           </li>
         )}
         <li className="ml-5 list-disc">台灣時間 00:00 重置；{refundText}失敗會全額退還點數。</li>

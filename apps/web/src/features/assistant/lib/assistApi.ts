@@ -117,6 +117,14 @@ export async function startAssistFollowup(id: string, body: CreateAssistFollowup
   return expect(await api(`${casePath(id)}/followups`, { method: 'POST', body }), isTaskAccepted);
 }
 
+/**
+ * POST …/zh-exemplar：國寫範文（國文的國寫案例、國寫指導完成後；8 點）→ 202。本體是空物件（不送學生的段落）。
+ * 每一題最多 2 篇（429 assist_limit）、每天 3 篇（429 daily_limit）、開關關著 503 not_configured（國寫範文設計 §7）。
+ */
+export async function startZhExemplar(id: string): Promise<AssistTaskAccepted> {
+  return expect(await api(`${casePath(id)}/zh-exemplar`, { method: 'POST', body: {} }), isTaskAccepted);
+}
+
 // ── 拍照問題目（WP-A3）：照片一次一張（multipart，欄位 photo），再送轉錄（2 點）。──
 
 function isPhotoUpload(v: unknown): v is PhotoUploadResponse {

@@ -13,6 +13,7 @@ import { describe, expect, it } from 'vitest';
 import { ASSISTANT_AI_NOTICE, AiBadge, AiNotice, ReportAiContent } from '../writing/components/ui';
 import { reportPlainText } from './lib/printText';
 import { REPORT_AI_DISCLAIMER } from './reportFormat';
+import { ZH_EXEMPLAR_COPY } from './subjects/chinese/copy';
 import { reportDetail } from './testing/report';
 
 const FILES = import.meta.glob<string>(['./**/*.{ts,tsx}', '!./**/*.test.{ts,tsx}'], { query: '?raw', import: 'default', eager: true });
@@ -64,6 +65,10 @@ describe('學習助手的文案', () => {
         './subjects/chinese/ZhQuestionFields.tsx',
         './subjects/chinese/components/OptionVerdictTable.tsx',
         './subjects/chinese/components/CardTable.tsx',
+        // 國寫範文（國寫範文設計 §8）。
+        './subjects/chinese/ZhExemplarSection.tsx',
+        './subjects/chinese/ZhExemplarView.tsx',
+        './subjects/chinese/exemplar.ts',
       ]),
     );
   });
@@ -114,6 +119,22 @@ describe('學習助手的文案', () => {
       const code = (source ?? '').replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
       expect(code, file).not.toMatch(/\d+\s*點|點數/);
     }
+  });
+
+  it('國寫範文（國寫範文設計 §8）：點數不寫死在畫面程式裡（只來自 shared 的常數）；不宣稱分數或評分，「得獎」只出現在「不是得獎作品」', () => {
+    for (const file of ['./subjects/chinese/ZhExemplarSection.tsx', './subjects/chinese/ZhExemplarView.tsx', './subjects/chinese/exemplar.ts']) {
+      const code = (FILES[file] ?? '').replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
+      expect(code, file).not.toBe('');
+      expect(code, file).not.toMatch(/\d+\s*點/);
+    }
+    const texts = Object.values(ZH_EXEMPLAR_COPY).flatMap((v): string[] =>
+      typeof v === 'string' ? [v] : typeof v === 'function' ? [String((v as (...n: number[]) => unknown)(8, 20, 7, 10))] : Object.values(v as Record<string, string>),
+    );
+    const all = texts.join('\n');
+    expect(all.replace(/不打分數/g, '')).not.toMatch(/分數|評分|等第|級分/);
+    expect(all.replace(/不是得獎作品/g, '')).not.toMatch(/得獎|特優|第一名/);
+    expect(all).toContain('不是得獎作品');
+    expect(all).not.toMatch(FORBIDDEN);
   });
 
   it('沒有 variant 時，寫作批改的文字不變', () => {
