@@ -53,12 +53,14 @@ function MethodCardChip({ id, section }: { id: ZhExemplarParagraph['card']; sect
 }
 
 function Paragraph({ index, paragraph, section }: { index: number; paragraph: ZhExemplarParagraph; section: ZhSection }) {
+  // 被隱藏或省略的段落（比賽語料、官方文字、不符合規則、內容過濾）：text 是程式的固定說明，不當成文章顯示，也不標方法卡。
   const hidden = paragraph.hidden !== null;
+  const card = hidden ? null : paragraph.card;
   return (
     <li className="space-y-2 rounded-xl border border-line px-3 py-3" data-zh-exemplar-paragraph={index + 1} data-hidden={hidden ? paragraph.hidden : undefined}>
       <p className="text-xs font-semibold text-muted">第 {index + 1} 段</p>
       <p className={hidden ? 'break-words text-muted' : 'break-words leading-loose indent-[2em]'}>{paragraph.text}</p>
-      {(paragraph.role_zh !== '' || paragraph.card !== null) && (
+      {(paragraph.role_zh !== '' || card !== null) && (
         <div className="flex flex-wrap items-center gap-2">
           {paragraph.role_zh !== '' && (
             <span className={chipCls}>
@@ -66,7 +68,7 @@ function Paragraph({ index, paragraph, section }: { index: number; paragraph: Zh
               {paragraph.role_zh}
             </span>
           )}
-          <MethodCardChip id={paragraph.card} section={section} />
+          <MethodCardChip id={card} section={section} />
         </div>
       )}
       {!hidden && paragraph.technique_zh !== '' && (
@@ -126,7 +128,10 @@ export function ZhExemplarView({
 }) {
   const bodyId = useId();
   const reason = exemplar.section === 'zh_writing_reason';
-  const hiddenCount = exemplar.paragraphs.filter((p) => p.hidden !== null).length;
+  const similarCount = exemplar.paragraphs.filter((p) => p.hidden === 'contest' || p.hidden === 'd8').length;
+  const omittedCount = exemplar.paragraphs.filter((p) => p.hidden === 'trimmed' || p.hidden === 'filtered').length;
+  // 指向被隱藏或省略的段落的要件對照不顯示（Worker 已經拿掉；這裡再保險一次）。
+  const coverage = exemplar.coverage.filter((c) => c.paragraph === 0 || exemplar.paragraphs[c.paragraph - 1]?.hidden === null);
   const totals = zhExemplarTotals(exemplar);
   return (
     <article aria-labelledby={zhExemplarHeadingId(turnId)} className="space-y-5" data-zh-exemplar={turnId}>
@@ -143,9 +148,9 @@ export function ZhExemplarView({
       ) : (
         <>
           <ProcessingNotices notices={exemplar.notices} />
-          {hiddenCount > 0 && (
+          {similarCount + omittedCount > 0 && (
             <p role="note" className="rounded-xl border border-badge-fg/30 bg-badge-bg/60 px-4 py-2 text-sm" data-testid="zh-exemplar-hidden">
-              {ZH_EXEMPLAR_COPY.hiddenNotice(hiddenCount)}
+              {ZH_EXEMPLAR_COPY.hiddenNotice(similarCount, omittedCount)}
             </p>
           )}
           {reason && exemplar.q1 && <Q1 turnId={turnId} q1={exemplar.q1} locatable={locatable} onLocate={onLocate} />}
@@ -181,11 +186,11 @@ export function ZhExemplarView({
               </ul>
             </section>
           )}
-          {exemplar.coverage.length > 0 && (
+          {coverage.length > 0 && (
             <section className="space-y-2">
               <h4 className="font-semibold">{ZH_EXEMPLAR_COPY.coverage}</h4>
               <ul className="space-y-2">
-                {exemplar.coverage.map((c, i) => (
+                {coverage.map((c, i) => (
                   <li key={i} className="space-y-0.5 rounded-xl border border-line px-3 py-2" data-zh-exemplar-coverage={c.paragraph}>
                     <p className="font-medium break-words">{c.point_zh}</p>
                     <p className="text-sm break-words text-muted">

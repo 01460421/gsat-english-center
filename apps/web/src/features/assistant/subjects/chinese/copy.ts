@@ -97,6 +97,8 @@ export const ZH_EXEMPLAR_COPY = {
   doneLive: '示範寫好了。',
   failedLive: '這篇示範沒有完成，點數已經退還。',
   deleteBusy: '示範產生中，完成後才能刪除。',
+  followupBusy: 'AI 示範產生中，完成後才能追問。',
+  followupBusyStopped: '自動更新已停止：按上方的「再試一次」看示範有沒有完成，完成後才能追問。',
   pick: '切換示範',
   pickItem: (n: number) => `第 ${n} 篇`,
   q1: '問題（一）',
@@ -105,7 +107,12 @@ export const ZH_EXEMPLAR_COPY = {
   role: '段落作用',
   card: '方法卡',
   technique: '這段怎麼寫：',
-  hiddenNotice: (n: number) => `有 ${n} 段被程式隱藏（和已發表的文章或受保護的官方文字太像），這篇示範不完整。`,
+  hiddenNotice: (similar: number, omitted: number) =>
+    omitted === 0
+      ? `有 ${similar} 段被程式隱藏（和已發表的文章或受保護的官方文字太像），這篇示範不完整。`
+      : similar === 0
+        ? `有 ${omitted} 段不符合本站的示範規則，已省略，這篇示範不完整。`
+        : `有 ${similar + omitted} 段被程式隱藏或省略（和已發表的文章或受保護的官方文字太像，或不符合本站的示範規則），這篇示範不完整。`,
   q1Hidden: {
     contest: '這個答案和已發表的文章有一長串文字相同，已隱藏。',
     d8: '這個答案和受保護的官方文字太像，已隱藏。',
@@ -119,6 +126,7 @@ export const ZH_EXEMPLAR_COPY = {
   overChars: (n: number) => `考試時要刪減 ${n} 字`,
   overCells: (n: number) => `考試時要刪減約 ${n} 格`,
   limitChars: (n: number) => `題目限 ${n} 字以內`,
+  limitCharsDefault: (n: number) => `題目沒寫字數，本站以 ${n} 字為上限`,
   noCopy: '看懂每段的作用之後，換成自己的經驗與句子重寫；國寫是手寫考試，這裡不提供整篇複製。',
 } as const;
 

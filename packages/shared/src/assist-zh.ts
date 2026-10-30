@@ -2441,6 +2441,8 @@ export const ZH_CHECK_COUNTERS = [
   'card_unknown',
   'paragraph_trimmed',
   'example_rule_removed',
+  // 情意範文含敏感事件用字的句子（只計數，ops 事件 assist_zh_exemplar_sensitive）。
+  'sensitive_event',
 ] as const;
 export type ZhCheckCounter = (typeof ZH_CHECK_COUNTERS)[number];
 export type ZhChecks = Partial<Record<ZhCheckCounter, number>>;

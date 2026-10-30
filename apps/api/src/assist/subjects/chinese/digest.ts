@@ -60,6 +60,20 @@ export function zhAnalysisDigest(view: ZhAnalysisView, max = 1_000): string {
   return cut(digestLines(view).join('\n'), max);
 }
 
+/**
+ * 國寫範文的 <analysis_digest>（≤ max 字；國寫範文設計 §2）。國寫指導附了學生的段落時，那次的素材摘要、「在考什麼」與大綱提示
+ * （hint_zh）可能帶到學生自己的經驗（例如家人住院），範文又被要求照大綱寫：這時只放要件（引題目的話）、問題（一）的要點與段落架構
+ * 的名稱，學生的事不會經由摘要混進 AI 示範。沒有附段落時同 zhAnalysisDigest。
+ */
+export function zhExemplarDigest(view: ZhAnalysisView, hadDraft: boolean, max = 1_000): string {
+  if (!hadDraft || view.kind !== 'zh_writing') return zhAnalysisDigest(view, max);
+  const lines: string[] = [];
+  for (const r of view.requirements) lines.push(`Requirement: ${r.point_zh}${r.quote ? `「${r.quote}」` : ''}`);
+  if (view.q1) for (const p of view.q1.points) lines.push(`問題（一）: ${p.point_zh}`);
+  for (const o of view.outline) lines.push(`Outline: ${o.part_zh}`);
+  return cut(lines.join('\n'), max);
+}
+
 /** 「同一份題目問另一部分」的前一個案例摘要（≤ 600 字；放進新案例的 <task>，所以寫成一行）。 */
 export function zhRelatedDigest(view: ZhAnalysisView, max = 600): string {
   return cut(digestLines(view).map((l) => l.trim()).join(' / '), max);

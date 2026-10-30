@@ -35,10 +35,13 @@ export const ZH_EXEMPLAR_PARAGRAPH_MIN_CHARS = 15;
 
 export type ZhExemplarSection = 'zh_writing_reason' | 'zh_writing_emotion';
 
-/** 一段示範：本文、隱藏的原因（比賽語料或 D8；隱藏時 text 是固定說明）、段落作用、方法卡、這段怎麼用那張卡。 */
+/**
+ * 一段示範：本文、隱藏的原因、段落作用、方法卡、這段怎麼用那張卡。隱藏時 text 是固定說明：contest＝和比賽語料相同、
+ * d8＝和受保護的官方文字太像、trimmed＝拿掉不合規則的句子後太短（ZH_EXEMPLAR_TRIMMED_TEXT）、filtered＝內容過濾擋下。
+ */
 export interface ZhExemplarParagraph {
   text: string;
-  hidden: 'contest' | 'd8' | null;
+  hidden: 'contest' | 'd8' | 'trimmed' | 'filtered' | null;
   role_zh: string;
   card: ZhWritingMethodId | null;
   technique_zh: string;
@@ -63,8 +66,11 @@ export interface ZhExemplarView {
   } | null;
   /** 知性＝問題（二）的段落；情意＝全文。 */
   paragraphs: ZhExemplarParagraph[];
-  /** 段落（不含問題（一））的字數、漢字數、格數，以及題目的上限（limit_chars 沒有規定是 null；limit_cells 是這部分能用的格數）。 */
-  totals: { chars: number; han: number; cells: number; limit_chars: number | null; limit_cells: number };
+  /**
+   * 段落（不含問題（一））的字數、漢字數、格數，以及上限（limit_chars 沒有規定是 null；limit_cells 是這部分能用的格數）。
+   * limit_chars_from_question：字數上限是題目寫的（false＝題目沒寫，知性問題（二）用本站預設的 400 字）。
+   */
+  totals: { chars: number; han: number; cells: number; limit_chars: number | null; limit_chars_from_question: boolean; limit_cells: number };
   /** 這篇怎麼寫（2–4 則）。 */
   notes: Array<{ card: ZhWritingMethodId | null; text_zh: string }>;
   /** 要件對照：要件 → 第幾段（0＝問題（一））與那一段裡的一句。 */
@@ -129,8 +135,11 @@ export interface ZhExemplarLimits {
   section: ZhExemplarSection;
   /** 知性題的問題（一）：硬限制（字，含標點）；情意題是 null。 */
   q1: { maxChars: number } | null;
-  /** 問題（二）或情意全文：字數上限（沒有規定是 null）、格數上限、題目原本寫的行數（「至多 N 行」；沒有是 null）。 */
-  body: { maxChars: number | null; maxCells: number; lines: number | null };
+  /**
+   * 問題（二）或情意全文：字數上限（沒有規定是 null）、字數上限是不是題目寫的（false＝本站預設）、格數上限、
+   * 題目原本寫的行數（「至多 N 行」；沒有是 null）。
+   */
+  body: { maxChars: number | null; charsFromQuestion: boolean; maxCells: number; lines: number | null };
   /** 問題（一）＋（二）或全文合計的格數上限（一面）。 */
   sheetCells: number;
   /** 目標範圍（字，含標點；給提示與計數）。 */
@@ -153,11 +162,12 @@ export function zhExemplarLimits(question: Pick<AssistQuestionView, 'blocks'>, s
     const q1 = charsOf(of('(一)')) ?? ZH_EXEMPLAR_DEFAULT_LIMITS.q1Chars;
     const q2 = of('(二)') ?? of(null);
     const lines = q2?.lines ?? null;
-    const maxChars = charsOf(q2) ?? ZH_EXEMPLAR_DEFAULT_LIMITS.q2Chars;
+    const given = charsOf(q2);
+    const maxChars = given ?? ZH_EXEMPLAR_DEFAULT_LIMITS.q2Chars;
     return {
       section,
       q1: { maxChars: q1 },
-      body: { maxChars, maxCells: cellsOf(lines), lines },
+      body: { maxChars, charsFromQuestion: given !== null, maxCells: cellsOf(lines), lines },
       sheetCells: ZH_SHEET_CELLS,
       target: { q1: pct(q1, ZH_EXEMPLAR_TARGETS.q1), body: pct(maxChars, ZH_EXEMPLAR_TARGETS.q2) },
     };
@@ -168,7 +178,7 @@ export function zhExemplarLimits(question: Pick<AssistQuestionView, 'blocks'>, s
   return {
     section,
     q1: null,
-    body: { maxChars, maxCells: cellsOf(lines), lines },
+    body: { maxChars, charsFromQuestion: maxChars !== null, maxCells: cellsOf(lines), lines },
     sheetCells: ZH_SHEET_CELLS,
     target: { q1: null, body: maxChars !== null ? pct(maxChars, ZH_EXEMPLAR_TARGETS.q2) : [...ZH_EXEMPLAR_TARGETS.emotionChars] },
   };
@@ -218,6 +228,17 @@ export const ZH_CLICHE_EXAMPLES: readonly string[] = [
 /** 這段文字裡的通用套語個數（ZH_CLICHE_PATTERNS，每個樣式算一次）。 */
 export function zhClicheCount(text: string): number {
   return ZH_CLICHE_PATTERNS.filter((re) => text.search(re) >= 0).length;
+}
+
+/**
+ * 敏感事件的字（情意的示範要用日常、可信的高中生經驗，提示禁止疾病、死亡、自傷、家暴、戀愛；§4）。Worker 的後處理只計數
+ * （sensitive_event）並寫 ops 事件給開發者抽查，不拿掉文字；評測的 K 組用同一份。
+ */
+export const ZH_EXEMPLAR_SENSITIVE_RE = /醫院|病房|住院|過世|去世|病逝|離世|喪禮|葬禮|告別式|靈堂|癌症|自殺|自殘|輕生|割腕|家暴|戀愛|男朋友|女朋友|告白|暗戀/u;
+
+/** 含敏感事件用字的句子數（以。！？切句）。 */
+export function zhSensitiveSentences(texts: readonly string[]): number {
+  return texts.flatMap((text) => text.split(/(?<=[。！？])/u)).filter((s) => ZH_EXEMPLAR_SENSITIVE_RE.test(s)).length;
 }
 
 /** 方法卡 id 的清單（給測試與提示；同 ZH_WRITING_METHOD_IDS）。 */

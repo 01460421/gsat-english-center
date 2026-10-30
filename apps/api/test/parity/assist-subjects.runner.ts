@@ -43,7 +43,7 @@ import { ApiError } from '../../src/errors';
 import type { AnalyzeRequestCase } from '../../src/assist/requests';
 import { chineseSubject } from '../../src/assist/subjects';
 import { zhD8MatchedWindows, zhOfficialStyleHit, zhQuestionWindows, zhShortAnswerHit, type ZhFingerprints } from '../../src/assist/subjects/chinese/d8';
-import { zhAnalysisDigest } from '../../src/assist/subjects/chinese/digest';
+import { zhAnalysisDigest, zhExemplarDigest } from '../../src/assist/subjects/chinese/digest';
 import { postprocessZhExemplar, zhExemplarSectionOf } from '../../src/assist/subjects/chinese/exemplar';
 import { assembleZhOcr } from '../../src/assist/subjects/chinese/ocr';
 import { postprocessZhAnalysis, postprocessZhFollowup, zhSubjectMismatch } from '../../src/assist/subjects/chinese/output';
@@ -535,7 +535,7 @@ export interface BuiltExemplar {
 
 /**
  * 國寫範文的請求（和 run.ts 的 runZhExemplar 同一套）：題型取國寫指導的 section，上限依題目，知性而且國寫指導有問題（一）才寫問題（一），
- * 摘要是 zhAnalysisDigest（≤ 1,000 字）。國寫指導不是國寫或離題時回 null（正式站的端點回 409）。
+ * 摘要是 zhExemplarDigest（≤ 1,000 字；附過段落時不帶大綱提示）。國寫指導不是國寫或離題時回 null（正式站的端點回 409）。
  */
 export function buildExemplar(base: { req: AnalyzeRequestCase; view: ZhAnalysisView }, config: AppConfig): BuiltExemplar | null {
   const analysis = base.view;
@@ -545,7 +545,7 @@ export function buildExemplar(base: { req: AnalyzeRequestCase; view: ZhAnalysisV
   const limits = zhExemplarLimits(question, section);
   const hasQ1 = section === 'zh_writing_reason' && analysis.q1 !== null;
   const tc = taskConfig('assist_zh_exemplar', config);
-  const input = zhExemplarCallInput(tc, { question, section, digest: zhAnalysisDigest(analysis, ZH_EXEMPLAR_DIGEST_CHARS), hasQ1, limits });
+  const input = zhExemplarCallInput(tc, { question, section, digest: zhExemplarDigest(analysis, Boolean(question.draft), ZH_EXEMPLAR_DIGEST_CHARS), hasQ1, limits });
   return { tc, input, section, limits, hasQ1 };
 }
 
@@ -570,12 +570,10 @@ export async function runExemplar(deps: RunDeps, c: ExemplarCase): Promise<CaseR
   const built = buildExemplar(found, deps.config);
   if (!built) return { ...result, failure: 'base_failed', checks: allFalse() };
   const question = found.req.question;
-  // 同 run.ts：每一次成功解析的輸出都算一次產生；還能再寫一次（第 1 次）時才要求重寫，第 2 次改用隱藏、提醒或退還。
-  let produced = 0;
-  const run = await runOp(deps.exec, built.input, built.tc, 'zh_exemplar', 'exemplar', (data) => {
-    produced += 1;
+  // 同 run.ts：每一次付費產生都算（截斷、格式不符也算），還能再寫一次（第 1 次）時才要求重寫，第 2 次改用隱藏、提醒或退還。
+  const run = await runOp(deps.exec, built.input, built.tc, 'zh_exemplar', 'exemplar', (data, attempt) => {
     const raw = data as ZhExemplarOutput;
-    const post = postprocessZhExemplar(raw, { question, section: built.section, limits: built.limits, hasQ1: built.hasQ1, filter: new OutputFilter(), fp: deps.fp, zh: deps.zh, allowRetry: produced < CONTENT_ATTEMPTS });
+    const post = postprocessZhExemplar(raw, { question, section: built.section, limits: built.limits, hasQ1: built.hasQ1, filter: new OutputFilter(), fp: deps.fp, zh: deps.zh, allowRetry: attempt + 1 < CONTENT_ATTEMPTS });
     if (post.retry) return { ok: false, problem: post.retry };
     if (post.failure || !post.view) return { ok: false, problem: `stop:${post.failure ?? 'invalid_output'}` };
     if (JSON.stringify(post.view).length > OUTPUT_JSON_MAX_CHARS) return { ok: false, problem: 'output_too_large' };

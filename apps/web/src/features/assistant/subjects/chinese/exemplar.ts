@@ -36,7 +36,7 @@ export interface ZhExemplarPointsInfo {
 
 /**
  * 確認面板的點數說明（同作文範文的 points.ts）：
- *   - 今天已經看過 3 篇（quota.assist.zh_exemplars）：停用；
+ *   - 今天已經看過 3 篇（quota.assist.zh_exemplars；後端送不限篇數時沒有這一條）：停用；
  *   - 讀不到額度、管理員或不限點數：只說會用幾點；
  *   - 今天剩的點數不夠：停用；試用帳號另外說明國寫指導＋範文不能在同一天完成；
  *   - 本月剩的點數不夠：停用；
@@ -44,7 +44,8 @@ export interface ZhExemplarPointsInfo {
  */
 export function zhExemplarPointsInfo(quota: AiQuotaResponse | null, points: number = ZH_EXEMPLAR_POINTS): ZhExemplarPointsInfo {
   const daily = quota?.assist?.zh_exemplars ?? null;
-  const dailyLimit = daily ? Math.min(daily.day_limit, ASSIST_LIMITS.zhExemplarsPerDay) : null;
+  // 管理員與不限點數的等級沒有每日篇數上限（後端送 UNLIMITED）：不夾到 3 篇，也不因此停用。
+  const dailyLimit = daily && !isUnlimited(daily.day_limit) ? Math.min(daily.day_limit, ASSIST_LIMITS.zhExemplarsPerDay) : null;
   if (daily && dailyLimit !== null && daily.day_used >= dailyLimit) return { blocked: true, lines: [ZH_EXEMPLAR_COPY.dailyFull(dailyLimit)] };
   if (!quota || (isUnlimited(quota.points.day_limit) && isUnlimited(quota.points.month_limit))) {
     return { blocked: false, lines: [ZH_EXEMPLAR_COPY.confirmPoints(points, null)] };
@@ -99,13 +100,15 @@ export function zhMethodCardName(card: ZhWritingMethodCard): string {
 
 /**
  * 段落的字數與格數那一行（知性是問題（二），情意是全文）；超過題目的字數或可用的格數時，另一句「考試時要刪減 N 字」。
+ * 題目沒寫字數（知性問題（二）用本站預設的 400 字）時不說「題目限」，也不拿這個預設值說要刪減。
  */
 export function zhExemplarTotals(view: Pick<ZhExemplarView, 'totals'>): { text: string; limit: string | null; over: string | null } {
   const t = view.totals;
   const text = ZH_EXEMPLAR_COPY.totals(t.han, t.chars, t.cells, ZH_SHEET_CELLS);
-  const limit = t.limit_chars !== null ? ZH_EXEMPLAR_COPY.limitChars(t.limit_chars) : null;
+  const fromQuestion = t.limit_chars_from_question !== false;
+  const limit = t.limit_chars === null ? null : fromQuestion ? ZH_EXEMPLAR_COPY.limitChars(t.limit_chars) : ZH_EXEMPLAR_COPY.limitCharsDefault(t.limit_chars);
   let over: string | null = null;
-  if (t.limit_chars !== null && t.chars > t.limit_chars) over = ZH_EXEMPLAR_COPY.overChars(t.chars - t.limit_chars);
+  if (fromQuestion && t.limit_chars !== null && t.chars > t.limit_chars) over = ZH_EXEMPLAR_COPY.overChars(t.chars - t.limit_chars);
   else if (t.cells > t.limit_cells) over = ZH_EXEMPLAR_COPY.overCells(t.cells - t.limit_cells);
   return { text, limit, over };
 }

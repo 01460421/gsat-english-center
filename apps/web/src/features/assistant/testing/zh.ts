@@ -467,7 +467,7 @@ export function zhFollowupReply(mode: 'hint' | 'explain'): ZhFollowupView {
 function exemplarTotals(paragraphs: readonly ZhExemplarParagraph[], limitChars: number | null, limitCells: number): ZhExemplarView['totals'] {
   const texts = paragraphs.filter((p) => p.hidden === null).map((p) => p.text);
   const count = texts.reduce((sum, t) => ({ chars: sum.chars + countZhChars(t).chars, han: sum.han + countZhChars(t).han }), { chars: 0, han: 0 });
-  return { chars: count.chars, han: count.han, cells: zhSheetCells(texts), limit_chars: limitChars, limit_cells: limitCells };
+  return { chars: count.chars, han: count.han, cells: zhSheetCells(texts), limit_chars: limitChars, limit_chars_from_question: limitChars !== null, limit_cells: limitCells };
 }
 
 /**

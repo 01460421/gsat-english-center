@@ -11,11 +11,12 @@
  *   runZhFollowup  上下文用 digest.ts 的摘要（≤ 1,000 字）、題目截到 3,000 字、先前問答 ≤ 1,200 字（不加快取標記）。
  *   runZhOcr       國文轉錄（assist-zh-ocr 提示＋ocr.ts 的組裝）：status other_subject → meta_json 記 detected_subject，以 invalid_output
  *                  退還（refund.ts 同時刪照片，同英文 not_english_question 的規則）；成功時同英文的結算（ocr_ready、刪照片）。
- *   runZhExemplar  國寫範文（國寫範文設計 §2、§5、§5.6）：最新一次國寫指導的摘要＋題目全部區塊（不送學生的段落）→ callWithPolicy
+ *   runZhExemplar  國寫範文（國寫範文設計 §2、§5、§5.6）：最新一次國寫指導的摘要（附過段落時不帶大綱提示）＋題目全部區塊（不送學生的段落）→ callWithPolicy
  *                  → 後處理（exemplar.ts）。重寫只有三種（比賽指紋、超過硬限制、簡體字），一個操作跨投遞最多付費產生 2 次
  *                  （ai_calls 的內容失敗＋turn 的 meta_json.content_failures）。結算：turn 改 done、寫 output_json 與 meta（task 仍是
  *                  zh_exemplar）；案例只更新 updated_at／expires_at、d8_hidden、safety_flag（不動 followups、analyses、狀態）。
  *                  讀不到比賽語料指紋或國寫指導 → 退還 internal；內容失敗（離題、隱藏太多、超過上限太多）→ 退還 invalid_output。
+ *                  ops 事件：比賽指紋隱藏段落（assist_zh_exemplar_overlap）、情意寫到敏感事件（assist_zh_exemplar_sensitive，只有句數）。
  * ops 事件的 detail 都帶 subject；日誌只記 op id、任務、狀態與數字，不記題目、學生文字或解析內容。
  */
 import {
@@ -42,7 +43,7 @@ import { codeList, mergeCodes, type CaseRow, type TurnRow } from '../../repo';
 import { requestCaseOf } from '../../requests';
 import { chineseSubject } from '../index';
 import type { ZhAnalysisPostprocessed, ZhFollowupPostprocessed, ZhOcrAssembled } from '../types';
-import { zhAnalysisDigest, zhRelatedDigest } from './digest';
+import { zhAnalysisDigest, zhExemplarDigest, zhRelatedDigest } from './digest';
 import type { ZhFingerprints } from './d8';
 import { postprocessZhExemplar, zhExemplarSectionOf, type ZhExemplarPostprocessed } from './exemplar';
 import { assembleZhOcr } from './ocr';
@@ -361,31 +362,33 @@ export async function runZhExemplar(ctx: ZhCtx & { question: AssistQuestionView 
   const section = zhExemplarSectionOf(analysis, question);
   const limits = zhExemplarLimits(question, section);
   const hasQ1 = section === 'zh_writing_reason' && analysis.q1 !== null;
-  const input = zhExemplarCallInput(tc, { question, section, digest: zhAnalysisDigest(analysis, ZH_EXEMPLAR_DIGEST_CHARS), hasQ1, limits });
+  const input = zhExemplarCallInput(tc, { question, section, digest: zhExemplarDigest(analysis, Boolean(question.draft), ZH_EXEMPLAR_DIGEST_CHARS), hasQ1, limits });
   ctx.callInput = () => input;
   const ref = { opId: op.id, turnId: turn.id, userId: op.user_id };
   const failures = await zhExemplarContentFailures(db, ref);
   const remaining = ZH_EXEMPLAR_CONTENT_ATTEMPTS - failures;
   if (remaining <= 0) return { kind: 'refund', reason: 'invalid_output' };
-  const state: { post: ZhExemplarPostprocessed | null; filter: OutputFilter | null; model: string; promptVersion: string; json: string; attempts: number; retries: number } = {
+  // generation：結算的這一篇是這個操作第幾次付費產生（之前的內容失敗＋1，跨投遞）。
+  const state: { post: ZhExemplarPostprocessed | null; filter: OutputFilter | null; model: string; promptVersion: string; json: string; generation: number } = {
     post: null,
     filter: null,
     model: input.spec.model,
     promptVersion: '',
     json: '',
-    attempts: 0,
-    retries: 0,
+    generation: failures + 1,
   };
   const result = await callWithPolicy(
     ctx,
     input,
     async (data, _callId, model, promptVersion) => {
-      state.attempts += 1;
+      // 每次都重讀已記下的內容失敗：這次投遞前面截斷或格式不符的呼叫（ai_calls）也要算，否則第二次產生仍會要求重寫，
+      // callWithPolicy 已經不能再呼叫，整個操作就被退還（兩次付費的產生都浪費）。
+      const used = await zhExemplarContentFailures(db, ref);
+      const allowRetry = used + 1 < ZH_EXEMPLAR_CONTENT_ATTEMPTS;
       const filter = new OutputFilter();
-      const post = postprocessZhExemplar(data as ZhExemplarOutput, { question, section, limits, hasQ1, filter, fp, zh, allowRetry: failures + state.attempts < ZH_EXEMPLAR_CONTENT_ATTEMPTS });
+      const post = postprocessZhExemplar(data as ZhExemplarOutput, { question, section, limits, hasQ1, filter, fp, zh, allowRetry });
       if (post.retry) {
         // 語意檢查要求重寫：先記下（跨投遞的內容失敗次數），再回傳原因讓 callWithPolicy 決定在這次重寫或交回 Queue。
-        state.retries += 1;
         log('assist_zh_exemplar_retry', { op_id: op.id, reason: post.retry });
         await bumpExemplarFailure(db, ref).run();
         return post.retry;
@@ -395,7 +398,7 @@ export async function runZhExemplar(ctx: ZhCtx & { question: AssistQuestionView 
         if (json.length > OUTPUT_JSON_MAX_CHARS) return 'output_too_large';
         state.json = json;
       }
-      Object.assign(state, { post, filter, model, promptVersion });
+      Object.assign(state, { post, filter, model, promptVersion, generation: used + 1 });
       return null;
     },
     { contentAttempts: remaining },
@@ -426,7 +429,7 @@ export async function runZhExemplar(ctx: ZhCtx & { question: AssistQuestionView 
     zh_fp: zh.version,
     counts: post.meta,
     checks: post.checks,
-    content_failures: failures + state.retries,
+    content_failures: state.generation - 1,
   };
   const nowMs = ctx.now();
   const now = nowSeconds(nowMs);
@@ -448,8 +451,10 @@ export async function runZhExemplar(ctx: ZhCtx & { question: AssistQuestionView 
         .bind(post.safety === 'none' ? null : post.safety, post.meta.d8_hidden > 0 ? 1 : 0, now, now + ASSIST_LIMITS.retentionDays * 86_400, caseRow.id, op.user_id, op.id, token),
       ...(post.meta.d8_hidden > 0 ? [opsEventIfSettled(db, op.id, token, 'assist_d8_output', { op_id: op.id, subject: 'chinese', fields: post.meta.d8_hidden })] : []),
       ...(post.meta.contest_hidden > 0
-        ? [opsEventIfSettled(db, op.id, token, 'assist_zh_exemplar_overlap', { op_id: op.id, paragraphs: post.meta.contest_hidden, attempt: failures + state.attempts })]
+        ? [opsEventIfSettled(db, op.id, token, 'assist_zh_exemplar_overlap', { op_id: op.id, paragraphs: post.meta.contest_hidden, attempt: state.generation })]
         : []),
+      // 情意範文寫到敏感事件（提示禁止；管理員看不到內容，這是唯一的訊號）：只有 op id 與句數。
+      ...(post.meta.sensitive > 0 ? [opsEventIfSettled(db, op.id, token, 'assist_zh_exemplar_sensitive', { op_id: op.id, sentences: post.meta.sensitive })] : []),
     ],
   });
   log('ai_settled', { op_id: op.id, task: op.task, subject: 'chinese', settled });

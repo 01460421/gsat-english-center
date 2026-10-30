@@ -13,7 +13,10 @@ import {
   ZH_EXEMPLAR_OVERLAP_TEXT,
   ZH_EXEMPLAR_TRIMMED_TEXT,
   zhExemplarLimits,
+  zhSheetCells,
   type AssistQuestionBlock,
+  type ZhChecks,
+  type ZhWritingView,
   type AssistQuestionView,
   type AssistStudentQuestion,
   type ZhExemplarSection,
@@ -29,7 +32,9 @@ import { zhContestHit, zhContestParagraphHits, zhContestQuestionWindows, zhConte
 import type { ZhFingerprints } from '../src/assist/subjects/chinese/d8';
 import { postprocessZhExemplar, zhExemplarSectionOf, ZH_EXEMPLAR_HIDDEN_MAX_SHARE } from '../src/assist/subjects/chinese/exemplar';
 import { zhStudentQuestion } from '../src/assist/subjects/chinese/question';
-import { zhExemplarCallInput, zhExemplarTitleRule, zhExemplarUserText, ZH_EXEMPLAR_DIGEST_CHARS } from '../src/assist/subjects/chinese/requests';
+import { zhAnalysisDigest, zhExemplarDigest } from '../src/assist/subjects/chinese/digest';
+import { zhExemplarBodyAim, zhExemplarCallInput, zhExemplarTaskLines, zhExemplarTitleRule, zhExemplarUserText, ZH_EXEMPLAR_DIGEST_CHARS } from '../src/assist/subjects/chinese/requests';
+import { zhCheckSampleQuotes, zhDemoGuards, zhStripSampleSentences } from '../src/assist/subjects/chinese/samples';
 import type { ZhExemplarOutput } from '../src/assist/subjects/chinese/schemas';
 import { fakeFingerprintFile } from './helpers/customEssay';
 import {
@@ -183,7 +188,7 @@ describe('系統提示與請求', () => {
     const q = EMOTION();
     const input = zhExemplarCallInput(tc, { question: q, section: 'zh_writing_emotion', digest: '', hasQ1: false, limits: zhExemplarLimits(q, 'zh_writing_emotion') });
     expect(input.spec).toMatchObject({ role: 'writer', maxTokens: 14_000, systemCacheTtl: '1h' });
-    expect(input.templateVersion).toBe('assist-zh-exemplar-user@1');
+    expect(input.templateVersion).toBe('assist-zh-exemplar-user@2');
     expect(input.system).toBe(assistZhExemplarSystemText());
   });
 
@@ -344,10 +349,16 @@ describe('後處理：整句拿掉（§5.1 第 7–12 步）與 D8', () => {
     expect(post(withParagraphs(texts), { q }).view!.paragraphs[0]!.text).toContain('也無風雨也無晴');
   });
 
-  it('一段拿完少於 15 字：換成固定說明（不算隱藏，但不算能顯示的段落）', () => {
-    const r = post(withParagraphs([...ZH_EXEMPLAR_PARAGRAPHS, '也無風雨也無晴。']));
-    expect(r.view!.paragraphs[4]).toMatchObject({ text: ZH_EXEMPLAR_TRIMMED_TEXT, hidden: null });
+  it('一段拿完少於 15 字：換成固定說明（hidden: trimmed；不算進 40% 的隱藏比例，也不算能顯示的段落），要件對照指向它的列拿掉', () => {
+    const coverage = [
+      { point_zh: '寫一扇具體的窗', paragraph: 1, quote: '有一扇窗' },
+      { point_zh: '收束', paragraph: 5, quote: '' },
+    ];
+    const r = post(withParagraphs([...ZH_EXEMPLAR_PARAGRAPHS, '也無風雨也無晴。'], { coverage }));
+    expect(r.view!.paragraphs[4]).toMatchObject({ text: ZH_EXEMPLAR_TRIMMED_TEXT, hidden: 'trimmed', technique_zh: '' });
     expect(r.checks.paragraph_trimmed).toBe(1);
+    expect(r.view!.coverage.map((c) => c.paragraph)).toEqual([1]);
+    expect(r.view!.totals.chars).toBe(ZH_EXEMPLAR_PARAGRAPHS.join('').length);
   });
 
   it('D8（寬鬆門檻）：命中的段落換成固定說明（hidden: d8），不重寫', () => {
@@ -358,5 +369,183 @@ describe('後處理：整句拿掉（§5.1 第 7–12 步）與 D8', () => {
     expect(r.view!.paragraphs[3]).toMatchObject({ text: ZH_EXEMPLAR_D8_TEXT, hidden: 'd8' });
     expect(r.meta.d8_hidden).toBeGreaterThanOrEqual(1);
     expect(r.tainted).toBe(true);
+  });
+});
+
+// ───────────────────────── 審查修正（引文、說法、長度目標、摘要、敏感事件） ─────────────────────────
+
+describe('引文：對話與引用名人（§5.4；知性只認一般人物與第一人稱，情意的「他說」看同一段前面）', () => {
+  // 句子都是本站自寫的；引號裡的話不是任何人真的說過的名言，也不在古文語料裡。
+  const QUOTE = '人活著就要替別人點一盞燈，不然再亮的屋子也只是自己的。';
+  const q = { blocks: zhBlocks(['question', null, ZH_WRITING_PROMPT]) };
+  const check = (text: string, narrative: boolean) => {
+    const checks: ZhChecks = {};
+    const r = zhCheckSampleQuotes(text, q, checks, { narrative });
+    return { text: r.text, removed: checks.attribution_removed ?? 0 };
+  };
+
+  it.each([
+    [`史懷哲把一生交給偏遠地方的病人。他曾說：「${QUOTE}」`, '史懷哲把一生交給偏遠地方的病人。'],
+    [`那位醫師在演講中勉勵大家，他說：「${QUOTE}」`, '那位醫師在演講中勉勵大家，他說：「' + QUOTE + '」'],
+    [`我想起梭羅說：「${QUOTE}」`, ''],
+    [`愛迪生一生試驗上千次。他說：「${QUOTE}」`, '愛迪生一生試驗上千次。'],
+    [`那位作家是著名的科學家，他說：「${QUOTE}」`, ''],
+    [`史懷哲曾說：「${QUOTE}」`, ''],
+  ])('名人或出處＋代名詞（知性與情意都拿掉）：%s', (text, keptPrefix) => {
+    for (const narrative of [false, true]) {
+      const r = check(text, narrative);
+      expect(r.removed, `${text}（narrative ${narrative}）`).toBe(1);
+      if (keptPrefix !== '' && !keptPrefix.includes('「')) expect(r.text).toBe(keptPrefix);
+    }
+  });
+
+  it('一般人物的對話（清單外的司機、阿姨、學長姊也算）：任何題型都保留，後面的敘事不會一起被拿掉', () => {
+    for (const text of [
+      '公車司機回頭說：「慢慢來，不要急，前面的路還很長呢。」我點點頭坐下。',
+      '隔壁的阿姨探頭說：「妳每天都這麼早出門，真的辛苦了啊。」我笑了笑。',
+      '社團的學長姊笑著說：「第一次上臺都會緊張，我們以前也一樣。」',
+    ]) {
+      for (const narrative of [false, true]) expect(check(text, narrative), text).toEqual({ text, removed: 0 });
+    }
+  });
+
+  it('第一人稱說的話：任何題型都保留；「我想起某人說」「我常聽人說」不算', () => {
+    const text = '我說：「沒關係，我們明天再一起去圖書館把題目做完吧。」';
+    expect(check(text, false)).toEqual({ text, removed: 0 });
+    expect(check(`我常聽人說：「${QUOTE}」`, true).removed).toBe(1);
+  });
+
+  it('「他說」：情意而且同一段前面提過一般人物才是對話；知性一律當成引用', () => {
+    const text = '同學把傘遞給我，他說：「我家就在前面，這把傘你先拿去用吧。」';
+    expect(check(text, true)).toEqual({ text, removed: 0 });
+    expect(check(text, false).removed).toBe(1);
+    expect(check('他說：「我家就在前面，這把傘你先拿去用吧。」', true).removed).toBe(1);
+  });
+
+  it('國寫指導的示範段（zhDemoGuards）用同一套：知性的「他曾說」整筆拿掉', () => {
+    const checks: ZhChecks = {};
+    const contest = { set: zhContestSet(), allowed: new Set<string>() };
+    expect(zhDemoGuards(`史懷哲把一生交給偏遠地方的病人。他曾說：「${QUOTE}」`, q, contest, checks)).toBeNull();
+    const dialogue = '同學把傘遞給我，他說：「我家就在前面，這把傘你先拿去用吧。」';
+    expect(zhDemoGuards(dialogue, q, contest, {}, { narrative: true })).toBe(dialogue);
+  });
+
+  it('範文的後處理依題型決定：情意保留一般人的對話，知性拿掉代名詞引出的引文', () => {
+    const para = `${ZH_EXEMPLAR_PARAGRAPHS[1]}同學把傘遞給我，他說：「我家就在前面，這把傘你先拿去用吧。」`;
+    const emotion = post(withParagraphs([ZH_EXEMPLAR_PARAGRAPHS[0], para, ...ZH_EXEMPLAR_PARAGRAPHS.slice(2)]));
+    expect(emotion.view!.paragraphs[1]!.text).toBe(para);
+    const rq = REASON();
+    const reason = post(withParagraphs([REASON_PARAGRAPHS[0]!, `${REASON_PARAGRAPHS[1]}愛迪生一生試驗上千次。他說：「${QUOTE}」`, REASON_PARAGRAPHS[2]!]), {
+      q: rq,
+      section: 'zh_writing_reason',
+    });
+    expect(reason.view!.paragraphs[1]!.text).toBe(`${REASON_PARAGRAPHS[1]}愛迪生一生試驗上千次。`);
+    expect(reason.checks.attribution_removed).toBe(1);
+  });
+});
+
+describe('未經查證的說法（§5.1 第 9 步）：中文數字、全形數字與更多來源字樣', () => {
+  const q = { blocks: zhBlocks(['question', null, REASON_TEXT]) };
+  const strip = (text: string) => {
+    const checks: ZhChecks = {};
+    return { text: zhStripSampleSentences(text, q, checks), removed: checks.claim_removed ?? 0 };
+  };
+
+  it.each([
+    '一項研究指出，每天滑手機超過四小時的青少年，睡眠少了一個半小時。',
+    '根據調查，全臺有兩千三百名高中生每天熬夜。',
+    '調查顯示，近兩成的高中生每週運動不到一小時。',
+    '研究指出，台灣有三萬多名青少年長期失眠。',
+    '根據教育部統計，有７０％的高中生每天睡不到七小時。',
+    '報告指出，五成的學生覺得考前壓力很大。',
+    '民調顯示，過半的家長支持延後上學。',
+  ])('拿掉：%s', (sentence) => {
+    expect(strip(`${sentence}我決定先改變自己。`)).toEqual({ text: '我決定先改變自己。', removed: 1 });
+  });
+
+  it.each([
+    '我研究了一個下午，終於把那道題目弄懂。',
+    '這份調查讓我想了一整天。',
+    '研究這個問題時，千萬不要急著下結論。',
+    '調查發現，多數學生每天使用手機超過三小時。',
+  ])('保留（一個、一天這類常見說法，或題目本身的數字）：%s', (sentence) => {
+    expect(strip(sentence)).toEqual({ text: sentence, removed: 0 });
+  });
+});
+
+describe('<task> 的長度目標：有行數規定時扣掉每段的空格（§5.2）', () => {
+  const official = '問題（一）：請依據甲、乙二文，說明兩種看法的差異。文長限80字以內（至多4行）。\n問題（二）：請寫一篇短文，說明你的看法。文長限400字以內（至多19行）。';
+
+  it('知性「400 字以內（至多 19 行）」：說明格子怎麼算，目標 3–4 段、312–342 字；四段或三段一樣長也寫得進 19 行', () => {
+    const q = { blocks: zhBlocks(['question', null, official]) };
+    const L = zhExemplarLimits(q, 'zh_writing_reason');
+    expect(L.body).toMatchObject({ maxChars: 400, maxCells: 418, lines: 19, charsFromQuestion: true });
+    const aim = zhExemplarBodyAim(L);
+    expect(aim).toEqual({ chars: [312, 342], paragraphs: [3, 4] });
+    const line = zhExemplarTaskLines({ question: q, section: 'zh_writing_reason', hasQ1: true, limits: L }).find((l) => l.startsWith('問題（二）'))!;
+    expect(line).toContain('at most 400 characters including punctuation, at most 19 lines of 22 cells.');
+    expect(line).toContain('Each paragraph starts with two empty cells and its last line counts as a full line');
+    expect(line).toContain('write 3–4 paragraphs and aim for 312–342 characters including punctuation');
+    for (const n of [3, 4]) {
+      const per = Math.ceil(aim.chars[1] / n);
+      expect(zhSheetCells(Array.from({ length: n }, () => '字'.repeat(per))), `${n} 段`).toBeLessThanOrEqual(L.body.maxCells);
+    }
+  });
+
+  it('自編題「350 字、至多 17 行」也寫得進；沒有行數規定的知性題與情意題照原本的寫法', () => {
+    const q = { blocks: zhBlocks(['question', null, '問題（一）：說明資料的重點。（文長限 60 字以內，至多 3 行）\n問題（二）：寫出你的看法。（文長限 350 字以內，至多 17 行）']) };
+    const L = zhExemplarLimits(q, 'zh_writing_reason');
+    const aim = zhExemplarBodyAim(L);
+    expect(zhSheetCells(Array.from({ length: 4 }, () => '字'.repeat(Math.ceil(aim.chars[1] / 4))))).toBeLessThanOrEqual(L.body.maxCells);
+    const r = REASON();
+    expect(zhExemplarTaskLines({ question: r, section: 'zh_writing_reason', hasQ1: true, limits: zhExemplarLimits(r, 'zh_writing_reason') })).toContain(
+      '問題（二）: at most 400 characters including punctuation.',
+    );
+    const e = EMOTION();
+    const lines = zhExemplarTaskLines({ question: e, section: 'zh_writing_emotion', hasQ1: false, limits: zhExemplarLimits(e, 'zh_writing_emotion') });
+    expect(lines.join('\n')).toContain('Aim for 650–750 characters including punctuation in 4–5 paragraphs.');
+    expect(lines.join('\n')).not.toContain('Because of these limits');
+  });
+
+  it('totals.limit_chars_from_question：題目寫了字數是 true；知性題目沒寫時用本站預設的 400 字，是 false', () => {
+    const official = question(zhBlocks(['question', null, REASON_TEXT.replace('（文長約 400 字）', '（文長限 350 字以內）')]));
+    const given = post(withParagraphs(REASON_PARAGRAPHS), { q: official, section: 'zh_writing_reason' }).view!.totals;
+    expect(given).toMatchObject({ limit_chars: 350, limit_chars_from_question: true });
+    const bare = question(zhBlocks(['question', null, REASON_TEXT.replace('（文長約 400 字）', '')]));
+    const none = post(withParagraphs(REASON_PARAGRAPHS), { q: bare, section: 'zh_writing_reason' }).view!.totals;
+    expect(none).toMatchObject({ limit_chars: 400, limit_chars_from_question: false });
+  });
+});
+
+describe('<analysis_digest>：國寫指導附了段落時不帶大綱提示（學生的事不混進示範）', () => {
+  const view = (): ZhWritingView =>
+    ({
+      kind: 'zh_writing',
+      section: 'zh_writing_emotion',
+      tested_zh: '寫一扇窗與相關的經驗',
+      material_zh: '',
+      requirements: [{ point_zh: '寫一扇具體的窗', quote: '那一扇窗', how_zh: '' }],
+      q1: null,
+      outline: [{ part_zh: '場景', hint_zh: '寫外婆的菜園旁那扇窗。' }],
+    }) as unknown as ZhWritingView;
+
+  it('沒附段落：同追問的摘要（含大綱提示）；附了段落：只有要件、問題（一）要點與段落架構的名稱', () => {
+    expect(zhExemplarDigest(view() as never, false)).toBe(zhAnalysisDigest(view() as never));
+    expect(zhExemplarDigest(view() as never, false)).toContain('外婆的菜園');
+    const withDraft = zhExemplarDigest(view() as never, true);
+    expect(withDraft).toBe('Requirement: 寫一扇具體的窗「那一扇窗」\nOutline: 場景');
+  });
+});
+
+describe('情意範文的敏感事件（只計數，sensitive_event）', () => {
+  it('情意：含敏感事件用字的句子數記進 checks 與 meta；知性不數', () => {
+    const para = `${ZH_EXEMPLAR_PARAGRAPHS[1]}那年冬天外婆住院，我每天放學都去病房陪她。`;
+    const r = post(withParagraphs([ZH_EXEMPLAR_PARAGRAPHS[0], para, ...ZH_EXEMPLAR_PARAGRAPHS.slice(2)]));
+    expect(r.checks.sensitive_event).toBe(1);
+    expect(r.meta.sensitive).toBe(1);
+    expect(r.view!.paragraphs[1]!.text).toBe(para);
+    const reason = post(withParagraphs([REASON_PARAGRAPHS[0]!, `${REASON_PARAGRAPHS[1]}那年冬天外婆住院。`, REASON_PARAGRAPHS[2]!]), { q: REASON(), section: 'zh_writing_reason' });
+    expect(reason.meta.sensitive).toBe(0);
+    expect(reason.checks.sensitive_event).toBeUndefined();
   });
 });

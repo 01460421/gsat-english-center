@@ -15,6 +15,7 @@ import {
   zhClicheCount,
   zhExemplarLimits,
   zhMethodCardId,
+  zhSensitiveSentences,
   zhSheetCells,
 } from './assist-zh-exemplar';
 import { AI_TASK_POINTS } from './writing';
@@ -65,7 +66,8 @@ describe('字數上限（依題目，沒有就用預設）', () => {
   it('知性：沒有規定時問題（一）80、問題（二）400，一面 836 格', () => {
     const l = zhExemplarLimits(q('閱讀甲、乙二文，回答問題。問題（一）：甲文的主張是什麼？問題（二）：你的看法？'), 'zh_writing_reason');
     expect(l.q1).toEqual({ maxChars: 80 });
-    expect(l.body).toEqual({ maxChars: 400, maxCells: 836, lines: null });
+    // 題目沒寫問題（二）的字數：用本站預設的 400 字（charsFromQuestion: false，畫面不說「題目限」）。
+    expect(l.body).toEqual({ maxChars: 400, charsFromQuestion: false, maxCells: 836, lines: null });
     expect(l.target.q1).toEqual([64, 76]);
     expect(l.target.body).toEqual([340, 380]);
   });
@@ -73,18 +75,25 @@ describe('字數上限（依題目，沒有就用預設）', () => {
   it('知性：題目寫了字數就照題目；「至多 N 行」另外限制格數，字數照預設', () => {
     const l = zhExemplarLimits(q('問題（一）：說明甲文的觀點。（文長限 100 字以內）問題（二）：提出你的看法。（文長約 500 字）'), 'zh_writing_reason');
     expect(l.q1).toEqual({ maxChars: 100 });
-    expect(l.body.maxChars).toBe(500);
+    expect(l.body).toMatchObject({ maxChars: 500, charsFromQuestion: true });
     const lines = zhExemplarLimits(q('問題（一）：說明。（至多 4 行）問題（二）：論述。（至多 19 行）'), 'zh_writing_reason');
     expect(lines.q1).toEqual({ maxChars: 80 });
-    expect(lines.body).toEqual({ maxChars: 400, maxCells: 19 * 22, lines: 19 });
+    expect(lines.body).toEqual({ maxChars: 400, charsFromQuestion: false, maxCells: 19 * 22, lines: 19 });
   });
 
   it('情意：沒有字數規定（只看一面的格數）；題目寫了字數就一併限制', () => {
     const l = zhExemplarLimits(q('以「那一扇窗」為題，寫一篇文章。（文長不限）'), 'zh_writing_emotion');
     expect(l.q1).toBeNull();
-    expect(l.body).toEqual({ maxChars: null, maxCells: 836, lines: null });
+    expect(l.body).toEqual({ maxChars: null, charsFromQuestion: false, maxCells: 836, lines: null });
     expect(l.target.body).toEqual([670, 760]);
-    expect(zhExemplarLimits(q('以「轉角」為題，寫一篇文章。（文長限 600 字）'), 'zh_writing_emotion').body.maxChars).toBe(600);
+    expect(zhExemplarLimits(q('以「轉角」為題，寫一篇文章。（文長限 600 字）'), 'zh_writing_emotion').body).toMatchObject({ maxChars: 600, charsFromQuestion: true });
+  });
+});
+
+describe('敏感事件的句子（情意範文只計數）', () => {
+  it('以句末標點切句，一句只算一次；日常的句子不算', () => {
+    expect(zhSensitiveSentences(['那年冬天外婆住院，我每天去病房陪她。後來我們一起去公園散步。'])).toBe(1);
+    expect(zhSensitiveSentences(['放學後我在操場跑了三圈。', '社團的學長教我怎麼調音。'])).toBe(0);
   });
 });
 

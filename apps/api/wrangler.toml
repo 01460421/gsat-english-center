@@ -123,7 +123,7 @@ AI_ASSISTANT_SUBJECTS_PHOTO = "on"
 # 學習助手的國寫範文（國文國寫案例的「看一篇 AI 示範」；docs/design/assistant-subjects.md「國寫範文」）：只認 "on"、"admin"，
 #   其他任何值都當成關（fail closed）。另外要 AI_ASSISTANT_SUBJECTS 對這位使用者開放。
 # 目前是 "on"：站主決定直接對已核准的學生開放，不跑真模型評測（K 組題目已經放進題目集，只能在 Actions 頁面手動執行）。
-#   上線後兩週由開發者依 ops 事件（assist_zh_exemplar_overlap、assist_d8_output）與 turn 的 meta_json.checks 抽查。
+#   上線後兩週由開發者依 ops 事件（assist_zh_exemplar_overlap、assist_zh_exemplar_sensitive、assist_d8_output）與 turn 的 meta_json.checks 抽查。
 # 緊急關閉：改成 "off" 部署（按鈕消失、端點 503；已有的範文照常可以看與刪除；已經排隊的照常完成）；只留給管理員＝"admin"
 #   （docs/SETUP-KEYS.md §8.4）。
 # 這一行是例外：src/config.ts 的程式預設固定是 off（[vars] 漏設時偏向關），不用跟著改（test/skeleton.test.ts）。

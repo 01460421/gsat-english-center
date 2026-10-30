@@ -2256,11 +2256,12 @@ COALESCE(json_extract(ref_json, '$.subject'), 'english')
 - 條款已涵蓋（§9.3）；B「三個層級的範文」、C 的新用途都要升版。
 - 教學上先看國寫指導（要件、架構）再看示範，示範照指導的架構寫。代價是「必須先有國寫指導」（7 點）才看得到範文——這是刻意的：先自己看要件與架構，降低「直接要一篇交差」的用法。
 
-### §2 輸入（`subjects/chinese/requests.ts` 的 `zhExemplarCallInput`，範本 `assist-zh-exemplar-user@1`）
+### §2 輸入（`subjects/chinese/requests.ts` 的 `zhExemplarCallInput`，範本 `assist-zh-exemplar-user@2`）
 
 - `<task>`（程式寫的）：題型（取最新一次國寫指導的 `section`）、「不寫等第或分數」、各部分的上限（含標點；知性問題（二）有「至多 N 行」時寫出行數；情意寫一面 38 行 × 22 格與每段縮兩格）、題目規定（題目有「以「…」為題」＝指定的題目；「題目自訂」＝擬一個 ≤ 12 字的題目；都沒有＝不寫題目）。只有知性而且國寫指導有問題（一）時才寫問題（一）。
+- 有行數規定時另寫格子怎麼算（每段首空兩格、段末不滿一行也算一整行）與扣掉空格後的目標（`zhExemplarBodyAim`：上緣取字數上限的 95% 與「格數 − 每段 19 格 × 最多段數」較小的一個，知性 3–4 段；例如 400 字、至多 19 行＝ 312–342 字），取代系統提示的 85–95%。
 - `<student_provided_question>`：`zhQuestionBody(question)`（全部區塊）。
-- `<analysis_digest>`：`zhAnalysisDigest(latestZhWriting, 1000)`（素材摘要、要件、問題（一）要點、段落架構；不含學生段落的檢核與錯別字）。
+- `<analysis_digest>`：`zhExemplarDigest(latestZhWriting, 附了段落？, 1000)`。沒附段落時同 `zhAnalysisDigest`（素材摘要、要件、問題（一）要點、段落架構；不含學生段落的檢核與錯別字）；國寫指導附了學生的段落時只放要件、問題（一）要點與段落架構的名稱（不放大綱提示 `hint_zh`、素材摘要與「在考什麼」，那些可能帶到學生自己的經驗）。系統提示另有一句：摘要若提到學生自己的生活，不理會、不寫。
 - **不送**：學生的段落、疑問、錯因歷史、任何帳號資訊。理由：示範不能建立在學生的文字上，否則就是「幫我把這段寫完」；不新增送出內容（§9.3）；學生的句子不會混進 AI 示範。
 - 前提（路由檢查）：案例是國文、`kind='zh_writing'`、`status='analyzed'`、最新一次解析是國寫指導而且不是離題。
 
@@ -2287,7 +2288,7 @@ COALESCE(json_extract(ref_json, '$.subject'), 'english')
 
 #### §3.2 畫面形狀（shared `assist-zh-exemplar.ts` 的 `ZhExemplarView`）
 
-`kind: 'zh_exemplar'`、`section`、`title_zh`、`q1`（答案、字數、上限、素材引文與定位、`hidden`）、`paragraphs[]`（本文、`hidden: 'contest' | 'd8' | null`、段落作用、方法卡、這段怎麼用）、`totals`（字數、漢字數、格數與上限）、`notes`、`coverage`、`self_check_zh`、`notices`、`off_topic`、`safety_flag`。固定標籤 `ZH_EXEMPLAR_LABEL`＝「AI 示範，不是得獎作品」。`AssistTurnKind` 多 `'zh_exemplar'`（只在畫面形狀；資料庫仍是 `followup`），`AssistTurnView` 多 `exemplar`。
+`kind: 'zh_exemplar'`、`section`、`title_zh`、`q1`（答案、字數、上限、素材引文與定位、`hidden`）、`paragraphs[]`（本文、`hidden: 'contest' | 'd8' | 'trimmed' | 'filtered' | null`、段落作用、方法卡、這段怎麼用）、`totals`（字數、漢字數、格數與上限；`limit_chars_from_question` 分開題目寫的字數與本站預設的 400 字）、`notes`、`coverage`、`self_check_zh`、`notices`、`off_topic`、`safety_flag`。固定標籤 `ZH_EXEMPLAR_LABEL`＝「AI 示範，不是得獎作品」。`AssistTurnKind` 多 `'zh_exemplar'`（只在畫面形狀；資料庫仍是 `followup`），`AssistTurnView` 多 `exemplar`。
 
 ### §4 提示（`apps/api/src/ai/prompts/assist-zh.ts` 的 `assistZhExemplarSystemText()`）
 
@@ -2310,7 +2311,7 @@ COALESCE(json_extract(ref_json, '$.subject'), 'english')
 | 6 | 比賽語料指紋（§5.3）：段落或問題（一）命中 → **重寫（R1）**；說明欄位命中換成固定說明 | `contest_retry`、`contest_overlap_removed` |
 | 7 | 引文（§5.4） | `attribution_removed`、`classic_misquote`、`quote_unmarked`、`material_quote_long` |
 | 8 | 套語：比賽套語的句子拿掉；通用套語、生僻詞、題目沒提到的高頻人物只計數 | `stock_line_removed`、`cliche`、`contest_word`、`overused_figure` |
-| 9 | 未經查證的說法：有「研究／調查／統計／數據顯示／根據…報導」又含題目沒有的數字 → 拿掉該句 | `claim_removed` |
+| 9 | 未經查證的說法：有「研究／調查／統計／報告指出／民調／數據／新聞報導…」（「研究了」這類動詞不算）又含題目沒有的數字（NFKC 之後的阿拉伯數字與 %、百分之 N、N 成、帶單位的中文數字如「兩千三百名」「三小時」、一半／過半／半數；只有「一」「半」的「一個」「一天」不算）→ 拿掉該句 | `claim_removed` |
 | 10 | 得獎字樣：「得獎、特優、第一二三名、佳作、語文競賽」的句子拿掉 | `contest_mention_removed` |
 | 11 | D8（§5.5）：每段、問題（一）、每則說明 | 隱藏，不重試（`d8_hidden`） |
 | 12 | 等第句拿掉 | `grade_removed` |
@@ -2318,13 +2319,13 @@ COALESCE(json_extract(ref_json, '$.subject'), 'english')
 | 14 | 品牌字樣換「官方」；說明欄位依 `ZH_FIELD_LIMITS.zh_exemplar` 截斷（段落本文不截） | — |
 | 15 | 收尾：隱藏的段落（指紋＋D8）占全文 ≥ 40% 字數，或能顯示的段落不到 2 段 → 內容失敗（退還 `invalid_output`） | — |
 
-段落拿掉句子後少於 15 字時，整段換成固定說明「這一段不符合本站的示範規則，已省略。」（`paragraph_trimmed`）。計數寫進 turn 的 `meta_json.checks`。
+段落拿掉句子後少於 15 字時，整段換成固定說明「這一段不符合本站的示範規則，已省略。」（`paragraph_trimmed`，`hidden: 'trimmed'`；內容過濾擋下的段落是 `hidden: 'filtered'`；這兩種不算進第 15 步的 40%，也不算能顯示的段落）。情意範文含敏感事件用字（`ZH_EXEMPLAR_SENSITIVE_RE`：住院、過世、自殘、家暴、戀愛…）的句子只計數（`sensitive_event`），結算時寫 ops 事件 `assist_zh_exemplar_sensitive`（只有 op id 與句數）。計數寫進 turn 的 `meta_json.checks`。
 
 #### §5.2 字數與格數（shared `zhExemplarLimits(question, section)`、`zhSheetCells(paragraphs)`）
 
 - 計數一律用 `countZhChars`：`chars` 含標點、不含空白（答題卷一格一字、標點占一格）；畫面另顯示漢字數。
 - `zhSheetCells(ps) = Σ ceil((2 + chars(p)) / 22) × 22`。
-- 上限：知性問題（一）＝題目的字數，沒有就 80；問題（二）＝題目的字數，沒有就 400，「至多 N 行」另限格數 ≤ N × 22；知性兩部分合計 ≤ 836 格；情意 ≤ 836 格，題目另有字數或行數時一併限制。目標：知性上限的 85–95%（問題（一）80–95%），情意含標點約 670–760 字。
+- 上限：知性問題（一）＝題目的字數，沒有就 80；問題（二）＝題目的字數，沒有就 400，「至多 N 行」另限格數 ≤ N × 22；知性兩部分合計 ≤ 836 格；情意 ≤ 836 格，題目另有字數或行數時一併限制。目標：知性上限的 85–95%（問題（一）80–95%；有行數規定時改用 §2 扣掉每段空格的目標），情意含標點約 670–760 字。
 - 超過硬限制：第一次 → 重寫；最後一次超過 ≤ 10% → 照顯示並加提醒（`exemplar_over_limit`，畫面標出要刪減）；> 10% → 退還。問題（一）最後一次仍超過 → 只隱藏問題（一）的答案。少於目標下限的 60% 只計數（`under_target`）。
 
 #### §5.3 比賽語料指紋
@@ -2338,7 +2339,8 @@ COALESCE(json_extract(ref_json, '$.subject'), 'english')
 
 #### §5.4 引文
 
-- 段落與問題（一）答案的每一組「」：在題目裡找得到（素材原文）→ 保留（素材引文全篇最多 2 處、各 ≤ 40 字，超過只計數）；≥ 8 個漢字、題目裡沒有 → 查公有領域古文語料：逐字相同保留，相近的換成語料版本，查不到時這句若有出處標記（前 20 字內有〈、《、曰、云、說、寫道、提到、指出、名言、所言）就整句拿掉，沒有就只拿掉引號；< 8 個漢字（強調用的關鍵詞）保留。一般人物的對話（「媽媽說：」）不當成名言。
+- 段落與問題（一）答案的每一組「」：在題目裡找得到（素材原文）→ 保留（素材引文全篇最多 2 處、各 ≤ 40 字，超過只計數）；≥ 8 個漢字、題目裡沒有 → 查公有領域古文語料：逐字相同保留，相近的換成語料版本，查不到時這句若有出處標記（前 20 字內有〈、《、曰、云、說、寫道、提到、指出、名言、所言）就整句拿掉，沒有就只拿掉引號；< 8 個漢字（強調用的關鍵詞）保留。
+- 對話不當成名言：一般人物（家人、師長同學、司機、阿姨、店員…）說的話任何題型都算；「我說：」任何題型都算（「我想起某人說」「我常聽人說」不算）；「他說：」「她問：」只在情意，而且同一段前面提過一般人物、沒有名人或出處的字樣（〈《、曾說、名言、演講、作家、科學家…、高頻人物）時才算。知性的「他說」「他曾說」一律當成引用。國寫指導的示範段（`zhDemoGuards`）依國寫指導的題型用同一套。
 - 理由：古文語料只有公有領域篇目，查不到的「名人名言」無法證明不是編的；[AN] 指出誤引與張冠李戴正是國寫會被扣的錯。
 
 #### §5.5 D8：國寫的寬鬆門檻
@@ -2349,7 +2351,7 @@ COALESCE(json_extract(ref_json, '$.subject'), 'english')
 #### §5.6 重寫與退還
 
 - 重寫只有三種：比賽語料指紋、超過硬限制、簡體字 ≥ 3（其他都是程式就地修正或隱藏，不花錢）。
-- 跨投遞累計（同英文作文範文）：`ai_calls` 裡這個操作截斷或格式不符的次數＋turn 的 `meta_json.content_failures`（語意檢查要求重寫時加 1）；兩者合計 ≥ 2 時不呼叫模型、直接退還。每個操作最多付費產生 2 次。
+- 跨投遞累計（同英文作文範文）：`ai_calls` 裡這個操作截斷或格式不符的次數＋turn 的 `meta_json.content_failures`（語意檢查要求重寫時加 1）；兩者合計 ≥ 2 時不呼叫模型、直接退還。每個操作最多付費產生 2 次。每一次解析成功的輸出都重讀這個合計再決定還能不能重寫（同一次投遞前面截斷的呼叫也算），第二次產生一定用最後一次的處理（隱藏、提醒或退還），不會再要求第三次。
 - 拒答、API 錯誤、逾時照現行規則；退還走 `refundWithAssistRef` 的追問分支（turn 改 failed、案例狀態不動），算進每天的內容退還上限。
 
 ### §6 點數、上限與費用
@@ -2483,8 +2485,28 @@ turn 隨案例 CASCADE；刪帳號隨 `users` CASCADE；180 天到期照案例�
 - 這次新增與修改的檔案以 9 字漢字窗口對語料掃描（一次性腳本在 scratchpad，不進 repo，只印檔名、行號與命中數）：0 命中（SETUP-KEYS 一個說法和語料的非作品文字有 9 字相同，已改寫）。
 - 沒有呼叫任何模型 API、沒有跑評測、沒有觸發任何 workflow；`assistant-subjects-eval.yml` 仍然只有 `workflow_dispatch`。
 
+#### 審查修正（2026-10-30，合併前）
+
+三位審查者（API、政策、前端）各自重現之後修正；同樣沒有呼叫任何模型 API、沒有跑評測、沒有觸發任何 workflow。
+
+| # | 問題 | 修正 |
+|---|---|---|
+| R1 | 同一次投遞先截斷（`max_tokens`）或格式不符、第二次才命中比賽指紋／超過上限／簡體字時，第二次仍要求重寫，`callWithPolicy` 已不能再呼叫，整個操作被退還（兩次付費的產生都浪費） | `run.ts` 每一次解析成功都重讀 `zhExemplarContentFailures`（含這次投遞前面的 `ai_calls`）決定還能不能重寫；`meta_json.content_failures` 與 ops 事件的 `attempt` 改記這一篇是第幾次產生。評測的 runner 同樣算所有呼叫。新增兩個 routes 測試（截斷＋指紋命中 → 隱藏那段並結算；截斷＋超過 5% → 照顯示加提醒） |
+| R2 | 知性問題（二）的官方寫法「400 字以內（至多 19 行）」：每段首空兩格、段末一整行，85–95% 的字數常常超過 418 格（四段各 90 字就要 440 格），付費重寫或退還 | `<task>` 在有行數規定時說明格子怎麼算，並給扣掉空格的目標（`zhExemplarBodyAim`：每段預留 19 格，知性 3–4 段；400 字／19 行 → 312–342 字，四段一樣長也寫得進）；情意另有字數或行數規定時也照算。範本版本 `assist-zh-exemplar-user@2` |
+| R3 | 未經查證的說法只認阿拉伯數字、百分之 N、N 成：中文數字（兩千三百名、三小時、三萬多名）、兩成、全形數字都漏掉 | 比對前 NFKC；數字加上帶單位的中文數字、一半／過半／半數（只有「一」「半」的「一個」「一天」不算，「千萬不要」「一成不變」不算）；來源字樣加報告指出、民調、問卷、數據、新聞報導、專家指出…，「研究了」「研究過」不算 |
+| R4 | 「他說：」「我想起某人說：」引出的編造名言被當成對話保留；清單外的一般人物（司機、阿姨）說的話反而整句被拿掉 | §5.4 的對話規則改寫（一般人物清單擴大；第一人稱任何題型；第三人稱只在情意、同一段前面提過一般人物、沒有名人或出處字樣時）；範文依題型、國寫指導的示範段依國寫指導的題型 |
+| R5 | 國寫指導附了學生的段落時，大綱提示可能帶到學生的私事，經由摘要進到範文 | `zhExemplarDigest`：附了段落時只放要件、問題（一）要點與段落架構的名稱；系統提示加一句不寫摘要裡學生自己的生活 |
+| R6 | 情意範文寫到敏感事件，正式站沒有任何訊號（評測的檢查只在 runner） | `ZH_EXEMPLAR_SENSITIVE_RE` 移到 shared，後處理計數 `sensitive_event`，結算時寫 ops 事件 `assist_zh_exemplar_sensitive`（只有 op id 與句數）；runner 用同一份 |
+| R7 | 管理員與不限點數的等級：確認面板把每日篇數夾到 3，看過 3 篇就停用 | 後端送不限篇數（UNLIMITED）時沒有每日篇數的停用與說明 |
+| R8 | 拿掉句子後太短、內容過濾擋下的段落 `hidden` 是 null：畫面當成文章縮排顯示、標方法卡、不算進「這篇不完整」 | `hidden` 多 `'trimmed'`、`'filtered'`（不算進 40% 的隱藏比例）；畫面用說明的樣式、不標方法卡，提醒分「被隱藏」與「已省略」兩種寫法，要件對照不指向它 |
+| R9 | 題目沒寫字數時，畫面仍說「題目限 400 字以內」並據此說要刪減 | `totals.limit_chars_from_question`；預設值寫「題目沒寫字數，本站以 400 字為上限」，不據此說要刪減 |
+| R10 | 範文產生中，追問框的停用說明是「等這一輪完成再問下一個問題。」 | 範文產生中改成「AI 示範產生中，完成後才能追問。」（自動更新停止時另一句）；解析與追問的寫法不變 |
+
+- 檢查：`npm run typecheck` 通過；`npm test`：API 45 個檔 1,407 個、web 185 個檔 2,276 個、shared 27 個檔 760 個全過；`npm run test:data` 66、223 個全過；`npm run build` 通過；`npm run test:local-e2e -w @gsat/api`（假模型）50／50；Playwright（新的建置；`assistant*.spec.ts`、`account`、`mobile-guard`、`desktop-safety`、`desktop-shell`，全部專案）142 過、31 個依專案跳過、0 失敗（第一次跑有一個和這次無關的 `desktop-safety` 語言標記測試失敗：練習頁隨機抽到的第一題選項沒有英文，單獨重跑與整組重跑都通過）。
+- `assist-prompts-zh.json` 只有 `zh_exemplar` 一列變了（範本版本與系統提示雜湊，用 `UPDATE_ZH_PROMPT_FIXTURE=1` 重寫）；英文的 `assist-prompts.json` 逐位元不變；`policy.ts` 沒有改。這次新增與修改的行以 9 字漢字窗口對語料掃描：0 命中。
+
 #### 上線後
 
 - 部署後站主用管理員帳號在一個國寫案例看完國寫指導、按一次「看一篇 AI 示範」確認（docs/SETUP-KEYS.md §8.4）。
-- 上線後兩週由開發者依 ops 事件（`assist_zh_exemplar_overlap`、`assist_d8_output`）、Worker 日誌（`assist_zh_exemplar_retry`、`assist_zh_exemplar_unusable`）與 turn 的 `meta_json.checks` 抽查；第 14 天依 `ai_calls` 重算每點成本（§6）。
+- 上線後兩週由開發者依 ops 事件（`assist_zh_exemplar_overlap`、`assist_zh_exemplar_sensitive`、`assist_d8_output`）、Worker 日誌（`assist_zh_exemplar_retry`、`assist_zh_exemplar_unusable`）與 turn 的 `meta_json.checks` 抽查；第 14 天依 `ai_calls` 重算每點成本（§6）。
 - 要確認品質時由站主手動跑 K 組（約 US$2.5）。

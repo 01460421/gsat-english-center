@@ -51,7 +51,7 @@ export const ZH_ANALYZE_TEMPLATE_VERSIONS: Readonly<Record<ZhCaseKind, string>> 
   zh_writing: 'assist-zh-user@1',
 };
 export const ZH_FOLLOWUP_TEMPLATE_VERSION = 'assist-zh-followup-user@1';
-export const ZH_EXEMPLAR_TEMPLATE_VERSION = 'assist-zh-exemplar-user@1';
+export const ZH_EXEMPLAR_TEMPLATE_VERSION = 'assist-zh-exemplar-user@2';
 
 // ───────────────────────── 共用段落 ─────────────────────────
 
@@ -139,7 +139,7 @@ export const ZH_OUTPUT_RULES = `Output rules:
 
 /** 國寫範文的寫法與標注（國寫範文設計 §4；依私人語料分析 §5、§6(c) 用本站自己的話寫）。 */
 const ZH_EXEMPLAR_TASK = `Model answer (國寫範文):
-- Write ONE complete model answer to the task in <student_provided_question>, as a strong senior-high student could write it by hand in the exam. <analysis_digest> is the website's earlier guidance: answer every requirement it lists and follow its outline unless that breaks a rule below. The student's own writing is not given to you.
+- Write ONE complete model answer to the task in <student_provided_question>, as a strong senior-high student could write it by hand in the exam. <analysis_digest> is the website's earlier guidance: answer every requirement it lists and follow its outline unless that breaks a rule below. The student's own writing is not given to you; if <analysis_digest> mentions anything about the student's own life, ignore it and never write about it.
 - Lengths are in <task>. Punctuation counts as one character, as on the answer sheet. Aim for 85–95% of each limit; the program redoes or removes anything over the limit.
 - 問題（一）: answer only from the material, in your own words, without opinion; put at most two short phrases copied from the material in material_quotes.
 - 問題（二） and the emotional essay: 3–5 paragraphs. The opening has at most two sentences and states the claim (知性) or the situation (情意) with the task's key word by its second sentence. A body paragraph: (1) a claim sentence with the key word; (2) ONE concrete example — for 知性 the material (quote it at least once in the whole answer) or something seen in ordinary life, for 情意 one scene with a time, a place, an action and one sensory detail; (3) one or two sentences tying the example back to the claim; (4) a sentence that returns to the claim or turns. 知性: at most two reasons, or one point and its limit. 情意: scene → turning point → insight. The ending returns to the opening in one or two sentences.

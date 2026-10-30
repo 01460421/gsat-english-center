@@ -253,6 +253,80 @@ describe('consumer：請求、結算與重寫（§2、§5.6）', () => {
     expect(ev).toEqual({ op_id: body.op_id, paragraphs: 1, attempt: 2 });
   });
 
+  it('同一次投遞：第一次截斷（max_tokens）、第二次命中比賽指紋 → 第二次就是最後一次：隱藏那一段並結算（不退還）', async () => {
+    const s = setup();
+    const caseId = await writingCase(s);
+    const { body } = await requestExemplar(s, caseId);
+    const overlap = zhExemplarOutput();
+    overlap.paragraphs[1]!.text += ZH_DECOY_CONTEST.slice(5, 22);
+    let i = 0;
+    const fake: FakeAnthropic = new FakeAnthropic(() => (i++ === 0 ? fake.json(zhExemplarOutput(), { stopReason: 'max_tokens' }) : fake.json(overlap)));
+    await run(s, fake);
+    expect(fake.requests).toHaveLength(2);
+    expect(row(s.env, 'SELECT status, refund_reason FROM ai_ops WHERE id = ?', body.op_id)).toEqual({ status: 'settled', refund_reason: null });
+    const d = await detail(s, caseId);
+    expect(d.turns[1].exemplar.paragraphs[1]).toMatchObject({ text: ZH_EXEMPLAR_OVERLAP_TEXT, hidden: 'contest' });
+    const meta = JSON.parse(row(s.env, 'SELECT meta_json FROM assist_turns WHERE id = ?', body.turn_id).meta_json);
+    expect(meta.content_failures).toBe(1);
+    expect(JSON.parse(row(s.env, `SELECT detail_json FROM ops_events WHERE kind = 'assist_zh_exemplar_overlap'`).detail_json)).toEqual({ op_id: body.op_id, paragraphs: 1, attempt: 2 });
+  });
+
+  it('同一次投遞：第一次截斷、第二次超過上限 ≤ 10% → 照顯示並加提醒（不退還）', async () => {
+    const s = setup();
+    const caseId = await writingCase(s);
+    const { body } = await requestExemplar(s, caseId);
+    // 情意 836 格；四段各 200 字（每段 10 行 220 格）＝ 880 格，超過約 5%。句子是本站自寫的。
+    const long = zhExemplarOutput();
+    const filler = '我在窗邊坐了很久，看著外面的街燈一盞一盞亮起來，心裡慢慢安定下來，覺得明天也可以再試一次。';
+    long.paragraphs = long.paragraphs.slice(0, 4).map((p) => {
+      let t = '';
+      while ([...t].length < 200) t += filler;
+      return { ...p, text: `${[...t].slice(0, 199).join('')}。` };
+    });
+    let i = 0;
+    const fake: FakeAnthropic = new FakeAnthropic(() => (i++ === 0 ? fake.json(zhExemplarOutput(), { stopReason: 'max_tokens' }) : fake.json(long)));
+    await run(s, fake);
+    expect(fake.requests).toHaveLength(2);
+    expect(row(s.env, 'SELECT status, refund_reason FROM ai_ops WHERE id = ?', body.op_id)).toEqual({ status: 'settled', refund_reason: null });
+    const ex = (await detail(s, caseId)).turns[1].exemplar;
+    expect(ex.notices.map((n: any) => n.kind)).toContain('exemplar_over_limit');
+    expect(ex.totals.cells).toBe(880);
+  });
+
+  it('國寫指導附了段落：範文的摘要不帶大綱提示（段落裡的事不會經由摘要送進範文的請求）', async () => {
+    const s = setup();
+    // 學生的段落與國寫指導的大綱提示都提到「外婆的菜園」（本站自寫）。
+    const created = await post(
+      s,
+      '/api/assist/cases',
+      zhTypedBody({ blocks: zhBlocks(['question', null, ZH_WRITING_PROMPT]), format: 'writing', draft: '每年暑假我都在外婆的菜園旁那扇窗邊寫作業，聽外面的蟬叫。', draft_target: 'q2' }),
+    );
+    expect(created.status, JSON.stringify(created.body)).toBe(201);
+    const caseId = created.body.id as string;
+    await post(s, `/api/assist/cases/${caseId}/analyze`);
+    await run(s, json(zhWritingOutput({ outline: [{ part_zh: '場景', hint_zh: '寫外婆的菜園旁那扇窗。' }] })));
+    const { body } = await requestExemplar(s, caseId);
+    expect(body.status).toBe('queued');
+    const fake = json(zhExemplarOutput());
+    await run(s, fake);
+    const userText = fake.requests[0]!.userText;
+    expect(userText).toContain('<analysis_digest>\nRequirement: 寫一扇具體的窗「那一扇窗」\nOutline: 場景\n</analysis_digest>');
+    expect(userText).not.toContain('外婆');
+  });
+
+  it('情意範文寫到敏感事件：照常結算，checks 記 sensitive_event，寫 assist_zh_exemplar_sensitive（只有 op id 與句數）', async () => {
+    const s = setup();
+    const caseId = await writingCase(s);
+    const { body } = await requestExemplar(s, caseId);
+    const out = zhExemplarOutput();
+    out.paragraphs[1]!.text += '那年冬天外婆住院，我每天放學都去病房陪她。';
+    await run(s, json(out));
+    expect(row(s.env, 'SELECT status FROM ai_ops WHERE id = ?', body.op_id).status).toBe('settled');
+    const meta = JSON.parse(row(s.env, 'SELECT meta_json FROM assist_turns WHERE id = ?', body.turn_id).meta_json);
+    expect(meta.checks.sensitive_event).toBe(1);
+    expect(JSON.parse(row(s.env, `SELECT detail_json FROM ops_events WHERE kind = 'assist_zh_exemplar_sensitive'`).detail_json)).toEqual({ op_id: body.op_id, sentences: 1 });
+  });
+
   it('跨投遞：上一次投遞已經重寫過一次（content_failures 1），這一次命中就不再重寫，直接用最後一次的處理', async () => {
     const s = setup();
     const caseId = await writingCase(s);

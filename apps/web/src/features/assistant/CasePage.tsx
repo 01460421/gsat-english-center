@@ -70,6 +70,12 @@ function mismatchOf(turn: AssistTurnView | null): Exclude<AssistDetectedSubject,
 }
 
 /** 常駐 live region 的文字：進行中的任務。 */
+/** 追問框停用時的說明：國寫範文產生中另外說（不是「這一輪」追問）；解析與追問的寫法不變。 */
+function composerBusyReason(pending: AssistPendingTask, stopped: boolean): string {
+  if (pending.kind === 'zh_exemplar') return stopped ? ZH_EXEMPLAR_COPY.followupBusyStopped : ZH_EXEMPLAR_COPY.followupBusy;
+  return stopped ? '自動更新已停止：按上方的「再試一次」看這一輪有沒有完成。' : '等這一輪完成再問下一個問題。';
+}
+
 function pendingText(pending: AssistPendingTask): string {
   if (pending.kind === 'followup') return pending.status === 'queued' ? '追問排隊中…' : 'AI 正在回答你的追問…';
   if (pending.kind === 'ocr') return '照片轉錄中…';
@@ -361,7 +367,7 @@ function CaseView({ detail, poller }: { detail: AssistCaseDetail; poller: Return
             labels={groupCase ? targets.map((t) => t.label) : []}
             displayOf={displayOf}
             disabled={pending !== null}
-            disabledReason={pending ? (stopped ? '自動更新已停止：按上方的「再試一次」看這一輪有沒有完成。' : '等這一輪完成再問下一個問題。') : null}
+            disabledReason={pending ? composerBusyReason(pending, stopped) : null}
             points={registry.followupPoints}
             onStarted={onStarted}
             {...(subject === 'chinese' ? { placeholder: ZH_FOLLOWUP_PLACEHOLDER } : {})}

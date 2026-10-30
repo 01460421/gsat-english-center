@@ -15,7 +15,7 @@
  */
 import {
   ZH_BOPOMOFO_RE,
-  ZH_EXEMPLAR_TRIMMED_TEXT,
+  ZH_EXEMPLAR_SENSITIVE_RE,
   countZhChars,
   normalizeZhChoiceLetters,
   zhBopomofoSyllables,
@@ -43,7 +43,7 @@ import {
   type ZhWritingView,
   zhFindQuote,
 } from '@gsat/shared';
-import { EXAM_BOARD_RE, FILTERED_PLACEHOLDER } from '../../src/ai/filter';
+import { EXAM_BOARD_RE } from '../../src/ai/filter';
 import { ZH_CONTEST_MENTION_RE } from '../../src/assist/subjects/chinese/samples';
 
 // ───────────────────────── 門檻（§11.3「上線門檻」） ─────────────────────────
@@ -1207,8 +1207,8 @@ export function exemplarProseView(view: ZhExemplarView): Record<string, unknown>
   return { ...view, coverage: undefined, coverage_points: view.coverage.map((r) => r.point_zh) };
 }
 
-/** 敏感事件的字（情意題的示範要用日常、可信的高中生經驗；國寫範文設計 §4 提示的 Material 一點）。只拿來數，命中時人工看。 */
-export const EXEMPLAR_SENSITIVE_RE = /醫院|病房|住院|過世|去世|病逝|離世|喪禮|葬禮|告別式|靈堂|癌症|自殺|自殘|輕生|割腕|家暴|戀愛|男朋友|女朋友|告白|暗戀/u;
+/** 敏感事件的字（shared 的 ZH_EXEMPLAR_SENSITIVE_RE；正式站的後處理也用它計數 sensitive_event）。只拿來數，命中時人工看。 */
+export const EXEMPLAR_SENSITIVE_RE = ZH_EXEMPLAR_SENSITIVE_RE;
 
 /**
  * 國寫範文的指標（view 是後處理之後的畫面，不存）。opts：題目集期望的題型、這一題的上限（zhExemplarLimits）、
@@ -1218,9 +1218,9 @@ export function exemplarMetrics(
   view: ZhExemplarView,
   opts: { expected: ZhExemplarSection; limits: ZhExemplarLimits; titleRule: { title: string } | 'own' | null; questionText: string; attempts: readonly string[] },
 ): ExemplarResult {
-  // 拿掉句子後整段省略、或被內容過濾換掉的段落：沒有隱藏原因，但畫面上不是示範文字。
-  const omitted = (text: string) => text === ZH_EXEMPLAR_TRIMMED_TEXT || text === FILTERED_PLACEHOLDER;
-  const shownParas = view.paragraphs.filter((p) => p.hidden === null && !omitted(p.text));
+  // 拿掉句子後整段省略（trimmed）、或被內容過濾換掉（filtered）的段落：畫面上不是示範文字。
+  const omitted = (p: ZhExemplarView['paragraphs'][number]) => p.hidden === 'trimmed' || p.hidden === 'filtered';
+  const shownParas = view.paragraphs.filter((p) => p.hidden === null);
   const q1 = view.q1;
   const q1State: ExemplarResult['q1'] = q1 === null ? 'none' : q1.hidden === null && q1.answer_zh !== '' ? 'shown' : 'hidden';
   const q1Chars = q1State === 'shown' ? countZhChars(q1!.answer_zh).chars : null;
@@ -1240,7 +1240,7 @@ export function exemplarMetrics(
     shown: shownParas.length,
     hidden_contest: view.paragraphs.filter((p) => p.hidden === 'contest').length,
     hidden_d8: view.paragraphs.filter((p) => p.hidden === 'd8').length,
-    trimmed: view.paragraphs.filter((p) => p.hidden === null && omitted(p.text)).length,
+    trimmed: view.paragraphs.filter(omitted).length,
     q1: q1State,
     q1_chars: q1Chars,
     q1_limit: q1?.limit ?? null,

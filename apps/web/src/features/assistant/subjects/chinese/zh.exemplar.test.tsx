@@ -11,6 +11,7 @@ import {
   ASSIST_SUBJECT_PROFILES,
   ZH_EXEMPLAR_LABEL,
   ZH_EXEMPLAR_OVERLAP_TEXT,
+  ZH_EXEMPLAR_TRIMMED_TEXT,
   ZH_NOTICE_TEXT,
   ZH_WRITING_METHOD_CARDS,
   type AiQuotaResponse,
@@ -138,6 +139,15 @@ describe('國寫範文的純函式', () => {
     });
   });
 
+  it('管理員與不限點數的等級（每日篇數送 UNLIMITED）：看過 3 篇也不停用，不說每天最多 3 篇', () => {
+    const unlimited = { day_used: 0, day_limit: 1_000_000_000, month_used: 0, month_limit: 1_000_000_000 };
+    const admin = zhExemplarPointsInfo({ ...QUOTA_ZH, points: unlimited, assist: { ...QUOTA_ZH.assist!, zh_exemplars: { day_used: 3, day_limit: 1_000_000_000 } } });
+    expect(admin).toEqual({ blocked: false, lines: [`這次會用 ${ZH_EXEMPLAR_POINTS} 點；沒有完成會全額退還。`] });
+    const tierOnly = zhExemplarPointsInfo({ ...QUOTA_ZH, assist: { ...QUOTA_ZH.assist!, zh_exemplars: { day_used: 5, day_limit: 1_000_000_000 } } });
+    expect(tierOnly.blocked).toBe(false);
+    expect(tierOnly.lines.join('')).not.toContain('每天最多');
+  });
+
   it('範文狀態：完成＋進行中算進每題 2 篇，失敗的不算；最新一篇失敗時給退還說明', () => {
     const done = exemplarTurn('e1', 2, 'done', zhEmotionExemplar());
     const failed = exemplarTurn('e2', 3, 'failed', undefined, 'timeout');
@@ -155,6 +165,11 @@ describe('國寫範文的純函式', () => {
     expect(zhExemplarTotals(zhEmotionExemplar({ overLimit: true })).over).toBe('考試時要刪減約 44 格');
     const reason = zhReasonExemplar();
     expect(zhExemplarTotals({ totals: { ...reason.totals, chars: 430 } })).toMatchObject({ limit: '題目限 400 字以內', over: '考試時要刪減 30 字' });
+    // 題目沒寫字數（本站預設的 400 字）：不說「題目限」，也不拿預設值說要刪減。
+    expect(zhExemplarTotals({ totals: { ...reason.totals, chars: 430, limit_chars_from_question: false } })).toMatchObject({
+      limit: '題目沒寫字數，本站以 400 字為上限',
+      over: null,
+    });
   });
 
   it('開關是 admin：管理員的 assistant_preview.subjects 帶 exemplar，和公開的國文合併；沒開時沒有這個欄位', () => {
@@ -214,6 +229,9 @@ describe('CasePage：看一篇 AI 示範', () => {
     expect(within(section).getByText(/通常 1–2 分鐘/)).toBeInTheDocument();
     expect(screen.getByText('AI 正在寫示範（約 1–2 分鐘）…')).toHaveAttribute('aria-live', 'polite');
     expect(screen.getByText('示範產生中，完成後才能刪除。')).toBeInTheDocument();
+    // 追問框的停用說明是範文產生中（不是「這一輪」追問）。
+    expect(screen.getByText('AI 示範產生中，完成後才能追問。')).toBeInTheDocument();
+    expect(screen.queryByText('等這一輪完成再問下一個問題。')).toBeNull();
     // 範文進行中不能再按，也不在追問那一塊顯示進度。
     expect(within(section).queryByRole('button', { name: /AI 示範/ })).toBeNull();
     state = 'done';
@@ -269,6 +287,21 @@ describe('CasePage：看一篇 AI 示範', () => {
     expect(totals).toHaveTextContent('考試時要刪減約 44 格');
     expect(totals.className).toContain('text-bad');
     expect(screen.getByText(ZH_NOTICE_TEXT.exemplar_over_limit)).toBeInTheDocument();
+  });
+
+  it('省略的段落（不符合規則、內容過濾）：當成程式的說明顯示（不縮排、沒有方法卡），提醒這篇不完整，要件對照不指向它', async () => {
+    const view = zhEmotionExemplar();
+    view.paragraphs[1] = { ...view.paragraphs[1]!, text: ZH_EXEMPLAR_TRIMMED_TEXT, hidden: 'trimmed', technique_zh: '' };
+    renderCase(writingCase({ turns: [analyzeTurn, exemplarTurn('e1', 2, 'done', view)] }));
+    expect(await screen.findByTestId('zh-exemplar-hidden')).toHaveTextContent('有 1 段不符合本站的示範規則，已省略，這篇示範不完整。');
+    const second = document.querySelector('[data-zh-exemplar-paragraph="2"]') as HTMLElement;
+    expect(second).toHaveAttribute('data-hidden', 'trimmed');
+    const text = within(second).getByText(ZH_EXEMPLAR_TRIMMED_TEXT);
+    expect(text.className).toContain('text-muted');
+    expect(text.className).not.toContain('indent');
+    expect(within(second).queryByRole('button', { name: /方法卡/ })).toBeNull();
+    expect(document.querySelector('[data-zh-exemplar-coverage="2"]')).toBeNull();
+    expect(document.querySelector('[data-zh-exemplar-coverage="1"]')).not.toBeNull();
   });
 
   it('兩篇：「第 1 篇／第 2 篇」切換，預設最新；這一題已經看過 2 篇時沒有按鈕', async () => {

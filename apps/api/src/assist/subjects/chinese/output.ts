@@ -903,7 +903,7 @@ function postWriting(c: ZhCleaner, raw: ZhWritingOutput, q: AssistQuestionView):
   const contest = { set: c.ctx.zh.contest, allowed: zhContestQuestionWindows(q) };
   const guarded = fitted.kept.flatMap((e) => {
     if (e.cleaned === '' || e.cleaned === ZH_D8_HIDDEN_TEXT || e.cleaned === FILTERED_PLACEHOLDER) return [e];
-    const text = zhDemoGuards(e.cleaned, q, contest, c.checks);
+    const text = zhDemoGuards(e.cleaned, q, contest, c.checks, { narrative: section === 'zh_writing_emotion' });
     return text === null ? [] : [{ ...e, cleaned: text }];
   });
   if (guarded.length < fitted.kept.length) {

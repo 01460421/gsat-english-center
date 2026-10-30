@@ -8,11 +8,13 @@
  *      問題（一）最後一次仍超過只隱藏答案。少於目標下限的 60% 只計數。
  *    6 比賽指紋（contest.ts；題目本身的窗口不算）：段落或問題（一）命中 → R1；最後一次 → 命中的段落換成固定說明（hidden: contest）；
  *      說明欄位命中換成固定說明。
- *    7 引文、8 套語、9 未經查證的說法、10 得獎字樣、12 等第句（samples.ts）：整句拿掉；段落拿完少於 15 字整段換成固定說明。
+ *    7 引文、8 套語、9 未經查證的說法、10 得獎字樣、12 等第句（samples.ts）：整句拿掉；段落拿完少於 15 字整段換成固定說明
+ *      （hidden: trimmed；內容過濾擋下的段落是 hidden: filtered）。
  *   11 D8（寬鬆門檻，§5.5）：每一段、問題（一）（另加短答比對）、每一則說明；命中隱藏，不重試。
  *   13 要件對照：quote 不在那一段就清空；段號夾到 0..n（沒有問題（一）時 1..n）；指向隱藏段落的列拿掉。
  *   14 品牌字樣、說明欄位依 ZH_FIELD_LIMITS.zh_exemplar 截斷（段落本文不截）。
  *   15 收尾：隱藏的段落（比賽＋D8）占全文 ≥ 40% 字數，或能顯示的段落不到 2 段 → 內容失敗（退還 invalid_output）。
+ *      情意範文含敏感事件用字的句子只計數（sensitive_event；run.ts 寫 ops 事件 assist_zh_exemplar_sensitive）。
  * 重試觸發只有 R1–R3（retry 不是 null）；其他都是就地修正或隱藏。checks 寫進 turn 的 meta_json（給監看，不顯示）。
  */
 import {
@@ -27,6 +29,7 @@ import {
   zhFindQuote,
   zhMethodCardId,
   zhSheetCells,
+  zhSensitiveSentences,
   zhSimplifiedChars,
   type AssistQuestionView,
   type AssistSafetyFlag,
@@ -57,7 +60,10 @@ export interface ZhExemplarContext {
   filter: OutputFilter;
   fp: D8Fingerprints;
   zh: ZhFingerprints;
-  /** 還能付費重寫一次嗎（跨投遞累計的內容失敗＋這次投遞的第幾次 < 2）。false 時改用最後一次的處理（隱藏、提醒或退還）。 */
+  /**
+   * 還能付費重寫一次嗎（這個操作已記下的內容失敗＋1 < 2；已記下的含這次投遞前面截斷或格式不符的呼叫）。
+   * false 時改用最後一次的處理（隱藏、提醒或退還）。
+   */
   allowRetry: boolean;
 }
 
@@ -70,7 +76,8 @@ export interface ZhExemplarPostprocessed {
   view: ZhExemplarView | null;
   retry: ZhExemplarRetry | null;
   failure: ZhExemplarFailure | null;
-  meta: { d8_hidden: number; contest_hidden: number };
+  /** sensitive：情意範文含敏感事件用字的句子數（只計數，run.ts 寫 ops 事件）。 */
+  meta: { d8_hidden: number; contest_hidden: number; sensitive: number };
   checks: ZhChecks;
   safety: AssistSafetyFlag;
   tainted: boolean;
@@ -115,8 +122,8 @@ function d8Hit(text: string, ctx: ZhExemplarContext, questionWindows: ReadonlySe
 }
 
 /** 段落的去句規則（引文、套語、說法、得獎字樣、等第句）→ 品牌字樣；少於 15 字回 null（呼叫端換成固定說明）。 */
-function cleanSample(text: string, q: AssistQuestionView, checks: ZhChecks): { text: string | null; material: number } {
-  const quoted = zhCheckSampleQuotes(text, q, checks);
+function cleanSample(text: string, q: AssistQuestionView, checks: ZhChecks, section: ZhExemplarSection): { text: string | null; material: number } {
+  const quoted = zhCheckSampleQuotes(text, q, checks, { narrative: section === 'zh_writing_emotion' });
   const stripped = zhStripSampleSentences(quoted.text, q, checks);
   zhCountSampleWords(stripped, q, checks);
   const branded = replaceExamBoard(stripped).text;
@@ -134,7 +141,7 @@ const EMPTY = (checks: ZhChecks, extra: Partial<ZhExemplarPostprocessed>): ZhExe
   view: null,
   retry: null,
   failure: null,
-  meta: { d8_hidden: 0, contest_hidden: 0 },
+  meta: { d8_hidden: 0, contest_hidden: 0, sensitive: 0 },
   checks,
   safety: 'none',
   tainted: false,
@@ -228,17 +235,17 @@ export function postprocessZhExemplar(raw: ZhExemplarOutput, ctx: ZhExemplarCont
     const prepared = paras[i]!;
     if (prepared.filtered) {
       filtered += 1;
-      return { ...base, text: FILTERED_PLACEHOLDER, hidden: null, technique_zh: '' };
+      return { ...base, text: FILTERED_PLACEHOLDER, hidden: 'filtered', technique_zh: '' };
     }
     if (paraHits[i]) {
       contestHidden += 1;
       return { ...base, text: ZH_EXEMPLAR_OVERLAP_TEXT, hidden: 'contest', technique_zh: '' };
     }
-    const cleaned = cleanSample(prepared.text, q, checks);
+    const cleaned = cleanSample(prepared.text, q, checks, ctx.section);
     material += cleaned.material;
     if (cleaned.text === null) {
       bump(checks, 'paragraph_trimmed');
-      return { ...base, text: ZH_EXEMPLAR_TRIMMED_TEXT, hidden: null, technique_zh: '' };
+      return { ...base, text: ZH_EXEMPLAR_TRIMMED_TEXT, hidden: 'trimmed', technique_zh: '' };
     }
     if (d8Hit(cleaned.text, ctx, questionWindows, false)) {
       d8Hidden += 1;
@@ -256,7 +263,7 @@ export function postprocessZhExemplar(raw: ZhExemplarOutput, ctx: ZhExemplarCont
     let answer = '';
     if (hidden === null && q1Raw.filtered) answer = FILTERED_PLACEHOLDER;
     else if (hidden === null && q1Raw.text !== '') {
-      const cleaned = cleanSample(q1Raw.text, q, checks);
+      const cleaned = cleanSample(q1Raw.text, q, checks, ctx.section);
       material += cleaned.material;
       answer = cleaned.text ?? '';
       if (answer !== '' && d8Hit(answer, ctx, questionWindows, true)) {
@@ -321,11 +328,14 @@ export function postprocessZhExemplar(raw: ZhExemplarOutput, ctx: ZhExemplarCont
   const rule = zhExemplarTitleRule(q);
   const title_zh = rule === null ? '' : rule === 'own' ? explain(c.text(raw.title_zh, 'title_zh', 'title_zh')) : [...rule.title].slice(0, 16).join('');
 
-  // 第 15 步：隱藏太多或能顯示的段落不到 2 段。
+  // 第 15 步：隱藏太多（比賽指紋＋D8）或能顯示的段落不到 2 段（省略、過濾的段落也不算能顯示）。
   const totalChars = originalChars.reduce((a, b) => a + b, 0);
-  const hiddenChars = paragraphs.reduce((sum, p, i) => sum + (p.hidden !== null ? originalChars[i]! : 0), 0);
-  const shown = paragraphs.filter((p) => p.hidden === null && p.text !== ZH_EXEMPLAR_TRIMMED_TEXT && p.text !== FILTERED_PLACEHOLDER);
-  const meta = { d8_hidden: d8Hidden + c.meta.d8_hidden, contest_hidden: contestHidden };
+  const hiddenChars = paragraphs.reduce((sum, p, i) => sum + (p.hidden === 'contest' || p.hidden === 'd8' ? originalChars[i]! : 0), 0);
+  const shown = paragraphs.filter((p) => p.hidden === null);
+  // 情意範文的敏感事件用字（提示禁止；只計數給監看，不拿掉文字）。
+  const sensitive = ctx.section === 'zh_writing_emotion' ? zhSensitiveSentences(shown.map((p) => p.text)) : 0;
+  bump(checks, 'sensitive_event', sensitive);
+  const meta = { d8_hidden: d8Hidden + c.meta.d8_hidden, contest_hidden: contestHidden, sensitive };
   if (totalChars > 0 && hiddenChars / totalChars >= ZH_EXEMPLAR_HIDDEN_MAX_SHARE) return EMPTY(checks, { failure: 'hidden_too_much', safety, meta });
   if (shown.length < 2) return EMPTY(checks, { failure: 'too_few_paragraphs', safety, meta });
 
@@ -342,6 +352,7 @@ export function postprocessZhExemplar(raw: ZhExemplarOutput, ctx: ZhExemplarCont
       han: counted.han,
       cells: zhSheetCells(shownTexts),
       limit_chars: L.body.maxChars,
+      limit_chars_from_question: L.body.charsFromQuestion,
       limit_cells: ctx.section === 'zh_writing_reason' ? Math.min(L.body.maxCells, L.sheetCells - (q1 && q1.hidden === null && q1.answer_zh !== '' ? zhSheetCells([q1.answer_zh]) : 0)) : L.body.maxCells,
     },
     notes,
