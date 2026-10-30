@@ -700,7 +700,7 @@ describe('台灣標準：注音、審定音、字碼、簡體字、修辭名稱'
   it('字碼統一、非標準字、簡體字、兩可寫法', () => {
     expect(zhApplyTwForms('温度内容')).toEqual({ text: '溫度內容', replaced: 2 });
     expect(zhNonStandardChars('迫不及待')).toEqual([]);
-    expect(zhNonStandardChars('这样温')).toEqual(['这', '温']);
+    expect(zhNonStandardChars('这样温')).toEqual(['这', '样', '温']);
     expect(zhSimplifiedChars('我们说这国')).toEqual(['们', '说', '这', '国']);
     expect(zhIsFormEither('台', '臺')).toBe(true);
     expect(zhIsFormEither('臺', '台')).toBe(true);
@@ -716,7 +716,9 @@ describe('台灣標準：注音、審定音、字碼、簡體字、修辭名稱'
     expect(zhRhetoricName('比喻')).toEqual({ status: 'replaced', name: '譬喻' });
     expect(zhRhetoricName('擬人')).toEqual({ status: 'replaced', name: '轉化（擬人）' });
     expect(zhRhetoricName('通感').status).toBe('unknown');
-    expect(zhRhetoricName('譬喻（博喻）').status).toBe('unknown');
+    expect(zhRhetoricName('譬喻（博喻）').status).toBe('ok');
+    expect(zhRhetoricName('譬喻（反喻）').status).toBe('unknown');
+    expect(zhRhetoricName('反問')).toEqual({ status: 'replaced', name: '設問（激問）' });
     for (const to of Object.values(ZH_RHETORIC_MAINLAND)) expect(zhRhetoricName(to).status, to).toBe('ok');
     for (const base of Object.keys(ZH_RHETORIC_SUBTYPES)) expect(ZH_RHETORIC_TERMS).toContain(base);
     expect(new Set(ZH_RHETORIC_TERMS).size).toBe(ZH_RHETORIC_TERMS.length);

@@ -2,31 +2,37 @@
  * 國文解析與追問的輸出後處理（docs/design/assistant-subjects.md §5.1；共用的過濾、品牌字樣、D8 與英文的 output.ts 同一套工具，
  * 英文的 output.ts 一個字都不改）。consumer（subjects/chinese/run.ts）在 callWithPolicy 的 onSuccess 裡呼叫：模型的 JSON 已經用
  * 完整的 zod schema 驗證過（第 1 步）。
- *
- * **S1-worker-core 建的骨架**：下面標「已做」的步驟能讓整條路（解析 → 結算 → 畫面）跑起來；標「TODO」的步驟由後處理的工作包
- * 填進這個檔與 quotes.ts、standards.ts、classics.ts、d8.ts（呼叫端都已經接好，不用改 consumer）。
- *    2 小列舉正規化（判定、確定程度、覆蓋程度、片段檢核、追問模式）：已做；不認得的判定當成漏判（null）、確定程度 unsure、
+ *    2 小列舉正規化（判定、確定程度、覆蓋程度、片段檢核、追問模式）：不認得的判定當成漏判（null，第 7 步補列）、確定程度 unsure、
  *      覆蓋程度 none、片段檢核 missing、追問模式用學生選的，計數 enum_normalized、enum_unknown。
- *    3 科目不符：zhSubjectMismatch（consumer 先呼叫；english、math、social、science 以 invalid_output 退還）。已做。
- *    4 共用：OutputFilter、品牌字樣換成「官方」、off_topic 整則換成固定說明、safety_flag 照記。已做。
- *    5 題號：zhLabelKey 對回要問的題；缺的補「AI 沒有產生這一題的解析」，多的丟掉。已做。
- *    6 代碼：題型、錯因（只留這個格式可用的）、瑕疵、技能、卡片種類（依 for_label 那一題的題型）；for_label 不是要問的題號改成空字串。已做。
- *    7 選項覆蓋與一致（漏判補列 option_gaps、inconsistent、multi_suspect、form_count_mismatch、stem_rule_missing）：TODO（zhOptionChecks）。
- *    8 引文：題目內的引文用 zhMatchKey 找、找不到清空（quote_misses）已做；卡片原文、注釋、總量、抄錄：TODO（quotes.ts）。
- *    9 多選計分（zhMultiScore）、逐選項的「你」欄、研判的「你判」、判定與依據（settle.ts 同一組函式）：已做。
- *   10 提示不洩答案（hint_leak_removed）：TODO（zhHintChecks）。
- *   11 確定程度上限（ZH_CERTAINTY_CAPS；模型的題型、該題的 item_type、guessZhSection 任一命中）：已做。
- *   12 字數與不代寫：簡答示範超過字數拿掉（demo_removed）、語譯題示範留空、學生答案字數與抄錄檢查、國寫示範規則、等第句、
- *      連續漢字上限：已做。必須抄錄的示範逐字比對：TODO（quotes.ts）。
- *   13 台灣標準：TODO（standards.ts；簡體字 ≥ 3 個時回 retry 要求重寫一次）。
- *   14 D8：每一個字串欄位比對英文與國文的指紋（d8.ts 的 zhD8Hit）、示範與要點跑短答比對（zhShortAnswerHit）：已接好，比對本身 TODO（d8.ts）。
- *   15 長度：每一欄依 ZH_FIELD_LIMITS 截斷、卡片列數依 ZH_CARD_ROW_MAX 與合計上限截斷。已做。
+ *    3 科目不符：zhSubjectMismatch（consumer 先呼叫；english、math、social、science 以 invalid_output 退還）。
+ *    4 共用：OutputFilter、品牌字樣換成「官方」、off_topic 整則換成固定說明、safety_flag 照記。
+ *    5 題號：zhLabelKey 對回要問的題（中文題號「一」「二」、小題「34(1)」照原樣比；模型只寫小題「(1)」時對回唯一的那一小題）；
+ *      缺的補「AI 沒有產生這一題的解析」，多的丟掉。
+ *    6 代碼：題型、錯因（只留這個格式可用的）、瑕疵、技能、卡片種類（依 for_label 那一題的題型）；for_label 不是要問的題號改成空字串。
+ *    7 選項覆蓋與一致（zhOptionChecks）：漏判補列（option_gaps）、逐項和答案不一致（inconsistent）、單選判出多個「該選」
+ *      （multi_suspect）、研判的組合一致與答案鍵逐句拆解、字形題錯字數（form_count_mismatch）、題幹自己的標準（stem_rule_missing）。
+ *    8 引文：題目內的引文用 zhMatchKey 找、找不到清空（quote_misses）；卡片原文句；注釋引用與選文總量（quotes.ts）；
+ *      古文名句與默寫（classics.ts）；必須抄錄的示範逐字出自原文（copy_demo_removed）。
+ *    9 多選計分（zhMultiScore）、逐選項的「你」欄、研判的「你判」、判定與依據（settle.ts 同一組函式）。
+ *   10 提示不洩答案（zhHintChecks、hint_leak_removed）：第 1、2 階不能有正解代號（含全形、研判的「① 不符合」）、字音題不能有注音、
+ *      簡答不能有示範的原句；拿掉後少於 2 階時補一階固定提示。
+ *   11 確定程度上限（ZH_CERTAINTY_CAPS；模型的題型、該題的 item_type、guessZhSection 任一命中）。
+ *   12 字數與不代寫：簡答示範超過字數拿掉（demo_removed）、語譯題示範留空、學生答案字數與抄錄檢查、國寫示範規則、問題（一）示範字數、
+ *      等第句、連續漢字上限。
+ *   13 台灣標準（standards.ts；簡體字 ≥ 3 個時回 retry 要求重寫一次）。
+ *   14 D8：每一個說明欄位比對英文與國文的 8 字窗口（d8.ts 的 zhD8Hit）與評分原則的句型（zhOfficialStyleHit）；簡答的示範、要點、
+ *      檢核與國寫問題（一）的示範、要點另外跑短答比對（zhShortAnswerHit）。命中都算進 meta.d8_hidden（consumer 寫 assist_d8_output）。
+ *   15 長度：每一欄依 ZH_FIELD_LIMITS 截斷、卡片列數依 ZH_CARD_ROW_MAX 與合計上限截斷。
  *   16 checks 計數：寫進 turn 的 meta_json（給評測與監看，不顯示）。
  */
 import {
   ASSIST_DETECTED_SUBJECTS,
   countZhChars,
   guessZhSection,
+  zhCharLimits,
+  zhJudgeComboLetter,
+  zhLongestCommonRun,
+  zhMatchKey,
   isZhCardKind,
   isZhFlawCode,
   isZhSection,
@@ -43,6 +49,7 @@ import {
   zhCardsMax,
   zhCertaintyCap,
   zhCopyCheck,
+  type ZhJudgeCombo,
   zhErrorCodeAllowed,
   zhFieldLimit,
   zhFitWritingExamples,
@@ -75,6 +82,7 @@ import {
   type ZhChoiceView,
   type ZhFollowupView,
   type ZhItemWarning,
+  type ZhJudgeLabels,
   type ZhNotice,
   type ZhNoticeKind,
   type ZhOptionView,
@@ -90,7 +98,7 @@ import { d8Hit } from '../../../ai/d8';
 import { FILTERED_PLACEHOLDER, replaceExamBoard } from '../../../ai/filter';
 import type { ZhAnalysisPostprocessed, ZhFollowupContext, ZhFollowupPostprocessed, ZhOutputContext } from '../types';
 import { zhCheckClassics } from './classics';
-import { zhD8Hit, zhShortAnswerHit } from './d8';
+import { zhD8Hit, zhOfficialStyleHit, zhShortAnswerHit } from './d8';
 import { zhCheckQuotes, zhLocateQuote } from './quotes';
 import type { ZhChoiceOutput, ZhFollowupOutput, ZhShortOutput, ZhWritingOutput } from './schemas';
 import { zhChoiceItemVerdict, zhShortPartVerdict } from './settle';
@@ -102,6 +110,10 @@ export const ZH_D8_HIDDEN_TEXT = '這段說明和受保護的官方文字太像�
 export const ZH_MISSING_ITEM_TEXT = 'AI 沒有產生這一題的解析，可以用追問問它';
 /** 簡答示範的上限（字，含標點；§3.3）。 */
 const ZH_DEMO_MAX = 60;
+/** 國寫問題（一）示範的上限（字，含標點；§5.5）。 */
+const ZH_Q1_DEMO_MAX = 80;
+/** 提示拿掉後少於 2 階時補的固定提示（§5.1 第 10 步）。 */
+export const ZH_HINT_FALLBACK = '先回到題幹，確認題目問的是什麼。';
 /** 簡體字 ≥ 這麼多個不同的字時，要求重寫一次（§5.6）。 */
 export const ZH_SIMPLIFIED_RETRY_MIN = 3;
 
@@ -121,6 +133,13 @@ class ZhCleaner {
   readonly checks: ZhChecks = {};
   readonly notices: ZhNotice[] = [];
   readonly meta = { d8_hidden: 0, filtered: 0, truncated: 0 };
+
+  /** 短答比對命中（§5.7）：計數、算進 d8_hidden（consumer 依它寫 assist_d8_output 與案例的 d8_hidden 旗標）、在示範的位置說明。 */
+  shortAnswerHidden(field: string): void {
+    this.meta.d8_hidden += 1;
+    this.count('short_answer_hidden');
+    this.notice('short_answer_hidden', field);
+  }
 
   constructor(
     readonly kind: ZhOutputKind,
@@ -156,7 +175,7 @@ class ZhCleaner {
       this.notice('filtered', field);
       return text;
     }
-    if (d8Hit(text, this.ctx.fp) || zhD8Hit(text, this.ctx.zh)) {
+    if (d8Hit(text, this.ctx.fp) || zhD8Hit(text, this.ctx.zh) || zhOfficialStyleHit(text)) {
       this.meta.d8_hidden += 1;
       this.count('d8_hidden');
       this.notice('d8_hidden', field);
@@ -216,16 +235,31 @@ class ZhCleaner {
 
 // ───────────────────────── 題號、題型、卡片 ─────────────────────────
 
-/** 依題號把模型的逐題輸出對回要問的題（缺的回 null；只有一題時模型寫什麼題號都算）。 */
+/**
+ * 依題號把模型的逐題輸出對回要問的題（缺的回 null；只有一題時模型寫什麼題號都算）。題號用 zhLabelKey 比（「第34題(1)」＝「34(1)」，
+ * 「①」不等於「1」，「一」「二」各自成鍵）。對不上的小題再試一次：模型只寫小題（「(1)」「⑴」「①」）而要問的題裡只有一個這樣的小題時，
+ * 對回那一小題。
+ */
 function matchByLabel<T extends { label: string }>(targets: readonly AssistQuestionTarget[], raw: readonly T[]): Array<T | null> {
   const used = new Set<number>();
-  return targets.map((t) => {
+  const out: Array<T | null> = targets.map((t) => {
     const at = raw.findIndex((r, i) => !used.has(i) && zhLabelKey(r.label) === zhLabelKey(t.label));
     const i = at >= 0 ? at : targets.length === 1 && raw.length > 0 ? 0 : -1;
     if (i < 0) return null;
     used.add(i);
     return raw[i]!;
   });
+  const partOf = (label: string) => zhSplitPartLabel(label).part;
+  targets.forEach((t, k) => {
+    if (out[k] !== null) return;
+    const part = partOf(t.label);
+    if (part === null || targets.filter((x) => partOf(x.label) === part).length !== 1) return;
+    const at = raw.findIndex((r, i) => !used.has(i) && zhLabelKey(r.label) === part);
+    if (at < 0) return;
+    used.add(at);
+    out[k] = raw[at]!;
+  });
+  return out;
 }
 
 /** 這個格式可以用的題型（不在清單換成 zh_other）。 */
@@ -430,13 +464,220 @@ function choiceItem(c: ZhCleaner, raw: ZhChoiceOutput['items'][number] | null, t
   };
 }
 
-/** 第 7 步：選項覆蓋與一致（漏判補列、逐項和答案不一致、單選判出多個「該選」、字形題錯字數、題幹標準）。TODO：下一個工作包。 */
-function zhOptionChecks(view: ZhChoiceView, _q: AssistQuestionView, _c: ZhCleaner): ZhChoiceView {
+// ───────────────────────── 第 7 步：選項覆蓋與一致（§5.3） ─────────────────────────
+
+const CIRCLED_ORDER = '①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳';
+
+function optionOrder(option: string): number {
+  if (/^[A-E]$/.test(option)) return option.charCodeAt(0) - 65;
+  const i = CIRCLED_ORDER.indexOf(option);
+  return i >= 0 ? 10 + i : 100;
+}
+
+/** 降確定程度（只有 AI 判斷的答案有確定程度）：to 是降到的值；step 是降一級（sure → likely → unsure）。 */
+function lowerCertainty(it: ZhChoiceItemView, to: ZhCertainty | 'step'): void {
+  if (it.answer_key?.from !== 'ai') return;
+  const cur = it.answer_key.certainty;
+  const next: ZhCertainty = to === 'step' ? (cur === 'sure' ? 'likely' : 'unsure') : zhCapCertainty(cur, to);
+  it.answer_key = { ...it.answer_key, certainty: next };
+}
+
+function addWarning(it: ZhChoiceItemView, w: ZhItemWarning): void {
+  if (!it.warnings.includes(w)) it.warnings.push(w);
+}
+
+/** 研判題的組合（選項 → 每句的判定）；選項是文字描述、解析不了時是 null。 */
+function judgeCombos(t: AssistQuestionTarget): Record<string, ZhJudgeCombo> | null {
+  return t.options ? zhParseJudgeCombos(t.options, t.judge_labels ?? null) : null;
+}
+
+/** 一題應判的選項：單選、多選是題目的 (A)–(E)；研判是每一句敘述；排序至少是答案與學生選的。 */
+function expectedOptions(it: ZhChoiceItemView, t: AssistQuestionTarget, combos: Record<string, ZhJudgeCombo> | null): string[] {
+  const letters = Object.keys(t.options ?? {}).filter((l) => /^[A-E]$/.test(l)).sort();
+  if (it.choice_mode === 'judge') return combos ? [...new Set(Object.values(combos).flatMap((c) => Object.keys(c)))].sort((a, b) => optionOrder(a) - optionOrder(b)) : [];
+  if (it.choice_mode === 'sequence') return letters.filter((l) => (it.answer_key?.text ?? '').includes(l) || (it.student_answer ?? '').includes(l));
+  return letters;
+}
+
+/** 題幹自己給標準的語法、修辭題（§5.3）：括號類別、「分為」「可分成」「屬於此種用法」、分類表。回傳題目出現過的類別名稱。 */
+function stemCategories(stem: string, figure: string): { defined: boolean; names: string[] } {
+  const names = [...new Set([...stem.matchAll(/[（(]([\p{Script=Han}]{2,4})[）)]/gu)].map((m) => m[1]!))];
+  const defined = figure.trim() !== '' || /分為|可分成|分成[^。\n]{0,6}類|屬於此種用法|此種用法|類別|名量詞/u.test(stem) || names.length >= 2;
+  return { defined, names };
+}
+
+/**
+ * 第 7 步（§5.3）：漏判補列、逐項和答案一致、研判的組合、單選判出多個「該選」、字形題錯字數、題幹自己的標準。
+ * 模型漏掉整題的（ZH_MISSING_ITEM_TEXT）不補列：那一題整個沒有解析，畫面已經說明。
+ */
+function zhOptionChecks(view: ZhChoiceView, q: AssistQuestionView, c: ZhCleaner): ZhChoiceView {
+  const figure = (q.blocks ?? []).filter((b) => b.kind === 'figure').map((b) => b.text).join('\n');
+  const questionText = (q.blocks ?? []).map((b) => b.text).join('\n');
+  for (const it of view.items) {
+    const t = q.targets.find((x) => x.label === it.label);
+    if (!t || it.diagnosis.summary_zh === ZH_MISSING_ITEM_TEXT) continue;
+    const combos = it.choice_mode === 'judge' ? judgeCombos(t) : null;
+    const student = it.student_answer;
+    const keyLetters = it.answer_key ? [...it.answer_key.text] : [];
+
+    // 覆蓋：漏判的選項或敘述補一列。
+    const present = new Set(it.options.map((o) => o.option));
+    const missing = expectedOptions(it, t, combos).filter((o) => !present.has(o));
+    const judged = combos && student && student.length === 1 ? (combos[student] ?? null) : null;
+    for (const option of missing) {
+      const isLetter = /^[A-E]$/.test(option);
+      let mark: ZhOptionView['student'] = null;
+      if (!isLetter && it.choice_mode === 'judge') mark = judged ? { judged: judged[option] ?? null } : null;
+      else if (isLetter && student !== null) {
+        const picked = student.includes(option);
+        const inKey = keyLetters.includes(option);
+        mark = { picked, mark: it.answer_key ? (picked && !inKey ? 'wrong_pick' : !picked && inKey ? 'missed' : 'ok') : null };
+      }
+      it.options.push({ option, verdict: null, key_zh: '', reason_zh: '', quote: '', range: null, flaw: '', student: mark, flags: ['option_gap'] });
+    }
+    if (missing.length > 0) {
+      c.count('option_gaps', missing.length);
+      it.options.sort((a, b) => optionOrder(a.option) - optionOrder(b.option));
+    }
+
+    const letterOptions = it.options.filter((o) => /^[A-E]$/.test(o.option));
+    if (it.answer_key?.from === 'ai' && it.choice_mode !== 'judge' && it.choice_mode !== 'sequence') {
+      // 單選、多選：「該選」的選項要等於答案；確認是單選卻標了兩個以上「該選」時提示可能是多選題。
+      const yes = letterOptions.filter((o) => o.verdict === 'yes').map((o) => o.option);
+      const disagree = letterOptions.some((o) => (o.verdict === 'yes' || o.verdict === 'no') && (o.verdict === 'yes') !== keyLetters.includes(o.option));
+      if (it.choice_mode === 'single' && yes.length >= 2) {
+        addWarning(it, 'multi_suspect');
+        lowerCertainty(it, 'unsure');
+        c.count('multi_suspect');
+      } else if (disagree) {
+        addWarning(it, 'inconsistent');
+        lowerCertainty(it, 'unsure');
+        c.count('inconsistent');
+      }
+    }
+    if (it.choice_mode === 'judge' && combos && it.answer_key) {
+      const verdicts: Record<string, ZhVerdict> = {};
+      for (const o of it.options) if (!/^[A-E]$/.test(o.option) && o.verdict !== null) verdicts[o.option] = o.verdict;
+      const answer = it.answer_key.text;
+      const combo = answer.length === 1 ? combos[answer] : undefined;
+      if (it.answer_key.from === 'ai' && combo && Object.keys(combo).every((s) => verdicts[s] !== undefined) && zhJudgeComboLetter(combos, verdicts) !== answer) {
+        // 逐句判定推不出 AI 自己的答案。
+        addWarning(it, 'inconsistent');
+        lowerCertainty(it, 'unsure');
+        c.count('inconsistent');
+      }
+      if (it.answer_key.from === 'student' && combo) {
+        // 學生提供的答案鍵拆成逐句：和 AI 的逐句判定不同的那一句加註。
+        for (const o of it.options) {
+          const want = combo[o.option];
+          if (want !== undefined && o.verdict !== null && o.verdict !== want && !o.flags.includes('key_differs')) o.flags.push('key_differs');
+        }
+      }
+    }
+
+    // 字形題的錯字數（單選；輸入法或轉錄可能把錯字改正了）。
+    const guess = t.stem ? guessZhSection(t.stem) : null;
+    if (it.choice_mode === 'single' && (it.item_type === 'zh_form' || guess?.section === 'zh_form') && guess?.form_polarity && letterOptions.length >= 2) {
+      const n = Object.keys(t.options ?? {}).length || letterOptions.length;
+      const wrongSentences = guess.form_polarity === 'all_correct' ? n - 1 : 1;
+      const counted = guess.form_polarity === 'all_correct' ? letterOptions.filter((o) => o.verdict === 'no').length : letterOptions.filter((o) => o.verdict === 'yes').length;
+      const gaps = letterOptions.some((o) => o.verdict === null);
+      const rows = view.cards.filter((card) => card.kind === 'form' && (card.for_label === it.label || (card.for_label === '' && view.items.length === 1))).reduce((sum, card) => sum + card.rows.length, 0);
+      if ((gaps ? counted > wrongSentences : counted !== wrongSentences) || rows < wrongSentences) {
+        addWarning(it, 'form_count_mismatch');
+        lowerCertainty(it, 'unsure');
+        c.count('form_count_mismatch');
+      }
+    }
+
+    // 題幹自己給標準的語法、修辭題：第 1 步要引題幹的定義或分類表；rule 卡的判定要是題目出現過的類別名稱。
+    if (it.item_type === 'zh_grammar' || it.item_type === 'zh_rhetoric') {
+      const stem = t.stem ?? '';
+      const cats = stemCategories(stem, figure);
+      if (cats.defined) {
+        const first = it.solution_steps[0];
+        const block = first?.range?.where === 'blocks' && first.range.ref !== null ? q.blocks?.[Number(first.range.ref)] : undefined;
+        if (!first || first.quote === '' || !block || block.kind === 'passage' || block.kind === 'options') {
+          addWarning(it, 'stem_rule_missing');
+          lowerCertainty(it, 'step');
+          c.count('stem_rule_missing');
+        }
+        const known = zhMatchKey(`${questionText}\n${figure}`).key;
+        let outside = false;
+        for (const card of view.cards) {
+          if (card.kind !== 'rule' || (card.for_label !== it.label && !(card.for_label === '' && view.items.length === 1))) continue;
+          for (const row of card.rows) {
+            const name = zhMatchKey(row.a).key;
+            if (name === '' || [...row.a].length > 12 || known.includes(name)) continue;
+            if (!row.flags.includes('class_not_in_question')) row.flags.push('class_not_in_question');
+            outside = true;
+          }
+        }
+        if (outside) lowerCertainty(it, 'likely');
+      }
+    }
+  }
   return view;
 }
 
-/** 第 10 步：提示不洩答案（第 1、2 階不能有正解代號；字音題不能有注音；拿光補固定提示）。TODO：下一個工作包。 */
-function zhHintChecks<V extends ZhAnalysisView>(view: V, _c: ZhCleaner): V {
+// ───────────────────────── 第 10 步：提示不洩答案（§5.1） ─────────────────────────
+
+function fullWidth(letter: string): string {
+  return String.fromCharCode(letter.charCodeAt(0) + 0xfee0);
+}
+
+/** 提示裡有沒有說出正解選項（(C)、（C）、Ｃ、C 選項、選項 C、選 C、C 才對）。 */
+export function zhHintNamesOption(hint: string, letter: string): boolean {
+  const L = `[${letter}${fullWidth(letter)}]`;
+  return (
+    new RegExp(`[(（]\\s*${L}\\s*[)）]`, 'u').test(hint) ||
+    hint.includes(fullWidth(letter)) ||
+    new RegExp(`(?<![A-Za-z])${L}\\s*選項|選項\\s*[(（]?\\s*${L}(?![A-Za-z])|選\\s*[(（]?\\s*${L}(?![A-Za-z])|(?<![A-Za-z])${L}\\s*[)）]?\\s*(?:才對|才是|正確|是對的|是正解|是答案)`, 'u').test(hint)
+  );
+}
+
+/** 研判題：提示寫出正解組合裡某一句的判定（「① 其實不符合」）。 */
+function hintNamesJudgement(hint: string, combo: ZhJudgeCombo | undefined, labels: ZhJudgeLabels | null): boolean {
+  if (!combo) return false;
+  for (const [stmt, v] of Object.entries(combo)) {
+    const word = labels ? (v === 'yes' ? labels.positive : v === 'no' ? labels.negative : labels.unknown) : null;
+    if (word && new RegExp(`${stmt}[^。，,；;\\n]{0,6}?${word}`, 'u').test(hint)) return true;
+  }
+  return false;
+}
+
+const ANSWER_PHRASE_RE = /答案(?:是|為|應為|應該是|就是)|正解(?:是|為)/u;
+
+/** 第 1、2 階提示拿掉洩答案的；拿掉後少於 2 階補固定提示。回傳新的提示與拿掉幾階。 */
+export function zhFilterHints(hints: readonly string[], leaks: (hint: string) => boolean): { hints: string[]; removed: number } {
+  let removed = 0;
+  const kept = hints.filter((h, i) => {
+    if (i >= 2 || !leaks(h)) return true;
+    removed += 1;
+    return false;
+  });
+  if (removed > 0 && kept.length < 2) kept.unshift(ZH_HINT_FALLBACK);
+  return { hints: kept, removed };
+}
+
+/** 第 10 步（選擇題；簡答在 shortPart 比對示範原句）。 */
+function zhHintChecks<V extends ZhAnalysisView>(view: V, q: AssistQuestionView, c: ZhCleaner): V {
+  if (view.kind !== 'zh_choice') return view;
+  for (const it of view.items) {
+    const t = q.targets.find((x) => x.label === it.label);
+    const letters = it.answer_key ? [...it.answer_key.text] : [];
+    const sound = it.item_type === 'zh_sound' || view.section === 'zh_sound' || (t?.stem ? guessZhSection(t.stem)?.section === 'zh_sound' : false);
+    const combos = it.choice_mode === 'judge' && t ? judgeCombos(t) : null;
+    const combo = combos && it.answer_key ? combos[it.answer_key.text] : undefined;
+    const r = zhFilterHints(
+      it.hints_zh,
+      (h) => letters.some((l) => zhHintNamesOption(h, l)) || ANSWER_PHRASE_RE.test(h) || (sound && /[ㄅ-ㄩ]/u.test(h)) || hintNamesJudgement(h, combo, it.judge_labels),
+    );
+    if (r.removed > 0) {
+      it.hints_zh = r.hints;
+      c.count('hint_leak_removed', r.removed);
+    }
+  }
   return view;
 }
 
@@ -474,8 +715,11 @@ function postChoice(c: ZhCleaner, raw: ZhChoiceOutput, q: AssistQuestionView): Z
 /** 語譯題（題幹有「語譯」「翻譯」「譯成白話」）：翻譯寫在 translation 卡，示範留空、不計入 demo_removed。 */
 const TRANSLATION_TASK_RE = /語譯|翻譯|譯成白話|譯為白話/u;
 
+/** 抄錄、不可抄錄的「原文」：選文區塊；題目沒有分開的選文區塊（整份貼在一個區塊）時用全部區塊。 */
 function passageText(q: AssistQuestionView): string {
-  return (q.blocks ?? []).filter((b) => b.kind === 'passage').map((b) => b.text).join('\n');
+  const blocks = q.blocks ?? [];
+  const passages = blocks.filter((b) => b.kind === 'passage');
+  return (passages.length > 0 ? passages : blocks).map((b) => b.text).join('\n');
 }
 
 function shortPart(c: ZhCleaner, raw: ZhShortOutput['parts'][number] | null, t: AssistQuestionTarget, i: number, section: ZhSection, q: AssistQuestionView): ZhShortPartView {
@@ -510,26 +754,37 @@ function shortPart(c: ZhCleaner, raw: ZhShortOutput['parts'][number] | null, t: 
   const coverage = c.enumValue(raw.check.coverage, normalizeZhCoverage(raw.check.coverage), student ? 'none' : 'unanswered');
   let demo = c.text(raw.demo_zh, 'parts[].demo_zh', `${field}.demo_zh`);
   if (t.stem && TRANSLATION_TASK_RE.test(t.stem)) demo = '';
-  const demoCount = demo === '' || demo === ZH_D8_HIDDEN_TEXT ? null : countZhChars(demo);
+  // 字數依模型寫的原文算（欄位上限會先截斷，截斷過的示範不能當成合規）。
+  const demoCount = demo === '' || demo === ZH_D8_HIDDEN_TEXT ? null : countZhChars(raw.demo_zh);
   if (demoCount && (demoCount.chars > ZH_DEMO_MAX || (limit?.max !== null && limit?.max !== undefined && demoCount.chars > limit.max))) {
     demo = '';
     c.count('demo_removed');
     c.notice('demo_removed', `${field}.demo_zh`);
+  }
+  // 必須抄錄：示範要逐字出自原文（「條件；文句」只看文句那一段），否則拿掉。
+  if (demo !== '' && demo !== ZH_D8_HIDDEN_TEXT && limit?.copy === 'must' && zhCopyCheck(demo, passageText(q), 'must').verbatim === false) {
+    demo = '';
+    c.count('copy_demo_removed');
+    c.notice('copy_demo_removed', `${field}.demo_zh`);
   }
   const keyPoints = c.list(raw.key_points, 'parts[].key_points').map((k, j) => {
     const located = c.quote(k.quote, 'parts[].key_points[].quote', q);
     return { point_zh: c.text(k.point_zh, 'parts[].key_points[].point_zh', `${field}.key_points[${j}].point_zh`), quote: located.quote, range: located.range };
   });
   const check = { coverage, missing_zh: c.text(raw.check.missing_zh, 'parts[].check.missing_zh', `${field}.check.missing_zh`), wording_zh: c.text(raw.check.wording_zh, 'parts[].check.wording_zh', `${field}.check.wording_zh`) };
-  // 第 14 步：短答逐子題比對（d8.ts）：示範、要點、檢核任一命中就拿掉示範，要點與檢核換成固定說明。
-  if ([demo, ...keyPoints.map((k) => k.point_zh), check.missing_zh, check.wording_zh].some((s) => s !== '' && zhShortAnswerHit(s, c.ctx.zh))) {
+  // 第 14 步：短答逐子題比對（d8.ts）：示範、要點、檢核任一命中就拿掉示範，要點與檢核換成固定說明。模型的原始示範也比（被字數規則
+  // 拿掉的示範一樣不能透過要點或檢核重現）。
+  if ([demo, raw.demo_zh, ...keyPoints.map((k) => k.point_zh), check.missing_zh, check.wording_zh].some((s) => s !== '' && zhShortAnswerHit(s, c.ctx.zh))) {
     demo = '';
     for (const k of keyPoints) k.point_zh = ZH_D8_HIDDEN_TEXT;
     if (check.missing_zh) check.missing_zh = ZH_D8_HIDDEN_TEXT;
     if (check.wording_zh) check.wording_zh = ZH_D8_HIDDEN_TEXT;
-    c.count('short_answer_hidden');
-    c.notice('short_answer_hidden', `${field}.demo_zh`);
+    c.shortAnswerHidden(`${field}.demo_zh`);
   }
+  // 第 10 步（簡答）：第 1、2 階提示不能有示範答案的原句（和模型的原始示範有 ≥ 10 字相同，示範較短時是整句）。
+  const demoKey = zhMatchKey(raw.demo_zh).key;
+  const hints = zhFilterHints(c.textList(raw.hints_zh, 'parts[].hints_zh', `${field}.hints_zh`), (h) => demoKey.length >= 6 && zhLongestCommonRun(h, raw.demo_zh).length >= Math.min(10, demoKey.length));
+  c.count('hint_leak_removed', hints.removed);
   return {
     ...base,
     item_type: section,
@@ -538,7 +793,7 @@ function shortPart(c: ZhCleaner, raw: ZhShortOutput['parts'][number] | null, t: 
     frame_zh: c.text(raw.frame_zh, 'parts[].frame_zh', `${field}.frame_zh`),
     demo_zh: demo,
     demo_count: demo === '' ? null : countZhChars(demo),
-    hints_zh: c.textList(raw.hints_zh, 'parts[].hints_zh', `${field}.hints_zh`),
+    hints_zh: hints.hints,
     check,
     verdict: zhShortPartVerdict(coverage, student),
   };
@@ -584,20 +839,30 @@ function postWriting(c: ZhCleaner, raw: ZhWritingOutput, q: AssistQuestionView):
     };
   });
   // 問題（一）：只有知性題；要點與素材原文依序對應。全部空白時是 null。
-  const points = c.textList(raw.q1.points_zh, 'q1.points_zh', 'q1.points_zh');
+  let points = c.textList(raw.q1.points_zh, 'q1.points_zh', 'q1.points_zh');
   const quotes = c.list(raw.q1.quotes, 'q1.quotes').map((s) => c.quote(s, 'q1.quotes', q));
   let demo = c.text(raw.q1.demo_zh, 'q1.demo_zh', 'q1.demo_zh');
-  if (demo !== '' && zhShortAnswerHit(demo, c.ctx.zh)) {
+  // 問題（一）的示範：≤ 80 字，而且不超過題目給問題（一）的字數限制（§5.5）。
+  const q1Limit = zhCharLimits((q.blocks ?? []).map((b) => b.text).join('\n')).find((l) => l.part === '(一)' && l.max !== null)?.max ?? null;
+  const q1Count = demo === '' || demo === ZH_D8_HIDDEN_TEXT ? null : countZhChars(raw.q1.demo_zh);
+  if (q1Count && (q1Count.chars > ZH_Q1_DEMO_MAX || (q1Limit !== null && q1Count.chars > q1Limit))) {
     demo = '';
-    c.count('short_answer_hidden');
-    c.notice('short_answer_hidden', 'q1.demo_zh');
+    c.count('demo_removed');
+    c.notice('demo_removed', 'q1.demo_zh');
+  }
+  // 短答逐子題比對：示範與要點（同簡答）。
+  if ([demo, raw.q1.demo_zh, ...points].some((s) => s !== '' && zhShortAnswerHit(s, c.ctx.zh))) {
+    demo = '';
+    points = points.map(() => ZH_D8_HIDDEN_TEXT);
+    c.shortAnswerHidden('q1.demo_zh');
   }
   const q1Empty = section === 'zh_writing_emotion' || (points.length === 0 && demo === '' && raw.q1.frame_zh.trim() === '');
+  // 示範的規則（三句以內、每句 ≤ 50 字；或一段 ≤ 150 字的主體段）依模型寫的原文長度判斷：超過的不先截斷成合規，而是整筆拿掉。
   const fitted = zhFitWritingExamples(
-    c.list(raw.examples, 'examples').map((e, i) => ({
-      use_zh: c.text(e.use_zh, 'examples[].use_zh', `examples[${i}].use_zh`),
-      text: c.text(e.text, 'examples[].text', `examples[${i}].text`, { hanRun: false }),
-    })),
+    c.list(raw.examples, 'examples').map((e, i) => {
+      const use_zh = c.text(e.use_zh, 'examples[].use_zh', `examples[${i}].use_zh`);
+      return { use_zh, text: e.text, cleaned: c.text(e.text, 'examples[].text', `examples[${i}].text`, { hanRun: false }) };
+    }),
   );
   if (fitted.removed > 0) {
     c.notice('example_removed', 'examples');
@@ -648,7 +913,7 @@ function postWriting(c: ZhCleaner, raw: ZhWritingOutput, q: AssistQuestionView):
       part_zh: c.text(o.part_zh, 'outline[].part_zh', `outline[${i}].part_zh`),
       hint_zh: zhTrimToFirstSentence(c.text(o.hint_zh, 'outline[].hint_zh', `outline[${i}].hint_zh`)),
     })),
-    examples: fitted.kept.filter((e) => e.text !== ''),
+    examples: fitted.kept.map((e) => ({ use_zh: e.use_zh, text: e.cleaned })).filter((e) => e.text !== ''),
     pitfalls_zh: c.textList(raw.pitfalls_zh, 'pitfalls_zh', 'pitfalls_zh'),
     draft,
     checklist_zh: c.textList(raw.checklist_zh, 'checklist_zh', 'checklist_zh'),
@@ -712,7 +977,7 @@ export function postprocessZhAnalysis(raw: ZhChoiceOutput | ZhShortOutput | ZhWr
       : ctx.kind === 'zh_short'
         ? postShort(c, raw as ZhShortOutput, q)
         : postWriting(c, raw as ZhWritingOutput, q);
-  view = zhHintChecks(view, c);
+  view = zhHintChecks(view, q, c);
   view = zhCheckQuotes(view, q, c.checks);
   view = zhCheckClassics(view, q, c.checks);
   const standards = zhApplyStandards(view, ctx, c.checks);
@@ -745,9 +1010,37 @@ export function postprocessZhAnalysis(raw: ZhChoiceOutput | ZhShortOutput | ZhWr
 
 // ───────────────────────── 追問 ─────────────────────────
 
+/** 追問的句子（以。！？；或換行分開，保留句末標點）。 */
+function sentencesOf(text: string): string[] {
+  return (text.match(/[^。！？!?；;\n]*(?:[。！？!?；;]+|\n|$)/gu) ?? []).filter((x) => x !== '');
+}
+
 /**
- * 國文追問的後處理（§3.5）：長度、過濾、D8、品牌字樣；mode_used 不認得就用學生選的模式；new_error_codes 只留這個格式可用的。
- * 提示模式不洩答案（程式檢查，同解析的第 10 步）：TODO（zhHintChecks 的追問版，下一個工作包）。
+ * 追問的提示模式不洩答案（§3.5；同解析的第 10 步）：回覆與要點裡說出正解選項的句子拿掉；回覆被拿光時換成固定提示。
+ * 回傳拿掉幾句。
+ */
+function followupHintChecks(view: ZhFollowupView, answers: Readonly<Record<string, string>>): number {
+  const letters = [...new Set(Object.values(answers).flatMap((a) => [...a]))].filter((l) => /^[A-E]$/.test(l));
+  const leaks = (sentence: string) => letters.some((l) => zhHintNamesOption(sentence, l)) || /答案(?:是|為|應為|應該是|就是)|正解(?:是|為)/u.test(sentence);
+  let removed = 0;
+  const strip = (text: string) => {
+    const kept = sentencesOf(text).filter((x) => {
+      if (!leaks(x)) return true;
+      removed += 1;
+      return false;
+    });
+    return kept.join('').trim();
+  };
+  const reply = strip(view.reply_zh);
+  view.reply_zh = reply === '' && view.reply_zh !== '' ? ZH_HINT_FALLBACK : reply;
+  view.points = view.points.map((p) => ({ text_zh: strip(p.text_zh), example: strip(p.example) })).filter((p) => p.text_zh !== '');
+  return removed;
+}
+
+/**
+ * 國文追問的後處理（§3.5）：長度、過濾、D8（8 字窗口與評分原則句型）、品牌字樣；mode_used 不認得就用學生選的模式；
+ * new_error_codes 只留這個格式可用的。提示模式不說出答案（followupHintChecks）。簡答案例的追問另外跑短答比對（學生常問
+ * 「直接給我官方答案」）：命中的欄位換成固定說明。
  */
 export function postprocessZhFollowup(raw: ZhFollowupOutput, ctx: ZhFollowupContext): ZhFollowupPostprocessed {
   const c = new ZhCleaner('zh_followup', ctx);
@@ -767,6 +1060,21 @@ export function postprocessZhFollowup(raw: ZhFollowupOutput, ctx: ZhFollowupCont
     safety_flag: raw.safety_flag,
     notices: c.notices,
   };
+  if (mode === 'hint' || ctx.mode === 'hint') c.count('hint_leak_removed', followupHintChecks(view, ctx.answers));
+  if (ctx.kind === 'zh_short') {
+    let hidden = false;
+    const hit = (t: string) => {
+      const h = t !== '' && t !== ZH_D8_HIDDEN_TEXT && zhShortAnswerHit(t, c.ctx.zh);
+      hidden ||= h;
+      return h;
+    };
+    if (hit(view.reply_zh)) view.reply_zh = ZH_D8_HIDDEN_TEXT;
+    view.points = view.points.map((p) => {
+      const inExample = hit(p.example);
+      return { text_zh: hit(p.text_zh) || inExample ? ZH_D8_HIDDEN_TEXT : p.text_zh, example: inExample ? '' : p.example };
+    });
+    if (hidden) c.shortAnswerHidden('reply_zh');
+  }
   view = zhApplyFollowupStandards(view, c.checks).view;
   if (view.off_topic) view = { ...view, points: [], new_error_codes: [], understood_check_zh: '', followup_chips_zh: [], notices: [{ kind: 'off_topic', field: '' }] };
   return {

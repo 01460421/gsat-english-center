@@ -2,10 +2,11 @@
  * 學習助手國文的測試資料與小工具（docs/design/assistant-subjects.md §11.1）。題目、選項與解析都是本站自己寫的句子
  * （仿講義格式；文言選文用公有領域的〈桃花源記〉），不含任何官方試題解析、參考答案或評分原則。
  *
- * 國文的 D8 指紋（subjects/chinese/d8.ts）由測試檔自己 vi.mock 換掉：requireZhFingerprints 回 fakeZhFingerprints()（或 null
- * 模擬讀不到）。比對本身由後處理的工作包實作；這裡只測呼叫端在預扣之前檢查、讀不到時 fail closed。
+ * 國文的 D8 指紋（subjects/chinese/d8.ts）由測試檔自己 vi.mock 換掉：requireZhFingerprints 回 fakeZhFingerprints()（空集合）、
+ * zhDecoyFingerprints()（本站自寫的誘餌造的集合，比對是真的 d8.ts），或 null（模擬讀不到，fail closed）。
  */
 import type { AssistQuestionBlock, AssistStudentQuestion } from '@gsat/shared';
+import { d8HanWindows, d8ZhGramHash, d8ZhWindowHash } from '../../src/ai/d8';
 import type { ZhFingerprints } from '../../src/assist/subjects/chinese/d8';
 import type { ZhChoiceOutput, ZhFollowupOutput, ZhOcrOutput, ZhShortOutput, ZhWritingOutput } from '../../src/assist/subjects/chinese/schemas';
 import type { Env } from '../../src/env';
@@ -18,9 +19,28 @@ export function zhEnv(overrides: Partial<Env> = {}, db?: TestD1): TestEnv {
   return assistEnv({ AI_ASSISTANT_PHOTO: 'on', AI_ASSISTANT_SUBJECTS: 'on', AI_ASSISTANT_SUBJECTS_PHOTO: 'on', ...overrides }, db);
 }
 
-/** 測試用的國文指紋（空集合；比對函式由下一個工作包實作）。 */
+/** 測試用的國文指紋（空集合；要測比對時用 zhDecoyFingerprints）。 */
 export function fakeZhFingerprints(): ZhFingerprints {
-  return { version: 'test-zh-0001', windows: new Set(), short: [] };
+  return { version: 'test-zh-0001', windows: new Set(), short: [], boilerplate: [], threshold: 0.6 };
+}
+
+/**
+ * 本站自寫的誘餌（不是任何官方文字）：DECOY_OFFICIAL 當成「受保護的評分說明」造 8 字窗口；DECOY_SHORT_ANSWER 當成「官方短答」造 3 字組。
+ */
+export const ZH_DECOY_OFFICIAL = '這是本站自己編寫的誘餌文字只給國文指紋比對的自動測試使用而且不會出現在題目裡';
+export const ZH_DECOY_SHORT_ANSWER = '村人希望守住桃源的祕密，免得外人前來擾亂安寧';
+
+/** 用誘餌造的國文指紋（同產生器的正規形式與雜湊：cyrb53('zh8:'／'zs3:'＋片段)）。 */
+export function zhDecoyFingerprints(opts: { official?: string[]; short?: string[]; boilerplate?: string[] } = {}): ZhFingerprints {
+  const official = opts.official ?? [ZH_DECOY_OFFICIAL];
+  const short = opts.short ?? [ZH_DECOY_SHORT_ANSWER];
+  return {
+    version: 'test-zh-decoy',
+    windows: new Set(official.flatMap((t) => d8HanWindows(t, 8).map((w) => d8ZhWindowHash(w.window)))),
+    short: short.map((t, i) => ({ year: 'test', item: String(i + 1), alt: 0, set: new Set(d8HanWindows(t, 3).map((w) => d8ZhGramHash(w.window))) })),
+    boilerplate: opts.boilerplate ?? [],
+    threshold: 0.6,
+  };
 }
 
 /** 字形單選（4 個選項、沒有題號；設計文件 §1.8 範例 A 的自寫題）。 */
@@ -67,6 +87,7 @@ export function zhChoiceOutput(items: Array<{ label: string; answer: string; opt
         title_zh: '錯字對照',
         rows: [
           { head: '這家店的價格卻不「斐」', a: '不菲', b: '菲：微薄；不菲＝不便宜', note: '斐：有文采' },
+          { head: '做事要按「步」就班', a: '按部就班', b: '部：門類、次序', note: '' },
           { head: '大家迫不「急」待', a: '迫不及待', b: '及：趕上', note: '' },
         ],
       },

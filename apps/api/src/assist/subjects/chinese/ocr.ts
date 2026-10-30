@@ -1,6 +1,11 @@
 /**
  * 國文拍照轉錄的組裝（docs/design/assistant-subjects.md §6.3）：模型輸出 → 顯示給學生確認的 AssistOcrView。英文的 assist/ocr.ts
- * 一個字都不改。**S1-worker-core 建的第一版**；後處理的工作包可以再加規則（呼叫端 subjects/chinese/run.ts 不用改）。
+ * 一個字都不改。
+ *
+ * **不改任何一個字**：字形題四句裡的錯字是題目本身（「無遠弗界」「離群所居」），轉錄的文字只做 normalizeZhText（NFC、全形英數字
+ * 換半形、PDF 的「○1」換成「①」、換行與空白、遮個資），**不套** NFKC、ZH_TW_FORM_MAP、簡體字或錯別字的任何「修正」；看不清的字
+ * 只標 [[?]]，候選字由學生在確認畫面自己選。D8 比對用的字碼統一只發生在比對的副本裡（d8.ts），不寫回文字。截斷以字（code point）
+ * 為單位，不會切斷擴充區的漢字。
  *
  *   1. status 是 other_subject：不輸出區塊，detected_subject 只認封閉清單（consumer 照英文 not_english_question 的規則以 invalid_output
  *      退還、刪照片，畫面依 detected_subject 請學生換科目再拍；第一版不做跨科重轉，§6.5）。
@@ -56,6 +61,12 @@ const LONG_PASSAGE_HAN = 1_200;
 const TASK_WORDS_RE = /請|以[^。\n]{1,20}?為題|文長|作答|寫一篇|說明|闡述/u;
 const OCR_UNCLEAR_MARK = '[[?]]';
 
+/** 截到 max 個字（code point；不切斷代理對）。 */
+function cutChars(text: string, max: number): string {
+  const chars = [...text];
+  return chars.length <= max ? text : chars.slice(0, max).join('');
+}
+
 function countMarks(text: string): number {
   return text.split(OCR_UNCLEAR_MARK).length - 1;
 }
@@ -93,7 +104,7 @@ export function assembleZhOcr(output: ZhOcrOutput, ctx: ZhOcrContext): ZhOcrAsse
   const raw = output.blocks.slice(0, ASSIST_LIMITS.questionBlocksMax);
   if (output.blocks.length > raw.length) counts.truncated += output.blocks.length - raw.length;
   const blocks: Work[] = raw.map((b) => {
-    const n = normalizeZhText(filter.quote(b.text, BLOCK_MAX_CHARS));
+    const n = normalizeZhText(cutChars(filter.quote(b.text, BLOCK_MAX_CHARS * 2), BLOCK_MAX_CHARS));
     counts.masked += n.masked;
     let text = n.text.trim();
     const label = normalizeZhOcrLabel(b.kind, b.label);
@@ -141,7 +152,7 @@ export function assembleZhOcr(output: ZhOcrOutput, ctx: ZhOcrContext): ZhOcrAsse
       continue;
     }
     if (total === 0) {
-      const text = b.text.slice(0, room).replace(/\[\[\?\]?$|\[\[$|\[$/, '').trimEnd();
+      const text = cutChars(b.text, room).replace(/\[\[\?\]?$|\[\[$|\[$/, '').trimEnd();
       kept.push({ ...b, text, unclear: b.unclear.slice(0, countMarks(text)) });
       total += text.length;
     }

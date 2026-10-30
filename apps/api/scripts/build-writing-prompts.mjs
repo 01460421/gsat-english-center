@@ -29,6 +29,13 @@
  * packages/shared/scripts/d8-fingerprint.mjs；檔案只有雜湊，建置紀錄只印筆數。筆數低於下限（D8_MIN_COUNTS）時失敗：
  * 題庫資料或比對資料被改壞了，產出的檔案雖然合法卻幾乎沒有內容。
  *
+ * 學習助手國文（docs/design/assistant-subjects.md §5.2、§5.7）另外兩件事：
+ *   - d8-fingerprints.json 多一個鍵 zh（版本是 zh_version）：data/d8/zh-official.fp.json 的 8 字窗口、zh-short.fp.json 的短答 3 字組
+ *     與 zh-boilerplate.txt 的樣板清單（都只有雜湊或公開字樣；不帶金鑰，cyrb53 加網域前綴，同 d8-zh-fingerprint.mjs）。英文的
+ *     han、en、version 不變，所以英文的快取鍵不變。讀檔時用 readZhFingerprintFile 檢查格式、筆數與版本，筆數低於下限就失敗。
+ *   - apps/api/src/generated/zh-classics.json（不進版控）：data/d8/zh-public-classics.txt 的公有領域古文（篇名、作者、原文），
+ *     Worker 用來核對題目以外的古文名句與默寫（≤ 300 KB）。
+ *
  * 只用 Node 22 內建模組（零依賴）。
  */
 import { createHash } from 'node:crypto';
@@ -56,6 +63,18 @@ import {
   d8HanWindows,
   packFingerprints,
 } from '../../../packages/shared/scripts/d8-fingerprint.mjs';
+import {
+  ZH_D8_BOILERPLATE_FILE,
+  ZH_D8_CLASSICS_FILE,
+  ZH_D8_MIN_COUNTS,
+  ZH_D8_OFFICIAL_FILE,
+  ZH_D8_SHORT_FILE,
+  ZH_D8_SHORT_GRAM,
+  ZH_D8_SHORT_THRESHOLD,
+  parseBoilerplate,
+  parseClassics,
+  readZhFingerprintFile,
+} from '../../../packages/shared/scripts/d8-zh-fingerprint.mjs';
 
 // 受保護片段的收集搬到 bank-select.mjs（選題的 D8 比對用同一份），這裡轉匯出，既有的匯入不用改。
 export { restrictedFragments };
@@ -68,6 +87,12 @@ export const BANK_DIR = path.join(REPO_ROOT, 'data', 'bank', 'v1');
 export const UNPUBLISH_FILE = path.join(REPO_ROOT, 'data', 'unpublish.jsonl');
 export const OUT_FILE = path.join(API_DIR, 'src', 'generated', 'writing-prompts.json');
 export const D8_OUT_FILE = path.join(API_DIR, 'src', 'generated', 'd8-fingerprints.json');
+export const ZH_CLASSICS_OUT_FILE = path.join(API_DIR, 'src', 'generated', 'zh-classics.json');
+/** 國文集合在 d8-fingerprints.json 裡的格式（Worker 的 parseZhFingerprints 檢查同一個值）。 */
+export const D8_ZH_FORMAT = 'gsat-d8-zh/v1';
+/** 古文語料打包的上限（§5.2：Worker 打包，約 300 KB 以內）與篇數下限（少於下限代表語料檔被改壞了）。 */
+export const ZH_CLASSICS_MAX_BYTES = 300 * 1024;
+export const ZH_CLASSICS_MIN_WORKS = 100;
 
 /**
  * D8 指紋的筆數下限（設計值，§2.4.5，S3）：實測 66 份考卷約有漢字 4,541（遮掉考試單位與考試名稱之後）、英文 6,372 筆。低於下限代表題庫資料或
@@ -492,6 +517,51 @@ export function buildD8Fingerprints(exams, bank, options = {}) {
   };
 }
 
+/**
+ * 國文的 D8 集合（併進 d8-fingerprints.json 的 zh 鍵與 zh_version；§5.7）。兩份指紋檔用 readZhFingerprintFile 檢查（格式、筆數、版本），
+ * 樣板清單用 parseBoilerplate 讀（NFKC、去空白、長的在前）。任何一份讀不了、格式不對或筆數低於下限就丟錯（呼叫端讓產生器失敗）。
+ * 回傳的物件只有雜湊、筆數、「年度＋子題」與公開的樣板字樣。
+ * @param {string} [repoRoot]
+ */
+export function buildZhD8Bundle(repoRoot = REPO_ROOT) {
+  const officialRaw = JSON.parse(readFileSync(path.join(repoRoot, ZH_D8_OFFICIAL_FILE), 'utf8'));
+  const shortRaw = JSON.parse(readFileSync(path.join(repoRoot, ZH_D8_SHORT_FILE), 'utf8'));
+  const official = readZhFingerprintFile(officialRaw);
+  const short = readZhFingerprintFile(shortRaw);
+  if (official.kind !== 'zh-official' || short.kind !== 'zh-short') throw new Error('國文指紋檔的種類不對');
+  if (official.set.size < ZH_D8_MIN_COUNTS.windows || short.sets.length < ZH_D8_MIN_COUNTS.shortSets) {
+    throw new Error(`國文指紋筆數低於下限（8 字窗口 ${official.set.size}／${ZH_D8_MIN_COUNTS.windows}、短答 ${short.sets.length}／${ZH_D8_MIN_COUNTS.shortSets} 組）`);
+  }
+  const boilerplate = parseBoilerplate(readFileSync(path.join(repoRoot, ZH_D8_BOILERPLATE_FILE), 'utf8'));
+  /** @type {Array<{ year: string, item: string, alt: number, grams: number, fp: string }>} */
+  const sets = shortRaw.sets.map((/** @type {{ year: string, item: string, alt: number, grams: number, fp: string }} */ s) => ({ year: s.year, item: s.item, alt: s.alt, grams: s.grams, fp: s.fp }));
+  const zh = {
+    format: D8_ZH_FORMAT,
+    han_window: D8_HAN_WINDOW,
+    gram: ZH_D8_SHORT_GRAM,
+    threshold: typeof shortRaw.threshold === 'number' ? shortRaw.threshold : ZH_D8_SHORT_THRESHOLD,
+    official: { version: official.version, count: official.set.size, fp: /** @type {string} */ (officialRaw.fp) },
+    short: { version: short.version, count: sets.length, sets },
+    boilerplate,
+  };
+  return { zh, zh_version: sha256([official.version, short.version, boilerplate.join('\n')].join('|')).slice(0, 12) };
+}
+
+/**
+ * 古文語料（§5.2）：data/d8/zh-public-classics.txt 解析成篇名、作者、原文，給 Worker 核對古文名句與默寫。篇數低於下限或超過
+ * 打包上限就丟錯。
+ * @param {string} [repoRoot]
+ */
+export function buildZhClassics(repoRoot = REPO_ROOT) {
+  const text = readFileSync(path.join(repoRoot, ZH_D8_CLASSICS_FILE), 'utf8');
+  const works = parseClassics(text).filter((w) => w.text !== '');
+  if (works.length < ZH_CLASSICS_MIN_WORKS) throw new Error(`古文語料只有 ${works.length} 篇（下限 ${ZH_CLASSICS_MIN_WORKS}）`);
+  const out = { format: 'zh-classics/v1', version: sha256(text).slice(0, 12), works };
+  const bytes = Buffer.byteLength(JSON.stringify(out));
+  if (bytes > ZH_CLASSICS_MAX_BYTES) throw new Error(`古文語料打包後 ${bytes} 位元組，超過上限 ${ZH_CLASSICS_MAX_BYTES}`);
+  return out;
+}
+
 /** 內容沒變就不寫檔，避免 wrangler dev／vitest 的檔案監看無謂重跑。回傳是否寫了。 @param {string} file @param {string} content */
 function writeIfChanged(file, content) {
   if (existsSync(file) && readFileSync(file, 'utf8') === content) return false;
@@ -552,6 +622,21 @@ function main() {
     console.error(`[writing-prompts] 失敗：D8 指紋筆數低於下限（漢字 ≥${D8_MIN_COUNTS.han}、英文 ≥${D8_MIN_COUNTS.en}）；題庫資料或官方比對資料可能被改壞了`);
     process.exit(1);
   }
+  /** @type {ReturnType<typeof buildZhD8Bundle>} */
+  let zhBundle;
+  /** @type {ReturnType<typeof buildZhClassics>} */
+  let classics;
+  try {
+    zhBundle = buildZhD8Bundle();
+    classics = buildZhClassics();
+  } catch (err) {
+    // 國文集合讀不了時不產生任何檔案（fail closed）；訊息只有檔名與筆數，不含任何受保護文字。
+    console.error(`[writing-prompts] 失敗：國文 D8 指紋或古文語料讀不了（${err instanceof Error ? err.message : String(err)}）`);
+    process.exit(1);
+  }
+  console.log(
+    `[writing-prompts] 國文 D8 指紋：8 字窗口 ${zhBundle.zh.official.count}、短答 ${zhBundle.zh.short.count} 組、樣板 ${zhBundle.zh.boilerplate.length} 個（版本 ${zhBundle.zh_version}）；古文語料 ${classics.works.length} 篇`,
+  );
   const json = JSON.stringify(bank);
   const bankCount = Object.values(bank.groups).filter((g) => g.origin === 'bank').length;
   if (checkOnly) {
@@ -561,7 +646,8 @@ function main() {
   if (writeIfChanged(OUT_FILE, json)) {
     console.log(`[writing-prompts] 已產生 ${path.relative(REPO_ROOT, OUT_FILE)}（${bank.count} 個題組，其中本站仿真題 ${bankCount} 組）`);
   }
-  if (writeIfChanged(D8_OUT_FILE, JSON.stringify(fp))) console.log(`[writing-prompts] 已產生 ${path.relative(REPO_ROOT, D8_OUT_FILE)}`);
+  if (writeIfChanged(D8_OUT_FILE, JSON.stringify({ ...fp, ...zhBundle }))) console.log(`[writing-prompts] 已產生 ${path.relative(REPO_ROOT, D8_OUT_FILE)}`);
+  if (writeIfChanged(ZH_CLASSICS_OUT_FILE, JSON.stringify(classics))) console.log(`[writing-prompts] 已產生 ${path.relative(REPO_ROOT, ZH_CLASSICS_OUT_FILE)}`);
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) main();

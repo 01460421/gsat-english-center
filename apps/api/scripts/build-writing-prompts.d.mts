@@ -35,3 +35,23 @@ export interface D8FingerprintFile {
   en: string;
 }
 export declare function buildD8Fingerprints(exams: Json[], bank: Json, options?: { corpus?: OfficialCorpus }): D8FingerprintFile;
+
+// 學習助手國文（docs/design/assistant-subjects.md §5.2、§5.7）。
+export declare const ZH_CLASSICS_OUT_FILE: string;
+export declare const D8_ZH_FORMAT: 'gsat-d8-zh/v1';
+export declare const ZH_CLASSICS_MAX_BYTES: number;
+export declare const ZH_CLASSICS_MIN_WORKS: number;
+export interface ZhD8Bundle {
+  zh: {
+    format: 'gsat-d8-zh/v1';
+    han_window: 8;
+    gram: 3;
+    threshold: number;
+    official: { version: string; count: number; fp: string };
+    short: { version: string; count: number; sets: Array<{ year: string; item: string; alt: number; grams: number; fp: string }> };
+    boilerplate: string[];
+  };
+  zh_version: string;
+}
+export declare function buildZhD8Bundle(repoRoot?: string): ZhD8Bundle;
+export declare function buildZhClassics(repoRoot?: string): { format: 'zh-classics/v1'; version: string; works: Array<{ title: string; author: string; text: string }> };

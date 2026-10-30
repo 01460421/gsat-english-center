@@ -3,7 +3,8 @@
  * 題目是本站自寫的句子（helpers/zh.ts）；英文的 D8 指紋與國文的 D8 指紋都由測試換掉（vi.mock）。
  *
  *   建案例：科目白名單、ref_json 的 subject 往返、開關 off／admin／on（非 on 的一般學生 503，在預扣之前）、國文指紋讀不到 503。
- *   拒收不扣點：subject_mismatch、zh_answer_section。
+ *   拒收不扣點：subject_mismatch、zh_answer_section、國文指紋（同一區塊 ≥ 2 個窗口才拒收 official_material；比對是真的 d8.ts，
+ *   指紋是本站自寫的誘餌）。
  *   確認題目：格式、作答、答案鍵、國寫片段；item_count 與 kind 依格式。
  *   related_case_id：同一位使用者、同一科、已確認題目才收。
  *   列表：科目篩選、每列 subject；不帶 subject 時 error_counts 只算英文（加強卷不吃國文案例）；歷史一行只數同一科。
@@ -20,8 +21,10 @@ import { fakeFingerprintFile } from './helpers/customEssay';
 import {
   fakeZhFingerprints,
   zhBlocks,
+  zhDecoyFingerprints,
   zhEnv,
   zhTypedBody,
+  ZH_DECOY_OFFICIAL,
   ZH_FORM_SINGLE,
   ZH_SHORT_PASSAGE,
   ZH_SHORT_QUESTION,
@@ -153,6 +156,25 @@ describe('拒收不扣點（§4.2）', () => {
     expect(rowOf(env, 'SELECT COUNT(*) AS n FROM ai_ops').n).toBe(0);
     // 科目不符寫一筆 assist_subject_mismatch（只有假名、階段與科目）。
     expect(JSON.parse(rowOf(env, `SELECT detail_json FROM ops_events WHERE kind = 'assist_subject_mismatch'`).detail_json)).toMatchObject({ where: 'typed', subject: 'chinese', stage: 'input', rejected: true });
+  });
+
+  it('國文指紋：同一區塊 ≥ 2 個窗口命中回 400 official_material（附學生文字裡的位置，不建案例、不扣點）；只命中 1 個窗口照常建立', async () => {
+    zh.value = zhDecoyFingerprints();
+    const env = zhEnv();
+    const site = fakeSite();
+    const user = seedUser(env.DB);
+    const pasted = `${ZH_FORM_SINGLE}
+講義的說明：${ZH_DECOY_OFFICIAL}`;
+    const hit = await create(env, site, user, zhTypedBody({ blocks: zhBlocks(['question', null, pasted]) }));
+    expect(hit.status).toBe(400);
+    expect(hit.body.error).toMatchObject({ code: 'assist_input_invalid', reason: 'official_material', field: 'blocks[0].text' });
+    const [start, end] = hit.body.error.ranges[0];
+    expect(pasted.slice(start, end)).toBe(ZH_DECOY_OFFICIAL);
+    expect(rowOf(env, 'SELECT COUNT(*) AS n FROM assist_cases').n).toBe(0);
+    expect(rowOf(env, 'SELECT COUNT(*) AS n FROM ai_ops').n).toBe(0);
+    const one = await create(env, site, user, zhTypedBody({ blocks: zhBlocks(['question', null, `${ZH_FORM_SINGLE}
+講義的說明：${ZH_DECOY_OFFICIAL.slice(0, 8)}`]) }));
+    expect(one.status, JSON.stringify(one.body)).toBe(201);
   });
 });
 
