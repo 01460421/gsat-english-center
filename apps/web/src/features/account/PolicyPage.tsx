@@ -72,7 +72,7 @@ export function PrivacyPage() {
         <div className="mt-1">
           <VersionLine doc={AI_PROCESSING_NOTICE} />
         </div>
-        <p className="mt-2 text-[0.95rem]">申請 AI 批改時另外同意；沒有申請就不會把你的作答送給 AI。</p>
+        <p className="mt-2 text-[0.95rem]">申請 AI 批改時另外同意；沒有申請就不會把你的任何內容送給 AI。</p>
         <ul className="mt-3 space-y-1.5 text-[0.95rem]">
           {AI_PROCESSING_NOTICE.summary.map((line) => (
             <li key={line} className="ml-5 list-disc">

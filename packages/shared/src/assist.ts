@@ -14,6 +14,18 @@
  * 獨立成一個模組（由 index.ts 直接轉匯出，不經 writing.ts）：只有學習助手的頁面與入口按鈕用到，不要跟著 writing.ts
  * 進到首頁的主程式（理由同 custom-essay.ts）。
  */
+import type { AssistDetectedSubject, AssistSubject } from './assist-subjects';
+import {
+  checkZhQuestion,
+  type ZhAnalysisView,
+  type ZhCaseKind,
+  type ZhCharLimit,
+  type ZhChoiceMode,
+  type ZhFollowupView,
+  type ZhFormat,
+  type ZhJudgeLabels,
+  type ZhSection,
+} from './assist-zh';
 import type { ExplanationItem } from './bank';
 import { EXAM_ID_PATTERN, type OptionLetter, type QuestionMode } from './exam';
 import { GROUP_KEY_PATTERN } from './bank-practice-file';
@@ -86,11 +98,21 @@ export const ASSIST_SECTION_LABELS: Record<AssistSection, string> = {
 export const ASSIST_SOURCES = ['bank', 'bank_mock', 'exam', 'vocab', 'writing', 'photo', 'typed'] as const;
 export type AssistSource = (typeof ASSIST_SOURCES)[number];
 
-/** 解析的種類：決定用哪一個輸出 schema（§2.1）。由來源決定，不由模型判斷。 */
-export type AssistCaseKind = 'item' | 'writing' | 'vocab';
+/** 英文的解析種類：由來源決定，不由模型判斷。 */
+export type AssistEnglishCaseKind = 'item' | 'writing' | 'vocab';
 
-/** 來源 → 解析的種類。 */
-export function assistCaseKindOf(source: AssistSource): AssistCaseKind {
+/**
+ * 解析的種類：決定用哪一個輸出 schema（§2.1）。英文由來源決定；國文由格式決定（zh_choice／zh_short／zh_writing，
+ * docs/design/assistant-subjects.md §2.1）。都不由模型判斷。
+ */
+export type AssistCaseKind = AssistEnglishCaseKind | ZhCaseKind;
+
+/**
+ * 來源 → 解析的種類。國文（只有拍照、貼上兩種來源）依格式：選擇 zh_choice、簡答 zh_short、國寫 zh_writing（沒指定是選擇）。
+ * 沒帶科目或是英文時，回傳值和原本完全相同。
+ */
+export function assistCaseKindOf(source: AssistSource, subject?: AssistSubject, format?: ZhFormat | null): AssistCaseKind {
+  if (subject === 'chinese' && (source === 'photo' || source === 'typed')) return format === 'short' ? 'zh_short' : format === 'writing' ? 'zh_writing' : 'zh_choice';
   if (source === 'writing') return 'writing';
   if (source === 'vocab') return 'vocab';
   return 'item';
@@ -133,8 +155,15 @@ export type AssistSourceRef =
   | { source: 'exam'; exam_id: string; labels: string[]; via: 'exam' | 'mock'; answers: Record<string, AnswerValue>; client_status?: Record<string, AssistClientStatus> }
   | { source: 'vocab'; entries: Array<{ entry_id: string; mode: AssistVocabMode; wrong_count: number }> } // 1–8 個
   | { source: 'writing'; submission_id: string }
-  | { source: 'photo' }
-  | { source: 'typed'; question: AssistStudentQuestion };
+  // 拍照、貼上才收前端的科目（白名單；沒帶＝英文，舊前端照舊）。站內題的科目由 Worker 依題目代號推出，前端不送。
+  | { source: 'photo'; subject?: AssistSubject }
+  | {
+      source: 'typed';
+      question: AssistStudentQuestion;
+      subject?: AssistSubject;
+      /** 「用同一份題目問另一部分」的前一個案例（同一位使用者、同一科、已確認題目；docs/design/assistant-subjects.md §1.6）。 */
+      related_case_id?: string;
+    };
 
 /** 學生提供的題目區塊的種類。 */
 export const ASSIST_BLOCK_KINDS = ['instructions', 'passage', 'question', 'options', 'student_mark', 'figure'] as const;
@@ -149,11 +178,25 @@ export interface AssistQuestionBlock {
   text: string;
 }
 
-/** 學生提供的題目（打字是一個 question 區塊；拍照是確認後的區塊）。 */
+/**
+ * 學生提供的題目（打字是一個 question 區塊；拍照是確認後的區塊）。format 之後的欄位只有國文會送
+ * （docs/design/assistant-subjects.md §7.2）；英文不送，英文的請求逐位元不變。
+ */
 export interface AssistStudentQuestion {
   blocks: AssistQuestionBlock[]; // 1–40 塊
   target_labels: string[]; // 要問的題號；只有一題時可以是空陣列
   student_answer?: string | null; // ≤ 300
+  /** 國文的格式（程式預填；學生沒選時 checkZhQuestion 用 guessZhFormat 補上）。 */
+  format?: ZhFormat;
+  /** 選擇題的子模式（5 個選項預設多選）。 */
+  choice_mode?: ZhChoiceMode;
+  /** 學生的作答：題號（簡答可以是小題「34(1)」）→ 選擇題的字母（「AC」）或簡答的文字（每小題 ≤ 120 字）。 */
+  answers?: Record<string, string>;
+  /** 「我有講義答案」：只有選擇題，只收 A–E（簡答與國寫不收：可能是官方的表達型參考答案）。 */
+  known_key?: Record<string, string>;
+  /** 國寫附的一段（≤ 250 字；標成問題（一）的答案時 ≤ 80 字）。 */
+  draft?: string;
+  draft_target?: 'q1' | 'q2';
 }
 
 /** 作答當下的行為訊號（選填）。只存在案例上，給錯題清單與報告用；不進解析的提示（所以不影響共用快取）。 */
@@ -187,6 +230,8 @@ export interface PatchAssistCaseBody {
   understood?: AssistUnderstood | null;
   rating?: AssistRating | null;
   note?: string | null; // ≤ 200
+  /** 國文已解析的單選題改成多選（0 點；畫面依已存的判定重算，不再呼叫 AI；docs/design/assistant-subjects.md §5.3）。 */
+  choice_mode?: ZhChoiceMode;
 }
 
 /** POST /api/assist/cases/{id}/followups。 */
@@ -215,8 +260,11 @@ export interface AssistCaseSummary {
   id: string;
   source: AssistSource;
   kind: AssistCaseKind;
+  /** 科目（由 ref_json 算出；Worker 一律帶，沒有這個欄位＝英文，例如舊版 Worker）。 */
+  subject?: AssistSubject;
   title: string; // 程式產生，例如「115 學測 第 21–30 題（文意選填）：第 23、27 格」「你貼的題目：The city council …」
-  section: AssistSection | null;
+  /** 英文的大題，或國文的題型（國文解析結算時寫回模型判斷的主要題型）。 */
+  section: AssistSection | ZhSection | null;
   status: AssistCaseStatus;
   verdict: AssistVerdict | null; // 整組：有錯就是 wrong，其次 partial、unanswered，全對才是 correct
   item_count: number; // 這個案例問了幾題（單字是幾個字）
@@ -287,9 +335,11 @@ export interface AssistTurnView {
   label?: string | null; // 追問針對題組裡的哪一題（null＝整組）
   mode?: AssistFollowupMode;
   ocr?: AssistOcrView;
-  analysis?: AssistAnalysisView | AssistWritingView | AssistVocabView;
-  reply?: AssistFollowupView;
+  analysis?: AssistAnalysisView | AssistWritingView | AssistVocabView | ZhAnalysisView;
+  reply?: AssistFollowupView | ZhFollowupView;
   failure?: AiRefundReason | null;
+  /** 國文解析或轉錄判定科目不符而退還時，模型判斷的科目（畫面依它請學生換科目；docs/design/assistant-subjects.md §2.5）。 */
+  detected_subject?: AssistDetectedSubject;
   cache_hit?: boolean;
   created_at: number;
 }
@@ -335,6 +385,15 @@ export interface AssistQuestionTarget {
   explanation: SiteExplanation | null; // 題庫題：explanation_zh、evidence、option_notes_zh、strategy_zh、hints、clue_type、sense、option_codes…
   stats: AssistQuestionStats | null; // 歷屆題
   tags: Record<string, string> | null; // test_point、item_type、grammar_point、clue、key_phrase
+  // ── 以下只有國文（docs/design/assistant-subjects.md §7.2）──
+  /** 選擇題的子模式。 */
+  choice_mode?: ZhChoiceMode;
+  /** 簡答的字數限制與抄錄規定（zhCharLimits 抽出）。 */
+  char_limit?: ZhCharLimit | null;
+  /** 研判題的題目標籤（zhJudgeLabels 抽出）。 */
+  judge_labels?: ZhJudgeLabels | null;
+  /** accepted 的來源：站內題的答案檔，或學生提供的答案（「我有講義答案」）。 */
+  key_source?: 'site' | 'student';
 }
 
 /** 單字案例的一個條目（Worker 從 vocab/index.json 取；錯題本只送 id、題型與錯誤次數）。 */
@@ -380,6 +439,10 @@ export interface AssistQuestionView {
   blocks?: AssistQuestionBlock[]; // 學生提供的題目
   vocab?: { entries: AssistVocabEntryView[] };
   writing?: AssistWritingQuestion;
+  /** 科目（沒有＝英文）。 */
+  subject?: AssistSubject;
+  /** 國寫附的一段與它回答哪一題（問題（一）或整篇的一段）。 */
+  draft?: { text: string; target: 'q1' | 'q2' } | null;
 }
 
 // ───────────────────────── 解析、追問與轉錄的畫面形狀（§2.1、§2.5–§2.8） ─────────────────────────
@@ -533,15 +596,19 @@ export interface AssistFollowupView {
 export const ASSIST_OCR_OMITTED = ['answer_key', 'explanation', 'scoring_notes', 'reference_translation', 'model_text', 'personal_info'] as const;
 export type AssistOcrOmitted = (typeof ASSIST_OCR_OMITTED)[number];
 
-/** 拍照轉錄的結果（§2.5）。被隱藏的區塊 text 是固定說明、不能編輯；確認後只留統計（blocks 是空陣列）。 */
+/**
+ * 拍照轉錄的結果（§2.5）。被隱藏的區塊 text 是固定說明、不能編輯；確認後只留統計（blocks 是空陣列）。
+ * 國文另有 other_subject（附 detected_subject）與兩種隱藏：答案或詳解段落、太長像一篇文章（docs/design/assistant-subjects.md §6.3）。
+ */
 export interface AssistOcrView {
-  status: 'ok' | 'unclear' | 'not_english_question' | 'no_question';
+  status: 'ok' | 'unclear' | 'not_english_question' | 'no_question' | 'other_subject';
+  detected_subject?: AssistDetectedSubject;
   blocks: Array<{
     kind: AssistBlockKind;
     label: string | null;
     text: string;
     unclear: Array<{ candidates: string[] }>;
-    hidden: 'd8' | 'official_like' | 'writing_english' | null;
+    hidden: 'd8' | 'official_like' | 'writing_english' | 'answer_section' | 'long_passage' | null;
   }>;
   student_answer_seen: string;
   omitted: AssistOcrOmitted[];
@@ -931,13 +998,19 @@ export const ASSIST_INPUT_PROBLEMS = [
   'english_too_long',
   'figure_too_long',
   'answer_too_long',
+  'zh_answer_too_long',
+  'zh_draft_too_long',
   'bad_characters',
   'markup',
   'request_to_ai',
   'official_like',
+  'zh_answer_section',
+  'zh_no_task',
   'writing_english_too_long',
   'not_english',
+  'subject_mismatch',
   'target_missing',
+  'zh_too_many_targets',
   'unresolved_target',
   // 只有 Worker 會回（D8 指紋）。
   'official_material',
@@ -959,13 +1032,19 @@ export const ASSIST_INPUT_PROBLEM_MESSAGES = {
   english_too_long: '英文最多 1,000 個單詞。只貼要問的題目與它的文章就好。',
   figure_too_long: '圖表或圖片的文字描述最多 1,500 字元。',
   answer_too_long: '你的答案最多 300 字元。',
+  zh_answer_too_long: '簡答的答案每一小題最多 120 字。',
+  zh_draft_too_long: '國寫指導一次只看一段，最多 250 字（問題（一）的答案最多 80 字）。',
   bad_characters: '題目裡有無法處理的特殊字元，請刪掉後再試。',
   markup: '題目裡不能有 <…> 這類標籤，請改成一般文字。',
   request_to_ai: '題目欄只放題目本身。學習助手會解析題目、說明解法，但不代寫作文或整段翻譯。',
   official_like: '題目裡有評分說明、範文或佳作。只貼要問的題目本身，不要貼評分標準、配分、範文或佳作。',
   writing_english_too_long: '作文或翻譯題的每一段英文最多 100 個單詞。只貼題目要求，不要貼範文或佳作。',
   not_english: '學習助手只處理英文題目。',
+  subject_mismatch: '這看起來不是國文題目，請改選科目。',
+  zh_answer_section: '請刪掉答案與解析再送出（已加亮那一段）；選擇題的答案字母可以填在「我有講義答案」。',
+  zh_no_task: '這看起來是一篇文章，不是作文題目。',
   target_missing: '這段文字有好幾題，請選要問哪幾題（最多 5 題）。',
+  zh_too_many_targets: '一次最多問 4 題選擇題、3 題簡答（小題合計 6 個）或 1 題國寫，其他的題目可以另外再問。',
   unresolved_target: '要問的題目裡還有看不清的字，請先選對或修改。',
   official_material: '題目裡有一段和官方受保護的資料（評分原則或參考譯文）相同，請刪掉那一段再送出。',
   bad_label_map: '這份卷子的題號對不上，請重新整理成績單再試一次。',
@@ -1081,10 +1160,13 @@ function sortProblems<P extends string>(problems: AssistInputHit<P>[], order: re
 
 /**
  * 學生提供的題目（打字、拍照確認後）的檢查（§4.4）：形狀 → 正規化與遮個資 → 長度 → 字元與標籤 → 內容規則 → 要問的題。
+ * subject 是 chinese 時改走 checkZhQuestion（國文的正規化不用 NFKC、規則另寫；docs/design/assistant-subjects.md §4）。
  * 不含 D8 指紋（Worker 另外做，official_material）。失敗時 problems 依 ASSIST_INPUT_PROBLEMS 的優先順序排好（API 只回第一個）；
  * 提醒不影響 ok。成功時 value 是正規化、遮過個資的題目（Worker 存的就是它）。
  */
-export function checkAssistQuestion(input: unknown): CheckResult<AssistStudentQuestion, AssistInputProblem> {
+export function checkAssistQuestion(input: unknown, subject: AssistSubject = 'english'): CheckResult<AssistStudentQuestion, AssistInputProblem> {
+  // 國文走自己的規則（assist-zh.ts；docs/design/assistant-subjects.md §4）；英文的規則一個字都不改。
+  if (subject === 'chinese') return checkZhQuestion(input);
   const L = ASSIST_LIMITS;
   const problems: AssistInputHit<AssistInputProblem>[] = [];
   const warnings: AssistInputHit<AssistInputWarning>[] = [];

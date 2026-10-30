@@ -3,7 +3,7 @@
  * 代理回的 HTML 會被當成「全部開啟」，畫面出現按了就壞的按鈕。
  */
 import { describe, expect, it } from 'vitest';
-import { FEATURES_OFF, isFeaturesResponse } from './features';
+import { ASSIST_SWITCHED_SUBJECTS, assistSubjectAvailability, FEATURES_OFF, isAssistSubjectAvailabilityList, isFeaturesResponse } from './features';
 
 describe('isFeaturesResponse', () => {
   it('接受四個布林欄位', () => {
@@ -48,6 +48,31 @@ describe('isFeaturesResponse', () => {
     expect(isFeaturesResponse({ ...base, essayExemplars: null })).toBe(false);
     expect(isFeaturesResponse({ ...base, essayExemplars: 1 })).toBe(false);
     expect('essayExemplars' in FEATURES_OFF).toBe(false);
+  });
+
+  it('assistantSubjects 選填（英文以外的科目與各科的拍照；docs/design/assistant-subjects.md §7.2）；形狀不對就整個不可信', () => {
+    const base = { auth: true, ai: true, ocr: true, aiPaused: false, assistant: true };
+    expect(isFeaturesResponse({ ...base, assistantSubjects: [{ subject: 'chinese', photo: false }] })).toBe(true);
+    expect(isFeaturesResponse({ ...base, assistantSubjects: [] })).toBe(true);
+    // 較新的 Worker 才有的科目：形狀對就接受，前端只取認得的科目。
+    expect(isFeaturesResponse({ ...base, assistantSubjects: [{ subject: 'social', photo: true }] })).toBe(true);
+    expect(isFeaturesResponse({ ...base, assistantSubjects: { chinese: true } })).toBe(false);
+    expect(isFeaturesResponse({ ...base, assistantSubjects: [{ subject: 'chinese' }] })).toBe(false);
+    expect(isFeaturesResponse({ ...base, assistantSubjects: [{ subject: 1, photo: true }] })).toBe(false);
+    expect(isAssistSubjectAvailabilityList(Array.from({ length: 11 }, () => ({ subject: 'chinese', photo: true })))).toBe(false);
+    expect('assistantSubjects' in FEATURES_OFF).toBe(false);
+  });
+
+  it('assistSubjectAvailability：只留認得的科目、去重', () => {
+    expect(ASSIST_SWITCHED_SUBJECTS).toEqual(['chinese']);
+    expect(
+      assistSubjectAvailability([
+        { subject: 'social', photo: true },
+        { subject: 'chinese', photo: true },
+        { subject: 'chinese', photo: false },
+      ]),
+    ).toEqual([{ subject: 'chinese', photo: true }]);
+    expect(assistSubjectAvailability(undefined)).toEqual([]);
   });
 
   it('預設值全部關閉，且不可被修改', () => {

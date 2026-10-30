@@ -31,6 +31,8 @@ import { writePrefs } from './lib/prefs';
 import { reportPlainText } from './lib/printText';
 import { readPlanChecks } from './planProgress';
 import { reportDate } from './reportFormat';
+import { ZH_COPY } from './subjects/chinese/copy';
+import { useAssistSubjects } from './subjects/useAssistSubjects';
 
 /** 進度列（不是 live region：頁面常駐的 AssistLiveRegion 負責唸）。stopped：輪詢因錯誤停了，原因與「再試一次」在上方。 */
 function ReportPending({ detail, stopped }: { detail: AssistReportDetail; stopped: boolean }) {
@@ -153,6 +155,7 @@ function Toolbar({
 }
 
 function Body() {
+  const zhOpen = useAssistSubjects().isOpen('chinese');
   const params = useParams();
   const [search] = useSearchParams();
   const navigate = useNavigate();
@@ -238,6 +241,8 @@ function Body() {
       <p className="text-muted">
         整理你的強項、弱點與常見錯誤，排出提分計畫與到考試日的逐週讀書計畫。數字由本站的程式依這台裝置的作答紀錄計算（估計、非官方）；分析與建議由 AI 產生。
       </p>
+      {/* 學習報告第一版只涵蓋英文（docs/design/assistant-subjects.md §7.4）；國文開放時才說明。 */}
+      {zhOpen && <p className="text-sm text-muted">{ZH_COPY.reportEnglishOnly}</p>}
     </AssistHeader>
   );
 

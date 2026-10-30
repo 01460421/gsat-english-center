@@ -19,7 +19,7 @@ import { DevBadge } from '../components/ModulePage';
 import { signedIn, useMe } from '../lib/api';
 import { useMainTier } from '../lib/media';
 import { usePageFeatureFlags } from '../features/assistant/lib/useAssistantEnabled';
-import { APP_NAME, NAV_GROUPS, documentTitle, getPage, isDevPage, navPages, type PageMeta } from '../modules';
+import { APP_NAME, NAV_GROUPS, documentTitle, getPage, isDevPage, navPages, pageSummary, type PageMeta } from '../modules';
 
 const home = getPage('/');
 
@@ -66,12 +66,15 @@ function ProgressPlaceholder() {
 function useHomeGroups(): { id: string; label: string; pages: PageMeta[] }[] {
   const flags = usePageFeatureFlags();
   return useMemo(() => {
-    const modules = navPages(flags).filter((p) => p.isStudyModule);
+    // 學習助手開放英文以外的科目時，卡片說明改成「英文、國文都能問」（docs/design/assistant-subjects.md §8.2）。
+    const modules = navPages(flags)
+      .filter((p) => p.isStudyModule)
+      .map((p) => ({ ...p, summary: pageSummary(p, flags) }));
     return NAV_GROUPS.flatMap((g) => {
       const pages = modules.filter((p) => p.group === g.id);
       return g.label && pages.length > 0 ? [{ id: g.id, label: g.label, pages }] : [];
     });
-  }, [flags.assistant]);
+  }, [flags.assistant, flags.assistantSubjects]);
 }
 
 /**

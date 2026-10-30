@@ -1,7 +1,8 @@
 /**
  * 學習助手的文案（docs/design/learning-assistant.md §5.8）：
  *   - features/assistant/** 的原始碼不出現「大考中心」、CEEC 或 ceec.edu.tw（比照 mock/bank/bank-copy.test.ts；
- *     用 Vite 的 ?raw 匯入，src/ 的 tsconfig 沒有 node 型別）；
+ *     用 Vite 的 ?raw 匯入，src/ 的 tsconfig 沒有 node 型別）；多科目的 subjects/**（docs/design/assistant-subjects.md §8.2）
+ *     也在掃描範圍，另外不能出現 AI 模型的名稱；
  *   - AI 聲明：AiNotice、ReportAiContent 的 variant="assistant" 寫「AI 產生」「可能有錯」，而且不提「評分」「分數」
  *     （學習助手不打分數）；報告「複製文字」的開頭與結尾（第三處，WP-C）寫「AI 生成」「僅供參考」「非官方」
  *     （詳細的版面在 report.test.tsx）。
@@ -52,8 +53,25 @@ describe('學習助手的文案', () => {
         './papers/reasons.ts',
         './papers/EntryLinks.tsx',
         './papers/weakness.ts',
+        // 多科目（docs/design/assistant-subjects.md §8.2：subjects/** 也要掃）。
+        './subjects/index.ts',
+        './subjects/SubjectChips.tsx',
+        './subjects/chinese/copy.ts',
+        './subjects/chinese/ZhChoiceView.tsx',
+        './subjects/chinese/ZhShortView.tsx',
+        './subjects/chinese/ZhWritingView.tsx',
+        './subjects/chinese/ZhPasteForm.tsx',
+        './subjects/chinese/ZhQuestionFields.tsx',
+        './subjects/chinese/components/OptionVerdictTable.tsx',
+        './subjects/chinese/components/CardTable.tsx',
       ]),
     );
+  });
+
+  it('不出現 AI 模型的名稱（介面一律寫 AI 或模型）', () => {
+    const MODEL_NAMES = /\b(?:claude|sonnet|opus|haiku|gpt-?\d|gemini|llama)\b/i;
+    const hits = Object.entries(FILES).filter(([, source]) => MODEL_NAMES.test(source));
+    expect(hits.map(([file]) => file)).toEqual([]);
   });
 
   it('不出現「大考中心」、CEEC 或 ceec.edu.tw', () => {

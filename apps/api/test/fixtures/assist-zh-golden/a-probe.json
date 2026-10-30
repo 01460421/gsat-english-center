@@ -1,0 +1,45 @@
+{
+ "format": "gsat-assist-zh-golden/v1",
+ "group": "A",
+ "cases": [
+  {
+   "id": "A-choice",
+   "group": "A",
+   "kind": "zh_choice",
+   "base": "B-112-01",
+   "max_tokens": 64
+  },
+  {
+   "id": "A-short",
+   "group": "A",
+   "kind": "zh_short",
+   "base": "E-site-taohua",
+   "max_tokens": 64
+  },
+  {
+   "id": "A-writing",
+   "group": "A",
+   "kind": "zh_writing",
+   "base": "F-113-1",
+   "max_tokens": 64
+  },
+  {
+   "id": "A-followup",
+   "group": "A",
+   "kind": "zh_followup",
+   "base": "B-112-01",
+   "followup": {
+    "mode": "hint",
+    "message": "可以給我一點提示嗎？"
+   },
+   "max_tokens": 64
+  },
+  {
+   "id": "A-ocr",
+   "group": "A",
+   "kind": "zh_ocr",
+   "base": "J-04",
+   "max_tokens": 64
+  }
+ ]
+}

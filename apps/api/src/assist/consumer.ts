@@ -24,11 +24,19 @@
  * 報告（WP-C）的第 5–7 步在 reportConsumer.ts 的 runAssistReport（讀 input_json → 呼叫 → 後處理與逐週份量 → 結算：報告改 done、
  * 寫 report_json、刪掉超過 10 版的舊版）；租約在 assist_reports。
  * 日誌只記 op id、任務、狀態與數字，不記題目、學生文字或解析內容。
+ *
+ * 科目（docs/design/assistant-subjects.md §2.3）：讀到 turn 與案例之後依案例的科目（ref_json.subject，沒有就是英文）分派。
+ * 英文走這個檔原本的 runAnalyze、runFollowup 與 ocr.ts 的 runAssistOcr（一個字都不改）；國文走 subjects/chinese/run.ts
+ * （另外要國文的 D8 指紋，讀不到以 internal 退還）。任務設定一律用 turn 的 meta_json 存的 {subject, kind, items}
+ * （routes 預扣時用的同一組；沒有 subject＝英文，舊的 turn 沒有這幾個鍵時照題目重算，和現行相同）。
  */
 import {
   ASSIST_LIMITS,
+  assistItemCount,
   isAssistErrorCode,
+  isAssistSubject,
   isAssistTask,
+  isZhCaseKind,
   type AiTask,
   type AssistAnalysisView,
   type AssistCaseKind,
@@ -58,7 +66,7 @@ import { requireD8Fingerprints, type D8Fingerprints } from '../ai/d8';
 import { FILTER_VERSION, OutputFilter } from '../ai/filter';
 import { settleOp, setPausedStatement } from '../ai/guard';
 import { opsEvent, opsEventStatement, userRefFor } from '../ai/ledger';
-import { LEASE_SECONDS, QUEUE_MAX_DELIVERIES, taskConfig } from '../ai/tasks';
+import { LEASE_SECONDS, QUEUE_MAX_DELIVERIES, taskConfig, type AssistTaskSize } from '../ai/tasks';
 import { loadConfig } from '../config';
 import { parseJson } from '../submissions/repo';
 import { nowSeconds, taiwanDay } from '../time';
@@ -70,6 +78,9 @@ import { runAssistReport } from './reportConsumer';
 import { codeList, mergeCodes, type CaseRow, type TurnRow } from './repo';
 import { runAssistOcr } from './ocr';
 import { analyzeCallInput, followupCallInput, isCacheable, requestCaseOf, studentPatternsText, type FollowupRound } from './requests';
+import { requireZhFingerprints } from './subjects/chinese/d8';
+import { runZhAnalyze, runZhFollowup, runZhOcr } from './subjects/chinese/run';
+import { subjectOfCase } from './subjects/index';
 
 /** 學習助手的任務 → 操作對象所在的表與 turn 的種類（報告沒有 turn）。 */
 const TASK_TARGETS: Record<AssistTask, { table: Extract<LeaseTable, 'assist_turns' | 'assist_reports'>; kind: 'ocr' | 'analyze' | 'followup' | null }> = {
@@ -178,14 +189,14 @@ export async function handleAssistMessage(env: Env, msg: Message<AiQueueMessage>
   const fp = await requireD8Fingerprints(db);
   if (!fp) return fail('internal');
 
-  const callBase = async (items: number): Promise<CallContext> => ({
+  const callBase = async (size: AssistTaskSize): Promise<CallContext> => ({
     env,
     db,
     deps,
     now,
     op: { ...op, user_id: opRef.user_id, task: task as AiTask },
     startedAt,
-    tc: taskConfig(task, config, { items }),
+    tc: taskConfig(task, config, size),
     userRef: await userRefFor(config.auth.ledgerSalt, opRef.user_id),
     callInput: () => {
       throw new Error('callInput 尚未設定');
@@ -224,7 +235,7 @@ export async function handleAssistMessage(env: Env, msg: Message<AiQueueMessage>
 
   // 學習報告（WP-C）：輸入在建立時已經算好存進 input_json（reportConsumer.ts）。
   if (task === 'assist_report') {
-    const action = await runAssistReport({ ...(await callBase(1)), reportId: opRef.ref_id, fp });
+    const action = await runAssistReport({ ...(await callBase({ items: 1 })), reportId: opRef.ref_id, fp });
     return finish(action, () => db.prepare('UPDATE assist_reports SET lease_until = NULL WHERE id = ?1 AND user_id = ?2 AND op_id = ?3').bind(opRef.ref_id, opRef.user_id, op.id).run());
   }
 
@@ -248,6 +259,33 @@ export async function handleAssistMessage(env: Env, msg: Message<AiQueueMessage>
     : null;
   const question = caseRow ? parseJson<AssistQuestionView>(caseRow.question_json) : null;
 
+  // 科目：國文走 subjects/chinese/run.ts（另外要國文的 D8 指紋；讀不到就不處理）。任務設定用 turn 存的 {subject, kind, items}。
+  const subject = caseRow ? subjectOfCase(caseRow) : 'english';
+  const turnMeta = turn ? (parseJson<{ subject?: unknown; kind?: unknown; items?: unknown; photos?: unknown }>(turn.meta_json) ?? {}) : {};
+  const metaItems = typeof turnMeta.items === 'number' && Number.isFinite(turnMeta.items) ? turnMeta.items : null;
+  if (subject === 'chinese') {
+    if (!turn || !caseRow || (turnMeta.subject !== undefined && (!isAssistSubject(turnMeta.subject) || turnMeta.subject !== subject))) {
+      log('assist_question_invalid', { op_id: op.id, task, subject });
+      return fail('internal');
+    }
+    const zh = await requireZhFingerprints(db);
+    if (!zh) return fail('internal');
+    let action: Action;
+    if (task === 'assist_ocr') {
+      if (caseRow.source !== 'photo') return fail('internal');
+      action = await runZhOcr({ ...(await callBase({ subject, photos: turnMeta.photos === 2 ? 2 : 1 })), turn, caseRow, fp, zh });
+    } else {
+      if (!question || !validZhQuestion(caseRow.kind, question)) {
+        log('assist_question_invalid', { op_id: op.id, task, subject });
+        return fail('internal');
+      }
+      const items = metaItems ?? assistItemCount(subject, caseRow.kind, question);
+      const ctx = { ...(await callBase({ subject, kind: caseRow.kind, items })), turn, caseRow, question, fp, zh };
+      action = task === 'assist_analyze' ? await runZhAnalyze(ctx) : await runZhFollowup(ctx);
+    }
+    return finish(action, () => db.prepare('UPDATE assist_turns SET lease_until = NULL WHERE id = ?1 AND user_id = ?2 AND op_id = ?3').bind(turn.id, turn.user_id, op.id).run());
+  }
+
   let action: Action;
   if (task === 'assist_ocr') {
     // 轉錄（WP-A3）：題目要等學生確認轉錄之後才有，這裡只要 turn 與案例（拍照的題目、轉錄排隊中）。
@@ -255,16 +293,22 @@ export async function handleAssistMessage(env: Env, msg: Message<AiQueueMessage>
       log('assist_question_invalid', { op_id: op.id, task });
       return fail('internal');
     }
-    action = await runAssistOcr({ ...(await callBase(1)), turn, caseRow, fp });
+    action = await runAssistOcr({ ...(await callBase({ items: 1 })), turn, caseRow, fp });
   } else {
     if (!turn || !caseRow || !question || !validQuestion(caseRow.kind, question)) {
       log('assist_question_invalid', { op_id: op.id, task });
       return fail('internal');
     }
-    const ctx: AssistCtx = { ...(await callBase(caseRow.kind === 'item' ? Math.max(1, question.targets.length) : 1)), turn, caseRow, question, fp };
+    const items = metaItems ?? (caseRow.kind === 'item' ? Math.max(1, question.targets.length) : 1);
+    const ctx: AssistCtx = { ...(await callBase({ subject: 'english', kind: caseRow.kind, items })), turn, caseRow, question, fp };
     action = task === 'assist_analyze' ? await runAnalyze(ctx) : await runFollowup(ctx);
   }
   return finish(action, () => db.prepare('UPDATE assist_turns SET lease_until = NULL WHERE id = ?1 AND user_id = ?2 AND op_id = ?3').bind(turn.id, turn.user_id, op.id).run());
+}
+
+/** 國文的題目夠不夠組請求：學生提供的區塊、至少一題、種類是國文的。 */
+function validZhQuestion(kind: AssistCaseKind, q: AssistQuestionView): boolean {
+  return isZhCaseKind(kind) && Array.isArray(q.targets) && q.targets.length >= 1 && Array.isArray(q.blocks) && q.blocks.length >= 1;
 }
 
 /** 題目的形狀夠不夠組請求（舊資料或壞掉的 JSON 不呼叫模型）。 */
@@ -277,14 +321,16 @@ function validQuestion(kind: AssistCaseKind, q: AssistQuestionView): boolean {
 
 /**
  * <student_patterns>：這位學生其他案例的錯因次數（前 3 個）與最新一版報告的弱點 area（只有代碼與數字；§4.9）。
- * 報告還沒有上線時只有錯因；讀不到就不帶。
+ * 報告還沒有上線時只有錯因；讀不到就不帶。只數英文的案例（國文和英文同名的通用錯因不混在一起，
+ * docs/design/assistant-subjects.md §7.3；只有英文案例時和改版前完全相同）。
  */
 async function studentPatterns(db: D1Database, userId: number, caseId: string, now: number): Promise<string | null> {
   try {
     const counts = await db
       .prepare(
         `SELECT j.value AS code, COUNT(DISTINCT c.id) AS n FROM assist_cases c, json_each(c.errors_json) j
-          WHERE c.user_id = ?1 AND c.id <> ?2 AND c.expires_at > ?3 GROUP BY j.value ORDER BY n DESC, j.value LIMIT 10`,
+          WHERE c.user_id = ?1 AND c.id <> ?2 AND c.expires_at > ?3 AND COALESCE(json_extract(c.ref_json, '$.subject'), 'english') = 'english'
+          GROUP BY j.value ORDER BY n DESC, j.value LIMIT 10`,
       )
       .bind(userId, caseId, now)
       .all<{ code: unknown; n: number }>();
@@ -357,6 +403,9 @@ async function runAnalyze(ctx: AssistCtx): Promise<Action> {
       case 'vocab':
         post = postprocessVocab(data as AssistVocabOutput, question, filter, fp);
         break;
+      default:
+        // 國文案例在 handleAssistMessage 就分派到 subjects/chinese/run.ts，不會走到這裡。
+        throw new Error(`英文的解析不處理 ${caseRow.kind}`);
     }
     const json = JSON.stringify(post.view);
     if (json.length > OUTPUT_JSON_MAX_CHARS) return 'output_too_large';

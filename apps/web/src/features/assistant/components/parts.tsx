@@ -2,7 +2,7 @@
  * 學習助手頁面共用的小元件：解析區塊（section＋h2＋AI 標章）、對錯標章（圖示＋文字，不只靠顏色）、作答文字、
  * 程式後處理的說明、身心安全的關懷訊息、按鈕樣式。
  */
-import type { AnswerValue, AssistNotice, AssistVerdict } from '@gsat/shared';
+import { ZH_NOTICE_TEXT, type AnswerValue, type AssistNotice, type AssistVerdict, type ZhNotice } from '@gsat/shared';
 import { CircleCheck, CircleHelp, CircleMinus, CircleX } from 'lucide-react';
 import { useId, type ReactNode } from 'react';
 import { AiBadge } from '../../writing/components/ui';
@@ -71,8 +71,8 @@ export function VerdictBadge({ status, basis }: { status: ItemStatus | AssistVer
   );
 }
 
-/** 學生或正確的答案：選擇題「(C)」、多選「(A)、(C)」、文字原樣（英文包 lang="en"）。 */
-export function AnswerText({ value, empty = '未作答' }: { value: AnswerValue | readonly string[] | null | undefined; empty?: string }) {
+/** 學生或正確的答案：選擇題「(C)」、多選「(A)、(C)」、文字原樣（英文包 lang="en"；國文的文字 lang 傳 null，不包）。 */
+export function AnswerText({ value, empty = '未作答', lang = 'en' }: { value: AnswerValue | readonly string[] | null | undefined; empty?: string; lang?: 'en' | null }) {
   if (value === null || value === undefined || (typeof value === 'string' && value.trim() === '') || (Array.isArray(value) && value.length === 0)) {
     return <span className="text-muted">{empty}</span>;
   }
@@ -80,7 +80,7 @@ export function AnswerText({ value, empty = '未作答' }: { value: AnswerValue 
   const letters = list.every((v) => /^[A-Z]$/.test(v));
   if (letters) return <span className="font-semibold">{list.map((l) => `(${l})`).join('、')}</span>;
   return (
-    <span lang="en" className="break-words">
+    <span lang={lang ?? undefined} className="break-words">
       {list.join('／')}
     </span>
   );
@@ -97,14 +97,17 @@ const NOTICE_TEXT: Record<AssistNotice['kind'], string> = {
   missing_item: '有一題沒有產生解析。',
 };
 
+/** 國文另有的說明（示範、短答、等第規則；docs/design/assistant-subjects.md §5.5、§5.7）。 */
+const ALL_NOTICE_TEXT: Record<ZhNotice['kind'], string> = { ...NOTICE_TEXT, ...ZH_NOTICE_TEXT };
+
 /** 程式後處理的說明（同一種只說一次）。 */
-export function ProcessingNotices({ notices }: { notices: readonly AssistNotice[] }) {
-  const kinds = [...new Set(notices.map((n) => n.kind))].filter((k) => k !== 'off_topic');
+export function ProcessingNotices({ notices }: { notices: readonly (AssistNotice | ZhNotice)[] }) {
+  const kinds = [...new Set(notices.map((n) => n.kind))].filter((k) => k !== 'off_topic' && ALL_NOTICE_TEXT[k] !== undefined);
   if (kinds.length === 0) return null;
   return (
     <ul className="space-y-1 rounded-xl border border-line bg-surface-2 px-4 py-2 text-sm text-muted">
       {kinds.map((k) => (
-        <li key={k}>{NOTICE_TEXT[k]}</li>
+        <li key={k}>{ALL_NOTICE_TEXT[k]}</li>
       ))}
     </ul>
   );

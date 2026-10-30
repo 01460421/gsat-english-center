@@ -17,7 +17,7 @@
 | `GOOGLE_CLIENT_SECRET` | 登入要 | §2.3 | Google 登入 |
 | `ADMIN_EMAIL` | 建議 | §2.5（你自己的 Gmail） | 第一次登入時自動成為管理員 |
 | `ANTHROPIC_API_KEY` | AI 要 | §3.3 | AI 批改與 OCR |
-| `ANTHROPIC_PARITY_API_KEY` | 打開自訂題目批改前要 | §8.2 | 只給「自訂作文題目評分對照（真模型）」用（dev workspace 的金鑰），不會同步到 Worker |
+| `ANTHROPIC_PARITY_API_KEY` | 打開自訂題目批改前要 | §8.2 | 只給真模型評測用（自訂作文題目評分對照、學習助手國文評測 §8.4 等；dev workspace 的金鑰），不會同步到 Worker |
 
 不需要自己準備的：`SESSION_SECRET`（簽登入 cookie）與 `LEDGER_SALT`（帳本假名）由部署 workflow 第一次執行時自動產生、存在 Cloudflare，之後不會再改。
 
@@ -265,7 +265,7 @@ workflow 會依序：型別檢查與測試 → 檢查 token 與 workers.dev 子�
 
 **目前兩個都是 `"on"`（已上線）**：2026-10-23 站主決定學習助手與拍照都直接開放給已核准的學生，不經管理員預覽，也不先跑真模型評測（設計文件 §6.5）；拍照的殘餘風險（佳作沒有指紋，只靠關鍵字與長度擋，設計文件 §8 第 1 點）站主已經接受。真模型評測與用量檢查改成上線後的監控（設計文件 §6.6 第 7 點）：上線後兩週每天到 `/admin` 看用量頁（依任務分組的點數與費用，每點實際美元＝費用 ÷ 點數，這是平均；第 14 天的中位數要由開發者從 `ai_ops` 逐筆算）與健康檢查的「未確認事件」數（學習助手的 `assist_key_concern`〔AI 對題目答案有疑問〕、`assist_official_like`〔擋下疑似佳作或範文〕等事件也算在裡面），拒答率與截斷率交給開發者從帳本查。每次部署的 **Summary** 都有「學習助手（assistant）」「學習助手拍照（assistantPhoto）」兩列，寫出 `wrangler.toml` 的值，應該都是「啟用」；和 `/api/features` 對不起來時「注意」裡會有一則警告，`admin` 模式會多一則「提醒」。
 
-上線時三份說明（隱私權說明、服務條款、AI 處理說明）同一天改版（2026-10-23）：所有人下次登入要重新同意隱私權說明與服務條款，已核准的學生下次使用 AI 前要重新同意 AI 處理說明（這段期間 AI 批改與學習助手都回「請先同意」，同意流程在 `/ai/apply`）。
+上線時三份說明（隱私權說明、服務條款、AI 處理說明）同一天改版（2026-10-23）：所有人下次登入要重新同意隱私權說明與服務條款，已核准的學生下次使用 AI 前要重新同意 AI 處理說明（這段期間 AI 批改與學習助手都回「請先同意」，同意流程在 `/ai/apply`）。2026-10-30 學習助手國文與作文範文一起上線，三份說明再升一次版（只升這一次，兩個功能共用；流程相同，見 §8.4、§8.5）。
 
 1. **確認開放**：沒登入打開 `https://gsat-english-center.vercel.app/api/features`，應該有 `"assistant":true` 與 `"assistantPhoto":true`；網站首頁「實戰」群組與側欄出現「學習助手」。
 2. **緊急關閉**（大量拒答、費用異常、有人用學習助手做奇怪的事、疑似官方受保護內容外流）：
@@ -277,6 +277,53 @@ workflow 會依序：型別檢查與測試 → 檢查 token 與 workers.dev 子�
 3. **重新開放**：問題處理完，把那一行改回 `"on"` 推到 main，Summary 應該是「啟用」、沒有「提醒」，`/api/features` 有 `"assistant":true`。如果改過學習助手的提示（`apps/api/src/ai/prompts/assist-*.ts`），重新開放前最好先在 Actions 跑一次「學習助手真模型評測」（`.github/workflows/assistant-eval.yml`，金鑰同 §8.2 第 1 步的 `ANTHROPIC_PARITY_API_KEY`）。
 
 另外一個相關設定 `SITE_DATA_ORIGIN`：Worker 讀公開題目檔（站內題目、單字）的來源，沒設定就是 `APP_ORIGIN`（正式站）。**正式站不要設**；只有本機的端對端測試會把它指到假的靜態檔伺服器。
+
+### 8.4 學習助手國文的開關與真模型評測（已上線；緊急關閉、只關國文拍照、改了提示要重跑評測）
+
+學習助手的國文（設計見 [design/assistant-subjects.md](design/assistant-subjects.md) §7.5、§11）有兩個開關，都在 `apps/api/wrangler.toml` 的 `[vars]`，值和 §8.3 一樣只認 `"off"`／`"admin"`／`"on"`（其他任何值都當成 `"off"`）：
+
+| 開關 | 控制什麼 | 還要什麼也開放 |
+|---|---|---|
+| `AI_ASSISTANT_SUBJECTS` | 國文的貼上、解析、追問（英文以外的科目；第一版只有國文） | `AI_ASSISTANT` |
+| `AI_ASSISTANT_SUBJECTS_PHOTO` | 國文的拍照 | `AI_ASSISTANT`、`AI_ASSISTANT_PHOTO`、`AI_ASSISTANT_SUBJECTS` |
+
+- **目前兩個都是 `"on"`（2026-10-30 上線，和作文範文同一個 PR）**：國文的貼上、解析、追問與拍照都開放給已核准的學生。拍照的照片組（J 組）沒有全部達標，站主決定第一版就開拍照（「拍照也可」）；保護措施（確認畫面的字形題提醒、錯字少於題目暗示的數量時標「不確定」、轉錄看不出題目時退點）與之後要補的手機實拍見 [design/assistant-subjects.md](design/assistant-subjects.md) 的實作備註。`/api/features` 只在 `"on"` 時有 `"assistantSubjects":[{"subject":"chinese","photo":…}]`；`"admin"` 時公開端點不透露，管理員登入後 `/api/me` 的 `assistant_preview` 多一個 `subjects`。每次部署的 **Summary** 有「學習助手國文」「學習助手國文拍照」兩列，寫出 `wrangler.toml` 的值，應該都是「對所有人開放」。
+- 上線時三份說明同一次升版（2026-10-30，和作文範文共用這一次；國文的點數不寫在說明裡，調點數不必再升版）：所有人下次登入要重新同意隱私權說明與服務條款，已申請（等核准、候補）或已核准的學生下次使用 AI 前要在 `/ai/apply` 重新同意 AI 處理說明（未滿 18 歲的也要再勾一次已告知父母或監護人）。
+- **不需要設定任何金鑰**：國文的 D8 指紋（`data/d8/zh-official.fp.json`、`zh-short.fp.json`）只有雜湊、不帶金鑰，部署時跟著程式一起打包。國文沒有新的 Worker secret，也沒有新的 GitHub secret；評測用的金鑰就是 §8.2 第 1 步的 `ANTHROPIC_PARITY_API_KEY`（沒有時才用正式站的 `ANTHROPIC_API_KEY`）。
+- 指紋讀不到（打包壞掉）時，國文的寫入端點在預扣之前一律回「暫停」，不扣點、不會漏放受保護的文字；英文不受影響。
+
+1. **跑真模型評測**（會花 API，**只有站主手動按才會跑**；上線前四次完整評測的結果與 run 連結在 [design/assistant-subjects.md](design/assistant-subjects.md) 實作備註「上線（2026-10-30）」之後幾節；之後改了國文的提示、輸出格式或後處理，由站主決定要不要重跑；GitHub Actions 上跑，不用在自己的電腦裝任何東西）：
+   - 站主在 GitHub 的 Actions 頁面選「學習助手國文真模型評測」（`.github/workflows/assistant-subjects-eval.yml`），按 **Run workflow**。輸入：`budget_usd`（累計上限，完整評測約 US$21，建議 25，最多 40）、`allow_online_key`、`resume`、`cases`（空白＝全部；只寫 `A`＝只確認五份輸出格式編譯得過，約 US$0.1）。
+   - **不會自動跑**（站主 2026-10-30：不要再自動花 API）：推 `RUN` 檔、改國文的提示都不會觸發；`RUN` 檔只留著當參數說明。開發者（或代理）不能自己觸發評測。
+   - 看結果：這次執行頁面下方的 **Summary**：第一行是結論（達標、不達標、還沒跑完），第二行是字音、字形「AI 判斷，請查教育部辭典」的上限要不要解除，第三行是國文拍照能不能開；下面是每一項門檻。完整結果在 artifact `assistant-subjects-eval`（保留 30 天）。結果只有計數、對錯、花費與延遲，不存 AI 寫的文字（這個 repo 是公開的）。
+   - **還沒跑完**：到時間或預算上限時結論會寫「還沒跑完」；`resume` 保持勾選、再按一次 Run workflow，已經完成的題目不會重新花錢。
+   - **不達標**（已上線，2026-10-30）：把 Summary 交給開發者調整提示、欄位上限或點數後重跑（改過提示後不會沿用舊結果）；情況嚴重時照第 3 步緊急關閉（或第 4 步只關國文拍照）。
+2. **確認開放**（2026-10-30 的上線 PR 合併、「部署後端（Cloudflare Worker）」跑完之後）：Summary 的兩列是「對所有人開放」、「注意」裡沒有「對不起來」；沒登入打開 `/api/features` 有 `"assistantSubjects":[{"subject":"chinese","photo":true}]`；再用管理員帳號貼一題、拍一張試試（學習助手首頁有「問國文題」）。以後重新開放也照這一步（`src/config.ts` 不用跟著改）。
+3. **緊急關閉國文**（大量拒答、費用異常、疑似官方受保護內容外流）：
+   1. 立即止血：網站 `/admin` 按「AI 全站暫停」（同 §8.3；英文的 AI 功能也會一起停，台灣時間隔天 00:00 自動恢復）。
+   2. 只關國文：把 `AI_ASSISTANT_SUBJECTS` 改成 `"off"`（或只留給管理員查問題的 `"admin"`），推到 main，等部署跑完。英文的學習助手照常；國文的科目選項與「問國文題」按鈕消失，已有的國文案例照樣可以看、評「懂了嗎」、刪除，新的國文解析與追問不會出現；已經在排隊的照常完成（點數已經預扣）。
+   3. 確認：Summary 的「學習助手國文」是「關閉」（`admin` 時是「只有管理員能用」）、「注意」裡沒有「對不起來」；`/api/features` 沒有 `"assistantSubjects"`。確認之後再到 `/admin` 解除全站暫停。
+4. **只關國文拍照**（例如轉錄把字形題的錯字改正了）：把 `AI_ASSISTANT_SUBJECTS_PHOTO` 改成 `"off"` 推到 main。國文貼上照常，英文的拍照也不受影響，不用改程式；`/api/features` 的國文那一筆變成 `"photo":false`。
+5. **不要**在 Cloudflare 儀表板的 Variables and Secrets 改這兩個值：下一次部署會被 `wrangler.toml` 的 `[vars]` 蓋回去（同 §8.1 第 3 點）。改回 `"on"` 之前，如果改過國文的提示或後處理，先照第 1 步重跑一次評測。
+
+### 8.5 作文範文的開關與真模型評測（目前只開給管理員；緊急關閉、改了提示要重跑評測）
+
+作文範文（輸入或選一個英文作文題目，AI 寫出基礎版、穩健版、頂標版三篇範文；設計見 [design/model-essays.md](design/model-essays.md) §7.5、§9.6）有一個開關 `AI_ESSAY_EXEMPLARS`，在 `apps/api/wrangler.toml` 的 `[vars]`，值和 §8.3 一樣只認 `"off"`／`"admin"`／`"on"`（其他任何值都當成 `"off"`，程式預設也是 `"off"`）。
+
+- **目前是 `"admin"`（2026-10-30）**：上線前的完整評測沒有達標（三個層級的分數帶與層級差、輸出長度，見 [design/model-essays.md](design/model-essays.md) §12.7），範文先只開給管理員，學生看不到入口。`/api/features` 只在 `"on"` 時有 `"essayExemplars":true`；`"admin"` 時公開端點不透露，管理員登入後 `/api/me` 多 `"exemplars_preview":true`。每次部署的 **Summary** 有「作文範文（essayExemplars）」一列，寫出 `wrangler.toml` 的值，現在應該是「只有管理員能用」。說明與條款已經在 2026-10-30 那一次升版寫進作文範文，修好之後改成 `"on"` 不必再升版。
+- 不需要新的金鑰：範文用 Worker 既有的 `ANTHROPIC_API_KEY`；評測用 §8.2 第 1 步的 `ANTHROPIC_PARITY_API_KEY`（沒有時才用正式站的金鑰）。
+- 上線時三份說明同一次升版（2026-10-30，和學習助手國文共用這一次；作文範文的點數不寫在說明裡）。
+
+1. **跑真模型評測**（會花 API，**只有站主手動按才會跑**；上線前那一次的結果與 run 連結在 [design/model-essays.md](design/model-essays.md) §12.7；修好範文之後、改成 `"on"` 之前由站主決定重跑；不達標時把 Summary 交給開發者）：
+   - 站主在 GitHub 的 Actions 頁面選「作文範文真模型評測」（`.github/workflows/exemplars-eval.yml`），按 **Run workflow**。輸入：`budget_usd`（累計上限，完整評測約 US$11，最多 100）、`allow_online_key`、`resume`、`effort_sweep`、`cases`（空白＝B–F 全部；只跑一部分時結論是「部分」，不能當上線門檻）。
+   - **不會自動跑**（站主 2026-10-30：不要再自動花 API）：推 `RUN` 檔、改範文的提示都不會觸發；`RUN` 檔只留著當參數說明。
+   - 看結果：這次執行頁面下方的 **Summary** 第一行是結論，下面是每一項門檻；完整結果在 artifact（保留 30 天）。結果只有代碼、計數、字數、分數、花費與延遲，不存 AI 寫的文字（這個 repo 是公開的）。
+2. **確認開放**（修好、評測達標、把 `wrangler.toml` 改成 `"on"` 推到 main、「部署後端（Cloudflare Worker）」跑完之後）：Summary 的那一列是「對所有人開放」、「注意」裡沒有「對不起來」；`/api/features` 有 `"essayExemplars":true`。上線當天站主用管理員帳號產生 111–115 學測作文 5 題的範文（約 US$1，估計），逐篇讀一次，特別是每一則「這個等級常見的錯」（錯句真的錯、改正句正確、規則正確）；這 5 題之後 0 點。有問題 → 照第 3 步改成 `"admin"`（只留給自己查）或 `"off"`。
+3. **緊急關閉**（大量拒答、費用異常、範文看起來像某篇公開佳作、常見的錯寫錯）：
+   1. 立即止血：網站 `/admin` 按「AI 全站暫停」（同 §8.3；作文、中譯英的批改與學習助手也會一起停，台灣時間隔天 00:00 自動恢復）。
+   2. 只關作文範文：把 `AI_ESSAY_EXEMPLARS` 改成 `"off"`（或只留給管理員查問題的 `"admin"`），推到 main，等部署跑完。已經在排隊的照常完成（點數已經預扣）；學生仍然可以看、回報「這組範文有問題」與刪除之前的範文（範文首頁只剩「我的範文」），寫作各頁的入口消失。英文作文自訂題目的拒收訊息（`custom-essay.ts` 的 `request_to_ai`）是固定文字，關閉期間仍會寫「想看範文請用「作文範文」」；關得久時請開發者把那一句拿掉（只改文字，`CUSTOM_PROMPT_RULES_VERSION` 不變，`writing-custom.spec.ts` 一起改）。
+   3. 確認：Summary 的「作文範文」是「關閉」（`admin` 時是「只有管理員能用」，多一則提醒）、「注意」裡沒有「對不起來」；`/api/features` 沒有 `"essayExemplars"`。確認之後再到 `/admin` 解除全站暫停。
+4. **不要**在 Cloudflare 儀表板的 Variables and Secrets 改這個值：下一次部署會被 `wrangler.toml` 的 `[vars]` 蓋回去（同 §8.1 第 3 點）。改回 `"on"` 之前，如果改過範文的提示或後處理，先照第 1 步重跑一次評測。
 
 ## 9. 已知限制
 

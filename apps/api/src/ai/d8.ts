@@ -14,6 +14,9 @@
  * 壞檔時 fail closed（S3）：格式不對、base64 解不開、筆數是 0 或和檔頭的 count 不符 → 自訂題的建立、修改、送辨識、
  * 送批改一律回 503 not_configured；ops_events(kind='d8_fingerprints_invalid') 每個 isolate 只寫一次（模組層旗標）。
  * 顯示時（詳情、列表標題、匯出）壞檔不回 503，只把題目隱藏。集合在第一次用到時才解碼（模組層快取）。
+ *
+ * 同一個檔另有學習助手國文的集合（鍵 zh、版本 zh_version；docs/design/assistant-subjects.md §5.7）：解碼在檔尾的
+ * parseZhFingerprints，比對在 assist/subjects/chinese/d8.ts。英文的 han、en、version 不受影響。
  */
 import fpJson from '../generated/d8-fingerprints.json';
 import { opsEvent } from './ledger';
@@ -199,6 +202,7 @@ export async function requireD8Fingerprints(db: D1Database): Promise<D8Fingerpri
 /** 測試用：清掉模組層的快取與「已告警」旗標（換了 mock 的指紋檔之後呼叫）。 */
 export function resetD8ForTests(): void {
   cached = null;
+  cachedZh = null;
   alerted = false;
 }
 
@@ -265,4 +269,127 @@ export function maskD8(text: string, fp: Pick<D8Fingerprints, 'han' | 'en'>, rep
     at = e;
   }
   return { text: out + nfkc.slice(at), masked: ranges.length };
+}
+
+// ───────────────────────── 國文集合（docs/design/assistant-subjects.md §5.7） ─────────────────────────
+//
+// build-writing-prompts.mjs 把 data/d8/zh-official.fp.json（8 字窗口）、zh-short.fp.json（短答 3 字組）與 zh-boilerplate.txt
+// （樣板字串）併進同一個檔的另一個鍵 zh，版本是 zh_version。英文的 han、en、version 一個字都不動，所以英文的快取鍵不變（§2.4）。
+// 雜湊和 packages/shared/scripts/d8-zh-fingerprint.mjs 相同：不帶金鑰，cyrb53 加網域前綴 'zh8:'／'zs3:'（站主決定：受保護的文件
+// 本來就由官方公開刊登，反推雜湊得不到沒公開的東西；本站要守的是不顯示、不重製）。國文集合只用在國文案例（subjects/chinese/d8.ts）。
+
+export const D8_ZH_FORMAT = 'gsat-d8-zh/v1';
+/** 短答比對的字組長度與每一組至少幾個字組（同產生器）。 */
+export const D8_ZH_GRAM = 3;
+export const D8_ZH_SHORT_MIN_GRAMS = 5;
+
+/** 國文集合（解碼後）。 */
+export interface D8ZhFingerprints {
+  /** zh_version（寫進國文 turn 的 meta.zh_fp；和英文的 version 分開）。 */
+  version: string;
+  /** 8 字窗口的雜湊（cyrb53('zh8:'＋窗口)）。 */
+  windows: Set<number>;
+  /** 國綜非選每一個子題官方答案的 3 字組（cyrb53('zs3:'＋3 字組)）；只有雜湊與「年度＋子題」。 */
+  short: Array<{ year: string; item: string; alt: number; set: Set<number> }>;
+  /** 樣板字串（NFKC、去空白，長的在前）：切窗口之前先遮掉。 */
+  boilerplate: string[];
+  /** 短答比對的門檻（任一組的包含率 ≥ 這個值就算命中）。 */
+  threshold: number;
+}
+
+/** 國文 8 字窗口的雜湊（同產生器的 zhD8WindowHash）。 */
+export function d8ZhWindowHash(window: string): number {
+  return cyrb53(`zh8:${window}`);
+}
+
+/** 短答 3 字組的雜湊（同產生器的 zhD8GramHash）。 */
+export function d8ZhGramHash(gram: string): number {
+  return cyrb53(`zs3:${gram}`);
+}
+
+/**
+ * 檢查並解碼國文集合（純函式；json 是整個 d8-fingerprints.json）。壞檔回 null：沒有 zh 鍵、格式或版本不對、base64 解不開、
+ * 筆數和檔頭不符、任何一組短答少於 5 個字組、樣板不是字串陣列。
+ */
+export function parseZhFingerprints(json: unknown): D8ZhFingerprints | null {
+  if (typeof json !== 'object' || json === null) return null;
+  const root = json as Record<string, unknown>;
+  const zh = root['zh'] as Record<string, unknown> | undefined;
+  const version = root['zh_version'];
+  if (typeof zh !== 'object' || zh === null || typeof version !== 'string' || version === '') return null;
+  const official = zh['official'] as Record<string, unknown> | undefined;
+  const short = zh['short'] as Record<string, unknown> | undefined;
+  const threshold = zh['threshold'];
+  const boilerplate = zh['boilerplate'];
+  if (
+    zh['format'] !== D8_ZH_FORMAT ||
+    zh['han_window'] !== D8_HAN_WINDOW ||
+    zh['gram'] !== D8_ZH_GRAM ||
+    typeof threshold !== 'number' ||
+    !(threshold > 0 && threshold <= 1) ||
+    !Array.isArray(boilerplate) ||
+    !boilerplate.every((t) => typeof t === 'string' && t !== '') ||
+    typeof official !== 'object' ||
+    official === null ||
+    typeof official['fp'] !== 'string' ||
+    typeof short !== 'object' ||
+    short === null ||
+    !Array.isArray(short['sets'])
+  ) {
+    return null;
+  }
+  try {
+    const windows = new Set(unpack(official['fp']));
+    if (windows.size === 0 || windows.size !== official['count']) return null;
+    const sets: D8ZhFingerprints['short'] = [];
+    for (const raw of short['sets'] as unknown[]) {
+      const s = raw as Record<string, unknown>;
+      if (typeof s !== 'object' || s === null || typeof s['fp'] !== 'string' || typeof s['year'] !== 'string' || typeof s['item'] !== 'string') return null;
+      const set = new Set(unpack(s['fp']));
+      if (set.size < D8_ZH_SHORT_MIN_GRAMS || set.size !== s['grams']) return null;
+      sets.push({ year: s['year'], item: s['item'], alt: typeof s['alt'] === 'number' ? s['alt'] : 0, set });
+    }
+    if (sets.length === 0 || sets.length !== short['count']) return null;
+    return { version, windows, short: sets, boilerplate: boilerplate as string[], threshold };
+  } catch {
+    return null;
+  }
+}
+
+let cachedZh: { zh: D8ZhFingerprints | null } | null = null;
+
+/** 打包的國文集合（第一次呼叫時解碼並快取）；壞檔或沒有 zh 鍵回 null（國文的寫入端點回 503，fail closed）。 */
+export function d8ZhFingerprints(): D8ZhFingerprints | null {
+  if (!cachedZh) cachedZh = { zh: parseZhFingerprints(fpJson as unknown) };
+  return cachedZh.zh;
+}
+
+/** 測試用：清掉國文集合的模組層快取（換了 mock 的指紋檔之後呼叫；resetD8ForTests 也會清）。 */
+export function resetD8ZhCacheForTests(): void {
+  cachedZh = null;
+}
+
+/** 樣板字串的比對式快取（同一份樣板清單只編譯一次）。 */
+const boilerplateRes = new WeakMap<readonly string[], RegExp[]>();
+
+function boilerplatePatterns(terms: readonly string[]): RegExp[] {
+  let res = boilerplateRes.get(terms);
+  if (!res) {
+    // 同產生器的 maskBoilerplate：長的在前、字和字之間可以有空白或換行。
+    res = [...terms]
+      .sort((a, b) => b.length - a.length || (a < b ? -1 : 1))
+      .map((t) => new RegExp([...t].map((c) => c.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('\\s*'), 'g'));
+    boilerplateRes.set(terms, res);
+  }
+  return res;
+}
+
+/**
+ * 樣板字串遮掉（先 NFKC，同產生器）：每個字換成分隔符號，**長度不變**，窗口的位置才對得回原文。窗口不會跨過分隔符號，
+ * 所以結果和產生器的 maskBoilerplate（整段換成一個分隔符號）切出來的窗口相同。
+ */
+export function maskZhBoilerplate(text: string, terms: readonly string[]): string {
+  let out = text.normalize('NFKC');
+  for (const re of boilerplatePatterns(terms)) out = out.replace(re, (m) => '｜'.repeat(m.length));
+  return out;
 }

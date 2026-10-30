@@ -1,9 +1,9 @@
 /**
  * 學習助手請求本體的 zod schema（docs/design/learning-assistant.md §4.2、§4.4）。只驗形狀與粗略的長度（擋超大或型別不對的本體），
  * 各來源的細節（題號、作答、label_map、swap、單字條目）在 sources.ts 驗證；學生文字的規則在 shared 的 checkAssistText／
- * checkAssistQuestion。請求大小（位元組）依 §4.15 的表：建立案例與 PUT …/question 32 KB，其他 4 KB。
+ * checkAssistQuestion（國文的題目在 subjects/chinese/question.ts；科目 subject 與 related_case_id 由 routes.ts 依白名單驗證）。請求大小（位元組）依 §4.15 的表：建立案例與 PUT …/question 32 KB，其他 4 KB。
  */
-import { ASSIST_DOUBT_KINDS, ASSIST_FOLLOWUP_MODES, ASSIST_RATINGS, ASSIST_SOURCES, ASSIST_UNDERSTOOD } from '@gsat/shared';
+import { ASSIST_DOUBT_KINDS, ASSIST_FOLLOWUP_MODES, ASSIST_RATINGS, ASSIST_SOURCES, ASSIST_UNDERSTOOD, ZH_CHOICE_MODES } from '@gsat/shared';
 import * as z from 'zod/v4';
 
 /** 請求本體的上限（位元組；readJsonBody 邊讀邊數）。 */
@@ -52,6 +52,8 @@ export const patchCaseSchema = z
     understood: z.enum(ASSIST_UNDERSTOOD).nullable().optional(),
     rating: z.enum(ASSIST_RATINGS).nullable().optional(),
     note: optionalText,
+    // 國文已解析的單選題改成多選（0 點；只接受 multi，其他由路由回 400；docs/design/assistant-subjects.md §5.3、§7.2）。
+    choice_mode: z.enum(ZH_CHOICE_MODES).optional(),
   })
   .strict();
 

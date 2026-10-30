@@ -5,11 +5,8 @@ import {
   ASSIST_ERROR_LABELS,
   isAssistErrorCode,
   stripMarkup,
-  type AssistAnalysisView,
   type AssistQuestionView,
   type AssistTurnView,
-  type AssistVocabView,
-  type AssistWritingView,
 } from '@gsat/shared';
 import type { TextHighlight } from '../../exams/richText';
 import type { ItemStatus, PreviewModel } from '../sources/types';
@@ -36,6 +33,7 @@ export function previewFromView(view: AssistQuestionView): PreviewModel {
       ...(t.verdict_basis === 'client' ? { clientJudged: true } : {}),
     })),
     ...(view.blocks ? { blocks: view.blocks } : {}),
+    ...(view.subject && view.subject !== 'english' ? { subject: view.subject } : {}),
   };
 }
 
@@ -78,8 +76,8 @@ export function locateQuote(passage: string | null, quote: string, label: string
   return { start, end: endIndex + 1, label, kind: 'evidence', active };
 }
 
-/** 最新一次完成的解析（同一題可以解析 2 次，取最後一次）。 */
-export function latestAnalysis(turns: readonly AssistTurnView[]): { turn: AssistTurnView; analysis: AssistAnalysisView | AssistWritingView | AssistVocabView } | null {
+/** 最新一次完成的解析（同一題可以解析 2 次，取最後一次）。任何一科的解析形狀都可能（英文 item／writing／vocab、國文 zh_*）。 */
+export function latestAnalysis(turns: readonly AssistTurnView[]): { turn: AssistTurnView; analysis: NonNullable<AssistTurnView['analysis']> } | null {
   for (let i = turns.length - 1; i >= 0; i -= 1) {
     const t = turns[i];
     if (t && t.kind === 'analyze' && t.status === 'done' && t.analysis) return { turn: t, analysis: t.analysis };

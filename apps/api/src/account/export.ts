@@ -13,7 +13,7 @@
  * 提示版本、注入旗標不匯出。沒有任何範文時不帶 exemplars。
  * MVP 還沒有作答、複習、偏好等資料，Phase 2 加上對應的表時在這裡補。
  */
-import type { ConsentKind, ConsentRecord, ExemplarSource, MeExport } from '@gsat/shared';
+import { assistSubjectFromRef, type ConsentKind, type ConsentRecord, type ExemplarSource, type MeExport } from '@gsat/shared';
 import { USER_COLUMNS, type UserRow } from '../auth/session';
 import { visibleTitle } from '../exemplars/repo';
 import { visibleExemplarPrompt, visibleExemplarView } from '../exemplars/visible';
@@ -140,7 +140,12 @@ export async function buildExport(db: D1Database, userId: number): Promise<MeExp
     list.push(jsonColumns(turn));
     turnsByCase.set(String(caseId), list);
   }
-  const cases = ((assistCases?.results ?? []) as Array<Record<string, unknown>>).map((c) => ({ ...jsonColumns(c), turns: turnsByCase.get(String(c['id'])) ?? [] }));
+  // 每個案例多一個 subject（由 ref_json 算出；沒有就是英文，docs/design/assistant-subjects.md §7.6）。ref_json 本來就會匯出。
+  const cases = ((assistCases?.results ?? []) as Array<Record<string, unknown>>).map((c) => ({
+    ...jsonColumns(c),
+    subject: assistSubjectFromRef(c['ref_json']),
+    turns: turnsByCase.get(String(c['id'])) ?? [],
+  }));
   const reports = ((assistReports?.results ?? []) as Array<Record<string, unknown>>).map(jsonColumns);
 
   // 作文範文：題目、標題與範文都重查 D8（meta_json 只用來判斷要不要重查，不匯出）。

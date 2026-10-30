@@ -22,6 +22,10 @@ export * from './bank-practice-file';
 // 學習助手的型別、代碼清單與檢查（同樣直接轉匯出、不經 writing.ts：只有學習助手的頁面與入口用到）。
 export * from './assist-codes';
 export * from './assist';
+// 學習助手的科目設定檔與國文的資料、規則、畫面形狀（docs/design/assistant-subjects.md §2.2）。
+export * from './assist-subjects';
+export * from './assist-zh';
+export * from './assist-zh-data';
 // 學習報告：方法庫、計畫骨架、facts 與報告內容的型別（docs/design/learning-assistant.md §3）。
 export * from './assist-methods';
 export * from './assist-report';

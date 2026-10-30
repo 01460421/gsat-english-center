@@ -12,8 +12,20 @@
  *   - 有進行中的 AI 任務時不能刪（409）：刪除鈕停用。
  *   - 開關關著（唯讀模式，AssistGate readOnly）：照常輪詢與顯示、可以改「懂了嗎」與刪除；頁首說明暫停，
  *     送出解析、追問、繼續拍照的入口都不顯示。
+ *   - 多科目（docs/design/assistant-subjects.md §8.1）：解析元件、左欄引文加亮、推薦練習（國文沒有）、重試與追問的點數都經過
+ *     科目登記表（subjects/index.ts）；國文的開關另外決定這一題是不是唯讀（國文關著時英文照常）。國文另有頁首的「國文｜字形・單選」、
+ *     解析時判定科目不符的退還說明，以及「用同一份題目問另一部分」。
  */
-import { PUBLISHER_ASSIST_ENDED_TEXT, assistAnalyzePoints, type AssistAnalysisView, type AssistCaseDetail, type AssistPendingTask, type AssistTaskAccepted, type AssistTurnKind } from '@gsat/shared';
+import {
+  PUBLISHER_ASSIST_ENDED_TEXT,
+  assistSubjectMismatchText,
+  type AssistCaseDetail,
+  type AssistDetectedSubject,
+  type AssistPendingTask,
+  type AssistTaskAccepted,
+  type AssistTurnKind,
+  type AssistTurnView,
+} from '@gsat/shared';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router';
 import { PaneTabs } from '../../components/desktop/PaneTabs';
@@ -21,25 +33,24 @@ import { Pane, Workspace } from '../../components/desktop/Workspace';
 import { scrollIntoPane } from '../../components/desktop/scroll';
 import { ApiRequestError } from '../../lib/api';
 import { useIsDesktop, useMainTier } from '../../lib/media';
-import type { TextHighlight } from '../exams/richText';
 import { AiNotice, BackLink, ConfirmButton, ErrorMessage, Notice, ReportAiContent } from '../writing/components/ui';
 import type { ErrorView } from '../writing/lib/errors';
-import { AnalysisView, questionModesOf } from './components/AnalysisView';
 import { AssistAccessNotice, AssistGate, useAssistAccess } from './components/AssistAccess';
 import { AssistLiveRegion, AssistStatus } from './components/AssistStatus';
 import { FollowupComposer } from './components/FollowupComposer';
 import { FollowupThread, followupHeadingId } from './components/FollowupThread';
 import { HistoryLine } from './components/HistoryLine';
 import { AssistSafetyCare, primaryBtn, secondaryBtn } from './components/parts';
-import { PracticeRecommendations } from './components/PracticeRecommendations';
 import { QuestionPreview } from './components/QuestionPreview';
 import { UnderstoodBar } from './components/UnderstoodBar';
-import { VocabAnalysisView } from './components/VocabAnalysisView';
-import { WritingAnalysisView } from './components/WritingAnalysisView';
 import { deleteAssistCase, startAssistAnalyze } from './lib/assistApi';
 import { assistRefundMessage } from './lib/errors';
 import { useAssistCasePoller, useAssistErrorView } from './lib/pollers';
-import { followupTurns, latestAnalysis, locateQuote, previewFromView } from './lib/view';
+import { followupTurns, latestAnalysis, previewFromView } from './lib/view';
+import { caseSubject, webSubject } from './subjects';
+import { ZH_COPY, ZH_FOLLOWUP_PLACEHOLDER } from './subjects/chinese/copy';
+import { zhCaseTag, zhClassicalCase } from './subjects/chinese/caseTag';
+import { useAssistSubjects } from './subjects/useAssistSubjects';
 import { APP_NAME } from '../../modules';
 
 function sourceNote(detail: AssistCaseDetail): string | null {
@@ -47,6 +58,12 @@ function sourceNote(detail: AssistCaseDetail): string | null {
   if (detail.source === 'bank' || detail.source === 'bank_mock') return '答案與本站解析以題目頁為準；AI 的說明是補充。';
   if (detail.trust === 'student') return '你提供的題目沒有經過本站確認；AI 判斷的答案可能有錯，請對照課本或老師的答案。';
   return null;
+}
+
+/** 解析時判定科目不符而退還（國文的 turn 帶 detected_subject；§2.5）：英文、數學、社會、自然才算，其他照一般的退還說明。 */
+function mismatchOf(turn: AssistTurnView | null): Exclude<AssistDetectedSubject, 'chinese' | 'other'> | null {
+  const d = turn?.detected_subject;
+  return d === 'english' || d === 'math' || d === 'social' || d === 'science' ? d : null;
 }
 
 /** 常駐 live region 的文字：進行中的任務。 */
@@ -100,17 +117,26 @@ function CaseView({ detail, poller }: { detail: AssistCaseDetail; poller: Return
   const isDesktop = useIsDesktop();
   const { ws } = useMainTier();
   const access = useAssistAccess();
-  const closed = access.state === 'closed';
+  const subjects = useAssistSubjects();
+  const subject = caseSubject(detail);
+  const registry = webSubject(subject);
+  // 英文以外的科目另有開關：那一科關著時這一題是唯讀模式（英文照常；§7.5 緊急關閉）。
+  const subjectClosed = subject !== 'english' && access.state !== 'closed' && !subjects.isOpen(subject);
+  const closed = access.state === 'closed' || subjectClosed;
   const errorView = useAssistErrorView();
   // 確認頁送出時回到既有的案例、這次的疑問放進了追問框（AskPage）：說明一次，桌機先打開「追問」分頁。
   const carriedDoubt = (location.state as { carriedDoubt?: boolean } | null)?.carriedDoubt === true;
   const [tab, setTab] = useState<'analysis' | 'followups'>(() => (carriedDoubt && latestAnalysis(detail.turns) ? 'followups' : 'analysis'));
-  const [locate, setLocate] = useState<{ label: string; step: number; n: number } | null>(null);
+  // 正在看的引文（id 由各科自己定）；n 讓同一句再按一次也會捲過去。
+  const [locate, setLocate] = useState<{ id: string; n: number } | null>(null);
   const [actionError, setActionError] = useState<ErrorView | null>(null);
   const [busy, setBusy] = useState(false);
   const analysisHeadingRef = useRef<HTMLHeadingElement>(null);
 
-  const preview = useMemo(() => (detail.question ? previewFromView(detail.question) : null), [detail.question]);
+  const preview = useMemo(
+    () => (detail.question ? { ...previewFromView(detail.question), ...(subject !== 'english' ? { subject } : {}) } : null),
+    [detail.question, subject],
+  );
   const latest = latestAnalysis(detail.turns);
   const analysis = latest?.analysis ?? null;
   const followups = followupTurns(detail.turns);
@@ -120,7 +146,7 @@ function CaseView({ detail, poller }: { detail: AssistCaseDetail; poller: Return
   // 輪詢因為不會自己好的錯誤停了：進度列不再說「會自動顯示」，改顯示原因與「再試一次」。
   const stopped = poller.snapshot.phase === 'error';
   const connectionError = !stopped && poller.snapshot.error !== null;
-  const ready = access.state === 'ready';
+  const ready = access.state === 'ready' && !subjectClosed;
   const targets = detail.question?.targets ?? [];
   const displayOf = (label: string) => targets.find((t) => t.label === label)?.display_label ?? label;
   const groupCase = targets.length > 1;
@@ -166,24 +192,12 @@ function CaseView({ detail, poller }: { detail: AssistCaseDetail; poller: Return
     if (focusLost) analysisHeadingRef.current?.focus({ preventScroll: true });
   }, [pending, analysis, detail.turns, lastAnalyze]);
 
-  // 證據句：左欄加亮（全部步驟淡色、按下的那一句加深），按下時捲過去。
-  const highlights = useMemo<TextHighlight[]>(() => {
-    if (!analysis || analysis.kind !== 'item' || !detail.question?.passage) return [];
-    const out: TextHighlight[] = [];
-    for (const item of analysis.items) {
-      item.solution_steps.forEach((step, i) => {
-        const active = locate !== null && locate.label === item.label && locate.step === i;
-        const h = locateQuote(detail.question?.passage ?? null, step.quote, item.display_label, active);
-        if (h) out.push(h);
-      });
-    }
-    return out.sort((a, b) => a.start - b.start || a.end - b.end);
-  }, [analysis, detail.question?.passage, locate]);
-  const locatable = (label: string, step: number) => {
-    if (!analysis || analysis.kind !== 'item') return false;
-    const q = analysis.items.find((i) => i.label === label)?.solution_steps[step]?.quote ?? '';
-    return locateQuote(detail.question?.passage ?? null, q, label) !== null;
-  };
+  // 證據句與引文：左欄加亮（全部淡色、按下的那一句加深），按下時捲過去。英文是選文裡的解法步驟；國文是題目區塊裡的引文。
+  const highlights = useMemo(
+    () => registry.highlightsOf(analysis, detail.question, locate?.id ?? null, detail.hint_first),
+    [registry, analysis, detail.question, locate, detail.hint_first],
+  );
+  const locatable = useMemo(() => registry.locatableOf(analysis, detail.question), [registry, analysis, detail.question]);
   useEffect(() => {
     if (!locate) return;
     const frame = requestAnimationFrame(() => {
@@ -225,10 +239,9 @@ function CaseView({ detail, poller }: { detail: AssistCaseDetail; poller: Return
     }
   };
 
-  const recommendations =
-    analysis && analysis.kind !== 'vocab' ? (
-      <PracticeRecommendations focus={analysis.practice_focus} fallbackSection={detail.section} />
-    ) : null;
+  const recommendations = registry.recommendationsOf(analysis, detail);
+  const Analysis = registry.Analysis;
+  const mismatch = mismatchOf(lastAnalyze);
 
   const analysisBlock = (
     <div className="space-y-5">
@@ -244,36 +257,50 @@ function CaseView({ detail, poller }: { detail: AssistCaseDetail; poller: Return
           <p>
             這一題的照片還沒有確認轉錄。
             {!closed && (
-              <Link to={`/assistant/new?mode=photo&case=${encodeURIComponent(detail.id)}`} className="ml-1 font-medium text-primary underline underline-offset-2">
+              <Link
+                to={`/assistant/new?${subject !== 'english' ? `subject=${subject}&` : ''}mode=photo&case=${encodeURIComponent(detail.id)}`}
+                className="ml-1 font-medium text-primary underline underline-offset-2"
+              >
                 繼續拍照與確認
               </Link>
             )}
           </p>
         </Notice>
       )}
-      {!analysis && !pending && lastAnalyze?.status === 'failed' && (
+      {!analysis && !pending && lastAnalyze?.status === 'failed' && mismatch === null && (
         <div role="alert" className="space-y-2 rounded-xl border border-bad/40 bg-bad/10 px-4 py-3">
           <p className="text-bad">{assistRefundMessage(lastAnalyze.failure)}，這次的點數已經退還。</p>
         </div>
       )}
-      {!analysis && !pending && !ended && (detail.status === 'ready' || detail.status === 'failed') && ready && (
+      {!analysis && !pending && lastAnalyze?.status === 'failed' && mismatch !== null && (
+        <div role="alert" className="space-y-2 rounded-xl border border-bad/40 bg-bad/10 px-4 py-3" data-testid="assist-subject-mismatch">
+          <p className="text-bad">{assistSubjectMismatchText(mismatch, 'analyze', subjects.open)}</p>
+          {mismatch === 'english' && subjects.isOpen('english') && (
+            <Link
+              to={`/assistant/new?subject=english&mode=paste&from=${encodeURIComponent(detail.id)}`}
+              className="inline-flex min-h-11 items-center font-medium text-primary underline underline-offset-2"
+            >
+              {ZH_COPY.analyzeSubjectRetry}
+            </Link>
+          )}
+        </div>
+      )}
+      {!analysis && !pending && !ended && mismatch === null && (detail.status === 'ready' || detail.status === 'failed') && ready && (
         <button type="button" onClick={() => void retryAnalyze()} disabled={busy} className={primaryBtn}>
-          {lastAnalyze ? '再試一次' : '送出解析'}（用 {assistAnalyzePoints(detail.kind, detail.item_count)} 點）
+          {lastAnalyze ? '再試一次' : '送出解析'}（用 {registry.analyzePoints(detail.kind, detail.item_count)} 點）
         </button>
       )}
-      {analysis?.kind === 'item' && (
-        <AnalysisView
-          analysis={analysis as AssistAnalysisView}
-          hintFirst={detail.hint_first}
+      {analysis && (
+        <Analysis
+          detail={detail}
+          analysis={analysis}
           sourceNote={sourceNote(detail)}
-          onLocate={(label, step) => setLocate((cur) => ({ label, step, n: (cur?.n ?? 0) + 1 }))}
-          locatable={locatable}
           recommendations={recommendations}
-          modes={questionModesOf(detail.question)}
+          locatable={locatable}
+          onLocate={(id) => setLocate((cur) => ({ id, n: (cur?.n ?? 0) + 1 }))}
+          onUpdated={poller.accept}
         />
       )}
-      {analysis?.kind === 'writing' && <WritingAnalysisView analysis={analysis} recommendations={recommendations} />}
-      {analysis?.kind === 'vocab' && <VocabAnalysisView analysis={analysis} />}
       {analysis && <ReportAiContent variant="assistant" />}
       {analysis && <UnderstoodBar detail={detail} onUpdated={poller.accept} />}
     </div>
@@ -308,8 +335,9 @@ function CaseView({ detail, poller }: { detail: AssistCaseDetail; poller: Return
             displayOf={displayOf}
             disabled={pending !== null}
             disabledReason={pending ? (stopped ? '自動更新已停止：按上方的「再試一次」看這一輪有沒有完成。' : '等這一輪完成再問下一個問題。') : null}
-            points={3}
+            points={registry.followupPoints}
             onStarted={onStarted}
+            {...(subject === 'chinese' ? { placeholder: ZH_FOLLOWUP_PLACEHOLDER } : {})}
           />
         ) : closed ? null : (
           <AssistAccessNotice access={access} />
@@ -324,6 +352,11 @@ function CaseView({ detail, poller }: { detail: AssistCaseDetail; poller: Return
     <header className="space-y-2">
       <title>{`${detail.title}｜學習助手｜${APP_NAME}`}</title>
       <BackLink to="/assistant">學習助手</BackLink>
+      {subject === 'chinese' && (
+        <p className="text-sm font-semibold text-primary" data-testid="zh-case-tag">
+          {zhCaseTag(detail, analysis)}
+        </p>
+      )}
       <h1 className="text-xl font-bold tracking-tight break-words lg:text-2xl">{detail.title}</h1>
       <AiNotice variant="assistant" />
       {ended && (
@@ -331,12 +364,28 @@ function CaseView({ detail, poller }: { detail: AssistCaseDetail; poller: Return
           <p data-testid="assist-source-ended">{PUBLISHER_ASSIST_ENDED_TEXT}。</p>
         </Notice>
       )}
-      <HistoryLine line={detail.history_line} currentId={detail.id} />
-      {closed && <AssistAccessNotice access={access} />}
+      <HistoryLine line={detail.history_line} currentId={detail.id} subject={subject} />
+      {access.state === 'closed' && <AssistAccessNotice access={access} />}
+      {subjectClosed && (
+        <Notice tone="warn">
+          <p>{ZH_COPY.closed}</p>
+        </Notice>
+      )}
       <AssistLiveRegion text={announcement} />
       {stopped && <PollStopped error={poller.snapshot.error} onRetry={() => poller.restart()} />}
     </header>
   );
+
+  // 國文「用同一份題目問另一部分」（§1.6）：題目已確認的國文案例，國文開放時才有（不用重拍或重貼）。
+  const relatedLink =
+    subject === 'chinese' && !closed && detail.question?.blocks && detail.question.blocks.length > 0 ? (
+      <Link
+        to={`/assistant/new?subject=chinese&mode=paste&from=${encodeURIComponent(detail.id)}`}
+        className="inline-flex min-h-11 items-center text-sm font-medium text-primary underline underline-offset-2"
+      >
+        {ZH_COPY.relatedCase}
+      </Link>
+    ) : null;
 
   const footer = (
     <div className="space-y-2">
@@ -366,7 +415,12 @@ function CaseView({ detail, poller }: { detail: AssistCaseDetail; poller: Return
                 題目
               </h2>
               {safety && <AssistSafetyCare />}
-              {preview ? <QuestionPreview model={preview} highlights={highlights} headingLevel={3} /> : <p className="text-muted">這一題沒有題目內容。</p>}
+              {preview ? (
+                <QuestionPreview model={preview} highlights={highlights.passage} blockMarks={highlights.blocks} classical={zhClassicalCase(detail, analysis)} headingLevel={3} />
+              ) : (
+                <p className="text-muted">這一題沒有題目內容。</p>
+              )}
+              {relatedLink}
             </section>
           </Pane>
         }
@@ -398,7 +452,16 @@ function CaseView({ detail, poller }: { detail: AssistCaseDetail; poller: Return
           <h2 id="assist-question-h" className="text-lg font-semibold">
             題目
           </h2>
-          <QuestionPreview model={preview} highlights={highlights} collapsible expand={locate !== null} headingLevel={3} />
+          <QuestionPreview
+            model={preview}
+            highlights={highlights.passage}
+            blockMarks={highlights.blocks}
+            classical={zhClassicalCase(detail, analysis)}
+            collapsible
+            expand={locate !== null}
+            headingLevel={3}
+          />
+          {relatedLink}
         </section>
       )}
       {analysisBlock}

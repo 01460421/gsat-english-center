@@ -16,6 +16,7 @@ import {
   type AssistReportListResponse,
   type AssistReportSummary,
   type AssistSection,
+  type AssistSubject,
   type AssistTaskAccepted,
   type CreateAssistCaseBody,
   type CreateAssistFollowupBody,
@@ -67,11 +68,17 @@ function expect<T>(body: unknown, guard: (v: unknown) => v is T): T {
 const casePath = (id: string) => `/api/assist/cases/${encodeURIComponent(id)}` as const;
 const withSignal = (signal?: AbortSignal) => (signal ? { signal } : {});
 
-/** GET /api/assist/cases（新到舊，每頁 20；另附各錯因的案例數）。 */
-export async function listAssistCases(opts: { cursor?: string | null; section?: AssistSection | null; signal?: AbortSignal } = {}): Promise<AssistCaseListResponse> {
+/**
+ * GET /api/assist/cases（新到舊，每頁 20；另附各錯因的案例數）。subject：只列那一科，錯因次數也只算那一科；
+ * 不帶時列全部科目，但錯因次數只算英文（docs/design/assistant-subjects.md §7.2、§7.3）。
+ */
+export async function listAssistCases(
+  opts: { cursor?: string | null; section?: AssistSection | null; subject?: AssistSubject | null; signal?: AbortSignal } = {},
+): Promise<AssistCaseListResponse> {
   const q = new URLSearchParams();
   if (opts.cursor) q.set('cursor', opts.cursor);
   if (opts.section) q.set('section', opts.section);
+  if (opts.subject) q.set('subject', opts.subject);
   const qs = q.toString();
   return expect(await api(`/api/assist/cases${qs ? `?${qs}` : ''}`, withSignal(opts.signal)), isAssistCaseList);
 }

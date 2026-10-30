@@ -13,7 +13,7 @@ import {
   ASSIST_SKILL_CODES,
   assistLimitText,
   type AssistAnalysisView,
-  type AssistCaseKind,
+  type AssistEnglishCaseKind,
   type AssistFieldLimit,
   type AssistFollowupView,
   type AssistQuestionView,
@@ -46,7 +46,7 @@ beforeEach(() => {
 
 const SNAPSHOT = JSON.parse(readFileSync(new URL('./fixtures/assist-prompts.json', import.meta.url), 'utf8')) as Record<string, { template_version: string; system_sha256: string; schema_sha256: string }>;
 const sha256 = async (s: string) => [...new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s)))].map((b) => b.toString(16).padStart(2, '0')).join('');
-const KINDS: AssistCaseKind[] = ['item', 'writing', 'vocab'];
+const KINDS: AssistEnglishCaseKind[] = ['item', 'writing', 'vocab'];
 
 function quiet<T>(fn: () => Promise<T>): Promise<T> {
   const log = console.log;

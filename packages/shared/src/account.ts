@@ -4,6 +4,7 @@
  * 命名沿用資料庫與既有共用型別：JSON 欄位一律 snake_case。列舉值與 DB 的 CHECK 約束一字不差，
  * 後端把資料表的值直接放進回應，不另做對照表。
  */
+import { isAssistSubjectAvailabilityList, type AssistSubjectAvailabilityRaw } from './features';
 
 /** 角色（users.role）。 */
 export const USER_ROLES = ['student', 'admin'] as const;
@@ -137,7 +138,14 @@ export interface MeResponseSignedIn {
    * 使用者是管理員、AI 已設定時才有；photo 是拍照問題目對這位管理員開不開。其他人、其他模式都沒有這個欄位
    * （開關是 on 時看公開的 /api/features）。前端的開關判斷：features.assistant === true || me.assistant_preview != null。
    */
-  assistant_preview?: { photo: boolean };
+  assistant_preview?: {
+    photo: boolean;
+    /**
+     * 英文以外的科目（docs/design/assistant-subjects.md §7.2）：AI_ASSISTANT_SUBJECTS 是 admin、使用者是管理員時才有，
+     * 每一科的 photo 由 Worker 算（同 /api/features 的 assistantSubjects）。
+     */
+    subjects?: AssistSubjectAvailabilityRaw[];
+  };
   /**
    * 作文範文的管理員預覽（docs/design/model-essays.md §7.5）：AI_ESSAY_EXEMPLARS 是 admin、使用者是管理員、AI 已設定時才有
    * （值一定是 true）。其他人、其他模式都沒有這個欄位（開關是 on 時看公開的 /api/features）。
@@ -382,8 +390,13 @@ export function isMeResponse(value: unknown): value is MeResponse {
   );
 }
 
-/** assistant_preview 選填；有的話必須是 { photo: boolean }（形狀不對就當成整個回應不可信，不顯示預覽入口）。 */
+/**
+ * assistant_preview 選填；有的話必須是 { photo: boolean }，subjects 選填、有的話是科目清單的形狀
+ * （形狀不對就當成整個回應不可信，不顯示預覽入口）。
+ */
 function isAssistantPreview(value: unknown): boolean {
   if (value === undefined) return true;
-  return typeof value === 'object' && value !== null && typeof (value as Record<string, unknown>)['photo'] === 'boolean';
+  if (typeof value !== 'object' || value === null) return false;
+  const v = value as Record<string, unknown>;
+  return typeof v['photo'] === 'boolean' && (v['subjects'] === undefined || isAssistSubjectAvailabilityList(v['subjects']));
 }

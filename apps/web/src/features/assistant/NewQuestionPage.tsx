@@ -18,6 +18,11 @@
  *   轉錄退還時案例回到 draft：看不出是英文題目（照片已刪）要重拍；系統原因（照片還在）可以「用剛才的照片再轉錄一次」。
  *   沒確認的轉錄文字在照片 24 小時到期時清掉：畫面說明並請學生重拍。
  * 學生提供的題目是不可信的資料：畫面一律用純文字節點顯示，不解析任何標記。
+ *
+ * 多科目（docs/design/assistant-subjects.md §1.2–§1.4、§8.1）：國文對這位使用者開放時，頁首多一列科目 chip（「科目：［英文］［國文］」，
+ * ?subject=、其次是上次選的科目）；國文的貼上是 ZhPasteForm，拍照多一行點數確認（轉錄＋解析＝總點數），確認畫面換成國文的欄位。
+ * ?from={caseId}：預填前一個案例的題目（國文「用同一份題目問另一部分」、科目不符退還後的「改用英文重新建立」）。
+ * 只有英文開放時，畫面和沒有多科目時完全相同。
  */
 import {
   AI_TASK_POINTS,
@@ -33,7 +38,10 @@ import {
   type AssistOcrView,
   type AssistQuestionBlock,
   type AssistStudentQuestion,
+  type AssistSubject,
   type UpdateAssistQuestionBody,
+  assistPoints,
+  assistSubjectMismatchText,
 } from '@gsat/shared';
 import { ArrowDownUp, Camera, ImagePlus, Trash2 } from 'lucide-react';
 import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from 'react';
@@ -54,7 +62,13 @@ import { createAssistCase, deleteAssistPhotos, putAssistQuestion, startAssistAna
 import { loadAssistDraft, saveAssistDraft } from './lib/drafts';
 import { assistRefundMessage } from './lib/errors';
 import { useAssistCasePoller, useAssistErrorView } from './lib/pollers';
-import { useAssistantPhotoEnabled } from './lib/useAssistantEnabled';
+import { caseSubject } from './subjects';
+import { ZH_COPY } from './subjects/chinese/copy';
+import { PhotoBudgetLine } from './subjects/chinese/components/PhotoBudgetLine';
+import { ZhPasteForm } from './subjects/chinese/ZhPasteForm';
+import { SubjectChips } from './subjects/SubjectChips';
+import { loadLastSubject, pickSubject, saveLastSubject, useAssistSubjects } from './subjects/useAssistSubjects';
+import { useFromCase } from './subjects/useFromCase';
 
 const LABEL_RE = /^[A-Za-z0-9]{1,8}$/;
 
@@ -90,14 +104,15 @@ function Highlighted({ text, ranges }: { text: string; ranges: ReadonlyArray<rea
   );
 }
 
-function PasteForm() {
+/** prefill：?from= 的前一個案例的題目文字（科目不符退還後改用英文重新建立）；沒有時用草稿。 */
+function PasteForm({ prefill = null }: { prefill?: string | null }) {
   const id = useId();
   const navigate = useNavigate();
   const access = useAiAccess();
   const ready = access.state === 'ready';
   const { quota } = useQuota(ready);
   const errorView = useAssistErrorView();
-  const [text, setText] = useState(() => loadAssistDraft('typed:text'));
+  const [text, setText] = useState(() => prefill ?? loadAssistDraft('typed:text'));
   const [figure, setFigure] = useState('');
   const [label, setLabel] = useState('');
   const [answer, setAnswer] = useState('');
@@ -362,8 +377,11 @@ function PhotoPicker({ photos, onChange, disabled }: { photos: PickedPhoto[]; on
   );
 }
 
-/** 拍照的整個流程：拍照、框選 → 上傳並轉錄 → 確認 → 解析（見檔頭）。caseId 來自網址 ?case=。 */
-function PhotoFlow({ caseId }: { caseId: string | null }) {
+/**
+ * 拍照的整個流程：拍照、框選 → 上傳並轉錄 → 確認 → 解析（見檔頭）。caseId 來自網址 ?case=。
+ * subject 是表單選的科目；接續既有的案例時以案例的科目為準。
+ */
+function PhotoFlow({ caseId, subject, open }: { caseId: string | null; subject: AssistSubject; open: readonly AssistSubject[] }) {
   const navigate = useNavigate();
   const [, setParams] = useSearchParams();
   const access = useAiAccess();
@@ -377,6 +395,10 @@ function PhotoFlow({ caseId }: { caseId: string | null }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<ErrorView | null>(null);
   const [serverField, setServerField] = useState<string | null>(null);
+  const flowSubject = detail ? caseSubject(detail) : subject;
+  const zh = flowSubject === 'chinese';
+  // 上傳了幾張（轉錄退還後「用剛才的照片再轉錄一次」的點數用；國文 1 張 3 點、2 張 4 點）。
+  const uploadedRef = useRef<1 | 2>(1);
   // 建立了空案例、但上傳或轉錄失敗（額度、網路）：重送時沿用同一個案例，不重複建立。
   const draftRef = useRef<string | null>(null);
   const photosRef = useRef(photos);
@@ -384,7 +406,7 @@ function PhotoFlow({ caseId }: { caseId: string | null }) {
   useEffect(() => () => photosRef.current.forEach((p) => URL.revokeObjectURL(p.previewUrl)), []);
 
   const remaining = quota ? Math.max(0, quota.points.day_limit - quota.points.day_used) : null;
-  const ocrPoints = AI_TASK_POINTS.assist_ocr;
+  const ocrPoints = zh ? assistPoints('chinese', 'assist_ocr', { photos: photos.length === 2 ? 2 : photos.length === 0 ? uploadedRef.current : 1 }) : AI_TASK_POINTS.assist_ocr;
 
   /** 上傳照片並送出轉錄。 */
   const upload = async () => {
@@ -396,15 +418,18 @@ function PhotoFlow({ caseId }: { caseId: string | null }) {
         // 換照片：先清掉這一題在伺服器上的舊照片（上一次系統原因失敗時還留著）。
         await deleteAssistPhotos(id);
       } else {
-        id = (await createAssistCase({ source: { source: 'photo' }, hint_first: true })).id;
+        // 英文的請求和沒有多科目時逐位元相同（不帶 subject）。
+        id = (await createAssistCase({ source: zh ? { source: 'photo', subject: 'chinese' } : { source: 'photo' }, hint_first: true })).id;
         draftRef.current = id;
       }
+      uploadedRef.current = photos.length === 2 ? 2 : 1;
       for (const [i, p] of photos.entries()) await uploadAssistPhoto(id, i + 1, p.blob);
       await startAssistOcr(id);
       photos.forEach((p) => URL.revokeObjectURL(p.previewUrl));
       setPhotos([]);
       if (id === caseId) poller.restart();
-      else setParams({ mode: 'photo', case: id }, { replace: true });
+      // 國文的網址帶著科目（重新整理時頁首與 chip 仍是國文）；英文的網址和原本相同。
+      else setParams(zh ? { subject: 'chinese', mode: 'photo', case: id } : { mode: 'photo', case: id }, { replace: true });
     } catch (err) {
       setError(await errorView(err, { quota, submitting: true }));
     } finally {
@@ -454,7 +479,7 @@ function PhotoFlow({ caseId }: { caseId: string | null }) {
     }
   };
 
-  const startOver = () => setParams({ mode: 'photo' }, { replace: true });
+  const startOver = () => setParams(zh ? { subject: 'chinese', mode: 'photo' } : { mode: 'photo' }, { replace: true });
 
   if (caseId && !detail) {
     if (snapshot.error instanceof ApiRequestError && snapshot.error.status === 404) {
@@ -510,7 +535,17 @@ function PhotoFlow({ caseId }: { caseId: string | null }) {
     }
     return (
       <>
-        <OcrBlocksConfirm key={latestOcrTurn(detail)?.id} ocr={ocr} busy={busy} ready={ready} error={error} serverField={serverField} remaining={remaining} onSubmit={(body) => void confirm(body)} />
+        <OcrBlocksConfirm
+          key={latestOcrTurn(detail)?.id}
+          ocr={ocr}
+          busy={busy}
+          ready={ready}
+          error={error}
+          serverField={serverField}
+          remaining={remaining}
+          onSubmit={(body) => void confirm(body)}
+          subject={flowSubject}
+        />
         <AssistAccessNotice access={access} />
       </>
     );
@@ -536,14 +571,20 @@ function PhotoFlow({ caseId }: { caseId: string | null }) {
   const lastOcr = detail ? latestOcrTurn(detail) : null;
   const failure = lastOcr?.status === 'failed' ? (lastOcr.failure ?? 'internal') : null;
   const keptPhotos = failure !== null && !CONTENT_FAILURES.has(failure) && failure !== 'expired';
+  // 國文轉錄判定是別科（other_subject）：照英文的規則退點、刪照片，請學生換科目再拍（第一版不做跨科重轉；§6.5）。
+  const otherSubject = zh && failure !== null && lastOcr?.detected_subject !== undefined && lastOcr.detected_subject !== 'chinese' ? lastOcr.detected_subject : null;
   return (
     <section className="space-y-4" aria-label="拍照">
       {failure !== null && (
         <div role="alert" className="space-y-2 rounded-xl border border-bad/40 bg-bad/10 px-4 py-3 text-sm">
           <p className="text-bad">
-            {CONTENT_FAILURES.has(failure)
-              ? 'AI 看不出照片裡的英文題目，或照片看不清楚；點數已經退還。請重新拍照（光線充足、只框題目），或改用「貼上文字」。'
-              : `轉錄沒有完成（${assistRefundMessage(failure)}），點數已經退還。`}
+            {otherSubject !== null
+              ? `${assistSubjectMismatchText(otherSubject, 'ocr', open)}點數已經退還，照片也已經刪除。`
+              : CONTENT_FAILURES.has(failure)
+                ? zh
+                  ? 'AI 看不出照片裡的國文題目，或照片看不清楚；點數已經退還。請重新拍照（光線充足、只框題目），或改用「貼上文字」。'
+                  : 'AI 看不出照片裡的英文題目，或照片看不清楚；點數已經退還。請重新拍照（光線充足、只框題目），或改用「貼上文字」。'
+                : `轉錄沒有完成（${assistRefundMessage(failure)}），點數已經退還。`}
           </p>
           {keptPhotos && ready && (
             <button type="button" onClick={() => void retryOcr()} disabled={busy} className={secondaryBtn}>
@@ -553,10 +594,14 @@ function PhotoFlow({ caseId }: { caseId: string | null }) {
         </div>
       )}
       <PhotoPicker photos={photos} onChange={setPhotos} disabled={busy} />
-      <p className="rounded-xl bg-surface-2 px-4 py-3 text-sm">
-        轉錄會用 <strong className="tabular-nums">{ocrPoints}</strong> 點{remaining !== null && <>；今天還剩 {remaining} 點</>}；確認轉錄的文字之後，解析一題 {assistAnalyzePoints('item', 1)} 點起。
-        照片在轉錄完成後立即刪除；沒確認的轉錄文字最多保留 24 小時。
-      </p>
+      {zh ? (
+        <PhotoBudgetLine photos={photos.length === 2 ? 2 : 1} remaining={remaining} />
+      ) : (
+        <p className="rounded-xl bg-surface-2 px-4 py-3 text-sm">
+          轉錄會用 <strong className="tabular-nums">{ocrPoints}</strong> 點{remaining !== null && <>；今天還剩 {remaining} 點</>}；確認轉錄的文字之後，解析一題 {assistAnalyzePoints('item', 1)} 點起。
+          照片在轉錄完成後立即刪除；沒確認的轉錄文字最多保留 24 小時。
+        </p>
+      )}
       <AssistAccessNotice access={access} />
       {ready && (
         <button type="button" disabled={busy || photos.length === 0} onClick={() => void upload()} className={primaryBtn}>
@@ -570,7 +615,8 @@ function PhotoFlow({ caseId }: { caseId: string | null }) {
 
 // ───────────────────────── 頁面 ─────────────────────────
 
-function ModeSwitch({ mode }: { mode: 'photo' | 'paste' }) {
+/** subject：兩科以上開放時連結帶著目前的科目（只有英文時網址和原本相同）。 */
+function ModeSwitch({ mode, subject }: { mode: 'photo' | 'paste'; subject: AssistSubject | null }) {
   const tabs = [
     { key: 'photo' as const, label: '拍照' },
     { key: 'paste' as const, label: '貼上文字' },
@@ -581,7 +627,7 @@ function ModeSwitch({ mode }: { mode: 'photo' | 'paste' }) {
         {tabs.map((t) => (
           <li key={t.key}>
             <Link
-              to={`/assistant/new?mode=${t.key}`}
+              to={subject ? `/assistant/new?subject=${subject}&mode=${t.key}` : `/assistant/new?mode=${t.key}`}
               replace
               aria-current={t.key === mode ? 'page' : undefined}
               className={`inline-flex min-h-11 items-center rounded-full px-4 text-sm font-medium ${t.key === mode ? 'bg-primary text-on-primary' : 'text-fg lg:hover:bg-surface-2'}`}
@@ -596,18 +642,51 @@ function ModeSwitch({ mode }: { mode: 'photo' | 'paste' }) {
 }
 
 function Body() {
-  const photoEnabled = useAssistantPhotoEnabled();
-  const [params] = useSearchParams();
+  const subjects = useAssistSubjects();
+  const [params, setParams] = useSearchParams();
+  const subject = pickSubject(params.get('subject'), loadLastSubject(), subjects.open);
+  const multi = subjects.open.length >= 2;
+  const zh = subject === 'chinese';
+  const photoEnabled = subjects.photo(subject);
   const rawCase = params.get('case');
   const caseId = rawCase !== null && CASE_ID_RE.test(rawCase) ? rawCase : null;
-  const mode: 'photo' | 'paste' = photoEnabled && (params.get('mode') !== 'paste' || caseId !== null) ? 'photo' : 'paste';
+  const from = useFromCase(params.get('from'));
+  const fromId = params.get('from');
+  const mode: 'photo' | 'paste' = photoEnabled && (params.get('mode') !== 'paste' || caseId !== null) && fromId === null ? 'photo' : 'paste';
+  const switchSubject = (next: AssistSubject) => {
+    saveLastSubject(next);
+    // 換科目：照片的案例與預填都是原本那一科的，不帶過去。
+    setParams({ subject: next, mode }, { replace: true });
+  };
+  const fromDetail = from.state === 'ready' ? from.detail : null;
+  const pasteForm =
+    from.state === 'loading' ? (
+      <p role="status" className="text-muted">
+        載入題目中…
+      </p>
+    ) : zh ? (
+      <ZhPasteForm key={fromDetail?.id ?? 'new'} related={fromDetail && caseSubject(fromDetail) === 'chinese' ? fromDetail : null} open={subjects.open} onSwitchSubject={switchSubject} />
+    ) : (
+      <PasteForm key={fromDetail?.id ?? 'new'} prefill={fromDetail?.question?.blocks?.map((b) => b.text).join('\n\n') ?? null} />
+    );
   return (
     <article className="space-y-5">
       <BackLink to="/assistant">學習助手</BackLink>
       {mode === 'photo' ? (
-        <AssistHeader title="拍照問題目" docTitle="拍照問題目｜學習助手">
-          <p className="text-muted">拍下講義、段考的英文題目：AI 先轉錄（{AI_TASK_POINTS.assist_ocr} 點），你確認轉錄的文字之後再解析。</p>
-          <p className="text-sm text-muted">只框要問的題目與它的文章，不要拍到解答、詳解、評分說明、範文，也不要拍到姓名、學號或學校。</p>
+        zh ? (
+          <AssistHeader title={ZH_COPY.photoTitle} docTitle={`${ZH_COPY.photoTitle}｜學習助手`}>
+            <p className="text-muted">{ZH_COPY.photoIntro}AI 先轉錄，你確認轉錄的文字之後再解析。</p>
+            <p className="text-sm text-muted">{ZH_COPY.photoNote}</p>
+          </AssistHeader>
+        ) : (
+          <AssistHeader title="拍照問題目" docTitle="拍照問題目｜學習助手">
+            <p className="text-muted">拍下講義、段考的英文題目：AI 先轉錄（{AI_TASK_POINTS.assist_ocr} 點），你確認轉錄的文字之後再解析。</p>
+            <p className="text-sm text-muted">只框要問的題目與它的文章，不要拍到解答、詳解、評分說明、範文，也不要拍到姓名、學號或學校。</p>
+          </AssistHeader>
+        )
+      ) : zh ? (
+        <AssistHeader title={ZH_COPY.pasteTitle} docTitle={`${ZH_COPY.pasteTitle}｜學習助手`}>
+          <p className="text-muted">{ZH_COPY.pasteIntro}</p>
         </AssistHeader>
       ) : (
         <AssistHeader title="貼上題目" docTitle="貼上題目｜學習助手">
@@ -615,8 +694,9 @@ function Body() {
           <p className="text-sm text-muted">iPhone 可以在照片上長按文字複製（原況文字），Android 用 Google 智慧鏡頭。</p>
         </AssistHeader>
       )}
-      {photoEnabled && <ModeSwitch mode={mode} />}
-      {mode === 'photo' ? <PhotoFlow key={caseId ?? 'new'} caseId={caseId} /> : <PasteForm />}
+      <SubjectChips open={subjects.open} value={subject} onChange={switchSubject} />
+      {photoEnabled && <ModeSwitch mode={mode} subject={multi ? subject : null} />}
+      {mode === 'photo' ? <PhotoFlow key={caseId ?? `new-${subject}`} caseId={caseId} subject={subject} open={subjects.open} /> : pasteForm}
     </article>
   );
 }

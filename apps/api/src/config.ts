@@ -4,7 +4,7 @@
  * 路由與業務邏輯一律呼叫 loadConfig(c.env)，不直接讀 c.env 的設定值。
  * 預設值與 wrangler.toml 的 [vars] 相同（§6.3「正式開放」的值）；wrangler.toml 是給站主看的「實際部署值」，
  * 這裡的預設值是 [vars] 漏設時的保險。兩邊一致由 test/skeleton.test.ts 檢查（例外：AI_CUSTOM_ESSAY、AI_ASSISTANT、
- * AI_ASSISTANT_PHOTO、AI_ESSAY_EXEMPLARS 這裡固定是 off，實際開關看 wrangler.toml）。
+ * AI_ASSISTANT_PHOTO、AI_ESSAY_EXEMPLARS、AI_ASSISTANT_SUBJECTS、AI_ASSISTANT_SUBJECTS_PHOTO 這裡固定是 off，實際開關看 wrangler.toml）。
  *
  * 機密只回「有沒有設」與值本身（給需要的模組用），**絕不放進任何回應**；/api/features、/api/admin/health 只回布林。
  */
@@ -16,9 +16,9 @@ export type AiEffort = (typeof AI_EFFORTS)[number];
 
 /** 預設值（字串形式與 wrangler.toml 的 [vars] 對照）。 */
 export const CONFIG_DEFAULTS = {
-  PRIVACY_POLICY_VERSION: '2026-10-23',
-  TERMS_VERSION: '2026-10-23',
-  AI_CONSENT_VERSION: '2026-10-23',
+  PRIVACY_POLICY_VERSION: '2026-10-30',
+  TERMS_VERSION: '2026-10-30',
+  AI_CONSENT_VERSION: '2026-10-30',
   AI_MODEL_DEFAULT: 'claude-opus-5-5',
   AI_MODEL_SECOND_RATER: 'claude-opus-5-5',
   AI_EFFORT_GRADE: 'medium',
@@ -32,6 +32,10 @@ export const CONFIG_DEFAULTS = {
   // 學習助手與它的拍照問題目的開關：同上，程式的預設固定是 off（fail closed）；開放、緊急關閉都只改 wrangler.toml 那兩行。
   AI_ASSISTANT: 'off',
   AI_ASSISTANT_PHOTO: 'off',
+  // 學習助手英文以外的科目（第一版只有國文；docs/design/assistant-subjects.md §7.5）與它們的拍照：同上，程式的預設固定是 off；
+  // 開放、緊急關閉都只改 wrangler.toml 那兩行。國文拍照另外要 AI_ASSISTANT_PHOTO 也對這位使用者開放。
+  AI_ASSISTANT_SUBJECTS: 'off',
+  AI_ASSISTANT_SUBJECTS_PHOTO: 'off',
   // 作文範文（docs/design/model-essays.md §7.5）的開關：同上，程式的預設固定是 off（fail closed）；上線、緊急關閉都只改
   // wrangler.toml 那一行。effort 預設 medium（兩邊一致）。
   AI_ESSAY_EXEMPLARS: 'off',
@@ -84,7 +88,7 @@ export const ASSISTANT_MODES = FEATURE_MODES;
 export type AssistantMode = FeatureMode;
 
 /** 用三態開關的設定名稱。 */
-export type FeatureModeName = 'AI_ASSISTANT' | 'AI_ASSISTANT_PHOTO' | 'AI_ESSAY_EXEMPLARS';
+export type FeatureModeName = 'AI_ASSISTANT' | 'AI_ASSISTANT_PHOTO' | 'AI_ESSAY_EXEMPLARS' | 'AI_ASSISTANT_SUBJECTS' | 'AI_ASSISTANT_SUBJECTS_PHOTO';
 
 export interface AppConfig {
   urls: {
@@ -127,6 +131,14 @@ export interface AppConfig {
     assistant: AssistantMode;
     /** 學習助手的拍照問題目（AI_ASSISTANT_PHOTO；規則同上）。另外要學習助手本身對這位使用者開放。 */
     assistantPhoto: AssistantMode;
+    /**
+     * 學習助手英文以外的科目（AI_ASSISTANT_SUBJECTS；第一版只有國文，docs/design/assistant-subjects.md §7.5）。規則同上
+     * （fail closed）；對某位使用者開不開由 features.ts 的 assistantSubjectAccess 判斷，另外要學習助手本身對他開放。
+     * 關閉時國文的建立、確認、解析、追問、轉錄回 503；已經排入 Queue 的照常完成；已有的國文案例照常可以看、評分、刪除。
+     */
+    assistantSubjects: FeatureMode;
+    /** 英文以外科目的拍照（AI_ASSISTANT_SUBJECTS_PHOTO；規則同上）。另外要 AI_ASSISTANT_PHOTO 也對這位使用者開放。 */
+    assistantSubjectsPhoto: FeatureMode;
     /**
      * 作文範文的總開關（AI_ESSAY_EXEMPLARS；fail closed，見 featureModeSwitch）。對某位使用者開不開由 features.ts 的
      * exemplarsAccess 判斷（admin 模式只有管理員）。關閉時新的產生回 503；已經排入 Queue 的照常完成；讀、評分、刪除照常。
@@ -193,7 +205,7 @@ export function customEssaySwitch(value: string | undefined, fallback: string = 
 }
 
 /**
- * 三態開關（AI_ASSISTANT、AI_ASSISTANT_PHOTO、AI_ESSAY_EXEMPLARS）：沒設定（或只有空白）時用預設值；去頭尾空白、轉小寫後只認
+ * 三態開關（AI_ASSISTANT、AI_ASSISTANT_PHOTO、AI_ESSAY_EXEMPLARS、AI_ASSISTANT_SUBJECTS、AI_ASSISTANT_SUBJECTS_PHOTO）：沒設定（或只有空白）時用預設值；去頭尾空白、轉小寫後只認
  * on、admin，其他任何值（off、true、打錯的字）一律當成關，不是 off 的另外寫 log。同 customEssaySwitch 的 fail closed：
  * 這是緊急關閉這些功能的唯一開關，打錯字時要偏向關。
  */
@@ -269,6 +281,8 @@ export function loadConfig(env: Env): AppConfig {
       customEssay: customEssaySwitch(env.AI_CUSTOM_ESSAY),
       assistant: featureModeSwitch('AI_ASSISTANT', env.AI_ASSISTANT),
       assistantPhoto: featureModeSwitch('AI_ASSISTANT_PHOTO', env.AI_ASSISTANT_PHOTO),
+      assistantSubjects: featureModeSwitch('AI_ASSISTANT_SUBJECTS', env.AI_ASSISTANT_SUBJECTS),
+      assistantSubjectsPhoto: featureModeSwitch('AI_ASSISTANT_SUBJECTS_PHOTO', env.AI_ASSISTANT_SUBJECTS_PHOTO),
       essayExemplars: featureModeSwitch('AI_ESSAY_EXEMPLARS', env.AI_ESSAY_EXEMPLARS),
       limits: {
         pointsUserDay: num('AI_POINTS_USER_DAY', env.AI_POINTS_USER_DAY, D.AI_POINTS_USER_DAY),

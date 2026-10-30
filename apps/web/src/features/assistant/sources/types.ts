@@ -13,6 +13,7 @@ import type {
   AssistSection,
   AssistSignals,
   AssistSourceRef,
+  AssistSubject,
   AssistQuestionBlock,
   QuestionMode,
   Tier,
@@ -91,6 +92,8 @@ export interface PreviewModel {
   items: PreviewItem[];
   /** 學生提供的題目（純文字區塊）。 */
   blocks?: AssistQuestionBlock[];
+  /** 科目（沒有＝英文）：國文不加 lang="en"，題目區塊的底線標記換成底線（docs/design/assistant-subjects.md §8.3）。 */
+  subject?: AssistSubject;
 }
 
 /** 確認頁「要問哪幾題」：同組可以勾的題、上限、預設勾選。 */

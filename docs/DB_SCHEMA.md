@@ -1447,17 +1447,18 @@ Anthropic 未成年人指引要求的監控與回報（04 文件 §7.5）：AI �
 - **`assist_reports`**：學習報告一版一列（`version` 依使用者遞增，每人保留最近 10 版）。`idx_assist_reports_inflight` 保證同一人同時只有一份進行中。`input_json` 是伺服器彙整的摘要與 facts，不是學生送來的。保存同案例（180 天）。
 - 清理接在 housekeeping（`purgeExpiredAssist`）：到期的照片、案例、報告分批刪除；進行中的案例與報告不刪（等結算或回收）。
 - 會增加的列舉（`source`、`section`、`kind`、`verdict`）不設 CHECK；JSON 欄位都是 `json_valid` 加長度上限；時間是 Unix 秒。
+- **國文（docs/design/assistant-subjects.md §7.1；2026-10-30 上線，沒有結構改動、沒有遷移）**：科目放在 `ref_json.subject`（`'chinese'`；沒有這個鍵就是英文），「用同一份題目問另一部分」的前一個案例放在 `ref_json.related_case_id`；查詢一律用 `COALESCE(json_extract(ref_json, '$.subject'), 'english')`（`assist/repo.ts`），列表不帶科目時預設只算英文。`kind` 多 `zh_choice`／`zh_short`／`zh_writing`，`section` 多 `zh_*` 的題型；子模式、字數限制、學生作答、已知答案與國寫片段在 `question_json`；國文的錯因與技能代碼照樣放 `errors_json`、`skills_json`。解析結算時把國文的 `section`、`verdict`（依當時的答案鍵重算，不信任存下的值；國寫是 `unknown`）與 `wrong_count` 寫回。匯出的案例多 `subject`。`assist_reports` 不變（學習報告只涵蓋英文）。沒有科目的索引：每人 ≤ 500 個案例，先用 `(user_id, updated_at)` 縮小範圍；需要時再加 generated column。
 
 | 欄位 | 型別與約束 | 說明 |
 |---|---|---|
 | `id` | `TEXT PRIMARY KEY` | UUID |
 | `user_id` | `INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE` | 使用者 |
 | `source` | `TEXT NOT NULL` | bank\|bank_mock\|exam\|vocab\|writing\|photo\|typed（會增加，不設 CHECK） |
-| `kind` | `TEXT NOT NULL` | item\|writing\|vocab（輸出 schema；會增加，不設 CHECK） |
-| `ref_json` | `TEXT NOT NULL CHECK (json_valid(ref_json) AND length(ref_json) <= 4096)` | 來源 id、題號、作答（不含題目文字） |
+| `kind` | `TEXT NOT NULL` | item\|writing\|vocab\|zh_choice\|zh_short\|zh_writing（輸出 schema；會增加，不設 CHECK） |
+| `ref_json` | `TEXT NOT NULL CHECK (json_valid(ref_json) AND length(ref_json) <= 4096)` | 來源 id、題號、作答（不含題目文字）；國文另有 `subject`、`related_case_id` |
 | `dedupe_key` | `TEXT` | 站內來源：sha256(source\|ref\|排序後的題號\|作答)；同一組同樣的作答只建一個案例 |
 | `trust` | `TEXT NOT NULL CHECK (trust IN ('site','student'))` | 題目是網站的或學生提供的 |
-| `section` | `TEXT` | AssistSection |
+| `section` | `TEXT` | AssistSection（國文是 `zh_*` 的題型） |
 | `title` | `TEXT NOT NULL CHECK (length(title) <= 120)` | 列表標題（程式產生；學生題目取開頭並遮個資） |
 | `item_count` | `INTEGER NOT NULL DEFAULT 1 CHECK (item_count BETWEEN 1 AND 8)` | 問了幾題（單字是幾個字） |
 | `wrong_count` | `INTEGER NOT NULL DEFAULT 0 CHECK (wrong_count BETWEEN 0 AND 8)` | 其中答錯幾題 |

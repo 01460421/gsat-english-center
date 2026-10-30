@@ -23,6 +23,9 @@ import {
   EXEMPLARS_DEFAULT,
   exemplarsMode,
   exemplarsVarFrom,
+  SUBJECTS_DEFAULT,
+  subjectsMode,
+  subjectsVarsFrom,
   type DeploySummaryInput,
 } from '../../../.github/scripts/deploy-summary.mjs';
 import { assistantSwitch, CONFIG_DEFAULTS, customEssaySwitch, featureModeSwitch } from '../src/config';
@@ -298,7 +301,7 @@ describe('deploy-summary.mjs', () => {
     expect(exemplarsVarFrom('# AI_ESSAY_EXEMPLARS = "on" 的說明\n[vars]\nAI_ESSAY_EXEMPLARS = "admin"\n')).toBe('admin');
     expect(exemplarsVarFrom('[vars]\nAPP_ORIGIN = "x"\n')).toBeNull();
     const toml = readFileSync(path.join(REPO, 'apps', 'api', 'wrangler.toml'), 'utf8');
-    // 現在是 "off"（test/skeleton.test.ts 釘住）；上線（on）、緊急關閉（off）、只留給管理員（admin）都只改那一行。
+    // 2026-10-30 上線後是 "on"；緊急關閉（off）、只留給管理員（admin）都只改那一行（部署前的測試不擋任何一種）。
     expect(exemplarsVarFrom(toml)).toMatch(/^(off|admin|on)$/);
     // 現行設定配上對得起來的 /api/features（只有 on 時有 essayExemplars）：沒有作文範文的警告。
     const mode = exemplarsMode(exemplarsVarFrom(toml));
@@ -310,5 +313,62 @@ describe('deploy-summary.mjs', () => {
   it('worker-deploy.yml 的部署後確認呼叫這支腳本', () => {
     const workflow = readFileSync(path.join(REPO, '.github', 'workflows', 'worker-deploy.yml'), 'utf8');
     expect(workflow).toContain('node .github/scripts/deploy-summary.mjs');
+  });
+
+  it('學習助手國文：兩列寫出 wrangler.toml 的值（在作文範文之後）；off 時沒有警告與提醒；on 時比 /api/features 的 assistantSubjects；admin 給提醒', () => {
+    const ZH_ROW = '學習助手國文（assistantSubjects）';
+    const ZH_PHOTO_ROW = '學習助手國文拍照（assistantSubjects.photo）';
+    const base = assistantInput({ assistant: true, assistantPhoto: true }, 'on', 'on');
+    const off = buildDeploySummary({ ...base, subjectsVar: 'off', subjectsPhotoVar: 'off' });
+    expect(row(off, ZH_ROW)).toBe('關閉（wrangler.toml 的 AI_ASSISTANT_SUBJECTS："off"）');
+    expect(row(off, ZH_PHOTO_ROW)).toBe('關閉（wrangler.toml 的 AI_ASSISTANT_SUBJECTS_PHOTO："off"）');
+    expect(off.warnings).toEqual([]);
+    expect(off.notices).toEqual([]);
+    const keys = off.rows.map(([k]) => k);
+    expect(keys.indexOf(ZH_ROW)).toBe(keys.indexOf('作文範文（essayExemplars）') + 1);
+    expect(keys.indexOf(ZH_PHOTO_ROW)).toBe(keys.indexOf(ZH_ROW) + 1);
+    expect(row(buildDeploySummary(base), ZH_ROW)).toBe('關閉（wrangler.toml 的 AI_ASSISTANT_SUBJECTS：沒有設定，預設 off）');
+    // on：/api/features 有國文（拍照也有）時沒有警告。
+    const opened = buildDeploySummary({ ...base, features: { ...base.features, assistantSubjects: [{ subject: 'chinese', photo: true }] }, subjectsVar: 'on', subjectsPhotoVar: 'on' });
+    expect(row(opened, ZH_ROW)).toBe('對所有人開放（wrangler.toml 的 AI_ASSISTANT_SUBJECTS："on"）');
+    expect(opened.warnings).toEqual([]);
+    expect(opened.notices).toEqual([]);
+    // on 卻沒有、或 off 卻出現：警告。
+    const missing = buildDeploySummary({ ...base, subjectsVar: 'on', subjectsPhotoVar: 'off' });
+    expect(missing.warnings.some((w) => w.includes('學習助手國文') && w.includes('對不起來'))).toBe(true);
+    const leaked = buildDeploySummary({ ...base, features: { ...base.features, assistantSubjects: [{ subject: 'chinese', photo: false }] }, subjectsVar: 'off' });
+    expect(leaked.warnings.some((w) => w.includes('學習助手國文'))).toBe(true);
+    // admin：提醒（只有管理員能用）。
+    const admin = buildDeploySummary({ ...base, subjectsVar: 'admin', subjectsPhotoVar: 'off' });
+    expect(row(admin, ZH_ROW)).toBe('只有管理員能用（wrangler.toml 的 AI_ASSISTANT_SUBJECTS："admin"）');
+    expect(admin.warnings).toEqual([]);
+    expect(admin.notices.some((n) => n.includes('學習助手國文') && n.includes('assistant_preview.subjects'))).toBe(true);
+  });
+
+  it('AI_ASSISTANT_SUBJECTS 的判斷和 src/config.ts 的 featureModeSwitch 相同（含預設值 off）；讀 wrangler.toml 的那兩行（2026-10-30 上線後都是 on）', () => {
+    expect(SUBJECTS_DEFAULT).toBe(CONFIG_DEFAULTS.AI_ASSISTANT_SUBJECTS);
+    expect(SUBJECTS_DEFAULT).toBe(CONFIG_DEFAULTS.AI_ASSISTANT_SUBJECTS_PHOTO);
+    const warn = console.warn;
+    console.warn = () => {};
+    try {
+      for (const v of [null, '', 'on', ' ON ', 'admin', 'off', 'yes', 'onn']) expect(subjectsMode(v), JSON.stringify(v)).toBe(featureModeSwitch('AI_ASSISTANT_SUBJECTS', v ?? undefined));
+    } finally {
+      console.warn = warn;
+    }
+    expect(subjectsVarsFrom('# AI_ASSISTANT_SUBJECTS = "on" 的說明\n[vars]\nAI_ASSISTANT_SUBJECTS = "admin"\n')).toEqual({ subjects: 'admin', photo: null });
+    // AI_ASSISTANT 的那一行不會被當成 AI_ASSISTANT_SUBJECTS（反過來也是）。
+    expect(assistantVarsFrom('[vars]\nAI_ASSISTANT_SUBJECTS = "on"\nAI_ASSISTANT_SUBJECTS_PHOTO = "on"\n')).toEqual({ assistant: null, photo: null });
+    const toml = readFileSync(path.join(REPO, 'apps', 'api', 'wrangler.toml'), 'utf8');
+    // 上線（on）、緊急關閉（off）、只關國文拍照、只留給管理員（admin）都只改那兩行：三種值都讀得到（不把值寫死）。
+    const real = subjectsVarsFrom(toml);
+    expect(real.subjects).toMatch(/^(off|admin|on)$/);
+    expect(real.photo).toMatch(/^(off|admin|on)$/);
+    // 現行設定配上對得起來的 /api/features（國文只在 on 時出現；拍照另外要學習助手的拍照也是 on）：沒有國文的警告。
+    const modeZ = subjectsMode(real.subjects);
+    const modeZP = subjectsMode(real.photo);
+    const base = assistantInput({ assistant: true, assistantPhoto: true }, 'on', 'on');
+    const features = { ...base.features, ...(modeZ === 'on' ? { assistantSubjects: [{ subject: 'chinese', photo: modeZP === 'on' }] } : {}) };
+    const s = buildDeploySummary({ ...base, features, subjectsVar: real.subjects, subjectsPhotoVar: real.photo });
+    expect(s.warnings.some((w) => w.includes('學習助手國文'))).toBe(false);
   });
 });

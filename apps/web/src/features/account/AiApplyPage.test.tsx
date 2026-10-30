@@ -3,8 +3,9 @@
  */
 import { screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import type { AiQuotaResponse } from '@gsat/shared';
+import { AI_TASK_POINTS, EXEMPLAR_LIMITS, assistPoints, type AiQuotaResponse } from '@gsat/shared';
 import { afterEach, describe, expect, it } from 'vitest';
+import { chinesePointRows } from './AiApplyPage';
 import { resetOnboardingRedirectForTests } from './RequireAccount';
 import { FEATURES_AUTH_ONLY, FEATURES_ON, VERSIONS, apiError, json, mockApi, renderApp, signedInMe } from './testing';
 
@@ -78,7 +79,7 @@ describe('說明與開關', () => {
     // 上限與使用須知也涵蓋學習助手（服務條款「三」的每日上限）。
     expect(within(main).getByText('學習報告每天 2 份、拍照轉錄每天 6 次。')).toBeInTheDocument();
     expect(within(main).getByText(/學習助手說明題目考什麼、你錯在哪、正確解法與相關觀念/)).toBeInTheDocument();
-    expect(within(main).getByText(/不要在作答、提問、回饋或照片裡寫真實姓名/)).toBeInTheDocument();
+    expect(within(main).getByText(/不要在題目、作答、提問、回饋或照片裡寫真實姓名/)).toBeInTheDocument();
   });
 
   it('學習助手開放、拍照關著（只關拍照的緊急模式）：解析、追問、報告照列，沒有拍照轉錄與「拍照、」', async () => {
@@ -96,7 +97,58 @@ describe('說明與開關', () => {
     expect(within(table).getByRole('row', { name: /學習助手：學習報告/ })).toBeInTheDocument();
     expect(within(table).queryByRole('row', { name: /拍照轉錄題目/ })).not.toBeInTheDocument();
     expect(within(main).getByText('學習報告每天 2 份。')).toBeInTheDocument();
-    expect(within(main).getByText(/不要在作答、提問或回饋裡寫真實姓名/)).toBeInTheDocument();
+    expect(within(main).getByText(/不要在題目、作答、提問或回饋裡寫真實姓名/)).toBeInTheDocument();
+  });
+
+  it('學習助手國文開放時：點數表多國文的幾列，每一列的數字都是 shared 的 assistPoints（條款不寫數字，docs/design/assistant-subjects.md §10）', async () => {
+    // 純函式：每一列和 assistPoints 逐一比對（選擇題 6＋2(n−1)、簡答依小題、國寫、追問、拍照 1／2 張）。
+    const choice = (n: number) => assistPoints('chinese', 'assist_analyze', { kind: 'zh_choice', items: n });
+    const short = (n: number) => assistPoints('chinese', 'assist_analyze', { kind: 'zh_short', items: n });
+    expect(chinesePointRows(true)).toEqual([
+      [`學習助手國文：選擇題解析（每多一題加 ${choice(2) - choice(1)} 點，最多 ${choice(99)} 點）`, `${choice(1)} 點起`],
+      [`學習助手國文：簡答解析（每多一個小題加 ${short(2) - short(1)} 點，最多 ${short(99)} 點）`, `${short(1)} 點起`],
+      ['學習助手國文：國寫指導', `${assistPoints('chinese', 'assist_analyze', { kind: 'zh_writing' })} 點`],
+      ['學習助手國文：追問一次', `${assistPoints('chinese', 'assist_followup')} 點`],
+      ['學習助手國文：拍照轉錄題目', `${assistPoints('chinese', 'assist_ocr', { photos: 1 })} 點（2 張 ${assistPoints('chinese', 'assist_ocr', { photos: 2 })} 點）`],
+    ]);
+    // 拍照關著（只關國文拍照的緊急模式）時沒有拍照那一列。
+    expect(chinesePointRows(false).map(([task]) => task)).not.toContain('學習助手國文：拍照轉錄題目');
+    expect(chinesePointRows(false)).toHaveLength(4);
+
+    mockApi({
+      'GET /api/features': { ...FEATURES_ON, assistant: true, assistantPhoto: true, assistantSubjects: [{ subject: 'chinese', photo: true }] },
+      'GET /api/me': signedInMe({ user: { ai_status: 'pending' } }),
+    });
+    const main = await openApply();
+    await within(main).findByRole('link', { name: '學習助手' });
+    const table = within(main).getByRole('table');
+    for (const [task, value] of chinesePointRows(true)) {
+      const row = within(table).getByRole('row', { name: new RegExp(task.replace(/[()（）]/g, '.')) });
+      expect(row).toHaveTextContent(value);
+    }
+    // 國文的幾列也在表上時，英文那幾列標「學習助手英文」（英文的拍照 2 點不會被看成國文的）；學習報告不分科目。
+    expect(within(table).getByRole('row', { name: /學習助手英文：解析（同一個題組每多一題加 2 點，最多 14 點）.*6 點起/ })).toBeInTheDocument();
+    expect(within(table).getByRole('row', { name: /學習助手英文：追問一次.*3 點/ })).toBeInTheDocument();
+    expect(within(table).getByRole('row', { name: /學習助手英文：拍照轉錄題目.*2 點/ })).toBeInTheDocument();
+    expect(within(table).getByRole('row', { name: /學習助手：學習報告.*10 點/ })).toBeInTheDocument();
+    expect(within(table).queryByRole('row', { name: /^學習助手：(解析|追問一次|拍照轉錄題目)/ })).not.toBeInTheDocument();
+  });
+
+  it('作文範文開放時：說明多一段（連到作文範文）、點數表多一列（點數是 task_points／AI_TASK_POINTS）、每天的組數上限；關著時沒有', async () => {
+    mockApi({
+      'GET /api/features': { ...FEATURES_ON, essayExemplars: true },
+      'GET /api/me': signedInMe({ user: { ai_status: 'pending' } }),
+    });
+    const main = await openApply();
+    expect(await within(main).findByRole('link', { name: '作文範文' })).toHaveAttribute('href', '/writing/essay/exemplars');
+    expect(within(main).getByText(/請不要當成自己的作品繳交/)).toBeInTheDocument();
+    const table = within(main).getByRole('table');
+    expect(within(table).getByRole('row', { name: new RegExp(`作文範文.*${AI_TASK_POINTS.essay_exemplars} 點`) })).toBeInTheDocument();
+    expect(within(main).getByText(`作文範文每天最多 ${EXEMPLAR_LIMITS.setsPerDay} 組（共用的範文也算一組）。`)).toBeInTheDocument();
+    expect(within(main).getByText('台灣時間 00:00 重置；批改或產生範文失敗會全額退還點數。')).toBeInTheDocument();
+    // 使用須知：能做的加上作文範文；不能做的是「替你寫要繳交的作文」（作文範文只供參考）。
+    expect(within(main).getByText(/AI 能做的/)).toHaveTextContent('作文範文依你選或輸入的題目寫出三個層級的範文與說明');
+    expect(within(main).getByText(/AI 不能做的/)).toHaveTextContent('替你寫要繳交的作文（作文範文只供參考）');
   });
 
   it('學習助手關著：說明與點數表沒有學習助手', async () => {
@@ -104,6 +156,9 @@ describe('說明與開關', () => {
     const main = await openApply();
     await within(main).findByRole('heading', { name: 'AI 批改是什麼' });
     expect(within(main).queryByText(/學習助手/)).not.toBeInTheDocument();
+    // 作文範文也關著：沒有作文範文的說明與那一列。
+    expect(within(main).queryByText(/作文範文/)).not.toBeInTheDocument();
+    expect(within(main).getByText('台灣時間 00:00 重置；批改失敗會全額退還點數。')).toBeInTheDocument();
   });
 
   it('全站暫停中：狀態區塊提示 AI 功能暫停中', async () => {
@@ -139,7 +194,7 @@ describe('申請', () => {
     const consent = within(main).getByRole('checkbox', { name: new RegExp(`同意 AI 處理說明（${VERSIONS.ai} 版）`) });
     // 勾選文字和 AI 處理說明第一點同一個範圍：學習助手送出的內容也在裡面（docs/design/learning-assistant.md §4.17）。
     expect(consent).toHaveAccessibleName(
-      /我的翻譯、作文與手寫照片，以及在學習助手送出的題目照片、題目文字、作答、提問，與產生學習報告時的目標、每週讀書時間、考試與段考日期、我寫的回饋與作答紀錄的摘要，會傳給 Anthropic 的 API 處理/,
+      /我使用 AI 批改、作文範文、學習助手等 AI 功能時，下面這些內容會傳給 Anthropic 的 API 處理，處理地點可能在台灣境外：AI 批改的翻譯與作文（手寫作文是照片）；產生作文範文時我輸入或貼上的題目文字（含圖片描述）；學習助手的題目照片、題目文字、我選的科目與題型、我的作答（含簡答與作文段落）、我提供的講義答案（選擇題）與提問；產生學習報告時/,
     );
     await user.click(consent);
     expect(submit).toBeEnabled();
@@ -235,10 +290,11 @@ describe('各狀態', () => {
     });
     const main = await openApply();
     expect(await within(main).findByText('請重新確認 AI 處理說明')).toBeInTheDocument();
+    expect(within(main).getByText(/重新同意後才能繼續使用 AI 批改、作文範文、學習助手等 AI 功能；其他功能不受影響/)).toBeInTheDocument();
     // 改了什麼：AI 處理說明這一版的 changes。
     expect(within(main).getByText(`${VERSIONS.ai} 版更新的內容：`)).toBeInTheDocument();
-    expect(within(main).getByText(/範圍加上學習助手/)).toBeInTheDocument();
-    expect(within(main).getByRole('checkbox', { name: /同意 AI 處理說明/ })).toHaveAccessibleName(/在學習助手送出的題目照片/);
+    expect(within(main).getByText(/範圍加上作文範文/)).toBeInTheDocument();
+    expect(within(main).getByRole('checkbox', { name: /同意 AI 處理說明/ })).toHaveAccessibleName(/學習助手的題目照片、題目文字、我選的科目與題型/);
     const submit = within(main).getByRole('button', { name: '同意並繼續使用' });
     await user.click(within(main).getByRole('checkbox', { name: /同意 AI 處理說明/ }));
     expect(submit).toBeDisabled();
@@ -292,7 +348,11 @@ describe('各狀態', () => {
     expect(await within(main).findByText(/^使用須知/, { selector: 'summary' })).toBeInTheDocument();
     expect(within(main).getByText(/AI 能做的/)).toBeInTheDocument();
     expect(within(main).getByText(/AI 不能做的/)).toBeInTheDocument();
-    expect(within(main).getByText(/不要在作答裡寫真實姓名/)).toBeInTheDocument();
+    expect(within(main).getByText(/不要在題目或作答裡寫真實姓名/)).toBeInTheDocument();
+    // 作文範文關著時：不能做的照樣是「替你寫要繳交的作文」，不提作文範文；能做的也沒有作文範文。
+    expect(within(main).getByText(/AI 不能做的/)).toHaveTextContent('替你寫要繳交的作文。');
+    expect(within(main).getByText(/AI 不能做的/).textContent).not.toContain('作文範文');
+    expect(within(main).getByText(/AI 能做的/).textContent).not.toContain('作文範文');
     expect(within(main).getByText(/不恰當或讓你不舒服的內容/)).toBeInTheDocument();
   });
 

@@ -73,7 +73,11 @@ export const API_ERROR_CODES = [
   /** 自訂題的作文還不能送 AI 批改（400）；error.reason 是 EssayNotGradableReason，error.field 是 'essay'。 */
   'essay_not_gradable',
   // ── 學習助手（assist.ts；docs/design/learning-assistant.md §4.2）──
-  /** 學習助手的輸入不符合規則（400）；error.reason 是 AssistInputProblem，error.field 是欄位，D8 與 official_like 命中另附 error.ranges。 */
+  /**
+   * 學習助手的輸入不符合規則（400）；error.reason 是 AssistInputProblem，error.field 是欄位，D8 與 official_like 命中另附 error.ranges。
+   * 國文的拒收原因（subject_mismatch、zh_answer_section、zh_no_task、zh_draft_too_long、zh_too_many_targets、zh_answer_too_long）
+   * 也走這個代碼，不另開錯誤代碼；國文沒開放時沿用 503 not_configured（docs/design/assistant-subjects.md §7.2）。
+   */
   'assist_input_invalid',
   /**
    * 讀不到這一題（409 版本已更新或下架、502 題目檔暫時讀不到、400 這種題目不支援）；error.reason 是 'gone' | 'unreachable' | 'unsupported'，

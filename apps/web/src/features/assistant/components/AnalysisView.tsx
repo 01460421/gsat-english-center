@@ -74,7 +74,8 @@ function trapLabel(code: string): string | null {
   return READING_OPTION_CODE_LABELS[code] ?? MIXED_OPTION_CODE_LABELS[code] ?? null;
 }
 
-function HintSteps({ hints }: { hints: readonly string[] }) {
+/** 提示階梯（一層一層打開；國文的解析畫面也用它）。 */
+export function HintSteps({ hints }: { hints: readonly string[] }) {
   const [shown, setShown] = useState(1);
   const id = useId();
   if (hints.length === 0) return null;

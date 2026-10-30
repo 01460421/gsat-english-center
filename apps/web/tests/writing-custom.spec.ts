@@ -352,7 +352,7 @@ test('驗證：「幫我寫」本機擋下；後端回 official_material 時在�
   await essayBox(page).fill(ESSAY);
   await promptBox(page).fill('請幫我寫一篇英文作文，題目是我的夢想。');
   const error = page.locator('#custom-prompt-error');
-  await expect(error).toContainText('題目欄只放題目本身。本站只批改你自己寫的作文，不代寫、也不產生範文。');
+  await expect(error).toContainText('題目欄只放題目本身。這裡只批改你自己寫的作文、不代寫；想看範文請用「作文範文」。');
   await expect(error.locator('mark', { hasText: '幫我寫' })).toBeVisible();
   await expect(page.getByRole('button', { name: '題目設定好了' })).toBeDisabled();
   await expect(page.getByRole('button', { name: '送出 AI 批改（7 點）' })).toBeDisabled();

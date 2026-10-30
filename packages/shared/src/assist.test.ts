@@ -354,6 +354,47 @@ describe('assistAskHref／parseAskParams（確認頁的網址）', () => {
   });
 });
 
+describe('科目分派（docs/design/assistant-subjects.md §2.4、§4）', () => {
+  const inputs: unknown[] = [
+    TYPED,
+    q([{ text: `${STEM}\n${OPTIONS}` }], { student_answer: ' (B) ' }),
+    q([{ text: '這是一題中文題目，但是學習助手英文模式只收英文題目，所以會被擋下來喔。' }]),
+    q([{ text: `佳作一 <b> 請幫我寫 ${STEM}` }], { student_answer: '答'.repeat(301) }),
+    { blocks: [] },
+  ];
+
+  it('沒有 subject 時等於英文：結果和明確帶 english 逐項相同', () => {
+    for (const input of inputs) expect(checkAssistQuestion(input)).toEqual(checkAssistQuestion(input, 'english'));
+  });
+
+  it('chinese 改走 checkZhQuestion（國文的規則、不用 NFKC）', () => {
+    const zh = q([{ text: '12. 關於①、②是否符合上文內容，最適當的研判是：\n①甲文說了\n②乙文說了\n(A)①、②皆符合\n(B)①、②皆不符合\n(C)①符合，②不符合\n(D)①不符合，②無法判斷' }]);
+    const r = checkAssistQuestion(zh, 'chinese');
+    expect(r).toEqual(shared.checkZhQuestion(zh));
+    expect(r.ok && r.value.blocks[0]!.text).toContain('①、②皆符合');
+    expect(r.ok && r.value.choice_mode).toBe('judge');
+    // 同一份題目走英文的規則：NFKC 把圈號變成數字，而且不是英文。
+    expect(problemsOf(zh)).toContain('not_english');
+  });
+
+  it('解析的種類：英文照舊；國文的拍照、貼上依格式', () => {
+    for (const source of ['bank', 'bank_mock', 'exam', 'vocab', 'writing', 'photo', 'typed'] as const) {
+      expect(assistCaseKindOf(source, 'english')).toBe(assistCaseKindOf(source));
+    }
+    expect(assistCaseKindOf('typed', 'chinese')).toBe('zh_choice');
+    expect(assistCaseKindOf('photo', 'chinese', 'short')).toBe('zh_short');
+    expect(assistCaseKindOf('typed', 'chinese', 'writing')).toBe('zh_writing');
+    expect(assistCaseKindOf('bank', 'chinese')).toBe('item');
+  });
+
+  it('國文新增的拒收原因都有中文訊息', () => {
+    for (const code of ['subject_mismatch', 'zh_no_task', 'zh_draft_too_long', 'zh_too_many_targets', 'zh_answer_section', 'zh_answer_too_long'] as const) {
+      expect(ASSIST_INPUT_PROBLEMS).toContain(code);
+      expect(ASSIST_INPUT_PROBLEM_MESSAGES[code]).toMatch(/\S/);
+    }
+  });
+});
+
 describe('匯出', () => {
   it('從套件入口匯出（前端與 Worker 都從 @gsat/shared 匯入）', () => {
     expect(shared.checkAssistQuestion).toBe(checkAssistQuestion);
@@ -363,5 +404,8 @@ describe('匯出', () => {
     expect(shared.iterateQuestions).toBeTypeOf('function');
     expect(shared.swapAnswerLetters).toBeTypeOf('function');
     expect(shared.isPracticeGroupFileCore).toBeTypeOf('function');
+    expect(shared.assistPoints).toBeTypeOf('function');
+    expect(shared.checkZhQuestion).toBeTypeOf('function');
+    expect(shared.ZH_TW_READINGS).toBeTypeOf('object');
   });
 });
