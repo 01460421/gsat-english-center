@@ -5,12 +5,13 @@
  *   ZhText              底線標記換成 <u>（不經 innerHTML）、報讀「畫線：」、加亮。
  *   CharCount、ZhErrorStats、PhotoBudgetLine、MultiScoreLine。
  *   先看提示：卡片、診斷、左欄的引文加亮都等展開完整解析（或按下那一句）才出現；研判題的「推出組合」。
+ *   ZhWritingView       國寫方法卡（先收合、依題型列知性或情意、來源說明）、你附的段落的程式檢查（有附才有、沒有發現時一行說明）。
  */
-import { ZH_CARD_COLUMNS, ZH_CARD_KINDS, zhMultiScore, type ZhCardView, type ZhOptionView } from '@gsat/shared';
+import { ZH_CARD_COLUMNS, ZH_CARD_KINDS, ZH_WRITING_METHOD_CARDS, zhMultiScore, type ZhCardView, type ZhOptionView } from '@gsat/shared';
 import { render, screen, within } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
 import { setDesktopViewport, setMobileViewport } from '../../../../test/viewport';
-import { zhFormAnalysis, zhJudgeAnalysis, zhWordAnalysis } from '../../testing/zh';
+import { zhFormAnalysis, zhJudgeAnalysis, zhWordAnalysis, zhWritingAnalysis } from '../../testing/zh';
 import { CardTable, cardsFor, sharedCards, zhCardLayout } from './components/CardTable';
 import { CharCount, charCountText } from './components/CharCount';
 import { MultiScoreLine } from './components/MultiScoreLine';
@@ -20,6 +21,7 @@ import { ZhErrorStats, zhErrorSummary } from './components/ZhErrorStats';
 import { ZhText, zhPlainText, zhSegments } from './components/ZhText';
 import { zhBlockMarks, zhQuoteId } from './quotes';
 import { ZhChoiceView, judgeComboLine } from './ZhChoiceView';
+import { ZhWritingView } from './ZhWritingView';
 
 afterEach(() => setMobileViewport());
 
@@ -209,5 +211,70 @@ describe('字數、錯因統計、拍照點數、多選計分', () => {
   it('MultiScoreLine：顯示 shared 算好的那一行', () => {
     render(<MultiScoreLine score={zhMultiScore({ chosen: 'AC', key: 'AE', n: 5, basis: 'student_key' })} />);
     expect(screen.getByTestId('zh-multi-score')).toHaveTextContent('你誤選 (C)、漏選 (E)：答錯 2 個選項，得 1/5（每題 4 分時是 0.8 分）。');
+  });
+});
+
+describe('ZhWritingView：國寫方法卡與程式檢查', () => {
+  const common = { hintFirst: false, sourceNote: null, locatable: () => false, onLocate: () => {} };
+  const cards = () => document.querySelector('[data-zh-method-cards]') as HTMLDetailsElement;
+
+  it('國寫方法卡先收合；五張卡都有要點與練習；情意題只列「情意題」那一行；有來源說明', () => {
+    render(<ZhWritingView analysis={zhWritingAnalysis()} common={common} />);
+    expect(cards()).not.toHaveAttribute('open');
+    expect(within(cards()).getByText('國寫方法卡').tagName).toBe('SUMMARY');
+    expect(cards().querySelectorAll('[data-method-card]')).toHaveLength(5);
+    for (const card of ZH_WRITING_METHOD_CARDS) {
+      expect(within(cards()).getByText(card.title_zh)).not.toBeVisible();
+      expect(within(cards()).getByText(card.emotion_zh)).toBeInTheDocument();
+      expect(within(cards()).queryByText(card.reason_zh)).toBeNull();
+      expect(within(cards()).getByText(card.practice_zh)).toBeInTheDocument();
+    }
+    expect(within(cards()).getAllByText('情意題：')).toHaveLength(5);
+    expect(within(cards()).getByText('整理自全國語文競賽高中學生組得獎作品與評審講評的共同寫法（本站分析，不轉載原文）。')).toBeInTheDocument();
+  });
+
+  it('知性題只列「知性題」那一行；題型不明兩行都列', () => {
+    const { unmount } = render(<ZhWritingView analysis={{ ...zhWritingAnalysis(), section: 'zh_writing_reason' }} common={common} />);
+    expect(within(cards()).getAllByText('知性題：')).toHaveLength(5);
+    expect(within(cards()).queryByText('情意題：')).toBeNull();
+    unmount();
+    render(<ZhWritingView analysis={{ ...zhWritingAnalysis(), section: 'zh_other' }} common={common} />);
+    expect(within(cards()).getAllByText('知性題：')).toHaveLength(5);
+    expect(within(cards()).getAllByText('情意題：')).toHaveLength(5);
+  });
+
+  it('附了段落：在「你附的段落」裡列程式檢查（標籤、錯因、引學生的字），標明不花點數、不送 AI', () => {
+    const text = '我們一但放棄就回不去了！真的回不去了！';
+    render(<ZhWritingView analysis={zhWritingAnalysis({ draft: text })} common={common} draftText={text} />);
+    const section = screen.getByRole('region', { name: /你附的段落/ });
+    const program = section.querySelector('[data-zh-draft-program]') as HTMLElement;
+    expect(within(program).getByRole('heading', { name: '程式檢查（不花點數）' })).toBeInTheDocument();
+    const items = program.querySelectorAll('[data-zh-draft-check]');
+    expect([...items].map((li) => li.getAttribute('data-zh-draft-check'))).toEqual(['typo', 'exclamation']);
+    expect(items[0]).toHaveTextContent('常見錯字');
+    expect(items[0]).toHaveTextContent('文辭（含錯字、標點）');
+    expect(items[0]).toHaveTextContent('「一但」應寫「一旦」');
+    expect(items[1]).toHaveTextContent('這一段有 2 個驚嘆號（「我們一但放棄就回不去了！」）');
+    expect(within(program).getByText('程式依固定規則比對，不送 AI；沒列出的不代表沒有問題。')).toBeInTheDocument();
+  });
+
+  it('附了段落但沒有發現：一行說明檢查了哪幾項（問題（一）的答案不列字數與開頭）', () => {
+    const text = '選擇不是逃避，而是知道自己要往哪裡走。';
+    const { unmount } = render(<ZhWritingView analysis={zhWritingAnalysis({ draft: text })} common={common} draftText={text} />);
+    expect(screen.getByText('程式沒有找到這幾種常見問題：字數偏多、開頭太長、常見錯字、套語、驚嘆號太多、分號串排比。')).toBeInTheDocument();
+    expect(document.querySelectorAll('[data-zh-draft-check]')).toHaveLength(0);
+    unmount();
+    const q1 = zhWritingAnalysis({ draft: text });
+    render(<ZhWritingView analysis={{ ...q1, draft: { ...q1.draft!, target: 'q1' } }} common={common} draftText={text} />);
+    expect(screen.getByText('程式沒有找到這幾種常見問題：常見錯字、套語、驚嘆號太多、分號串排比。')).toBeInTheDocument();
+  });
+
+  it('沒有附段落：沒有程式檢查（即使傳了文字）；有附段落但拿不到原文：只顯示 AI 的檢核', () => {
+    const { unmount } = render(<ZhWritingView analysis={zhWritingAnalysis()} common={common} draftText="我們一但放棄！" />);
+    expect(document.querySelector('[data-zh-draft-program]')).toBeNull();
+    unmount();
+    render(<ZhWritingView analysis={zhWritingAnalysis({ draft: '我在渡過暑假的時候…' })} common={common} />);
+    expect(screen.getByRole('region', { name: /你附的段落/ })).toBeInTheDocument();
+    expect(document.querySelector('[data-zh-draft-program]')).toBeNull();
   });
 });

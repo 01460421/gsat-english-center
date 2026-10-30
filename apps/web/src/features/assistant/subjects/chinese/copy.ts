@@ -2,7 +2,7 @@
  * 學習助手國文版的文案（docs/design/assistant-subjects.md §8.2）：集中在這裡，頁面與元件只引用常數。
  * 不寫官方考試機構的名稱或縮寫（一律寫「官方」），也不寫 AI 模型的名稱。
  */
-import type { AssistDoubtKind, ZhCoverage, ZhDraftStatus } from '@gsat/shared';
+import { ZH_METHOD_CARDS_SOURCE_ZH, type AssistDoubtKind, type ZhCoverage, type ZhDraftStatus } from '@gsat/shared';
 
 export const ZH_COPY = {
   /** 學習助手首頁的主要按鈕（兩科都開放時）。 */
@@ -51,6 +51,16 @@ export const ZH_COPY = {
   targetMissing: '這段文字有好幾題，請在「要問的題號」填要問哪幾題（選擇題最多 4 題，簡答最多 3 題）。',
   analyzeSubjectRetry: '改用英文重新建立',
   homeChineseCard: '講義、段考的國文題目：字音字形、文言、閱讀、簡答與國寫指導。',
+  /** 國寫指導最下面的方法卡（本站整理，先收合；卡片內容在 shared 的 assist-methods-zh.ts）。 */
+  methodCardsSummary: '國寫方法卡',
+  methodCardsReason: '知性題',
+  methodCardsEmotion: '情意題',
+  methodCardsPractice: '練習',
+  methodCardsSource: ZH_METHOD_CARDS_SOURCE_ZH,
+  /** 「你附的段落」裡的程式檢查（shared 的 zhDraftChecks；不送 AI、不花點數）。 */
+  draftChecksTitle: '程式檢查（不花點數）',
+  draftChecksNone: (labels: readonly string[]) => `程式沒有找到這幾種常見問題：${labels.join('、')}。`,
+  draftChecksNote: '程式依固定規則比對，不送 AI；沒列出的不代表沒有問題。',
 } as const;
 
 /** 「你卡在哪裡」的國文標籤（代碼和英文相同；§8.2）。 */

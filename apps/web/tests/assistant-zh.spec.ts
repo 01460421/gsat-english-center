@@ -200,6 +200,13 @@ test('簡答與國寫：每小題的作答與字數、示範先收合；國寫�
   expect(created.hint_first).toBe(false);
   await expect(page.getByText('AI 不打分數，示範不是佳作。')).toBeVisible();
   await expect(page.getByText('「渡過」→「度過」', { exact: false })).toBeVisible();
+  // 程式檢查（不花點數）用題目裡的段落原文算；這一段沒有常見問題。國寫方法卡先收合，打開後看得到情意題的做法。
+  await expect(page.getByRole('heading', { name: '程式檢查（不花點數）' })).toBeVisible();
+  await expect(page.getByText(/^程式沒有找到這幾種常見問題：/)).toBeVisible();
+  await expect(page.getByText('審題：圈出關鍵詞，問它排除了什麼')).toBeHidden();
+  await page.getByText('國寫方法卡', { exact: true }).click();
+  await expect(page.getByText('審題：圈出關鍵詞，問它排除了什麼')).toBeVisible();
+  await expect(page.getByText('情意題：').first()).toBeVisible();
   await expectNoHorizontalOverflow(page, isMobile(testInfo));
   expect(errors).toEqual([]);
 });
