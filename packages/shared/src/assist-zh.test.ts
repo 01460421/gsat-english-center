@@ -47,6 +47,8 @@ import {
   zhAnswerSectionHits,
   zhApplyTwForms,
   zhBopomofoSyllables,
+  zhScriptCount,
+  zhStripMarks,
   zhCapCertainty,
   zhCardRowsTotalMax,
   zhCardsMax,
@@ -89,6 +91,7 @@ import {
 } from './assist-zh';
 import { ZH_FORM_EITHER, ZH_RHETORIC_MAINLAND, ZH_RHETORIC_SUBTYPES, ZH_RHETORIC_TERMS, ZH_SIMPLIFIED_ONLY, ZH_TW_FORM_MAP, ZH_TW_READINGS } from './assist-zh-data';
 import { ASSIST_INPUT_PROBLEMS, assistLimitText, type AssistInputProblem } from './assist';
+import { detectAssistSubject } from './assist-subjects';
 
 const PAPERS = readFileSync(new URL('./fixtures/zh-papers-public.txt', import.meta.url), 'utf8');
 
@@ -281,6 +284,17 @@ describe('checkZhQuestion：每一條規則', () => {
     expect(problemsOf(q(JUDGE_FIXTURE))).toEqual([]);
   });
 
+  it('subject_mismatch：選項印注音的字音題（漢字不到 30 個）照樣是國文，注音字元也算國文的字', () => {
+    // 本站自寫的題目：漢字 22 個、注音 10 個。
+    const printed = '3. 下列「」內的字，注音完全正確的是：\n(A)下星「期」：ㄑㄧ\n(B)「危」險：ㄨㄟ\n(C)「暫」時：ㄓㄢˋ\n(D)「企」業：ㄑㄧˇ';
+    expect(printed.match(/\p{Script=Han}/gu)!.length).toBeLessThan(30);
+    expect(zhScriptCount(printed)).toBeGreaterThanOrEqual(30);
+    expect(problemsOf(q(printed))).toEqual([]);
+    expect(detectAssistSubject(printed)).toEqual({ subject: 'chinese', confidence: 'high' });
+    // 只有注音、沒有題目的短字串仍然不夠。
+    expect(problemsOf(q('ㄑㄧ ㄨㄟ ㄓㄢˋ ㄑㄧˇ (A) (B) (C) (D) 1234567890'))).toContain('subject_mismatch');
+  });
+
   it('text_missing、text_too_short、text_too_long、figure_too_long、blocks_invalid', () => {
     expect(problemsOf(q('   '))).toContain('text_missing');
     expect(problemsOf(q('下列何者正確'))).toContain('text_too_short');
@@ -464,6 +478,21 @@ describe('guessZhSection：30 個題幹', () => {
     }
   });
   it('一共 30 個題幹', () => expect(cases).toHaveLength(30));
+
+  // 國綜把「沒有」「有」畫底線（轉錄寫成 ⟦…⟧）；段考與講義常寫「字形完全正確」「何者字形錯誤」。
+  const marked: Array<[string, string, string]> = [
+    ['下列文句，完全⟦沒有⟧錯別字的是：', 'zh_form', 'all_correct'],
+    ['下列文句，⟦有⟧錯別字的是：', 'zh_form', 'has_error'],
+    ['下列「」內的字，字形完全正確的選項是：', 'zh_form', 'all_correct'],
+    ['下列文句中「」內的字，何者字形錯誤？', 'zh_form', 'has_error'],
+  ];
+  it.each(marked)('底線標記與字形寫法：%s', (stem, section, polarity) => {
+    expect(guessZhSection(stem)).toEqual({ section, form_polarity: polarity });
+  });
+  it('zhStripMarks：拿掉 ⟦⟧ 與波浪線的 ~', () => {
+    expect(zhStripMarks('完全⟦沒有⟧錯別字、⟦~波浪~⟧')).toBe('完全沒有錯別字、波浪');
+    expect(guessZhFormat('下列敘述，何者⟦正確⟧？\n(A)甲\n(B)乙\n(C)丙\n(D)丁').choice_mode).toBe('single');
+  });
 });
 
 describe('zhCharLimits、parseZhNumber、countZhChars：字數與抄錄規定', () => {
@@ -586,6 +615,11 @@ describe('國寫不代寫：示範、架構說明、等第與連續漢字', () =
     expect(zhStripGradeSentences('大約 18 分。').removed).toBe(1);
     expect(zhStripGradeSentences('問題（二）至多 19 行，標點占一格。寫作時間約 40 分鐘。')).toEqual({ text: '問題（二）至多 19 行，標點占一格。寫作時間約 40 分鐘。', removed: 0 });
     expect(zhStripGradeSentences('先分析素材。').removed).toBe(0);
+    // 配分是格式事實（系統提示允許引用）：不拿掉；同一句另有分數或等第時照樣拿掉。
+    for (const fact of ['問題（一）占 4 分，問題（二）占 21 分。', '知性題 4＋21 分，情意題 25 分。', '問題（一）4 分。', '國寫滿分 25 分。']) {
+      expect(zhStripGradeSentences(fact), fact).toEqual({ text: fact, removed: 0 });
+    }
+    expect(zhStripGradeSentences('問題（二）占 21 分，你這段大約 15 分。').removed).toBe(1);
   });
 
   it('連續漢字超過 120 個時截斷', () => {
@@ -706,6 +740,14 @@ describe('台灣標準：注音、審定音、字碼、簡體字、修辭名稱'
     expect(zhIsFormEither('臺', '台')).toBe(true);
     expect(zhIsFormEither('温', '溫')).toBe(true);
     expect(zhIsFormEither('斐', '菲')).toBe(false);
+    // 模型多半寫整個詞：逐字比，每個不同的字都是兩可才算。
+    expect(zhIsFormEither('台灣', '臺灣')).toBe(true);
+    expect(zhIsFormEither('讚嘆', '讚歎')).toBe(true);
+    expect(zhIsFormEither('温度', '溫度')).toBe(true);
+    expect(zhIsFormEither('了解', '瞭解')).toBe(true);
+    expect(zhIsFormEither('計劃', '計畫')).toBe(true);
+    expect(zhIsFormEither('渡過暑假', '度過暑假')).toBe(false);
+    expect(zhIsFormEither('台灣省', '臺灣')).toBe(false);
   });
 
   it('修辭名稱：台灣課本的名稱通過、大陸名稱換掉、其他只計數', () => {
@@ -733,6 +775,17 @@ describe('台灣標準：注音、審定音、字碼、簡體字、修辭名稱'
     expect(zhSoundKeyConsistent('ㄐㄧˋ／ㄑㄧˋ／ㄐㄧ：完全不同')).toBe(true);
     expect(zhSoundKeyConsistent('讀音相同')).toBeNull();
     expect(zhReadingsRelation(['ㄆㄧˊ'])).toBe('same');
+    // 結論取最後一個冒號之後（字義題的 key_zh 前面也有冒號）；讀音取前面各段。
+    expect(zhParseSoundKey('前：被／後：被：同')).toEqual({ readings: [], claim: 'same' });
+    expect(zhParseSoundKey('前：代詞／後：往：不同').claim).toBe('different');
+    expect(zhParseSoundKey('前：ㄆㄧˊ／後：ㄆㄧˊ：同')).toEqual({ readings: ['ㄆㄧˊ', 'ㄆㄧˊ'], claim: 'same' });
+    expect(zhParseSoundKey('ㄆㄧˊ／ㄅㄧˋ／ㄆㄧ：兩兩不同').claim).toBe('all_different');
+    expect(zhParseSoundKey('ㄆㄧˊ').claim).toBeNull();
+  });
+
+  it('一聲的「ˉ」：拿掉再檢查（台灣的注音一聲不標）', () => {
+    expect(zhCheckBopomofo('ㄍㄨㄚˉ')).toMatchObject({ ok: true, syllables: ['ㄍㄨㄚ'] });
+    expect(zhBopomofoSyllables('ㄓㄢˉ ㄍㄨㄤˉ')).toEqual(['ㄓㄢ', 'ㄍㄨㄤ']);
   });
 });
 

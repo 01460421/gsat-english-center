@@ -447,14 +447,18 @@ function zhAnalysisOf(c: AssistCaseDetail, multiSuspect: boolean): ZhAnalysisVie
   return zhClassicalAnalysis({ label, studentAnswer: answer });
 }
 
-/** 國文題目的題號清單（簡答展開成小題；沒有題號時是「1」）。 */
+/** 國文題目的題號清單（簡答展開成小題；沒有題號時是空字串，同 Worker）。 */
 function zhTargetsOf(question: UpdateAssistQuestionBody['question'], kind: AssistCaseKind): AssistQuestionTarget[] {
+  // 同 Worker（subjects/chinese/question.ts）：學生沒填題號、題目裡也沒有題號時，題號是空字串。
+  const parts = kind === 'zh_short' ? zhShortPartLabels(question.blocks, question.target_labels) : [];
   const labels =
     kind === 'zh_short'
-      ? zhShortPartLabels(question.blocks, question.target_labels).map((l) => (l === '' ? '1' : l))
+      ? parts.length > 0
+        ? parts
+        : ['']
       : question.target_labels.length > 0
         ? question.target_labels
-        : [question.blocks.find((b) => b.label)?.label ?? '1'];
+        : [question.blocks.find((b) => b.label)?.label ?? ''];
   const single = labels.length === 1;
   return labels.map((label) => {
     const answer = question.answers?.[label] ?? (single ? (Object.values(question.answers ?? {})[0] ?? null) : null);

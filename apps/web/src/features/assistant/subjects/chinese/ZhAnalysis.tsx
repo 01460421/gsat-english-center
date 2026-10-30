@@ -2,7 +2,7 @@
  * 國文在科目登記表裡的解析元件（docs/design/assistant-subjects.md §8.1）：依 kind 分到 ZhChoiceView、ZhShortView、ZhWritingView。
  * 「可能是多選題」的「改成多選重看」在這裡送 PATCH（0 點；§5.3），回來的案例交給案例頁的輪詢器。
  */
-import type { ZhChoiceMode } from '@gsat/shared';
+import { zhExtractOptions, type ZhChoiceMode } from '@gsat/shared';
 import { useState } from 'react';
 import { ErrorMessage } from '../../../writing/components/ui';
 import type { ErrorView } from '../../../writing/lib/errors';
@@ -18,7 +18,13 @@ export function ZhAnalysis({ detail, analysis, sourceNote, locatable, onLocate, 
   const [switching, setSwitching] = useState(false);
   const [error, setError] = useState<ErrorView | null>(null);
   const errorView = useAssistErrorView();
-  const common: ZhViewCommonProps = { hintFirst: detail.hint_first, sourceNote, locatable, onLocate };
+  // 題幹與選項：Worker 的題目已經抽好每一題的選項；只有一題而沒有抽到時，從題目區塊抽 (A)–(E)。
+  const targetList = detail.question?.targets ?? [];
+  const blocksText = (detail.question?.blocks ?? []).map((b) => b.text).join('\n');
+  const targets = Object.fromEntries(
+    targetList.map((t) => [t.label, { stem: t.stem, options: t.options ?? (targetList.length === 1 && blocksText !== '' ? zhExtractOptions(blocksText) : null) }]),
+  );
+  const common: ZhViewCommonProps = { hintFirst: detail.hint_first, sourceNote, locatable, onLocate, targets };
 
   if (analysis.kind === 'zh_choice') {
     const modes: Record<string, ZhChoiceMode | undefined> = Object.fromEntries((detail.question?.targets ?? []).map((t) => [t.label, t.choice_mode]));

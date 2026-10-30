@@ -4,19 +4,22 @@
  *   CardTable           11 種欄名、依 for_label 放到題號下、字音字形的查辭典標示、文言對照卡兩欄。
  *   ZhText              底線標記換成 <u>（不經 innerHTML）、報讀「畫線：」、加亮。
  *   CharCount、ZhErrorStats、PhotoBudgetLine、MultiScoreLine。
+ *   先看提示：卡片、診斷、左欄的引文加亮都等展開完整解析（或按下那一句）才出現；研判題的「推出組合」。
  */
 import { ZH_CARD_COLUMNS, ZH_CARD_KINDS, zhMultiScore, type ZhCardView, type ZhOptionView } from '@gsat/shared';
 import { render, screen, within } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
 import { setDesktopViewport, setMobileViewport } from '../../../../test/viewport';
 import { zhFormAnalysis, zhJudgeAnalysis, zhWordAnalysis } from '../../testing/zh';
-import { CardTable, cardsFor, sharedCards } from './components/CardTable';
+import { CardTable, cardsFor, sharedCards, zhCardLayout } from './components/CardTable';
 import { CharCount, charCountText } from './components/CharCount';
 import { MultiScoreLine } from './components/MultiScoreLine';
 import { OptionVerdictTable, studentCell } from './components/OptionVerdictTable';
 import { PhotoBudgetLine, photoBudget } from './components/PhotoBudgetLine';
 import { ZhErrorStats, zhErrorSummary } from './components/ZhErrorStats';
 import { ZhText, zhPlainText, zhSegments } from './components/ZhText';
+import { zhBlockMarks, zhQuoteId } from './quotes';
+import { ZhChoiceView, judgeComboLine } from './ZhChoiceView';
 
 afterEach(() => setMobileViewport());
 
@@ -91,6 +94,16 @@ describe('CardTable', () => {
     expect(sharedCards(cards, ['1', '2', '34(1)']).map((c) => c.kind)).toEqual(['compare', 'rule']);
   });
 
+  it('zhCardLayout：只有一題時每張卡都屬於那一題（學生沒填題號時題號是空字串）；好幾題時依 for_label 分', () => {
+    const cards = [card('sound', ''), card('form', '2'), card('compare', '')];
+    const one = zhCardLayout(cards, ['']);
+    expect(one.shared).toEqual([]);
+    expect(one.of('').map((c) => c.kind)).toEqual(['sound', 'form', 'compare']);
+    const many = zhCardLayout(cards, ['1', '2']);
+    expect(many.of('2').map((c) => c.kind)).toEqual(['form']);
+    expect(many.shared.map((c) => c.kind)).toEqual(['sound', 'compare']);
+  });
+
   it('字音、字形卡在確定程度上限生效時標「讀音、字形請查教育部辭典」；字音的注音欄不換行', () => {
     render(<CardTable card={card('sound')} capped />);
     expect(screen.getByText('讀音、字形請查教育部辭典')).toBeInTheDocument();
@@ -157,7 +170,7 @@ describe('字數、錯因統計、拍照點數、多選計分', () => {
     expect(summary.top.map((t) => t.code)).toEqual(['zh_form_homophone', 'zh_polysemy', 'careless']);
     render(<ZhErrorStats counts={{ zh_form_homophone: 3 }} />);
     expect(screen.getByRole('heading', { name: /國文錯因統計/ })).toBeInTheDocument();
-    expect(screen.getByText(/「同音、音近字誤用」3 題/)).toBeInTheDocument();
+    expect(screen.getByText(/「同音、音近字誤用」3 次/)).toBeInTheDocument();
   });
 
   it('PhotoBudgetLine：轉錄 3 點（2 張 4 點）＋解析約 6 點；點數不夠時建議改用貼上', () => {
@@ -166,6 +179,31 @@ describe('字數、錯因統計、拍照點數、多選計分', () => {
     render(<PhotoBudgetLine photos={1} remaining={5} />);
     expect(screen.getByTestId('zh-photo-budget')).toHaveTextContent('轉錄 3 點＋解析約 6 點＝9 點；你今天還有 5 點。');
     expect(screen.getByText('點數不夠做完這一題，建議改用貼上。')).toBeInTheDocument();
+  });
+
+  it('judgeComboLine：研判題的「推出組合」＝逐句判定 → 答案與選項文字；不是研判題時沒有這一行', () => {
+    const item = zhJudgeAnalysis({ studentAnswer: 'D' }).items[0]!;
+    expect(judgeComboLine(item, '①、②皆不符合')).toBe('① 不符合、② 不符合 → (B)「①、②皆不符合」');
+    expect(judgeComboLine(item, null)).toBe('① 不符合、② 不符合 → (B)');
+    expect(judgeComboLine(zhFormAnalysis({ studentAnswer: 'A' }).items[0]!, '素昧平生')).toBeNull();
+  });
+
+  it('先看提示、沒填題號：字形卡、診斷與逐選項都收在「看完整解析」裡，提示階梯在上面', () => {
+    const analysis = zhFormAnalysis({ label: '', studentAnswer: null });
+    render(<ZhChoiceView analysis={analysis} common={{ hintFirst: true, sourceNote: null, locatable: () => false, onLocate: () => {} }} />);
+    expect(screen.getByText('每句只找成語或關鍵詞。')).toBeVisible();
+    expect(screen.queryByRole('region', { name: '字形卡：錯字對照' })).toBeNull();
+    expect(screen.getByText('(A)「價格卻不斐」有錯字，應該寫「不菲」。')).not.toBeVisible();
+    expect(document.querySelector('[data-zh-shared-cards]')).toBeNull();
+  });
+
+  it('zhBlockMarks：先看提示（activeOnly）時只標按下的那一句', () => {
+    const analysis = zhFormAnalysis({ label: '', studentAnswer: null });
+    const blocks = [{ kind: 'question' as const, label: null, text: '(C)我們素昧平生，卻一見如故' }];
+    expect(Object.values(zhBlockMarks(analysis, blocks, null)).flat().length).toBeGreaterThan(0);
+    expect(zhBlockMarks(analysis, blocks, null, { activeOnly: true })).toEqual({});
+    const id = zhQuoteId.step('', 0);
+    expect(Object.values(zhBlockMarks(analysis, blocks, id, { activeOnly: true })).flat()).toEqual([expect.objectContaining({ active: true })]);
   });
 
   it('MultiScoreLine：顯示 shared 算好的那一行', () => {

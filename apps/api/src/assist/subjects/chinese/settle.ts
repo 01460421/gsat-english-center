@@ -8,6 +8,8 @@
  *   簡答  check.coverage：full → correct、partial → partial、none → wrong；學生沒作答 → unanswered。
  *   國寫  unknown（不給等第或分數）。
  * 題組取最差（assistGroupVerdict），wrong_count 是答錯（wrong、partial）的題數。後處理（output.ts）與結算用同一組函式。
+ * 後處理有好幾步會把 AI 答案的確定程度降成 unsure（逐項不一致、單選判出多個「該選」、字形題錯字數、讀音前後不一致），所以判定一律
+ * 在後處理的最後依當時的答案鍵重算（zhRefreshChoiceItem），結算也不信任存下的 verdict，依同一組欄位再算一次。
  */
 import {
   assistGroupVerdict,
@@ -16,6 +18,7 @@ import {
   type AssistVerdict,
   type ZhAnalysisView,
   type ZhAnswerKey,
+  type ZhChoiceItemView,
   type ZhChoiceMode,
   type ZhCoverage,
   type ZhSection,
@@ -43,6 +46,26 @@ export function zhChoiceItemVerdict(item: { student_answer: string | null; answe
   return { verdict: 'wrong', basis };
 }
 
+/** 逐選項表裡的選項數（A–E；沒有時 undefined，多選以 5 計）。 */
+function letterCount(it: Pick<ZhChoiceItemView, 'options'>): number | undefined {
+  return it.options.filter((o) => /^[A-E]$/.test(o.option)).length || undefined;
+}
+
+/**
+ * 依目前的答案鍵與確定程度重算一題的判定、依據與多選計分（直接改 it）。AI 的答案降成 unsure 而沒有答案鍵時，判定是 unknown
+ * （畫面「AI 不確定」），也不顯示多選的試算分數。optionCount 是題目的選項數（沒給用逐選項表的 A–E 個數）。
+ */
+export function zhRefreshChoiceItem(it: ZhChoiceItemView, optionCount?: number): void {
+  const n = optionCount || letterCount(it);
+  const v = zhChoiceItemVerdict({ student_answer: it.student_answer, answer_key: it.answer_key, choice_mode: it.choice_mode, option_count: n });
+  it.verdict = v.verdict;
+  it.verdict_basis = v.basis;
+  it.multi_score =
+    it.choice_mode === 'multi' && it.answer_key && it.student_answer !== null && v.verdict !== 'unknown'
+      ? zhMultiScore({ chosen: it.student_answer, key: it.answer_key.text, n: n ?? 5, basis: v.basis === 'none' ? 'ai_answer' : v.basis })
+      : null;
+}
+
 /** 一個簡答小題的判定。 */
 export function zhShortPartVerdict(coverage: ZhCoverage, studentAnswer: string | null): AssistVerdict {
   if (studentAnswer === null || studentAnswer.trim() === '' || coverage === 'unanswered') return 'unanswered';
@@ -61,7 +84,10 @@ export interface ZhSettlement {
 /** 國文解析的結算（離題時判定是 unknown、答錯 0 題）。 */
 export function zhSettlement(view: ZhAnalysisView): ZhSettlement {
   if (view.off_topic || view.kind === 'zh_writing') return { section: view.section, verdict: 'unknown', wrongCount: 0 };
-  const verdicts = view.kind === 'zh_choice' ? view.items.map((i) => i.verdict) : view.parts.map((p) => p.verdict);
+  const verdicts =
+    view.kind === 'zh_choice'
+      ? view.items.map((it) => zhChoiceItemVerdict({ student_answer: it.student_answer, answer_key: it.answer_key, choice_mode: it.choice_mode, option_count: letterCount(it) }).verdict)
+      : view.parts.map((p) => p.verdict);
   return {
     section: view.section,
     verdict: assistGroupVerdict(verdicts),

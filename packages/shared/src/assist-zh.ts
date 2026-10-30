@@ -46,6 +46,7 @@ import { isAssistErrorCode, type GeneralErrorTag } from './assist-codes';
 import type { AssistSubject } from './assist-subjects';
 import {
   ZH_FORM_EITHER,
+  ZH_FORM_EITHER_WORDS,
   ZH_RHETORIC_MAINLAND,
   ZH_RHETORIC_SUBTYPES,
   ZH_RHETORIC_TERMS,
@@ -144,7 +145,7 @@ export const ZH_TEXT_LIMITS = {
   draftChars: 250,
   draftQ1Chars: 80,
   writingPromptHan: 2_500,
-  /** 科目文字：漢字至少 30 個、占可見字元至少 30%（§2.5）。 */
+  /** 科目文字：漢字（加上注音字元）至少 30 個、占可見字元至少 30%（§2.5）。 */
   subjectHanMin: 30,
   subjectHanRatio: 0.3,
 } as const;
@@ -482,7 +483,7 @@ export const ZH_SECTION_SPECS: Record<ZhSection, ZhSectionSpec> = {
     families: ['form', 'answering', 'general'],
     length_zh: { base: 1_200 },
     steps_title_zh: '字音：先寫音再比對',
-    steps_zh: ['把每組被問的字的注音都寫下來', '圈出相同的聲旁，提醒自己同聲旁不一定同音', '不確定的字，用它最常見的詞語回想讀音', '最後才比對前後讀音是否相同'],
+    steps_zh: ['把每組被問的字的注音都寫下來', '圈出相同的聲旁，提醒自己同聲旁不一定同音', '破音字看它在這個詞裡的意思或詞性決定讀音', '最後才比對前後讀音是否相同'],
   },
   zh_form: {
     kinds: ['zh_choice'],
@@ -1033,6 +1034,14 @@ function hanCount(text: string): number {
   return text.match(HAN_RE)?.length ?? 0;
 }
 
+/** 國語注音的字元（ㄅ–ㄩ 與聲調 ˊˇˋ˙）；科目判斷時算成國文的字（選項印注音的字音題，漢字常不到 30 個）。 */
+const BOPOMOFO_CHARS_RE = /[ㄅ-ㄩˊˇˋ˙]/gu;
+
+/** 國文書寫的字數：漢字加上注音字元（科目判斷用；§2.5、§4.2）。 */
+export function zhScriptCount(text: string): number {
+  return hanCount(text) + (text.match(BOPOMOFO_CHARS_RE)?.length ?? 0);
+}
+
 function visibleChars(text: string): number {
   return [...text.replace(/\s/gu, '')].length;
 }
@@ -1049,10 +1058,10 @@ export function countZhChars(text: string): ZhCharCount {
   return { chars: visibleChars(text), han: hanCount(text) };
 }
 
-/** 漢字占可見字元的比例（科目判斷用）。 */
+/** 漢字（加上注音字元）占可見字元的比例（科目判斷用）。 */
 export function zhHanRatio(text: string): number {
   const visible = visibleChars(text);
-  return visible === 0 ? 0 : hanCount(text) / visible;
+  return visible === 0 ? 0 : zhScriptCount(text) / visible;
 }
 
 /** 最長的連續漢字（不含標點）有幾個字：國寫的最後一道防線用（ZH_HAN_RUN_MAX）。 */
@@ -1310,8 +1319,9 @@ export function checkZhQuestion(input: unknown): CheckResult<AssistStudentQuesti
   }
   if (masked > 0) warnings.push({ code: 'personal_masked', field: 'blocks' });
 
-  // 科目文字：漢字 ≥ 30 字，而且占可見字元 ≥ 30%（§2.5）。
-  if (all.trim() !== '' && (hanCount(all) < T.subjectHanMin || zhHanRatio(all) < T.subjectHanRatio)) problems.push({ code: 'subject_mismatch', field: 'blocks' });
+  // 科目文字：漢字 ≥ 30 字，而且占可見字元 ≥ 30%（§2.5）。注音字元也算國文的字：選項印注音的字音題（「「戛」然而止：ㄍㄚ」）
+  // 整題常不到 30 個漢字，注音只會出現在國文，不該讓它被當成別科。
+  if (all.trim() !== '' && (zhScriptCount(all) < T.subjectHanMin || zhHanRatio(all) < T.subjectHanRatio)) problems.push({ code: 'subject_mismatch', field: 'blocks' });
 
   // 格式：學生選的優先，沒選用程式猜的（猜不到當成選擇題）；子模式同理。
   const guess = guessZhFormat(all, { answer: Object.values(answersIn)[0] ?? studentAnswer ?? undefined });
@@ -1450,7 +1460,8 @@ export interface ZhFormatGuess {
  *   5 個選項是多選（題目寫明「單選」才改單選；國綜與舊制國文的單選都是 4 個選項）→ 4 個選項是單選。
  *   作答填了兩個以上字母也是多選。選項與字數限制同時出現（混合題組）、選項個數不是 4 或 5 時信心低。
  */
-export function guessZhFormat(text: string, opts: { answer?: string } = {}): ZhFormatGuess {
+export function guessZhFormat(raw: string, opts: { answer?: string } = {}): ZhFormatGuess {
+  const text = zhStripMarks(raw);
   const options = zhExtractOptions(text);
   const n = optionCount(options);
   const hasLimit = /作答字數|[0-9零〇一二兩三四五六七八九十百]+\s*字以內|限\s*[0-9零〇一二兩三四五六七八九十百]+\s*字/u.test(text);
@@ -1484,14 +1495,20 @@ export interface ZhSectionGuess {
   form_polarity?: 'all_correct' | 'has_error';
 }
 
+/** 底線與波浪線的標記（⟦…⟧、⟦~…~⟧）：題幹比對關鍵詞之前先拿掉（國綜常把「沒有」畫底線：「完全⟦沒有⟧錯別字」）。 */
+export function zhStripMarks(text: string): string {
+  return text.replace(/[⟦⟧~]/gu, '');
+}
+
 /**
  * 題型的猜測（§2.5；只看題幹關鍵詞，猜不到回 null，模型以自己的判斷為準）。用在 <task> 裡的「程式猜的題型」、
- * 確定程度上限與字形題的輸入提醒。
+ * 確定程度上限與字形題的輸入提醒。比對前先拿掉底線標記。
  */
-export function guessZhSection(text: string): ZhSectionGuess | null {
+export function guessZhSection(raw: string): ZhSectionGuess | null {
+  const text = zhStripMarks(raw);
   if (/讀音|注音|字音/.test(text)) return { section: 'zh_sound' };
-  if (/錯別字|錯字|別字|用字(?:完全)?(?:正確|錯誤)/.test(text)) {
-    const allCorrect = /(?:完全)?沒有\s*錯別?字|無錯別?字|用字完全正確|完全正確|用字正確/.test(text);
+  if (/錯別字|錯字|別字|用字(?:完全)?(?:正確|錯誤)|字形(?:完全)?(?:正確|錯誤|有誤)/.test(text)) {
+    const allCorrect = /(?:完全)?沒有\s*錯別?字|無錯別?字|用字完全正確|完全正確|用字正確|字形(?:完全)?正確/.test(text);
     return { section: 'zh_form', form_polarity: allCorrect ? 'all_correct' : 'has_error' };
   }
   if ((/無法判斷/.test(text) && STATEMENT_NUMBER_RE.test(text)) || /研判/.test(text)) return { section: 'zh_judge' };
@@ -1723,12 +1740,18 @@ export function zhTrimToFirstSentence(text: string, maxChars = 100): string {
 
 /** 等第或分數的寫法（「A 等」「B+級」「18 分」「級分」「等第」；「分鐘」「分之」「分析」「分類」「分段」「分別」不算）。 */
 const GRADE_RE = /[ABC][＋+]?\s*(?:等|級)|\d{1,2}\s*分(?!鐘|之|析|類|段|別)|級分|等第/u;
+/**
+ * 配分的格式事實（系統提示允許模型引用）：「占 4 分」「配分 21 分」「滿分 25 分」「4＋21 分」「問題（一）4 分」。
+ * 判斷等第句之前先拿掉這些寫法，句子裡沒有別的分數或等第就保留。
+ */
+const SCORE_FACT_RE =
+  /(?:占|佔|配分|滿分|共|合計|總分)\s*\d{1,2}\s*分|\d{1,2}\s*[＋+]\s*\d{1,2}\s*分|問題\s*[（(][一二三四][）)][^。！？\n\d]{0,6}\d{1,2}\s*分|(?:知性|情意)(?:題)?[^。！？\n\d]{0,6}\d{1,2}\s*分/gu;
 
-/** 拿掉含等第或分數的句子（整句；句子以。！？或換行分開）。「至多 19 行」「標點占一格」這類格式事實不受影響。 */
+/** 拿掉含等第或分數的句子（整句；句子以。！？或換行分開）。「至多 19 行」「標點占一格」與配分這類格式事實不受影響。 */
 export function zhStripGradeSentences(text: string): { text: string; removed: number } {
   let removed = 0;
   const kept = (text.match(/[^。！？!?\n]*(?:[。！？!?]+|\n|$)/gu) ?? []).filter((sentence) => {
-    if (sentence === '' || !GRADE_RE.test(sentence)) return true;
+    if (sentence === '' || !GRADE_RE.test(sentence.replace(SCORE_FACT_RE, ''))) return true;
     removed += 1;
     return false;
   });
@@ -1918,10 +1941,10 @@ export function isZhBopomofoSyllable(syllable: string): boolean {
   return !(light && new RegExp(TONE, 'u').test(syllable)) && (syllable.match(/˙/gu)?.length ?? 0) <= 1;
 }
 
-/** 連寫的注音切成音節（聲調、輕聲或下一個聲母開始新的音節；空白、「／」「・」也是分隔）。 */
+/** 連寫的注音切成音節（聲調、輕聲或下一個聲母開始新的音節；空白、「／」「・」也是分隔）。一聲的「ˉ」不寫，先拿掉。 */
 export function zhBopomofoSyllables(text: string): string[] {
   const out: string[] = [];
-  for (const token of text.split(/[\s／/・、]+/u)) {
+  for (const token of text.replace(/ˉ/gu, '').split(/[\s／/・、]+/u)) {
     let cur = '';
     let has = { initial: false, medial: false, final: false };
     const flush = () => {
@@ -1971,8 +1994,12 @@ export interface ZhBopomofoCheck {
   dialect: boolean;
 }
 
-/** 字音卡的注音欄（§5.6）：字元只允許 U+3105–U+3129、聲調與分隔（空白、「／」「・」），並檢查每個音節的形狀。 */
-export function zhCheckBopomofo(text: string): ZhBopomofoCheck {
+/**
+ * 字音卡的注音欄（§5.6）：字元只允許 U+3105–U+3129、聲調與分隔（空白、「／」「・」），並檢查每個音節的形狀。
+ * 一聲的「ˉ」（有些講義會標）先拿掉再檢查：台灣的注音一聲不標。
+ */
+export function zhCheckBopomofo(raw: string): ZhBopomofoCheck {
+  const text = raw.replace(/ˉ/gu, '');
   const pinyin = /[A-Za-zāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜü]/u.test(text);
   const dialect = /[ㄪ-ㄯㆠ-ㆿ]/u.test(text);
   const syllables = zhBopomofoSyllables(text.trim());
@@ -1999,17 +2026,20 @@ export function zhTwReadingCheck(char: string, reading: string): 'ok' | 'mismatc
 export type ZhSoundClaim = 'same' | 'different' | 'all_different';
 
 /**
- * 字音題 key_zh 的讀音與結論（§5.6 的一致性檢查）：「前ㄆㄧˊ／後ㄆㄧˊ：同」→ readings ['ㄆㄧˊ','ㄆㄧˊ']、claim same；
- * 三字一組寫三個音。結論只認「同、相同」「不同」「完全不同」，其他是 null。
+ * 字音、字義題 key_zh 的讀音與結論（§5.6 的一致性檢查）：「前ㄆㄧˊ／後ㄆㄧˊ：同」→ readings ['ㄆㄧˊ','ㄆㄧˊ']、claim same；
+ * 三字一組寫三個音。結論是最後一個冒號之後的那一段（字義題寫成「前：被／後：被：同」，前面也有冒號），讀音取前面各段。
+ * 結論只認「同、相同」「不同」「完全不同、兩兩不同」，其他是 null；沒有冒號時沒有結論。
  */
 export function zhParseSoundKey(key: string): { readings: string[]; claim: ZhSoundClaim | null } {
-  const [left = '', right = ''] = key.split(/[：:]/u);
+  const at = Math.max(key.lastIndexOf('：'), key.lastIndexOf(':'));
+  const left = at >= 0 ? key.slice(0, at) : key;
+  const right = at >= 0 ? key.slice(at + 1) : '';
   const readings = left
     .split(/[／/、，,]/u)
     .map((seg) => zhBopomofoSyllables(seg.replace(/[^ㄅ-ㄩˊˇˋ˙\s]/gu, ' ')).join(' '))
     .filter((r) => r !== '');
   const r = right.trim();
-  const claim: ZhSoundClaim | null = /完全不同/.test(r) ? 'all_different' : /不同/.test(r) ? 'different' : /同/.test(r) ? 'same' : null;
+  const claim: ZhSoundClaim | null = /完全不同|兩兩不同|皆不同|各不相同/.test(r) ? 'all_different' : /不同/.test(r) ? 'different' : /同/.test(r) ? 'same' : null;
   return { readings, claim };
 }
 
@@ -2055,12 +2085,27 @@ export function zhNonStandardChars(text: string): string[] {
   return [...new Set([...text].filter((ch) => SIMPLIFIED_SET.has(ch) || ZH_TW_FORM_MAP[ch] !== undefined))];
 }
 
-/** (wrong, right) 是不是兩可的寫法（ZH_FORM_EITHER 或字碼差異）：錯別字清單要丟掉這一列。 */
+function pairIn(pairs: ReadonlyArray<readonly [string, string]>, x: string, y: string): boolean {
+  return pairs.some(([a, b]) => (a === x && b === y) || (a === y && b === x));
+}
+
+/** 兩個字是不是兩可：ZH_FORM_EITHER 的一對，或字碼對照（ZH_TW_FORM_MAP）統一之後相同。 */
+function charEither(x: string, y: string): boolean {
+  return x === y || pairIn(ZH_FORM_EITHER, x, y) || ZH_TW_FORM_MAP[x] === y || ZH_TW_FORM_MAP[y] === x || zhApplyTwForms(x).text === zhApplyTwForms(y).text;
+}
+
+/**
+ * (wrong, right) 是不是兩可的寫法：錯別字清單要丟掉這一列。模型多半寫整個詞（「台灣→臺灣」「讚嘆→讚歎」），所以逐字比：
+ * 兩邊一樣長、每一個不同的字都是 ZH_FORM_EITHER 的一對或字碼差異，就是兩可；另外收常見的兩可詞（ZH_FORM_EITHER_WORDS）。
+ */
 export function zhIsFormEither(wrong: string, right: string): boolean {
   if (wrong === right) return true;
-  if (ZH_FORM_EITHER.some(([a, b]) => (a === wrong && b === right) || (a === right && b === wrong))) return true;
+  if (pairIn(ZH_FORM_EITHER, wrong, right) || pairIn(ZH_FORM_EITHER_WORDS, wrong, right)) return true;
   if (zhApplyTwForms(wrong).text === zhApplyTwForms(right).text) return true;
-  return false;
+  const a = [...wrong];
+  const b = [...right];
+  if (a.length !== b.length) return false;
+  return a.every((ch, i) => charEither(ch, b[i]!));
 }
 
 /**

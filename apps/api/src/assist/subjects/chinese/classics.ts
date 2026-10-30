@@ -8,9 +8,11 @@
  *                        和語料完全相同 → 保留；幾乎相同（編輯距離 ≤ 2）而且語料裡只有一種寫法 → 換成語料版本；
  *                        相近的寫法不只一種 → 拿掉引號改成轉述。兩者都計數 classic_misquote。語料找不到 → 照常顯示（輸出照樣跑 D8）。
  *                     2. 默寫題（題幹有「默寫」「填入課文」，或「寫出原文」而題目沒有選文）：
- *                        簡答：學生的答案與 AI 的示範都在語料裡找最相近的同長片段逐字比對。示範和原文不同 → 換成原文；
- *                        學生寫錯的字 → 「用詞」一欄的開頭寫「你寫的「…」，原文是「…」。」；語料裡沒有那一篇 →
- *                        「本站無法核對原文。」（recitation_unverified）。
+ *                        簡答：學生的答案與 AI 的示範都在語料裡找最相近的同長片段逐字比對（zhClosestPassage：最多
+ *                        min(2, ⌊長度／6⌋) 個字不同、相近的寫法只有一種、不跨過輸入沒有的句末標點；不合條件就當成語料
+ *                        沒有這一篇）。示範和原文不同 → 換成原文；學生寫錯的字 → 「用詞」一欄的開頭寫「你寫的「…」，
+ *                        原文是「…」。」；語料裡沒有那一篇 → 「本站無法核對原文。」（recitation_unverified），不改示範、
+ *                        不寫「原文是」。
  *                        選擇：選項的文句在語料裡都找不到 → 該題 certainty 最高 likely、畫面加「本站無法核對原文」。
  *   zhPublicDomainShare   選文有幾成在語料裡（引文總量的限制不套用在公有領域古文，quotes.ts）。
  */
@@ -216,7 +218,21 @@ export function zhPublicDomainShare(text: string): number {
   return total === 0 ? 0 : found / total;
 }
 
-/** 默寫：語料裡和 p 最相近的同長片段（以 3 字組投票找候選位置，再逐字比對）。差太多或找不到回 null。 */
+/** 默寫「同一段原文」最多容許幾個字不同：min(2, ⌊長度／6⌋)（6 個字以內要完全相同）。 */
+export function zhRecitationMaxMismatches(length: number): number {
+  return Math.min(2, Math.floor(length / 6));
+}
+
+/** 句末標點與換行（默寫的片段不能跨過輸入本身沒有的句子界線；分號、逗號常有出入，不算）。 */
+const SENTENCE_END_RE = /[。！？!?\n]/gu;
+
+/**
+ * 默寫：語料裡和 p 最相近的同長片段（以 3 字組投票找候選位置，再逐字比對）。只有「確定是同一段原文」才回傳，否則回 null
+ * （呼叫端顯示「本站無法核對原文」，不改示範、不斷定學生寫錯；§5.2）：
+ *   - 不同的字最多 zhRecitationMaxMismatches(長度) 個（〈學記〉這類語料沒收的句子，常和別篇只差幾個字）；
+ *   - 有字不同時，相近的寫法只能有一種（兩處一樣接近就無從判斷）；
+ *   - 對到的原文不能跨過輸入沒有的句末標點（「勿施於人也」不能對成「勿施於人。在…」）。
+ */
 export function zhClosestPassage(text: string): { original: string; key: string; diffs: Array<{ wrote: string; original: string }>; mismatches: number } | null {
   const index = zhClassicsIndex();
   const p = zhMatchKey(text).key;
@@ -228,16 +244,19 @@ export function zhClosestPassage(text: string): { original: string; key: string;
   }
   const candidates = [...votes.entries()].sort((a, b) => b[1] - a[1]).slice(0, 8);
   let best: { start: number; mismatches: number; votes: number } | null = null;
+  const scored: Array<{ seg: string; mismatches: number }> = [];
   for (const [start, v] of candidates) {
     if (start < 0 || start + p.length > index.key.length) continue;
     const seg = index.key.slice(start, start + p.length);
     if (seg.includes(SEP)) continue;
     let mismatches = 0;
     for (let i = 0; i < p.length; i += 1) if (seg[i] !== p[i]) mismatches += 1;
+    scored.push({ seg, mismatches });
     if (!best || mismatches < best.mismatches) best = { start, mismatches, votes: v };
   }
-  if (!best || best.votes < (p.length >= 8 ? 2 : 1) || best.mismatches > Math.floor(p.length / 2)) return null;
+  if (!best || best.votes < (p.length >= 8 ? 2 : 1) || best.mismatches > zhRecitationMaxMismatches(p.length)) return null;
   const seg = index.key.slice(best.start, best.start + p.length);
+  if (best.mismatches > 0 && scored.some((x) => x.mismatches === best.mismatches && x.seg !== seg)) return null;
   const diffs: Array<{ wrote: string; original: string }> = [];
   for (let i = 0; i < p.length; ) {
     if (seg[i] === p[i]) {
@@ -250,7 +269,11 @@ export function zhClosestPassage(text: string): { original: string; key: string;
     i = j;
   }
   const original = originalOf(index, best.start, best.start + p.length);
-  return original === null ? null : { original, key: seg, diffs, mismatches: best.mismatches };
+  if (original === null) return null;
+  // 句子界線：對到的原文中間的句末標點，不能比輸入多（跨到下一句就不是同一段）。
+  const ends = (s: string) => s.trim().slice(0, -1).match(SENTENCE_END_RE)?.length ?? 0;
+  if (ends(original) > ends(text)) return null;
+  return { original, key: seg, diffs, mismatches: best.mismatches };
 }
 
 // ───────────────────────── 整則的核對 ─────────────────────────

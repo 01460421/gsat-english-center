@@ -36,6 +36,7 @@ import { ASSIST_ZH_OCR_TEMPLATE_VERSION, assistZhOcrSchema, assistZhOcrSystemTex
 import { callSpec, type TaskConfig } from '../../../ai/tasks';
 import { toBase64 } from '../../../submissions/images';
 import type { AnalyzeRequestCase } from '../../requests';
+import { zhQuestionNoteNumbers } from './notes';
 
 /** 追問上下文的上限（字元；§3.5）。 */
 export const ZH_FOLLOWUP_CONTEXT = { questionChars: 3_000, digestChars: 1_000, conversationChars: 1_200 } as const;
@@ -131,16 +132,12 @@ function limitText(l: ZhCharLimit): string {
   return `${size}${l.scope === 'total' ? ' in total' : l.scope === 'each' ? ' each' : ''}, ${COPY_TEXT[l.copy]}`;
 }
 
-/** 題目裡的注釋標號（「注1」「注 3」「注①」；注釋區塊的「①」也算）：「注1–注6」或「注1、注3」；沒有回 null。 */
+/**
+ * 題目裡的注釋標號（由小到大）：和 quotes.ts 的「注釋引用」檢查同一支偵測（notes.ts：注釋區塊、夾在區塊中間的「注釋：」段落、
+ * 拍照轉錄的「注釋：①…」、題目裡的「注 N」）；沒有注釋時是空陣列。
+ */
 export function zhNoteNumbers(q: Pick<AssistQuestionView, 'blocks'>): number[] {
-  const nums = new Set<number>();
-  for (const b of q.blocks ?? []) {
-    for (const m of b.text.matchAll(/注\s*(?:釋\s*)?([0-9]{1,2}|[①-⑳])/gu)) nums.add(/\d/.test(m[1]!) ? Number(m[1]) : m[1]!.charCodeAt(0) - 0x2460 + 1);
-    if (b.kind === 'passage' && b.label !== null && /注/.test(b.label)) {
-      for (const m of b.text.matchAll(/(?:^|\n)\s*([①-⑳])/gu)) nums.add(m[1]!.charCodeAt(0) - 0x2460 + 1);
-    }
-  }
-  return [...nums].sort((a, b) => a - b);
+  return [...zhQuestionNoteNumbers(q)].sort((a, b) => a - b);
 }
 
 function notesLine(q: AssistQuestionView): string {

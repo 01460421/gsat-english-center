@@ -82,7 +82,7 @@
    - 不顯示、也不重述：國綜非選擇題參考答案與評分原則、國寫閱卷評分原則、參考試卷解析、佳作、電子報的評分說明。可以顯示：題本文字（短引）、選擇題答案字母、官方統計、三等六級的名稱與分數區間。
    - 輸入：國文自己的樣式（「配分標於題末」與段考卷頭的「配分」不誤中；講義的【答案】【解析】詳解要學生先刪掉）。
    - 指紋：8 個漢字的窗口（雜湊進 repo），扣掉題本與公有領域古文。
-   - **非選示範在第一版就有逐子題比對**：111–115 與參考試卷每個子題的官方答案，扣掉題本 3 字組後，以**帶金鑰的雜湊**各存一組；示範、要點、檢核欄位任一組包含率 ≥ 60% 就拿掉示範。官方短答多半短於 8 字窗口，這一層補上（§5.7）。
+   - **非選示範在第一版就有逐子題比對**：111–115 與參考試卷每個子題的官方答案，扣掉題本 3 字組後，以**不帶金鑰的雜湊**（和英文 D8 同一種：cyrb53 加網域前綴；站主決定，§15 Q10）各存一組；示範、要點、檢核欄位任一組包含率 ≥ 60% 就拿掉示範。官方短答多半短於 8 字窗口，這一層補上（§5.7）。
    - 佳作沒有文字層，殘餘風險和英文一樣（站主 10/23 已接受）。
 9. **拍照轉錄**（§6）：國文另一份提示與 schema。逐字照錄，字形題的錯字不能被改正；直書轉橫排；注釋獨立成區塊；底線用 `⟦…⟧`；注音照抄。不是國文時退點、刪照片，畫面請學生換科目再拍（**第一版不做跨科重轉**，英文行為不變）。
 10. **資料：不加遷移**（§7.1）。科目寫在 `assist_cases.ref_json.subject`，沒寫就是英文；格式在 `kind`、題型在 `section`。國文解析結算時寫回 `section`、`verdict`、`wrong_count`，列表才有「國文｜字形・答錯」。
@@ -487,7 +487,7 @@ export function workerSubject(subject: AssistSubject): WorkerSubject;
 | 步驟 | 現在（main d5442a2） | 之後 |
 |---|---|---|
 | 建案例 `POST /api/assist/cases` | 依來源決定 `kind` | `photo`／`typed` 多收 `subject`（白名單，預設 `english`）與選填的 `related_case_id`，寫進 `ref_json`。國文開關對這位使用者不開時回 **503 `not_configured`**（同現行慣例，不透露預覽）。國文 `kind` 由格式決定，確認時可以改 |
-| 國文的寫入端點（建案例、確認、解析、追問、轉錄） | 英文在 writeGate 檢查 D8 指紋 | 國文另外在**預扣之前**檢查國文指紋與短答雜湊金鑰（§5.7）；指紋壞掉回 503，不預扣 |
+| 國文的寫入端點（建案例、確認、解析、追問、轉錄） | 英文在 writeGate 檢查 D8 指紋 | 國文另外在**預扣之前**檢查國文指紋（8 字窗口與短答集合，§5.7）；指紋讀不到或壞掉回 503，不預扣 |
 | 確認題目 `PUT …/question` | `checkAssistQuestion(input)` | `checkAssistQuestion(input, subject)`：英文走原函式，國文走 `checkZhQuestion`；另外收 `format`、`choice_mode`、`answers`、`known_key`、`draft`、`draft_target`（§7.2），更新 `kind`、`item_count` |
 | 題數 | `routes.ts:569`：`kind === 'item'` 才算題數，其他一律 1 | 改成 `assistItemCount(subject, kind, question)`：`zh_choice` 是題數、`zh_short` 是小題數、`zh_writing` 是 1；英文的回傳值不變 |
 | 解析的任務設定 | `taskConfig('assist_analyze', config, { items })` | `size` 多 `subject`、`kind`：點數、`max_tokens`、輸入估計、逾時由 `workerSubject(subject).taskSize` 與 `assistPoints` 決定；英文的數字不變 |
@@ -1232,9 +1232,9 @@ The student's doubts: why_not_mine, torn_between (C).                           
 **短答逐子題比對（第一版就做；第 1 版原本放在 S4）**：
 - **為什麼**：[ZH] §9.4 實測官方非選答案只有 4–31 字，多以逗號分句；8 字窗口不跨標點，這類答案幾乎切不出窗口。只靠 8 字窗口時，模型背出或自然收斂成官方短答會直接顯示。
 - **集合**：111–115 國綜與參考試卷的每一個非選子題（約 60 個），把官方參考答案（含評分原則裡的滿分答案）切成 3 字組（`zhMatchKey` 之後、不跨標點），**扣掉該題題本的 3 字組**（官方答案常摘自選文），剩下的各存一組。扣完少於 5 個 3 字組的極短答案（多半是事實型的人名、詞語）不建集合。
-- **雜湊帶金鑰**：3 字組的組合數有限，不帶金鑰的雜湊可以用常見 3 字組字典反推出答案片段，而 repo 是公開的。所以用 HMAC-SHA256（金鑰是 Worker secret `ASSIST_D8_ZH_KEY`，開發者本機產生時讀同一個值），取前 8 位元組，存成 `data/d8/zh-short.fp.json`（只有雜湊與來源清單：年度、題號、3 字組數）。
+- **雜湊（不帶金鑰；站主決定，§15 Q10）**：和英文 D8 同一種雜湊，也就是 `packages/shared/scripts/d8-fingerprint.mjs` 的 cyrb53；國文的 8 字窗口加網域前綴 `zh8:`、3 字組加 `zs3:`（和英文的窗口互不相撞），取 7 位元組、排序去重後 base64，存成 `data/d8/zh-official.fp.json` 與 `data/d8/zh-short.fp.json`（只有雜湊與來源清單：年度、題號、3 字組數）。不需要任何 secret，站主也不需要設定、接收或貼上任何金鑰。理由：受保護的國文來源本來就由官方公開刊登，反推雜湊得不到任何沒公開的內容；本站要守的是「網站不顯示、不重述」。
 - **比對**：上面列的輸出欄位，逐組算「集合裡有幾成的 3 字組出現在這個欄位」。**任一組 ≥ 60%**：拿掉 `demo_zh`（顯示「這個示範和受保護的官方文字太像，已省略」），同一小題的 `key_points` 與 `check` 說明照 8 字窗口的規則換成固定說明，寫 `assist_d8_output`（detail 帶 `kind: 'short'`），計數 `short_answer_hidden`。不需要先辨識是哪一題。
-- **金鑰缺少**：寫入端點在預扣前回 503（§7.5）。萬一解析時讀不到，只拿掉示範，不退整則。
+- **指紋讀不到**：寫入端點在預扣前回 503（§7.5）；解析、追問、轉錄時讀不到就退還（fail closed），不顯示沒比對過的示範。
 - **評測**：E 組 113–115 與 111 的非選題目當正例：量官方題的示範被攔下的比例、自編題被誤攔的比例（只用雜湊，不存答案原文）。自編題誤攔 > 10% 時，門檻改成 70%。
 
 ---
@@ -1400,7 +1400,7 @@ COALESCE(json_extract(ref_json, '$.subject'), 'english')
 
 **沒開時的回應**：
 - 非 `on`、又不是管理員：國文的寫入端點回 **503 `not_configured`**，同現行 `routes.ts` 的慣例（公開端點不透露有預覽）。
-- 國文指紋或短答比對金鑰讀不到：在**預扣之前**回 503（同英文在 writeGate 的作法），不是預扣後退點。
+- 國文指紋（8 字窗口或短答集合）讀不到：在**預扣之前**回 503（同英文在 writeGate 的作法），不是預扣後退點。
 
 **公開資訊**：
 - `/api/features` 只在 `on` 時回 `assistantSubjects`；`admin` 模式不透露（同既有規則）。
@@ -1707,12 +1707,12 @@ COALESCE(json_extract(ref_json, '$.subject'), 'english')
   - 簡答：示範超過字數就拿掉；必須抄錄時改寫過的示範被拿掉；學生的抄錄答案不是原文時標示；語譯題的示範留空不計數。
   - 國寫：主體段示範 ≤ 150 字通過、超過拿掉；三句以上拿掉；等第句被拿掉；問題（一）的 `quotes` 比對。
   - 拼音被清空、簡體字重寫。
-  - D8 輸出命中換固定說明；**短答比對命中（測試金鑰與本站自寫的誘餌答案）時拿掉示範**；金鑰缺少時只拿掉示範。
+  - D8 輸出命中換固定說明；**短答比對命中（測試用的雜湊集合與本站自寫的誘餌答案）時拿掉示範**。
   - 結算寫回 `section`、`verdict`、`wrong_count`（答案鍵、AI 答案、unsure → unknown、簡答的覆蓋程度）。
   - `checks` 計數正確。
 - `assist.zh.photo.test.ts`：`other_subject` 退點、刪照片、案例回到 draft（同英文）；國文的隱藏規則（答案段、指紋、長文）；`AI_ASSISTANT_SUBJECTS_PHOTO` off 時國文拍照回 503、英文拍照不受影響。
 - `assist.photo.test.ts`：**不改**。
-- `d8.zh.test.ts`（測試用指紋、測試金鑰與本站自寫的誘餌句，不用官方文字）：國文集合只用在國文案例；**英文的 `d8.version` 不變**；同一區塊 ≥ 2 個窗口才拒收；樣板與古文語料扣除有效；指紋檔壞掉時 fail closed；短答 3 字組包含率的計算。
+- `d8.zh.test.ts`（測試用指紋與本站自寫的誘餌句，不用官方文字）：國文集合只用在國文案例；**英文的 `d8.version` 不變**；同一區塊 ≥ 2 個窗口才拒收；樣板與古文語料扣除有效；指紋檔壞掉時 fail closed；短答 3 字組包含率的計算。
 - `assist.cache.test.ts`：國文請求不進共用快取；英文快取鍵不變。
 - **加強卷不受國文影響**：有國文 `careless`、`understood='no'` 案例時，`/api/assist/cases`（不帶 subject）的 `error_counts` 不變；前端 `papers/data.ts` 送出 `subject=english`。
 - `features.test.ts`、`skeleton.test.ts`、`deploy-summary.test.ts`：兩個新開關。
@@ -1828,7 +1828,7 @@ COALESCE(json_extract(ref_json, '$.subject'), 'english')
 
 **金鑰**：
 - 優先用 `ANTHROPIC_PARITY_API_KEY`（dev workspace）。沒有時要 `allow_online_key=true` 才用正式站的金鑰；A 組（64 tokens）例外，直接退回正式站金鑰。金鑰只放在「跑評測」那一步。
-- **沒有其他金鑰**（站主決定，覆蓋 §5.7 與 §15 Q10 原本的「帶金鑰的雜湊」）：國文的 8 字窗口與短答 3 字組都用和英文 D8 相同的不帶金鑰雜湊（`d8-fingerprint.mjs` 的 cyrb53，加 `zh8:`／`zs3:` 網域前綴，7 位元組，排序去重後 base64），所以評測、Worker 與站主都不需要設定任何新的 secret。理由：受保護的國文來源本來就由官方公開，反推雜湊得不到任何沒公開的內容；我們守的是「本站不顯示、不重述」。
+- **沒有其他金鑰**（站主決定，§5.7、§15 Q10）：國文的 8 字窗口與短答 3 字組都用和英文 D8 相同的不帶金鑰雜湊（`d8-fingerprint.mjs` 的 cyrb53，加 `zh8:`／`zs3:` 網域前綴，7 位元組，排序去重後 base64），所以評測、Worker 與站主都不需要設定任何新的 secret。理由：受保護的國文來源本來就由官方公開，反推雜湊得不到任何沒公開的內容；我們守的是「本站不顯示、不重述」。
 - 完整評測一定要有正式的國文指紋（`npm run prompts` 打包；讀不到就在花錢之前失敗）。只跑 A 組時，指紋還沒接上也可以跑（用空的國文集合組題目，A 組只看輸出格式）。
 
 **工具**：
@@ -1898,7 +1898,7 @@ COALESCE(json_extract(ref_json, '$.subject'), 'english')
 
 | 檔案 | 改動 |
 |---|---|
-| `apps/api/src/config.ts`、`env.ts`、`wrangler.toml` | `AI_ASSISTANT_SUBJECTS="off"`、`AI_ASSISTANT_SUBJECTS_PHOTO="off"`、註解；secret `ASSIST_D8_ZH_KEY` |
+| `apps/api/src/config.ts`、`env.ts`、`wrangler.toml` | `AI_ASSISTANT_SUBJECTS="off"`、`AI_ASSISTANT_SUBJECTS_PHOTO="off"`、註解（國文 D8 不需要新的 secret） |
 | `apps/api/src/features.ts`、`account/routes.ts` | `assistantSubjects`（每科 `photo`）、`assistant_preview.subjects` |
 | `apps/api/src/assist/subjects/index.ts`、`english.ts`、`chinese/{schemas,requests,output,quotes,standards,classics,digest,d8,ocr}.ts` | 新檔 |
 | `apps/api/src/ai/prompts/assist-zh.ts`、`assist-zh-ocr.ts` | 新檔 |
@@ -1908,14 +1908,14 @@ COALESCE(json_extract(ref_json, '$.subject'), 'english')
 | `digests.ts` | 只算英文 |
 | `schemas.ts` | 請求的 zod |
 | `apps/api/src/ai/tasks.ts` | 三個 `assist_*` case 的 `size` 帶 `subject`、`kind`、`items` |
-| `apps/api/src/ai/d8.ts` | `zh` 集合與 `zh_version`；短答 3 字組集合與金鑰 |
+| `apps/api/src/ai/d8.ts` | `zh` 集合與 `zh_version`；短答 3 字組集合（不帶金鑰的雜湊） |
 | `apps/api/scripts/build-writing-prompts.mjs` | 併入 `zh` 集合、短答集合、古文語料 |
 | `apps/api/src/account/export.ts` | `subject` |
 
 **不改**：`refund.ts`、`photos.ts`、`assist/ocr.ts`（英文轉錄）、`assist-codes.ts`、英文的提示與 schema。
 
 **D8 資料**：
-- `packages/shared/scripts/d8-zh-fingerprint.mjs`（新）：8 字窗口指紋，以及短答 3 字組集合（讀環境變數 `ASSIST_D8_ZH_KEY` 算 HMAC）。
+- `packages/shared/scripts/d8-zh-fingerprint.mjs`（新）：8 字窗口指紋，以及短答 3 字組集合（cyrb53 加 `zh8:`／`zs3:` 網域前綴，不帶金鑰）。
 - `data/d8/zh-official.fp.json`、`data/d8/zh-short.fp.json`（產物，只有雜湊）、`data/d8/zh-boilerplate.txt`。
 - `.gitignore` 加 `data/raw/`。
 
@@ -1949,8 +1949,7 @@ COALESCE(json_extract(ref_json, '$.subject'), 'english')
    - 開關打開後的視覺基準（附站主同意）。
    - PR 說明附綠色 run 的連結、門檻表、原版與重排版的差距、人工檢查的結論。
 3. **說明與條款**：已在作文範文的上線 PR 處理（§10）。萬一作文範文延後，照 §15 Q5。
-4. **部署前**：站主設定 Worker secret `ASSIST_D8_ZH_KEY`（一行 `wrangler secret put`，值由開發者提供；SETUP-KEYS §8）。沒設定時國文寫入端點回 503，不會漏放示範。
-5. **部署後**：站主用管理員帳號貼一題、拍一張，確認正式站可以用。學生下次進學習助手首頁會看到「問國文題」。
+4. **部署後**：站主用管理員帳號貼一題、拍一張，確認正式站可以用。學生下次進學習助手首頁會看到「問國文題」。
 
 ### 12.4 和其他分支、main 的衝突（以 d5442a2 重新盤點）
 
@@ -1980,10 +1979,10 @@ COALESCE(json_extract(ref_json, '$.subject'), 'english')
 | 文件 | 改什麼 |
 |---|---|
 | `docs/design/learning-assistant.md` | 「國文、數學等其他科的照片｜不做」等幾處加註，指到本文；「其他科目」改成已開始 |
-| `docs/ARCHITECTURE.md` | §6.1 任務表的說明：學習助手的點數依科目；§7「通用代理」的例外：學習助手涵蓋英文與國文；§11 新設定與 secret |
+| `docs/ARCHITECTURE.md` | §6.1 任務表的說明：學習助手的點數依科目；§7「通用代理」的例外：學習助手涵蓋英文與國文；§11 兩個新開關（國文沒有新的 secret） |
 | `docs/SPEC.md` | §6.13 學習助手的範圍 |
 | `docs/DB_SCHEMA.md` | `assist_cases` 的 `ref_json.subject`、`related_case_id`、`kind` 與 `section` 的新值、國文的 `verdict` 寫回（沒有結構改動） |
-| `docs/SETUP-KEYS.md` | §8：兩個新開關、`ASSIST_D8_ZH_KEY`、評測怎麼跑（`RUN` 與 dispatch）、緊急關閉、只關國文拍照 |
+| `docs/SETUP-KEYS.md` | §8：兩個新開關、評測怎麼跑（`RUN` 與 dispatch）、緊急關閉、只關國文拍照 |
 | `docs/ROADMAP.md` | 功能清單 |
 
 ---
@@ -1997,7 +1996,7 @@ COALESCE(json_extract(ref_json, '$.subject'), 'english')
 | R3 | 簡體字、異體字、字碼不同的字、大陸讀音、大陸修辭名稱 | 教學生寫非標準字、用大陸術語 | 字碼對照自動替換；教字形的欄位零容忍；簡體字重寫一次；修辭名稱封閉清單與替換；字音卡清空拼音、查審定音 |
 | R4 | 國寫被拿來代寫 | 違反「不代寫」 | schema 沒有整篇的欄位；示範三句或一段 ≤ 150 字；120 個連續漢字截斷；不給等第；對抗題 |
 | R5 | 佳作被拆段貼上 | D8 殘餘風險 | 樣式、片段 ≤ 250、轉錄跳過、示範只有句子或一段；站主確認（§15 Q6） |
-| R6 | 模型背出近年國綜非選的官方短答 | 違反 D8 | 提示禁止；8 字窗口；**第一版就有的逐子題 3 字組比對（帶金鑰的雜湊）**；示範受字數限制 |
+| R6 | 模型背出近年國綜非選的官方短答 | 違反 D8 | 提示禁止；8 字窗口；**第一版就有的逐子題 3 字組比對（雜湊同英文 D8，不帶金鑰）**；示範受字數限制 |
 | R7 | 指紋誤擋：講義題目或模型引用的古文名句，剛好出現在評分原則裡 | 學生貼題目被拒、解析被藏 | 扣題本與公有領域古文窗口；輸入 ≥ 2 個窗口；樣板清單；評測量誤藏率，超過 2% 就放寬 |
 | R8 | 成本：中文 tokens 多，低流量時快取多半是寫入 | 每點超過 0.0271 | 門檻用冷快取平均；系統提示有預算；欄位上限依 `max_tokens` 縮；追問上下文截短、不加快取標記；第 14 天用實測調；點數不在說明裡 |
 | R9 | 英文被意外改到（提示、schema、快取鍵、D8 版本、樣式、轉錄、加強卷的弱點） | 英文快取全失效、行為改變或加強卷組錯題 | §2.4 的快照與雜湊；英文設定檔只引用；國文指紋另一個版本；`OFFICIAL_LIKE_PATTERNS`、`refund.ts`、`assist-codes.ts` 不改；列表預設只算英文錯因 |
@@ -2040,14 +2039,14 @@ COALESCE(json_extract(ref_json, '$.subject'), 'english')
 |---|---|---|---|
 | Q1 | 國文第一版範圍 | 貼上與拍照；選擇、簡答、國寫指導三種格式；追問；同一份題目問另一部分；首頁的國文篩選與錯因統計。**錯題清單的國文分頁、國文方法卡、跨科重轉延後到 S4 或之後；學習報告不含國文** | 越快越好：這幾項不影響「依題型最佳化」的回答本身，省約 2–3 人日 |
 | Q2 | 要不要先開一個「其他科目（通用）」模式？下一科是哪一科？ | **不開通用模式**；畫面寫「數學、社會、自然還沒開放」，選錯科目的解析會退點；下一科預設**社會**，接著數學、自然 | 沒有題型模式與評測的科目做不到「高度優化」；社會可以沿用國文的閱讀模式，最快上線 |
-| Q3 | 國綜非選要不要給 AI 示範答案？ | **給**：在題目字數內、先收合、標「本站 AI 示範，不是官方答案」；跑 8 字窗口，**第一版就跑逐子題 3 字組比對**（帶金鑰的雜湊），命中就拿掉示範 | 學生最需要看到「好答案長什麼樣」；官方短答多半短於 8 字窗口，3 字組比對補上這個缺口。另一個選項：只給要件與句型，S4 之後才給示範 |
+| Q3 | 國綜非選要不要給 AI 示範答案？ | **給**：在題目字數內、先收合、標「本站 AI 示範，不是官方答案」；跑 8 字窗口，**第一版就跑逐子題 3 字組比對**（雜湊同英文 D8，不帶金鑰），命中就拿掉示範 | 學生最需要看到「好答案長什麼樣」；官方短答多半短於 8 字窗口，3 字組比對補上這個缺口。另一個選項：只給要件與句型，S4 之後才給示範 |
 | Q4 | 國寫：收不收學生自己的段落？給不給等第或分數？ | 收一段 ≤ 250 字（或問題（一）的答案 ≤ 80 字），只做要件檢核、錯別字與修改建議；**不給等第或分數**；示範可以是三句或一段 ≤ 150 字的主體段 | 國寫 AI 批改要先校準；250 字擋整篇貼上的佳作；一段示範讓學生看到段落怎麼發展，仍不是代寫 |
 | Q5 | 說明與條款 | 國文的文字**併進作文範文上線的那一次升版**，點數不寫數字；國文上線不再升版。作文範文延後超過 1 週時，改成國文先做一次只升兩份的小升版，AI 處理說明不升 | 學生重新同意的次數最少；雜誌小考卷也這樣做（§10） |
 | Q6 | 佳作沒有指紋的殘餘風險（拆成 250 字以內的片段貼上擋不住） | 比照英文接受 | 站主 2026-10-23 對英文拍照已接受同類風險；國寫不給等第、示範只有句子或一段，降低貼佳作的價值 |
 | Q7 | 國文點數 | 轉錄 1 張 3、2 張 4；選擇 6 起（每多一題 +2）；簡答 6 起（每多一個小題 +1，上限 10）；國寫 7；追問 3（冷快取超標時 4）；依評測與第 14 天的實測調整 | 冷快取估計每點 0.020–0.026；「拍 1 張＋單題解析 ≤ 10」讓試用帳號也做得完一題（§9） |
 | Q8 | 國文拍照要不要和貼上一起開？ | 一起開；但 J 組（錯字照錄、直書、手機實拍）沒過時，`AI_ASSISTANT_SUBJECTS_PHOTO` 維持 off，先只開貼上 | 國文學生的題目多半在紙本上；錯字被改正會讓解析全錯 |
 | Q9 | 資料：用 `ref_json` 放科目，不跑遷移 | 照預設 | 不必排遷移編號、不受凍結期影響；需要時再加 generated column（§7.1） |
-| Q10 | 國文 D8 指紋：只有雜湊進公開 repo，原文與中間檔永不進 repo；由開發者在本機產生；納入選才電子報的評分說明；**短答 3 字組用帶金鑰的雜湊，金鑰是 Worker secret** | 照預設；部署前站主設定 `ASSIST_D8_ZH_KEY`（一行指令） | repo 是公開的；3 字組不帶金鑰的話，可以用常見 3 字組字典反推出官方短答的片段 |
+| Q10 | 國文 D8 指紋：只有雜湊進公開 repo，原文與中間檔永不進 repo；由開發者在本機產生；納入選才電子報的評分說明；短答 3 字組的雜湊要不要帶金鑰？ | **站主決定：不帶金鑰、不設任何 secret**。8 字窗口與短答 3 字組都用和英文 D8 相同的雜湊（cyrb53 加 `zh8:`／`zs3:` 前綴、7 位元組、排序去重、base64）；站主不需要設定、接收或貼上任何金鑰 | 受保護的國文來源本來就由官方公開刊登，反推雜湊得不到任何沒公開的內容；本站要守的是「網站不顯示、不重述」 |
 | Q11 | 開放方式 | 合併時 off；評測達標的那個 PR 直接 on；站主開放後 3 天內抽查 10 份 | 站主偏好直接開放；正確率由評測（重排版、沒看過的題、逐字門檻）守住 |
 | Q12 | 開關的粒度 | 兩個：`AI_ASSISTANT_SUBJECTS` 控制所有非英文科目（第一版只有國文）、`AI_ASSISTANT_SUBJECTS_PHOTO` 控制它們的拍照；第二科上線前若要分開控制，再加 `AI_ASSISTANT_SUBJECTS_LIST` | 只關國文拍照不必改程式、也不影響英文拍照 |
 | Q13 | 官方歷屆題辨識（帶入官方答案與全國答對率）要不要放進第一版？ | 開放後馬上做（S4），不擋第一版 | 它是國文正確率最大的槓桿，但要整理題本資料；先開放，再補上 |
@@ -2088,7 +2087,7 @@ COALESCE(json_extract(ref_json, '$.subject'), 'english')
 | A1 | major | 「CasePage 不改」做不到，國文解析會是空的 | 接受 | S2 明列 `CasePage` 的改動：解析元件、加亮、推薦區塊（國文 `null`）、重試與追問點數、依科目的 `ready`／`closed`（§8.1）；§12.4 以 d5442a2 重新盤點 |
 | A2 | major | 英文轉錄的「改用國文重新轉錄」一定 409 | 接受（採最省事的修法） | 拿掉跨科重轉；`other_subject` 照英文退點、刪照片，畫面請學生換科目再拍；`refund.ts`、`assist.photo.test.ts` 不改（§1.4、§6.5）；跨科重轉列入 §14 |
 | A3 | major | NFKC 改壞 ①②③、輕聲與全形標點 | 接受 | 國文路徑的 `normalizeZhText`（NFC＋白名單半形＋去不可見字元）存檔與送出；NFKC 只用在比對副本 `zhMatchKey`；`zhLabelKey` 先把圈號換成 `c1`…（§4.1）；三份 fixture 斷言逐字不變 |
-| A4 | major | 第一版的國綜非選示範沒有可用的 D8 | 修改後接受 | 採 (b)：短答逐子題 3 字組比對提前到 S1，不依賴題目辨識；**改用帶金鑰的 HMAC**，因為不帶金鑰的 3 字組雜湊可以用字典反推；金鑰是 Worker secret，缺少時只拿掉示範；少於 5 個 3 字組的極短事實型答案不建集合（§5.7、§15 Q3、Q10） |
+| A4 | major | 第一版的國綜非選示範沒有可用的 D8 | 修改後接受 | 採 (b)：短答逐子題 3 字組比對提前到 S1，不依賴題目辨識；雜湊由站主決定**不帶金鑰**（同英文 D8；受保護的來源本來就公開，本站守的是不顯示、不重述，§15 Q10）；少於 5 個 3 字組的極短事實型答案不建集合（§5.7、§15 Q3、Q10） |
 | A5 | major | 其他科題目貼在國文會被扣 6–7 點 | 接受 | 三份 schema 加 `detected_subject`（＋1 葉）；不是國文時以 `invalid_output` 退還（算進每日退還上限）；chip 下方寫「數學、社會、自然還沒開放」；`detectAssistSubject` 加社會、自然特徵詞（只提醒）（§2.5、§8.2） |
 | A6 | major | 國文案例汙染英文加強卷的弱點計算 | 接受（再加一層） | 列表不帶 subject 時 `error_counts` 只算英文；`isAssistErrorCode` 不動，另加 `isZhErrorCode`、`isSubjectErrorCode`；**另外把 `papers/data.ts` 改成明確帶 `subject=english`**，`notUnderstoodSkills` 也只取英文；加測試（§7.3） |
 | A7 | major | 成本門檻量在暖快取；欄位上限遠超估計；追問輸入估計偏低 | 修改後接受 | 門檻改成冷快取平均（§9.1、§11.3）；欄位上限縮到「每欄寫滿」≤ `max_tokens` 60%，`max_tokens` 依題數算（§9.3）；追問題目截到 3,000 字並實算最長輸入。**「cards ≤ 2、列數合計 ≤ 12」不採用**：和 P5（混合題型每題要有卡、三字一組要 12 列）衝突；改用列數合計 9＋3n 加上縮小每格，達到同樣的 60% 目標 |
@@ -2102,10 +2101,64 @@ COALESCE(json_extract(ref_json, '$.subject'), 'english')
 | A15 | minor | consumer 的任務設定與結算回寫沒列 | 接受 | turn 的 `meta_json` 寫 `{subject, kind, items}`，routes 與 consumer 用同一組算 `taskConfig`；國文結算寫回 `section`、`verdict`、`wrong_count`（§2.3、§7.3） |
 | A16 | minor | 第一版可以砍的部分 | 接受 | 跨科重轉、錯題清單國文分頁、25 張方法卡都延後；第一版用首頁的國文篩選與錯因統計，解法用設定檔的每型步驟加模型的步驟（§1.1、§14、§15 Q1） |
 | A17 | minor | 品牌與國文入口沒有設計 | 接受 | 首頁兩個主要按鈕「問英文題」「問國文題」；網站首頁與導覽寫「英文、國文都能問」；§15 Q14 問站名（§1.2、§8.2） |
-| A18 | minor | 開關行為的三個細節 | 修改後接受 | 非 on 非管理員回 503 `not_configured`，不新增 `subject_closed`；拍照可用性由 Worker 算、經 API 回傳——**做法是加第二個開關 `AI_ASSISTANT_SUBJECTS_PHOTO`**，緊急關國文拍照不必改程式；國文指紋與金鑰在預扣前檢查（§7.5） |
+| A18 | minor | 開關行為的三個細節 | 修改後接受 | 非 on 非管理員回 503 `not_configured`，不新增 `subject_closed`；拍照可用性由 Worker 算、經 API 回傳——**做法是加第二個開關 `AI_ASSISTANT_SUBJECTS_PHOTO`**，緊急關國文拍照不必改程式；國文指紋在預扣前檢查（§7.5） |
 | A19 | minor | 引文 30% 總量誤刪文言對照與短題引文 | 接受 | 和 P8 合併：只算選文、只套白話與非公有領域選文、至少 120 字、`translation`／`poetry` 的 `head` 不計（§5.2） |
 | A20 | minor | 輸入規則對講義、段考格式會誤判 | 接受 | 貼上時答案段改成拒收並回傳位置、轉錄時才隱藏；樣式加【答案】【解析】詳解 解答；「配分」只在接等級描述或給分時命中；誤判 fixture 加 5 份段考／講義卷頭；字數支援中文數字與範圍（§4.2、§5.5） |
 | A21 | minor | 小列舉不受 grammar 約束，寫錯就付費重試 | 接受 | `verdict`、`certainty`、`coverage`、`draft_checks.status`、追問的 `mode_used` 改字串、後處理正規化，不認得的當漏判補列並計數；`safety_flag` 與轉錄的 `status` 維持 enum（§3.1、§5.1 第 2 步） |
 | A22 | minor | 國文表單在手機上太多技術性選項 | 接受 | 子模式不讓學生選，只顯示「多選題（依題目判斷）・修改」；已知答案收進「我有講義答案」；格式只在偵測信心低時才要求確認（§1.3、§8.2） |
 
 **統計**：接受 38 項（其中 A4、A7、A8、A18 修改後接受；P10、P14 在兩個修法中選一；P12 加嚴），拒絕 0 項。沒有採用的具體建議：A7 的「cards ≤ 2、列數合計 ≤ 12」（和 P5 衝突，改用列數合計 9＋3n 與縮小每格達到同樣的 60% 目標）；P10、P14 審查本來就給兩個修法，各選一個、另一個不採用。
+
+---
+
+## 實作備註（2026-10-30；S1、S1d、S2 與整合，開關 off）
+
+### 做了什麼
+
+分支 `assistant-subjects`（d5442a2 起）依 §12 的工作包分段提交，最後一個提交是整合者依審查意見的修正。
+
+- **S1 shared**（`packages/shared`）：`assist-subjects.ts`（科目設定檔、`assistPoints`、`assistItemCount`、`detectAssistSubject`）、`assist-zh.ts`（題型與 `ZH_SECTION_SPECS`、代碼、欄位上限、確定程度上限、正規化三支、`checkZhQuestion`、猜測、字數與抄錄、研判、多選計分、台灣標準、畫面形狀）、`assist-zh-data.ts`（審定音 233 字、字碼、簡體字、兩可寫法、修辭名稱）；`assist.ts`、`features.ts`、`account.ts`、`api.ts` 的新欄位。
+- **S1d 資料**：`d8-zh-fingerprint.mjs` 與兩份指紋（8 字窗口 8,370、短答子題集合 35，只有雜湊）、`zh-boilerplate.txt`、`zh-public-classics.txt`（188 篇）、評測題目集 `assist-zh-golden/`（A–J 組）。
+- **S1 Worker**：科目登記表（`subjects/index.ts`、`english.ts`）；國文的題目、請求、consumer 分支、結算寫回；後處理（`output.ts`、`quotes.ts`、`notes.ts`、`standards.ts`、`classics.ts`、`digest.ts`、`d8.ts`、`ocr.ts`）；兩個開關；國文提示與轉錄提示；`local-e2e.mjs` 的國文流程。
+- **S1 評測工具**：`.github/workflows/assistant-subjects-eval.yml`、plan 腳本、`test/parity/assist-subjects.*`、`RUN`（目前只跑 A 組、上限 US$1）、不花錢的 `assist-subjects.parity-summary.test.ts`。
+- **S2 前端**：科目登記表接管 `CasePage`；國文的貼上表單、拍照確認、三種解析畫面、首頁的科目篩選與國文錯因統計；假後端的國文路由與 e2e `assistant-zh.spec.ts`。
+
+### 和設計不同的地方
+
+| 項目 | 設計 | 實作 | 理由 |
+|---|---|---|---|
+| 國文 D8 的雜湊（§5.7、§15 Q10） | 原本是帶金鑰的 HMAC、Worker secret | **不帶金鑰**：和英文 D8 同一種 cyrb53，8 字窗口用 `zh8:`、短答 3 字組用 `zs3:` 前綴，7 位元組、排序去重、base64。沒有任何新的 secret，站主不需要設定或貼上金鑰；本文的 §0、§2.3、§5.7、§7.5、§12、§13、§15、§16 已一併改寫 | 站主決定：受保護的來源本來就由官方公開，反推雜湊得不到沒公開的內容；本站守的是不顯示、不重述 |
+| B′ 答案的確認（§15 Q15） | 請站主看過，1 天沒回覆照開發者的確認 | **只有開發者確認**，不請站主看；`assist-zh-golden/README.md` 寫明，評測結論引用 B′ 時註明「答案未經站主確認」 | 站主決定 |
+| 提示洩答案時（§5.1 第 10 步） | 拿掉那一階，少於 2 階時補一階固定提示 | 第 1、2 階洩答案的**原地換成**固定提示（兩階都洩時依序用兩句不同的固定提示） | 拿掉會讓本來就可以寫出正解的第 3 階往前遞補成第 2 階 |
+| 判定與結算（§7.3） | 依答案鍵與確定程度判定 | 判定在後處理**最後**依當時的答案鍵重算（逐項不一致、單選判出多個「該選」、字形錯字數、讀音不一致都會把 AI 的答案降成 unsure）；結算也依同一組欄位再算一次，不信任存下的 verdict。AI 不確定時不顯示多選的試算分數 | 降成 unsure 的題不能還告訴學生「答錯」 |
+| 默寫核對（§5.2） | 找最相近的同長片段 | 「同一段原文」收緊：最多 min(2, ⌊長度／6⌋) 個字不同、有字不同時相近的寫法只能有一種、不能跨過輸入沒有的句末標點；不合就是「本站無法核對原文」，不改示範、不寫「原文是」 | 語料沒收的篇目（〈學記〉）原本會被對成別篇的句子 |
+| 科目文字（§2.5、§4.2） | 漢字 ≥ 30、占 ≥ 30% | **注音字元也算國文的字**（`zhScriptCount`；`detectAssistSubject` 同一個算法） | 選項印注音的字音題常不到 30 個漢字；評測的 B-106-01、BP-03 因此原本跑不起來 |
+| 題型猜測與極性 | 比對題幹關鍵詞 | 先拿掉 `⟦⟧~` 標記；字形題另認「字形（完全）正確／錯誤」 | 國綜把「沒有」畫底線，「完全⟦沒有⟧錯別字」原本被當成「有錯別字」 |
+| 字音卡（§3.6） | 欄名「詞語（「」標出被問的字）」 | 畫面欄名仍是「詞語」；規則寫在提示的卡片說明（head 用「」標被問的字、a 只寫被問的字的注音）；程式也接受 ⟦⟧，a 寫了整個詞的注音時取被問的字那一個音節 | 選擇題的系統提示預算 5,500 tokens（§3.7）：改完是 5,496；同時拿掉和教學規則重複的「詩詞卡格律」一行 |
+| 錯因清單（§3.7、§3.9） | 三種解析都附錯因清單 | 只有 `zh_choice` 附；`zh_short`、`zh_writing` 的 schema 沒有錯因欄位，不附清單與「用錯因代碼診斷」那一句 | 白付 tokens，模型還可能把代碼寫進說明文字；簡答、國寫的錯因只從追問的 `new_error_codes` 來 |
+| 注釋偵測 | requests 與 quotes 各寫一支 | 新檔 `subjects/chinese/notes.ts`：注釋區塊、區塊中間以「注釋」開頭的段落（到下一個題號或選項為止）、拍照轉錄的「注釋：①…」、題目裡的「注 N」；`<task>` 與注釋引用檢查共用 | 兩支規則不同時，`<task>` 說「沒有注釋」、正確的「注①」引用卻被拿掉 |
+| 先看提示（§1.7） | 主體區塊收合 | 只有一題時每張卡都屬於那一題（Worker 沒題號時是空字串）；診斷、題型卡、整組共用的卡都收在「看完整解析」；左欄引文只標學生按下的那一句 | 字音卡的注音、字形卡的正字、文言對照的白話都等於答案 |
+| 研判題（§1.7） | 判定表 → 推出組合 → 答案 | 加上「推出組合」一行（逐句判定 → 選項字母與題目的選項文字） | 原本缺 |
+| 指紋的樣板清單 | 文件、考科、辭典名稱 | 另加常見的題幹「標點符號使用正確／恰當／錯誤」，重產 `zh-official.fp.json`（8,373 → 8,370 個窗口）；`test:data` 檢查評測題目集的全部題幹 0 命中 | 受保護文件引用了舊題幹，解析裡寫到同一句題幹會被誤藏 |
+| 其他小修 | — | 國寫的等第句不拿掉配分事實（「占 4 分」「4＋21 分」）；字詞義 key_zh 的結論取最後一個冒號之後；國寫錯別字的兩可逐字比（台灣／臺灣、讚嘆／讚歎，另收了解／瞭解、計畫／計劃）；字音題的追問在提示模式拿掉有注音的句子；注音的「ˉ」先拿掉；字音解法第 3 步改成「破音字看它在這個詞裡的意思或詞性決定讀音」；錯因統計寫「次」；「格式：」；語譯題的說明看題幹 | 審查意見 |
+
+### 檢查結果（整合時）
+
+- `npm run typecheck` 通過；`npm test`：API 1,310、web 2,241、shared 689 全過；`npm run test:data`：web 66、shared 222 全過；`npm run build` 通過。
+- Playwright：`assistant*.spec.ts`、`weak-paper.spec.ts` 71 過、1 個只在桌機跑的跳過；另跑 `account`、`smoke`、`overview`、`desktop-shell`、`desktop-safety`、`mobile-guard`：170 過、32 個依專案跳過。
+- `npm run test:local-e2e -w @gsat/api`：49／49（含國文：貼上 → 解析 → 追問 → 用同一份題目問另一部分；`AI_ASSISTANT_SUBJECTS` 用 `--var` 改成 admin）。
+- 英文零差異：`apps/api/test/fixtures/assist-prompts.json` 和 d5442a2 相同；國文的提示雜湊在 `assist-prompts-zh.json`（這次更新，A 組探測會跟著跑）。
+
+### 評測怎麼跑
+
+1. 分支要以 `claude/assistant-subjects` 的名稱推上去（例如 `git push origin assistant-subjects:claude/assistant-subjects`）：workflow 只看 `main` 與 `claude/**`，本機分支名 `assistant-subjects` 推上去不會觸發。
+2. 第一次推：`RUN` 是 `cases=A`、`budget_usd=1`，只確認 workflow 與五份 schema 能用（約 US$0.1）。
+3. 完整評測（S3）：編輯 `apps/api/test/fixtures/assist-zh-golden/RUN`，把 `cases=` 清空、`budget_usd=25`、`request=` 寫這次的說明，推上去；中斷了就把 `resume=true` 再推一次。有 `ANTHROPIC_PARITY_API_KEY` 時 `allow_online_key=false`。
+4. 本機不花錢的檢查：`npx vitest run test/assist-subjects.parity-summary.test.ts`（在 `apps/api`）。
+
+### S3 上線清單
+
+1. 推 `claude/assistant-subjects`，改 `RUN` 跑完整評測，看 §11.3 的門檻（重排版、研判、注音逐字、錯字配對、必過題 115 #12、冷快取每點、誤藏率）。手機實拍 3 張（J 組）還沒拍，拍好放進 `photos/` 再跑 J 組。
+2. 沒達標：調提示、欄位上限或點數，重跑（改了提示或 schema 要更新 `assist-prompts-zh.json`）。
+3. 上線 PR（和作文範文的上線 PR 綁在一起，§10）：`wrangler.toml` 的 `AI_ASSISTANT_SUBJECTS="on"`、`AI_ASSISTANT_SUBJECTS_PHOTO` 依 J 組；`ZH_CERTAINTY_CAPS` 依逐字門檻調整；**說明與條款的升版併進作文範文的那一次**（這個分支沒有改任何政策版本與文字）；§12.6 的文件；開關打開後的視覺基準；PR 說明附綠色 run 的連結與門檻表。
+4. 部署後：站主用管理員帳號貼一題、拍一張確認。不需要設定任何新的 secret。

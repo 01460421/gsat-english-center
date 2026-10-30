@@ -14,6 +14,7 @@
  *                         云、后、几、斗、里、余、干…自然被排除）。S1d 的工作表另外用 Unihan 的 kTraditionalVariant 獨立重算一次，補上漏掉的
  *                         常用字（这、时、会、对…；都不在簡編本字頭、題本全文與古文語料裡）。
  *   ZH_FORM_EITHER        兩字都是教育部標準字、在這些用法上通用的組合（開發者確認）。ZH_TW_FORM_MAP 的每一組也視為兩可（zhIsFormEither）。
+ *   ZH_FORM_EITHER_WORDS  兩種寫法都通用的常用詞（只在這個詞裡通用，不能拆成單字）。
  *   ZH_RHETORIC_TERMS     設計文件的 28 個修辭格名稱，加上黃慶萱《修辭學》另有的倒反、仿擬、藏詞；ZH_RHETORIC_SUBTYPES 是臺灣課本與參考書常用的次類。
  *   ZH_RHETORIC_MAINLAND  中國大陸語文教材的修辭術語 → 臺灣課本的名稱（只收確定的對照；通感、移就這類兩岸歸類不同的不收，計數 rhetoric_term_unknown）。
  */
@@ -141,6 +142,9 @@ export const ZH_SIMPLIFIED_ONLY: readonly string[] = [
 
 /** 兩可的寫法（[甲, 乙] 不分先後）：學生寫哪一個都不算錯別字。ZH_TW_FORM_MAP 的每一組也視為兩可（字碼差異）。 */
 export const ZH_FORM_EITHER: readonly (readonly [string, string])[] = [['台', '臺'], ['嘆', '歎'], ['跡', '蹟'], ['佔', '占'], ['唯', '惟']];
+
+/** 兩可的常用詞（教育部辭典兩種寫法都收；不能拆成單字的兩可，例如「了」和「瞭」只在這個詞裡通用）。zhIsFormEither 也認這些詞。 */
+export const ZH_FORM_EITHER_WORDS: readonly (readonly [string, string])[] = [['了解', '瞭解'], ['計畫', '計劃']];
 
 /** 台灣高中國文課本的修辭格名稱（封閉清單；系統提示照這個順序列出）。次類寫成「名稱（次類）」，例如「轉化（擬人）」。 */
 export const ZH_RHETORIC_TERMS: readonly string[] = [

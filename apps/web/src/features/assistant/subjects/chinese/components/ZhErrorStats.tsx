@@ -1,6 +1,7 @@
 /**
  * 首頁「最近的解析」選「國文」時上方的國文錯因統計（docs/design/assistant-subjects.md §7.3；程式算，0 點）：
- * GET /api/assist/cases?subject=chinese 的 error_counts 依錯因族加總，列各族題數與最常見的 3 個錯因。認不得的代碼略過。
+ * GET /api/assist/cases?subject=chinese 的 error_counts 依錯因族加總，列各族次數與最常見的 3 個錯因。認不得的代碼略過。
+ * 是「次」不是「題」：一題可以標同一族的兩個錯因，加總之後會算兩次。
  */
 import { ZH_ERROR_FAMILIES, ZH_ERROR_FAMILY_LABELS, ZH_ERROR_INFO, isZhErrorCode, type ZhErrorFamily } from '@gsat/shared';
 import { useId } from 'react';
@@ -10,7 +11,7 @@ export interface ZhErrorSummary {
   top: Array<{ code: string; label: string; count: number }>;
 }
 
-/** 純函式（測試用）：錯因次數 → 各族題數（依族的順序、0 的不列）與最常見的 3 個錯因（次數相同依代碼）。 */
+/** 純函式（測試用）：錯因次數 → 各族次數（依族的順序、0 的不列）與最常見的 3 個錯因（次數相同依代碼）。 */
 export function zhErrorSummary(counts: Readonly<Record<string, number>>): ZhErrorSummary {
   const entries = Object.entries(counts).filter(([code, n]) => isZhErrorCode(code) && n > 0) as Array<[keyof typeof ZH_ERROR_INFO, number]>;
   const byFamily = new Map<ZhErrorFamily, number>();
@@ -40,11 +41,11 @@ export function ZhErrorStats({ counts }: { counts: Readonly<Record<string, numbe
           <ul className="flex flex-wrap gap-2 text-sm">
             {summary.families.map((f) => (
               <li key={f.family} className="rounded-full bg-surface-2 px-3 py-1">
-                {f.label} <span className="font-semibold tabular-nums">{f.count}</span> 題
+                {f.label} <span className="font-semibold tabular-nums">{f.count}</span> 次
               </li>
             ))}
           </ul>
-          <p className="text-sm">最常見的錯因：{summary.top.map((t) => `「${t.label}」${t.count} 題`).join('、')}</p>
+          <p className="text-sm">最常見的錯因：{summary.top.map((t) => `「${t.label}」${t.count} 次`).join('、')}</p>
         </>
       )}
     </section>

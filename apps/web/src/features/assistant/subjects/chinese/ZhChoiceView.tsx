@@ -2,7 +2,9 @@
  * zh_choice（單選、多選、研判、排序）解析的畫面（docs/design/assistant-subjects.md §1.7、§1.8 範例 A、B、C、F、§3.2）：
  *   1. 這題（這組）在考什麼  2. 文本脈絡  3. 你的疑問
  *   4. 逐題：題型標籤 → 你的答案錯在哪 →（先看提示時：提示階梯與「看完整解析」）→ 題型卡（放在對應題號下）→ 正確解法（證據鏈）
- *      → 逐選項判定（研判題用題目自己的標籤與「你判」）→ 正確答案與多選計分
+ *      → 逐選項判定（研判題用題目自己的標籤與「你判」）→（研判題）推出組合 → 正確答案與多選計分
+ *   先看提示時，提示階梯以外的東西（錯在哪、題型卡、整組共用的卡）都收在「看完整解析」裡：字音卡的注音、字形卡的正字、文言對照卡
+ *   的白話都等於答案。只有一題時每張卡都屬於那一題（學生沒填題號時題號是空字串）。
  *   5. 這類題的解法  6. 提分建議
  * 數字與對錯都是程式給的：正確答案有「你提供的答案」或「AI 判斷・確定程度」；多選的誤選、漏選與得分由 shared 的 zhMultiScore 算。
  * 單選判出兩個以上「該選」時（multi_suspect）提示「可能是多選題」，按了用 PATCH 把子模式改成多選（0 點，不再呼叫 AI），
@@ -15,6 +17,8 @@ import {
   ZH_VERDICT_BASIS_TEXT,
   zhErrorLabel,
   zhMultiScore,
+  zhVerdictText,
+  type ZhCardView,
   type ZhChoiceItemView,
   type ZhChoiceMode,
   type ZhChoiceView as ZhChoiceAnalysis,
@@ -23,7 +27,7 @@ import {
 import { useId, useState } from 'react';
 import { HintSteps } from '../../components/AnalysisView';
 import { AnalysisSection, VerdictBadge, secondaryBtn } from '../../components/parts';
-import { CardTable, cardsFor, sharedCards } from './components/CardTable';
+import { CardTable, zhCardLayout } from './components/CardTable';
 import { MultiScoreLine } from './components/MultiScoreLine';
 import { LocateQuote } from './components/LocateQuote';
 import { OptionVerdictTable } from './components/OptionVerdictTable';
@@ -73,6 +77,19 @@ function AnswerLine({ item }: { item: ZhChoiceItemView }) {
   );
 }
 
+/**
+ * 研判題的「推出組合」（§1.7：敘述判定表 → 推出組合 → 答案）：「① 不符合、② 不符合 → (B)「①、②皆不符合」」。
+ * 逐句判定依 AI 的判定與題目的標籤；選項文字取自題目（取不到就只寫字母）。不是研判題、或答案不是一個字母時回 null。
+ */
+export function judgeComboLine(item: Pick<ZhChoiceItemView, 'judge_labels' | 'options' | 'answer_key'>, optionText: string | null): string | null {
+  const key = item.answer_key?.text ?? '';
+  if (!item.judge_labels || !/^[A-E]$/.test(key)) return null;
+  const statements = item.options.filter((o) => !/^[A-E]$/.test(o.option));
+  if (statements.length === 0) return null;
+  const parts = statements.map((o) => `${o.option} ${zhVerdictText(o.verdict, item.judge_labels)}`).join('、');
+  return `${parts} → (${key})${optionText ? `「${optionText}」` : ''}`;
+}
+
 function Warnings({ item, onSwitchToMulti, switching }: { item: ZhChoiceItemView; onSwitchToMulti?: (() => void) | undefined; switching: boolean }) {
   if (item.warnings.length === 0) return null;
   return (
@@ -94,6 +111,7 @@ function Warnings({ item, onSwitchToMulti, switching }: { item: ZhChoiceItemView
 function ChoiceItem({
   item,
   analysis,
+  cards,
   single,
   common,
   onSwitchToMulti,
@@ -101,6 +119,8 @@ function ChoiceItem({
 }: {
   item: ZhChoiceItemView;
   analysis: ZhChoiceAnalysis;
+  /** 放在這一題下面的卡（zhCardLayout）。 */
+  cards: readonly ZhCardView[];
   single: boolean;
   common: ZhViewCommonProps;
   onSwitchToMulti?: (() => void) | undefined;
@@ -112,9 +132,18 @@ function ChoiceItem({
   const headline =
     item.verdict === 'correct' ? '為什麼對、哪裡容易猶豫' : item.verdict === 'unanswered' ? '這題卡住的地方' : item.verdict === 'unknown' ? '這題的重點' : '你的答案錯在哪';
   const capped = item.warnings.includes('cap_dictionary');
-  const cards = cardsFor(analysis.cards, item.label);
   const keyText = item.answer_key?.text ?? '';
   const multi = item.choice_mode === 'multi';
+  const combo = judgeComboLine(item, /^[A-E]$/.test(keyText) ? (common.targets?.[item.label]?.options?.[keyText] ?? null) : null);
+  // 你的答案錯在哪（模型的診斷常直接寫出正解）：先看提示時收進「看完整解析」。
+  const diagnosis = (
+    <div className="space-y-1">
+      <h4 className="font-semibold">{headline}</h4>
+      {codes.length > 0 && <p className="text-sm text-muted">錯因：{codes.join('、')}</p>}
+      {item.diagnosis.summary_zh && <p className="font-medium break-words">{item.diagnosis.summary_zh}</p>}
+      {item.diagnosis.detail_zh && <p className="break-words">{item.diagnosis.detail_zh}</p>}
+    </div>
+  );
   return (
     <section aria-labelledby={`${bodyId}-h`} className="space-y-3 rounded-2xl border border-line bg-surface p-4" data-zh-item={item.label}>
       <div className="flex flex-wrap items-center gap-2">
@@ -130,12 +159,7 @@ function ChoiceItem({
         <dt className="text-muted">你的答案</dt>
         <dd>{item.student_answer ? <span className="font-semibold">{[...item.student_answer].map((l) => `(${l})`).join('')}</span> : <span className="text-muted">未作答</span>}</dd>
       </dl>
-      <div className="space-y-1">
-        <h4 className="font-semibold">{headline}</h4>
-        {codes.length > 0 && <p className="text-sm text-muted">錯因：{codes.join('、')}</p>}
-        {item.diagnosis.summary_zh && <p className="font-medium break-words">{item.diagnosis.summary_zh}</p>}
-        {item.diagnosis.detail_zh && <p className="break-words">{item.diagnosis.detail_zh}</p>}
-      </div>
+      {!common.hintFirst && diagnosis}
       {common.hintFirst && <HintSteps hints={item.hints_zh} />}
       {common.hintFirst && (
         <button
@@ -149,6 +173,7 @@ function ChoiceItem({
         </button>
       )}
       <div id={`${bodyId}-full`} hidden={!open} className="space-y-4">
+        {common.hintFirst && diagnosis}
         <Warnings item={item} onSwitchToMulti={onSwitchToMulti} switching={switching} />
         {cards.map((card) => (
           <CardTable
@@ -199,6 +224,12 @@ function ChoiceItem({
             }}
           />
         </div>
+        {combo && (
+          <div className="space-y-1">
+            <h4 className="font-semibold">推出組合</h4>
+            <p className="break-words">{combo}</p>
+          </div>
+        )}
         <div className="space-y-1">
           <h4 className="font-semibold">正確答案</h4>
           <AnswerLine item={item} />
@@ -227,9 +258,20 @@ export function ZhChoiceView({
   if (analysis.off_topic) return <ZhOffTopic />;
   const items = analysis.items.map((i) => withChoiceMode(i, modes?.[i.label]));
   const single = items.length === 1;
-  const labels = items.map((i) => i.label);
-  const shared = sharedCards(analysis.cards, labels);
+  const layout = zhCardLayout(
+    analysis.cards,
+    items.map((i) => i.label),
+  );
+  const shared = layout.shared;
   const capped = items.some((i) => i.warnings.includes('cap_dictionary'));
+  const sharedTables = shared.map((card) => (
+    <CardTable
+      key={analysis.cards.indexOf(card)}
+      card={card}
+      capped={capped}
+      onLocate={(c, row) => common.locatable(zhQuoteId.card(analysis.cards.indexOf(c), row)) && common.onLocate(zhQuoteId.card(analysis.cards.indexOf(c), row))}
+    />
+  ));
   return (
     <div className="space-y-6">
       <ZhHeadNotes sourceNote={common.sourceNote} keyConcern={analysis.key_concern_zh} notices={analysis.notices} />
@@ -244,17 +286,12 @@ export function ZhChoiceView({
         </AnalysisSection>
       )}
       <DoubtReplies replies={analysis.doubt_replies} />
-      {shared.length > 0 && (
-        <div className="space-y-3">
-          {shared.map((card) => (
-            <CardTable
-              key={analysis.cards.indexOf(card)}
-              card={card}
-              capped={capped}
-              onLocate={(c, row) => common.locatable(zhQuoteId.card(analysis.cards.indexOf(c), row)) && common.onLocate(zhQuoteId.card(analysis.cards.indexOf(c), row))}
-            />
-          ))}
-        </div>
+      {shared.length > 0 && !common.hintFirst && <div className="space-y-3">{sharedTables}</div>}
+      {shared.length > 0 && common.hintFirst && (
+        <details className="rounded-2xl border border-line bg-surface px-4 py-2" data-zh-shared-cards>
+          <summary className="flex min-h-11 cursor-pointer items-center font-semibold">看完整解析：整組共用的題型卡</summary>
+          <div className="space-y-3 pb-2">{sharedTables}</div>
+        </details>
       )}
       <AnalysisSection title={single ? '解析' : '逐題解析'}>
         <div className="space-y-3">
@@ -263,6 +300,7 @@ export function ZhChoiceView({
               key={item.label}
               item={item}
               analysis={analysis}
+              cards={layout.of(item.label)}
               single={single}
               common={common}
               onSwitchToMulti={onSwitchToMulti ? () => onSwitchToMulti(item.label) : undefined}

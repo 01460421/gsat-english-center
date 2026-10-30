@@ -76,6 +76,29 @@ describe('D8 國文指紋：本站自寫的文字', () => {
     }
   });
 
+  it('常見的選擇題題幹（評測題目集的題幹與講義常用的寫法）：8 字窗口 0 命中（命中會讓解析裡引用題幹的說明被誤藏）', () => {
+    if (official.kind !== 'zh-official') return;
+    const golden = path.join(REPO, 'apps/api/test/fixtures/assist-zh-golden');
+    const stems = ['b-choice.json', 'b-unseen.json'].flatMap((f) =>
+      (JSON.parse(readFileSync(path.join(golden, f), 'utf8')) as { cases: Array<{ items: Array<{ stem: string }> }> }).cases.flatMap((c) => c.items.map((it) => it.stem)),
+    );
+    expect(stems.length).toBeGreaterThan(50);
+    const common = [
+      '下列文句，標點符號使用正確的是：',
+      '這題考標點符號使用正確的是哪一句',
+      '下列文句，標點符號使用恰當的是：',
+      '下列「」內的字，字形完全正確的選項是：',
+      '下列文句中「」內的字，何者字形錯誤？',
+      '下列各組「」內的字，讀音前後相同的是：',
+      '下列文句，完全沒有錯別字的是：',
+      '下列文句畫底線處的詞語，運用適當的是：',
+      '下列甲、乙、丙、丁四句，依文意排列順序最恰當的是：',
+      '下列題辭，使用恰當的是：',
+      '依據上文，下列敘述何者正確？',
+    ];
+    for (const t of [...stems, ...common]) expect(zhD8OfficialHitCount(t, official.set), t).toBe(0);
+  });
+
   it('測試用的公開題本全文：8 字窗口 0 命中', () => {
     if (official.kind !== 'zh-official') return;
     const papers = readFileSync(new URL('./fixtures/zh-papers-public.txt', import.meta.url), 'utf8');

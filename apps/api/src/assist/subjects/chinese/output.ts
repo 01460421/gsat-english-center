@@ -59,6 +59,7 @@ import {
   zhParseJudgeCombos,
   zhSplitPartLabel,
   zhStripGradeSentences,
+  zhStripMarks,
   zhTrimToFirstSentence,
   zhTruncateHanRun,
   ZH_CARD_ROW_MAX,
@@ -101,7 +102,7 @@ import { zhCheckClassics } from './classics';
 import { zhD8Hit, zhOfficialStyleHit, zhShortAnswerHit } from './d8';
 import { zhCheckQuotes, zhLocateQuote } from './quotes';
 import type { ZhChoiceOutput, ZhFollowupOutput, ZhShortOutput, ZhWritingOutput } from './schemas';
-import { zhChoiceItemVerdict, zhShortPartVerdict } from './settle';
+import { zhChoiceItemVerdict, zhRefreshChoiceItem, zhShortPartVerdict } from './settle';
 import { zhApplyFollowupStandards, zhApplyStandards } from './standards';
 
 /** D8 命中的欄位換成這句（§5.7）。 */
@@ -112,8 +113,9 @@ export const ZH_MISSING_ITEM_TEXT = 'AI 沒有產生這一題的解析，可以�
 const ZH_DEMO_MAX = 60;
 /** 國寫問題（一）示範的上限（字，含標點；§5.5）。 */
 const ZH_Q1_DEMO_MAX = 80;
-/** 提示拿掉後少於 2 階時補的固定提示（§5.1 第 10 步）。 */
+/** 第 1、2 階提示洩答案時換上的固定提示（§5.1 第 10 步；兩階都洩答案時依序用這兩句）。 */
 export const ZH_HINT_FALLBACK = '先回到題幹，確認題目問的是什麼。';
+export const ZH_HINT_FALLBACK_2 = '把題目要的條件一項一項列出來，再逐項檢查。';
 /** 簡體字 ≥ 這麼多個不同的字時，要求重寫一次（§5.6）。 */
 export const ZH_SIMPLIFIED_RETRY_MIN = 3;
 
@@ -500,7 +502,8 @@ function expectedOptions(it: ZhChoiceItemView, t: AssistQuestionTarget, combos: 
 }
 
 /** 題幹自己給標準的語法、修辭題（§5.3）：括號類別、「分為」「可分成」「屬於此種用法」、分類表。回傳題目出現過的類別名稱。 */
-function stemCategories(stem: string, figure: string): { defined: boolean; names: string[] } {
+function stemCategories(raw: string, figure: string): { defined: boolean; names: string[] } {
+  const stem = zhStripMarks(raw);
   const names = [...new Set([...stem.matchAll(/[（(]([\p{Script=Han}]{2,4})[）)]/gu)].map((m) => m[1]!))];
   const defined = figure.trim() !== '' || /分為|可分成|分成[^。\n]{0,6}類|屬於此種用法|此種用法|類別|名量詞/u.test(stem) || names.length >= 2;
   return { defined, names };
@@ -648,16 +651,20 @@ function hintNamesJudgement(hint: string, combo: ZhJudgeCombo | undefined, label
 
 const ANSWER_PHRASE_RE = /答案(?:是|為|應為|應該是|就是)|正解(?:是|為)/u;
 
-/** 第 1、2 階提示拿掉洩答案的；拿掉後少於 2 階補固定提示。回傳新的提示與拿掉幾階。 */
+/**
+ * 第 1、2 階提示洩答案的，**原地**換成固定提示（第 1 個換 ZH_HINT_FALLBACK、第 2 個換 ZH_HINT_FALLBACK_2）。不能直接拿掉：
+ * 第 3 階本來就可以寫出正解，拿掉前面的會讓它往前遞補成第 2 階。回傳新的提示與換掉幾階。
+ */
 export function zhFilterHints(hints: readonly string[], leaks: (hint: string) => boolean): { hints: string[]; removed: number } {
+  const out = [...hints];
+  const fallbacks = [ZH_HINT_FALLBACK, ZH_HINT_FALLBACK_2];
   let removed = 0;
-  const kept = hints.filter((h, i) => {
-    if (i >= 2 || !leaks(h)) return true;
+  for (let i = 0; i < Math.min(2, out.length); i += 1) {
+    if (!leaks(out[i]!)) continue;
     removed += 1;
-    return false;
-  });
-  if (removed > 0 && kept.length < 2) kept.unshift(ZH_HINT_FALLBACK);
-  return { hints: kept, removed };
+    out[i] = fallbacks.find((f) => !out.includes(f)) ?? ZH_HINT_FALLBACK_2;
+  }
+  return { hints: out, removed };
 }
 
 /** 第 10 步（選擇題；簡答在 shortPart 比對示範原句）。 */
@@ -982,6 +989,10 @@ export function postprocessZhAnalysis(raw: ZhChoiceOutput | ZhShortOutput | ZhWr
   view = zhCheckClassics(view, q, c.checks);
   const standards = zhApplyStandards(view, ctx, c.checks);
   view = standards.view;
+  // 第 7、8、11、13 步可能把 AI 答案的確定程度降成 unsure：判定、依據與多選計分依最後的答案鍵重算（§7.3）。
+  if (view.kind === 'zh_choice') {
+    for (const it of view.items) zhRefreshChoiceItem(it, Object.keys(q.targets.find((t) => t.label === it.label)?.options ?? {}).length || undefined);
+  }
   let retry: string | null = null;
   if (standards.simplified.length >= ZH_SIMPLIFIED_RETRY_MIN) {
     if (ctx.allowRetry) {
@@ -1016,12 +1027,13 @@ function sentencesOf(text: string): string[] {
 }
 
 /**
- * 追問的提示模式不洩答案（§3.5；同解析的第 10 步）：回覆與要點裡說出正解選項的句子拿掉；回覆被拿光時換成固定提示。
- * 回傳拿掉幾句。
+ * 追問的提示模式不洩答案（§3.5；同解析的第 10 步）：回覆與要點裡說出正解選項的句子拿掉；字音題另外拿掉有注音的句子；
+ * 回覆被拿光時換成固定提示。回傳拿掉幾句。
  */
-function followupHintChecks(view: ZhFollowupView, answers: Readonly<Record<string, string>>): number {
+function followupHintChecks(view: ZhFollowupView, answers: Readonly<Record<string, string>>, sound: boolean): number {
   const letters = [...new Set(Object.values(answers).flatMap((a) => [...a]))].filter((l) => /^[A-E]$/.test(l));
-  const leaks = (sentence: string) => letters.some((l) => zhHintNamesOption(sentence, l)) || /答案(?:是|為|應為|應該是|就是)|正解(?:是|為)/u.test(sentence);
+  // 字音題的提示模式不能出現任何注音（同解析的第 10 步）。
+  const leaks = (sentence: string) => letters.some((l) => zhHintNamesOption(sentence, l)) || ANSWER_PHRASE_RE.test(sentence) || (sound && /[ㄅ-ㄩ]/u.test(sentence));
   let removed = 0;
   const strip = (text: string) => {
     const kept = sentencesOf(text).filter((x) => {
@@ -1060,7 +1072,7 @@ export function postprocessZhFollowup(raw: ZhFollowupOutput, ctx: ZhFollowupCont
     safety_flag: raw.safety_flag,
     notices: c.notices,
   };
-  if (mode === 'hint' || ctx.mode === 'hint') c.count('hint_leak_removed', followupHintChecks(view, ctx.answers));
+  if (mode === 'hint' || ctx.mode === 'hint') c.count('hint_leak_removed', followupHintChecks(view, ctx.answers, ctx.sound === true));
   if (ctx.kind === 'zh_short') {
     let hidden = false;
     const hit = (t: string) => {

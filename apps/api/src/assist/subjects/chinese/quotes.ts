@@ -11,9 +11,10 @@
  *                        卡片原文句找不到時保留白話、拿掉原文標示（card_head_unmatched）在 output.ts 組卡片時做；
  *                        必須抄錄的示範逐字比對（copy_demo_removed）在 output.ts 的簡答小題做（要字數限制與抄錄規定）。
  */
-import { countZhChars, zhFindQuote, type AssistQuestionBlock, type AssistQuestionView, type AssistQuoteRange, type ZhAnalysisView, type ZhChecks } from '@gsat/shared';
+import { countZhChars, zhFindQuote, type AssistQuestionView, type AssistQuoteRange, type ZhAnalysisView, type ZhChecks } from '@gsat/shared';
 import { zhPublicDomainShare } from './classics';
 import { zhExplainFields, zhQuoteFields } from './fields';
+import { NOTE_CITE_RE, zhIsNoteBlock, zhNoteNumber, zhQuestionNoteNumbers as noteNumbersOf } from './notes';
 
 /** 引文在題目（或學生的片段）裡的位置；找不到或引文是空的回 null。 */
 export function zhLocateQuote(quote: string, q: Pick<AssistQuestionView, 'blocks' | 'draft'>, where: 'question' | 'draft' = 'question'): AssistQuoteRange | null {
@@ -32,41 +33,8 @@ export function zhLocateQuote(quote: string, q: Pick<AssistQuestionView, 'blocks
 
 // ───────────────────────── 注釋引用 ─────────────────────────
 
-/** 注釋區塊：label 寫「注釋」「注」「右框」「乙注」，或文字以「注釋：」「注1」開頭。 */
-const NOTE_BLOCK_LABEL_RE = /注|註|框/u;
-const NOTE_BLOCK_TEXT_RE = /^\s*(?:注釋|註釋|注解|註解|注|註)\s*(?:[：:]|[0-9０-９]{1,2}|[①-⑳])/u;
-/** 注釋區塊裡的標號：圈號、「注 3」、行首的「3.」「3、」「(3)」「⑶」。 */
-const NOTE_MARK_RES: readonly RegExp[] = [/[①-⑳]/gu, /(?:注釋|註釋|注|註)\s*([0-9０-９]{1,2})/gu, /^[ \t]*[(（]?\s*([0-9０-９]{1,2})\s*[)）.．、]/gmu, /[⑴-⒇]/gu];
-/** 說明欄位裡引用注釋的寫法：「注3」「注釋 3」「註③」。 */
-const NOTE_CITE_RE = /(?:注釋|註釋|注|註)\s*([0-9０-９]{1,2}|[①-⑳])/gu;
-
-function noteNumber(raw: string): number {
-  const ch = raw.codePointAt(0)!;
-  if (ch >= 0x2460 && ch <= 0x2473) return ch - 0x2460 + 1;
-  if (ch >= 0x2474 && ch <= 0x2487) return ch - 0x2474 + 1;
-  return Number(raw.normalize('NFKC'));
-}
-
-function isNoteBlock(b: AssistQuestionBlock): boolean {
-  return (b.label !== null && NOTE_BLOCK_LABEL_RE.test(b.label)) || NOTE_BLOCK_TEXT_RE.test(b.text);
-}
-
-/**
- * 題目有的注釋標號：注釋區塊裡的標號，加上題目任何地方寫明的「注 N」。沒有任何注釋時是空集合（這時說明裡的「注X」都不成立）。
- */
-export function zhQuestionNoteNumbers(q: Pick<AssistQuestionView, 'blocks'>): Set<number> {
-  const out = new Set<number>();
-  for (const b of q.blocks ?? []) {
-    const res = isNoteBlock(b) ? NOTE_MARK_RES : [NOTE_MARK_RES[1]!];
-    for (const re of res) {
-      for (const m of b.text.matchAll(re)) {
-        const n = noteNumber(m[1] ?? m[0]);
-        if (Number.isInteger(n) && n >= 1 && n <= 40) out.add(n);
-      }
-    }
-  }
-  return out;
-}
+// 題目有哪些注釋（注釋區塊、夾在區塊中間的注釋段落、「注 N」）由 notes.ts 判斷，requests.ts 的 <task> 用同一支。
+export { zhQuestionNoteNumbers } from './notes';
 
 /** 句子（以。！？；或換行分開，保留句末標點）。 */
 function sentences(text: string): string[] {
@@ -78,7 +46,7 @@ export function zhDropUnmatchedNotes(text: string, notes: ReadonlySet<number>): 
   if (!/(?:注|註)/u.test(text)) return { text, removed: 0 };
   let removed = 0;
   const kept = sentences(text).filter((s) => {
-    const bad = [...s.matchAll(NOTE_CITE_RE)].filter((m) => !notes.has(noteNumber(m[1]!))).length;
+    const bad = [...s.matchAll(NOTE_CITE_RE)].filter((m) => !notes.has(zhNoteNumber(m[1]!))).length;
     removed += bad;
     return bad === 0;
   });
@@ -92,7 +60,7 @@ export const ZH_QUOTE_VOLUME = { minPassageChars: 300, ratio: 0.3, floorChars: 1
 
 /** 選文區塊（不含注釋區塊）的序號。 */
 function passageBlockIndexes(q: Pick<AssistQuestionView, 'blocks'>): number[] {
-  return (q.blocks ?? []).flatMap((b, i) => (b.kind === 'passage' && !isNoteBlock(b) ? [i] : []));
+  return (q.blocks ?? []).flatMap((b, i) => (b.kind === 'passage' && !zhIsNoteBlock(b) ? [i] : []));
 }
 
 /** 選文總量的上限（字）；不套用時回 null（選文太短、沒有選文，或是公有領域古文）。 */
@@ -109,7 +77,7 @@ export function zhQuoteVolumeCap(q: Pick<AssistQuestionView, 'blocks'>): number 
 /** 整則的引文規則（見檔頭）。回傳同一個 view（直接改）。 */
 export function zhCheckQuotes<V extends ZhAnalysisView>(view: V, q: AssistQuestionView, checks: ZhChecks): V {
   // 1. 注釋引用。
-  const notes = zhQuestionNoteNumbers(q);
+  const notes = noteNumbersOf(q);
   for (const f of zhExplainFields(view)) {
     const r = zhDropUnmatchedNotes(f.get(), notes);
     if (r.removed === 0) continue;

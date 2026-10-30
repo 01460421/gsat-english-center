@@ -28,6 +28,7 @@ import {
   zhRhetoricName,
   zhSimplifiedChars,
   zhSoundKeyConsistent,
+  zhStripMarks,
   zhTwReadingCheck,
   ZH_RHETORIC_MAINLAND,
   type AssistQuestionTarget,
@@ -103,12 +104,50 @@ function dropNonStandardRows(view: ZhAnalysisView, checks: ZhChecks): void {
 
 // ───────────────────────── 2. 注音與審定音 ─────────────────────────
 
-/** head 裡被問的字：「」包住的字；沒有「」而且 head 只有一個漢字時就是那個字。 */
-function askedChars(head: string): string[] {
-  const m = /「([^「」]+)」/u.exec(head);
-  const inner = m ? m[1]! : head.trim();
-  const chars = [...inner].filter((c) => /\p{Script=Han}/u.test(c));
-  return m || chars.length === 1 ? chars : [];
+/**
+ * head 裡被問的字：「」或 ⟦⟧ 包住的字（可以不只一處）；都沒有而且 head 只有一個漢字時就是那個字。
+ * 另外回傳被問的字在整個詞裡是第幾個漢字（positions）與整個詞的漢字數（word）：模型把整個詞的注音都寫進 a 時，
+ * 用位置取出被問的字那一個音節。
+ */
+function askedChars(head: string): { chars: string[]; positions: number[]; word: number } {
+  const chars: string[] = [];
+  const positions: number[] = [];
+  let depth = 0;
+  let marked = false;
+  let n = 0;
+  for (const ch of head) {
+    if (ch === '「' || ch === '⟦') {
+      depth += 1;
+      marked = true;
+      continue;
+    }
+    if (ch === '」' || ch === '⟧') {
+      depth = Math.max(0, depth - 1);
+      continue;
+    }
+    if (!/\p{Script=Han}/u.test(ch)) continue;
+    if (depth > 0) {
+      chars.push(ch);
+      positions.push(n);
+    }
+    n += 1;
+  }
+  if (marked) return { chars, positions, word: n };
+  const all = [...head].filter((c) => /\p{Script=Han}/u.test(c));
+  return all.length === 1 ? { chars: all, positions: [0], word: 1 } : { chars: [], positions: [], word: n };
+}
+
+/**
+ * 卡片列被問的字的讀音（比對形式、音節之間一個空白）：a 的音節數等於被問的字數就照用；等於整個詞的字數時取被問的字那幾個音節；
+ * 看不出被問的是哪個字時用整格（同改寫前的行為）。
+ */
+function askedReading(row: Pick<ZhCardRowView, 'head' | 'a'>): string {
+  const syllables = zhCheckBopomofo(row.a).syllables.map(readingKey);
+  const asked = askedChars(row.head);
+  if (asked.chars.length > 0 && syllables.length !== asked.chars.length && syllables.length === asked.word) {
+    return asked.positions.map((i) => syllables[i]!).join(' ');
+  }
+  return syllables.join(' ');
 }
 
 function checkSoundCards(view: ZhAnalysisView, checks: ZhChecks): void {
@@ -130,8 +169,13 @@ function checkSoundCards(view: ZhAnalysisView, checks: ZhChecks): void {
         flag(row, 'reading_unverified');
         continue;
       }
-      const chars = askedChars(row.head);
-      const syllables = c.syllables.map(readingKey);
+      // 一聲的「ˉ」不寫（台灣的注音一聲不標）。
+      if (a.includes('ˉ')) row.a = a.replace(/ˉ/gu, '').trim();
+      const asked = askedChars(row.head);
+      let syllables = c.syllables.map(readingKey);
+      // 模型寫了整個詞的注音：取被問的字那幾個音節。
+      if (asked.chars.length > 0 && syllables.length !== asked.chars.length && syllables.length === asked.word) syllables = asked.positions.map((i) => syllables[i]!);
+      const chars = asked.chars;
       if (chars.length === 0 || chars.length !== syllables.length) continue;
       if (!chars.some((ch, i) => zhTwReadingCheck(ch, syllables[i]!) === 'mismatch')) continue;
       flag(row, 'reading_unverified');
@@ -159,7 +203,9 @@ function clearPinyinKeys(view: ZhChoiceView, isSound: (it: ZhChoiceItemView) => 
 type Polarity = 'same' | 'different' | 'all_different' | 'correct' | 'wrong';
 
 /** 字音題的題幹要的是什麼（讀音相同、不同、兩兩不同、注音正確、注音錯誤）；看不出來回 null。 */
-export function zhSoundStemPolarity(stem: string): Polarity | null {
+export function zhSoundStemPolarity(raw: string): Polarity | null {
+  // 底線標記先拿掉（「讀音完全⟦不同⟧」）。
+  const stem = zhStripMarks(raw);
   if (/兩兩不同|完全不同|皆不相同|都不相同|各不相同|皆不同|都不同/u.test(stem)) return 'all_different';
   if (/(?:讀音|字音|注音|音)[^。？?\n]{0,4}(?:不同|相異)|不同音/u.test(stem)) return 'different';
   if (/(?:讀音|字音|音)[^。？?\n]{0,4}(?:相同|一樣)|同音|前後相同|兩兩相同/u.test(stem)) return 'same';
@@ -169,7 +215,8 @@ export function zhSoundStemPolarity(stem: string): Polarity | null {
 }
 
 /** 字義題的題幹要的是同還是不同；看不出來回 null。 */
-function wordStemPolarity(stem: string): Polarity | null {
+function wordStemPolarity(raw: string): Polarity | null {
+  const stem = zhStripMarks(raw);
   if (/兩兩不同|完全不同|皆不相同|各不相同/u.test(stem)) return 'all_different';
   if (/(?:意義|意思|字義|詞義|用法)[^。？?\n]{0,4}(?:不同|相異)/u.test(stem)) return 'different';
   if (/(?:意義|意思|字義|詞義|用法)[^。？?\n]{0,4}(?:相同|一樣|相近)/u.test(stem)) return 'same';
@@ -223,13 +270,13 @@ function checkSoundConsistency(view: ZhChoiceView, targetOf: (label: string) => 
         }
         const optionText = t?.options?.[o.option] ?? '';
         const rows = soundRowsFor(view.cards, it.label, optionText).filter((r) => r.a.trim() !== '');
-        // 卡片的讀音要在 key_zh 寫出的讀音裡。
+        // 卡片的讀音（被問的字那幾個音節）要在 key_zh 寫出的讀音裡。
         const keyReadings = parsed.readings.map(readingKey);
-        if (keyReadings.length > 0 && rows.some((r) => !keyReadings.includes(readingKey(r.a)))) bad = true;
+        if (keyReadings.length > 0 && rows.some((r) => !keyReadings.includes(askedReading(r)))) bad = true;
         // 選項直接印注音：和卡片的讀音一致才該判 yes（題幹問「錯誤」時相反）。
         const printed = printedReading(optionText.replace(/「[^「」]*」/gu, ''));
         if (printed && rows.length > 0 && (o.verdict === 'yes' || o.verdict === 'no')) {
-          const same = rows.some((r) => readingKey(r.a) === printed);
+          const same = rows.some((r) => askedReading(r) === printed);
           const expect = polarity === 'wrong' ? !same : same;
           if (expect !== (o.verdict === 'yes')) bad = true;
         }
@@ -260,8 +307,9 @@ function checkSoundConsistency(view: ZhChoiceView, targetOf: (label: string) => 
 // ───────────────────────── 4. 修辭名稱 ─────────────────────────
 
 /** 題幹自己給了分類（括號類別、「分為」「可分成」「屬於此種用法」、分類表）：以題目的名稱為準，不套台灣課本的清單。 */
-export function zhStemDefinesCategories(stem: string, hasFigure: boolean): boolean {
+export function zhStemDefinesCategories(raw: string, hasFigure: boolean): boolean {
   if (hasFigure) return true;
+  const stem = zhStripMarks(raw);
   if (/分為|可分成|分成[^。\n]{0,6}類|屬於此種用法|此種用法|類別|名量詞/u.test(stem)) return true;
   const brackets = new Set([...stem.matchAll(/[（(]([\p{Script=Han}]{2,4})[）)]/gu)].map((m) => m[1]!));
   return brackets.size >= 2;

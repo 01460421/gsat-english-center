@@ -252,8 +252,8 @@ describe('設定（src/config.ts）', () => {
     for (const name of ['AI_ASSISTANT_SUBJECTS', 'AI_ASSISTANT_SUBJECTS_PHOTO']) {
       expect(toml.match(new RegExp(`^${name}\\s*=\\s*"([^"]*)"`, 'm'))?.[1], `wrangler.toml 的 [vars] 要明確寫 ${name} = "off"`).toBe('off');
     }
-    // 國文不需要新的 secret（短答比對的雜湊不帶金鑰）。
-    expect(toml).not.toMatch(/ASSIST_D8_ZH_KEY/);
+    // 國文不需要新的 secret（短答比對的雜湊不帶金鑰）：wrangler.toml 沒有任何國文 D8 的金鑰設定。
+    expect(toml).not.toMatch(/D8_ZH|ZH_D8_KEY/);
     const config = loadConfig(baseEnv);
     expect([config.ai.assistantSubjects, config.ai.assistantSubjectsPhoto]).toEqual(['off', 'off']);
     for (const v of ['on', 'ON', ' on ']) expect(loadConfig({ ...baseEnv, AI_ASSISTANT_SUBJECTS: v }).ai.assistantSubjects, v).toBe('on');

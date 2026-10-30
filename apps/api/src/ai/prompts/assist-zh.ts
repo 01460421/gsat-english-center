@@ -76,8 +76,12 @@ export const ZH_TEACHING = `How to teach (Chinese):
 - Hints: hints 1 and 2 must not name the correct option or, for 讀音, write any 注音.
 - When you are not sure about a reading, a character form, a traditional usage (題辭、稱謂) or a fact of literary history, set certainty to likely or unsure and say so. Quote famous classical lines only when you are sure of every character. Do not invent sources or authors.
 - When <task> gives an answer key, it was given by the student and not verified: explain the question as keyed; if you believe the key is wrong, say why briefly in key_concern_zh; otherwise leave key_concern_zh empty.
-- Diagnose the student's specific mistake with error codes from the list below, answer every doubt the student raised, and make every score tip a concrete action that follows from this mistake.
 - If <student_patterns> is given, connect this mistake to the student's earlier ones only when it really is the same pattern.`;
+
+/** 選擇題的錯因（只有 zh_choice 的 schema 有錯因欄位；簡答、國寫不放錯因清單，§3.9）。 */
+const ZH_DIAGNOSE_CHOICE = `- Diagnose the student's specific mistake with error codes from the list below, answer every doubt the student raised, and make every score tip a concrete action that follows from this mistake.`;
+/** 簡答：沒有錯因欄位，只回答疑問、給具體的提分做法。 */
+const ZH_DIAGNOSE_SHORT = `- Answer every doubt the student raised, and make every score tip a concrete action that follows from the student's answer.`;
 
 /** 非選擇題的規則（只放在 zh_short）。 */
 const ZH_SHORT_RULES = `Non-choice questions:
@@ -156,12 +160,11 @@ export function zhCardGuide(): string {
       const c = ZH_CARD_COLUMNS[k];
       return `- ${k}: ${c.head} | ${c.a} | ${c.b} | ${c.note} (at most ${ZH_CARD_ROW_MAX[k]} rows)`;
     }),
-    '- sound: a is 注音 only (ㄅ–ㄩ and tone marks); b states a 破音 rule only when one really applies, otherwise 「固定讀音，記詞」.',
+    '- sound: head wraps each asked character in 「」; a is the 注音 of the asked characters only, one syllable each; b states a 破音 rule only when one really applies, otherwise 「固定讀音，記詞」.',
     '- form: head quotes enough context to judge the word; a is the correct form in standard characters.',
     '- idiom: a names a source book only when you are sure, otherwise 「出處待查」.',
     '- rule: when the question gives its own categories, a uses only the question\'s category names.',
     '- translation and poetry: head is copied exactly from the question.',
-    '- poetry: note (格律) only when the question tests meter.',
     'At most 4 cards and at most one more card than there are questions; rows across all cards at most 9 + 3 × (number of questions).',
   ].join('\n');
 }
@@ -208,7 +211,7 @@ const SYSTEM_TEXT: Readonly<Record<ZhCaseKind, string>> = {
   zh_choice: [
     ZH_ROLE,
     ZH_DATA_RULES,
-    ZH_TEACHING,
+    `${ZH_TEACHING}\n${ZH_DIAGNOSE_CHOICE}`,
     `Options:
 - verdict for an ordinary option says whether it should be chosen: yes or no. When the stem asks for the inappropriate one, the inappropriate option is yes.
 - verdict for a numbered statement: yes for the positive label, no for the negative label, cannot_tell for 無法判斷.
@@ -230,12 +233,11 @@ const SYSTEM_TEXT: Readonly<Record<ZhCaseKind, string>> = {
   zh_short: [
     ZH_ROLE,
     ZH_DATA_RULES,
-    ZH_TEACHING,
+    `${ZH_TEACHING}\n${ZH_DIAGNOSE_SHORT}`,
     ZH_SHORT_RULES,
     ZH_SCORING_FACTS_TEST,
     zhSectionModes('zh_short'),
     zhCardGuide(),
-    zhErrorCodeList('zh_short'),
     zhSkillCodeList(),
     zhRhetoricList(),
     ZH_D8_RULE,
@@ -250,7 +252,6 @@ const SYSTEM_TEXT: Readonly<Record<ZhCaseKind, string>> = {
     ZH_WRITING_RULES,
     ZH_SCORING_FACTS_WRITING,
     zhSectionModes('zh_writing'),
-    zhErrorCodeList('zh_writing'),
     zhSkillCodeList(),
     ZH_D8_RULE,
     zhLengthLimits('zh_writing'),

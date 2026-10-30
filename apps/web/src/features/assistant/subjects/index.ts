@@ -42,8 +42,11 @@ export interface WebSubject {
   offTopic: string;
   /** 解析元件（依 kind 自己分派；不認得的 kind 畫面是空的）。 */
   Analysis: ComponentType<SubjectAnalysisProps>;
-  /** 左欄的引文加亮（全部淡色、activeId 那一句加深）。 */
-  highlightsOf(analysis: AnyAnalysis | null, question: AssistQuestionView | null, activeId: string | null): QuestionHighlights;
+  /**
+   * 左欄的引文加亮（全部淡色、activeId 那一句加深）。hintFirst（先看提示）時國文只標學生按下的那一句：全部引文一起加亮等於把
+   * 證據與答案標在題目上。
+   */
+  highlightsOf(analysis: AnyAnalysis | null, question: AssistQuestionView | null, activeId: string | null, hintFirst?: boolean): QuestionHighlights;
   /** 引文 id → 能不能在左欄標出來。 */
   locatableOf(analysis: AnyAnalysis | null, question: AssistQuestionView | null): (id: string) => boolean;
   /** 推薦練習（國文 null）。 */
@@ -80,8 +83,8 @@ const SUBJECTS: Record<AssistSubject, WebSubject> = {
     textLang: null,
     offTopic: ZH_COPY.offTopic,
     Analysis: ZhAnalysis,
-    highlightsOf: (analysis, question, activeId) =>
-      isZhAnalysis(analysis) ? { passage: [], blocks: zhBlockMarks(analysis, question?.blocks, activeId) } : EMPTY,
+    highlightsOf: (analysis, question, activeId, hintFirst = false) =>
+      isZhAnalysis(analysis) ? { passage: [], blocks: zhBlockMarks(analysis, question?.blocks, activeId, { activeOnly: hintFirst }) } : EMPTY,
     locatableOf: (analysis, question) => {
       const ids = isZhAnalysis(analysis) ? zhLocatable(analysis, question?.blocks) : new Set<string>();
       return (id) => ids.has(id);

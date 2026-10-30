@@ -8,7 +8,7 @@
  * 拍照能不能用不放在這裡：由 Worker 依開關算，經 /api/features 與 /api/me 回給前端（§7.5）。
  */
 import { assistAnalyzePoints, ASSIST_LIMITS, type AssistCaseKind, type AssistQuestionView } from './assist';
-import { ZH_TARGET_LIMITS, zhShortPartLabels, type ZhCaseKind } from './assist-zh';
+import { ZH_TARGET_LIMITS, zhScriptCount, zhShortPartLabels, type ZhCaseKind } from './assist-zh';
 import { ASSIST_SWITCHED_SUBJECTS } from './features';
 import { AI_TASK_POINTS } from './writing';
 
@@ -201,7 +201,7 @@ function countDistinct(text: string, words: readonly string[]): number {
  *   英文單詞 ≥ 15 而且拉丁字母占可見字元 ≥ 50% → 英文（high）；
  *   數字與運算符號占 ≥ 30%，或有 \frac、√、∫ → 數學（high）；
  *   社會、自然的特徵詞 ≥ 3 個而且國文的特徵詞 < 2 → 社會或自然（low，多的那一科）；
- *   漢字 ≥ 30、占可見字元 ≥ 50%，而且英文單詞 < 15 → 國文（high）；其他 low。
+ *   漢字（含注音字元）≥ 30、占可見字元 ≥ 50%，而且英文單詞 < 15 → 國文（high）；其他 low。
  */
 export function detectAssistSubject(text: string): { subject: AssistDetectedSubject; confidence: 'high' | 'low' } {
   const visible = text.replace(/\s/gu, '');
@@ -209,7 +209,8 @@ export function detectAssistSubject(text: string): { subject: AssistDetectedSubj
   if (n === 0) return { subject: 'other', confidence: 'low' };
   const englishWords = text.match(/[A-Za-z]+(?:['’][A-Za-z]+)?/g)?.length ?? 0;
   const latin = visible.match(/[A-Za-z]/g)?.length ?? 0;
-  const han = visible.match(/\p{Script=Han}/gu)?.length ?? 0;
+  // 注音字元也算國文的字（選項印注音的字音題常不到 30 個漢字；checkZhQuestion 用同一個算法）。
+  const han = zhScriptCount(visible);
   if (englishWords >= 15 && latin / n >= 0.5) return { subject: 'english', confidence: 'high' };
   const mathy = visible.match(/[0-9+\-×÷*/=<>≤≥^√∫∑π]/gu)?.length ?? 0;
   if (/\\frac|√|∫/.test(text) || mathy / n >= 0.3) return { subject: 'math', confidence: 'high' };

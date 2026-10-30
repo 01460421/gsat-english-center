@@ -95,7 +95,7 @@ export function ZhQuestionFields({
     <div className="space-y-4">
       <div className="space-y-2">
         <p className="flex flex-wrap items-center gap-x-1 gap-y-1">
-          <span className="font-semibold">題型：</span>
+          <span className="font-semibold">格式：</span>
           <span data-testid="zh-format-summary">
             {formatSummary(format, mode)}
             {byGuess && !needConfirm ? '（依題目判斷）' : ''}

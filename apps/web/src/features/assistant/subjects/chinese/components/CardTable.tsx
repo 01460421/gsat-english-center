@@ -24,6 +24,15 @@ export function sharedCards(cards: readonly ZhCardView[], labels: readonly strin
   return cards.filter((c) => c.for_label === '' || !labels.some((l) => cardsFor([c], l).length > 0));
 }
 
+/**
+ * 卡片的擺放：只有一題時每一張卡都屬於那一題（題號可能是空字串：學生沒填題號），放進那一題的區塊，先看提示時跟著收合；
+ * 好幾題時依 for_label 放到各題下面，其餘是整組共用的卡。
+ */
+export function zhCardLayout(cards: readonly ZhCardView[], labels: readonly string[]): { of: (label: string) => ZhCardView[]; shared: ZhCardView[] } {
+  if (labels.length === 1) return { of: () => [...cards], shared: [] };
+  return { of: (label) => cardsFor(cards, label), shared: sharedCards(cards, labels) };
+}
+
 const CLASSICAL_CARDS = new Set(['translation', 'poetry']);
 
 function RowFlags({ row }: { row: ZhCardRowView }) {

@@ -15,6 +15,7 @@
  */
 import {
   ASSIST_LIMITS,
+  guessZhSection,
   isZhCaseKind,
   isZhErrorCode,
   type AssistDetectedSubject,
@@ -260,10 +261,17 @@ export async function runZhFollowup(ctx: ZhCtx & { question: AssistQuestionView 
   ctx.callInput = () => input;
   const answers: Record<string, string> =
     analysis.kind === 'zh_choice' ? Object.fromEntries(analysis.items.flatMap((it) => (it.answer_key ? [[it.label, it.answer_key.text]] : []))) : {};
+  // 字音題（追問指定的那一題，沒指定時任一題）：提示模式不能出現注音。
+  const askedItems = analysis.kind === 'zh_choice' ? analysis.items.filter((it) => !turn.label || it.label === turn.label) : [];
+  const sound =
+    analysis.kind === 'zh_choice' &&
+    (analysis.section === 'zh_sound' ||
+      askedItems.some((it) => it.item_type === 'zh_sound') ||
+      question.targets.some((t) => (!turn.label || t.label === turn.label) && Boolean(t.stem) && guessZhSection(t.stem ?? '')?.section === 'zh_sound'));
   const state: { post: ZhFollowupPostprocessed | null; filter: OutputFilter | null; model: string; promptVersion: string } = { post: null, filter: null, model: input.spec.model, promptVersion: '' };
   const result = await callWithPolicy(ctx, input, async (data, _callId, model, promptVersion) => {
     const filter = new OutputFilter();
-    Object.assign(state, { post: postprocessZhFollowup(data as ZhFollowupOutput, { kind, question, mode, filter, fp, zh, answers }), filter, model, promptVersion });
+    Object.assign(state, { post: postprocessZhFollowup(data as ZhFollowupOutput, { kind, question, mode, filter, fp, zh, answers, sound }), filter, model, promptVersion });
     return null;
   });
   if (!result.ok) return actionForFailures([result]);

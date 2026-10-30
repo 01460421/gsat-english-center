@@ -131,6 +131,30 @@ test('文言：沒填答案先看提示，「看完整解析」才展開文言�
   expect(errors).toEqual([]);
 });
 
+test('沒填題號、先看提示：提示上方沒有字形卡與診斷，左欄不先標引文；「看完整解析」才出現', async ({ page }) => {
+  const errors = collectErrors(page);
+  await setup(page);
+  await page.goto('/assistant/new?subject=chinese');
+  await paste(page, ZH_SAMPLE_QUESTIONS.form);
+  await expect(page.getByRole('checkbox', { name: /先給提示就好/ })).toBeChecked();
+  await submitAndWait(page);
+  await expect(page.getByTestId('zh-case-tag')).toHaveText('國文｜字形・單選');
+  await expect(page.getByText('每句只找成語或關鍵詞。')).toBeVisible();
+  // 字形卡的正字、模型的診斷、逐選項的關鍵都等於答案：先看提示時一律收合（Worker 的題號是空字串，卡片也算這一題的）。
+  await expect(page.getByRole('region', { name: '字形卡：錯字對照' })).toBeHidden();
+  await expect(page.getByText('(A)「價格卻不斐」有錯字，應該寫「不菲」。')).toBeHidden();
+  await expect(page.getByText('「不斐」→「不菲」').filter({ visible: true })).toHaveCount(0);
+  await expect(page.locator('[data-zh-shared-cards]')).toHaveCount(0);
+  await expect(page.locator('mark')).toHaveCount(0);
+  await page.getByRole('button', { name: '看完整解析' }).click();
+  await expect(page.getByRole('region', { name: '字形卡：錯字對照' })).toBeVisible();
+  await expect(page.getByText('(A)「價格卻不斐」有錯字，應該寫「不菲」。')).toBeVisible();
+  // 按下「在題目中標出這句」才在左欄標出那一句。
+  await page.getByRole('button', { name: '在題目中標出這句' }).first().click();
+  await expect(page.locator('mark[data-active="true"]')).toHaveCount(1);
+  expect(errors).toEqual([]);
+});
+
 test('推論研判：判定用題目自己的標籤，學生的組合拆成「你判」', async ({ page }) => {
   const errors = collectErrors(page);
   await setup(page);
@@ -143,6 +167,8 @@ test('推論研判：判定用題目自己的標籤，學生的組合拆成「�
   await expect(page.getByText('用題目的標籤：符合／不符合／無法判斷')).toBeVisible();
   await expect(page.getByText('你判：無法判斷')).toBeVisible();
   await expect(page.getByText('該選')).toHaveCount(0);
+  // 敘述判定表 → 推出組合 → 答案：逐句判定對到哪一個選項（選項文字取自題目）。
+  await expect(page.getByText('① 不符合、② 不符合 → (B)「①、②皆不符合」')).toBeVisible();
   expect(errors).toEqual([]);
 });
 
@@ -233,7 +259,7 @@ test('首頁的國文篩選與錯因統計；用同一份題目問另一部分�
   await expect(recent.getByText('國文・你貼的題目', { exact: false }).first()).toBeVisible();
   await recent.getByRole('group', { name: '依科目篩選' }).getByText('國文', { exact: true }).click();
   // 第一題答錯（同音、音近字誤用）；第二題沒作答，沒有錯因。
-  await expect(page.getByTestId('zh-error-stats')).toContainText('字音字形 1 題');
+  await expect(page.getByTestId('zh-error-stats')).toContainText('字音字形 1 次');
   expect(backend.calls.some((c) => c.path === '/api/assist/cases' && c.query.get('subject') === 'chinese')).toBe(true);
   expect(errors).toEqual([]);
 });

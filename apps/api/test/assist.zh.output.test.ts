@@ -13,8 +13,12 @@ import { resetZhClassicsForTests } from '../src/assist/subjects/chinese/classics
 import type { ZhFingerprints } from '../src/assist/subjects/chinese/d8';
 import { zhAnalysisDigest } from '../src/assist/subjects/chinese/digest';
 import { assembleZhOcr } from '../src/assist/subjects/chinese/ocr';
-import { postprocessZhAnalysis, postprocessZhFollowup, ZH_D8_HIDDEN_TEXT, ZH_HINT_FALLBACK, zhHintNamesOption } from '../src/assist/subjects/chinese/output';
+import { postprocessZhAnalysis, postprocessZhFollowup, ZH_D8_HIDDEN_TEXT, ZH_HINT_FALLBACK, ZH_HINT_FALLBACK_2, zhFilterHints, zhHintNamesOption } from '../src/assist/subjects/chinese/output';
 import { zhStudentQuestion } from '../src/assist/subjects/chinese/question';
+import { zhQuestionNoteNumbers } from '../src/assist/subjects/chinese/quotes';
+import { zhNoteNumbers } from '../src/assist/subjects/chinese/requests';
+import { zhSettlement } from '../src/assist/subjects/chinese/settle';
+import { zhSoundStemPolarity } from '../src/assist/subjects/chinese/standards';
 import type { ZhChoiceOutput, ZhShortOutput, ZhWritingOutput } from '../src/assist/subjects/chinese/schemas';
 import { fakeFingerprintFile } from './helpers/customEssay';
 import {
@@ -110,6 +114,47 @@ describe('小列舉與題號（§5.1 第 2、5 步）', () => {
 
 const JUDGE_QUESTION =
   '閱讀下文，判斷①②的敘述是否符合文意。\n小明每天清晨到公園慢跑，回家以後才吃早餐。他說跑步讓他一整天都很有精神，也因此結交了幾位一起運動的鄰居。\n①小明是在吃過早餐以後才去慢跑。\n②小明因為慢跑而認識了一些鄰居。\n(A)①符合，②不符合\n(B)①不符合，②符合\n(C)①無法判斷，②符合\n(D)①不符合，②無法判斷';
+
+describe('判定依最後的確定程度重算（§7.3）', () => {
+  const CLASSICAL_SINGLE = zhBlocks(['passage', null, '師者，所以傳道受業解惑也。人非生而知之者，孰能無惑？惑而不從師，其為惑也終不解矣。'], ['question', null, '下列關於上文的敘述，何者正確？\n(A)作者認為人生來就懂得道理\n(B)作者認為老師能替人解答疑惑\n(C)作者主張不必向人學習\n(D)作者認為疑惑會自然消失']);
+
+  it('單選判出兩個「該選」（multi_suspect）、沒有答案鍵：AI 的答案降成 unsure，學生的判定是「AI 不確定」，結算不算答錯', () => {
+    const q = question(CLASSICAL_SINGLE, { student_answer: 'C' });
+    const out = oneItem('', 'B', ['A', 'B', 'C', 'D'].map((o) => ({ option: o, verdict: o === 'A' || o === 'B' ? 'yes' : 'no' })), { item_type: 'zh_classical' }, { section: 'zh_classical' });
+    out.items[0]!.answer.certainty = 'sure';
+    const r = analyze(out, q);
+    const it0 = choice(r).items[0]!;
+    expect(it0.warnings).toContain('multi_suspect');
+    expect(it0.answer_key).toMatchObject({ from: 'ai', certainty: 'unsure' });
+    expect(it0.verdict).toBe('unknown');
+    expect(zhSettlement(r.view)).toMatchObject({ verdict: 'unknown', wrongCount: 0 });
+    // 一致時照常判答錯。
+    const fine = oneItem('', 'B', ['A', 'B', 'C', 'D'].map((o) => ({ option: o, verdict: o === 'B' ? 'yes' : 'no' })), { item_type: 'zh_classical' }, { section: 'zh_classical' });
+    fine.items[0]!.answer.certainty = 'sure';
+    const f = analyze(fine, q);
+    expect(choice(f).items[0]!.verdict).toBe('wrong');
+    expect(zhSettlement(f.view)).toMatchObject({ verdict: 'wrong', wrongCount: 1 });
+  });
+
+  it('字音題的讀音前後不一致（sound_inconsistent）、沒有答案鍵：判定是 unknown；結算也不信任存下的 verdict', () => {
+    const q = question(zhBlocks(['question', null, SOUND_QUESTION]), { student_answer: 'B' });
+    const out = oneItem(
+      '',
+      'A',
+      ['A', 'B', 'C', 'D'].map((o) => ({ option: o, verdict: o === 'A' ? 'yes' : 'no', key_zh: o === 'A' ? '前ㄨㄟˊ／後ㄨㄟˊ：不同' : '' })),
+      { item_type: 'zh_sound' },
+      { section: 'zh_sound' },
+    );
+    const r = analyze(out, q);
+    const it0 = choice(r).items[0]!;
+    expect(it0.warnings).toContain('sound_inconsistent');
+    expect(it0.verdict).toBe('unknown');
+    expect(zhSettlement(r.view).wrongCount).toBe(0);
+    // 存下的 verdict 就算是舊的（答錯），結算依答案鍵與確定程度重算。
+    const stale = { ...(r.view as ZhChoiceView), items: [{ ...it0, verdict: 'wrong' as const }] };
+    expect(zhSettlement(stale)).toMatchObject({ verdict: 'unknown', wrongCount: 0 });
+  });
+});
 
 describe('選項覆蓋與一致（§5.3）', () => {
   it('研判：題目自己的標籤、學生選 (D) 拆成逐句的「你判」、漏判的敘述補列（option_gaps）', () => {
@@ -266,6 +311,33 @@ describe('引文與原文核對（§5.2）', () => {
     expect(choice(r).notices).toContainEqual({ kind: 'notes_removed', field: 'items[0].diagnosis.detail_zh' });
   });
 
+  it('注釋夾在區塊中間（「注釋：」開頭的一行）、拍照轉錄的「注釋：①…」、label 是「注釋」：<task> 與注釋引用檢查認得同一組標號', () => {
+    const variants: AssistQuestionBlock[][] = [
+      zhBlocks(['passage', null, '注釋：①攲：傾斜。\n②旖旎：柔美。']),
+      zhBlocks(['question', null, '古文……\n注釋：\n①攲：傾斜。\n②旖旎：柔美。\n1. 下列敘述何者正確？']),
+      zhBlocks(['passage', '注釋', '①攲：傾斜。\n②旖旎：柔美。']),
+    ];
+    for (const blocks of variants) {
+      expect(zhNoteNumbers({ blocks })).toEqual([1, 2]);
+      expect([...zhQuestionNoteNumbers({ blocks })].sort((a, b) => a - b)).toEqual([1, 2]);
+    }
+    expect(zhNoteNumbers({ blocks: zhBlocks(['question', null, '下列敘述何者正確？\n1. 甲\n2. 乙']) })).toEqual([]);
+    // 整份貼成一塊：引用「注①」的正確句子照留。
+    const q = question(
+      zhBlocks([
+        'question',
+        null,
+        '晉侯、秦伯圍鄭，以其無禮於晉，且貳於楚也。夜縋①而出，見秦伯。\n注釋：\n①縋：用繩子綁住，從城牆上放下去。\n下列關於上文的敘述，何者正確？\n(A)秦晉兩國一起包圍鄭國\n(B)鄭國派兵攻打晉國\n(C)燭之武白天出城\n(D)秦國先攻打楚國',
+      ]),
+    );
+    const out = oneItem('', 'A', ['A', 'B', 'C', 'D'].map((o) => ({ option: o, verdict: o === 'A' ? 'yes' : 'no' })), {
+      diagnosis: { error_codes: [], summary_zh: '依注①，縋是用繩子放下去。', detail_zh: '燭之武夜裡出城。' },
+    });
+    const r = analyze(out, q);
+    expect(choice(r).items[0]!.diagnosis.summary_zh).toBe('依注①，縋是用繩子放下去。');
+    expect(r.checks.notes_unmatched).toBeUndefined();
+  });
+
   it('選文總量：白話選文 ≥ 300 字時，引自選文的引文合計 ≤ 30%（至少 120 字），從後面清起；古文不套', () => {
     const q = question(zhBlocks(['passage', null, MODERN_PASSAGE], ['question', null, '根據上文，下列敘述何者正確？\n(A)書店早上七點開門\n(B)書店因房租上漲而關門\n(C)讀書會只有學生參加\n(D)老闆會催促學生離開']));
     const quotes = ['老闆每天早上七點開門，先把門前的落葉掃乾淨，再把昨天整理好的書', '來店裡的大多是附近的學生，他們放學後會在角落的長椅上坐一會兒', '書店差一點因為房租上漲而關門。消息傳開以後，曾經在這裡讀書的人', '參加的人從十幾歲的學生到退休的老師都有。大家輪流朗讀自己喜歡'];
@@ -327,28 +399,60 @@ describe('默寫（§5.2）', () => {
     expect(short(r).parts[0]!.check.wording_zh).toBe('本站無法核對原文。');
     expect(r.checks.recitation_unverified).toBe(1);
   });
+
+  it('語料沒收的篇目（〈學記〉）、句尾多一個字而對到下一句：都當成「本站無法核對原文」，不改示範、不寫「原文是」', () => {
+    const stem2 = '請依照課本的原文默寫下列文句，注意每一個字都要寫正確，標點也要寫出來，不要寫成別篇的句子。（作答字數：30字以內）';
+    for (const text of ['學然後知不足，教然後知困', '己所不欲，勿施於人也', '此之謂大丈夫也']) {
+      const q = question(zhBlocks(['question', null, stem2]), { format: 'short', student_answer: text });
+      const out = zhShortOutput(['']);
+      out.parts[0]!.demo_zh = text;
+      out.parts[0]!.check.wording_zh = '';
+      const r = analyze(out, q);
+      const p = short(r).parts[0]!;
+      expect(p.demo_zh, text).toBe(text);
+      expect(p.check.wording_zh, text).toBe('本站無法核對原文。');
+      expect(r.checks.classic_misquote, text).toBeUndefined();
+    }
+  });
 });
 
 // ───────────────────────── 第 10 步：提示 ─────────────────────────
 
 describe('提示不洩答案（§5.1 第 10 步）', () => {
-  it('正解代號（含全形、「選項 C」）出現在第 1、2 階就拿掉；第 3 階可以提錯誤選項；拿光時補固定提示', () => {
+  it('正解代號（含全形、「選項 C」）出現在第 1、2 階就原地換成固定提示；第 3 階可以提錯誤選項', () => {
     expect(['(C)', '（C）', 'Ｃ', 'C 選項', '選項 C', '選C', 'C才對'].every((h) => zhHintNamesOption(`提示：${h}`, 'C'))).toBe(true);
     expect(zhHintNamesOption('先圈出關鍵詞（Cover 不算）', 'C')).toBe(false);
     const q = question(zhBlocks(['question', null, ZH_FORM_SINGLE]));
     const out = zhChoiceOutput([{ label: '', answer: 'C', options: ['A', 'B', 'C', 'D'], yes: ['C'] }]);
     out.items[0]!.hints_zh = ['想想（Ｃ）的「昧」是什麼意思。', '先把每句的關鍵詞圈出來。', '(A) 的「斐」是有文采。'];
     const r = analyze(out, q);
-    expect(choice(r).items[0]!.hints_zh).toEqual(['先把每句的關鍵詞圈出來。', '(A) 的「斐」是有文采。']);
+    expect(choice(r).items[0]!.hints_zh).toEqual([ZH_HINT_FALLBACK, '先把每句的關鍵詞圈出來。', '(A) 的「斐」是有文采。']);
     expect(r.checks.hint_leak_removed).toBe(1);
     out.items[0]!.hints_zh = ['答案是 C。', '選項 C 才對。'];
-    expect(choice(analyze(out, q)).items[0]!.hints_zh).toEqual([ZH_HINT_FALLBACK]);
+    expect(choice(analyze(out, q)).items[0]!.hints_zh).toEqual([ZH_HINT_FALLBACK, ZH_HINT_FALLBACK_2]);
+  });
+
+  it('第 3 階可以寫出正解，但拿掉前面的洩答案提示時不能讓它往前遞補成第 1、2 階', () => {
+    const q = question(zhBlocks(['question', null, ZH_FORM_SINGLE]));
+    const out = zhChoiceOutput([{ label: '', answer: 'C', options: ['A', 'B', 'C', 'D'], yes: ['C'] }]);
+    for (const hints of [
+      ['答案是 C。', '先把每句的關鍵詞圈出來。', '所以 (C) 才對。'],
+      ['答案是 C。', '選項 C 沒有錯字。', '所以 (C) 才對。'],
+      ['先把每句的關鍵詞圈出來。', '（Ｃ）最可疑。', '所以 (C) 才對。'],
+    ]) {
+      out.items[0]!.hints_zh = hints;
+      const got = choice(analyze(out, q)).items[0]!.hints_zh;
+      expect(got, hints.join('｜')).toHaveLength(3);
+      expect(got[2]).toBe('所以 (C) 才對。');
+      for (const h of got.slice(0, 2)) expect(zhHintNamesOption(h, 'C'), h).toBe(false);
+    }
+    expect(zhFilterHints(['洩', '洩', '第三階'], (h) => h === '洩').hints).toEqual([ZH_HINT_FALLBACK, ZH_HINT_FALLBACK_2, '第三階']);
   });
 
   it('研判題：提示寫出正解組合裡某一句的判定（「① 不符合」）也算洩答案', () => {
     const q = question(zhBlocks(['question', null, JUDGE_QUESTION]));
     const out = oneItem('', 'B', [{ option: '①', verdict: 'no' }, { option: '②', verdict: 'yes' }], { hints_zh: ['①其實是不符合的。', '先找小明做事的順序。', '再看他認識鄰居的原因。'] }, { section: 'zh_judge' });
-    expect(choice(analyze(out, q)).items[0]!.hints_zh).toEqual(['先找小明做事的順序。', '再看他認識鄰居的原因。']);
+    expect(choice(analyze(out, q)).items[0]!.hints_zh).toEqual([ZH_HINT_FALLBACK, '先找小明做事的順序。', '再看他認識鄰居的原因。']);
   });
 
   it('簡答：第 1、2 階不能有示範答案的原句', () => {
@@ -511,7 +615,39 @@ describe('台灣標準（§5.6）', () => {
   it('提示：字音題的第 1、2 階不能有任何注音', () => {
     const q = question(zhBlocks(['question', null, SOUND_QUESTION]));
     const r = analyze(soundOutput([], keys, ['A'], { hints_zh: ['「危」讀ㄨㄟˊ。', '先唸唸看每一組字。', '注意聲調。'] }), q);
-    expect(choice(r).items[0]!.hints_zh).toEqual(['先唸唸看每一組字。', '注意聲調。']);
+    expect(choice(r).items[0]!.hints_zh).toEqual([ZH_HINT_FALLBACK, '先唸唸看每一組字。', '注意聲調。']);
+  });
+
+  it('字音卡：head 用 ⟦⟧ 標被問的字也核對審定音；a 寫了整個詞的注音時取被問的字那一個音節；一聲的「ˉ」拿掉', () => {
+    const q = question(zhBlocks(['question', null, SOUND_QUESTION]));
+    // ⟦危⟧險 寫成 ㄨㄟ（審定音是 ㄨㄟˊ）：讀音待查。
+    const marked = analyze(soundOutput([{ head: '⟦危⟧險', a: 'ㄨㄟ' }], keys, ['A']), q);
+    expect(marked.checks.tw_reading_mismatch).toBe(1);
+    // 整個詞的注音：被問的「危」是第一個音節，和 key_zh 的 ㄨㄟˊ 一致，不算前後不一致。
+    const whole = analyze(soundOutput([{ head: '「危」險', a: 'ㄨㄟˊ ㄒㄧㄢˇ' }, { head: '「微」笑', a: 'ㄨㄟˊ ㄒㄧㄠˋ' }], keys, ['A']), q);
+    expect(choice(whole).items[0]!.warnings).not.toContain('sound_inconsistent');
+    expect(whole.checks.tw_reading_mismatch).toBeUndefined();
+    const wrong = analyze(soundOutput([{ head: '「危」險', a: 'ㄨㄟ ㄒㄧㄢˇ' }], keys, ['A']), q);
+    expect(wrong.checks.tw_reading_mismatch).toBe(1);
+    const tone1 = analyze(soundOutput([{ head: '「沾」光', a: 'ㄓㄢˉ' }], keys, ['A']), q);
+    expect(choice(tone1).cards[0]!.rows[0]).toMatchObject({ a: 'ㄓㄢ', flags: [] });
+  });
+
+  it('題幹的底線標記先拿掉再判斷極性（「讀音完全⟦不同⟧」）', () => {
+    expect(zhSoundStemPolarity('下列各組「」內的字，讀音完全⟦不同⟧的選項是：')).toBe('all_different');
+    expect(zhSoundStemPolarity('下列「」內的字，讀音⟦前後相同⟧的是：')).toBe('same');
+  });
+
+  it('字詞義：key_zh「前：被／後：被：同」的結論取最後一個冒號之後，和題幹、判定矛盾時標不一致', () => {
+    const q = question(zhBlocks(['question', null, ZH_WORD_MULTI]));
+    const keysW: Record<string, string> = { A: '前：被／後：被：同', B: '前：代詞／後：往：不同', C: '前：只是／後：拜訪：不同', D: '前：竟然／後：於是：不同', E: '前：若沒有／後：若沒有：同' };
+    const opts = (yes: string[]) => ['A', 'B', 'C', 'D', 'E'].map((o) => ({ option: o, verdict: yes.includes(o) ? 'yes' : 'no', key_zh: keysW[o] }));
+    const ok = analyze(oneItem('', 'AE', opts(['A', 'E']), { item_type: 'zh_word' }, { section: 'zh_word' }), q);
+    expect(choice(ok).items[0]!.warnings).not.toContain('inconsistent');
+    // (B) 寫「不同」卻判該選（題幹要的是相同）：不一致。
+    const bad = analyze(oneItem('', 'ABE', opts(['A', 'B', 'E']), { item_type: 'zh_word' }, { section: 'zh_word' }), q);
+    expect(choice(bad).items[0]!.warnings).toContain('inconsistent');
+    expect(choice(bad).items[0]!.answer_key).toMatchObject({ certainty: 'unsure' });
   });
 
   it('字形：form 卡的正確寫法有異體字碼就拿掉那一列；說明欄位的字碼替換；錯別字的兩可清單丟掉', () => {
@@ -534,6 +670,9 @@ describe('台灣標準（§5.6）', () => {
             { wrong: '臺', right: '台', quote: '臺北' },
             { wrong: '嘆', right: '歎', quote: '嘆了' },
             { wrong: '聊', right: '着', quote: '聊天' },
+            // 模型多半寫整個詞：台灣／臺灣、讚嘆／讚歎都是兩可的寫法。
+            { wrong: '臺北', right: '台北', quote: '臺北' },
+            { wrong: '嘆了', right: '歎了', quote: '嘆了' },
           ],
         }),
         wq,
@@ -624,6 +763,15 @@ describe('國文追問（§3.5）', () => {
     expect(r.checks.hint_leak_removed).toBe(1);
     const all = postprocessZhFollowup(zhFollowupOutput({ reply_zh: '答案是 C。', mode_used: 'hint' }), { kind: 'zh_choice', question: q, mode: 'hint', filter: new OutputFilter(), fp: FP, zh: fakeZhFingerprints(), answers: { '': 'C' } });
     expect(all.view.reply_zh).toBe(ZH_HINT_FALLBACK);
+  });
+
+  it('字音題的提示模式：有注音的句子拿掉；不是字音題時照留', () => {
+    const ctx = { kind: 'zh_choice' as const, question: q, mode: 'hint' as const, filter: new OutputFilter(), fp: FP, zh: fakeZhFingerprints(), answers: { '': 'C' } };
+    const out = zhFollowupOutput({ reply_zh: '想想「枇」的聲旁。它念ㄆㄧˊ。', mode_used: 'hint' });
+    const sound = postprocessZhFollowup(out, { ...ctx, sound: true });
+    expect(sound.view.reply_zh).toBe('想想「枇」的聲旁。');
+    expect(sound.checks.hint_leak_removed).toBe(1);
+    expect(postprocessZhFollowup(zhFollowupOutput({ reply_zh: '想想「枇」的聲旁。它念ㄆㄧˊ。', mode_used: 'hint' }), ctx).view.reply_zh).toBe('想想「枇」的聲旁。它念ㄆㄧˊ。');
   });
 
   it('講解模式可以說答案；簡答案例的追問跑短答比對', () => {

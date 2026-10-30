@@ -67,11 +67,20 @@ export function resolveZhQuote(ref: Pick<ZhQuoteRef, 'quote' | 'range'>, blocks:
   return null;
 }
 
-/** 左欄每個區塊要加亮的位置（全部引文淡色、按下的那一句加深）。 */
-export function zhBlockMarks(analysis: ZhAnalysisView | null, blocks: readonly AssistQuestionBlock[] | undefined, activeId: string | null): Record<number, ZhMark[]> {
+/**
+ * 左欄每個區塊要加亮的位置（全部引文淡色、按下的那一句加深）。activeOnly（先看提示）時只標按下的那一句：還沒展開完整解析前，
+ * 逐選項與證據鏈的引文一起加亮等於提前露出答案。
+ */
+export function zhBlockMarks(
+  analysis: ZhAnalysisView | null,
+  blocks: readonly AssistQuestionBlock[] | undefined,
+  activeId: string | null,
+  opts: { activeOnly?: boolean } = {},
+): Record<number, ZhMark[]> {
   const out: Record<number, ZhMark[]> = {};
   if (!analysis || !blocks || blocks.length === 0) return out;
   for (const ref of zhQuoteRefs(analysis)) {
+    if (opts.activeOnly && ref.id !== activeId) continue;
     const at = resolveZhQuote(ref, blocks);
     if (!at) continue;
     (out[at.block] ??= []).push({ start: at.start, end: at.end, active: ref.id === activeId });

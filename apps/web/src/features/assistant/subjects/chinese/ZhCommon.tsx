@@ -14,6 +14,8 @@ export interface ZhViewCommonProps {
   /** 這句引文能不能在左欄標出來（引文 id，見 quotes.ts）。 */
   locatable: (id: string) => boolean;
   onLocate: (id: string) => void;
+  /** 題號 → 題目裡那一題的題幹與選項文字（語譯題的判斷、研判題「推出組合」那一行的選項文字）；沒有時不顯示這些補充。 */
+  targets?: Readonly<Record<string, { stem: string | null; options: Readonly<Record<string, string>> | null }>>;
 }
 
 /** 題號 → 畫面上的題目名稱：數字開頭寫「第 34(1) 題」，其他照原樣。 */

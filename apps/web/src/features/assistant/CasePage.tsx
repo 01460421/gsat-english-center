@@ -193,7 +193,10 @@ function CaseView({ detail, poller }: { detail: AssistCaseDetail; poller: Return
   }, [pending, analysis, detail.turns, lastAnalyze]);
 
   // 證據句與引文：左欄加亮（全部淡色、按下的那一句加深），按下時捲過去。英文是選文裡的解法步驟；國文是題目區塊裡的引文。
-  const highlights = useMemo(() => registry.highlightsOf(analysis, detail.question, locate?.id ?? null), [registry, analysis, detail.question, locate]);
+  const highlights = useMemo(
+    () => registry.highlightsOf(analysis, detail.question, locate?.id ?? null, detail.hint_first),
+    [registry, analysis, detail.question, locate, detail.hint_first],
+  );
   const locatable = useMemo(() => registry.locatableOf(analysis, detail.question), [registry, analysis, detail.question]);
   useEffect(() => {
     if (!locate) return;

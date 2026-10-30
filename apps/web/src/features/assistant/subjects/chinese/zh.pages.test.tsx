@@ -345,7 +345,7 @@ describe('學習助手首頁（國文）', () => {
     expect(within(list).getByText('AI 不確定')).toBeInTheDocument();
     expect(within(list).getByText('字形')).toBeInTheDocument();
     await user.click(within(list).getByRole('radio', { name: '國文' }));
-    expect(await screen.findByTestId('zh-error-stats')).toHaveTextContent('字音字形 2 題');
+    expect(await screen.findByTestId('zh-error-stats')).toHaveTextContent('字音字形 2 次');
     expect(fetch.calls.some((c) => c.path === '/api/assist/cases?subject=chinese')).toBe(true);
   });
 

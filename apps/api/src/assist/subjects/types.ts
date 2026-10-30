@@ -68,6 +68,8 @@ export interface ZhFollowupContext {
   zh: ZhFingerprints;
   /** 上一次解析的正確答案（題號 → 選項字母；提示模式不能說出來，§3.5）。 */
   answers: Readonly<Record<string, string>>;
+  /** 追問的是字音題（提示模式不能出現任何注音，§3.5、§5.1 第 10 步）；沒給當成不是。 */
+  sound?: boolean;
 }
 
 export interface ZhFollowupPostprocessed extends SubjectPostprocessed<ZhFollowupView> {

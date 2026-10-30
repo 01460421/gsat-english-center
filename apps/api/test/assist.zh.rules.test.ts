@@ -172,10 +172,11 @@ describe('§3.7 國文的系統提示與 schema 的雜湊（fixtures/assist-prom
     }
   });
 
-  it('只列國文的清單：錯因只列這個格式可用的、英文的代碼與題型不在國文的提示裡', () => {
+  it('只列國文的清單：錯因只在選擇題列這個格式可用的（簡答、國寫的 schema 沒有錯因欄位，不列清單）、英文的代碼與題型不在國文的提示裡', () => {
     for (const kind of ANALYZE_KINDS) {
       const system = OUTPUTS[kind].system;
-      for (const code of ZH_ERROR_CODES) expect(system.includes(`- ${code} `), `${kind} ${code}`).toBe(zhErrorCodesFor(kind).includes(code));
+      for (const code of ZH_ERROR_CODES) expect(system.includes(`- ${code} `), `${kind} ${code}`).toBe(kind === 'zh_choice' && zhErrorCodesFor(kind).includes(code));
+      expect(system.includes('error codes from the list below'), kind).toBe(kind === 'zh_choice');
       for (const english of [/word_bank/, /(?<![a-z_])over_inference/, /tp:collocation/, /trap_code/]) expect(system).not.toMatch(english);
     }
     expect(OUTPUTS.zh_writing.system).not.toContain('Flaw codes');

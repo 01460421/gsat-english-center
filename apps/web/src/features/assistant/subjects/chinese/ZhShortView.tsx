@@ -2,18 +2,22 @@
  * zh_short（非選擇題、簡答）解析的畫面（docs/design/assistant-subjects.md §1.7、§1.8 範例 D、§3.3、§5.5）：每個小題依序是
  * 審題（含字數與抄錄規定）→ 要點與原文依據 → 句型 → 你的答案（要件檢核、字數、抄錄檢查）→ AI 示範答案（先收合）。
  * 字數、是否逐字出自原文都是程式算的（ZhShortPartView 的 count、over_limit、copy_check）；示範一律標「本站 AI 示範，不是官方答案」，
- * 被程式拿掉時在原位說明原因。
+ * 被程式拿掉時在原位說明原因。先看提示時，題型卡（文言對照卡的白話就是語譯題的答案）與整組共用的卡都收在「看完整解析」裡；
+ * 只有一題時每張卡都屬於那一題。
  */
-import { ZH_SECTION_LABELS, type ZhCharLimit, type ZhShortPartView, type ZhShortView as ZhShortAnalysis } from '@gsat/shared';
+import { ZH_SECTION_LABELS, type ZhCardView, type ZhCharLimit, type ZhShortPartView, type ZhShortView as ZhShortAnalysis } from '@gsat/shared';
 import { useId, useState } from 'react';
 import { HintSteps } from '../../components/AnalysisView';
 import { AnalysisSection, VerdictBadge } from '../../components/parts';
-import { CardTable, cardsFor, sharedCards } from './components/CardTable';
+import { CardTable, zhCardLayout } from './components/CardTable';
 import { CharCount } from './components/CharCount';
 import { LocateQuote } from './components/LocateQuote';
 import { ZH_COPY, ZH_COVERAGE_TEXT } from './copy';
 import { zhQuoteId } from './quotes';
 import { DoubtReplies, SectionTag, TestedSection, TipsSection, TypeStepsSection, ZhHeadNotes, ZhOffTopic, fieldNotice, zhItemTitle, type ZhViewCommonProps } from './ZhCommon';
+
+/** 語譯題（題幹有「語譯」「翻譯」「譯成白話」）：翻譯寫在文言對照卡，示範留空（同 Worker 的判斷）。 */
+const TRANSLATION_TASK_RE = /語譯|翻譯|譯成白話|譯為白話/u;
 
 /** 字數限制的說明：「作答字數：20 字以內」「80–100 字」「至多 19 行（約 418 字）」。 */
 export function charLimitText(limit: ZhCharLimit | null): string | null {
@@ -30,12 +34,27 @@ function copyRuleText(limit: ZhCharLimit | null): string {
   return ZH_COPY.copyNone;
 }
 
-function PartBlock({ part, index, analysis, single, common }: { part: ZhShortPartView; index: number; analysis: ZhShortAnalysis; single: boolean; common: ZhViewCommonProps }) {
+function PartBlock({
+  part,
+  index,
+  analysis,
+  cards,
+  single,
+  common,
+}: {
+  part: ZhShortPartView;
+  index: number;
+  analysis: ZhShortAnalysis;
+  /** 放在這個小題下面的卡（zhCardLayout）。 */
+  cards: readonly ZhCardView[];
+  single: boolean;
+  common: ZhViewCommonProps;
+}) {
   const [open, setOpen] = useState(!common.hintFirst);
   const bodyId = useId();
   const limitText = charLimitText(part.char_limit);
   const demoNotice = fieldNotice(analysis.notices, `parts[${index}].demo_zh`);
-  const cards = cardsFor(analysis.cards, part.label);
+  const translation = TRANSLATION_TASK_RE.test(common.targets?.[part.label]?.stem ?? '');
   const max = part.char_limit?.max ?? null;
   return (
     <section aria-labelledby={`${bodyId}-h`} className="space-y-3 rounded-2xl border border-line bg-surface p-4" data-zh-part={part.label}>
@@ -135,7 +154,7 @@ function PartBlock({ part, index, analysis, single, common }: { part: ZhShortPar
               </p>
             </div>
           ) : (
-            <p className="pb-1 text-sm text-muted">{demoNotice ?? (part.item_type === 'zh_classical' ? '語譯題的翻譯在上面的文言對照卡逐句寫。' : '這個小題沒有示範答案。')}</p>
+            <p className="pb-1 text-sm text-muted">{demoNotice ?? (translation ? '語譯題的翻譯在上面的文言對照卡逐句寫。' : '這個小題沒有示範答案。')}</p>
           )}
         </details>
       </div>
@@ -146,10 +165,14 @@ function PartBlock({ part, index, analysis, single, common }: { part: ZhShortPar
 export function ZhShortView({ analysis, common }: { analysis: ZhShortAnalysis; common: ZhViewCommonProps }) {
   if (analysis.off_topic) return <ZhOffTopic />;
   const single = analysis.parts.length === 1;
-  const shared = sharedCards(
+  const layout = zhCardLayout(
     analysis.cards,
     analysis.parts.map((p) => p.label),
   );
+  const shared = layout.shared;
+  const sharedTables = shared.map((card) => (
+    <CardTable key={analysis.cards.indexOf(card)} card={card} capped={false} onLocate={(c, row) => common.onLocate(zhQuoteId.card(analysis.cards.indexOf(c), row))} />
+  ));
   return (
     <div className="space-y-6">
       <ZhHeadNotes sourceNote={common.sourceNote} keyConcern={analysis.key_concern_zh} notices={analysis.notices} />
@@ -165,17 +188,17 @@ export function ZhShortView({ analysis, common }: { analysis: ZhShortAnalysis; c
         </AnalysisSection>
       )}
       <DoubtReplies replies={analysis.doubt_replies} />
-      {shared.length > 0 && (
-        <div className="space-y-3">
-          {shared.map((card) => (
-            <CardTable key={analysis.cards.indexOf(card)} card={card} capped={false} onLocate={(c, row) => common.onLocate(zhQuoteId.card(analysis.cards.indexOf(c), row))} />
-          ))}
-        </div>
+      {shared.length > 0 && !common.hintFirst && <div className="space-y-3">{sharedTables}</div>}
+      {shared.length > 0 && common.hintFirst && (
+        <details className="rounded-2xl border border-line bg-surface px-4 py-2" data-zh-shared-cards>
+          <summary className="flex min-h-11 cursor-pointer items-center font-semibold">看完整解析：整組共用的題型卡</summary>
+          <div className="space-y-3 pb-2">{sharedTables}</div>
+        </details>
       )}
       <AnalysisSection title={single ? '解析' : '逐題解析'}>
         <div className="space-y-3">
           {analysis.parts.map((part, i) => (
-            <PartBlock key={part.label} part={part} index={i} analysis={analysis} single={single} common={common} />
+            <PartBlock key={part.label} part={part} index={i} analysis={analysis} cards={layout.of(part.label)} single={single} common={common} />
           ))}
         </div>
       </AnalysisSection>
