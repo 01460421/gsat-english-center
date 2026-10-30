@@ -256,7 +256,7 @@ jobs:
             if [ "$MODE" = "full" ]; then
               if [ "$RESUME" = "true" ]; then echo "- 接續上次的結果：${MATCHED:-沒有找到，從頭開始}"; else echo "- 從頭開始（resume=false）"; fi
             fi
-            echo "- 作文範文還沒上線（AI_ESSAY_EXEMPLARS=\"off\"）：上線 PR 要附完整評測的綠色 run 的連結；常見的錯由站主在正式站的管理員預覽逐則確認（docs/design/model-essays.md §9.6、§10.2、§12.2）。"
+            echo "- 作文範文已上線（2026-10-30，AI_ESSAY_EXEMPLARS=\"on\"）：不達標時把 Summary 交給開發者調整；情況嚴重時照 docs/SETUP-KEYS.md §8.5 緊急關閉。常見的錯由站主在正式站逐則確認（docs/design/model-essays.md §9.6、§10.2、§12.7）。"
           } >> "$GITHUB_STEP_SUMMARY"
           if [ -f "$RESULTS_DIR/exemplars.json" ]; then echo "json=true" >> "$GITHUB_OUTPUT"; else echo "json=false" >> "$GITHUB_OUTPUT"; fi
 

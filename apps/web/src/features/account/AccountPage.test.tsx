@@ -209,16 +209,20 @@ describe('已登入', () => {
       'POST /api/me/consents': () => json(signedInMe({ ...approved, pending_ai_consents: ['ai_processing'] })),
     });
     const main = await openAccount();
-    // AI 處理同意也涵蓋學習助手：撤回的說明寫出學習助手也停，題目與報告保留、可以看與刪除。
+    // AI 處理同意涵蓋所有 AI 功能：撤回的說明寫出作文範文、學習助手也停，範文、題目與報告保留、可以看與刪除。
     expect(
-      await within(main).findByText(/撤回後就不能使用 AI 批改與學習助手；已有的批改紀錄、學習助手的題目與報告會保留，仍然可以看與刪除/),
+      await within(main).findByText(
+        /撤回後就不能使用 AI 批改、作文範文、學習助手等 AI 功能；已有的批改紀錄、作文範文、學習助手的題目與報告會保留，仍然可以看與刪除/,
+      ),
     ).toBeInTheDocument();
     expect(within(main).getByRole('link', { name: '學習助手' })).toHaveAttribute('href', '/assistant');
     await user.click(await within(main).findByRole('button', { name: '撤回同意' }));
     expect(api.callsTo('POST', '/api/me/consents')).toHaveLength(0);
     await user.click(within(main).getByRole('button', { name: '確定撤回' }));
-    expect(await within(main).findByText(/已撤回 AI 處理同意/)).toBeInTheDocument();
-    expect(within(main).getByText(/需要重新同意 AI 處理說明（說明已更新，或你撤回了同意），完成後才能使用 AI 批改與學習助手。/)).toBeInTheDocument();
+    expect(await within(main).findByText(/已撤回 AI 處理同意，本站不會再把你的任何內容送給 AI/)).toBeInTheDocument();
+    expect(
+      within(main).getByText(/需要重新同意 AI 處理說明（說明已更新，或你撤回了同意），完成後才能使用 AI 批改、作文範文、學習助手等 AI 功能。/),
+    ).toBeInTheDocument();
     expect(within(main).queryByRole('button', { name: '撤回同意' })).not.toBeInTheDocument();
     expect(api.callsTo('POST', '/api/me/consents')[0]?.body).toEqual({
       items: [{ kind: 'ai_processing', version: VERSIONS.ai, granted: false }],

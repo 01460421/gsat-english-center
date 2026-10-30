@@ -83,11 +83,11 @@ export function isAiQuotaResponse(value: unknown): value is AiQuotaResponse {
 
 /**
  * 「同意 AI 處理說明」的勾選文字（申請表與重新同意共用）：和 policy.ts 的 AI 處理說明第一點同一個範圍
- * （docs/design/learning-assistant.md §4.17；2026-10-30 版加上作文範文的題目文字與學習助手的簡答、作文段落、你提供的答案：
- * docs/design/model-essays.md §6.3、docs/design/assistant-subjects.md §10）。
+ * （docs/design/learning-assistant.md §4.17；2026-10-30 版依功能用「；」分開列，加上作文範文的題目文字與學習助手的科目與題型、
+ * 簡答、作文段落、講義答案：docs/design/model-essays.md §6.3、docs/design/assistant-subjects.md §10）。
  */
 export function aiConsentLabel(version: string): string {
-  return `我已閱讀並同意 AI 處理說明（${version} 版）：我的翻譯、作文與手寫照片，產生作文範文時輸入或貼上的題目文字，在學習助手送出的題目照片、題目文字、作答（含簡答與作文段落）與我提供的答案、提問，以及產生學習報告時的目標、每週讀書時間、考試與段考日期、我寫的回饋與作答紀錄的摘要，會傳給 Anthropic 的 API 處理，處理地點可能在台灣境外`;
+  return `我已閱讀並同意 AI 處理說明（${version} 版）：我使用 AI 批改、作文範文、學習助手等 AI 功能時，下面這些內容會傳給 Anthropic 的 API 處理，處理地點可能在台灣境外：AI 批改的翻譯與作文（手寫作文是照片）；產生作文範文時我輸入或貼上的題目文字（含圖片描述）；學習助手的題目照片、題目文字、我選的科目與題型、我的作答（含簡答與作文段落）、我提供的講義答案（選擇題）與提問；產生學習報告時的目標、每週讀書時間、考試與段考日期、我寫的回饋與作答紀錄的摘要`;
 }
 
 function isAiApplyResponse(value: unknown): value is { ai_status: AiStatus } {
@@ -185,6 +185,8 @@ function AboutAi({ quota }: { quota: AiQuotaResponse | null }) {
   const chinese = useAssistantSubjects().find((s) => s.subject === 'chinese') ?? null;
   // 作文範文（docs/design/model-essays.md §6.3）：開放時說明多一段、點數表多一列。
   const exemplars = useExemplarsEnabled();
+  // 國文的幾列也在表上時，英文那幾列標「學習助手英文」，免得把英文的拍照、追問點數看成國文的。
+  const english = chinese ? '學習助手英文' : '學習助手';
   const refundable = ['批改', ...(exemplars ? ['產生範文'] : []), ...(assistant ? ['解析'] : [])];
   const refundText = refundable.length === 1 ? refundable[0] : `${refundable.slice(0, -1).join('、')}或${refundable[refundable.length - 1]}`;
   // 管理員（不限點數）的額度不代表一般規則，改顯示預設值。
@@ -218,7 +220,7 @@ function AboutAi({ quota }: { quota: AiQuotaResponse | null }) {
             ：輸入或選一個英文作文題目，看 AI 寫的基礎版、穩健版、頂標版三篇範文與說明。範文僅供學習參考，請不要當成自己的作品繳交。
           </p>
         )}
-        <p className="text-muted">你正在和 AI 互動：{AI_NOTICE}，不是大考中心的正式評分，也可能有錯誤。</p>
+        <p className="text-muted">你正在和 AI 互動：{AI_NOTICE}，不是正式的考試評分，也可能有錯誤。</p>
       </div>
 
       <h3 className="mt-4 font-semibold">點數規則</h3>
@@ -257,13 +259,13 @@ function AboutAi({ quota }: { quota: AiQuotaResponse | null }) {
               <>
                 <tr>
                   <td className="py-1.5 pr-3">
-                    學習助手：解析（同一個題組每多一題加 {assistAnalyzePoints('item', 2) - assistAnalyzePoints('item', 1)} 點，最多{' '}
+                    {english}：解析（同一個題組每多一題加 {assistAnalyzePoints('item', 2) - assistAnalyzePoints('item', 1)} 點，最多{' '}
                     {assistAnalyzePoints('item', Number.MAX_SAFE_INTEGER)} 點）
                   </td>
                   <td className="whitespace-nowrap py-1.5 text-right">{points.assist_analyze} 點起</td>
                 </tr>
                 <tr>
-                  <td className="py-1.5 pr-3">學習助手：追問一次</td>
+                  <td className="py-1.5 pr-3">{english}：追問一次</td>
                   <td className="whitespace-nowrap py-1.5 text-right">{points.assist_followup} 點</td>
                 </tr>
                 <tr>
@@ -272,7 +274,7 @@ function AboutAi({ quota }: { quota: AiQuotaResponse | null }) {
                 </tr>
                 {assistantPhoto && (
                   <tr>
-                    <td className="py-1.5 pr-3">學習助手：拍照轉錄題目</td>
+                    <td className="py-1.5 pr-3">{english}：拍照轉錄題目</td>
                     <td className="whitespace-nowrap py-1.5 text-right">{points.assist_ocr} 點</td>
                   </tr>
                 )}
@@ -309,13 +311,14 @@ function AboutAi({ quota }: { quota: AiQuotaResponse | null }) {
         <ul className="mt-2 space-y-1 text-[0.95rem]">
           <li className="ml-5 list-disc">
             AI 能做的：依學測的評分方式指出錯誤、說明原因、給分數與修改建議
+            {exemplars ? '；作文範文依你選或輸入的題目寫出三個層級的範文與說明，讓你參考寫法' : ''}
             {assistant ? '；學習助手說明題目考什麼、你錯在哪、正確解法與相關觀念，回答追問，並整理學習報告與讀書計畫' : ''}。
           </li>
           <li className="ml-5 list-disc">
-            AI 不能做的：保證分數準確、代替老師或大考中心評分、替你寫作文。分數和真正的考試可能有落差。
+            AI 不能做的：保證分數準確、代替老師或正式的考試評分、替你寫要繳交的作文{exemplars ? '（作文範文只供參考）' : ''}。分數和真正的考試可能有落差。
           </li>
           <li className="ml-5 list-disc">
-            不要在{assistant ? (assistantPhoto ? '作答、提問、回饋或照片' : '作答、提問或回饋') : '作答'}裡寫真實姓名、學校、地址或電話；需要人名時用虛構的名字。
+            不要在{assistant ? (assistantPhoto ? '題目、作答、提問、回饋或照片' : '題目、作答、提問或回饋') : '題目或作答'}裡寫真實姓名、學校、地址或電話；需要人名時用虛構的名字。
           </li>
           <li className="ml-5 list-disc">
             AI 的回饋會先經過過濾才顯示。如果仍看到不恰當或讓你不舒服的內容，請不要理會它，可以刪除那份紀錄，並告訴你信任的老師或家人（線上回報即將開放）。
@@ -455,7 +458,7 @@ function AiReconsentForm({ me, kinds }: { me: MeResponseSignedIn; kinds: Consent
   return (
     <form onSubmit={onSubmit} className="grid grid-cols-1 gap-4">
       <Notice tone="warn" title="請重新確認 AI 處理說明">
-        <p>AI 處理說明已更新、你撤回了同意，或你的年齡區間改了。重新同意後才能繼續使用 AI 批改與學習助手；其他功能不受影響。</p>
+        <p>AI 處理說明已更新、你撤回了同意，或你的年齡區間改了。重新同意後才能繼續使用 AI 批改、作文範文、學習助手等 AI 功能；其他功能不受影響。</p>
         {kinds.includes('ai_processing') && AI_PROCESSING_NOTICE.changes.length > 0 && (
           <>
             <p className="pt-1">{AI_PROCESSING_NOTICE.version} 版更新的內容：</p>

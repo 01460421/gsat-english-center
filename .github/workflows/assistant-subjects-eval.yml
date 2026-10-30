@@ -247,7 +247,7 @@ jobs:
             if [ "$MODE" = "full" ]; then
               if [ "$RESUME" = "true" ]; then echo "- 接續上次的結果：${MATCHED:-沒有找到，從頭開始}"; else echo "- 從頭開始（resume=false）"; fi
             fi
-            echo "- 國文還沒開放（AI_ASSISTANT_SUBJECTS=\"off\"）：上線 PR 要附完整評測的綠色 run 的連結；國文拍照另外看 J 組（docs/design/assistant-subjects.md §11.3、§12.3）。"
+            echo "- 國文已上線（2026-10-30，AI_ASSISTANT_SUBJECTS、AI_ASSISTANT_SUBJECTS_PHOTO 都是 \"on\"）：不達標時把 Summary 交給開發者調整；情況嚴重時照 docs/SETUP-KEYS.md §8.4 緊急關閉（只關國文拍照也照 §8.4）。國文拍照另外看 J 組（docs/design/assistant-subjects.md §11.3、§12.3）。"
           } >> "$GITHUB_STEP_SUMMARY"
           if [ -f "$RESULTS_DIR/assist-subjects.json" ]; then echo "json=true" >> "$GITHUB_OUTPUT"; else echo "json=false" >> "$GITHUB_OUTPUT"; fi
 

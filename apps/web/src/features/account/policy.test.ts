@@ -93,9 +93,14 @@ describe('2026-10-30 升版：作文範文與學習助手國文一起上線，�
       expect(doc.changes.join(''), doc.title).toContain('作文範文');
     }
     expect(PRIVACY_POLICY.changes.join('')).toContain('學習助手的題目可以是不同科目');
-    expect(TERMS_OF_SERVICE.changes).toContain('學習助手的點數改成在確認畫面與 AI 申請頁列出（依科目、題型與題數）。');
-    // 已核准的學生要重新同意 AI 處理說明（範圍加上作文範文的題目文字），重新同意的畫面會列出這一段。
-    expect(AI_PROCESSING_NOTICE.changes.join('')).toContain('已經核准使用 AI 的同學要重新同意一次');
+    // 拿掉的點數數字不是漲價：英文的點數沒有改。
+    expect(TERMS_OF_SERVICE.changes).toContain('學習助手的點數改成在送出前的畫面與 AI 申請頁列出（依科目、題型與題數）；英文的點數沒有改。');
+    // 已申請（等核准、候補）或已核准的學生要重新同意 AI 處理說明（session.ts 的 AI_STATUSES_NEEDING_CONSENT）；
+    // 未滿 18 歲的 guardian_ack 也跟 AI 處理說明的版本（CONSENT_VERSION_SOURCE），重新同意的畫面會列出這一段。
+    expect(AI_PROCESSING_NOTICE.changes).toContain(
+      '已經申請或核准使用 AI 的同學要重新同意一次；未滿 18 歲的同學也要再確認一次已告知父母或監護人。',
+    );
+    expect(AI_PROCESSING_NOTICE.changes.join('')).not.toContain('已經核准使用 AI 的同學');
   });
 
   it('學習助手與作文範文的點數不寫數字：提到「學習助手」或「作文範文」的每一段都沒有「N 點」（0 點的規則除外）；點數在確認畫面與 AI 申請頁', () => {
@@ -106,8 +111,10 @@ describe('2026-10-30 升版：作文範文與學習助手國文一起上線，�
       }
     }
     const three = sectionText(TERMS_OF_SERVICE, '三、');
-    expect(three).toContain('使用學習助手也會扣點數：拍照轉錄、解析、追問與學習報告各自計點，解析的點數依科目、題型與題數而定；送出前的確認畫面會先列出這次要用幾點，AI 申請頁有點數表。');
-    expect(three).toContain('產生作文範文也會扣點數：送出前的確認畫面會先列出這次要用幾點，AI 申請頁有點數表；網站上的題目已經有共用的範文時 0 點');
+    // 追問沒有確認畫面，點數寫在送出按鈕上（FollowupComposer「送出追問（用 N 點）」），所以寫「送出前，畫面上會先列出」。
+    expect(three).toContain('使用學習助手也會扣點數：拍照轉錄、解析、追問與學習報告各自計點，解析的點數依科目、題型與題數而定；送出前，畫面上會先列出這次要用幾點，AI 申請頁有點數表。');
+    expect(three).toContain('產生作文範文也會扣點數：送出前，畫面上會先列出這次要用幾點，AI 申請頁有點數表；網站上的題目已經有共用的範文時 0 點');
+    expect(three).not.toContain('確認畫面');
     // 這個測試真的抓得到：舊版的學習助手點數句會失敗。
     expect('使用學習助手也會扣點數：拍照轉錄 2 點、解析 6 點起').toMatch(pointNumber);
   });
@@ -129,13 +136,22 @@ describe('2026-10-30 升版：作文範文與學習助手國文一起上線，�
 
   it('作文範文：蒐集、用途、傳給 Anthropic、管理員看不到、保存期限（數字和 shared 的常數一致）、條款的聲明與使用規範', () => {
     expect(EXEMPLAR_LIMITS.retentionDays).toBe(180);
-    expect(sectionText(PRIVACY_POLICY, '二、')).toContain('作文範文：你輸入或貼上的作文題目（選網站上的題目時只記題目代號）、AI 產生的三篇範文與說明，以及你對範文的評分。');
+    // prompt_json 也存圖片描述、段數與字數（requests.ts 的 ExemplarCustomPrompt）；回報是「這組範文有問題」的按鈕，不是評分。
+    expect(sectionText(PRIVACY_POLICY, '二、')).toContain(
+      '作文範文：你輸入或貼上的作文題目（含圖片描述與段數、字數要求；選網站上的題目時只記題目代號）、AI 產生的三篇範文與說明，以及你對範文的回報（例如「這組範文有問題」）。',
+    );
+    expect(JSON.stringify(PRIVACY_POLICY)).not.toContain('你對範文的評分');
     expect(sectionText(PRIVACY_POLICY, '三、')).toContain('提供作文範文：依你輸入或選的題目，產生三個層級的範文與說明。');
-    expect(sectionText(PRIVACY_POLICY, '四、')).toContain('你產生作文範文時，你輸入或貼上的題目文字也會用同樣的方式傳送到 Anthropic 的 API 處理；選網站上的題目時，只送網站自己的題目，不送你的任何資料。');
+    expect(sectionText(PRIVACY_POLICY, '四、')).toContain(
+      '你產生作文範文時，你輸入或貼上的題目文字（含圖片描述與段數、字數要求）也會用同樣的方式傳送到 Anthropic 的 API 處理；選網站上的題目時，只送網站自己的題目，不送你的任何資料。',
+    );
     expect(sectionText(PRIVACY_POLICY, '六、')).toContain('以及你輸入的作文範文題目與範文');
     const retention = sectionText(PRIVACY_POLICY, '七、');
     expect(retention).toContain(`作文範文：最後一次更新後 ${EXEMPLAR_LIMITS.retentionDays} 天自動刪除，你也可以隨時自己刪除（還在產生的那一組要等完成）。`);
     expect(retention).toContain('你自己輸入的題目不會存成共用的版本');
+    // 保存期限寫的是共用（其他同學可能看到），點數規則在服務條款「三」。
+    expect(retention).toContain('保存 180 天，其他同學選同一題時可能直接看到這份共用的範文');
+    expect(retention).not.toContain('同一題已經有共用的範文時 0 點');
     // 共用的範文不保證命中（寫入條件嚴格），不寫成「下一位同學 0 點」。
     expect(retention).not.toMatch(/下一位|第二個人起/);
     expect(PRIVACY_POLICY.summary[1]).toContain('你的寫作、批改、作文範文與學習助手紀錄');
@@ -149,15 +165,28 @@ describe('2026-10-30 升版：作文範文與學習助手國文一起上線，�
     expect(AI_PROCESSING_NOTICE.summary).toContain('作文範文由 AI 產生，僅供學習參考，可能有錯；請不要把範文當成自己的作品繳交。');
   });
 
-  it('學習助手國文：科目與題型、簡答與作文段落、你提供的答案（隱私權說明二、四；AI 處理說明第一點；勾選文字同一個範圍）', () => {
+  it('學習助手國文：科目與題型、簡答與作文段落、講義答案（隱私權說明重點、二、四；AI 處理說明第一點；勾選文字同一個範圍）', () => {
+    // 「講義答案」是畫面上「我有講義答案」的說法（只有選擇題），不會和學生自己的「作答」混在一起。
     const collected = sectionText(PRIVACY_POLICY, '二、');
-    expect(collected).toContain('題目文字、你選的科目與題型、你的作答（含簡答與作文段落）與疑問、你提供的答案、筆記、追問');
-    expect(sectionText(PRIVACY_POLICY, '四、')).toContain('你選的科目與題型、你的作答（含簡答與作文段落）、你提供的答案、疑問與追問');
-    expect(AI_PROCESSING_NOTICE.summary[0]).toContain('作答（含簡答與作文段落）與你提供的答案');
+    expect(collected).toContain('題目文字、你選的科目與題型、你的作答（含簡答與作文段落）與疑問、你提供的講義答案（選擇題）、筆記、追問');
+    expect(sectionText(PRIVACY_POLICY, '四、')).toContain('你選的科目與題型、你的作答（含簡答與作文段落）、你提供的講義答案（選擇題）、疑問與追問');
+    expect(PRIVACY_POLICY.summary[2]).toContain('你選的科目與題型、作答（含簡答與作文段落）、你提供的講義答案（選擇題）與提問');
+    expect(AI_PROCESSING_NOTICE.summary[0]).toContain('學習助手的題目照片、題目文字、你選的科目與題型、你的作答（含簡答與作文段落）、你提供的講義答案（選擇題）與提問');
     const label = aiConsentLabel(AI_CONSENT_VERSION);
-    expect(label).toContain('作答（含簡答與作文段落）與我提供的答案');
-    expect(label).toContain('產生作文範文時輸入或貼上的題目文字');
-    expect(AI_PROCESSING_NOTICE.summary[0]).toContain('產生作文範文時輸入或貼上的題目文字');
+    expect(label).toContain('學習助手的題目照片、題目文字、我選的科目與題型、我的作答（含簡答與作文段落）、我提供的講義答案（選擇題）與提問');
+    expect(label).toContain('產生作文範文時我輸入或貼上的題目文字（含圖片描述）');
+    expect(AI_PROCESSING_NOTICE.summary[0]).toContain('產生作文範文時你輸入或貼上的題目文字（含圖片描述）');
+    // 「你提供的答案」單獨出現時讀起來像自己的作答：現行文字一律寫「講義答案」。
+    for (const doc of DOCS) expect(JSON.stringify(doc), doc.title).not.toMatch(/(你|我)提供的答案/);
+    expect(label).not.toMatch(/(你|我)提供的答案/);
+  });
+
+  it('原本只寫「AI 批改」的地方改成涵蓋所有 AI 功能（隱私權說明二、八、九；服務條款五）', () => {
+    expect(sectionText(PRIVACY_POLICY, '二、')).toContain('AI 使用紀錄：每次使用 AI 功能（批改、作文範文、學習助手等）的時間、任務種類與點數');
+    expect(sectionText(PRIVACY_POLICY, '八、')).toContain('撤回後本站不會再把你的內容送給 AI');
+    expect(sectionText(PRIVACY_POLICY, '九、')).toContain('未滿 18 歲的使用者申請 AI 功能時');
+    expect(sectionText(TERMS_OF_SERVICE, '五、你的作品')).toContain('（包括傳給 AI 批改、解析與計算統計）');
+    expect(PRIVACY_POLICY.changes.join('')).toContain('改成涵蓋所有 AI 功能');
   });
 });
 
@@ -213,7 +242,9 @@ describe('學習助手的說明（docs/design/learning-assistant.md §4.17；202
     expect(three).not.toContain('之前有人問過');
     expect(three).toContain(`學習報告每天 ${ASSIST_LIMITS.reportsPerDay} 份、拍照轉錄每天 ${ASSIST_LIMITS.ocrPerDay} 次`);
     expect(three).toContain(`中譯英 ${AI_TASK_POINTS.translation_grade} 點、英文作文 ${AI_TASK_POINTS.essay_grade} 點、手寫作文照片辨識 ${AI_TASK_POINTS.essay_ocr} 點`);
-    expect(three).toContain('學習助手的解析與報告由 AI 產生，僅供參考，可能有錯誤；答案以題目頁或官方公布為準。');
+    // 國文的講義、段考題沒有題目頁或官方答案：加上「老師的說明」。
+    expect(three).toContain('學習助手的解析與報告由 AI 產生，僅供參考，可能有錯誤；答案以題目頁、官方公布或老師的說明為準。');
+    expect(AI_PROCESSING_NOTICE.summary).toContain('學習助手的解析與學習報告由 AI 產生，僅供參考，可能有錯誤；答案以題目頁、官方公布或老師的說明為準。');
     const four = sectionText(TERMS_OF_SERVICE, '四、使用規範');
     expect(four).toContain('試圖讓 AI 產生與學習無關的內容。');
     expect(four).not.toContain('與批改無關');
@@ -228,18 +259,29 @@ describe('學習助手的說明（docs/design/learning-assistant.md §4.17；202
   });
 
   it('AI 處理說明：第一點涵蓋學習助手送出的內容（含學習報告的設定與回饋），勾選文字同一個範圍', () => {
+    // 依功能用「；」分開列（同一個範圍，比一長句好讀）。
     expect(AI_PROCESSING_NOTICE.summary[0]).toBe(
-      '你使用 AI 批改、作文範文、學習助手等 AI 功能時，你的翻譯、作文（手寫作文是照片），產生作文範文時輸入或貼上的題目文字，在學習助手送出的題目照片、題目文字、作答（含簡答與作文段落）與你提供的答案、提問，以及產生學習報告時的目標、每週讀書時間、考試與段考日期、你寫的回饋與作答紀錄的摘要會傳給 Anthropic, PBC 的 API 處理，處理地點可能在台灣境外（例如美國）。',
+      '你使用 AI 批改、作文範文、學習助手等 AI 功能時，下面這些內容會傳給 Anthropic, PBC 的 API 處理，處理地點可能在台灣境外（例如美國）：AI 批改的翻譯與作文（手寫作文是照片）；產生作文範文時你輸入或貼上的題目文字（含圖片描述）；學習助手的題目照片、題目文字、你選的科目與題型、你的作答（含簡答與作文段落）、你提供的講義答案（選擇題）與提問；產生學習報告時的目標、每週讀書時間、考試與段考日期、你寫的回饋與作答紀錄的摘要。',
     );
-    expect(AI_PROCESSING_NOTICE.summary[1]).toContain('請不要在作答、提問、回饋或照片裡留下真實姓名、學校、地址');
+    // 作文範文的自訂題目是學生自己打的：「題目」也列進不要留真實姓名的地方。
+    expect(AI_PROCESSING_NOTICE.summary[1]).toContain('請不要在題目、作答、提問、回饋或照片裡留下真實姓名、學校、地址');
     const label = aiConsentLabel(AI_CONSENT_VERSION);
-    for (const phrase of ['翻譯', '作文', '題目照片', '題目文字', '作答', '提問', '目標', '每週讀書時間', '考試與段考日期', '回饋', '作答紀錄的摘要', 'Anthropic', '台灣境外']) {
+    expect(label).toContain('下面這些內容會傳給 Anthropic 的 API 處理，處理地點可能在台灣境外：AI 批改的翻譯與作文（手寫作文是照片）；');
+    for (const phrase of ['翻譯', '作文', '題目照片', '題目文字', '圖片描述', '科目與題型', '作答', '講義答案', '提問', '目標', '每週讀書時間', '考試與段考日期', '回饋', '作答紀錄的摘要', 'Anthropic', '台灣境外']) {
       expect(AI_PROCESSING_NOTICE.summary[0], phrase).toContain(phrase);
       expect(label, phrase).toContain(phrase);
     }
   });
 
-  it('這一版的文字（改了什麼、學習助手與作文範文的段落、「你上傳的題目」）沒有「大考中心」或 CEEC', () => {
+  it('這一版要重新同意的文字都沒有「大考中心」或 CEEC（只有服務條款「七」的題目出處與「沒有任何關係」的聲明例外）', () => {
+    for (const doc of DOCS) {
+      for (const text of allTexts(doc)) {
+        if (doc === TERMS_OF_SERVICE && text === sectionText(TERMS_OF_SERVICE, '七、')) continue;
+        expect(text, `${doc.title}：${text}`).not.toMatch(/大考中心|CEEC/i);
+      }
+    }
+    expect(sectionText(TERMS_OF_SERVICE, '七、')).toContain('本站與大學入學考試中心沒有任何關係');
+    expect(PRIVACY_POLICY.sections[3]?.bullets).toContain('AI 批改結果僅供參考，不是正式的考試評分。');
     const added = [
       ...PRIVACY_POLICY.changes,
       ...TERMS_OF_SERVICE.changes,
