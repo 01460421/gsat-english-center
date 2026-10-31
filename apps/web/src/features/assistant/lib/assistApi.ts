@@ -122,7 +122,7 @@ export async function startAssistFollowup(id: string, body: CreateAssistFollowup
 }
 
 /**
- * POST …/zh-exemplar：國寫範文（國文的國寫案例、國寫指導完成後；8 點）→ 202。本體是空物件（不送學生的段落）。
+ * POST …/zh-exemplar：國寫範文（國文的國寫案例、國寫指導完成後；10 點）→ 202。本體是空物件（不送學生的段落）。
  * 每一題最多 2 篇（429 assist_limit）、每天 3 篇（429 daily_limit）、開關關著 503 not_configured（國寫範文設計 §7）。
  */
 export async function startZhExemplar(id: string): Promise<AssistTaskAccepted> {
@@ -132,7 +132,7 @@ export async function startZhExemplar(id: string): Promise<AssistTaskAccepted> {
 // ── 國寫範文的獨立頁（docs/design/assistant-subjects.md「國寫範文」的「獨立頁」）──
 
 /**
- * POST /api/assist/zh-exemplars：歷屆題目（past）、貼上的題目（paste）或同一個案例再看一篇（case）→ 202（8 點）；
+ * POST /api/assist/zh-exemplars：歷屆題目（past）、貼上的題目（paste）或同一個案例再看一篇（case）→ 202（10 點）；
  * 同一題已經有一篇正在產生時 200 existing（不扣點）。之後輪詢 GET /api/assist/cases/{case_id}。
  * 輸入檢查同國文的貼上（400 assist_input_invalid，field 是 prompt／material／limits）；每案例 2 篇（429 assist_limit）、
  * 每天 3 篇（429 daily_limit）、開關關著 503 not_configured。

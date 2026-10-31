@@ -239,7 +239,7 @@ function PapersCard() {
   );
 }
 
-/** 國文的點數（shared 的 assistPoints；國文開放時列在英文那一行下面）。國寫範文開放時多「國寫範文一篇 8 點」。 */
+/** 國文的點數（shared 的 assistPoints；國文開放時列在英文那一行下面）。國寫範文開放時多「國寫範文一篇 10 點」。 */
 function ChinesePointsLine({ photo, exemplar }: { photo: boolean; exemplar: boolean }) {
   const choice = (n: number) => assistPoints('chinese', 'assist_analyze', { kind: 'zh_choice', items: n });
   const short = (n: number) => assistPoints('chinese', 'assist_analyze', { kind: 'zh_short', items: n });

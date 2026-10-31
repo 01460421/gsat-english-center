@@ -26,7 +26,7 @@ import * as contestMjs from '../../../packages/shared/scripts/zh-contest-fingerp
 import { parseFingerprints } from '../src/ai/d8';
 import { OutputFilter } from '../src/ai/filter';
 import { assistZhExemplarSystemText, assistZhSystemText } from '../src/ai/prompts/assist-zh';
-import { taskConfig } from '../src/ai/tasks';
+import { reserveMicros, taskConfig } from '../src/ai/tasks';
 import { loadConfig } from '../src/config';
 import {
   zhContestHit,
@@ -42,7 +42,7 @@ import { postprocessZhExemplar, zhExemplarSectionOf, ZH_EXEMPLAR_HIDDEN_MAX_SHAR
 import { zhStudentQuestion } from '../src/assist/subjects/chinese/question';
 import { zhAnalysisDigest, zhExemplarDigest } from '../src/assist/subjects/chinese/digest';
 import { zhExemplarBodyAim, zhExemplarCallInput, zhExemplarTaskLines, zhExemplarTitleRule, zhExemplarUserText, ZH_EXEMPLAR_DIGEST_CHARS } from '../src/assist/subjects/chinese/requests';
-import { zhCheckSampleQuotes, zhDemoGuards, zhStripSampleSentences } from '../src/assist/subjects/chinese/samples';
+import { zhCheckSampleQuotes, zhDemoGuards, zhDialogueHits, zhStripSampleSentences } from '../src/assist/subjects/chinese/samples';
 import type { ZhExemplarOutput } from '../src/assist/subjects/chinese/schemas';
 import { fakeFingerprintFile } from './helpers/customEssay';
 import {
@@ -183,6 +183,70 @@ describe('系統提示與請求', () => {
     expect(assistZhSystemText('zh_writing')).not.toMatch(/claude|opus|sonnet|haiku|gpt|gemini/iu);
   });
 
+  it('範文的系統提示（2026-10-31 改寫）：目標是最高等級、寫明最高等級看重什麼、先構思再寫、段落沒有固定模板；不寫引號對話；硬性的風格上限改成指引', () => {
+    const system = assistZhExemplarSystemText();
+    for (const want of [
+      'reaches the top level (A+)',
+      'The quality of the essay comes first',
+      'What the top level rewards',
+      'Analytical task (知性)',
+      'Emotional task (情意): a prose essay (散文), not a short story',
+      'What keeps an essay at the middle levels',
+      'Plan before you write',
+      'there is no fixed template for a paragraph',
+      'No quoted dialogue anywhere',
+      '母親只淡淡要我早點睡',
+      'Figures of speech',
+      'avoid ornament for its own sake',
+      'Rules that protect the student',
+      'Never copy, imitate, recite or mention any published essay',
+      'Never invent a quotation, an author, a study, a statistic, a news event or a named person',
+      'No illness, death, abuse, self-harm, romance',
+      'Never give a grade, a level or a score',
+    ]) {
+      expect(system, want).toContain(want);
+    }
+    // 舊的寫法：目標是「穩健的高中生」、每段四步的模板、比喻與排比各一次、不准驚嘆號、每段一個分號。
+    for (const old of ['a strong senior-high student', 'A body paragraph: (1)', 'at most one metaphor', 'at most one parallel set', 'no exclamation marks', 'at most one semicolon']) {
+      expect(system, old).not.toContain(old);
+    }
+    // 同日第二輪（盲評的缺點寫成檢核，不是新的模板）：問題（一）、知性、情意各自的檢核，輸出前以嚴格閱卷者的眼光重讀一次。
+    for (const want of [
+      'every key word, guiding question and named consideration (other reasons, a limit, how to choose) must be answered in substance',
+      'name the two angles most students would take',
+      'claim, example, concession, conclusion is not a default',
+      "Cover every point asked, in the question's order",
+      'including its deeper layer',
+      'Check every detail of the material you use against the text',
+      'Do not open with a quotation or a list of the material\'s examples',
+      'include the case only your claim explains',
+      'Never raise a distinction you then drop',
+      'Your own example: one precise moment, preferably one in which you chose',
+      'do not resolve it in one neat clause',
+      'with a criterion (when holding back is a fair limit, when it is an excuse)',
+      "The close answers the prompt's last question concretely",
+      'Fix the real properties of the carried image',
+      'The turn has a cause inside the scene',
+      'never a coincidence (恰好)',
+      'Show before you claim',
+      'If the prompt asks you to imagine, give the imagined world concrete images of its own',
+      'End on a concrete image or action that carries the insight',
+      'Do not explain the image (…大概也是這樣), add a vow (往後我會…), end on a maxim (與其…不如…)',
+      'one image per idea, never mixed',
+      'Do not announce the structure with transitions',
+      'Avoid stock moves such as 那一瞬間…彷彿回到, 我愣住了',
+      'Before you output, reread the answer as a strict marker and fix what fails',
+    ]) {
+      expect(system, want).toContain(want);
+    }
+    // 檢核不是模板：段落仍然沒有固定的步驟或段數規定以外的格式。
+    expect(system).not.toMatch(/\(1\) the first sentence is the claim|first sentence (?:is|must be) the claim/u);
+    // 國寫指導的示範段也不寫引號對話；附段落的檢核提醒對話要改成敘述。
+    const writing = assistZhSystemText('zh_writing');
+    expect(writing).toContain('No quoted dialogue (a 國寫 answer is an essay, not fiction)');
+    expect(writing).toContain('with speech summarised in narration rather than quoted as dialogue');
+  });
+
   it('<task>：情意題不寫問題（一）、照題目的題目；知性題寫問題（一）與問題（二）的字數；題目全部區塊與摘要（≤ 1,000 字）', () => {
     const q = EMOTION();
     const emotion = zhExemplarUserText({ question: q, section: 'zh_writing_emotion', digest: '摘'.repeat(1_500), hasQ1: false, limits: zhExemplarLimits(q, 'zh_writing_emotion') });
@@ -203,12 +267,17 @@ describe('系統提示與請求', () => {
     expect(zhExemplarTitleRule({ blocks: zhBlocks(['question', null, REASON_TEXT]) })).toBeNull();
   });
 
-  it('呼叫輸入：寫作者角色、14,000 tokens、1 小時快取、範文的範本版本', () => {
+  it('呼叫輸入：寫作者角色、20,000 tokens、effort AI_EFFORT_ZH_EXEMPLAR（預設 high，和解析分開）、1 小時快取、範文的範本版本；10 點、預扣 508,000 微美元', () => {
     const tc = taskConfig('assist_zh_exemplar', loadConfig(zhEnv()));
-    expect(tc).toMatchObject({ points: 8, timeoutMs: 240_000, family: { tasks: ['assist_zh_exemplar'], capKey: 'assist_zh_exemplar' } });
+    expect(tc).toMatchObject({ points: 10, timeoutMs: 240_000, inputTokensEstimate: 13_500, family: { tasks: ['assist_zh_exemplar'], capKey: 'assist_zh_exemplar' } });
+    expect(reserveMicros(tc)).toBe(508_000);
     const q = EMOTION();
     const input = zhExemplarCallInput(tc, { question: q, section: 'zh_writing_emotion', digest: '', hasQ1: false, limits: zhExemplarLimits(q, 'zh_writing_emotion') });
-    expect(input.spec).toMatchObject({ role: 'writer', maxTokens: 14_000, systemCacheTtl: '1h' });
+    expect(input.spec).toMatchObject({ role: 'writer', maxTokens: 20_000, effort: 'high', systemCacheTtl: '1h' });
+    // effort 自己一個設定：改解析的 AI_EFFORT_ASSIST 不影響範文，改 AI_EFFORT_ZH_EXEMPLAR 只影響範文。
+    expect(taskConfig('assist_zh_exemplar', loadConfig(zhEnv({ AI_EFFORT_ASSIST: 'low' }))).calls[0]!.effort).toBe('high');
+    expect(taskConfig('assist_zh_exemplar', loadConfig(zhEnv({ AI_EFFORT_ZH_EXEMPLAR: 'medium' }))).calls[0]!.effort).toBe('medium');
+    expect(taskConfig('assist_analyze', loadConfig(zhEnv({ AI_EFFORT_ZH_EXEMPLAR: 'max' })), { subject: 'chinese', kind: 'zh_writing', items: 1 }).calls[0]!.effort).toBe('medium');
     expect(input.templateVersion).toBe('assist-zh-exemplar-user@2');
     expect(input.system).toBe(assistZhExemplarSystemText());
   });
@@ -255,12 +324,15 @@ describe('後處理：正常的一篇', () => {
     expect(r.checks.under_target).toBe(1);
   });
 
-  it('標點：引號外的驚嘆號換「。」、半形標點換全形；段內換行接起來', () => {
-    const r = post(withParagraphs([ZH_EXEMPLAR_PARAGRAPHS[0] + '我好開心!', `${ZH_EXEMPLAR_PARAGRAPHS[1]}\n  媽媽說：「快來看！」`, ...ZH_EXEMPLAR_PARAGRAPHS.slice(2)]));
+  it('標點：半形標點換全形、驚嘆號保留（2026-10-31 起只計數 exclaim_kept，不再換成「。」）；段內換行接起來', () => {
+    const r = post(withParagraphs([ZH_EXEMPLAR_PARAGRAPHS[0] + '原來光一直都在!', `${ZH_EXEMPLAR_PARAGRAPHS[1]}\n  那一刻多麼安靜啊！`, ...ZH_EXEMPLAR_PARAGRAPHS.slice(2)]));
     const v = r.view!;
-    expect(v.paragraphs[0]!.text.endsWith('我好開心。')).toBe(true);
-    expect(v.paragraphs[1]!.text.endsWith('媽媽說：「快來看！」')).toBe(true);
-    expect(r.checks.exclaim_replaced).toBe(1);
+    expect(r.retry).toBeNull();
+    expect(v.paragraphs[0]!.text.endsWith('原來光一直都在！')).toBe(true);
+    expect(v.paragraphs[1]!.text).toBe(`${ZH_EXEMPLAR_PARAGRAPHS[1]}那一刻多麼安靜啊！`);
+    expect(r.checks.exclaim_kept).toBe(2);
+    expect(r.checks.exclaim_replaced).toBeUndefined();
+    expect(r.checks.punct_fixed).toBe(1);
   });
 });
 
@@ -398,73 +470,113 @@ describe('後處理：整句拿掉（§5.1 第 7–12 步）與 D8', () => {
 
 // ───────────────────────── 審查修正（引文、說法、長度目標、摘要、敏感事件） ─────────────────────────
 
-describe('引文：對話與引用名人（§5.4；知性只認一般人物與第一人稱，情意的「他說」看同一段前面）', () => {
+describe('引號對話（站主 2026-10-31：「不能有引號對話，你在寫文章不是小說」）與引用名人（§5.4）', () => {
   // 句子都是本站自寫的；引號裡的話不是任何人真的說過的名言，也不在古文語料裡。
   const QUOTE = '人活著就要替別人點一盞燈，不然再亮的屋子也只是自己的。';
   const q = { blocks: zhBlocks(['question', null, ZH_WRITING_PROMPT]) };
-  const check = (text: string, narrative: boolean) => {
+  const check = (text: string) => {
     const checks: ZhChecks = {};
-    const r = zhCheckSampleQuotes(text, q, checks, { narrative });
-    return { text: r.text, removed: checks.attribution_removed ?? 0 };
+    const r = zhCheckSampleQuotes(text, q, checks);
+    return { text: r.text, removed: checks.attribution_removed ?? 0, dialogue: checks.dialogue_removed ?? 0 };
   };
 
   it.each([
     [`史懷哲把一生交給偏遠地方的病人。他曾說：「${QUOTE}」`, '史懷哲把一生交給偏遠地方的病人。'],
-    [`那位醫師在演講中勉勵大家，他說：「${QUOTE}」`, '那位醫師在演講中勉勵大家，他說：「' + QUOTE + '」'],
+    [`那位醫師在演講中勉勵大家，他說：「${QUOTE}」`, ''],
     [`我想起梭羅說：「${QUOTE}」`, ''],
     [`愛迪生一生試驗上千次。他說：「${QUOTE}」`, '愛迪生一生試驗上千次。'],
     [`那位作家是著名的科學家，他說：「${QUOTE}」`, ''],
     [`史懷哲曾說：「${QUOTE}」`, ''],
-  ])('名人或出處＋代名詞（知性與情意都拿掉）：%s', (text, keptPrefix) => {
-    for (const narrative of [false, true]) {
-      const r = check(text, narrative);
-      expect(r.removed, `${text}（narrative ${narrative}）`).toBe(1);
-      if (keptPrefix !== '' && !keptPrefix.includes('「')) expect(r.text).toBe(keptPrefix);
-    }
+    [`我常聽人說：「${QUOTE}」`, ''],
+  ])('引用名人或回想某人說過的話（不是對話）：查不到出處就整句拿掉（attribution_removed）：%s', (text, kept) => {
+    expect(check(text)).toEqual({ text: kept, removed: 1, dialogue: 0 });
   });
 
-  it('一般人物的對話（清單外的司機、阿姨、學長姊也算）：任何題型都保留，後面的敘事不會一起被拿掉', () => {
+  it.each([
+    ['公車司機回頭說：「慢慢來，不要急，前面的路還很長呢。」我點點頭坐下。', '我點點頭坐下。'],
+    ['隔壁的阿姨探頭說：「妳每天都這麼早出門，真的辛苦了啊。」我笑了笑。', '我笑了笑。'],
+    ['社團的學長姊笑著說：「第一次上臺都會緊張，我們以前也一樣。」', ''],
+    ['我說：「沒關係，我們明天再一起去圖書館把題目做完吧。」', ''],
+    ['同學把傘遞給我，他說：「我家就在前面，這把傘你先拿去用吧。」', ''],
+    ['媽媽推門進來，說：「早點睡。」我沒有抬頭。', '我沒有抬頭。'],
+    ['「你還好嗎？」同桌問。我搖搖頭，看著窗外。', '我搖搖頭，看著窗外。'],
+    ['我看著窗外。「你還好嗎？」', '我看著窗外。'],
+  ])('引號對話（任何題型）：整句拿掉（dialogue_removed），後面的敘事留著：%s', (text, kept) => {
+    const r = check(text);
+    expect(r.text).toBe(kept);
+    expect(r.dialogue).toBeGreaterThanOrEqual(1);
+    expect(r.removed).toBe(0);
+  });
+
+  it('不是對話：題目的關鍵詞與題目、素材的引文、強調用的詞、附篇名的古文名句；照留', () => {
+    const material = question(zhBlocks(['passage', null, '森林要想成為孕育新生命的希望之地，就需要有縫隙。'], ['question', null, '請以「縫隙的聯想」為題，寫一篇文章。']));
     for (const text of [
-      '公車司機回頭說：「慢慢來，不要急，前面的路還很長呢。」我點點頭坐下。',
-      '隔壁的阿姨探頭說：「妳每天都這麼早出門，真的辛苦了啊。」我笑了笑。',
-      '社團的學長姊笑著說：「第一次上臺都會緊張，我們以前也一樣。」',
+      '題目要我們寫「縫隙的聯想」，我先想到操場邊的樟樹。',
+      '文中說森林「就需要有縫隙」，人生也是。',
+      '我把這種狀態叫做「留白」，它不是浪費。',
+      '諸葛亮在〈出師表〉中說：「親賢臣，遠小人，此先漢所以興隆也。」',
     ]) {
-      for (const narrative of [false, true]) expect(check(text, narrative), text).toEqual({ text, removed: 0 });
+      const checks: ZhChecks = {};
+      expect(zhCheckSampleQuotes(text, material, checks).text, text).toBe(text);
+      expect(checks, text).toEqual({});
+      expect(zhDialogueHits(text, material), text).toEqual([]);
     }
+    // 素材本身是對話（112 學測的福爾摩斯）：照引素材不算對話。
+    const holmes = question(zhBlocks(['passage', null, '「福爾摩斯，中午吃火腿三明治好嗎？」\n「好啊！不過華生，請你先說說看。」'], ['question', null, '根據上文，說明你的看法。']));
+    expect(zhDialogueHits('華生問：「福爾摩斯，中午吃火腿三明治好嗎？」這句話看似平常。', holmes)).toEqual([]);
+    expect(zhDialogueHits('華生問：「中午要不要去吃麵？」這句話看似平常。', holmes)).toHaveLength(1);
   });
 
-  it('第一人稱說的話：任何題型都保留；「我想起某人說」「我常聽人說」不算', () => {
-    const text = '我說：「沒關係，我們明天再一起去圖書館把題目做完吧。」';
-    expect(check(text, false)).toEqual({ text, removed: 0 });
-    expect(check(`我常聽人說：「${QUOTE}」`, true).removed).toBe(1);
-  });
-
-  it('「他說」：情意而且同一段前面提過一般人物才是對話；知性一律當成引用', () => {
-    const text = '同學把傘遞給我，他說：「我家就在前面，這把傘你先拿去用吧。」';
-    expect(check(text, true)).toEqual({ text, removed: 0 });
-    expect(check(text, false).removed).toBe(1);
-    expect(check('他說：「我家就在前面，這把傘你先拿去用吧。」', true).removed).toBe(1);
-  });
-
-  it('國寫指導的示範段（zhDemoGuards）用同一套：知性的「他曾說」整筆拿掉', () => {
-    const checks: ZhChecks = {};
+  it('國寫指導的示範段（zhDemoGuards）：有引號對話就整筆拿掉（不論題型）；知性的「他曾說」整筆拿掉', () => {
     const contest = { set: zhContestSet(), allowed: new Set<string>() };
+    const checks: ZhChecks = {};
     expect(zhDemoGuards(`史懷哲把一生交給偏遠地方的病人。他曾說：「${QUOTE}」`, q, contest, checks)).toBeNull();
-    const dialogue = '同學把傘遞給我，他說：「我家就在前面，這把傘你先拿去用吧。」';
-    expect(zhDemoGuards(dialogue, q, contest, {}, { narrative: true })).toBe(dialogue);
+    expect(checks.attribution_removed).toBe(1);
+    const dialogue: ZhChecks = {};
+    expect(zhDemoGuards('同學把傘遞給我，他說：「我家就在前面，這把傘你先拿去用吧。」', q, contest, dialogue)).toBeNull();
+    expect(zhDemoGuards('媽媽說：“早點睡。”我把檯燈關掉。', q, contest, dialogue)).toBeNull();
+    expect(dialogue.dialogue_removed).toBe(2);
+    // 改成敘述的寫法照留（驚嘆號照舊換成「。」：示範段的規則不變）。
+    const narrated = '母親只淡淡要我早點睡，我卻把檯燈又調亮了一格!';
+    expect(zhDemoGuards(narrated, q, contest, {})).toBe('母親只淡淡要我早點睡，我卻把檯燈又調亮了一格。');
   });
 
-  it('範文的後處理依題型決定：情意保留一般人的對話，知性拿掉代名詞引出的引文', () => {
-    const para = `${ZH_EXEMPLAR_PARAGRAPHS[1]}同學把傘遞給我，他說：「我家就在前面，這把傘你先拿去用吧。」`;
-    const emotion = post(withParagraphs([ZH_EXEMPLAR_PARAGRAPHS[0], para, ...ZH_EXEMPLAR_PARAGRAPHS.slice(2)]));
-    expect(emotion.view!.paragraphs[1]!.text).toBe(para);
+  it('範文：段落或問題（一）有引號對話 → 付費重寫一次（dialogue）；最後一次拿掉那幾句、其餘照顯示，並加提醒 dialogue_removed', () => {
+    const para = `${ZH_EXEMPLAR_PARAGRAPHS[1]}媽媽推門進來，說：「早點睡。」我沒有抬頭。`;
+    const texts = [ZH_EXEMPLAR_PARAGRAPHS[0], para, ...ZH_EXEMPLAR_PARAGRAPHS.slice(2)];
+    const first = post(withParagraphs(texts));
+    expect(first).toMatchObject({ view: null, retry: 'dialogue', failure: null });
+    expect(first.checks.dialogue_retry).toBe(1);
+    const last = post(withParagraphs(texts), { allowRetry: false });
+    expect(last.retry).toBeNull();
+    expect(last.view!.paragraphs[1]!.text).toBe(`${ZH_EXEMPLAR_PARAGRAPHS[1]}我沒有抬頭。`);
+    expect(last.view!.paragraphs.map((p) => p.hidden)).toEqual([null, null, null, null]);
+    expect(last.checks.dialogue_removed).toBe(1);
+    expect(last.view!.notices).toContainEqual({ kind: 'dialogue_removed', field: 'paragraphs' });
+    // 知性題也一樣（以前知性只認一般人物與第一人稱）；比賽指紋先於對話（R1 的原因不變）。
     const rq = REASON();
-    const reason = post(withParagraphs([REASON_PARAGRAPHS[0]!, `${REASON_PARAGRAPHS[1]}愛迪生一生試驗上千次。他說：「${QUOTE}」`, REASON_PARAGRAPHS[2]!]), {
-      q: rq,
-      section: 'zh_writing_reason',
+    const reason = withParagraphs([REASON_PARAGRAPHS[0]!, `${REASON_PARAGRAPHS[1]}室友問我：「你今天怎麼這麼早睡？」`, REASON_PARAGRAPHS[2]!]);
+    expect(post(reason, { q: rq, section: 'zh_writing_reason' }).retry).toBe('dialogue');
+    const both = [ZH_EXEMPLAR_PARAGRAPHS[0], `${para}${DECOY_17}。`, ...ZH_EXEMPLAR_PARAGRAPHS.slice(2)];
+    expect(post(withParagraphs(both)).retry).toBe('contest_overlap');
+    // 名人的話不是對話：不重寫，最後照舊整句拿掉（attribution_removed）。
+    const famous = post(withParagraphs([REASON_PARAGRAPHS[0]!, `${REASON_PARAGRAPHS[1]}愛迪生一生試驗上千次。他說：「${QUOTE}」`, REASON_PARAGRAPHS[2]!]), { q: rq, section: 'zh_writing_reason' });
+    expect(famous.retry).toBeNull();
+    expect(famous.view!.paragraphs[1]!.text).toBe(`${REASON_PARAGRAPHS[1]}愛迪生一生試驗上千次。`);
+    expect(famous.checks.attribution_removed).toBe(1);
+  });
+
+  it('範文的問題（一）有引號對話：重寫；最後一次拿掉那一句，提醒在 q1.answer_zh', () => {
+    const q = REASON();
+    const raw = withParagraphs(REASON_PARAGRAPHS, {
+      title_zh: '',
+      q1: { answer_zh: '資料顯示，多數學生每天使用手機超過三小時。同學說：「睡不飽啦。」', material_quotes: [] },
     });
-    expect(reason.view!.paragraphs[1]!.text).toBe(`${REASON_PARAGRAPHS[1]}愛迪生一生試驗上千次。`);
-    expect(reason.checks.attribution_removed).toBe(1);
+    raw.coverage = [];
+    expect(post(raw, { q, section: 'zh_writing_reason', hasQ1: true }).retry).toBe('dialogue');
+    const last = post(raw, { q, section: 'zh_writing_reason', hasQ1: true, allowRetry: false });
+    expect(last.view!.q1).toMatchObject({ answer_zh: '資料顯示，多數學生每天使用手機超過三小時。', hidden: null });
+    expect(last.view!.notices).toContainEqual({ kind: 'dialogue_removed', field: 'q1.answer_zh' });
   });
 });
 
@@ -492,8 +604,36 @@ describe('未經查證的說法（§5.1 第 9 步）：中文數字、全形數�
     '這份調查讓我想了一整天。',
     '研究這個問題時，千萬不要急著下結論。',
     '調查發現，多數學生每天使用手機超過三小時。',
+    '姊姊讀研究所兩年，常常半夜才回家。',
+    '那位研究員在實驗室待了三個月。',
   ])('保留（一個、一天這類常見說法，或題目本身的數字）：%s', (sentence) => {
     expect(strip(sentence)).toEqual({ text: sentence, removed: 0 });
+  });
+});
+
+describe('不傷到好文章的放寬（2026-10-31）：得獎字樣要和寫作有關、詞組的引號照留', () => {
+  const q = { blocks: zhBlocks(['question', null, ZH_WRITING_PROMPT]) };
+
+  it('得獎字樣：「佳作、語文競賽、文學獎、徵文」一律拿掉；「得獎、第一名」只在同一句提到寫作時拿掉，運動會、段考的名次是敘事', () => {
+    for (const [text, kept, removed] of [
+      ['那場接力賽我們拿了第二名，我卻只記得交棒時那隻發抖的手。', '那場接力賽我們拿了第二名，我卻只記得交棒時那隻發抖的手。', 0],
+      ['我的作文得了第一名。後來我才懂得慢慢寫。', '後來我才懂得慢慢寫。', 1],
+      ['這篇文章曾經在語文競賽得獎。', '', 1],
+      ['那年徵文比賽的題目也是窗。我想起那扇窗。', '我想起那扇窗。', 1],
+    ] as const) {
+      const checks: ZhChecks = {};
+      expect(zhStripSampleSentences(text, q, checks), text).toBe(kept);
+      expect(checks.contest_mention_removed ?? 0, text).toBe(removed);
+    }
+  });
+
+  it('沒有出處的長引號：一個完整的句子拿掉引號（像沒說出處的名言）；一個詞組（自己命名的說法）照留', () => {
+    const check = (text: string) => {
+      const checks: ZhChecks = {};
+      return { text: zhCheckSampleQuotes(text, q, checks).text, unmarked: checks.quote_unmarked ?? 0 };
+    };
+    expect(check('我把那段日子叫做「被時間追著跑的每一個晚上」，現在想起來仍然心慌。')).toEqual({ text: '我把那段日子叫做「被時間追著跑的每一個晚上」，現在想起來仍然心慌。', unmarked: 0 });
+    expect(check('我一直記得那句「光不必很大，只要找得到縫就會進來」。')).toEqual({ text: '我一直記得那句光不必很大，只要找得到縫就會進來。', unmarked: 1 });
   });
 });
 

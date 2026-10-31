@@ -105,6 +105,8 @@ export interface Env {
   AI_ESSAY_EXEMPLARS?: string;
   /** 作文範文的 effort（預設 medium）。 */
   AI_EFFORT_EXEMPLARS?: string;
+  /** 學習助手國寫範文的 effort（預設 high；2026-10-31 起和解析分開，國寫範文設計「實作備註（範文品質）」）。 */
+  AI_EFFORT_ZH_EXEMPLAR?: string;
 
   // ── AI 上限與預算（ARCHITECTURE §6.3；數字字串，config.ts 解析）──
   AI_POINTS_USER_DAY?: string;

@@ -2185,6 +2185,7 @@ export const ZH_NOTICE_KINDS = [
   'simplified_kept',
   'example_rule_removed',
   'exemplar_over_limit',
+  'dialogue_removed',
 ] as const;
 export type ZhNoticeKind = AssistNotice['kind'] | (typeof ZH_NOTICE_KINDS)[number];
 
@@ -2203,8 +2204,9 @@ export const ZH_NOTICE_TEXT: Record<(typeof ZH_NOTICE_KINDS)[number], string> = 
   grade_removed: 'AI 不打等第或分數，已拿掉那一句。',
   notes_removed: '已拿掉引用題目沒有的注釋的那一句。',
   simplified_kept: '這則解析裡有簡體字，寫法請以教育部標準字為準。',
-  example_rule_removed: '有一筆示範不符合本站的示範規則（和已發表的文章相同、用了套語，或引文查不到出處），已省略。',
+  example_rule_removed: '有一筆示範不符合本站的示範規則（和已發表的文章相同、用了套語、寫成引號對話，或引文查不到出處），已省略。',
   exemplar_over_limit: '這篇示範比答案卷的字數或格數多一些，考試時要再刪減。',
+  dialogue_removed: '國寫是文章不是小說，不寫引號對話；這篇示範原本有幾句對話，已拿掉。',
 };
 
 /** 一題（或一列）的程式提醒：確定程度上限、逐項和答案不一致、可能是多選、錯字數不符、讀音前後不一致…。 */
@@ -2466,6 +2468,11 @@ export const ZH_CHECK_COUNTERS = [
   'card_unknown',
   'paragraph_trimmed',
   'example_rule_removed',
+  // 引號對話（站主 2026-10-31：國寫是文章不是小說）：範文第一次命中付費重寫（dialogue_retry），最後一次與示範段拿掉的句子或筆數
+  // （dialogue_removed）；範文保留的驚嘆號（exclaim_kept；示範段照舊換成「。」，計 exclaim_replaced）。
+  'dialogue_retry',
+  'dialogue_removed',
+  'exclaim_kept',
   // 情意範文含敏感事件用字的句子（只計數，ops 事件 assist_zh_exemplar_sensitive）。
   'sensitive_event',
 ] as const;

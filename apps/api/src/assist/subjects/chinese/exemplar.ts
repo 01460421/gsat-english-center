@@ -2,12 +2,15 @@
  * 國寫範文的後處理（國寫範文設計 §5；全部確定性）。run.ts 在 callWithPolicy 的 onSuccess 裡呼叫：模型的 JSON 已經用 zod 驗證過（第 1 步）。
  *
  *    2 小欄位：off_topic → 內容失敗（退還）；方法卡正規化（zhMethodCardId，不認得計 card_unknown）；題目依題目指定覆寫。
- *    3 標點：彎引號換「」『』、半形標點換全形、引號外的驚嘆號換「。」（samples.ts）。
+ *    3 標點：彎引號換「」『』、半形標點換全形（samples.ts）；驚嘆號保留、只計數（exclaim_kept；2026-10-31 起不再換成「。」：
+ *      有目的的語氣是好文章的一部分）。
  *    4 台灣標準：字碼統一（ZH_TW_FORM_MAP）；簡體專用字 ≥ 3 個 → R3（付費重寫一次）。
  *    5 字數與格數（shared 的 zhExemplarLimits、zhSheetCells）：超過硬限制 → R2；最後一次超過 ≤ 10% 照顯示並加提醒、> 10% 退還；
  *      問題（一）最後一次仍超過只隱藏答案。少於目標下限的 60% 只計數。
  *    6 比賽指紋（contest.ts；題目本身的窗口不算，命中 ≥ 2 個窗口的題目區塊除外）：段落或問題（一）命中 → R1；最後一次 → 命中的段落換成固定說明（hidden: contest）；
  *      說明欄位命中換成固定說明。
+ *   6b 引號對話（samples.ts 的 zhDialogueHits；站主 2026-10-31：「不能有引號對話，你在寫文章不是小說」）：段落或問題（一）命中 → R4；
+ *      最後一次 → 第 7 步把那幾句拿掉（dialogue_removed）並加提醒 dialogue_removed。
  *    7 引文、8 套語、9 未經查證的說法、10 得獎字樣、12 等第句（samples.ts）：整句拿掉；段落拿完少於 15 字整段換成固定說明
  *      （hidden: trimmed；內容過濾擋下的段落是 hidden: filtered）。
  *   11 D8（寬鬆門檻，§5.5）：每一段、問題（一）（另加短答比對）、每一則說明；命中隱藏，不重試。
@@ -15,7 +18,7 @@
  *   14 品牌字樣、說明欄位依 ZH_FIELD_LIMITS.zh_exemplar 截斷（段落本文不截）。
  *   15 收尾：隱藏的段落（比賽＋D8）占全文 ≥ 40% 字數，或能顯示的段落不到 2 段 → 內容失敗（退還 invalid_output）。
  *      情意範文含敏感事件用字的句子只計數（sensitive_event；run.ts 寫 ops 事件 assist_zh_exemplar_sensitive）。
- * 重試觸發只有 R1–R3（retry 不是 null）；其他都是就地修正或隱藏。checks 寫進 turn 的 meta_json（給監看，不顯示）。
+ * 重試觸發只有 R1–R4（retry 不是 null）；其他都是就地修正或隱藏。checks 寫進 turn 的 meta_json（給監看，不顯示）。
  */
 import {
   ZH_EXEMPLAR_D8_TEXT,
@@ -47,7 +50,7 @@ import { zhContestHit, zhContestParagraphHits, zhContestQuestionWindows } from '
 import { zhD8Hit, zhEnglishSetHit, zhOfficialStyleHit, zhQuestionWindows, zhShortAnswerHit, type ZhFingerprints } from './d8';
 import { ZH_SIMPLIFIED_RETRY_MIN, ZhCleaner } from './output';
 import { zhExemplarTitleRule } from './requests';
-import { zhCheckSampleQuotes, zhCountSampleWords, zhFixSamplePunct, zhStripSampleSentences } from './samples';
+import { zhCheckSampleQuotes, zhCountSampleWords, zhDialogueHits, zhFixSamplePunct, zhStripSampleSentences } from './samples';
 import type { ZhExemplarOutput } from './schemas';
 import { zhApplyExemplarStandards } from './standards';
 
@@ -67,8 +70,8 @@ export interface ZhExemplarContext {
   allowRetry: boolean;
 }
 
-/** 重寫的原因（R1 比賽指紋、R2 超過硬限制、R3 簡體字）。 */
-export type ZhExemplarRetry = 'contest_overlap' | 'over_limit' | 'simplified';
+/** 重寫的原因（R1 比賽指紋、R2 超過硬限制、R3 簡體字、R4 引號對話）。 */
+export type ZhExemplarRetry = 'contest_overlap' | 'over_limit' | 'simplified' | 'dialogue';
 /** 內容失敗（退還 invalid_output，不重試）。 */
 export type ZhExemplarFailure = 'off_topic' | 'over_limit' | 'too_few_paragraphs' | 'hidden_too_much';
 
@@ -98,15 +101,15 @@ export function zhExemplarSectionOf(analysis: Pick<ZhWritingView, 'section' | 'q
   return guess === 'zh_writing_reason' ? 'zh_writing_reason' : 'zh_writing_emotion';
 }
 
-/** 段落本文的前處理：去掉頭尾空白與段首縮排、段內換行接起來 → 內容過濾（不截斷）→ 標點 → 字碼統一。 */
+/** 段落本文的前處理：去掉頭尾空白與段首縮排、段內換行接起來 → 內容過濾（不截斷）→ 標點（驚嘆號保留）→ 字碼統一。 */
 function prepare(raw: string, filter: OutputFilter, checks: ZhChecks): { text: string; filtered: boolean } {
   const flat = raw.replace(/\s*\n\s*/gu, '').replace(/^[\s　]+|[\s　]+$/gu, '');
   if (flat === '') return { text: '', filtered: false };
   const filtered = filter.text(flat, 20_000);
   if (filtered === FILTERED_PLACEHOLDER) return { text: filtered, filtered: true };
-  const punct = zhFixSamplePunct(filtered);
+  const punct = zhFixSamplePunct(filtered, { exclaim: 'keep' });
   bump(checks, 'punct_fixed', punct.fixed);
-  bump(checks, 'exclaim_replaced', punct.exclaim);
+  bump(checks, 'exclaim_kept', punct.exclaim);
   const forms = zhApplyTwForms(punct.text);
   bump(checks, 'tw_form_replaced', forms.replaced);
   return { text: forms.text, filtered: false };
@@ -121,9 +124,9 @@ function d8Hit(text: string, ctx: ZhExemplarContext, questionWindows: ReadonlySe
   );
 }
 
-/** 段落的去句規則（引文、套語、說法、得獎字樣、等第句）→ 品牌字樣；少於 15 字回 null（呼叫端換成固定說明）。 */
-function cleanSample(text: string, q: AssistQuestionView, checks: ZhChecks, section: ZhExemplarSection): { text: string | null; material: number } {
-  const quoted = zhCheckSampleQuotes(text, q, checks, { narrative: section === 'zh_writing_emotion' });
+/** 段落的去句規則（引號對話、引文、套語、說法、得獎字樣、等第句）→ 品牌字樣；少於 15 字回 null（呼叫端換成固定說明）。 */
+function cleanSample(text: string, q: AssistQuestionView, checks: ZhChecks): { text: string | null; material: number } {
+  const quoted = zhCheckSampleQuotes(text, q, checks);
   const stripped = zhStripSampleSentences(quoted.text, q, checks);
   zhCountSampleWords(stripped, q, checks);
   const branded = replaceExamBoard(stripped).text;
@@ -220,12 +223,20 @@ export function postprocessZhExemplar(raw: ZhExemplarOutput, ctx: ZhExemplarCont
     return EMPTY(checks, { retry: 'contest_overlap', safety });
   }
 
+  // 第 6b 步：引號對話（國寫是文章不是小說）。第一次命中付費重寫；最後一次在第 7 步拿掉那幾句並加提醒。
+  const dialogueIn = (p: { text: string; filtered: boolean }) => !p.filtered && p.text !== '' && zhDialogueHits(p.text, q).length > 0;
+  if ((paras.some(dialogueIn) || (q1Raw !== null && !q1HiddenForLength && dialogueIn(q1Raw))) && ctx.allowRetry) {
+    bump(checks, 'dialogue_retry');
+    return EMPTY(checks, { retry: 'dialogue', safety });
+  }
+
   // 第 7–12 步：段落。
   const questionWindows = zhQuestionWindows({ blocks: q.blocks }, ctx.zh);
   let d8Hidden = 0;
   let contestHidden = 0;
   let material = 0;
   let filtered = 0;
+  const dialogueRemoved = { paragraphs: false, q1: false };
   const originalChars = paras.map((p) => countZhChars(p.text).chars);
   const paragraphs: ZhExemplarParagraph[] = rawParas.map((p, i) => {
     const card = zhMethodCardId(p.card);
@@ -241,7 +252,9 @@ export function postprocessZhExemplar(raw: ZhExemplarOutput, ctx: ZhExemplarCont
       contestHidden += 1;
       return { ...base, text: ZH_EXEMPLAR_OVERLAP_TEXT, hidden: 'contest', technique_zh: '' };
     }
-    const cleaned = cleanSample(prepared.text, q, checks, ctx.section);
+    const dialogueBefore = checks.dialogue_removed ?? 0;
+    const cleaned = cleanSample(prepared.text, q, checks);
+    if ((checks.dialogue_removed ?? 0) > dialogueBefore) dialogueRemoved.paragraphs = true;
     material += cleaned.material;
     if (cleaned.text === null) {
       bump(checks, 'paragraph_trimmed');
@@ -263,7 +276,9 @@ export function postprocessZhExemplar(raw: ZhExemplarOutput, ctx: ZhExemplarCont
     let answer = '';
     if (hidden === null && q1Raw.filtered) answer = FILTERED_PLACEHOLDER;
     else if (hidden === null && q1Raw.text !== '') {
-      const cleaned = cleanSample(q1Raw.text, q, checks, ctx.section);
+      const dialogueBefore = checks.dialogue_removed ?? 0;
+      const cleaned = cleanSample(q1Raw.text, q, checks);
+      if ((checks.dialogue_removed ?? 0) > dialogueBefore) dialogueRemoved.q1 = true;
       material += cleaned.material;
       answer = cleaned.text ?? '';
       if (answer !== '' && d8Hit(answer, ctx, questionWindows, true)) {
@@ -280,6 +295,8 @@ export function postprocessZhExemplar(raw: ZhExemplarOutput, ctx: ZhExemplarCont
     const quotes = hidden === null ? c.list(raw.q1.material_quotes, 'q1.material_quotes').map((s) => c.quote(s, 'q1.material_quotes', q)).filter((x) => x.quote !== '') : [];
     q1 = { answer_zh: hidden === null ? answer : '', count: countZhChars(hidden === null ? answer : ''), limit: L.q1.maxChars, quotes, hidden };
   }
+  if (dialogueRemoved.paragraphs) c.notice('dialogue_removed', 'paragraphs');
+  if (dialogueRemoved.q1) c.notice('dialogue_removed', 'q1.answer_zh');
   // 素材引文全篇最多 2 處（超過只計數；每處超過 40 字的在 samples.ts 計數）。
   if (material > 2) bump(checks, 'material_quote_long', material - 2);
 

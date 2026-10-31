@@ -44,7 +44,7 @@ import {
   zhFindQuote,
 } from '@gsat/shared';
 import { EXAM_BOARD_RE } from '../../src/ai/filter';
-import { ZH_CONTEST_MENTION_RE } from '../../src/assist/subjects/chinese/samples';
+import { zhContestMention } from '../../src/assist/subjects/chinese/samples';
 
 // ───────────────────────── 門檻（§11.3「上線門檻」） ─────────────────────────
 
@@ -1260,7 +1260,7 @@ export function exemplarMetrics(
     title: opts.titleRule === null ? 'none' : opts.titleRule === 'own' ? 'own' : 'given',
     title_chars: [...view.title_zh].length,
     grade_sentences: prose.reduce((s, text) => s + zhStripGradeSentences(text).removed, 0),
-    contest_mentions: prose.filter((text) => ZH_CONTEST_MENTION_RE.test(text)).length,
+    contest_mentions: prose.filter((text) => zhContestMention(text)).length,
     sensitive: sentences(EXEMPLAR_SENSITIVE_RE),
     contest_retries: count('contest_overlap'),
     over_retries: count('over_limit'),

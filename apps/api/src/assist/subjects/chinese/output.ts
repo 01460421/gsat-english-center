@@ -19,7 +19,7 @@
  *   11 確定程度上限（ZH_CERTAINTY_CAPS；模型的題型、該題的 item_type、guessZhSection 任一命中）。
  *   12 字數與不代寫：簡答示範超過字數拿掉（demo_removed）、語譯題示範留空、學生答案字數與抄錄檢查、國寫示範規則、問題（一）示範字數、
  *      等第句、連續漢字上限。國寫的示範段另外跑寫作規則（samples.ts 的 zhDemoGuards；國寫範文設計 §10）：比賽語料指紋、比賽套語、
- *      編造的名言命中就拿掉那一筆（example_rule_removed），驚嘆號與半形標點就地修正。
+ *      引號對話、編造的名言命中就拿掉那一筆（example_rule_removed），驚嘆號與半形標點就地修正。
  *   13 台灣標準（standards.ts；簡體字 ≥ 3 個時回 retry 要求重寫一次）。
  *   14 D8：每一個說明欄位比對英文與國文的 8 字窗口（d8.ts 的 zhD8Hit；題目本身的窗口不算，國寫的解析與追問用長度門檻）與評分原則的句型（zhOfficialStyleHit）；簡答的示範、要點、
  *      檢核與國寫問題（一）的示範、要點另外跑短答比對（zhShortAnswerHit）。命中都算進 meta.d8_hidden（consumer 寫 assist_d8_output）。
@@ -899,11 +899,11 @@ function postWriting(c: ZhCleaner, raw: ZhWritingOutput, q: AssistQuestionView):
     c.count('demo_removed', fitted.removed);
   }
   // 示範段的寫作規則（國寫範文設計 §10）：比賽指紋（題目本身的窗口不算；命中 ≥ 2 個窗口的題目區塊除外，contest.ts）、比賽套語、
-  // 要拿掉的引文任一命中就拿掉那一筆；驚嘆號與半形標點就地修正；競賽詞彙、高頻人物、通用套語只計數。不重試（示範只是國寫指導的一小部分）。
+  // 引號對話（站主 2026-10-31：國寫是文章不是小說）、要拿掉的引文任一命中就拿掉那一筆；驚嘆號與半形標點就地修正；競賽詞彙、高頻人物、通用套語只計數。不重試（示範只是國寫指導的一小部分）。
   const contest = { set: c.ctx.zh.contest, allowed: zhContestQuestionWindows(q, c.ctx.zh.contest) };
   const guarded = fitted.kept.flatMap((e) => {
     if (e.cleaned === '' || e.cleaned === ZH_D8_HIDDEN_TEXT || e.cleaned === FILTERED_PLACEHOLDER) return [e];
-    const text = zhDemoGuards(e.cleaned, q, contest, c.checks, { narrative: section === 'zh_writing_emotion' });
+    const text = zhDemoGuards(e.cleaned, q, contest, c.checks);
     return text === null ? [] : [{ ...e, cleaned: text }];
   });
   if (guarded.length < fitted.kept.length) {

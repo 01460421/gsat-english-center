@@ -243,3 +243,160 @@ export function zhSensitiveSentences(texts: readonly string[]): number {
 
 /** 方法卡 id 的清單（給測試與提示；同 ZH_WRITING_METHOD_IDS）。 */
 export const ZH_EXEMPLAR_CARD_IDS: readonly ZhWritingMethodId[] = ZH_WRITING_METHOD_IDS;
+
+// ───────────────────────── 句子與引號對話（站主 2026-10-31：「不能有引號對話，你在寫文章不是小說」） ─────────────────────────
+
+const SENTENCE_QUOTE_OPEN = new Set(['「', '『', '“', '‘']);
+const SENTENCE_QUOTE_CLOSE = new Set(['」', '』', '”', '’']);
+
+/**
+ * 說話的動詞（引號對話的標記）。「說明、說服、說法、說穿、說完」「問題、問卷」「答案、答應」「叫做」「唸書」不是說話。
+ * 不收單獨的「道」（知道、道路）：「說道、問道、笑道、嘆道、喊道」由前面的字涵蓋。
+ */
+const SPEECH_VERB =
+  '(?:說(?![明服法穿完謊教])|問(?![題卷])|答(?![案應])|回答|回應|告訴|喊|叫(?![做作])|嚷|吼|罵|唸(?!書)|叮嚀|叮囑|囑咐|交代|提醒|安慰|抱怨|嘀咕|喃喃|追問|反問|插嘴|笑道|嘆道)';
+/** 引號前的說話標記（引號前緊接著）：說話的動詞＋（著、了、道、起來）＋（對誰：我、自己、大家…）＋（：，）。 */
+const SPEECH_TAG = `${SPEECH_VERB}(?:著|了|道|起來)?(?:自己|我們|我|你們|你|妳|他們|他|她們|她|大家)?\\s*[：:，,]?\\s*$`;
+
+/**
+ * 日常生活裡的一般人物（家人、學校、路上遇到的人）：這些人說的話一定是對話（以前情意題允許，2026-10-31 起任何題型都不寫）。
+ */
+export const ZH_EVERYDAY_SPEAKERS =
+  '媽媽|爸爸|母親|父親|老媽|老爸|阿嬤|阿公|奶奶|爺爺|外婆|外公|祖母|祖父|弟弟|妹妹|哥哥|姊姊|姐姐|表哥|表姊|表姐|表弟|表妹|堂哥|堂姊|堂弟|堂妹|' +
+  '阿姨|叔叔|伯伯|伯父|伯母|嬸嬸|舅舅|舅媽|姑姑|姑丈|姨丈|家人|老師|導師|班導|教官|校長|主任|同學|學長姊|學長|學姊|學姐|學弟|學妹|班長|' +
+  '隊長|社長|組長|隊友|社員|室友|同桌|朋友|好友|鄰居|店員|店長|老闆娘|老闆|司機|教練|護理師|護士|醫生|警衛|志工|服務生|客人|乘客|路人|' +
+  '老先生|老太太|老爺爺|老奶奶|老人|阿伯|大叔|小朋友|小孩|孩子|男孩|女孩|館員|管理員|清潔員|廚師|攤販|陌生人';
+const EVERYDAY_SPEAKER_RE = new RegExp(ZH_EVERYDAY_SPEAKERS, 'u');
+
+/** 一般人物說的話：「媽媽說：」「公車司機回頭說：」（人物和說話的動詞之間最多 6 個字、不跨逗號）。 */
+const NOUN_TAG_RE = new RegExp(`(?:${ZH_EVERYDAY_SPEAKERS})[^，。！？「」『』]{0,6}${SPEECH_TAG}`, 'u');
+/** 第一人稱說的話（「我說：」「我們問：」「我問自己：」）；「我想起某人說」「我曾聽人說」不算。 */
+const FIRST_PERSON_TAG_RE = new RegExp(`(?<![對跟和向訴給教])(?:我們|我)(?!想起|想到|記得|常|也曾)[^，。！？「」『』曾常聽讀想記引]{0,4}${SPEECH_TAG}`, 'u');
+/** 第二、三人稱說的話（「他笑著說：」）；「他曾說」「她常說」不算。 */
+const PRONOUN_TAG_RE = new RegExp(`(?:他們|她們|你們|他|她|你|對方)(?!常|也曾)[^，。！？「」『』曾常聽讀想記引]{0,4}${SPEECH_TAG}`, 'u');
+/** 引號裡的念頭（「我心想：」）：讀起來同樣是小說的寫法。 */
+const THOUGHT_TAG_RE = /(?:心想|暗想|心裡想|心中想|心底想|心裡說|心裡默念|想著)\s*[：:]\s*$/u;
+/** 有冒號的說話標記（說話的人在逗號前面，或不是上面幾類）：「媽媽推門進來，說：」。 */
+const COLON_TAG_RE = new RegExp(`${SPEECH_VERB}(?:著|了|道|起來)?(?:自己|我們|我|你們|你|妳|他們|他|她們|她|大家)?\\s*[：:]\\s*$`, 'u');
+/** 引用作品、俗語名言、書上的話、回想某人說過的話（不是對話；引文規則另外處理）。 */
+const CITATION_RE = /〈|《|俗話|俗語|諺語|古人|前人|常言|有句話|有人|人們常|人家常|名言|書上|書中|文中|作者|筆者|所謂|想起|想到|記得|聽人|聽過|讀過|讀到|曾經?說|常說/u;
+/** 名人或出處的字樣：同一段前面有這些時，代名詞或不明的人說的話多半是在引用名人（引文規則拿掉編造的名言）。 */
+export const ZH_FAMOUS_CONTEXT_RE =
+  /《|〈|曾經?說|名言|演講|著作|書中|書裡|作家|科學家|哲學家|思想家|文學家|發明家|藝術家|音樂家|詩人|名人|偉人|總統|諾貝爾|創辦人|執行長/u;
+/** 引號裡少於這麼多個漢字、前面有說話標記：一句短短的話（「好。」），當成對話（長的名言由引文規則判斷）。 */
+const SHORT_UTTERANCE_HAN = 8;
+/** 引號後的說話標記：「你還好嗎？」他問。「早點睡。」媽媽笑著說。（「我沒有回答」不是：中間有否定詞。） */
+const TAG_AFTER_RE = new RegExp(`^[，,]?\\s*(?:${ZH_EVERYDAY_SPEAKERS}|我們|我|他們|她們|你們|他|她|你|對方)(?:(?![沒不未別])[^，。！？「」『』]){0,6}?${SPEECH_VERB}`, 'u');
+/** 引號後的說話的人是代名詞（「他問。」）：同一段前面是名人時可能是在引用名人。 */
+const PRONOUN_AFTER_RE = /^[，,]?\s*(?:他們|她們|你們|他|她|你|對方)/u;
+
+/**
+ * 句子：以。！？或換行分開；引號（「」『』“”‘’）裡的句末標點不分句；句末標點後面緊接的句末標點與收引號留在這一句。
+ * 引號裡最後是句末標點（「早點睡。」）而引號後面不是「他問」這類說話標記時，句子在收引號後結束（「她說：「早點睡。」我沒有抬頭。」
+ * 是兩句），拿掉一句對話時不會連後面的敘事一起拿掉。
+ */
+export function zhSampleSentences(text: string): string[] {
+  const out: string[] = [];
+  const chars = [...text];
+  let cur = '';
+  let depth = 0;
+  for (let i = 0; i < chars.length; i++) {
+    const ch = chars[i]!;
+    if (ch === '\n') {
+      if (cur !== '') out.push(cur);
+      cur = '';
+      depth = 0;
+      continue;
+    }
+    cur += ch;
+    if (SENTENCE_QUOTE_OPEN.has(ch)) depth += 1;
+    else if (SENTENCE_QUOTE_CLOSE.has(ch)) {
+      depth = Math.max(0, depth - 1);
+      if (depth === 0 && /[。！？!?…]/u.test(chars[i - 1] ?? '')) {
+        const rest = chars.slice(i + 1).join('');
+        if (rest !== '' && !/^[。！？!?」』”’）)]/u.test(rest) && !TAG_AFTER_RE.test(rest)) {
+          out.push(cur);
+          cur = '';
+        }
+      }
+    } else if (depth === 0 && /[。！？!?]/u.test(ch)) {
+      while (i + 1 < chars.length && /[。！？!?」』”’）)]/u.test(chars[i + 1]!)) cur += chars[++i]!;
+      out.push(cur);
+      cur = '';
+    }
+  }
+  if (cur !== '') out.push(cur);
+  return out;
+}
+
+/** 引號對話的種類：引號前有說話標記、引號後有說話標記、整句只有引號、引號裡的話是說話的口氣（問句、驚嘆、對「你」說）。 */
+export type ZhDialogueKind = 'tag_before' | 'tag_after' | 'standalone' | 'speech_like';
+
+export interface ZhDialogueHit {
+  /** 第幾句（zhSampleSentences(text) 的索引）。 */
+  sentence: number;
+  /** 引號裡的文字。 */
+  inner: string;
+  kind: ZhDialogueKind;
+}
+
+function hanOf(text: string): number {
+  return text.match(/\p{Script=Han}/gu)?.length ?? 0;
+}
+
+/** 引號裡的話是不是說話的口氣：以問號、驚嘆號結尾，句末是語氣詞，或（4 字以上）對「你」說。 */
+function speechLike(inner: string): boolean {
+  const body = inner.replace(/[\s」』”’）)]+$/u, '');
+  if (/[？！?!]$/u.test(body)) return true;
+  if (/(?:吧|啦|呢|嗎|喔|噢|囉|啊|呀|嘛|哦)[。，…～]*$/u.test(body)) return true;
+  return [...body].length >= 4 && /你|妳|您/u.test(body);
+}
+
+/**
+ * 找出引號對話（國寫範文與國寫指導的示範段；站主規則：國寫是文章，不是小說，「」不寫人物說的話）。全部確定性。
+ * 「」只留給：題目素材的短引文、附作者與篇名的古文名句、題目的關鍵詞、篇名或題目。呼叫端用 exempt 判斷「不是對話」的引文
+ * （題目裡找得到的字、古文語料查得到的句子）。
+ *
+ *   tag_before   一定算：引號前緊接著一般人物、第一人稱或念頭的說話標記（「媽媽說：」「公車司機回頭說：」「我問自己：」「我心想：」）。
+ *                其次：代名詞的說話標記（「他問：」）或有冒號的說話標記（「媽媽推門進來，說：」），而且同一段前面提過一般人物、
+ *                引號裡是說話的口氣，或引號裡不到 8 個漢字（一句短短的話）；但引號前有〈〉《》（引用作品）、俗語名言、書上的話、
+ *                回想某人說過的話（「我想起梭羅說：」），或同一段前面是名人或作品時不算（引文規則另外處理，編造的名言整句拿掉）。
+ *   tag_after    引號後緊接著說話的人與動詞（「早點睡。」媽媽說。「你還好嗎？」他問。），引號裡有標點或是說話的口氣；說話的人是
+ *                代名詞而同一段前面是名人時不算。
+ *   standalone   整句只有引號（「你還好嗎？」），引號裡至少兩個漢字；引號前有〈〉《》或俗語名言的字樣時不算。
+ *   speech_like  其他位置的引號，引號裡是說話的口氣（問句、驚嘆、語氣詞、對「你」說）；同上。
+ */
+export function zhFindDialogue(text: string, exempt: (inner: string) => boolean = () => false): ZhDialogueHit[] {
+  // 彎引號先換成「」『』（長度不變；同後處理的標點修正）。
+  const norm = text.replace(/[“”‘’]/gu, (ch) => (ch === '“' ? '「' : ch === '”' ? '」' : ch === '‘' ? '『' : '』'));
+  const hits: ZhDialogueHit[] = [];
+  let prior = '';
+  zhSampleSentences(norm).forEach((sentence, index) => {
+    for (const m of sentence.matchAll(/「([^「」]+)」/gu)) {
+      const inner = m[1]!;
+      const offset = m.index;
+      if (hanOf(inner) === 0 || exempt(inner)) continue;
+      const before = [...sentence.slice(0, offset)].slice(-20).join('');
+      const after = sentence.slice(offset + m[0].length);
+      const context = prior + sentence.slice(0, offset);
+      const utterance = /[，。！？、；,!?…]/u.test(inner) || speechLike(inner);
+      const tagAfter = TAG_AFTER_RE.test(after);
+      let kind: ZhDialogueKind | null = null;
+      if (NOUN_TAG_RE.test(before) || FIRST_PERSON_TAG_RE.test(before) || THOUGHT_TAG_RE.test(before)) kind = 'tag_before';
+      else if (tagAfter && !PRONOUN_AFTER_RE.test(after) && utterance) kind = 'tag_after';
+      else {
+        const cited = CITATION_RE.test(before);
+        const famous = ZH_FAMOUS_CONTEXT_RE.test(context) || ZH_OVERUSED_FIGURES.some((f) => context.includes(f));
+        if (PRONOUN_TAG_RE.test(before) || COLON_TAG_RE.test(before)) {
+          kind = !cited && !famous && (EVERYDAY_SPEAKER_RE.test(context) || speechLike(inner) || hanOf(inner) < SHORT_UTTERANCE_HAN) ? 'tag_before' : null;
+        } else if (tagAfter && utterance) kind = famous ? null : 'tag_after';
+        else if (cited) kind = null;
+        else if (sentence.replace(m[0], '').replace(/[\s。！？!?，、…—～.]/gu, '') === '' && hanOf(inner) >= 2) kind = 'standalone';
+        else if (speechLike(inner)) kind = 'speech_like';
+      }
+      if (kind) hits.push({ sentence: index, inner, kind });
+    }
+    prior += sentence;
+  });
+  return hits;
+}

@@ -111,7 +111,7 @@ function renderCase(detail: AssistCaseDetail | (() => Response), opts: { feature
 }
 
 describe('國寫範文的純函式', () => {
-  it('點數只來自 shared 的常數（8 點，同 AI_TASK_POINTS 與國文的設定檔）', () => {
+  it('點數只來自 shared 的常數（10 點，同 AI_TASK_POINTS 與國文的設定檔）', () => {
     expect(ZH_EXEMPLAR_POINTS).toBe(AI_TASK_POINTS.assist_zh_exemplar);
     expect(ZH_EXEMPLAR_POINTS).toBe(ASSIST_SUBJECT_PROFILES.chinese.exemplarPoints);
   });
@@ -131,8 +131,8 @@ describe('國寫範文的純函式', () => {
     });
     const trial = zhExemplarPointsInfo({ ...QUOTA_ZH, tier: 'trial', points: { day_used: 7, day_limit: 10, month_used: 7, month_limit: 300 } });
     expect(trial.blocked).toBe(true);
-    expect(trial.lines[0]).toBe('今天剩 3 點，AI 示範要 8 點。試用帳號每天 10 點：國寫指導（7 點）加 AI 示範（8 點）要 15 點，不能在同一天完成，明天再來看。');
-    expect(zhExemplarPointsInfo({ ...QUOTA_ZH, points: { ...QUOTA_ZH.points, month_used: 296 } })).toEqual({ blocked: true, lines: ['本月剩 4 點，AI 示範要 8 點；下個月 1 日重置。'] });
+    expect(trial.lines[0]).toBe('今天剩 3 點，AI 示範要 10 點。試用帳號每天 10 點：國寫指導（7 點）加 AI 示範（10 點）要 17 點，不能在同一天完成，明天再來看。');
+    expect(zhExemplarPointsInfo({ ...QUOTA_ZH, points: { ...QUOTA_ZH.points, month_used: 296 } })).toEqual({ blocked: true, lines: ['本月剩 4 點，AI 示範要 10 點；下個月 1 日重置。'] });
     expect(zhExemplarPointsInfo({ ...QUOTA_ZH, assist: { ...QUOTA_ZH.assist!, zh_exemplars: { day_used: 3, day_limit: 3 } } })).toEqual({
       blocked: true,
       lines: ['今天已經看過 3 篇國寫的 AI 示範，明天再試。'],
@@ -180,7 +180,7 @@ describe('國寫範文的純函式', () => {
 });
 
 describe('CasePage：看一篇 AI 示範', () => {
-  it('國寫指導之後：一行建議與「看一篇 AI 示範（8 點）」；按了是行內確認（點數、今天還有幾點、不打分數、不是得獎作品），取消回到按鈕', async () => {
+  it('國寫指導之後：一行建議與「看一篇 AI 示範（10 點）」；按了是行內確認（點數、今天還有幾點、不打分數、不是得獎作品），取消回到按鈕', async () => {
     const user = userEvent.setup();
     const { fetch } = renderCase(writingCase());
     const section = await screen.findByRole('region', { name: /^AI 示範/ });
@@ -188,7 +188,7 @@ describe('CasePage：看一篇 AI 示範', () => {
     const trigger = within(section).getByRole('button', { name: `看一篇 AI 示範（${AI_TASK_POINTS.assist_zh_exemplar} 點）` });
     await user.click(trigger);
     const panel = within(section).getByRole('group', { name: '確認點數' });
-    expect(await within(panel).findByText('這次會用 8 點（今天還有 20 點）；沒有完成會全額退還。')).toBeInTheDocument();
+    expect(await within(panel).findByText('這次會用 10 點（今天還有 20 點）；沒有完成會全額退還。')).toBeInTheDocument();
     expect(within(panel).getByText('國寫的 AI 示範每天最多 3 篇，今天已經看過 1 篇。')).toBeInTheDocument();
     expect(within(panel).getByText('AI 會依題目寫一篇完整示範，逐段標出段落作用與方法卡；不打分數。')).toBeInTheDocument();
     expect(within(panel).getByText('示範是 AI 寫的，不是得獎作品，也不是官方佳作；請不要當成自己的作品繳交。')).toBeInTheDocument();
@@ -216,13 +216,13 @@ describe('CasePage：看一篇 AI 示範', () => {
         extra: {
           'POST /api/assist/cases/z1/zh-exemplar': () => {
             state = 'pending';
-            return jsonResponse({ op_id: 'op', case_id: 'z1', turn_id: 'e1', status: 'queued', points: 8 }, 202);
+            return jsonResponse({ op_id: 'op', case_id: 'z1', turn_id: 'e1', status: 'queued', points: 10 }, 202);
           },
         },
       },
     );
-    await user.click(await screen.findByRole('button', { name: '看一篇 AI 示範（8 點）' }));
-    await user.click(await screen.findByRole('button', { name: '確定，用 8 點' }));
+    await user.click(await screen.findByRole('button', { name: '看一篇 AI 示範（10 點）' }));
+    await user.click(await screen.findByRole('button', { name: '確定，用 10 點' }));
     await waitFor(() => expect(fetch.calls.find((c) => c.method === 'POST')).toMatchObject({ path: '/api/assist/cases/z1/zh-exemplar', body: {} }));
     const section = screen.getByRole('region', { name: /^AI 示範/ });
     expect(await within(section).findByText('AI 正在寫示範…')).toBeInTheDocument();
@@ -241,7 +241,7 @@ describe('CasePage：看一篇 AI 示範', () => {
     expect(label.textContent).toBe('AI 示範，不是得獎作品');
     await waitFor(() => expect(document.activeElement).toBe(label));
     // 每題 2 篇：還可以再看一篇。
-    expect(within(section).getByRole('button', { name: '再看一篇 AI 示範（8 點）' })).toBeInTheDocument();
+    expect(within(section).getByRole('button', { name: '再看一篇 AI 示範（10 點）' })).toBeInTheDocument();
   });
 
   it('結果：段落作用與方法卡 chip（按下展開要點）、這段怎麼寫、字數與格數、這篇怎麼寫、要件對照、自我檢查；沒有複製或列印、沒有分數', async () => {
@@ -315,7 +315,7 @@ describe('CasePage：看一篇 AI 示範', () => {
     expect(screen.getByText('那一扇窗', { selector: 'p' })).toBeInTheDocument();
     expect(screen.queryByText('窗外的樟樹')).toBeNull();
     expect(screen.getByTestId('zh-exemplar-full')).toHaveTextContent('這一題已經看過 2 篇示範。');
-    expect(screen.queryByRole('button', { name: /AI 示範（8 點）/ })).toBeNull();
+    expect(screen.queryByRole('button', { name: /AI 示範（10 點）/ })).toBeNull();
   });
 
   it('國寫範文沒開：沒有這一塊；已經有的範文照常顯示（唯讀，沒有按鈕）', async () => {
@@ -335,20 +335,20 @@ describe('CasePage：看一篇 AI 示範', () => {
     expect(screen.queryByRole('region', { name: /^AI 示範/ })).toBeNull();
   });
 
-  it('失敗：退還原因＋點數已經退還＋「再試一次（8 點）」（同樣先確認）', async () => {
+  it('失敗：退還原因＋點數已經退還＋「再試一次（10 點）」（同樣先確認）', async () => {
     const user = userEvent.setup();
     renderCase(writingCase({ turns: [analyzeTurn, exemplarTurn('e1', 2, 'failed', undefined, 'timeout')] }));
     expect(await screen.findByTestId('zh-exemplar-failed')).toHaveTextContent('AI 回應逾時，點數已經退還。');
-    await user.click(screen.getByRole('button', { name: '再試一次（8 點）' }));
+    await user.click(screen.getByRole('button', { name: '再試一次（10 點）' }));
     expect(screen.getByRole('group', { name: '確認點數' })).toBeInTheDocument();
   });
 
-  it('點數不夠：確定鈕停用並說明（試用帳號說明國寫指導加範文要 15 點）', async () => {
+  it('點數不夠：確定鈕停用並說明（試用帳號說明國寫指導加範文要 17 點）', async () => {
     const user = userEvent.setup();
     renderCase(writingCase(), { quota: { ...QUOTA_ZH, tier: 'trial', points: { day_used: 7, day_limit: 10, month_used: 7, month_limit: 300 } } });
-    await user.click(await screen.findByRole('button', { name: '看一篇 AI 示範（8 點）' }));
-    expect(await screen.findByText(/要 15 點，不能在同一天完成/)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: '確定，用 8 點' })).toBeDisabled();
+    await user.click(await screen.findByRole('button', { name: '看一篇 AI 示範（10 點）' }));
+    expect(await screen.findByText(/要 17 點，不能在同一天完成/)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '確定，用 10 點' })).toBeDisabled();
   });
 
   it('送出被擋（今天已經看過 3 篇）：顯示學習助手的說明，不顯示後端的英文', async () => {
@@ -358,8 +358,8 @@ describe('CasePage：看一篇 AI 示範', () => {
         'POST /api/assist/cases/z1/zh-exemplar': () => jsonResponse({ error: { code: 'daily_limit', message: 'daily limit', reason: 'assist_zh_exemplar' } }, 429),
       },
     });
-    await user.click(await screen.findByRole('button', { name: '看一篇 AI 示範（8 點）' }));
-    await user.click(await screen.findByRole('button', { name: '確定，用 8 點' }));
+    await user.click(await screen.findByRole('button', { name: '看一篇 AI 示範（10 點）' }));
+    await user.click(await screen.findByRole('button', { name: '確定，用 10 點' }));
     expect(await screen.findByText('今天已經看過 3 篇國寫的 AI 示範，明天再試。')).toBeInTheDocument();
   });
 
