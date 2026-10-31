@@ -8,6 +8,7 @@ import {
   BookA,
   Blocks,
   Dumbbell,
+  Feather,
   House,
   Info,
   Languages,
@@ -41,6 +42,7 @@ const ICONS: Record<IconKey, LucideIcon> = {
   exams: Archive,
   mock: Timer,
   assistant: MessageCircleQuestionMark,
+  'zh-writing': Feather,
   settings: Settings,
   about: Info,
 };

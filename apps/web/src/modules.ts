@@ -26,6 +26,7 @@ export type IconKey =
   | 'exams'
   | 'mock'
   | 'assistant'
+  | 'zh-writing'
   | 'settings'
   | 'about';
 
@@ -68,14 +69,15 @@ export interface PageMeta {
   subjectsSummary?: string;
 }
 
-/** 由功能開關控制的頁面（目前只有學習助手）。 */
-export type PageFeature = 'assistant';
+/** 由功能開關控制的頁面：學習助手、國寫範文（學習助手國文的國寫範文開放時）。 */
+export type PageFeature = 'assistant' | 'zhExemplar';
 
 /**
  * 前端目前打開的功能開關（學習助手：features.assistant 或管理員預覽，見 features/assistant/lib/useAssistantEnabled.ts）。
+ * zhExemplar：國寫範文對這位使用者開放（國文那一筆有 exemplar: true；沒給＝關）。
  * assistantSubjects：學習助手對這位使用者開放了英文以外的科目（只換說明文字，不影響要不要列出）。
  */
-export type PageFeatureFlags = Readonly<Record<PageFeature, boolean>> & { readonly assistantSubjects?: boolean };
+export type PageFeatureFlags = Readonly<{ assistant: boolean; zhExemplar?: boolean; assistantSubjects?: boolean }>;
 
 export const PAGES = [
   {
@@ -202,6 +204,20 @@ export const PAGES = [
     isStudyModule: true,
   },
   {
+    // 國寫範文的獨立頁（docs/design/assistant-subjects.md「國寫範文」的「獨立頁」）：國文的國寫範文開放時才出現在導覽與首頁
+    // （feature）。結果頁 /zh-writing/:id 不在這份清單裡，路由在 App.tsx。資料存在學習助手（國文的國寫案例）。
+    // 說明不能含其他學習模組的標題（modules.test.ts；例如「學習助手」「寫作練習」「單字」）。
+    path: '/zh-writing',
+    title: '國寫範文',
+    navLabel: '國寫範文',
+    summary: '選一題 111–115 學測國寫，或貼上自己的國寫題目，看一篇 AI 寫的完整示範：逐段標出段落作用與方法卡，不打分數。',
+    group: 'open',
+    icon: 'zh-writing',
+    status: 'ready',
+    isStudyModule: true,
+    feature: 'zhExemplar',
+  },
+  {
     path: '/exams',
     title: '歷屆試題',
     navLabel: '歷屆試題',
@@ -268,9 +284,9 @@ export function isDevPage(page: Pick<PageMeta, 'status'>): boolean {
   return page.status === 'dev';
 }
 
-/** 這一頁在目前的功能開關下要不要出現在導覽與首頁（沒有 feature 的頁面一律出現）。 */
+/** 這一頁在目前的功能開關下要不要出現在導覽與首頁（沒有 feature 的頁面一律出現；沒給的開關＝關）。 */
 export function isPageEnabled(page: Pick<PageMeta, 'path' | 'feature'>, flags: PageFeatureFlags): boolean {
-  return page.feature === undefined || flags[page.feature];
+  return page.feature === undefined || flags[page.feature] === true;
 }
 
 /** 頁面的一句話說明：學習助手開放英文以外的科目時用 subjectsSummary（其他頁面一律是 summary）。 */

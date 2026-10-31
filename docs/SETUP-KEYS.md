@@ -286,13 +286,13 @@ workflow 會依序：型別檢查與測試 → 檢查 token 與 workers.dev 子�
 |---|---|---|
 | `AI_ASSISTANT_SUBJECTS` | 國文的貼上、解析、追問（英文以外的科目；第一版只有國文） | `AI_ASSISTANT` |
 | `AI_ASSISTANT_SUBJECTS_PHOTO` | 國文的拍照 | `AI_ASSISTANT`、`AI_ASSISTANT_PHOTO`、`AI_ASSISTANT_SUBJECTS` |
-| `AI_ZH_EXEMPLAR` | 國寫範文：國寫案例看過國寫指導之後的「看一篇 AI 示範」（8 點、每天 3 篇、同一題 2 篇） | `AI_ASSISTANT`、`AI_ASSISTANT_SUBJECTS` |
+| `AI_ZH_EXEMPLAR` | 國寫範文：國寫案例看過國寫指導之後的「看一篇 AI 示範」，以及不必先看國寫指導的國寫範文獨立頁（選歷屆國寫或貼上題目；8 點、每天 3 篇、同一題 2 篇） | `AI_ASSISTANT`、`AI_ASSISTANT_SUBJECTS` |
 
 - **目前兩個都是 `"on"`（2026-10-30 上線，和作文範文同一個 PR）**：國文的貼上、解析、追問與拍照都開放給已核准的學生。拍照的照片組（J 組）沒有全部達標，站主決定第一版就開拍照（「拍照也可」）；保護措施（確認畫面的字形題提醒、錯字少於題目暗示的數量時標「不確定」、轉錄看不出題目時退點）與之後要補的手機實拍見 [design/assistant-subjects.md](design/assistant-subjects.md) 的實作備註。`/api/features` 只在 `"on"` 時有 `"assistantSubjects":[{"subject":"chinese","photo":…}]`；`"admin"` 時公開端點不透露，管理員登入後 `/api/me` 的 `assistant_preview` 多一個 `subjects`。每次部署的 **Summary** 有「學習助手國文」「學習助手國文拍照」兩列，寫出 `wrangler.toml` 的值，應該都是「對所有人開放」。
 - 上線時三份說明同一次升版（2026-10-30，和作文範文共用這一次；國文的點數不寫在說明裡，調點數不必再升版）：所有人下次登入要重新同意隱私權說明與服務條款，已申請（等核准、候補）或已核准的學生下次使用 AI 前要在 `/ai/apply` 重新同意 AI 處理說明（未滿 18 歲的也要再勾一次已告知父母或監護人）。
 - **不需要設定任何金鑰**：國文的 D8 指紋（`data/d8/zh-official.fp.json`、`zh-short.fp.json`）只有雜湊、不帶金鑰，部署時跟著程式一起打包。國文沒有新的 Worker secret，也沒有新的 GitHub secret；評測用的金鑰就是 §8.2 第 1 步的 `ANTHROPIC_PARITY_API_KEY`（沒有時才用正式站的 `ANTHROPIC_API_KEY`）。
 - 指紋讀不到（打包壞掉）時，國文的寫入端點在預扣之前一律回「暫停」，不扣點、不會漏放受保護的文字；英文不受影響。
-- **國寫範文目前是 `"on"`（2026-10-30 開放）**：站主決定直接開放給已核准的學生、**不跑真模型評測**（評測題目的 K 組已經放進題目集，只能由站主在 Actions 頁面手動執行，見第 1 步）。`/api/features` 只在國文與國寫範文都是 `"on"` 時，國文那一筆多 `"exemplar":true`；`"admin"` 時公開端點不透露，管理員的 `/api/me` 的 `assistant_preview.subjects` 有。部署的 **Summary** 有「學習助手國寫範文（assistantSubjects.exemplar）」一列，應該是「對所有人開放」。條款不必升版（只送案例已存的題目與本站的國寫指導摘要，結果存在學習助手的案例裡；設計「國寫範文」§9.3）。比賽語料指紋（`data/d8/zh-contest.fp.json`）只有雜湊、不帶金鑰，沒有新的 secret；它是國文指紋的必填部分，缺了就整個國文指紋當成讀不到（上一點：寫入端點回「暫停」），萬一到了背景處理才發現，範文以系統錯誤退還點數、不呼叫 AI。部署後第一次請用管理員帳號在一個國寫案例看完國寫指導、按一次「看一篇 AI 示範」確認。上線後的監看看 ops 事件：`assist_zh_exemplar_sensitive`（情意範文寫到住院、過世、自傷、戀愛這類提示禁止的事件；只有操作代號與句數，看不到內容）、`assist_zh_exemplar_overlap`（和比賽作品有一長串相同、重寫後仍隱藏段落）常常出現時交給開發者判斷，嚴重時照第 5 步關閉。
+- **國寫範文目前是 `"on"`（2026-10-30 開放）**：站主決定直接開放給已核准的學生、**不跑真模型評測**（評測題目的 K 組已經放進題目集，只能由站主在 Actions 頁面手動執行，見第 1 步）。`/api/features` 只在國文與國寫範文都是 `"on"` 時，國文那一筆多 `"exemplar":true`；`"admin"` 時公開端點不透露，管理員的 `/api/me` 的 `assistant_preview.subjects` 有。部署的 **Summary** 有「學習助手國寫範文（assistantSubjects.exemplar）」一列，應該是「對所有人開放」。條款不必升版（只送案例已存的題目與本站的國寫指導摘要，結果存在學習助手的案例裡；設計「國寫範文」§9.3）。比賽語料指紋（`data/d8/zh-contest.fp.json`）只有雜湊、不帶金鑰，沒有新的 secret；它是國文指紋的必填部分，缺了就整個國文指紋當成讀不到（上一點：寫入端點回「暫停」），萬一到了背景處理才發現，範文以系統錯誤退還點數、不呼叫 AI。部署後第一次請用管理員帳號在一個國寫案例看完國寫指導、按一次「看一篇 AI 示範」確認。上線後的監看看 ops 事件：`assist_zh_exemplar_sensitive`（情意範文寫到住院、過世、自傷、戀愛這類提示禁止的事件；只有操作代號與句數，看不到內容）、`assist_zh_exemplar_overlap`（和比賽作品有一長串相同、重寫後仍隱藏段落）常常出現時交給開發者判斷，嚴重時照第 5 步關閉。`assist_zh_contest_input`（學生貼的國寫題目或素材和比賽作品有一長段相同、送出時就擋下，沒有扣點；只有假名與欄位）偶爾出現是正常的，同一位學生反覆出現時可以到後台看看是不是在試著讓 AI 改寫得獎作品。
 
 1. **跑真模型評測**（會花 API，**只有站主手動按才會跑**；上線前四次完整評測的結果與 run 連結在 [design/assistant-subjects.md](design/assistant-subjects.md) 實作備註「上線（2026-10-30）」之後幾節；之後改了國文的提示、輸出格式或後處理，由站主決定要不要重跑；GitHub Actions 上跑，不用在自己的電腦裝任何東西）：
    - 站主在 GitHub 的 Actions 頁面選「學習助手國文真模型評測」（`.github/workflows/assistant-subjects-eval.yml`），按 **Run workflow**。輸入：`budget_usd`（累計上限，完整評測約 US$23，建議 25，最多 40）、`allow_online_key`、`resume`、`cases`（空白＝全部；只寫 `A`＝只確認六份輸出格式編譯得過，約 US$0.1；只寫 `K`＝國寫範文的 6 題，各含前置的國寫指導，約 US$2.5，`budget_usd` 填 5）。國寫範文上線時這一組**還沒有跑過**。
@@ -308,7 +308,7 @@ workflow 會依序：型別檢查與測試 → 檢查 token 與 workers.dev 子�
 4. **只關國文拍照**（例如轉錄把字形題的錯字改正了）：把 `AI_ASSISTANT_SUBJECTS_PHOTO` 改成 `"off"` 推到 main。國文貼上照常，英文的拍照也不受影響，不用改程式；`/api/features` 的國文那一筆變成 `"photo":false`。
 5. **緊急關閉國寫範文**（範文和已發表的作品太像、出現不適合的內容、費用異常、學生拿來交作業的回報）：
    1. 立即止血同第 3 步的 1（「AI 全站暫停」會一起停掉英文與國文的所有 AI 功能）。
-   2. 只關範文：把 `AI_ZH_EXEMPLAR` 改成 `"off"`，推到 main，等部署跑完。「看一篇 AI 示範」的按鈕消失、`POST …/zh-exemplar` 回「暫停」（503，不扣點）；國寫指導、其他國文功能與英文都照常；**已經產生的範文照常可以看、跟著案例刪除**；已經在排隊的照常完成（點數已經預扣，失敗照樣退還）。
+   2. 只關範文：把 `AI_ZH_EXEMPLAR` 改成 `"off"`，推到 main，等部署跑完。「看一篇 AI 示範」的按鈕與國寫範文的獨立頁的送出都消失、`POST …/zh-exemplar` 與 `POST /api/assist/zh-exemplars` 回「暫停」（503，不扣點）；導覽、首頁與學習助手首頁的「國寫範文」入口也不見；直接打開 `/zh-writing` 時已登入是唯讀模式（「我的國寫範文」與之前的示範照常可以看與刪除），沒登入只顯示暫停；國寫指導、其他國文功能與英文都照常；**已經產生的範文照常可以看、跟著案例刪除**；已經在排隊的照常完成（點數已經預扣，失敗照樣退還）。
    3. **只留給管理員**查問題：改成 `"admin"`。學生的按鈕消失，管理員登入後照樣看得到、可以產生。
    4. 確認：Summary 的「學習助手國寫範文」是「關閉」（`admin` 時是「只有管理員能用」）、「注意」裡沒有「對不起來」；`/api/features` 的國文那一筆沒有 `"exemplar"`。`src/config.ts` 的程式預設固定是 `off`，不用改。
 6. **重產比賽語料指紋**（國寫範文用的 `data/d8/zh-contest.fp.json`；只有站主取得新一年的語文競賽作品集、放進自己電腦上的私人語料目錄時才做；語料是未成年人的作品，**永遠不放進 repo**，repo 裡只有雜湊）：

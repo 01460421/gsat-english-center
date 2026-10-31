@@ -52,6 +52,11 @@ export const ZH_ANALYZE_TEMPLATE_VERSIONS: Readonly<Record<ZhCaseKind, string>> 
 };
 export const ZH_FOLLOWUP_TEMPLATE_VERSION = 'assist-zh-followup-user@1';
 export const ZH_EXEMPLAR_TEMPLATE_VERSION = 'assist-zh-exemplar-user@2';
+/**
+ * 國寫範文的獨立頁（沒有國寫指導）：user 訊息沒有 <analysis_digest>，<task> 多一行請模型自己從題目找出要件。系統提示與 schema
+ * 和上面那一份完全相同（同一個快取前綴）；有國寫指導時的 user 訊息逐位元不變，仍是 @2。
+ */
+export const ZH_EXEMPLAR_STANDALONE_TEMPLATE_VERSION = 'assist-zh-exemplar-standalone-user@1';
 
 // ───────────────────────── 共用段落 ─────────────────────────
 

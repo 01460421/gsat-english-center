@@ -25,6 +25,7 @@ import {
   type ZhFollowupView,
   type ZhFormat,
   type ZhJudgeLabels,
+  type ZhQuestionCheckOptions,
   type ZhSection,
 } from './assist-zh';
 import type { ExplanationItem } from './bank';
@@ -1025,8 +1026,9 @@ export const ASSIST_INPUT_PROBLEMS = [
   'target_missing',
   'zh_too_many_targets',
   'unresolved_target',
-  // 只有 Worker 會回（D8 指紋）。
+  // 只有 Worker 會回（D8 指紋；國寫題目的比賽語料指紋）。
   'official_material',
+  'zh_contest_material',
   // 站內來源的驗證（Worker；§4.4「站內來源的驗證」）。
   'bad_label_map',
   'bad_swap',
@@ -1060,6 +1062,7 @@ export const ASSIST_INPUT_PROBLEM_MESSAGES = {
   zh_too_many_targets: '一次最多問 4 題選擇題、3 題簡答（小題合計 6 個）或 1 題國寫，其他的題目可以另外再問。',
   unresolved_target: '要問的題目裡還有看不清的字，請先選對或修改。',
   official_material: '題目裡有一段和官方受保護的資料（評分原則或參考譯文）相同，請刪掉那一段再送出。',
+  zh_contest_material: '題目或素材裡有一長段和已發表的作文相同。只貼題目和題目附的素材，不要貼別人的作文或範文。',
   bad_label_map: '這份卷子的題號對不上，請重新整理成績單再試一次。',
   bad_swap: '這份卷子的選項對不上，請重新整理成績單再試一次。',
 } as const satisfies Record<AssistInputProblem, string>;
@@ -1175,11 +1178,15 @@ function sortProblems<P extends string>(problems: AssistInputHit<P>[], order: re
  * 學生提供的題目（打字、拍照確認後）的檢查（§4.4）：形狀 → 正規化與遮個資 → 長度 → 字元與標籤 → 內容規則 → 要問的題。
  * subject 是 chinese 時改走 checkZhQuestion（國文的正規化不用 NFKC、規則另寫；docs/design/assistant-subjects.md §4）。
  * 不含 D8 指紋（Worker 另外做，official_material）。失敗時 problems 依 ASSIST_INPUT_PROBLEMS 的優先順序排好（API 只回第一個）；
- * 提醒不影響 ok。成功時 value 是正規化、遮過個資的題目（Worker 存的就是它）。
+ * 提醒不影響 ok。成功時 value 是正規化、遮過個資的題目（Worker 存的就是它）。zhOptions 只給國文（國寫範文頁的貼上）。
  */
-export function checkAssistQuestion(input: unknown, subject: AssistSubject = 'english'): CheckResult<AssistStudentQuestion, AssistInputProblem> {
+export function checkAssistQuestion(
+  input: unknown,
+  subject: AssistSubject = 'english',
+  zhOptions: ZhQuestionCheckOptions = {},
+): CheckResult<AssistStudentQuestion, AssistInputProblem> {
   // 國文走自己的規則（assist-zh.ts；docs/design/assistant-subjects.md §4）；英文的規則一個字都不改。
-  if (subject === 'chinese') return checkZhQuestion(input);
+  if (subject === 'chinese') return checkZhQuestion(input, zhOptions);
   const L = ASSIST_LIMITS;
   const problems: AssistInputHit<AssistInputProblem>[] = [];
   const warnings: AssistInputHit<AssistInputWarning>[] = [];

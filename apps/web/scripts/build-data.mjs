@@ -17,6 +17,7 @@
  *   data/bank/topic-plan*.json             題庫的主題規劃（自組模擬考的主題鍵；可以不存在）
  *   data/sources.json                      題目來源登記（本站題庫與出版社的出處句、授權範圍、到期日；可以不存在＝只有本站題庫）
  *   data/publisher/{來源}/v1/…             出版社模考的正規化檔（gsat-pub/v1；可以不存在，docs/design/weak-paper.md §8.4）
+ *   data/zh-writing/prompts.json           國寫範文獨立頁的歷屆國寫題目（111–115 每年知性、情意各一；gsat-zh-writing-prompts/v1）
  *   （新增輸入路徑時，根目錄 vercel.json 的 ignoreCommand 要一起加，否則只改那個路徑的提交不會重新建置；
  *    Vercel 限制 ignoreCommand 最多 256 字，超過時部署一建立就失敗，路徑太多就改列上層目錄）
  *
@@ -43,6 +44,8 @@
  *                        規則在 scripts/lib/bank-paper-skills.mjs（docs/design/weak-paper.md §6.2）
  *   bank/sources.json    公開的來源登記（出處句、授權範圍、是否有效、到期日 ends_on；不含合約編號），
  *                        規則在 scripts/lib/item-sources.mjs（docs/design/weak-paper.md §8.3、§7.6）
+ *   zh-writing/prompts.json  國寫範文獨立頁的歷屆國寫題目（題本的題目、素材、引導問題與字數規定；沒有參考答案、評分原則或佳作）。
+ *                        原樣輸出（加 version），型別與守衛在 packages/shared/src/zh-writing-prompts.ts；Worker 另外打包同一份
  *
  * 前端對應的型別在 apps/web/src/data/vocab.ts、exams.ts、scoreScales.ts、bank.ts、src/features/writing/data.ts、
  * src/features/writing/bank/data.ts、src/features/mock/bank/pool.ts、src/features/mock/bank/paperSkills.ts；
@@ -139,6 +142,9 @@ const UNPUBLISH_FILE = path.join(DATA_DIR, 'unpublish.jsonl');
  */
 const SOURCES_FILE = process.env.GSAT_SOURCES_FILE ? path.resolve(process.env.GSAT_SOURCES_FILE) : path.join(DATA_DIR, 'sources.json');
 const PUBLISHER_DIR = process.env.GSAT_PUBLISHER_DIR ? path.resolve(process.env.GSAT_PUBLISHER_DIR) : path.join(DATA_DIR, 'publisher');
+/** 國寫範文獨立頁的歷屆國寫題目（docs/design/assistant-subjects.md「國寫範文」的「獨立頁」）：必須存在、格式要對。 */
+const ZH_WRITING_PROMPTS_FILE = path.join(DATA_DIR, 'zh-writing', 'prompts.json');
+const ZH_WRITING_PROMPTS_FORMAT = 'gsat-zh-writing-prompts/v1';
 /** 寫作題庫的 SVG 清理（版本雜湊用：清理規則改了，輸出就可能改變）。 */
 const SVG_SANITIZE_SCRIPT = path.join(REPO_ROOT, 'packages', 'shared', 'scripts', 'svg-sanitize.mjs');
 /** PDF 字型的缺字檢查（版本雜湊用：自組模擬考的組卷池依它判斷題本缺字的題組）。 */
@@ -1020,6 +1026,22 @@ function buildWriting(details, summaries) {
 // 主程式
 // ---------------------------------------------------------------------------
 
+/**
+ * 國寫範文獨立頁的歷屆國寫題目：粗略檢查格式與代號（逐欄的守衛在 shared 的 isZhWritingPromptFile，前端讀檔時用），原樣回傳。
+ * @returns {Record<string, unknown>}
+ */
+function buildZhWritingPrompts() {
+  const raw = readJson(ZH_WRITING_PROMPTS_FILE);
+  check(isObject(raw) && raw.format === ZH_WRITING_PROMPTS_FORMAT && Array.isArray(raw.prompts), `${relative(ZH_WRITING_PROMPTS_FILE)} 的格式不對`);
+  const ids = new Set();
+  for (const p of raw.prompts) {
+    check(isObject(p) && typeof p.id === 'string' && /^zh-1\d{2}-[12]$/.test(p.id) && !ids.has(p.id), `${relative(ZH_WRITING_PROMPTS_FILE)} 有一題的代號不對`);
+    ids.add(p.id);
+  }
+  check(ids.size >= 10, `${relative(ZH_WRITING_PROMPTS_FILE)} 只有 ${ids.size} 題`);
+  return raw;
+}
+
 function main() {
   const started = Date.now();
   assertInputsExist();
@@ -1060,6 +1082,7 @@ function main() {
     WRITING_BANK_SCRIPT,
     SVG_SANITIZE_SCRIPT,
     SCORE_SCALES_SCRIPT,
+    ZH_WRITING_PROMPTS_FILE,
     BANK_MOCK_POOL_SCRIPT,
     BANK_MOCK_THEMES_SCRIPT,
     BANK_MOCK_LETTERS_SCRIPT,
@@ -1106,6 +1129,8 @@ function main() {
   emit(PAPER_SKILLS_PATH, buildPaperSkills({ version, practice: bank.groups, writing: writingBank.index }));
   // 公開的來源登記（scripts/lib/item-sources.mjs，docs/design/weak-paper.md §8.3）：前端與 Worker 自己比對 ends_on。
   emit(SOURCES_PATH, publicSourceRegistry(sources.effective, version));
+  // 國寫範文獨立頁的歷屆國寫題目（packages/shared/src/zh-writing-prompts.ts 的 ZH_WRITING_PROMPTS_PATH）。
+  emit('zh-writing/prompts.json', { ...buildZhWritingPrompts(), version });
   assertNoOfficialTranslations(outputs, exams.officialTextsById);
   // D8 第 4 道（docs/design/bank-writing.md §6）：寫作檔的禁止鍵、答案提前外流、官方文字（和選題同一支比對函式）、未清理的 SVG。
   assertWritingBankOutputs(outputs, writingBank.corpus);

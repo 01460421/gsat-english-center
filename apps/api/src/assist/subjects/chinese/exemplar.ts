@@ -6,7 +6,7 @@
  *    4 台灣標準：字碼統一（ZH_TW_FORM_MAP）；簡體專用字 ≥ 3 個 → R3（付費重寫一次）。
  *    5 字數與格數（shared 的 zhExemplarLimits、zhSheetCells）：超過硬限制 → R2；最後一次超過 ≤ 10% 照顯示並加提醒、> 10% 退還；
  *      問題（一）最後一次仍超過只隱藏答案。少於目標下限的 60% 只計數。
- *    6 比賽指紋（contest.ts；題目本身的窗口不算）：段落或問題（一）命中 → R1；最後一次 → 命中的段落換成固定說明（hidden: contest）；
+ *    6 比賽指紋（contest.ts；題目本身的窗口不算，命中 ≥ 2 個窗口的題目區塊除外）：段落或問題（一）命中 → R1；最後一次 → 命中的段落換成固定說明（hidden: contest）；
  *      說明欄位命中換成固定說明。
  *    7 引文、8 套語、9 未經查證的說法、10 得獎字樣、12 等第句（samples.ts）：整句拿掉；段落拿完少於 15 字整段換成固定說明
  *      （hidden: trimmed；內容過濾擋下的段落是 hidden: filtered）。
@@ -206,9 +206,9 @@ export function postprocessZhExemplar(raw: ZhExemplarOutput, ctx: ZhExemplarCont
   }
   if (bodyChars < L.target.body[0] * 0.6) bump(checks, 'under_target');
 
-  // 第 6 步：比賽指紋（段落先串成一條流；問題（一）另外比）。
+  // 第 6 步：比賽指紋（段落先串成一條流；問題（一）另外比）。題目區塊的窗口不算，命中 ≥ 2 個窗口的區塊除外（contest.ts）。
   const contestSet = ctx.zh.contest;
-  const allowed = zhContestQuestionWindows(q);
+  const allowed = zhContestQuestionWindows(q, contestSet);
   const paraHits = zhContestParagraphHits(
     paras.map((p) => p.text),
     contestSet,

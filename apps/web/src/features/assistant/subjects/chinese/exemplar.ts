@@ -38,11 +38,12 @@ export interface ZhExemplarPointsInfo {
  * 確認面板的點數說明（同作文範文的 points.ts）：
  *   - 今天已經看過 3 篇（quota.assist.zh_exemplars；後端送不限篇數時沒有這一條）：停用；
  *   - 讀不到額度、管理員或不限點數：只說會用幾點；
- *   - 今天剩的點數不夠：停用；試用帳號另外說明國寫指導＋範文不能在同一天完成；
+ *   - 今天剩的點數不夠：停用；試用帳號另外說明國寫指導＋範文不能在同一天完成（國寫範文的獨立頁不需要國寫指導：guide false 時
+ *     一律是一般的「今天剩幾點」）；
  *   - 本月剩的點數不夠：停用；
  *   - 其他：會用幾點（今天還有幾點），另一行今天看過幾篇。
  */
-export function zhExemplarPointsInfo(quota: AiQuotaResponse | null, points: number = ZH_EXEMPLAR_POINTS): ZhExemplarPointsInfo {
+export function zhExemplarPointsInfo(quota: AiQuotaResponse | null, points: number = ZH_EXEMPLAR_POINTS, opts: { guide?: boolean } = {}): ZhExemplarPointsInfo {
   const daily = quota?.assist?.zh_exemplars ?? null;
   // 管理員與不限點數的等級沒有每日篇數上限（後端送 UNLIMITED）：不夾到 3 篇，也不因此停用。
   const dailyLimit = daily && !isUnlimited(daily.day_limit) ? Math.min(daily.day_limit, ASSIST_LIMITS.zhExemplarsPerDay) : null;
@@ -55,7 +56,7 @@ export function zhExemplarPointsInfo(quota: AiQuotaResponse | null, points: numb
   if (!isUnlimited(quota.points.day_limit) && dayLeft < points) {
     const guide = assistPoints('chinese', 'assist_analyze', { kind: 'zh_writing' });
     const text =
-      quota.tier === 'trial' && quota.points.day_limit < guide + points
+      opts.guide !== false && quota.tier === 'trial' && quota.points.day_limit < guide + points
         ? ZH_EXEMPLAR_COPY.trialShort(dayLeft, points, guide, quota.points.day_limit)
         : ZH_EXEMPLAR_COPY.dayShort(dayLeft, points);
     return { blocked: true, lines: [text] };

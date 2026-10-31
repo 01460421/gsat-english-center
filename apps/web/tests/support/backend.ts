@@ -7,6 +7,7 @@
  * 沒有登記的 /api、/auth 一律回統一格式的 404：瀏覽器會為它印一行 console error，collectErrors 就會抓到，
  * 新頁面多打了一支沒假造的 API 時測試會直接失敗，而不是默默通過。
  */
+import { readFileSync } from 'node:fs';
 import { expect, type Page, type Request } from '@playwright/test';
 import type {
   AdminHealthResponse,
@@ -36,6 +37,7 @@ import type {
   CreateAssistFollowupBody,
   CreateAssistReportBody,
   CreateExemplarSetBody,
+  CreateZhExemplarBody,
   ExemplarSetDetail,
   ExemplarSetSummary,
   FeaturesResponse,
@@ -45,8 +47,29 @@ import type {
   PublicUser,
   UpdateAssistQuestionBody,
   ZhAnalysisView,
+  ZhExemplarAccepted,
+  ZhExemplarListItem,
+  ZhExemplarListResponse,
+  ZhWritingPrompt,
 } from '@gsat/shared';
-import { AI_TASK_POINTS, ASSIST_LIMITS, assistCaseKindOf, assistPoints, isZhSection, zhShortPartLabels, type AiRefundReason } from '@gsat/shared';
+import {
+  AI_TASK_POINTS,
+  ASSIST_INPUT_PROBLEM_MESSAGES,
+  ASSIST_LIMITS,
+  assistCaseKindOf,
+  assistPoints,
+  checkAssistQuestion,
+  isZhSection,
+  isZhWritingPromptFile,
+  ZH_PASTE_PROBLEM_MESSAGES,
+  zhPasteLimitsProblem,
+  zhPasteQuestion,
+  zhShortPartLabels,
+  zhWritingPromptLabel,
+  zhWritingPromptQuestion,
+  type AiRefundReason,
+  type AssistInputProblem,
+} from '@gsat/shared';
 import { reportDetail as reportDetailFixture } from '../../src/features/assistant/testing/report';
 import {
   zhClassicalAnalysis,
@@ -529,9 +552,15 @@ export class FakeAssist {
   readonly photos = new Map<string, number[]>();
   private seq = 0;
 
+  /** 國寫範文的獨立頁建立的案例（案例 id → 來源；Worker 記在 ref_json）。 */
+  readonly zhStandalone = new Map<string, { via: 'past' | 'paste'; prompt_id: string | null }>();
+  /** 同一題的案例（去重鍵 → 案例 id；Worker 的 dedupe_key）。 */
+  private readonly zhDedupe = new Map<string, string>();
+
   constructor(
     backend: FakeBackend,
-    private readonly options: FakeAssistOptions = {},
+    /** 測試可以在中途改（例如第一篇失敗、重試時成功：把 zhExemplarFailure 拿掉）。 */
+    readonly options: FakeAssistOptions = {},
   ) {
     this.handlers = {
       // ?subject= 只列那一科、錯因次數也只算那一科；不帶時列全部，但錯因次數只算英文（docs/design/assistant-subjects.md §7.2）。
@@ -581,6 +610,15 @@ export class FakeAssist {
         }),
       'POST /api/assist/cases/:id/analyze': (call) => this.withCase(call, (c) => this.analyze(c)),
       'POST /api/assist/cases/:id/zh-exemplar': (call) => this.withCase(call, (c) => this.zhExemplar(c)),
+      // 國寫範文的獨立頁（assistant-subjects.md「國寫範文」的「獨立頁」）：歷屆題目、貼上題目、同一案例再一篇；我的國寫範文。
+      'POST /api/assist/zh-exemplars': (call) => this.zhExemplarStandalone(call.json as CreateZhExemplarBody),
+      // ?via=past 只列歷屆題目建立的案例（同 Worker）。
+      'GET /api/assist/zh-exemplars': (call) => {
+        const via = call.query.get('via');
+        if (via !== null && via !== 'past') return apiError(400, 'bad_request');
+        const items = this.zhExemplarItems().filter((i) => via === null || i.origin === via);
+        return ok({ items, next_cursor: null } satisfies ZhExemplarListResponse);
+      },
       'POST /api/assist/cases/:id/followups': (call) => this.withCase(call, (c) => this.followup(c, call.json as CreateAssistFollowupBody)),
       // 拍照（WP-A3）：照片只記張數（不解析 multipart）；轉錄排入佇列 → 輪詢完成。
       'POST /api/assist/cases/:id/photos': (call) =>
@@ -795,6 +833,147 @@ export class FakeAssist {
     return ok({ op_id: opId, case_id: c.id, turn_id: turn.id, status: 'queued', points: AI_TASK_POINTS.assist_zh_exemplar } satisfies AssistTaskAccepted, 202);
   }
 
+  /** 在案例上排一篇範文（每案例 2 篇：完成＋進行中；失敗的不算）。 */
+  private addZhExemplarTurn(c: AssistCaseDetail): Reply {
+    const counted = c.turns.filter((t) => t.kind === 'zh_exemplar' && t.status !== 'failed').length;
+    if (counted >= ASSIST_LIMITS.zhExemplarsPerCase) {
+      return { status: 429, json: { error: { code: 'assist_limit', message: 'e2e assist_limit', reason: 'zh_exemplars_per_case' } } };
+    }
+    const turn: AssistTurnView = { id: this.nextId('turn'), seq: c.turns.length + 1, kind: 'zh_exemplar', status: 'queued', created_at: nowSec() };
+    c.turns.push(turn);
+    const opId = this.nextId('op');
+    c.pending = { turn_id: turn.id, kind: 'zh_exemplar', op_id: opId, status: 'queued' };
+    c.updated_at = nowSec();
+    this.pendingLeft.set(c.id, this.options.pendingPolls ?? 1);
+    return ok({ op_id: opId, case_id: c.id, turn_id: turn.id, status: 'queued', points: AI_TASK_POINTS.assist_zh_exemplar } satisfies ZhExemplarAccepted, 202);
+  }
+
+  /** 案例已經有一篇範文正在產生：200 existing（不扣點）；進行中的是別的任務 → 409。沒有進行中回 null。 */
+  private inflightZhExemplar(c: AssistCaseDetail): Reply | null {
+    if (!c.pending) return null;
+    if (c.pending.kind !== 'zh_exemplar') return apiError(409, 'conflict');
+    return ok({ op_id: c.pending.op_id, case_id: c.id, turn_id: c.pending.turn_id, status: 'queued', points: AI_TASK_POINTS.assist_zh_exemplar, existing: true } satisfies ZhExemplarAccepted);
+  }
+
+  /**
+   * POST /api/assist/zh-exemplars（同 Worker 的形狀）：past 用歷屆題目檔（data/zh-writing/prompts.json）組題目；paste 跑國文貼上的
+   * 同一套檢查（shared 的 checkAssistQuestion，writingPaste；D8 與比賽語料指紋只有 Worker 有），被拒時 400 assist_input_invalid、
+   * field 是 prompt／material／limits、message 用這一頁的說法（ZH_PASTE_PROBLEM_MESSAGES）；同一題（代號，或貼上的區塊＋題型）
+   * 在同一個案例上再加一篇；case 是同一個案例再一篇。
+   */
+  private zhExemplarStandalone(body: CreateZhExemplarBody): Reply {
+    if (body.source === 'case') {
+      const c = this.cases.get(body.case_id);
+      if (!c) return apiError(404, 'not_found');
+      if (c.subject !== 'chinese' || c.kind !== 'zh_writing') return apiError(400, 'bad_request');
+      const inflight = this.inflightZhExemplar(c);
+      if (inflight) return inflight;
+      if (!this.zhStandalone.has(c.id) && c.status !== 'analyzed') return apiError(409, 'conflict');
+      return this.addZhExemplarTurn(c);
+    }
+    let key: string;
+    let section: 'zh_writing_reason' | 'zh_writing_emotion';
+    let question: AssistQuestionView;
+    let title: string;
+    let promptId: string | null = null;
+    if (body.source === 'past') {
+      const p = zhWritingPrompts().get(body.prompt_id);
+      if (!p) return apiError(400, 'bad_request');
+      key = `past:${p.id}`;
+      section = p.section;
+      promptId = p.id;
+      const q = zhWritingPromptQuestion(p);
+      question = zhQuestionView({ blocks: q.blocks, target_labels: [], format: 'writing' }, 'zh_writing', zhWritingPromptLabel(p));
+      title = `國寫範文・${p.year} 學測${p.section === 'zh_writing_reason' ? '知性' : '情意'}：${p.topic}`;
+    } else {
+      if (body.prompt.trim() === '') return zhInputInvalid('text_missing', 'prompt', null);
+      const problem = zhPasteLimitsProblem(body.section, body.limits);
+      if (problem) return { status: 400, json: { error: { code: 'bad_request', message: problem, field: 'limits' } } };
+      const pasted = zhPasteQuestion(body);
+      const check = checkAssistQuestion(pasted, 'chinese', { writingPaste: true });
+      if (!check.ok) {
+        const first = check.problems[0]!;
+        const m = /^blocks\[(\d+)\]\.text$/.exec(first.field);
+        const kind = m ? pasted.blocks[Number(m[1])]?.kind : undefined;
+        const field = kind === 'instructions' ? 'limits' : kind === 'passage' ? 'material' : 'prompt';
+        const ranges = first.start !== undefined && first.end !== undefined && kind ? [[first.start, first.end]] : null;
+        return zhInputInvalid(first.code as AssistInputProblem, field, ranges, ZH_PASTE_PROBLEM_MESSAGES[first.code]);
+      }
+      key = `paste:${body.section}:${JSON.stringify(check.value.blocks.map((b) => [b.kind, b.text]))}`;
+      section = body.section;
+      question = zhQuestionView({ blocks: check.value.blocks, target_labels: [], format: 'writing' }, 'zh_writing', '你貼的題目');
+      title = `國寫範文・你貼的題目：${body.prompt.trim().replace(/\s+/g, ' ').slice(0, 30)}`;
+    }
+    const existingId = this.zhDedupe.get(key);
+    const existing = existingId ? this.cases.get(existingId) : undefined;
+    if (existing) return this.inflightZhExemplar(existing) ?? this.addZhExemplarTurn(existing);
+    const now = nowSec();
+    const id = this.nextId('case');
+    const detail: AssistCaseDetail = {
+      id,
+      source: 'typed',
+      kind: 'zh_writing',
+      title,
+      section,
+      status: 'ready',
+      verdict: 'unknown',
+      item_count: 1,
+      wrong_count: 0,
+      understood: null,
+      error_codes: [],
+      skill_codes: [],
+      followups: 0,
+      created_at: now,
+      updated_at: now,
+      expires_at: now + 180 * 86_400,
+      trust: 'student',
+      question: { ...question, section: null },
+      doubt_kinds: [],
+      torn_with: null,
+      doubt: null,
+      hint_first: false,
+      note: null,
+      rating: null,
+      turns: [],
+      pending: null,
+      history_line: null,
+      flags: { d8_hidden: false, injection: false, safety: null },
+      subject: 'chinese',
+    };
+    this.cases.set(id, detail);
+    this.zhDedupe.set(key, id);
+    this.zhStandalone.set(id, { via: body.source, prompt_id: promptId });
+    return this.addZhExemplarTurn(detail);
+  }
+
+  /** 「我的國寫範文」：獨立頁建立的案例，加上學習助手裡已經有範文的國寫案例（新到舊）。 */
+  private zhExemplarItems(): ZhExemplarListItem[] {
+    const out: ZhExemplarListItem[] = [];
+    for (const c of [...this.cases.values()].reverse()) {
+      if (c.subject !== 'chinese' || c.kind !== 'zh_writing') continue;
+      const turns = c.turns.filter((t) => t.kind === 'zh_exemplar');
+      const standalone = this.zhStandalone.get(c.id);
+      if (!standalone && turns.length === 0) continue;
+      const done = turns.filter((t) => t.status === 'done').length;
+      const inflight = turns.filter((t) => t.status === 'queued' || t.status === 'running').length;
+      const latest = turns[turns.length - 1];
+      out.push({
+        case_id: c.id,
+        title: c.title,
+        origin: standalone ? standalone.via : 'assistant',
+        prompt_id: standalone?.prompt_id ?? null,
+        section: c.section === 'zh_writing_reason' || c.section === 'zh_writing_emotion' ? c.section : null,
+        exemplars: done,
+        remaining: Math.max(0, ASSIST_LIMITS.zhExemplarsPerCase - done - inflight),
+        latest: latest ? { turn_id: latest.id, status: latest.status, failure: latest.failure ?? null, created_at: latest.created_at } : null,
+        created_at: c.created_at,
+        updated_at: c.updated_at,
+        expires_at: c.expires_at,
+      });
+    }
+    return out;
+  }
+
   /** 轉錄（2 點）：要有照片、狀態 draft；排入佇列，輪詢幾次之後完成（或退還）。 */
   private ocr(c: AssistCaseDetail): Reply {
     if (c.pending || c.source !== 'photo' || c.status !== 'draft') return apiError(409, 'conflict');
@@ -969,6 +1148,25 @@ export class FakeAssist {
 
 function nowSec(): number {
   return Math.floor(Date.now() / 1000);
+}
+
+/** 國文貼上的檢查擋下（同 Worker：400 assist_input_invalid，reason 是問題代碼，field 是表單的欄位）。 */
+function zhInputInvalid(reason: AssistInputProblem, field: string, ranges: number[][] | null, message?: string): Reply {
+  return {
+    status: 400,
+    json: { error: { code: 'assist_input_invalid', message: message ?? ASSIST_INPUT_PROBLEM_MESSAGES[reason], reason, field, ...(ranges ? { ranges } : {}) } },
+  };
+}
+
+let zhPromptCache: Map<string, ZhWritingPrompt> | null = null;
+
+/** 歷屆國寫題目（repo 的 data/zh-writing/prompts.json；網站建置輸出的是同一份）。 */
+function zhWritingPrompts(): Map<string, ZhWritingPrompt> {
+  if (zhPromptCache) return zhPromptCache;
+  const raw: unknown = JSON.parse(readFileSync(new URL('../../../../data/zh-writing/prompts.json', import.meta.url), 'utf8'));
+  if (!isZhWritingPromptFile(raw)) throw new Error('data/zh-writing/prompts.json 的格式不對');
+  zhPromptCache = new Map(raw.prompts.map((p) => [p.id, p]));
+  return zhPromptCache;
 }
 
 /** 固定的解析內容（item）：題組有全篇結構，逐題各一塊；勾了「在兩個選項之間猶豫」時回覆那個疑問。 */

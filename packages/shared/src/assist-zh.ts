@@ -148,6 +148,11 @@ export const ZH_TEXT_LIMITS = {
   /** 科目文字：漢字（加上注音字元）至少 30 個、占可見字元至少 30%（§2.5）。 */
   subjectHanMin: 30,
   subjectHanRatio: 0.3,
+  /**
+   * 國寫範文頁的貼上（checkZhQuestion 的 writingPaste）：學生的題目與素材合計至少 10 個漢字（命題作文常常只有一兩行，
+   * 「以「我與一扇窗」為題，寫一篇文章…」不到 30 個漢字；學生已經自己選了國寫與題型，不必再用 30 字判斷科目）。
+   */
+  pasteWritingHanMin: 10,
 } as const;
 
 // ───────────────────────── 題型卡（§3.6） ─────────────────────────
@@ -1236,14 +1241,26 @@ function sortZhProblems(problems: AssistInputHit<AssistInputProblem>[]): AssistI
 /** 只提醒：只有字母的答案標記（「【答案】C」「答案：B」）。 */
 const ANSWER_LETTER_RE = /[【［[]\s*答案\s*[】］\]]\s*[(（]?\s*[A-E]\b|答案\s*[:：]\s*[(（]?\s*[A-E]\b/g;
 
+/** checkZhQuestion 的選項。 */
+export interface ZhQuestionCheckOptions {
+  /**
+   * 國寫範文頁的貼上（zh-writing-prompts.ts 的 zhPasteQuestion 組的題目；學生已經自己選了國寫與題型）：kind 是 instructions 的區塊
+   * 是本站寫的字數規定（學生填的數字），長度、科目與國寫任務字樣只看其他區塊（學生的題目與素材），否則結果會隨選填的字數欄位
+   * 改變（本站那一行有十幾個漢字，也有「文長」）。門檻：科目只看漢字比例（≥ 30%），長度改成漢字至少
+   * ZH_TEXT_LIMITS.pasteWritingHanMin 個（命題作文常常不到 30 個漢字）。
+   */
+  writingPaste?: boolean;
+}
+
 /**
  * 國文題目的檢查（§4.2；前端與 Worker 共用；英文的 checkAssistQuestion 一個字都不改，由 subject 分派到這裡）。
  * 形狀 → 正規化與遮個資（normalizeZhText，不用 NFKC）→ 長度 → 字元與標籤 → 內容規則（代寫、受保護樣式、答案或詳解）→
  * 科目文字 → 格式（國寫的任務字樣、片段長度）→ 要問的題（格式各自的上限）→ 作答與答案鍵。
  * 不含 D8 指紋（Worker 另外做，official_material）。失敗時 problems 依 ASSIST_INPUT_PROBLEMS 的優先順序排好。
  * 成功時 value 是正規化、遮過個資的題目，format 與 choice_mode 有填（學生沒選時用 guessZhFormat 的結果）。
+ * opts.writingPaste：見 ZhQuestionCheckOptions（只有國寫範文頁的貼上用；學習助手的貼上與確認照舊）。
  */
-export function checkZhQuestion(input: unknown): CheckResult<AssistStudentQuestion, AssistInputProblem> {
+export function checkZhQuestion(input: unknown, opts: ZhQuestionCheckOptions = {}): CheckResult<AssistStudentQuestion, AssistInputProblem> {
   const L = ASSIST_LIMITS;
   const T = ZH_TEXT_LIMITS;
   const problems: AssistInputHit<AssistInputProblem>[] = [];
@@ -1304,10 +1321,16 @@ export function checkZhQuestion(input: unknown): CheckResult<AssistStudentQuesti
   const keyIn = isRecord(input['known_key']) ? (input['known_key'] as Record<string, string>) : {};
 
   // 長度：全部區塊合計 20–6,000 字元；圖表描述 ≤ 1,500；你的答案 ≤ 300。
+  // 國寫範文頁的貼上：長度下限、科目與國寫任務字樣只看學生的題目與素材（本站寫的字數規定區塊不算；ZhQuestionCheckOptions）。
   const all = blocks.map((b) => b.text).join('\n');
+  const own = opts.writingPaste ? blocks.filter((b) => b.kind !== 'instructions').map((b) => b.text).join('\n') : all;
   const total = blocks.reduce((sum, b) => sum + b.text.length, 0);
+  // 貼上的國寫：先看是不是以中文為主（不是就只報科目，不報太短），再看漢字夠不夠。
+  const pasteNotZh = opts.writingPaste === true && own.trim() !== '' && zhHanRatio(own) < T.subjectHanRatio;
   if (all.trim() === '') problems.push({ code: 'text_missing', field: 'blocks' });
-  else if (visibleChars(all) < L.questionMinChars) problems.push({ code: 'text_too_short', field: 'blocks' });
+  else if (opts.writingPaste ? !pasteNotZh && zhScriptCount(own) < T.pasteWritingHanMin : visibleChars(all) < L.questionMinChars) {
+    problems.push({ code: 'text_too_short', field: 'blocks' });
+  }
   if (total > L.questionMaxChars) problems.push({ code: 'text_too_long', field: 'blocks' });
   const figureTotal = blocks.filter((b) => b.kind === 'figure').reduce((sum, b) => sum + b.text.length, 0);
   if (figureTotal > L.figureMaxChars) problems.push({ code: 'figure_too_long', field: 'blocks' });
@@ -1337,7 +1360,9 @@ export function checkZhQuestion(input: unknown): CheckResult<AssistStudentQuesti
 
   // 科目文字：漢字 ≥ 30 字，而且占可見字元 ≥ 30%（§2.5）。注音字元也算國文的字：選項印注音的字音題（「「戛」然而止：ㄍㄚ」）
   // 整題常不到 30 個漢字，注音只會出現在國文，不該讓它被當成別科。
-  if (all.trim() !== '' && (zhScriptCount(all) < T.subjectHanMin || zhHanRatio(all) < T.subjectHanRatio)) problems.push({ code: 'subject_mismatch', field: 'blocks' });
+  if (opts.writingPaste ? pasteNotZh : all.trim() !== '' && (zhScriptCount(all) < T.subjectHanMin || zhHanRatio(all) < T.subjectHanRatio)) {
+    problems.push({ code: 'subject_mismatch', field: 'blocks' });
+  }
 
   // 格式：學生選的優先，沒選用程式猜的（猜不到當成選擇題）；子模式同理。
   const guess = guessZhFormat(all, { answer: Object.values(answersIn)[0] ?? studentAnswer ?? undefined });
@@ -1348,7 +1373,7 @@ export function checkZhQuestion(input: unknown): CheckResult<AssistStudentQuesti
   // 國寫：題目要有任務字樣、漢字合計 ≤ 2,500；片段 ≤ 250 字（問題（一）的答案 ≤ 80 字）。
   const draftTarget = format === 'writing' && draft !== null ? ((rawDraftTarget as 'q1' | 'q2' | null | undefined) ?? 'q2') : undefined;
   if (format === 'writing') {
-    if (all.trim() !== '' && (!WRITING_TASK_RE.test(all) || hanCount(all) > T.writingPromptHan)) problems.push({ code: 'zh_no_task', field: 'blocks' });
+    if (own.trim() !== '' && (!WRITING_TASK_RE.test(own) || hanCount(all) > T.writingPromptHan)) problems.push({ code: 'zh_no_task', field: 'blocks' });
     if (draft !== null && countZhChars(draft).chars > (draftTarget === 'q1' ? T.draftQ1Chars : T.draftChars)) problems.push({ code: 'zh_draft_too_long', field: 'draft' });
   } else if (draft !== null) {
     return fail('blocks_invalid', 'draft');

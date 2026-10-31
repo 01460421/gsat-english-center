@@ -29,6 +29,7 @@ const PAGE_COMPONENTS: Record<PagePath, ComponentType> = {
   '/exams': lazy(() => import('./pages/ExamsPage')),
   '/mock': lazy(() => import('./pages/MockExamPage')),
   '/assistant': lazy(() => import('./features/assistant/AssistantHomePage')),
+  '/zh-writing': lazy(() => import('./features/assistant/zhWriting/ZhWritingPage')),
   '/settings': lazy(() => import('./pages/SettingsPage')),
   '/about': lazy(() => import('./pages/AboutPage')),
 };
@@ -91,6 +92,12 @@ const AssistantCasePage = lazy(() => import('./features/assistant/CasePage'));
 const AssistantReportPage = lazy(() => import('./features/assistant/ReportPage'));
 /** 加強卷（docs/design/weak-paper.md §3.2、§9.3）：依弱點選題組卷；不用 AI，學習助手暫停時照常能用（頁面自己判斷開關）。 */
 const AssistantPapersPage = lazy(() => import('./features/assistant/papers/PapersPage'));
+/**
+ * 國寫範文的獨立頁（docs/design/assistant-subjects.md「國寫範文」的「獨立頁」）：/zh-writing（選歷屆題目或貼上題目、確認、
+ * 我的國寫範文）與 /zh-writing/:id（輪詢與結果；id 是學習助手的案例 id）。開關關著時：已登入的人是唯讀模式（看與刪除之前的範文），
+ * 沒登入只顯示暫停（ZhWritingGate，不打學習助手的 API）。
+ */
+const ZhWritingResultPage = lazy(() => import('./features/assistant/zhWriting/ZhWritingResultPage'));
 
 export function App() {
   return (
@@ -133,6 +140,7 @@ export function App() {
         <Route path="assistant/papers" element={<AssistantPapersPage />} />
         <Route path="assistant/report" element={<AssistantReportPage />} />
         <Route path="assistant/report/:version" element={<AssistantReportPage />} />
+        <Route path="zh-writing/:id" element={<ZhWritingResultPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>

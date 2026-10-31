@@ -898,9 +898,9 @@ function postWriting(c: ZhCleaner, raw: ZhWritingOutput, q: AssistQuestionView):
     c.notice('example_removed', 'examples');
     c.count('demo_removed', fitted.removed);
   }
-  // 示範段的寫作規則（國寫範文設計 §10）：比賽指紋（題目本身的窗口不算）、比賽套語、要拿掉的引文任一命中就拿掉那一筆；
-  // 驚嘆號與半形標點就地修正；競賽詞彙、高頻人物、通用套語只計數。不重試（示範只是國寫指導的一小部分）。
-  const contest = { set: c.ctx.zh.contest, allowed: zhContestQuestionWindows(q) };
+  // 示範段的寫作規則（國寫範文設計 §10）：比賽指紋（題目本身的窗口不算；命中 ≥ 2 個窗口的題目區塊除外，contest.ts）、比賽套語、
+  // 要拿掉的引文任一命中就拿掉那一筆；驚嘆號與半形標點就地修正；競賽詞彙、高頻人物、通用套語只計數。不重試（示範只是國寫指導的一小部分）。
+  const contest = { set: c.ctx.zh.contest, allowed: zhContestQuestionWindows(q, c.ctx.zh.contest) };
   const guarded = fitted.kept.flatMap((e) => {
     if (e.cleaned === '' || e.cleaned === ZH_D8_HIDDEN_TEXT || e.cleaned === FILTERED_PLACEHOLDER) return [e];
     const text = zhDemoGuards(e.cleaned, q, contest, c.checks, { narrative: section === 'zh_writing_emotion' });

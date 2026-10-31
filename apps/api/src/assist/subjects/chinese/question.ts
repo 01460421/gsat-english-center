@@ -5,7 +5,9 @@
  *   1. checkAssistQuestion(input, 'chinese')（shared 的 checkZhQuestion：國文路徑的正規化不用 NFKC、規則另寫）；被拒時只回第一個
  *      問題（400 assist_input_invalid，附位置），不扣點。
  *   2. D8：每一區塊、簡答的作答、國寫片段先比英文集合（同英文），再比國文集合（同一區塊 ≥ 2 個不同窗口才算，subjects/chinese/d8.ts）；
- *      命中回 400 official_material（只回學生自己文字裡的位置）。
+ *      命中回 400 official_material（只回學生自己文字裡的位置）。國寫題目的每一區塊另外比比賽語料指紋（contest.ts：同一區塊
+ *      ≥ 2 個窗口）：命中回 400 zh_contest_material——得獎作文貼成題目或素材時，模型照抄的部分會被當成「題目本身」而不擋
+ *      （審查 2026-10-30）。學生的國寫片段不比（那是學生自己的文字，不會被當成題目而豁免）。
  *   3. 拍照確認的題目：非目標區塊剩下的 [[?]] 換成 [unclear]（同英文）。
  *   4. 要問的題（targets）：
  *        選擇  一題一筆；選項由程式從題目抽出（zhExtractOptions）；子模式學生選了就全部照用，沒選依每一題的文字猜
@@ -49,6 +51,7 @@ import { officialMaterialHits, type D8Fingerprints } from '../../../ai/d8';
 import { detectInjection } from '../../../ai/filter';
 import { ApiError } from '../../../errors';
 import { problemMessage, studentQuestionTitle, type BuiltCase } from '../../sources';
+import { zhContestInputHits } from './contest';
 import { zhOfficialMaterialHits, type ZhFingerprints } from './d8';
 
 /** 國文的題目（建立貼上的案例、確認題目共用）。 */
@@ -177,9 +180,15 @@ function questionLabels(q: AssistStudentQuestion): string[] {
 
 /**
  * 檢查並組成國文的題目（見檔頭）。raw 是前端送來的 AssistStudentQuestion（未檢查）；fp、zh 是英文與國文的 D8 指紋。
+ * opts.writingPaste：國寫範文頁的貼上（shared 的 ZhQuestionCheckOptions：本站寫的字數規定區塊不算進長度、科目與任務字樣）。
  */
-export function zhStudentQuestion(raw: unknown, fp: D8Fingerprints, zh: ZhFingerprints, opts: { origin?: 'typed' | 'photo' } = {}): ZhBuiltQuestion {
-  const checked = checkAssistQuestion(raw, 'chinese');
+export function zhStudentQuestion(
+  raw: unknown,
+  fp: D8Fingerprints,
+  zh: ZhFingerprints,
+  opts: { origin?: 'typed' | 'photo'; writingPaste?: boolean } = {},
+): ZhBuiltQuestion {
+  const checked = checkAssistQuestion(raw, 'chinese', { writingPaste: opts.writingPaste === true });
   if (!checked.ok) {
     const p = checked.problems[0]!;
     throw invalid(p.code, p.field, p.start !== undefined && p.end !== undefined ? [[p.start, p.end]] : undefined);
@@ -203,6 +212,13 @@ export function zhStudentQuestion(raw: unknown, fp: D8Fingerprints, zh: ZhFinger
 
   const format = question.format ?? 'choice';
   const kind = zhKindOfFormat(format);
+  // 國寫題目：每一區塊比比賽語料指紋（同一區塊 ≥ 2 個窗口；見檔頭第 2 點）。
+  if (kind === 'zh_writing') {
+    question.blocks.forEach((b, i) => {
+      const ranges = zhContestInputHits(b.text, zh.contest);
+      if (ranges.length > 0) throw invalid('zh_contest_material', `blocks[${i}].text`, ranges);
+    });
+  }
   const rawMode = typeof raw === 'object' && raw !== null ? (raw as Record<string, unknown>)['choice_mode'] : undefined;
   const explicitMode = (ZH_CHOICE_MODES as readonly unknown[]).includes(rawMode) ? (rawMode as ZhChoiceMode) : null;
   const targets =

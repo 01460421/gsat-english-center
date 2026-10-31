@@ -148,7 +148,7 @@ describe('說明與開關', () => {
     const table = within(main).getByRole('table');
     expect(within(table).getByRole('row', { name: new RegExp(`學習助手國文：國寫範文.整篇 AI 示範.*${AI_TASK_POINTS.assist_zh_exemplar} 點`) })).toBeInTheDocument();
     expect(
-      within(main).getByText(`國寫範文每天最多 ${ASSIST_LIMITS.zhExemplarsPerDay} 篇、同一題最多 ${ASSIST_LIMITS.zhExemplarsPerCase} 篇（要先看過那一題的國寫指導）。`),
+      within(main).getByText(`國寫範文每天最多 ${ASSIST_LIMITS.zhExemplarsPerDay} 篇、同一題最多 ${ASSIST_LIMITS.zhExemplarsPerCase} 篇（在國寫範文頁直接選題或貼上題目，或在學習助手看過國寫指導之後）。`),
     ).toBeInTheDocument();
   });
 

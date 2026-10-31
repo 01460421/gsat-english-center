@@ -307,7 +307,7 @@ function AboutAi({ quota }: { quota: AiQuotaResponse | null }) {
         )}
         {chinese?.exemplar === true && (
           <li className="ml-5 list-disc">
-            國寫範文每天最多 {ASSIST_LIMITS.zhExemplarsPerDay} 篇、同一題最多 {ASSIST_LIMITS.zhExemplarsPerCase} 篇（要先看過那一題的國寫指導）。
+            國寫範文每天最多 {ASSIST_LIMITS.zhExemplarsPerDay} 篇、同一題最多 {ASSIST_LIMITS.zhExemplarsPerCase} 篇（在國寫範文頁直接選題或貼上題目，或在學習助手看過國寫指導之後）。
           </li>
         )}
         <li className="ml-5 list-disc">台灣時間 00:00 重置；{refundText}失敗會全額退還點數。</li>

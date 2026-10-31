@@ -1,6 +1,7 @@
 /**
  * 國文的呼叫輸入（docs/design/assistant-subjects.md §3.5、§3.8、§6.1）：解析的 user 訊息、追問的三個 content block、轉錄、國寫範文。
- * 範本版本 assist-zh-user@1、assist-zh-followup-user@1、assist-zh-ocr-user@1、assist-zh-exemplar-user@2（prompts/assist-zh.ts、assist-zh-ocr.ts）。
+ * 範本版本 assist-zh-user@1、assist-zh-followup-user@1、assist-zh-ocr-user@1、assist-zh-exemplar-user@2（沒有國寫指導的獨立頁是
+ * assist-zh-exemplar-standalone-user@1；prompts/assist-zh.ts、assist-zh-ocr.ts）。
  * 英文的 src/assist/requests.ts 一個字都不改：兩邊由 subjects/index.ts 依科目分派。
  *
  *   - 沿用現有的結構標籤，不加新標籤：<task>、<student_provided_question>、<student_text role="answer|draft|doubt|question">、
@@ -42,6 +43,7 @@ import {
   assistZhSchema,
   assistZhSystemText,
   ZH_ANALYZE_TEMPLATE_VERSIONS,
+  ZH_EXEMPLAR_STANDALONE_TEMPLATE_VERSION,
   ZH_EXEMPLAR_TEMPLATE_VERSION,
   ZH_FOLLOWUP_TEMPLATE_VERSION,
 } from '../../../ai/prompts/assist-zh';
@@ -360,10 +362,13 @@ export const ZH_EXEMPLAR_DIGEST_CHARS = 1_000;
 export interface ZhExemplarRequest {
   /** 案例存的題目（全部區塊：素材、圖表文字、引導問題；不含學生的段落）。 */
   question: Pick<AssistQuestionView, 'blocks'>;
-  /** 題型（最新一次國寫指導的 section；看不出來時由 run.ts 決定）。 */
+  /** 題型（最新一次國寫指導的 section；看不出來時由 run.ts 決定；獨立頁的案例是學生選或歷屆題目的題型）。 */
   section: ZhExemplarSection;
-  /** 前一次國寫指導的摘要（digest.ts 的 zhAnalysisDigest，≤ 1,000 字）。 */
-  digest: string;
+  /**
+   * 前一次國寫指導的摘要（digest.ts 的 zhAnalysisDigest，≤ 1,000 字）。獨立頁的案例沒有國寫指導時是 null：不送 <analysis_digest>，
+   * <task> 多一行請模型自己從題目找出要件（範本 assist-zh-exemplar-standalone-user@1；系統提示不變）。
+   */
+  digest: string | null;
   /** 國寫指導有沒有問題（一）（知性而且有，才要寫問題（一））。 */
   hasQ1: boolean;
   limits: ZhExemplarLimits;
@@ -406,8 +411,15 @@ export function zhExemplarBodyAim(L: ZhExemplarLimits): { chars: [number, number
   return { chars: [Math.max(0, Math.min(lo0, hi - (hi0 - lo0))), hi], paragraphs };
 }
 
-/** 國寫範文的 <task> 各行（網站寫的；只有程式產生的值）。 */
-export function zhExemplarTaskLines(r: Pick<ZhExemplarRequest, 'question' | 'section' | 'hasQ1' | 'limits'>): string[] {
+/**
+ * 沒有國寫指導（獨立頁）時 <task> 多的一行：系統提示說要照 <analysis_digest> 的要件與大綱寫、要件對照也對著它，這裡改成自己從題目
+ * 找出要件。英文寫（同其他 <task> 行）；<task> 整段會經過 neutralizeTags，所以標籤名稱不加角括號。
+ */
+export const ZH_EXEMPLAR_NO_DIGEST_LINE =
+  "No analysis_digest is given (the student has not asked for the website's guidance on this task): work out the task's requirements yourself from student_provided_question (what each question asks, its key words and the parts it requires), then answer every one of them; coverage maps each requirement you found to the paragraph that answers it.";
+
+/** 國寫範文的 <task> 各行（網站寫的；只有程式產生的值）。沒有國寫指導時最後多一行 ZH_EXEMPLAR_NO_DIGEST_LINE。 */
+export function zhExemplarTaskLines(r: Pick<ZhExemplarRequest, 'question' | 'section' | 'hasQ1' | 'limits'> & { digest?: string | null }): string[] {
   const lines = [`Subject: Chinese (國文). Output: one model answer for a 國寫 task (${r.section}). Never write a grade or a score.`];
   const L = r.limits;
   const aim = zhExemplarBodyAim(L);
@@ -436,13 +448,18 @@ export function zhExemplarTaskLines(r: Pick<ZhExemplarRequest, 'question' | 'sec
   }
   const title = zhExemplarTitleRule(r.question);
   lines.push(title === null ? 'No title.' : title === 'own' ? 'Write a title of at most 12 characters.' : `Title given: 「${title.title.replace(/[「」]/gu, '')}」`);
+  if (r.digest === null) lines.push(ZH_EXEMPLAR_NO_DIGEST_LINE);
   return lines;
 }
 
-/** 國寫範文的 user 訊息：<task>、<student_provided_question>（全部區塊）、<analysis_digest>。不送學生的段落、疑問或錯因。 */
+/**
+ * 國寫範文的 user 訊息：<task>、<student_provided_question>（全部區塊）、<analysis_digest>（沒有國寫指導時不送）。不送學生的段落、
+ * 疑問或錯因。
+ */
 export function zhExemplarUserText(r: ZhExemplarRequest): string {
-  const digest = [...r.digest].slice(0, ZH_EXEMPLAR_DIGEST_CHARS).join('');
-  return [taskBlock(zhExemplarTaskLines(r)), block('student_provided_question', zhQuestionBody(r.question)), block('analysis_digest', digest)].join('\n');
+  const parts = [taskBlock(zhExemplarTaskLines(r)), block('student_provided_question', zhQuestionBody(r.question))];
+  if (r.digest !== null) parts.push(block('analysis_digest', [...r.digest].slice(0, ZH_EXEMPLAR_DIGEST_CHARS).join('')));
+  return parts.join('\n');
 }
 
 export function zhExemplarCallInput(tc: TaskConfig, r: ZhExemplarRequest): ClaudeCallInput {
@@ -454,7 +471,7 @@ export function zhExemplarCallInput(tc: TaskConfig, r: ZhExemplarRequest): Claud
     system: assistZhExemplarSystemText(),
     schema: assistZhExemplarSchema,
     content: zhExemplarUserText(r),
-    templateVersion: ZH_EXEMPLAR_TEMPLATE_VERSION,
+    templateVersion: r.digest === null ? ZH_EXEMPLAR_STANDALONE_TEMPLATE_VERSION : ZH_EXEMPLAR_TEMPLATE_VERSION,
   };
 }
 

@@ -17,6 +17,7 @@
  *     解析時判定科目不符的退還說明，以及「用同一份題目問另一部分」。
  *   - 科目登記表的 CaseExtras（選填，英文沒有）放在解析之後、「回報 AI 內容」之前：國文的國寫案例是「看一篇 AI 示範」
  *     （國寫範文設計 §8）。範文的進度列放在那一塊（頁首只放解析與轉錄的進度），寫好或失敗時常駐的 live region 照樣唸出來。
+ *     國寫範文的獨立頁送出的題目還沒有國寫指導時，解析那一欄多一行說明與連結：示範在 /zh-writing/:id。
  */
 import {
   PUBLISHER_ASSIST_ENDED_TEXT,
@@ -48,12 +49,13 @@ import { UnderstoodBar } from './components/UnderstoodBar';
 import { deleteAssistCase, startAssistAnalyze } from './lib/assistApi';
 import { assistRefundMessage } from './lib/errors';
 import { useAssistCasePoller, useAssistErrorView } from './lib/pollers';
-import { followupTurns, latestAnalysis, previewFromView } from './lib/view';
+import { exemplarTurns, followupTurns, latestAnalysis, previewFromView } from './lib/view';
 import { caseSubject, webSubject } from './subjects';
 import { ZH_COPY, ZH_EXEMPLAR_COPY, ZH_FOLLOWUP_PLACEHOLDER } from './subjects/chinese/copy';
 import { zhCaseTag, zhClassicalCase } from './subjects/chinese/caseTag';
 import { zhExemplarHeadingId } from './subjects/chinese/ZhExemplarView';
 import { useAssistSubjects } from './subjects/useAssistSubjects';
+import { ZH_WRITING_COPY, zhWritingHref } from './zhWriting/labels';
 import { APP_NAME } from '../../modules';
 
 function sourceNote(detail: AssistCaseDetail): string | null {
@@ -284,6 +286,17 @@ function CaseView({ detail, poller }: { detail: AssistCaseDetail; poller: Return
                 繼續拍照與確認
               </Link>
             )}
+          </p>
+        </Notice>
+      )}
+      {/* 國寫範文的獨立頁送出的題目（還沒有國寫指導）：示範在 /zh-writing/:id（這裡的範文那一塊要等國寫指導之後才出現）。 */}
+      {!analysis && subject === 'chinese' && detail.kind === 'zh_writing' && exemplarTurns(detail.turns).length > 0 && (
+        <Notice>
+          <p data-testid="zh-writing-case-notice">
+            {ZH_WRITING_COPY.caseNotice}
+            <Link to={zhWritingHref(detail.id)} className="ml-1 font-medium text-primary underline underline-offset-2">
+              {ZH_WRITING_COPY.caseNoticeLink}
+            </Link>
           </p>
         </Notice>
       )}
