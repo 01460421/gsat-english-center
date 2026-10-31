@@ -145,9 +145,10 @@ export interface AssistTaskSize {
  *   追問           5,000、輸入 12,000、90 秒（上下文不加 5 分鐘快取標記，§3.5）
  *   國寫範文       20,000、輸入 13,500、240 秒、effort AI_EFFORT_ZH_EXEMPLAR（high）。2026-10-31 由 14,000、AI_EFFORT_ASSIST 改來
  *                  （範文品質：提示要模型先構思再寫，high 的思考比 medium 長）：「每欄寫滿」約 5.2k tokens，占 26%，其餘留給思考。
- *                  成本（估計，同國寫範文設計 §6 的算法）：冷快取一篇＝系統約 3.3k × 1 小時寫入＋題目約 1.3–2k × 輸入＋可見約 3k 與
- *                  思考約 7k（medium 的估計是 4k）× 輸出 ≈ US$0.23，重寫 10–15% 後約 0.26–0.27。8 點時每點 0.033–0.034，超過
- *                  WORST_USD_PER_POINT（0.0271）；10 點時 0.026–0.027，所以點數改 10（試用帳號每天 10 點仍然看得了一篇）。
+ *                  成本（估計，同國寫範文設計 §6 的算法）：冷快取一篇＝系統約 4.0k（同日第二輪；第一版 3.3k）× 1 小時寫入＋題目約
+ *                  1.3–2k × 輸入＋可見約 3k 與思考約 7k（medium 的估計是 4k）× 輸出 ≈ US$0.24，重寫 10–15% 後約 0.26–0.28。8 點時
+ *                  每點 0.033–0.035，超過 WORST_USD_PER_POINT（0.0271）；10 點時 0.026–0.028（上緣略高於門檻；系統提示命中快取時
+ *                  0.023–0.024），所以點數改 10（試用帳號每天 10 點仍然看得了一篇），第 14 天依實測重算。
  * 點數一律由 shared 的 assistPoints 算（前端顯示、預扣同一份常數）；國寫範文是 AI_TASK_POINTS.assist_zh_exemplar（10 點）。
  */
 export const ZH_TASK_SIZES = {
@@ -338,7 +339,8 @@ export function taskConfig(task: AiTask, config: AppConfig, size?: AssistTaskSiz
         target: { kind: 'assist_turn' },
         timeoutMs: t.timeoutMs,
         maxRetries: SDK_MAX_RETRIES,
-        // 系統提示約 3.3k＋題目（最長 6,000 字約 7.8k）＋國寫指導摘要 ≤ 1.3k＋<task>（預扣＝13,500 × 1 小時快取寫入單價＋20,000 × 輸出單價）。
+        // 系統提示約 4.0k（2026-10-31 第二輪；第一版 3.3k）＋題目（最長 6,000 字約 7.8k）＋國寫指導摘要 ≤ 1.3k＋<task> 0.3k ≈ 13.4k
+        // （預扣＝13,500 × 1 小時快取寫入單價＋20,000 × 輸出單價）。
         inputTokensEstimate: t.input,
         calls: [{ role: 'writer', model: models.default, effort: effort.zhExemplar, maxTokens: t.maxTokens, framework: 'exemplar', systemCacheTtl: '1h' }],
         family: ASSIST_ZH_EXEMPLAR_FAMILY,

@@ -210,6 +210,37 @@ describe('系統提示與請求', () => {
     for (const old of ['a strong senior-high student', 'A body paragraph: (1)', 'at most one metaphor', 'at most one parallel set', 'no exclamation marks', 'at most one semicolon']) {
       expect(system, old).not.toContain(old);
     }
+    // 同日第二輪（盲評的缺點寫成檢核，不是新的模板）：問題（一）、知性、情意各自的檢核，輸出前以嚴格閱卷者的眼光重讀一次。
+    for (const want of [
+      'every key word, guiding question and named consideration (other reasons, a limit, how to choose) must be answered in substance',
+      'name the two angles most students would take',
+      'claim, example, concession, conclusion is not a default',
+      "Cover every point asked, in the question's order",
+      'including its deeper layer',
+      'Check every detail of the material you use against the text',
+      'Do not open with a quotation or a list of the material\'s examples',
+      'include the case only your claim explains',
+      'Never raise a distinction you then drop',
+      'Your own example: one precise moment, preferably one in which you chose',
+      'do not resolve it in one neat clause',
+      'with a criterion (when holding back is a fair limit, when it is an excuse)',
+      "The close answers the prompt's last question concretely",
+      'Fix the real properties of the carried image',
+      'The turn has a cause inside the scene',
+      'never a coincidence (恰好)',
+      'Show before you claim',
+      'If the prompt asks you to imagine, give the imagined world concrete images of its own',
+      'End on a concrete image or action that carries the insight',
+      'Do not explain the image (…大概也是這樣), add a vow (往後我會…), end on a maxim (與其…不如…)',
+      'one image per idea, never mixed',
+      'Do not announce the structure with transitions',
+      'Avoid stock moves such as 那一瞬間…彷彿回到, 我愣住了',
+      'Before you output, reread the answer as a strict marker and fix what fails',
+    ]) {
+      expect(system, want).toContain(want);
+    }
+    // 檢核不是模板：段落仍然沒有固定的步驟或段數規定以外的格式。
+    expect(system).not.toMatch(/\(1\) the first sentence is the claim|first sentence (?:is|must be) the claim/u);
     // 國寫指導的示範段也不寫引號對話；附段落的檢核提醒對話要改成敘述。
     const writing = assistZhSystemText('zh_writing');
     expect(writing).toContain('No quoted dialogue (a 國寫 answer is an essay, not fiction)');
