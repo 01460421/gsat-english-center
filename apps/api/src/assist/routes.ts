@@ -11,7 +11,7 @@
  *   POST   /cases/{id}/analyze            解析（6 點起；共用快取命中 0 點、回 200）→ 202                AI 核准＋開關
  *   POST   /cases/{id}/followups          追問（3 點）→ 202                                              AI 核准＋開關
  *   POST   /cases/{id}/zh-exemplar        國寫範文（8 點；國文國寫案例、國寫指導完成後）→ 202             AI 核准＋國寫範文開關
- *   GET    /zh-exemplars?cursor=          「我的國寫範文」（獨立頁建立的案例＋有範文的國寫案例；新到舊，每頁 20）    登入
+ *   GET    /zh-exemplars?cursor=&via=     「我的國寫範文」（獨立頁的案例＋有範文的國寫案例；新到舊，每頁 20；via=past 只列歷屆題目）  登入
  *   POST   /zh-exemplars                  國寫範文的獨立頁：歷屆題目／貼上題目／同一案例再一篇（8 點）→ 202     AI 核准＋國寫範文開關
  *   POST   /cases/{id}/photos?ord=1|2     題目照片（multipart，欄位 photo；只限拍照的題目、draft）        AI 核准＋拍照開關（WP-A3）
  *   DELETE /cases/{id}/photos             刪掉這一題的照片（轉錄進行中 409）                             登入（WP-A3）
@@ -216,6 +216,8 @@ const REJECTION_EVENTS: Readonly<Record<string, string>> = {
   official_material: 'assist_d8_input',
   official_like: 'assist_official_like',
   subject_mismatch: 'assist_subject_mismatch',
+  // 國寫題目的區塊和比賽語料（得獎作文）有一長段相同（subjects/chinese/contest.ts）。
+  zh_contest_material: 'assist_zh_contest_input',
 };
 
 /**
@@ -997,7 +999,9 @@ assistRoutes.get('/zh-exemplars', async (c) => {
   const user = await sessionUser(c);
   const now = nowSeconds();
   const cursor = decodeCursor(c.req.query('cursor'));
-  const rows = await listZhExemplarCases(c.env.DB, user.id, now, cursor, CASE_PAGE_SIZE + 1);
+  const viaRaw = c.req.query('via');
+  if (viaRaw !== undefined && viaRaw !== 'past') throw new ApiError(400, 'bad_request', 'via 只能是 past');
+  const rows = await listZhExemplarCases(c.env.DB, user.id, now, cursor, CASE_PAGE_SIZE + 1, viaRaw === 'past' ? 'past' : null);
   const page = rows.slice(0, CASE_PAGE_SIZE);
   const last = page[page.length - 1];
   const body: ZhExemplarListResponse = { items: page.map(toZhExemplarListItem), next_cursor: rows.length > CASE_PAGE_SIZE && last ? encodeCursor(last) : null };

@@ -5,17 +5,20 @@
  *
  *   歷屆題目   打包的 src/generated/zh-writing-prompts.json（build-writing-prompts.mjs 由 data/zh-writing/prompts.json 複製）；
  *              前端只送代號，題目文字由伺服器端決定。讀檔時用 shared 的 isZhWritingPromptFile 再檢查一次，不對就當成沒有（503）。
- *   建立案例   歷屆題目與貼上的題目都走國文貼上的同一套檢查（question.ts 的 zhStudentQuestion：國文官方 D8 的窗口、答案區、注入、
- *              長度）；案例是 source 'typed'、trust 'student'、kind 'zh_writing'、status 'ready'（沒有國寫指導，學生之後也可以在
+ *   建立案例   歷屆題目與貼上的題目都走國文貼上的同一套檢查（question.ts 的 zhStudentQuestion：國文官方 D8 的窗口、比賽語料指紋、
+ *              答案區、注入、長度；貼上的另外用 writingPaste：本站寫的字數規定區塊不算進長度、科目與任務字樣，被拒時的訊息用
+ *              shared 的 ZH_PASTE_PROBLEM_MESSAGES）；案例是 source 'typed'、trust 'student'、kind 'zh_writing'、status 'ready'（沒有國寫指導，學生之後也可以在
  *              學習助手對它要國寫指導），section 是學生選（或歷屆題目）的題型。ref_json 記 origin 'zh_exemplar'、via（past／paste）、
  *              歷屆題目的代號、題型與學生填的字數規定（範文的 consumer 從這裡讀，不靠國寫指導）。
  *   去重       同一位使用者、同一題（歷屆題目的代號，或貼上的題目正規化後的區塊與題型）在 180 天內只有一個案例：再送一次就在那個
  *              案例上再加一篇（每案例最多 2 篇）；那個案例有一篇正在產生時回那一篇（不另外扣點）。
- *   列表       「我的國寫範文」：這個頁面建立的案例，加上學習助手裡已經有範文的國寫案例（新到舊，游標同案例列表）。
+ *   列表       「我的國寫範文」：這個頁面建立的案例，加上學習助手裡已經有範文的國寫案例（新到舊，游標同案例列表）。?via=past 只列
+ *              歷屆題目建立的案例（選題分頁標出每一題看過幾篇；同一題 180 天內只有一個案例，所以最多就是題目數，不受第一頁 20 筆限制）。
  */
 import {
   AI_REFUND_REASONS,
   ASSIST_LIMITS,
+  ZH_PASTE_PROBLEM_MESSAGES,
   isZhExemplarSection,
   isZhWritingPromptFile,
   zhPasteLimitsProblem,
@@ -163,9 +166,10 @@ export async function zhPastCase(promptId: string, fp: D8Fingerprints, zh: ZhFin
 const PASTE_FIELD_OF_KIND: Readonly<Record<string, string>> = { instructions: 'limits', passage: 'material', question: 'prompt' };
 
 /**
- * 貼上的題目 → 案例：題目不能空白、字數規定的範圍（shared 的 zhPasteLimitsProblem）→ 組成題目區塊（zhPasteQuestion）→ 國文貼上的
- * 檢查（D8 窗口、答案區、注入、長度；被拒時 400 assist_input_invalid，同學習助手的貼上；field 換成 prompt／material／limits，
- * ranges 是那一欄正規化後的位置）。去重鍵是正規化後的區塊與題型。
+ * 貼上的題目 → 案例：題目不能空白、字數規定的範圍與組合（shared 的 zhPasteLimitsProblem）→ 組成題目區塊（zhPasteQuestion）→ 國文貼上的
+ * 檢查（writingPaste；D8 窗口、比賽語料指紋、答案區、注入、長度；被拒時 400 assist_input_invalid，同學習助手的貼上；field 換成
+ * prompt／material／limits，ranges 是那一欄正規化後的位置，message 用這一頁的說法）。去重鍵是正規化後的區塊與題型。
+ * 全部在預扣之前（routes.ts）。
  */
 export async function zhPasteCase(input: ZhExemplarPasteInput, fp: D8Fingerprints, zh: ZhFingerprints): Promise<ZhStandaloneCase> {
   if (input.prompt.trim() === '') throw new ApiError(400, 'assist_input_invalid', problemMessage('text_missing'), { reason: 'text_missing', field: 'prompt' });
@@ -174,11 +178,15 @@ export async function zhPasteCase(input: ZhExemplarPasteInput, fp: D8Fingerprint
   const pasted = zhPasteQuestion(input);
   let s: ReturnType<typeof zhStudentQuestion>;
   try {
-    s = zhStudentQuestion(pasted, fp, zh);
+    s = zhStudentQuestion(pasted, fp, zh, { writingPaste: true });
   } catch (err) {
-    const m = err instanceof ApiError && typeof err.detail.field === 'string' ? /^blocks\[(\d+)\]\.text$/.exec(err.detail.field) : null;
+    if (!(err instanceof ApiError)) throw err;
+    const m = typeof err.detail.field === 'string' ? /^blocks\[(\d+)\]\.text$/.exec(err.detail.field) : null;
     const kind = m ? pasted.blocks[Number(m[1])]?.kind : undefined;
-    if (err instanceof ApiError && kind && PASTE_FIELD_OF_KIND[kind]) throw new ApiError(err.status, err.code, err.message, { ...err.detail, field: PASTE_FIELD_OF_KIND[kind] });
+    const field = kind ? PASTE_FIELD_OF_KIND[kind] : undefined;
+    const reason = typeof err.detail.reason === 'string' ? err.detail.reason : null;
+    const message = (err.code === 'assist_input_invalid' && reason ? ZH_PASTE_PROBLEM_MESSAGES[reason as keyof typeof ZH_PASTE_PROBLEM_MESSAGES] : undefined) ?? err.message;
+    if (field || message !== err.message) throw new ApiError(err.status, err.code, message, { ...err.detail, ...(field ? { field } : {}) });
     throw err;
   }
   if (s.kind !== 'zh_writing') throw new ApiError(400, 'bad_request', '這不是國寫的題目');
@@ -212,7 +220,7 @@ const LATEST = (col: string) => `(SELECT ${col} FROM assist_turns t WHERE ${EXEM
 
 /**
  * 「我的國寫範文」：國文的國寫案例，而且是這個頁面建立的（ref_json.origin）或已經有範文的 turn（學習助手裡要過的）。
- * 新到舊（更新時間＋id 的游標，同案例列表）；?1 user ?2 now ?3 ?4 游標 ?5 筆數。
+ * 新到舊（更新時間＋id 的游標，同案例列表）；?1 user ?2 now ?3 ?4 游標 ?5 筆數 ?6 只列這個頁面哪一種來源建立的（null＝全部）。
  */
 const LIST_ZH_EXEMPLAR_CASES = `SELECT c.id, c.title, c.section, c.ref_json, c.created_at, c.updated_at, c.expires_at,
     (SELECT COUNT(*) FROM assist_turns t WHERE ${EXEMPLAR_TURN} AND t.status = 'done') AS done_count,
@@ -223,6 +231,7 @@ const LIST_ZH_EXEMPLAR_CASES = `SELECT c.id, c.title, c.section, c.ref_json, c.c
   WHERE c.user_id = ?1 AND c.expires_at > ?2 AND c.kind = 'zh_writing'
     AND COALESCE(json_extract(c.ref_json, '$.subject'), 'english') = 'chinese'
     AND (json_extract(c.ref_json, '$.origin') = '${ZH_STANDALONE_ORIGIN}' OR EXISTS (SELECT 1 FROM assist_turns t WHERE ${EXEMPLAR_TURN}))
+    AND (?6 IS NULL OR (json_extract(c.ref_json, '$.origin') = '${ZH_STANDALONE_ORIGIN}' AND json_extract(c.ref_json, '$.via') = ?6))
     AND (?3 IS NULL OR c.updated_at < ?3 OR (c.updated_at = ?3 AND c.id < ?4))
   ORDER BY c.updated_at DESC, c.id DESC
   LIMIT ?5`;
@@ -243,10 +252,17 @@ export interface ZhExemplarCaseRow {
   latest_created_at: number | null;
 }
 
-export async function listZhExemplarCases(db: D1Database, userId: number, now: number, cursor: { at: number; id: string } | null, limit: number): Promise<ZhExemplarCaseRow[]> {
+export async function listZhExemplarCases(
+  db: D1Database,
+  userId: number,
+  now: number,
+  cursor: { at: number; id: string } | null,
+  limit: number,
+  via: 'past' | null = null,
+): Promise<ZhExemplarCaseRow[]> {
   const res = await db
     .prepare(LIST_ZH_EXEMPLAR_CASES)
-    .bind(userId, now, cursor?.at ?? null, cursor?.id ?? null, limit)
+    .bind(userId, now, cursor?.at ?? null, cursor?.id ?? null, limit, via)
     .all<ZhExemplarCaseRow>();
   return res.results;
 }

@@ -572,10 +572,13 @@ describe('國寫指導的示範段（國寫範文設計 §10）', () => {
     );
     expect(named.examples).toEqual([]);
     expect(named.notices).toContainEqual({ kind: 'example_rule_removed', field: 'examples' });
-    // 題目的素材引了誘餌：照引不算抄寫。
-    const quoting = question(zhBlocks(['passage', null, ZH_DECOY_CONTEST], ['question', null, WRITING_REASON]), { format: 'writing' });
-    const kept = writing(analyze(zhWritingOutput({ section: 'zh_writing_reason', examples: [{ use_zh: '開頭', text: `我想起${ZH_DECOY_CONTEST.slice(5, 22)}。` }] }), quoting, { zh: zhExemplarFingerprints() }));
-    expect(kept.examples).toHaveLength(1);
+    // 題目的素材引了誘餌的一句（一個窗口）：照引不算抄寫。
+    const demo = zhWritingOutput({ section: 'zh_writing_reason', examples: [{ use_zh: '開頭', text: `我想起${ZH_DECOY_CONTEST.slice(5, 22)}。` }] });
+    const quoting = question(zhBlocks(['passage', null, `資料：${ZH_DECOY_CONTEST.slice(5, 22)}`], ['question', null, WRITING_REASON]), { format: 'writing' });
+    expect(writing(analyze(demo, quoting, { zh: zhExemplarFingerprints() })).examples).toHaveLength(1);
+    // 素材是整篇誘餌（好幾個窗口；現在輸入就擋下，這是之前建立的案例）：不豁免，那一筆拿掉。
+    const pasted = question(zhBlocks(['passage', null, ZH_DECOY_CONTEST], ['question', null, WRITING_REASON]), { format: 'writing' });
+    expect(writing(analyze(demo, pasted, { zh: zhExemplarFingerprints() })).examples).toEqual([]);
   });
 
   it('沒有比賽集合（舊的指紋檔）時只跑套語與引文規則', () => {

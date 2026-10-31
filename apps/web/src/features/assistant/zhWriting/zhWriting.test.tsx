@@ -211,6 +211,25 @@ describe('國寫範文獨立頁的純函式', () => {
     expect(ok).toEqual({ ok: true, input: { section: 'zh_writing_emotion', prompt: ZH_SAMPLE_QUESTIONS.writing, limits: { body_chars: 600, body_lines: 30 } } });
   });
 
+  it('貼上的檢查（審查 2026-10-30）：短的命題作文可以送，不論有沒有填字數；太短或不是中文用這一頁的說法；寫不出來的字數組合', () => {
+    const short = '請以「我與一扇窗」為題，寫一篇文章，敘述你的經驗與感受，文長不限。';
+    const bare = checkZhPaste({ ...EMPTY_ZH_PASTE_DRAFT, section: 'zh_writing_emotion', prompt: short });
+    expect(bare).toEqual({ ok: true, input: { section: 'zh_writing_emotion', prompt: short } });
+    expect(checkZhPaste({ ...EMPTY_ZH_PASTE_DRAFT, section: 'zh_writing_emotion', prompt: short, body: '600', lines: '30' }).ok).toBe(true);
+    for (const extra of [{}, { body: '600', lines: '30' }]) {
+      const tiny = checkZhPaste({ ...EMPTY_ZH_PASTE_DRAFT, section: 'zh_writing_emotion', prompt: '以「窗」為題寫一篇文章。', ...extra });
+      expect(tiny.ok).toBe(false);
+      if (!tiny.ok) expect(tiny.problems).toEqual([{ field: 'prompt', message: '題目太短了，請把題目的引導文字一起貼上（題目與素材合計至少 10 個字）。', ranges: null }]);
+    }
+    const english = checkZhPaste({ ...EMPTY_ZH_PASTE_DRAFT, section: 'zh_writing_emotion', prompt: 'Write an essay about a window in your life, 請寫一篇。' });
+    if (!english.ok) expect(english.problems[0]!.message).toBe('這看起來不是國寫題目：題目與素材要以中文為主。');
+    expect(english.ok).toBe(false);
+    // 問題（一）的「至多 4 行」填進行數欄。
+    const lines = checkZhPaste({ ...EMPTY_ZH_PASTE_DRAFT, section: 'zh_writing_reason', prompt: ZH_SAMPLE_QUESTIONS.writingReason, body: '400', lines: '4' });
+    if (!lines.ok) expect(lines.problems).toEqual([{ field: 'limits', message: '問題（二）的行數請填 10–38 的整數（問題（一）的行數不用填）', ranges: null }]);
+    expect(lines.ok).toBe(false);
+  });
+
   it('貼上的檢查：國文貼上的規則（答案或詳解段落）放回那一欄並帶命中位置；不是作文題目的放在題目欄', () => {
     const answer = checkZhPaste({ ...EMPTY_ZH_PASTE_DRAFT, section: 'zh_writing_emotion', prompt: ZH_SAMPLE_QUESTIONS.writing, material: '一段素材。\n【解析】這題要寫窗的意義，所以第一段先寫窗外的樹。' });
     expect(answer.ok).toBe(false);
@@ -334,7 +353,31 @@ describe('/zh-writing：選歷屆題目', () => {
     expect(screen.getByTestId('location')).toHaveTextContent('/zh-writing?prompt=zh-111-1');
   });
 
-  it('看過的題目：列表標「你看過 N 篇」；已經 2 篇時只給連結與說明，沒有按鈕', async () => {
+  it('列表的標記用「我的國寫範文」同一句狀態：第一篇失敗（已退還）不說「看過 0 篇」，連結是「看這一題」', async () => {
+    const user = userEvent.setup();
+    const failed = listItem({ exemplars: 0, remaining: 2, latest: { turn_id: 'e1', status: 'failed', failure: 'timeout', created_at: 1 } });
+    render('/zh-writing', { items: [failed] });
+    const badge = await screen.findByTestId('zh-prompt-status');
+    expect(badge).toHaveTextContent('上一篇沒有完成（點數已退還）');
+    expect(screen.queryByText(/看過 0 篇/)).toBeNull();
+    await user.click(screen.getByRole('button', { name: /知性：午休自習/ }));
+    const detail = await screen.findByRole('article', { name: '111 學測國寫・第一大題（知性）' });
+    expect(within(detail).getByRole('link', { name: '看這一題' })).toHaveAttribute('href', '/zh-writing/c1');
+    expect(within(detail).getByRole('button', { name: '再試一次（8 點）' })).toBeInTheDocument();
+  });
+
+  it('歷屆題目的案例用 ?via=past 讀（不受「我的國寫範文」第一頁 20 筆限制）：舊的案例照樣標出、已經 2 篇就不給按鈕', async () => {
+    const { fetch } = render('/zh-writing?prompt=zh-111-1', {
+      items: [],
+      extra: { 'GET /api/assist/zh-exemplars?via=past': () => jsonResponse({ items: [listItem({ exemplars: 2, remaining: 0 })], next_cursor: null }) },
+    });
+    const detail = await screen.findByRole('article', { name: '111 學測國寫・第一大題（知性）' });
+    expect(await within(detail).findByRole('link', { name: '看你的 2 篇示範' })).toHaveAttribute('href', '/zh-writing/c1');
+    expect(within(detail).queryByRole('button', { name: /AI 示範/ })).toBeNull();
+    expect(fetch.calls.map((c) => c.path)).toContain('/api/assist/zh-exemplars?via=past');
+  });
+
+  it('看過的題目：列表標「N 篇示範」；已經 2 篇時只給連結與說明，沒有按鈕', async () => {
     render('/zh-writing?prompt=zh-111-1', { items: [listItem({ exemplars: 2, remaining: 0 })] });
     const detail = await screen.findByRole('article', { name: '111 學測國寫・第一大題（知性）' });
     expect(await within(detail).findByRole('link', { name: '看你的 2 篇示範' })).toHaveAttribute('href', '/zh-writing/c1');
@@ -449,6 +492,25 @@ describe('/zh-writing：我的國寫範文', () => {
   it('還沒有：說明怎麼開始', async () => {
     render('/zh-writing');
     expect(await screen.findByText('還沒有國寫範文。選一題歷屆題目或貼上題目，看第一篇吧。')).toBeInTheDocument();
+  });
+
+  it('不能送出時（暫停、還沒核准）空清單只說還沒有，不叫學生選題或貼上；伺服器要先同意條款時整塊不顯示', async () => {
+    const closed = render('/zh-writing', { features: FEATURES_ZH_ONLY });
+    const history = await screen.findByTestId('zh-writing-history');
+    expect(await within(history).findByText('還沒有國寫範文。')).toBeInTheDocument();
+    expect(screen.queryByText(/選一題歷屆題目或貼上題目/)).toBeNull();
+    closed.unmount();
+    render('/zh-writing', { me: meWith('none') });
+    expect(await screen.findByText('看 AI 示範要先申請使用 AI。')).toBeInTheDocument();
+    expect(await within(await screen.findByTestId('zh-writing-history')).findByText('還沒有國寫範文。')).toBeInTheDocument();
+    expect(screen.queryByText(/選一題歷屆題目或貼上題目/)).toBeNull();
+  });
+
+  it('讀清單時伺服器回 403 consent_required：不顯示「暫時讀不到」，整塊不顯示', async () => {
+    render('/zh-writing', { extra: { 'GET /api/assist/zh-exemplars': () => apiError(403, 'consent_required') } });
+    expect(await screen.findByRole('tab', { name: '選歷屆題目' })).toBeInTheDocument();
+    await waitFor(() => expect(screen.queryByTestId('zh-writing-history')).toBeNull());
+    expect(screen.queryByText('暫時讀不到你的國寫範文，請稍後再試。')).toBeNull();
   });
 });
 

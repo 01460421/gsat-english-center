@@ -61,6 +61,7 @@ import {
   checkAssistQuestion,
   isZhSection,
   isZhWritingPromptFile,
+  ZH_PASTE_PROBLEM_MESSAGES,
   zhPasteLimitsProblem,
   zhPasteQuestion,
   zhShortPartLabels,
@@ -611,7 +612,13 @@ export class FakeAssist {
       'POST /api/assist/cases/:id/zh-exemplar': (call) => this.withCase(call, (c) => this.zhExemplar(c)),
       // 國寫範文的獨立頁（assistant-subjects.md「國寫範文」的「獨立頁」）：歷屆題目、貼上題目、同一案例再一篇；我的國寫範文。
       'POST /api/assist/zh-exemplars': (call) => this.zhExemplarStandalone(call.json as CreateZhExemplarBody),
-      'GET /api/assist/zh-exemplars': () => ok({ items: this.zhExemplarItems(), next_cursor: null } satisfies ZhExemplarListResponse),
+      // ?via=past 只列歷屆題目建立的案例（同 Worker）。
+      'GET /api/assist/zh-exemplars': (call) => {
+        const via = call.query.get('via');
+        if (via !== null && via !== 'past') return apiError(400, 'bad_request');
+        const items = this.zhExemplarItems().filter((i) => via === null || i.origin === via);
+        return ok({ items, next_cursor: null } satisfies ZhExemplarListResponse);
+      },
       'POST /api/assist/cases/:id/followups': (call) => this.withCase(call, (c) => this.followup(c, call.json as CreateAssistFollowupBody)),
       // 拍照（WP-A3）：照片只記張數（不解析 multipart）；轉錄排入佇列 → 輪詢完成。
       'POST /api/assist/cases/:id/photos': (call) =>
@@ -850,8 +857,9 @@ export class FakeAssist {
 
   /**
    * POST /api/assist/zh-exemplars（同 Worker 的形狀）：past 用歷屆題目檔（data/zh-writing/prompts.json）組題目；paste 跑國文貼上的
-   * 同一套檢查（shared 的 checkAssistQuestion；D8 指紋只有 Worker 有），被拒時 400 assist_input_invalid、field 是
-   * prompt／material／limits；同一題（代號，或貼上的區塊＋題型）在同一個案例上再加一篇；case 是同一個案例再一篇。
+   * 同一套檢查（shared 的 checkAssistQuestion，writingPaste；D8 與比賽語料指紋只有 Worker 有），被拒時 400 assist_input_invalid、
+   * field 是 prompt／material／limits、message 用這一頁的說法（ZH_PASTE_PROBLEM_MESSAGES）；同一題（代號，或貼上的區塊＋題型）
+   * 在同一個案例上再加一篇；case 是同一個案例再一篇。
    */
   private zhExemplarStandalone(body: CreateZhExemplarBody): Reply {
     if (body.source === 'case') {
@@ -882,14 +890,14 @@ export class FakeAssist {
       const problem = zhPasteLimitsProblem(body.section, body.limits);
       if (problem) return { status: 400, json: { error: { code: 'bad_request', message: problem, field: 'limits' } } };
       const pasted = zhPasteQuestion(body);
-      const check = checkAssistQuestion(pasted, 'chinese');
+      const check = checkAssistQuestion(pasted, 'chinese', { writingPaste: true });
       if (!check.ok) {
         const first = check.problems[0]!;
         const m = /^blocks\[(\d+)\]\.text$/.exec(first.field);
         const kind = m ? pasted.blocks[Number(m[1])]?.kind : undefined;
         const field = kind === 'instructions' ? 'limits' : kind === 'passage' ? 'material' : 'prompt';
         const ranges = first.start !== undefined && first.end !== undefined && kind ? [[first.start, first.end]] : null;
-        return zhInputInvalid(first.code as AssistInputProblem, field, ranges);
+        return zhInputInvalid(first.code as AssistInputProblem, field, ranges, ZH_PASTE_PROBLEM_MESSAGES[first.code]);
       }
       key = `paste:${body.section}:${JSON.stringify(check.value.blocks.map((b) => [b.kind, b.text]))}`;
       section = body.section;
@@ -1143,10 +1151,10 @@ function nowSec(): number {
 }
 
 /** 國文貼上的檢查擋下（同 Worker：400 assist_input_invalid，reason 是問題代碼，field 是表單的欄位）。 */
-function zhInputInvalid(reason: AssistInputProblem, field: string, ranges: number[][] | null): Reply {
+function zhInputInvalid(reason: AssistInputProblem, field: string, ranges: number[][] | null, message?: string): Reply {
   return {
     status: 400,
-    json: { error: { code: 'assist_input_invalid', message: ASSIST_INPUT_PROBLEM_MESSAGES[reason], reason, field, ...(ranges ? { ranges } : {}) } },
+    json: { error: { code: 'assist_input_invalid', message: message ?? ASSIST_INPUT_PROBLEM_MESSAGES[reason], reason, field, ...(ranges ? { ranges } : {}) } },
   };
 }
 

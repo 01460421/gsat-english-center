@@ -3,8 +3,12 @@
  * （素材、圖的文字描述、引導問題、題本印的字數規定）→「看這一題的 AI 示範（8 點）」→ 行內確認 → POST
  * /api/assist/zh-exemplars {source:'past', prompt_id} → 結果頁。選了哪一題記在網址 ?prompt=（由頁面持有）。
  *
- * 這一題已經看過（「我的國寫範文」裡有同一個代號）時：連到結果頁；已經 2 篇（完成＋進行中）就不再給按鈕；正在產生時只給連結
- * （Worker 對同一題會在同一個案例上加一篇，正在產生時回那一篇）。題目文字一律是純文字節點（題本原文，不解析任何標記）。
+ * 這一題已經有案例（GET /api/assist/zh-exemplars?via=past 裡有同一個代號；不受「我的國寫範文」第一頁 20 筆的限制）時：連到結果頁；
+ * 已經 2 篇（完成＋進行中）就不再給按鈕；正在產生時只給連結（Worker 對同一題會在同一個案例上加一篇，正在產生時回那一篇）。
+ * 列表上的標記用「我的國寫範文」同一句狀態（zhHistoryStatus：產生中、N 篇示範、上一篇沒有完成）。
+ * 送出成功時先收起確認面板再交給頁面換頁：換頁沒有卸載這個元件時（例如結果頁的程式還在下載時按「上一頁」，而外框沒有在換頁時
+ * 重設；目前 Layout 的錯誤邊界以路徑為 key，會先顯示「載入中…」），面板也不會卡在「送出中」。
+ * 題目文字一律是純文字節點（題本原文，不解析任何標記）。
  */
 import { ASSIST_LIMITS, ZH_WRITING_PROMPT_ID_RE, zhWritingPromptLabel, type AssistTaskAccepted, type ZhExemplarListItem, type ZhWritingPrompt } from '@gsat/shared';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
@@ -19,7 +23,7 @@ import { ZH_EXEMPLAR_COPY } from '../../subjects/chinese/copy';
 import { ZH_EXEMPLAR_POINTS } from '../../subjects/chinese/exemplar';
 import { ZhExemplarConfirm } from '../../subjects/chinese/ZhExemplarSection';
 import { ZH_WRITING_COPY, ZH_WRITING_SECTION_SHORT, zhWritingHref } from '../labels';
-import { loadZhWritingPrompts, zhPromptsByYear } from '../lib';
+import { loadZhWritingPrompts, zhHistoryStatus, zhPromptsByYear } from '../lib';
 
 /** 列表上的一題（按鈕；回來時焦點放回這裡）。 */
 export const promptButtonAttr = 'data-zh-prompt';
@@ -37,7 +41,7 @@ export function PastPrompts({
   /** 網址的 ?prompt=（null＝列表）。 */
   selected: string | null;
   onSelect: (id: string | null) => void;
-  /** 「我的國寫範文」（標出看過的題目；還沒讀到是空陣列）。 */
+  /** 歷屆題目建立的案例（?via=past；標出看過的題目；還沒讀到是空陣列）。 */
   history: readonly ZhExemplarListItem[];
   onStarted: (accepted: AssistTaskAccepted) => void;
 }) {
@@ -74,6 +78,7 @@ export function PastPrompts({
           <ul className="grid gap-2 sm:grid-cols-2">
             {group.prompts.map((p) => {
               const item = byId.get(p.id);
+              const st = item ? zhHistoryStatus(item) : null;
               return (
                 <li key={p.id} className="min-w-0">
                   <button
@@ -86,9 +91,12 @@ export function PastPrompts({
                       <span className="block font-medium break-words">{ZH_WRITING_COPY.pastItem(p.section, p.topic)}</span>
                       <span className="mt-0.5 block text-sm text-muted">
                         {p.number === 1 ? '第一大題' : '第二大題'}
-                        {item && (
-                          <span className="ml-2 rounded-full bg-primary-soft px-2 py-0.5 text-xs font-semibold text-primary">
-                            {pendingOf(item) ? ZH_WRITING_COPY.pastPending : ZH_WRITING_COPY.pastSeen(item.exemplars)}
+                        {st && (
+                          <span
+                            className={`ml-2 inline-block rounded-full px-2 py-0.5 text-xs font-semibold ${st.tone === 'failed' ? 'bg-bad/10 text-bad' : 'bg-primary-soft text-primary'}`}
+                            data-testid="zh-prompt-status"
+                          >
+                            {st.text}
                           </span>
                         )}
                       </span>
@@ -185,7 +193,7 @@ function PromptDetail({
         {item && (
           <p>
             <Link to={zhWritingHref(item.case_id)} className="inline-flex min-h-11 items-center font-medium text-primary underline underline-offset-2">
-              {ZH_WRITING_COPY.pastOpen(done)}
+              {ZH_WRITING_COPY.pastOpen(done, pending)}
             </Link>
           </p>
         )}
@@ -199,7 +207,11 @@ function PromptDetail({
               restoreFocus.current = true;
               setConfirming(false);
             }}
-            onStarted={onStarted}
+            onStarted={(accepted) => {
+              // 先收起面板再換頁（見檔頭：換頁沒有卸載這個元件時，不能卡在「送出中」）。
+              setConfirming(false);
+              onStarted(accepted);
+            }}
           />
         ) : (
           <div className="space-y-2">

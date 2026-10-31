@@ -24,8 +24,8 @@
  */
 import {
   ASSIST_LIMITS,
-  zhApplyPasteLimits,
   zhExemplarLimits,
+  zhStandaloneExemplarLimits,
   zhHasWritingQ1,
   guessZhSection,
   isZhCaseKind,
@@ -369,7 +369,8 @@ export async function runZhExemplar(ctx: ZhCtx & { question: AssistQuestionView 
   const standalone = zhStandaloneRef(caseRow.ref_json);
   if (!standalone && !analysis) return { kind: 'refund', reason: 'internal' };
   const section = standalone ? standalone.section : zhExemplarSectionOf(analysis!, question);
-  const limits = standalone ? zhApplyPasteLimits(zhExemplarLimits(question, section), standalone.limits) : zhExemplarLimits(question, section);
+  // 獨立頁：題目的規定不含本站寫的字數規定區塊，學生填的數字另外套用（shared 的 zhStandaloneExemplarLimits）。
+  const limits = standalone ? zhStandaloneExemplarLimits(question, section, standalone.limits) : zhExemplarLimits(question, section);
   const questionText = (question.blocks ?? []).map((b) => b.text).join('\n');
   const hasQ1 = section === 'zh_writing_reason' && (standalone ? zhHasWritingQ1(questionText) || (analysis?.q1 ?? null) !== null : analysis!.q1 !== null);
   const digest = analysis ? zhExemplarDigest(analysis, Boolean(question.draft), ZH_EXEMPLAR_DIGEST_CHARS) : null;

@@ -28,7 +28,15 @@ import { OutputFilter } from '../src/ai/filter';
 import { assistZhExemplarSystemText, assistZhSystemText } from '../src/ai/prompts/assist-zh';
 import { taskConfig } from '../src/ai/tasks';
 import { loadConfig } from '../src/config';
-import { zhContestHit, zhContestParagraphHits, zhContestQuestionWindows, zhContestRanges, zhContestStream } from '../src/assist/subjects/chinese/contest';
+import {
+  zhContestHit,
+  zhContestInputHits,
+  zhContestParagraphHits,
+  zhContestQuestionWindows,
+  zhContestRanges,
+  zhContestStream,
+  ZH_CONTEST_INPUT_MIN_WINDOWS,
+} from '../src/assist/subjects/chinese/contest';
 import type { ZhFingerprints } from '../src/assist/subjects/chinese/d8';
 import { postprocessZhExemplar, zhExemplarSectionOf, ZH_EXEMPLAR_HIDDEN_MAX_SHARE } from '../src/assist/subjects/chinese/exemplar';
 import { zhStudentQuestion } from '../src/assist/subjects/chinese/question';
@@ -126,11 +134,24 @@ describe('比賽語料指紋的比對（contest.ts）', () => {
     expect(zhContestHit(DECOY_17, new Set())).toBe(false);
   });
 
-  it('題目本身的窗口不算（素材引了相同的句子，照引不算抄寫）', () => {
+  it('題目本身的窗口不算（素材引了相同的句子，照引不算抄寫）；命中 ≥ 2 個窗口的區塊（貼了作品）不豁免（審查 2026-10-30）', () => {
     const set = zhContestSet();
-    const allowed = zhContestQuestionWindows({ blocks: zhBlocks(['passage', null, `資料：${ZH_DECOY_CONTEST}`]) });
-    expect(zhContestHit(DECOY_17, set, allowed)).toBe(false);
+    // 引一句（17 字，語料端每 4 字一個窗口 → 1 個窗口）：照引不算抄寫。
+    const quoting = { blocks: zhBlocks(['passage', null, `資料：${DECOY_17}`]) };
+    expect(zhContestInputHits(quoting.blocks[0]!.text, set)).toEqual([]);
+    expect(zhContestHit(DECOY_17, set, zhContestQuestionWindows(quoting, set))).toBe(false);
     expect(zhContestHit(DECOY_17, set, new Set())).toBe(true);
+    // 整段貼上（好幾個窗口）：輸入擋下（回位置），輸出也不豁免。
+    const pasted = { blocks: zhBlocks(['passage', null, `資料：${ZH_DECOY_CONTEST}`], ['question', null, `${DECOY_17.slice(0, 6)}，請寫一篇文章。`]) };
+    const ranges = zhContestInputHits(pasted.blocks[0]!.text, set);
+    expect(ranges.length).toBeGreaterThan(0);
+    expect(ranges[0]![0]).toBeGreaterThanOrEqual('資料：'.length);
+    expect(zhContestHit(DECOY_17, set, zhContestQuestionWindows(pasted, set))).toBe(true);
+    // 其他區塊照樣豁免；沒給集合（舊的呼叫）照舊全部豁免。
+    expect(zhContestQuestionWindows(pasted, set).size).toBeGreaterThan(0);
+    expect(zhContestHit(DECOY_17, set, zhContestQuestionWindows(pasted))).toBe(false);
+    expect(zhContestInputHits(ZH_DECOY_CONTEST, undefined)).toEqual([]);
+    expect(ZH_CONTEST_INPUT_MIN_WINDOWS).toBe(2);
   });
 
   it('好幾段先串成一條流：跨段的抄寫也抓得到，命中的窗口碰到的段落都算', () => {
@@ -300,9 +321,12 @@ describe('後處理：重寫（R1–R3）與最後一次的處理', () => {
     expect(last.checks.contest_hidden).toBe(1);
     // 隱藏的段落不算字數；要件對照指向它的列拿掉。
     expect(last.view!.totals.chars).toBe([0, 2, 3].map((i) => ZH_EXEMPLAR_PARAGRAPHS[i]!).join('').length);
-    // 題目本身引了同一段（素材）：不算抄寫，不重寫。
-    const q = question(zhBlocks(['passage', null, ZH_DECOY_CONTEST], ['question', null, ZH_WRITING_PROMPT]));
+    // 題目本身引了同一句（素材）：不算抄寫，不重寫。
+    const q = question(zhBlocks(['passage', null, `資料：${DECOY_17}`], ['question', null, ZH_WRITING_PROMPT]));
     expect(post(withParagraphs(texts), { q }).retry).toBeNull();
+    // 素材是整篇作品（舊的案例；現在輸入就擋下）：不豁免，照樣重寫。
+    const pasted = question(zhBlocks(['passage', null, ZH_DECOY_CONTEST], ['question', null, ZH_WRITING_PROMPT]));
+    expect(post(withParagraphs(texts), { q: pasted }).retry).toBe('contest_overlap');
   });
 
   it('知性題的問題（一）命中比賽指紋 → 重寫；最後一次只隱藏問題（一）（hidden: contest）', () => {

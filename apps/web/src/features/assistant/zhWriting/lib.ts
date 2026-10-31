@@ -4,14 +4,15 @@
  *   歷屆題目   /data/zh-writing/prompts.json（shared 的 ZH_WRITING_PROMPTS_PATH；build-data.mjs 原樣輸出）：載入、依學年度分組。
  *              送給 Worker 的只有代號（題目文字由 Worker 用打包的同一份）。
  *   貼上題目   表單的草稿 → 送出的本體：題型、題目、素材與選填的字數規定。送出前在瀏覽器跑國文貼上的同一套檢查（shared 的
- *              zhPasteQuestion＋checkAssistQuestion，和 Worker 同一支；D8 的官方文字指紋只有 Worker 會查），擋下的問題依區塊放回
- *              對應的欄位（字數規定、素材、題目），同 Worker 的 field。
+ *              zhPasteQuestion＋checkAssistQuestion(…, 'chinese', { writingPaste: true })，和 Worker 同一支：本站寫的字數規定區塊不算進
+ *              長度、科目與任務字樣；D8 的官方文字指紋與比賽語料指紋只有 Worker 會查），擋下的問題依區塊放回對應的欄位（字數規定、
+ *              素材、題目），同 Worker 的 field；訊息用 shared 的 ZH_PASTE_PROBLEM_MESSAGES（Worker 回的 message 也是這一份）。
  *   我的範文   列表一列的狀態文字、去掉「國寫範文・」前綴的標題。
  */
 import {
   ASSIST_INPUT_PROBLEM_MESSAGES,
-  ASSIST_LIMITS,
   ZH_EXEMPLAR_PASTE_LIMITS,
+  ZH_PASTE_PROBLEM_MESSAGES,
   ZH_WRITING_PROMPTS_PATH,
   checkAssistQuestion,
   isZhWritingPromptFile,
@@ -90,19 +91,12 @@ export function zhPasteLimitsOf(draft: Pick<ZhPasteDraft, 'section' | 'q1' | 'bo
 const FIELD_OF_KIND: Readonly<Record<string, ZhPasteField>> = { instructions: 'limits', passage: 'material', question: 'prompt' };
 
 /**
- * 國文貼上的問題代碼 → 這一頁的說法：大多照學習助手（ASSIST_INPUT_PROBLEM_MESSAGES），提到這一頁沒有的欄位或說「學習助手解析」的
- * 幾條改寫（這一頁沒有「我有講義答案」，而且這一頁就是要 AI 寫示範）。
+ * 國文貼上的問題代碼 → 這一頁的說法：shared 的 ZH_PASTE_PROBLEM_MESSAGES（提到這一頁沒有的欄位——選項、「我有講義答案」、改選科目——
+ * 或說「學習助手解析」的幾條改寫），其餘照學習助手（ASSIST_INPUT_PROBLEM_MESSAGES）。
  */
-const PASTE_PROBLEM_OVERRIDES: Partial<Record<AssistInputProblem, string>> = {
-  zh_answer_section: '請刪掉答案與解析再送出（已加亮那一段）。',
-  request_to_ai: '題目欄只放題目本身，不要寫給 AI 的要求（例如「幫我寫」「照某篇的寫法」）。',
-  text_too_long: `題目、素材與字數規定合計最多 ${ASSIST_LIMITS.questionMaxChars.toLocaleString('en-US')} 字元。只貼這一題的題目與素材就好。`,
-};
-
 export function zhPasteProblemMessage(code: string | null | undefined): string | null {
   if (!code) return null;
-  if (code in PASTE_PROBLEM_OVERRIDES) return PASTE_PROBLEM_OVERRIDES[code as AssistInputProblem] ?? null;
-  return (ASSIST_INPUT_PROBLEM_MESSAGES as Record<string, string>)[code] ?? null;
+  return ZH_PASTE_PROBLEM_MESSAGES[code as AssistInputProblem] ?? (ASSIST_INPUT_PROBLEM_MESSAGES as Record<string, string>)[code] ?? null;
 }
 
 /** Worker 回的 field（prompt／material／limits；其他當成題目）。 */
@@ -111,8 +105,8 @@ export function zhPasteFieldOf(field: string | null | undefined): ZhPasteField {
 }
 
 /**
- * 送出前的檢查：題型、題目必填、長度（同 Worker 的 schema）、字數規定的範圍（shared 的 zhPasteLimitsProblem）、國文貼上的檢查
- * （答案或詳解段落、評分說明、範文佳作樣式、注入、長度、國寫的任務字樣）。每一欄只留第一個問題。
+ * 送出前的檢查：題型、題目必填、長度（同 Worker 的 schema）、字數規定的範圍與組合（shared 的 zhPasteLimitsProblem）、國文貼上的檢查
+ * （writingPaste：答案或詳解段落、評分說明、範文佳作樣式、注入、長度、國寫的任務字樣）。每一欄只留第一個問題。
  */
 export function checkZhPaste(draft: ZhPasteDraft): { ok: true; input: ZhExemplarPasteInput } | { ok: false; problems: ZhPasteProblem[] } {
   const L = ZH_EXEMPLAR_PASTE_LIMITS;
@@ -139,7 +133,7 @@ export function checkZhPaste(draft: ZhPasteDraft): { ok: true; input: ZhExemplar
     ...(limits ? { limits } : {}),
   };
   const question = zhPasteQuestion(input);
-  const check = checkAssistQuestion(question, 'chinese');
+  const check = checkAssistQuestion(question, 'chinese', { writingPaste: true });
   if (!check.ok) {
     for (const p of check.problems) {
       const m = /^blocks\[(\d+)\]\.text$/.exec(p.field);

@@ -40,8 +40,6 @@ export const ZH_WRITING_COPY = {
   pastIntro: '111–115 學測國寫的題目（每年知性、情意各一），題目文字照官方題本；有圖的題目改成只抄錄圖上文字的描述。',
   pastYear: (year: number) => `${year} 學年度`,
   pastItem: (section: ZhExemplarSection, topic: string) => `${ZH_WRITING_SECTION_SHORT[section]}：${topic}`,
-  pastSeen: (done: number) => `你看過 ${done} 篇`,
-  pastPending: '示範產生中',
   pastBack: '換一題',
   pastTitleGiven: (title: string) => `題目指定：以「${title}」為題`,
   pastLimits: '字數規定（照題本）',
@@ -49,8 +47,8 @@ export const ZH_WRITING_COPY = {
   figureLabel: '圖的文字描述（本站依題本整理，只抄錄圖上的字）',
   materialLabel: '素材',
   promptLabel: '題目',
-  /** 這一題已經看過（或正在產生）時的連結。 */
-  pastOpen: (done: number) => (done > 0 ? `看你的 ${done} 篇示範` : '看這一題的進度'),
+  /** 這一題已經有案例時的連結：正在產生、看過幾篇，或都沒有完成（上一篇失敗、點數已退還）。 */
+  pastOpen: (done: number, pending: boolean) => (pending ? '看這一題的進度' : done > 0 ? `看你的 ${done} 篇示範` : '看這一題'),
   /** 貼上題目。 */
   pasteIntro: '把老師、講義或模擬考的國寫題目貼上來。只貼題目、素材與字數規定，不要貼範文、佳作、評分說明或答案。',
   sectionLegend: '這題是知性題還是情意題？（必填）',
@@ -90,6 +88,8 @@ export const ZH_WRITING_COPY = {
   /** 我的國寫範文。 */
   historyTitle: '我的國寫範文',
   historyEmpty: '還沒有國寫範文。選一題歷屆題目或貼上題目，看第一篇吧。',
+  /** 不能送出時（暫停、還沒核准、待同意）的空清單：不邀請學生選題。 */
+  historyEmptyReadOnly: '還沒有國寫範文。',
   historyFailed: '暫時讀不到你的國寫範文，請稍後再試。',
   historyMore: '顯示更多',
   historyDone: (n: number) => `${n} 篇示範`,

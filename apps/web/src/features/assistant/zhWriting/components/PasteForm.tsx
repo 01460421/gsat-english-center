@@ -8,6 +8,7 @@
  *   被擋下   Worker 回 400 assist_input_invalid（field 是 prompt／material／limits，ranges 是那一欄正規化後的位置）：確認面板收起來，
  *            問題放回那一欄並加亮、焦點移過去。其他錯誤（點數、每天上限、開關）留在確認面板裡（ZhExemplarConfirm）。
  *   草稿     題目與素材存在這台裝置（學習助手的草稿，gsat-assist:v1:draft:zh-writing:*；送出成功時清掉）。
+ *   送出成功 先收起確認面板再交給頁面換頁（換頁沒有卸載這個元件時——例如結果頁的程式還在下載時按「上一頁」——不能卡在「送出中」）。
  * 學生的題目一律用純文字節點顯示（ZhText 只加底線與加亮，不解析任何標記）。
  */
 import {
@@ -116,6 +117,7 @@ export function ZhPasteForm({ onStarted }: { onStarted: (accepted: AssistTaskAcc
   const started = (accepted: AssistTaskAccepted) => {
     saveAssistDraft(DRAFT_PROMPT, '');
     saveAssistDraft(DRAFT_MATERIAL, '');
+    setConfirmInput(null);
     onStarted(accepted);
   };
 

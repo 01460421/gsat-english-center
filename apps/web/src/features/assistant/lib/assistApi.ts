@@ -162,8 +162,13 @@ function isZhExemplarList(v: unknown): v is ZhExemplarListResponse {
 }
 
 /** GET /api/assist/zh-exemplars?cursor=：「我的國寫範文」（新到舊，每頁 20；只要登入，開關關著也能看）。 */
-export async function listZhExemplars(opts: { cursor?: string | null; signal?: AbortSignal } = {}): Promise<ZhExemplarListResponse> {
-  const qs = opts.cursor ? `?${new URLSearchParams({ cursor: opts.cursor }).toString()}` : '';
+/** GET /api/assist/zh-exemplars：via 'past' 只列歷屆題目的案例（選題分頁標出看過幾篇用）。 */
+export async function listZhExemplars(opts: { cursor?: string | null; via?: 'past' | null; signal?: AbortSignal } = {}): Promise<ZhExemplarListResponse> {
+  const params = new URLSearchParams();
+  if (opts.cursor) params.set('cursor', opts.cursor);
+  if (opts.via) params.set('via', opts.via);
+  const query = params.toString();
+  const qs = query !== '' ? `?${query}` : '';
   return expect(await api(`/api/assist/zh-exemplars${qs}`, withSignal(opts.signal)), isZhExemplarList);
 }
 

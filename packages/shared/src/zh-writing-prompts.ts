@@ -6,16 +6,25 @@
  *                111–115 學測國寫的十題（每年知性、情意各一），只有題本上的題目、素材、引導問題與字數規定（試題不受著作權保護，
  *                著作權法第 9 條第 1 項第 5 款）；沒有任何參考答案、評分原則、佳作或試題分析（D8）。圖只抄錄圖上的文字。
  *                網站建置時複製到 /data/zh-writing/prompts.json（前端選題用），Worker 建置時打包（apps/api/src/generated/）。
- *   貼上題目     題目、素材與選填的字數規定 → 學習助手的題目區塊（之後由 Worker 用國文貼上的同一套檢查：D8、答案區、注入、長度）。
- *                學生填的字數規定由本站寫成一個區塊放在最前面（模型與畫面看得到），Worker 另外用 zhApplyPasteLimits 直接套用數字
- *                （題目文字裡也寫了規定時，以學生填的為準）。
+ *   貼上題目     題目、素材與選填的字數規定 → 學習助手的題目區塊（之後由 Worker 用國文貼上的同一套檢查：D8、答案區、注入、長度；
+ *                checkZhQuestion 的 writingPaste：長度、科目與任務字樣只看學生的題目與素材）。學生填的字數規定由本站寫成一個區塊放在
+ *                最前面（模型與畫面看得到）；Worker 讀題目的規定時不算這個區塊，再用 zhApplyPasteLimits 直接套用學生填的數字
+ *                （zhStandaloneExemplarLimits；題目文字裡也寫了規定時，以學生填的為準）。字數規定的範圍與組合（zhPasteLimitsProblem）
+ *                擋掉寫不出來的數字（行數太少、行數裝不下字數、知性兩題放不進一面），不讓學生付了點數才失敗退還。
  *   API 型別     POST /api/assist/zh-exemplars 的本體與回應、GET /api/assist/zh-exemplars 的列表。
  *
  * 資料仍存在學習助手（一個國文的國寫案例＋範文的 turn）：保存與刪除照學習助手（180 天、可以自己刪），隱私權說明不必改版。
  */
-import { ASSIST_LIMITS, type AssistQuestionBlock, type AssistStudentQuestion, type AssistTaskAccepted } from './assist';
-import { ZH_LINE_CELLS } from './assist-zh';
-import { ZH_EXEMPLAR_DEFAULT_LIMITS, ZH_EXEMPLAR_TARGETS, ZH_SHEET_CELLS, type ZhExemplarLimits, type ZhExemplarSection } from './assist-zh-exemplar';
+import { ASSIST_LIMITS, type AssistInputProblem, type AssistQuestionBlock, type AssistQuestionView, type AssistStudentQuestion, type AssistTaskAccepted } from './assist';
+import { ZH_LINE_CELLS, ZH_TEXT_LIMITS } from './assist-zh';
+import {
+  ZH_EXEMPLAR_DEFAULT_LIMITS,
+  ZH_EXEMPLAR_TARGETS,
+  ZH_SHEET_CELLS,
+  zhExemplarLimits,
+  type ZhExemplarLimits,
+  type ZhExemplarSection,
+} from './assist-zh-exemplar';
 import type { AiRefundReason } from './writing';
 
 // ───────────────────────── 歷屆題目（data/zh-writing/prompts.json） ─────────────────────────
@@ -136,15 +145,27 @@ export function zhWritingPromptQuestion(p: Pick<ZhWritingPrompt, 'material' | 'p
 
 /**
  * 貼上的上限：題目（引導問題）與素材各自的字元數（精確的長度與內容規則在國文貼上的檢查：全部合計 ≤ 6,000 字元），
- * 選填的字數規定的範圍（問題（一）20–200 字、問題（二）或全文 100–1,200 字、1–38 行）。
+ * 選填的字數規定的範圍（問題（一）20–200 字；問題（二）200–680 字、10–38 行；情意全文 300–1,200 字、15–38 行）。
+ * 下限：範文的主體要寫 3–5 段（模型瞄準上限的 85–95%，段首空兩格、段末不滿一行也算一行），太少的數字寫不出來，模型一定超過，
+ * 要付費重寫、最後退還（審查 2026-10-30：學生把問題（一）的「至多 4 行」填進行數欄）。知性問題（二）的上限 680＋問題（一）
+ * 預設 80＝一面答題卷寫得下的 760 字（reasonSheetChars）。
  */
 export const ZH_EXEMPLAR_PASTE_LIMITS = {
   promptMaxChars: 2_000,
   materialMaxChars: 5_000,
   q1Chars: [20, 200],
-  bodyChars: [100, 1_200],
-  bodyLines: [1, 38],
-} as const;
+  bodyChars: { zh_writing_reason: [200, 680], zh_writing_emotion: [300, 1_200] },
+  bodyLines: { zh_writing_reason: [10, 38], zh_writing_emotion: [15, 38] },
+  /** 知性：問題（一）與問題（二）寫在同一面答題卷，兩題的字數合計上限（含標點；沒填的用預設 80／400）。 */
+  reasonSheetChars: 760,
+} as const satisfies {
+  promptMaxChars: number;
+  materialMaxChars: number;
+  q1Chars: readonly [number, number];
+  bodyChars: Record<ZhExemplarSection, readonly [number, number]>;
+  bodyLines: Record<ZhExemplarSection, readonly [number, number]>;
+  reasonSheetChars: number;
+};
 
 /** 貼上時選填的字數規定（沒有填＝看題目裡寫的，題目也沒寫就用本站預設）。 */
 export interface ZhExemplarPasteLimits {
@@ -156,17 +177,43 @@ export interface ZhExemplarPasteLimits {
   body_lines?: number | null;
 }
 
-/** 字數規定的問題（給前端與 Worker 同一份訊息）；沒有問題回 null。 */
+/**
+ * 字數規定的問題（給前端與 Worker 同一份訊息；Worker 在預扣之前擋）；沒有問題回 null。依序：情意不能填問題（一）→ 各欄的範圍
+ * （依題型）→ 行數裝得下字數（每行 22 格）→ 知性兩題放得進一面答題卷（行數：問題（一）約幾行＋問題（二）的行數 ≤ 38；
+ * 字數：合計 ≤ reasonSheetChars，沒填的用預設）。
+ */
 export function zhPasteLimitsProblem(section: ZhExemplarSection, limits: ZhExemplarPasteLimits | null | undefined): string | null {
   if (!limits) return null;
   const L = ZH_EXEMPLAR_PASTE_LIMITS;
-  const within = (v: number | null | undefined, [lo, hi]: readonly [number, number]) => v === null || v === undefined || (Number.isInteger(v) && v >= lo && v <= hi);
-  if (section === 'zh_writing_emotion' && limits.q1_chars !== null && limits.q1_chars !== undefined) return '情意題沒有問題（一），不用填問題（一）的字數';
+  const sheetLines = Math.round(ZH_SHEET_CELLS / ZH_LINE_CELLS);
+  const given = (v: number | null | undefined): v is number => v !== null && v !== undefined;
+  const within = (v: number | null | undefined, [lo, hi]: readonly [number, number]) => !given(v) || (Number.isInteger(v) && v >= lo && v <= hi);
+  const reason = section === 'zh_writing_reason';
+  const part = reason ? '問題（二）' : '全文';
+  if (!reason && given(limits.q1_chars)) return '情意題沒有問題（一），不用填問題（一）的字數';
   if (!within(limits.q1_chars, L.q1Chars)) return `問題（一）的字數請填 ${L.q1Chars[0]}–${L.q1Chars[1]} 的整數`;
-  if (!within(limits.body_chars, L.bodyChars)) return `${section === 'zh_writing_reason' ? '問題（二）' : '全文'}的字數請填 ${L.bodyChars[0]}–${L.bodyChars[1]} 的整數`;
-  if (!within(limits.body_lines, L.bodyLines)) return `行數請填 ${L.bodyLines[0]}–${L.bodyLines[1]} 的整數`;
+  const chars = L.bodyChars[section];
+  if (!within(limits.body_chars, chars)) return `${part}的字數請填 ${chars[0]}–${chars[1]} 的整數`;
+  const lines = L.bodyLines[section];
+  if (!within(limits.body_lines, lines)) return `${part}的行數請填 ${lines[0]}–${lines[1]} 的整數${reason ? '（問題（一）的行數不用填）' : ''}`;
+  if (given(limits.body_lines) && given(limits.body_chars) && limits.body_lines * ZH_LINE_CELLS < limits.body_chars) {
+    return `行數和字數對不上：${limits.body_lines} 行最多只能寫 ${limits.body_lines * ZH_LINE_CELLS} 字（每行 ${ZH_LINE_CELLS} 格），請再對一次題目的規定`;
+  }
+  if (reason) {
+    const q1 = limits.q1_chars ?? ZH_EXEMPLAR_DEFAULT_LIMITS.q1Chars;
+    // 問題（一）的答案是一段：段首空兩格，最後一行不滿也算一行。
+    const q1Lines = Math.ceil((q1 + 2) / ZH_LINE_CELLS);
+    if (given(limits.body_lines) && q1Lines + limits.body_lines > sheetLines) {
+      return `問題（一）和問題（二）要寫在同一面答題卷（${sheetLines} 行）：問題（一）約 ${q1Lines} 行，問題（二）最多填 ${sheetLines - q1Lines} 行`;
+    }
+    const body = Math.min(limits.body_chars ?? ZH_EXEMPLAR_DEFAULT_LIMITS.q2Chars, given(limits.body_lines) ? limits.body_lines * ZH_LINE_CELLS : Infinity);
+    if (q1 + body > L.reasonSheetChars) return `問題（一）和問題（二）要寫在同一面答題卷：兩題的字數合計最多 ${L.reasonSheetChars} 字`;
+  }
   return null;
 }
+
+/** 本站寫的字數規定區塊的開頭（zhPasteLimitText）。 */
+export const ZH_PASTE_LIMITS_HEAD = '字數規定（你填的）';
 
 /**
  * 選填的字數規定 → 本站寫的一行（寫法同題本：「問題（一）：文長限 80 字以內。」「問題（二）：文長限 400 字以內（至多 19 行）。」
@@ -191,7 +238,12 @@ export function zhPasteLimitText(section: ZhExemplarSection, limits: ZhExemplarP
     const b = body(limits.body_chars, limits.body_lines);
     if (b) out.push(b);
   }
-  return out.length > 0 ? `字數規定（你填的）：\n${out.join('\n')}` : null;
+  return out.length > 0 ? `${ZH_PASTE_LIMITS_HEAD}：\n${out.join('\n')}` : null;
+}
+
+/** 這個區塊是本站寫的字數規定嗎（zhPasteQuestion 放在最前面的 instructions；學生自己的題目與素材是 question／passage）。 */
+export function zhIsPasteLimitsBlock(b: Pick<AssistQuestionBlock, 'kind' | 'text'>): boolean {
+  return b.kind === 'instructions' && b.text.startsWith(`${ZH_PASTE_LIMITS_HEAD}：`);
 }
 
 /** 貼上的國寫題目（POST 本體裡 source 是 paste 的欄位）。 */
@@ -206,7 +258,7 @@ export interface ZhExemplarPasteInput {
 
 /**
  * 貼上的題目 → 送進國文貼上檢查的題目：本站寫的字數規定（有填時，放最前面）、素材（passage）、引導問題（question）。
- * 不檢查內容（Worker 用國文貼上的同一套檢查；前端送出前可以先用 checkZhQuestion 預檢）。
+ * 不檢查內容（Worker 用國文貼上的同一套檢查；前端送出前先用 checkAssistQuestion(…, 'chinese', { writingPaste: true }) 預檢）。
  */
 export function zhPasteQuestion(input: ZhExemplarPasteInput): AssistStudentQuestion {
   const limitText = zhPasteLimitText(input.section, input.limits);
@@ -247,6 +299,32 @@ export function zhApplyPasteLimits(base: ZhExemplarLimits, paste: ZhExemplarPast
     target: { q1: null, body: maxChars !== null ? pct(maxChars, ZH_EXEMPLAR_TARGETS.q2) : [...ZH_EXEMPLAR_TARGETS.emotionChars] },
   };
 }
+
+/**
+ * 獨立頁案例的範文上限（Worker 的 consumer 用）：先從題目本身讀規定——**不含本站寫的字數規定區塊**——再用 zhApplyPasteLimits
+ * 套用學生填的數字。那個區塊放在最前面，若一起讀，zhCharLimits 會把「問題（二）：文長限 N 字」當成第一個「問題（一）」之前的
+ * 題幹規定，套到題目沒有自己規定的問題（一）（審查 2026-10-30：只填問題（二）400 字，問題（一）也變成 400 字）。
+ */
+export function zhStandaloneExemplarLimits(
+  question: Pick<AssistQuestionView, 'blocks'>,
+  section: ZhExemplarSection,
+  paste: ZhExemplarPasteLimits | null | undefined,
+): ZhExemplarLimits {
+  const blocks = (question.blocks ?? []).filter((b) => !zhIsPasteLimitsBlock(b));
+  return zhApplyPasteLimits(zhExemplarLimits({ blocks }, section), paste);
+}
+
+/**
+ * 國文貼上的問題代碼 → 國寫範文頁的說法（前端顯示、Worker 回的 message 都用這一份；沒列的照學習助手的 ASSIST_INPUT_PROBLEM_MESSAGES）：
+ * 提到這一頁沒有的欄位（選項、「我有講義答案」、改選科目）或說「學習助手解析」的幾條改寫（這一頁就是要 AI 寫示範）。
+ */
+export const ZH_PASTE_PROBLEM_MESSAGES: Readonly<Partial<Record<AssistInputProblem, string>>> = {
+  text_too_short: `題目太短了，請把題目的引導文字一起貼上（題目與素材合計至少 ${ZH_TEXT_LIMITS.pasteWritingHanMin} 個字）。`,
+  subject_mismatch: '這看起來不是國寫題目：題目與素材要以中文為主。',
+  zh_answer_section: '請刪掉答案與解析再送出（已加亮那一段）。',
+  request_to_ai: '題目欄只放題目本身，不要寫給 AI 的要求（例如「幫我寫」「照某篇的寫法」）。',
+  text_too_long: `題目、素材與字數規定合計最多 ${ASSIST_LIMITS.questionMaxChars.toLocaleString('en-US')} 字元。只貼這一題的題目與素材就好。`,
+};
 
 /** 題目裡有沒有「問題（一）」（知性題要不要寫問題（一）的答案；沒有國寫指導時由題目判斷）。 */
 export function zhHasWritingQ1(text: string): boolean {
