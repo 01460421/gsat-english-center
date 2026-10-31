@@ -701,10 +701,10 @@ describe('runCase：國寫範文（K 組）', () => {
     expect(r).toMatchObject({ ok: true, attempts: ['base:ok', 'ok'] });
     expect(r.ops.map((o) => [o.task, o.points, o.latency_class])).toEqual([
       ['zh_writing', 7, 'group'],
-      ['zh_exemplar', 8, 'exemplar'],
+      ['zh_exemplar', 10, 'exemplar'],
     ]);
     const ex = exec.inputs[1]!;
-    expect([ex.task, ex.spec.maxTokens, ex.timeoutMs]).toEqual(['assist_zh_exemplar', 14_000, 240_000]);
+    expect([ex.task, ex.spec.maxTokens, ex.spec.effort, ex.timeoutMs]).toEqual(['assist_zh_exemplar', 20_000, 'high', 240_000]);
     expect(typeof ex.content === 'string' && ex.content).toMatch(/問題（一）: at most 60 characters including punctuation\.\n問題（二）: at most 350 characters including punctuation, at most 17 lines of 22 cells\.[\s\S]*Title given: 「共用的東西」/);
     expect(r.exemplar).toMatchObject({ section: 'zh_writing_reason', section_ok: true, paragraphs: 4, shown: 4, q1: 'shown', q1_chars: 50, q1_limit: 60, chars: 217, cells: 264, limit_chars: 350, within_limits: true, cards_known: 4, material_quotes: 1, title: 'given', contest_retries: 0 });
     expect(r.checks).toEqual({ within_limits: true, contest_hits_0: true, no_grade: true, q1_shown: true, material_quoted: true });
@@ -836,7 +836,7 @@ function passing(c: EvalCase): CaseResult | null {
     const reason = c.section === 'zh_writing_reason';
     return {
       ...base,
-      ops: [op('zh_exemplar', 8, 'exemplar', { timeout_ms: 240_000, max_tokens: 14_000, input_estimate: 13_500, cold_micros: 180_000, latency_ms: 90_000 })],
+      ops: [op('zh_exemplar', 10, 'exemplar', { timeout_ms: 240_000, max_tokens: 20_000, input_estimate: 13_500, cold_micros: 180_000, latency_ms: 90_000 })],
       exemplar: {
         section: c.section,
         section_ok: true,

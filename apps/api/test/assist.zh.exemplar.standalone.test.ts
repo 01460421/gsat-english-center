@@ -72,7 +72,7 @@ interface Setup {
 
 function setup(overrides: Partial<Env> = {}, role: 'student' | 'admin' = 'student'): Setup {
   const env = zhEnv({ AI_ZH_EXEMPLAR: 'on', ...overrides });
-  // 點數上限放寬：一個測試裡常常有國寫指導（7 點）加好幾篇範文（8 點）。
+  // 點數上限放寬：一個測試裡常常有國寫指導（7 點）加好幾篇範文（10 點）。
   return { env, site: fakeSite(), user: seedUser(env.DB, { role, aiPointsDay: 500, aiPointsMonth: 5_000 }) };
 }
 
@@ -139,11 +139,11 @@ describe('POST /api/assist/zh-exemplars 的開關與核准', () => {
 });
 
 describe('歷屆題目（source: past）', () => {
-  it('202：同一個 batch 建立案例（typed、zh_writing、ready、題型、去重鍵）與範文的 turn；預扣 8 點；題目就是打包的題本文字', async () => {
+  it('202：同一個 batch 建立案例（typed、zh_writing、ready、題型、去重鍵）與範文的 turn；預扣 10 點；題目就是打包的題本文字', async () => {
     const s = setup();
     const res = await post(s, { source: 'past', prompt_id: 'zh-111-1' });
     expect(res.status, JSON.stringify(res.body)).toBe(202);
-    expect(res.body).toMatchObject({ status: 'queued', points: 8 });
+    expect(res.body).toMatchObject({ status: 'queued', points: 10 });
     expect(res.body).not.toHaveProperty('existing');
     const c = row(s.env, 'SELECT * FROM assist_cases WHERE id = ?', res.body.case_id);
     expect(c).toMatchObject({ user_id: s.user.id, source: 'typed', kind: 'zh_writing', trust: 'student', status: 'ready', section: 'zh_writing_reason', analyses: 0, followups: 0 });
@@ -158,7 +158,7 @@ describe('歷屆題目（source: past）', () => {
     const turn = row(s.env, 'SELECT case_id, seq, kind, status, input_text, label, mode, meta_json FROM assist_turns WHERE id = ?', res.body.turn_id);
     expect(turn).toMatchObject({ case_id: res.body.case_id, seq: 1, kind: 'followup', status: 'queued', input_text: null, label: null, mode: null });
     expect(JSON.parse(turn.meta_json)).toEqual({ subject: 'chinese', task: 'zh_exemplar' });
-    expect(row(s.env, 'SELECT task, points_reserved, ref_id FROM ai_ops WHERE id = ?', res.body.op_id)).toEqual({ task: 'assist_zh_exemplar', points_reserved: 8, ref_id: res.body.turn_id });
+    expect(row(s.env, 'SELECT task, points_reserved, ref_id FROM ai_ops WHERE id = ?', res.body.op_id)).toEqual({ task: 'assist_zh_exemplar', points_reserved: 10, ref_id: res.body.turn_id });
     // 建立案例的每日計數照舊（ops_events 的建立紀錄）。
     expect(row(s.env, `SELECT COUNT(*) AS n FROM ops_events WHERE kind = 'assist_case_created'`).n).toBe(1);
     const d = await detail(s, res.body.case_id);
@@ -203,7 +203,7 @@ describe('歷屆題目（source: past）', () => {
     expect(msg.acked).toBe(true);
     expect(fake.requests[0]!.userText).toContain('Title given: 「花草樹木的氣味記憶」');
     expect(fake.requests[0]!.userText).toContain('問題（一） does not apply: leave q1 empty.');
-    expect(row(s.env, 'SELECT status, points_charged FROM ai_ops WHERE id = ?', res.body.op_id)).toEqual({ status: 'settled', points_charged: 8 });
+    expect(row(s.env, 'SELECT status, points_charged FROM ai_ops WHERE id = ?', res.body.op_id)).toEqual({ status: 'settled', points_charged: 10 });
     const meta = JSON.parse(row(s.env, 'SELECT meta_json FROM assist_turns WHERE id = ?', res.body.turn_id).meta_json);
     expect(meta).toMatchObject({ subject: 'chinese', task: 'zh_exemplar', section: 'zh_writing_emotion', standalone: 'past', digest: false, content_failures: 0 });
     const d = await detail(s, res.body.case_id);
@@ -401,7 +401,7 @@ describe('去重、上限與退還', () => {
     expect(first.status).toBe(202);
     const again = await post(s, { source: 'past', prompt_id: 'zh-113-2' });
     expect(again.status).toBe(200);
-    expect(again.body).toEqual({ op_id: first.body.op_id, case_id: first.body.case_id, turn_id: first.body.turn_id, status: 'queued', points: 8, existing: true });
+    expect(again.body).toEqual({ op_id: first.body.op_id, case_id: first.body.case_id, turn_id: first.body.turn_id, status: 'queued', points: 10, existing: true });
     expect(opCount(s)).toBe(1);
     await run(s, json(zhExemplarOutput()));
     const second = await post(s, { source: 'past', prompt_id: 'zh-113-2' });
@@ -464,7 +464,7 @@ describe('去重、上限與退還', () => {
     expect(caseCount(s)).toBe(1);
   });
 
-  it('內容失敗（離題）：全額退還 invalid_output、turn failed、案例不變；用 source: case 再試一次（8 點）', async () => {
+  it('內容失敗（離題）：全額退還 invalid_output、turn failed、案例不變；用 source: case 再試一次（10 點）', async () => {
     const s = setup();
     const res = await post(s, emotionPaste());
     await run(s, json(zhExemplarOutput({ off_topic: true })));
@@ -473,7 +473,7 @@ describe('去重、上限與退還', () => {
     expect(row(s.env, 'SELECT status FROM assist_cases WHERE id = ?', res.body.case_id).status).toBe('ready');
     const retry = await post(s, { source: 'case', case_id: res.body.case_id });
     expect(retry.status, JSON.stringify(retry.body)).toBe(202);
-    expect(retry.body).toMatchObject({ case_id: res.body.case_id, points: 8, status: 'queued' });
+    expect(retry.body).toMatchObject({ case_id: res.body.case_id, points: 10, status: 'queued' });
     // 進行中時再按一次：回同一篇。
     const dup = await post(s, { source: 'case', case_id: res.body.case_id });
     expect(dup.status).toBe(200);

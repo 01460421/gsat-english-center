@@ -128,6 +128,11 @@ AI_ASSISTANT_SUBJECTS_PHOTO = "on"
 #   （docs/SETUP-KEYS.md §8.4）。
 # 這一行是例外：src/config.ts 的程式預設固定是 off（[vars] 漏設時偏向關），不用跟著改（test/skeleton.test.ts）。
 AI_ZH_EXEMPLAR = "on"
+# 國寫範文的 effort（2026-10-31 起和解析的 AI_EFFORT_ASSIST 分開）：high，讓模型先構思立意、取材與結構再寫（站主試用後說範文沒有
+#   達到最高等級）。和 src/config.ts 的預設值一致（test/skeleton.test.ts）。成本（估計）：冷快取每篇約 US$0.23、含重寫約 0.26–0.27，
+#   所以點數由 8 改成 10（每點 ≤ WORST_USD_PER_POINT 0.0271）、max_tokens 20,000（tasks.ts 的 ZH_TASK_SIZES）。
+#   第 14 天依 ai_calls（task＝assist_zh_exemplar）的冷快取平均重算；超過門檻時先改回 "medium"（不必改程式，點數照舊也在門檻內）。
+AI_EFFORT_ZH_EXEMPLAR = "high"
 # 學習助手的 effort：解析與報告、追問（模型一律用 AI_MODEL_DEFAULT）。
 AI_EFFORT_ASSIST = "medium"
 AI_EFFORT_CHAT = "low"

@@ -3,10 +3,10 @@
  * 後端用 tests/support/backend.ts 的假 Worker（fakeAssist 的 POST／GET /api/assist/zh-exemplars：歷屆題目用 repo 的
  * data/zh-writing/prompts.json 組題目、貼上的題目跑國文貼上的同一套檢查；範文用本站自寫的示範）。
  *
- *   1. 從導覽（桌機側邊欄、手機「更多」）進國寫範文 → 選歷屆題目（111 知性）→ 題目全文 → 行內確認（8 點、今天還有幾點、固定標籤、
+ *   1. 從導覽（桌機側邊欄、手機「更多」）進國寫範文 → 選歷屆題目（111 知性）→ 題目全文 → 行內確認（10 點、今天還有幾點、固定標籤、
  *      不能繳交）→ 等待 → 結果（固定標籤、問題（一）、方法卡；沒有複製或列印）→ 我的國寫範文列出這一題；
  *   2. 貼上題目：沒填時的說明 → 情意題＋題目＋素材＋字數規定 → 確認 → 結果；這一題也出現在學習助手的列表，案例頁指回國寫範文；
- *   3. 失敗：退還說明 →「再試一次（8 點）」→ POST {source:'case'} → 結果；
+ *   3. 失敗：退還說明 →「再試一次（10 點）」→ POST {source:'case'} → 結果；
  *   4. 開關與核准：國寫範文沒開時導覽與學習助手首頁都沒有入口、直接打開是唯讀；沒核准時有入口但只說明怎麼申請；
  *   5. 手機 375／360／320 px 與桌機沒有水平捲動；
  *   6. 審查 2026-10-30：短的命題作文（不到 30 個漢字）不必填字數也能送、太短時的說法不提選項或改選科目；結果頁的程式還在下載
@@ -70,7 +70,7 @@ function postedBodies(backend: Awaited<ReturnType<typeof setup>>['backend']): Cr
   return backend.callsTo('POST', '/api/assist/zh-exemplars').map((c) => c.json as CreateZhExemplarBody);
 }
 
-test('從導覽進國寫範文 → 選歷屆題目 → 確認 8 點 → 等待 → 結果；我的國寫範文列出這一題', async ({ page }, testInfo) => {
+test('從導覽進國寫範文 → 選歷屆題目 → 確認 10 點 → 等待 → 結果；我的國寫範文列出這一題', async ({ page }, testInfo) => {
   const errors = collectErrors(page);
   const { backend } = await setup(page, { pendingPolls: 2 });
   await page.goto('/');
@@ -93,15 +93,15 @@ test('從導覽進國寫範文 → 選歷屆題目 → 確認 8 點 → 等待 �
   await expect(detail.getByText('知性・樂齡活動・題目指定：以「樂齡出遊」為題')).toBeVisible();
   await expectNoOverflowAll(page, testInfo);
 
-  await detail.getByRole('button', { name: '看一篇 AI 示範（8 點）' }).click();
+  await detail.getByRole('button', { name: '看一篇 AI 示範（10 點）' }).click();
   const panel = detail.getByRole('group', { name: '確認點數' });
-  await expect(panel.getByText('這次會用 8 點（今天還有 20 點）；沒有完成會全額退還。')).toBeVisible();
+  await expect(panel.getByText('這次會用 10 點（今天還有 20 點）；沒有完成會全額退還。')).toBeVisible();
   await expect(panel.getByText('國寫的 AI 示範每天最多 3 篇，今天已經看過 0 篇。')).toBeVisible();
   await expect(panel.getByTestId('zh-exemplar-confirm-label')).toHaveText('AI 示範，不是得獎作品');
   await expect(panel.getByText('示範是 AI 寫的，不是得獎作品，也不是官方佳作；請不要當成自己的作品繳交。')).toBeVisible();
-  await expect(panel.getByRole('button', { name: '確定，用 8 點' })).toBeInViewport();
+  await expect(panel.getByRole('button', { name: '確定，用 10 點' })).toBeInViewport();
   await expectNoOverflowAll(page, testInfo);
-  await panel.getByRole('button', { name: '確定，用 8 點' }).click();
+  await panel.getByRole('button', { name: '確定，用 10 點' }).click();
 
   // 結果頁：進度列在「AI 示範」那一塊；完成後出現固定標籤。
   await expect(page).toHaveURL(/\/zh-writing\/case-1$/);
@@ -113,7 +113,7 @@ test('從導覽進國寫範文 → 選歷屆題目 → 確認 8 點 → 等待 �
   await expect(section.getByRole('heading', { name: '問題（一）' })).toBeVisible();
   await section.locator('[data-zh-exemplar-paragraph="1"]').getByRole('button', { name: /^方法卡：/ }).click();
   await expect(page.getByRole('button', { name: /複製|列印/ })).toHaveCount(0);
-  await expect(section.getByRole('button', { name: '再看一篇 AI 示範（8 點）' })).toBeVisible();
+  await expect(section.getByRole('button', { name: '再看一篇 AI 示範（10 點）' })).toBeVisible();
   await expect(page.getByTestId('zh-writing-result-footer').getByRole('link', { name: '在學習助手打開這一題（國寫指導、追問）' })).toHaveAttribute('href', '/assistant/case/case-1');
   await expectNoOverflowAll(page, testInfo);
 
@@ -143,10 +143,10 @@ test('貼上題目：沒填時說明 → 情意題＋題目＋素材＋字數規
   await expectNoOverflowAll(page, testInfo);
   await page.getByRole('button', { name: '下一步：確認點數' }).click();
   const panel = page.getByRole('group', { name: '確認點數' });
-  await expect(panel.getByText('這次會用 8 點（今天還有 20 點）；沒有完成會全額退還。')).toBeVisible();
+  await expect(panel.getByText('這次會用 10 點（今天還有 20 點）；沒有完成會全額退還。')).toBeVisible();
   await expect(panel.getByTestId('zh-exemplar-confirm-label')).toBeVisible();
   await expectNoOverflowAll(page, testInfo);
-  await panel.getByRole('button', { name: '確定，用 8 點' }).click();
+  await panel.getByRole('button', { name: '確定，用 10 點' }).click();
 
   await expect(page).toHaveURL(/\/zh-writing\/case-1$/);
   await expect(page.locator('section#zh-exemplar').getByTestId('zh-exemplar-label')).toBeVisible();
@@ -210,7 +210,7 @@ test('短的命題作文：不填字數也能送（不再被當成別科）；�
   await prompt.fill(short);
   await page.getByRole('button', { name: '下一步：確認點數' }).click();
   const panel = page.getByRole('group', { name: '確認點數' });
-  await panel.getByRole('button', { name: '確定，用 8 點' }).click();
+  await panel.getByRole('button', { name: '確定，用 10 點' }).click();
   await expect(page).toHaveURL(/\/zh-writing\/case-1$/);
   await expect(page.locator('section#zh-exemplar').getByTestId('zh-exemplar-label')).toBeVisible();
   expect(postedBodies(backend)).toEqual([{ source: 'paste', section: 'zh_writing_emotion', prompt: short }]);
@@ -229,8 +229,8 @@ test('結果頁的程式還在下載時按「上一頁」：確認面板不卡�
   });
   await page.goto('/zh-writing?prompt=zh-111-2');
   const detail = page.getByRole('article', { name: '111 學測國寫・第二大題（情意）' });
-  await detail.getByRole('button', { name: '看一篇 AI 示範（8 點）' }).click();
-  await detail.getByRole('button', { name: '確定，用 8 點' }).click();
+  await detail.getByRole('button', { name: '看一篇 AI 示範（10 點）' }).click();
+  await detail.getByRole('button', { name: '確定，用 10 點' }).click();
   await expect.poll(() => postedBodies(backend).length).toBe(1);
   // 結果頁的程式正在下載（還沒換頁）時按「上一頁」。
   await expect.poll(() => delayed).toBe(1);
@@ -247,20 +247,20 @@ test('結果頁的程式還在下載時按「上一頁」：確認面板不卡�
   expect(errors).toEqual([]);
 });
 
-test('失敗：退還說明 →「再試一次（8 點）」→ POST {source:case} → 結果', async ({ page }) => {
+test('失敗：退還說明 →「再試一次（10 點）」→ POST {source:case} → 結果', async ({ page }) => {
   const errors = collectErrors(page);
   const { backend, assist } = await setup(page, { zhExemplarFailure: 'timeout' });
   await page.goto('/zh-writing?prompt=zh-115-2');
   const detail = page.getByRole('article', { name: '115 學測國寫・第二大題（情意）' });
   await expect(detail.getByText('圖的文字描述（本站依題本整理，只抄錄圖上的字）').first()).toBeVisible();
-  await detail.getByRole('button', { name: '看一篇 AI 示範（8 點）' }).click();
-  await detail.getByRole('button', { name: '確定，用 8 點' }).click();
+  await detail.getByRole('button', { name: '看一篇 AI 示範（10 點）' }).click();
+  await detail.getByRole('button', { name: '確定，用 10 點' }).click();
   const section = page.locator('section#zh-exemplar');
   await expect(section.getByTestId('zh-exemplar-failed')).toHaveText('AI 回應逾時，點數已經退還。');
 
   assist.options.zhExemplarFailure = undefined;
-  await section.getByRole('button', { name: '再試一次（8 點）' }).click();
-  await section.getByRole('button', { name: '確定，用 8 點' }).click();
+  await section.getByRole('button', { name: '再試一次（10 點）' }).click();
+  await section.getByRole('button', { name: '確定，用 10 點' }).click();
   await expect(section.getByTestId('zh-exemplar-label')).toBeVisible();
   expect(postedBodies(backend)).toEqual([
     { source: 'past', prompt_id: 'zh-115-2' },

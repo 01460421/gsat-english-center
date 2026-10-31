@@ -2,28 +2,34 @@
  * AI 寫的國文示範文字的共同規則（國寫範文設計 §5.1 第 3、7–10 步、§5.4、§10）：國寫範文（exemplar.ts）的段落與問題（一）答案，
  * 以及國寫指導的示範段（output.ts 的 postWriting）用同一組檢查。全部確定性、不呼叫模型。
  *
- *   zhFixSamplePunct   半形的 , ; : ? ! 夾在漢字後面換成全形；“”‘’ 換成「」『』；引號外的驚嘆號換成「。」。
- *   zhSampleSentences  句子（以。！？分開，引號裡的句末標點不分句，句末標點後緊接的收引號留在這一句）。
- *   zhCheckSampleQuotes 「…」的引文規則（§5.4）：題目裡找得到 → 保留；≥ 8 個漢字、題目沒有 → 古文語料核對：完全相同保留、
- *                      幾乎相同換成語料版本、查不到時有出處標記就整句拿掉（編造的名言）、沒有出處標記只拿掉引號；
- *                      < 8 個漢字（強調用的關鍵詞）保留。對話不算引文：一般人物（「媽媽說：」「公車司機回頭說：」）任何題型；
- *                      「我說：」任何題型（「我想起某人說」不算）；「他說：」「她問：」只在情意的敘事、而且同一段前面提過一般人物、
- *                      沒有名人或出處的字樣時才算（「愛因斯坦是科學家，他說：」「史懷哲……他曾說：」都當成引用名人）。
+ *   zhFixSamplePunct   半形的 , ; : ? ! 夾在漢字後面換成全形；“”‘’ 換成「」『』；引號外的驚嘆號：國寫指導的示範段換成「。」
+ *                      （示範段的規則是不用驚嘆號），國寫範文保留（2026-10-31：有目的的語氣是好文章的一部分，只計數）。
+ *   zhSampleSentences  句子（shared；以。！？分開，引號裡的句末標點不分句，「…。」後面不是說話標記時在收引號後分句）。
+ *   zhDialogueHits     引號對話（shared 的 zhFindDialogue；站主 2026-10-31：「不能有引號對話，你在寫文章不是小說」）：題目裡找得到的
+ *                      字（素材、關鍵詞、題目）與古文語料查得到的名句不算。以前情意題允許一般人物的對話，現在任何題型都不寫。
+ *   zhCheckSampleQuotes 「…」的引文規則（§5.4）：有引號對話的句子整句拿掉（dialogue_removed；國寫範文在最後一次產生才走到這裡，
+ *                      第一次命中先付費重寫）；其餘的引號：題目裡找得到 → 保留；≥ 8 個漢字、題目沒有 → 古文語料核對：完全相同保留、
+ *                      幾乎相同換成語料版本、查不到時有出處標記就整句拿掉（編造的名言）、沒有出處標記而且是完整的句子
+ *                      只拿掉引號（詞組照留：自己命名的說法是修辭）；< 8 個漢字（強調用的關鍵詞）保留。
  *   zhStripSampleSentences 套語（ZH_CONTEST_STOCK_PATTERNS，題目本身引用的不算）、未經查證的說法（研究、調查、統計、報告、
  *                      民調…而且有題目沒有的數字：阿拉伯或全形數字、百分之N、N成、帶單位的中文數字）、得獎字樣、等第句：整句拿掉。
  *   zhCountSampleWords 通用套語、競賽詞彙、高頻人物（題目沒提到的）：只計數。
- *   zhDemoGuards       國寫指導的示範段（§10）：比賽指紋、比賽套語、要拿掉的引文任一命中就拿掉那一筆；標點就地修正；詞彙只計數。
+ *   zhDemoGuards       國寫指導的示範段（§10）：比賽指紋、比賽套語、引號對話、要拿掉的引文任一命中就拿掉那一筆；標點就地修正；
+ *                      詞彙只計數。
  */
 import {
   ZH_CLICHE_PATTERNS,
   ZH_CONTEST_STOCK_PATTERNS,
   ZH_CONTEST_WORDS,
   ZH_OVERUSED_FIGURES,
+  zhFindDialogue,
   zhFindQuote,
+  zhSampleSentences,
   zhStripGradeSentences,
   type AssistQuestionView,
   type ZhChecks,
   type ZhCheckCounter,
+  type ZhDialogueHit,
 } from '@gsat/shared';
 import { ZH_CLASSIC_QUOTE_MIN_HAN, zhLookupClassic } from './classics';
 import { zhContestHit } from './contest';
@@ -44,10 +50,12 @@ const QUOTE_CLOSE = new Set(['」', '』']);
 const HALF_TO_FULL: Readonly<Record<string, string>> = { ',': '，', ';': '；', ':': '：', '?': '？', '!': '！' };
 
 /**
- * 標點（§5.1 第 3 步）：彎引號換成「」『』；半形的 , ; : ? ! 接在漢字或收引號後面時換全形；引號外的驚嘆號換成「。」
- * （前一個字已經是句末標點時直接拿掉，不留「。。」）。回傳修正後的文字與兩種計數。
+ * 標點（§5.1 第 3 步）：彎引號換成「」『』；半形的 , ; : ? ! 接在漢字或收引號後面時換全形。引號外的驚嘆號：exclaim 'replace'
+ * （預設；國寫指導的示範段）換成「。」（前一個字已經是句末標點時直接拿掉，不留「。。」）；'keep'（國寫範文）保留、只計數。
+ * 回傳修正後的文字與兩種計數（exclaim＝引號外的驚嘆號個數，換掉或保留的都算）。
  */
-export function zhFixSamplePunct(text: string): { text: string; fixed: number; exclaim: number } {
+export function zhFixSamplePunct(text: string, opts: { exclaim?: 'replace' | 'keep' } = {}): { text: string; fixed: number; exclaim: number } {
+  const replace = opts.exclaim !== 'keep';
   let fixed = 0;
   let out = text.replace(/[“”‘’]/gu, (ch) => {
     fixed += 1;
@@ -65,7 +73,11 @@ export function zhFixSamplePunct(text: string): { text: string; fixed: number; e
     else if (QUOTE_CLOSE.has(ch)) depth = Math.max(0, depth - 1);
     if (depth === 0 && (ch === '！' || ch === '!')) {
       exclaim += 1;
-      if (!/[。？?…]$/u.test(result)) result += '。';
+      if (replace) {
+        if (!/[。？?…]$/u.test(result)) result += '。';
+        continue;
+      }
+      result += '！';
       continue;
     }
     result += ch;
@@ -75,64 +87,29 @@ export function zhFixSamplePunct(text: string): { text: string; fixed: number; e
 
 // ───────────────────────── 句子 ─────────────────────────
 
-/** 句子：以。！？或換行分開；引號裡的句末標點不分句；句末標點後面緊接的句末標點與收引號留在這一句。 */
-export function zhSampleSentences(text: string): string[] {
-  const out: string[] = [];
-  const chars = [...text];
-  let cur = '';
-  let depth = 0;
-  for (let i = 0; i < chars.length; i++) {
-    const ch = chars[i]!;
-    if (ch === '\n') {
-      if (cur !== '') out.push(cur);
-      cur = '';
-      depth = 0;
-      continue;
-    }
-    cur += ch;
-    if (QUOTE_OPEN.has(ch)) depth += 1;
-    else if (QUOTE_CLOSE.has(ch)) depth = Math.max(0, depth - 1);
-    else if (depth === 0 && /[。！？!?]/u.test(ch)) {
-      while (i + 1 < chars.length && /[。！？!?」』）)]/u.test(chars[i + 1]!)) cur += chars[++i]!;
-      out.push(cur);
-      cur = '';
-    }
-  }
-  if (cur !== '') out.push(cur);
-  return out;
-}
+/** 句子（搬到 shared；這裡照舊匯出，呼叫端不用改）。 */
+export { zhSampleSentences };
 
 // ───────────────────────── 引文（§5.4） ─────────────────────────
 
 /** 出處標記（「〈」「《」「曰」「云」「說」「寫道」「提到」「指出」「名言」「所言」）：引號前 20 字內有這些就當成引用某人某書。 */
 const ATTRIBUTION_RE = /〈|《|曰|云|說|寫道|提到|指出|名言|所言/u;
-/** 日常生活裡的一般人物（家人、學校、路上遇到的人）：情意題的敘事常有他們說的話。 */
-const EVERYDAY_SPEAKERS =
-  '媽媽|爸爸|母親|父親|老媽|老爸|阿嬤|阿公|奶奶|爺爺|外婆|外公|祖母|祖父|弟弟|妹妹|哥哥|姊姊|姐姐|表哥|表姊|表姐|表弟|表妹|堂哥|堂姊|堂弟|堂妹|' +
-  '阿姨|叔叔|伯伯|伯父|伯母|嬸嬸|舅舅|舅媽|姑姑|姑丈|姨丈|家人|老師|導師|班導|教官|校長|主任|同學|學長姊|學長|學姊|學姐|學弟|學妹|班長|' +
-  '隊長|社長|組長|隊友|社員|室友|同桌|朋友|好友|鄰居|店員|店長|老闆娘|老闆|司機|教練|護理師|護士|醫生|警衛|志工|服務生|客人|乘客|路人|' +
-  '老先生|老太太|老爺爺|老奶奶|老人|阿伯|大叔|小朋友|小孩|孩子|男孩|女孩|館員|管理員|清潔員|廚師|攤販';
-const SPEAK = '(?:說|問|喊|叫|回答|答)[：:，,]?$';
-/** 一般人物說的話（對話）：引號前是「媽媽說：」「公車司機回頭說：」這類，不當成名言（任何題型）。 */
-const NOUN_DIALOGUE_RE = new RegExp(`(?:${EVERYDAY_SPEAKERS})[^，。！？「」『』]{0,4}${SPEAK}`, 'u');
-/** 第一人稱說的話（「我說：」「我們問：」）；「我想起某人說」「我曾聽人說」不算（任何題型）。 */
-const FIRST_PERSON_DIALOGUE_RE = new RegExp(`(?<![對跟和向訴給教])(?:我們|我)(?!想起|想到|記得|常|也曾)[^，。！？「」『』曾常聽讀想記引]{0,3}${SPEAK}`, 'u');
-/** 第二、三人稱說的話（「他笑著說：」）；「他曾說」「她常說」不算。只在情意的敘事，而且要看同一段前面的文字（見 isDialogue）。 */
-const OTHER_PERSON_DIALOGUE_RE = new RegExp(`(?:他們|她們|你們|他|她|你)(?!常|也曾)[^，。！？「」『』曾常聽讀想記引]{0,3}${SPEAK}`, 'u');
-const EVERYDAY_SPEAKER_RE = new RegExp(EVERYDAY_SPEAKERS, 'u');
-/** 名人或出處的字樣：同一段前面有這些時，「他說」多半是在引用名人。 */
-const FAMOUS_CONTEXT_RE = /《|〈|曾經?說|名言|演講|著作|書中|書裡|作家|科學家|哲學家|思想家|文學家|發明家|藝術家|音樂家|詩人|名人|偉人|總統|諾貝爾|創辦人|執行長/u;
+
+function inQuestion(inner: string, q: Pick<AssistQuestionView, 'blocks'>): boolean {
+  return (q.blocks ?? []).some((b) => zhFindQuote(b.text, inner) !== null);
+}
 
 /**
- * 引號前的文字是不是一般人的對話（不當成名言）。before＝這一句引號前最多 20 字；prior＝同一段裡引號前的全部文字。
- * 情意的「他說：」要同一段前面提過一般人物（「他」指的是那個人），而且沒有名人或出處的字樣；「你說：」不必有前面的人物。
+ * 引號對話（shared 的 zhFindDialogue）：題目裡找得到的字（素材的引文、題目的關鍵詞、題目）與古文語料查得到的名句（≥ 8 個漢字）
+ * 不算。回傳命中的句子（zhSampleSentences 的索引）與種類。
  */
-function isDialogue(before: string, prior: string, narrative: boolean): boolean {
-  if (NOUN_DIALOGUE_RE.test(before) || FIRST_PERSON_DIALOGUE_RE.test(before)) return true;
-  const other = narrative ? OTHER_PERSON_DIALOGUE_RE.exec(before) : null;
-  if (!other) return false;
-  if (FAMOUS_CONTEXT_RE.test(prior) || ZH_OVERUSED_FIGURES.some((f) => prior.includes(f))) return false;
-  return other[0].startsWith('你') || EVERYDAY_SPEAKER_RE.test(prior);
+export function zhDialogueHits(text: string, q: Pick<AssistQuestionView, 'blocks'>): ZhDialogueHit[] {
+  return zhFindDialogue(text, (inner) => {
+    if (inQuestion(inner, q)) return true;
+    if (hanCount(inner) < ZH_CLASSIC_QUOTE_MIN_HAN) return false;
+    const r = zhLookupClassic(inner);
+    return r.kind === 'exact' || r.kind === 'near' || r.kind === 'ambiguous';
+  });
 }
 
 export interface ZhQuoteCheck {
@@ -142,21 +119,20 @@ export interface ZhQuoteCheck {
   longMaterial: number;
 }
 
-function inQuestion(inner: string, q: Pick<AssistQuestionView, 'blocks'>): boolean {
-  return (q.blocks ?? []).some((b) => zhFindQuote(b.text, inner) !== null);
-}
-
 /**
  * 一段示範的引文（見檔頭）。直接改 checks；回傳新文字（拿掉句子、換成語料版本或拿掉引號之後）。
- * opts.narrative：情意題的敘事（「他說：」「她問：」可能是一般人的對話）；知性題與不確定的題型是 false。
+ * 引號對話的句子整句拿掉（dialogue_removed），不論題型（站主 2026-10-31；以前情意題保留一般人物的對話）。
  */
-export function zhCheckSampleQuotes(text: string, q: Pick<AssistQuestionView, 'blocks'>, checks: ZhChecks, opts: { narrative?: boolean } = {}): ZhQuoteCheck {
+export function zhCheckSampleQuotes(text: string, q: Pick<AssistQuestionView, 'blocks'>, checks: ZhChecks): ZhQuoteCheck {
   let material = 0;
   let longMaterial = 0;
   const kept: string[] = [];
-  /** 這一段前面的句子（原文；判斷「他說」指的是誰）。 */
-  let earlier = '';
-  for (const sentence of zhSampleSentences(text)) {
+  const dialogue = new Set(zhDialogueHits(text, q).map((h) => h.sentence));
+  zhSampleSentences(text).forEach((sentence, index) => {
+    if (dialogue.has(index)) {
+      bump(checks, 'dialogue_removed');
+      return;
+    }
     let drop = false;
     const next = sentence.replace(/「([^「」]+)」/gu, (whole, inner: string, offset: number) => {
       if (drop) return whole;
@@ -173,18 +149,19 @@ export function zhCheckSampleQuotes(text: string, q: Pick<AssistQuestionView, 'b
         return `「${r.original}」`;
       }
       const before = [...sentence.slice(0, offset)].slice(-20).join('');
-      if (isDialogue(before, earlier + sentence.slice(0, offset), opts.narrative === true)) return whole;
       if (ATTRIBUTION_RE.test(before)) {
         drop = true;
         return whole;
       }
+      // 沒有出處標記：一個完整的句子（有句中或句末標點）像是沒說出處的名言，拿掉引號當成自己的話；一個詞組（自己命名的說法、
+      // 強調的詞）是修辭，照留（2026-10-31 放寬：以前 8 字以上一律拿掉引號）。
+      if (!/[，。！？；、,.!?;]/u.test(inner)) return whole;
       bump(checks, 'quote_unmarked');
       return inner;
     });
     if (drop) bump(checks, 'attribution_removed');
     else kept.push(next);
-    earlier += sentence;
-  }
+  });
   bump(checks, 'material_quote_long', longMaterial);
   return { text: kept.join('').trim(), material, longMaterial };
 }
@@ -192,11 +169,12 @@ export function zhCheckSampleQuotes(text: string, q: Pick<AssistQuestionView, 'b
 // ───────────────────────── 整句拿掉的規則 ─────────────────────────
 
 /**
- * 說法的來源字樣（§5.1 第 9 步）：研究、調查、統計、報告、民調、新聞、數據…（「研究了一下」「研究過」這類動詞不算）。
+ * 說法的來源字樣（§5.1 第 9 步）：研究、調查、統計、報告、民調、新聞、數據…（「研究了一下」「研究過」這類動詞，以及
+ * 「研究所、研究生、研究員、研究室」這些名詞不算：「姊姊讀研究所兩年」是敘事，不是編造的統計）。
  * 比對前先 NFKC（全形字母數字換半形）。
  */
 const CLAIM_RE =
-  /研究(?![了過一])|調查|統計|普查|民調|問卷|數據|報告(?:指出|顯示|發現)|新聞(?:報導|指出)|資料顯示|實驗(?:顯示|發現|證明|證實)|(?:專家|學者)(?:指出|表示|發現|估計)|據估計|根據[^。！？]{0,20}報導/u;
+  /研究(?![了過一所生員室])|調查|統計|普查|民調|問卷|數據|報告(?:指出|顯示|發現)|新聞(?:報導|指出)|資料顯示|實驗(?:顯示|發現|證明|證實)|(?:專家|學者)(?:指出|表示|發現|估計)|據估計|根據[^。！？]{0,20}報導/u;
 /** 阿拉伯數字（NFKC 之後；含小數、千分位與 %）與「百分之N」。 */
 const DIGIT_NUMBER_RE = /\d+(?:[.,]\d+)*\s*%?|百分之[零〇一二兩三四五六七八九十百]+(?:點[零〇一二三四五六七八九]+)?/gu;
 /** 中文數字＋（多／餘／來）＋單位：「兩千三百名」「三萬多名」「近兩成」「三小時」「一個半小時」。 */
@@ -222,8 +200,19 @@ function sampleNumbers(text: string): string[] {
   out.push(...[...text.matchAll(HALF_RE)].map((m) => m[0]));
   return out;
 }
-/** 得獎字樣（§5.1 第 10 步）：示範不提任何比賽或得獎作品。 */
-export const ZH_CONTEST_MENTION_RE = /得獎|特優|第[一二三]名|佳作|語文競賽/u;
+/**
+ * 得獎字樣（§5.1 第 10 步）：示範不提任何比賽或得獎作品。「佳作」「語文競賽」「文學獎」「徵文」一律算；「得獎、特優、第一二三名、
+ * 首獎」只在同一句提到寫作（作文、文章、寫作、語文、演講、朗讀、這篇、範文、示範）時才算（2026-10-31 放寬：「那場接力賽我們拿了
+ * 第二名」「段考第一名」是敘事，整句拿掉會傷到好文章）。
+ */
+const CONTEST_ALWAYS_RE = /佳作|語文競賽|文學獎|徵文/u;
+const CONTEST_PLACE_RE = /得獎|特優|第[一二三]名|首獎/u;
+const WRITING_CONTEXT_RE = /作文|文章|寫作|語文|演講|朗讀|這篇|範文|示範/u;
+
+/** 這段文字有沒有得獎字樣（逐句看；見上）。評測的 K 組用同一支。 */
+export function zhContestMention(text: string): boolean {
+  return zhSampleSentences(text).some((s) => CONTEST_ALWAYS_RE.test(s) || (CONTEST_PLACE_RE.test(s) && WRITING_CONTEXT_RE.test(s)));
+}
 
 /** 題目本身引用了的比賽套語（照題目寫不算套語）。 */
 function stockAllowed(q: Pick<AssistQuestionView, 'blocks'>): Set<number> {
@@ -255,7 +244,7 @@ export function zhStripSampleSentences(
       bump(checks, 'claim_removed');
       return false;
     }
-    if (kinds.mention && ZH_CONTEST_MENTION_RE.test(s)) {
+    if (kinds.mention && zhContestMention(s)) {
       bump(checks, 'contest_mention_removed');
       return false;
     }
@@ -284,14 +273,14 @@ export function zhCountSampleWords(text: string, q: Pick<AssistQuestionView, 'bl
 
 /**
  * 國寫指導的一筆示範（句子或主體段示範）：要拿掉回 null（呼叫端計數並加 example_rule_removed 說明），否則回標點修正後的文字。
- * 比賽指紋（題目本身的窗口不算）、比賽套語（題目引用的不算）、引文規則判定要拿掉句子，任一命中就拿掉整筆；不重試。
+ * 比賽指紋（題目本身的窗口不算）、比賽套語（題目引用的不算）、引號對話（站主 2026-10-31）、引文規則判定要拿掉句子，任一命中
+ * 就拿掉整筆；不重試。
  */
 export function zhDemoGuards(
   text: string,
   q: Pick<AssistQuestionView, 'blocks'>,
   contest: { set: ReadonlySet<number> | undefined; allowed: ReadonlySet<string> },
   checks: ZhChecks,
-  opts: { narrative?: boolean } = {},
 ): string | null {
   if (text === '') return text;
   if (zhContestHit(text, contest.set, contest.allowed)) {
@@ -303,8 +292,12 @@ export function zhDemoGuards(
     bump(checks, 'stock_line_removed');
     return null;
   }
+  if (zhDialogueHits(text, q).length > 0) {
+    bump(checks, 'dialogue_removed');
+    return null;
+  }
   const before = checks.attribution_removed ?? 0;
-  const quoted = zhCheckSampleQuotes(text, q, checks, opts);
+  const quoted = zhCheckSampleQuotes(text, q, checks);
   if ((checks.attribution_removed ?? 0) > before) return null;
   const punct = zhFixSamplePunct(quoted.text);
   bump(checks, 'punct_fixed', punct.fixed);

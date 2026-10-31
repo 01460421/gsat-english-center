@@ -287,6 +287,22 @@ describe('設定（src/config.ts）', () => {
     expect([mixed.ai.assistantSubjects, mixed.ai.essayExemplars]).toEqual(['off', 'off']);
   });
 
+  it('AI_EFFORT_ZH_EXEMPLAR：國寫範文自己的 effort（2026-10-31 起和解析的 AI_EFFORT_ASSIST 分開）；兩邊都是 high；不合法的值用預設值', () => {
+    expect(CONFIG_DEFAULTS.AI_EFFORT_ZH_EXEMPLAR).toBe('high');
+    const toml = readFileSync(new URL('../wrangler.toml', import.meta.url), 'utf8');
+    expect(toml.match(/^AI_EFFORT_ZH_EXEMPLAR\s*=\s*"([^"]*)"/m)?.[1]).toBe('high');
+    expect(loadConfig(baseEnv).ai.effort).toMatchObject({ assist: 'medium', zhExemplar: 'high' });
+    expect(loadConfig({ ...baseEnv, AI_EFFORT_ZH_EXEMPLAR: 'medium' }).ai.effort).toMatchObject({ assist: 'medium', zhExemplar: 'medium' });
+    expect(loadConfig({ ...baseEnv, AI_EFFORT_ASSIST: 'low' }).ai.effort).toMatchObject({ assist: 'low', zhExemplar: 'high' });
+    const warn = console.warn;
+    console.warn = () => {};
+    try {
+      expect(loadConfig({ ...baseEnv, AI_EFFORT_ZH_EXEMPLAR: 'highest' }).ai.effort.zhExemplar).toBe('high');
+    } finally {
+      console.warn = warn;
+    }
+  });
+
   it('AI_ESSAY_EXEMPLARS：程式預設固定是 off；wrangler.toml 明確寫 "off"、"admin" 或 "on"（docs/design/model-essays.md §7.5）；effort 兩邊都是 medium', () => {
     // 目前是 on（2026-10-30 上線）；緊急關閉（off）或只留給管理員（admin）都只改 wrangler.toml 那一行，部署前的測試
     // 不擋任何一種，所以這裡不把值寫死（同上面學習助手的測試）。漏設時偏向關。

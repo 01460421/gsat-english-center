@@ -1,6 +1,6 @@
 /**
  * 「選歷屆題目」分頁：111–115 學測國寫的十題（/data/zh-writing/prompts.json），依學年度分組；按一題 → 這一題的完整題目
- * （素材、圖的文字描述、引導問題、題本印的字數規定）→「看這一題的 AI 示範（8 點）」→ 行內確認 → POST
+ * （素材、圖的文字描述、引導問題、題本印的字數規定）→「看這一題的 AI 示範（10 點）」→ 行內確認 → POST
  * /api/assist/zh-exemplars {source:'past', prompt_id} → 結果頁。選了哪一題記在網址 ?prompt=（由頁面持有）。
  *
  * 這一題已經有案例（GET /api/assist/zh-exemplars?via=past 裡有同一個代號；不受「我的國寫範文」第一頁 20 筆的限制）時：連到結果頁；

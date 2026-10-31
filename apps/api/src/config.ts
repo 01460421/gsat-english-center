@@ -44,6 +44,9 @@ export const CONFIG_DEFAULTS = {
   // 學習助手的國寫範文（國寫範文設計 §7）：同上，程式的預設固定是 off（fail closed）；開放、只留給管理員、緊急關閉都只改
   // wrangler.toml 那一行。另外要國文（AI_ASSISTANT_SUBJECTS）也對這位使用者開放。
   AI_ZH_EXEMPLAR: 'off',
+  // 國寫範文的 effort（2026-10-31 起自己一個設定，不再沿用解析的 AI_EFFORT_ASSIST）：high，讓模型先構思立意、取材與結構再寫
+  // （站主試用後說範文沒有達到最高等級）。兩邊一致（skeleton.test.ts）；成本與點數見 tasks.ts 的 ZH_TASK_SIZES。
+  AI_EFFORT_ZH_EXEMPLAR: 'high',
   AI_POINTS_USER_DAY: 30,
   AI_POINTS_USER_MONTH: 300,
   AI_POINTS_TRIAL_DAY: 10,
@@ -121,8 +124,8 @@ export interface AppConfig {
     apiKey: string | null;
     baseUrl: string;
     models: { default: string; secondRater: string };
-    /** exemplars：作文範文（AI_EFFORT_EXEMPLARS，docs/design/model-essays.md §3.1）。 */
-    effort: { grade: AiEffort; ocr: AiEffort; assist: AiEffort; chat: AiEffort; exemplars: AiEffort };
+    /** exemplars：作文範文（AI_EFFORT_EXEMPLARS，docs/design/model-essays.md §3.1）；zhExemplar：學習助手的國寫範文（AI_EFFORT_ZH_EXEMPLAR）。 */
+    effort: { grade: AiEffort; ocr: AiEffort; assist: AiEffort; chat: AiEffort; exemplars: AiEffort; zhExemplar: AiEffort };
     /**
      * 英文作文自訂題目的總開關（AI_CUSTOM_ESSAY；fail closed，見 customEssaySwitch）。關閉時新的自訂題建立、修改題目、
      * 送辨識、送批改都回 503；已經排入 Queue 的照常完成，結果頁照常顯示。
@@ -286,6 +289,7 @@ export function loadConfig(env: Env): AppConfig {
         assist: effort('AI_EFFORT_ASSIST', env.AI_EFFORT_ASSIST, D.AI_EFFORT_ASSIST),
         chat: effort('AI_EFFORT_CHAT', env.AI_EFFORT_CHAT, D.AI_EFFORT_CHAT),
         exemplars: effort('AI_EFFORT_EXEMPLARS', env.AI_EFFORT_EXEMPLARS, D.AI_EFFORT_EXEMPLARS),
+        zhExemplar: effort('AI_EFFORT_ZH_EXEMPLAR', env.AI_EFFORT_ZH_EXEMPLAR, D.AI_EFFORT_ZH_EXEMPLAR),
       },
       customEssay: customEssaySwitch(env.AI_CUSTOM_ESSAY),
       assistant: featureModeSwitch('AI_ASSISTANT', env.AI_ASSISTANT),

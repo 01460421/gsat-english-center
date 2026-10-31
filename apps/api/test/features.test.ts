@@ -359,12 +359,12 @@ describe('國寫範文的開關（AI_ZH_EXEMPLAR；國寫範文設計 §7）', (
     const quota = async (env: TestEnv, user: Parameters<typeof cookieFor>[0]) => (await (await call(env, 'GET', '/api/ai/quota', { cookie: await cookieFor(user) })).json()) as AiQuotaResponse;
     const env = aiEnv({ ...ON, AI_ZH_EXEMPLAR: 'on' });
     const student = insertUser(env.DB, { aiStatus: 'approved' });
-    seedAssistOp(env.DB, student.id, 'assist_zh_exemplar', crypto.randomUUID(), { points: 8 });
-    const refunded = seedAssistOp(env.DB, student.id, 'assist_zh_exemplar', crypto.randomUUID(), { points: 8 });
+    seedAssistOp(env.DB, student.id, 'assist_zh_exemplar', crypto.randomUUID(), { points: 10 });
+    const refunded = seedAssistOp(env.DB, student.id, 'assist_zh_exemplar', crypto.randomUUID(), { points: 10 });
     env.DB.sqlite.prepare("UPDATE ai_ops SET status = 'refunded', points_charged = 0 WHERE id = ?").run(refunded);
     const body = await quota(env, student);
     expect(body.assist).toEqual({ reports: { day_used: 0, day_limit: 2 }, ocr: { day_used: 0, day_limit: 6 }, zh_exemplars: { day_used: 1, day_limit: 3 } });
-    expect(body.task_points.assist_zh_exemplar).toBe(8);
+    expect(body.task_points.assist_zh_exemplar).toBe(10);
     const off = aiEnv(ON);
     const s2 = insertUser(off.DB, { aiStatus: 'approved' });
     expect((await quota(off, s2)).assist).toEqual({ reports: { day_used: 0, day_limit: 2 }, ocr: { day_used: 0, day_limit: 6 } });

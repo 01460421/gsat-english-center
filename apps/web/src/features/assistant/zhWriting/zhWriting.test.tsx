@@ -2,7 +2,7 @@
  * 國寫範文的獨立頁（docs/design/assistant-subjects.md「國寫範文」的「獨立頁」）：
  *   純函式   貼上表單的檢查（題型、必填、長度、字數規定、國文貼上的檢查放回對應欄位）、字數規定的解析、列表的狀態、依學年度分組、
  *            開關判斷（國文那一筆的 exemplar）。
- *   首頁     開關與核准（沒開＋登入是唯讀、沒登入只顯示暫停、沒核准只說明怎麼開通）；歷屆題目 → 題目全文 → 行內確認（8 點、今天
+ *   首頁     開關與核准（沒開＋登入是唯讀、沒登入只顯示暫停、沒核准只說明怎麼開通）；歷屆題目 → 題目全文 → 行內確認（10 點、今天
  *            還有幾點、固定標籤、不能當成自己的作品繳交）→ POST {source:'past'} → 結果頁；貼上題目 → 檢查 → 確認 → POST
  *            {source:'paste'}；Worker 擋下題目時錯誤放回那一欄；每天上限的錯誤留在確認面板；我的國寫範文。
  *   結果頁   輪詢到寫好（唸出來、焦點移到固定標籤）、失敗的退還與「再試一次」（POST {source:'case'}）、2 篇時的說明與切換、
@@ -304,11 +304,11 @@ describe('/zh-writing：選歷屆題目', () => {
     await waitFor(() => expect(document.activeElement).toBe(screen.getByRole('button', { name: /情意：那一扇窗/ })));
   });
 
-  it('看一篇 AI 示範 → 行內確認（8 點、今天還有幾點、今天看過幾篇、固定標籤、不能繳交）→ 確定 → POST {source:past} → 結果頁', async () => {
+  it('看一篇 AI 示範 → 行內確認（10 點、今天還有幾點、今天看過幾篇、固定標籤、不能繳交）→ 確定 → POST {source:past} → 結果頁', async () => {
     const user = userEvent.setup();
     const { fetch } = render('/zh-writing?prompt=zh-111-1', {
       extra: {
-        'POST /api/assist/zh-exemplars': () => jsonResponse({ op_id: 'op', case_id: 'c1', turn_id: 'e1', status: 'queued', points: 8 }, 202),
+        'POST /api/assist/zh-exemplars': () => jsonResponse({ op_id: 'op', case_id: 'c1', turn_id: 'e1', status: 'queued', points: 10 }, 202),
         'GET /api/assist/cases/c1': () => jsonResponse(standaloneCase({ turns: [exemplarTurn('e1', 1, 'queued')], pending: { turn_id: 'e1', kind: 'zh_exemplar', op_id: 'op', status: 'queued' } })),
       },
     });
@@ -317,12 +317,12 @@ describe('/zh-writing：選歷屆題目', () => {
     expect(within(detail).getByText('建議先自己想好立意與段落，或寫一段，再對照示範。')).toBeInTheDocument();
     await user.click(within(detail).getByRole('button', { name: `看一篇 AI 示範（${AI_TASK_POINTS.assist_zh_exemplar} 點）` }));
     const panel = within(detail).getByRole('group', { name: '確認點數' });
-    expect(await within(panel).findByText('這次會用 8 點（今天還有 20 點）；沒有完成會全額退還。')).toBeInTheDocument();
+    expect(await within(panel).findByText('這次會用 10 點（今天還有 20 點）；沒有完成會全額退還。')).toBeInTheDocument();
     expect(within(panel).getByText('國寫的 AI 示範每天最多 3 篇，今天已經看過 1 篇。')).toBeInTheDocument();
     expect(within(panel).getByTestId('zh-exemplar-confirm-label')).toHaveTextContent(ZH_EXEMPLAR_LABEL);
     expect(within(panel).getByText('示範是 AI 寫的，不是得獎作品，也不是官方佳作；請不要當成自己的作品繳交。')).toBeInTheDocument();
     expect(document.activeElement).toBe(within(panel).getByRole('heading', { name: '確認點數' }));
-    await user.click(within(panel).getByRole('button', { name: '確定，用 8 點' }));
+    await user.click(within(panel).getByRole('button', { name: '確定，用 10 點' }));
     await waitFor(() => expect(screen.getByTestId('location')).toHaveTextContent('/zh-writing/c1'));
     expect(fetch.calls.filter((c) => c.method === 'POST')).toEqual([{ method: 'POST', path: '/api/assist/zh-exemplars', body: { source: 'past', prompt_id: 'zh-111-1' } }]);
     expect(await screen.findByText('排隊中…')).toBeInTheDocument();
@@ -332,10 +332,10 @@ describe('/zh-writing：選歷屆題目', () => {
     const user = userEvent.setup();
     render('/zh-writing?prompt=zh-111-1', { quota: { ...QUOTA_ZH, tier: 'trial', points: { day_used: 5, day_limit: 10, month_used: 5, month_limit: 100 } } });
     const detail = await screen.findByRole('article', { name: '111 學測國寫・第一大題（知性）' });
-    await user.click(within(detail).getByRole('button', { name: '看一篇 AI 示範（8 點）' }));
+    await user.click(within(detail).getByRole('button', { name: '看一篇 AI 示範（10 點）' }));
     const panel = within(detail).getByRole('group', { name: '確認點數' });
-    expect(await within(panel).findByText('今天剩 5 點，AI 示範要 8 點；明天再來看。')).toBeInTheDocument();
-    expect(within(panel).getByRole('button', { name: '確定，用 8 點' })).toBeDisabled();
+    expect(await within(panel).findByText('今天剩 5 點，AI 示範要 10 點；明天再來看。')).toBeInTheDocument();
+    expect(within(panel).getByRole('button', { name: '確定，用 10 點' })).toBeDisabled();
   });
 
   it('每天上限（429 daily_limit）：錯誤留在確認面板，不換頁', async () => {
@@ -347,8 +347,8 @@ describe('/zh-writing：選歷屆題目', () => {
       },
     });
     const detail = await screen.findByRole('article', { name: '111 學測國寫・第一大題（知性）' });
-    await user.click(within(detail).getByRole('button', { name: '看一篇 AI 示範（8 點）' }));
-    await user.click(await within(detail).findByRole('button', { name: '確定，用 8 點' }));
+    await user.click(within(detail).getByRole('button', { name: '看一篇 AI 示範（10 點）' }));
+    await user.click(await within(detail).findByRole('button', { name: '確定，用 10 點' }));
     expect(await within(detail).findByText(`今天已經看過 ${ASSIST_LIMITS.zhExemplarsPerDay} 篇國寫的 AI 示範，明天再試。`)).toBeInTheDocument();
     expect(screen.getByTestId('location')).toHaveTextContent('/zh-writing?prompt=zh-111-1');
   });
@@ -363,7 +363,7 @@ describe('/zh-writing：選歷屆題目', () => {
     await user.click(screen.getByRole('button', { name: /知性：午休自習/ }));
     const detail = await screen.findByRole('article', { name: '111 學測國寫・第一大題（知性）' });
     expect(within(detail).getByRole('link', { name: '看這一題' })).toHaveAttribute('href', '/zh-writing/c1');
-    expect(within(detail).getByRole('button', { name: '再試一次（8 點）' })).toBeInTheDocument();
+    expect(within(detail).getByRole('button', { name: '再試一次（10 點）' })).toBeInTheDocument();
   });
 
   it('歷屆題目的案例用 ?via=past 讀（不受「我的國寫範文」第一頁 20 筆限制）：舊的案例照樣標出、已經 2 篇就不給按鈕', async () => {
@@ -391,7 +391,7 @@ describe('/zh-writing：貼上題目', () => {
     const user = userEvent.setup();
     const result = render('/zh-writing?tab=paste', {
       extra: {
-        'POST /api/assist/zh-exemplars': () => jsonResponse({ op_id: 'op', case_id: 'c2', turn_id: 'e1', status: 'queued', points: 8 }, 202),
+        'POST /api/assist/zh-exemplars': () => jsonResponse({ op_id: 'op', case_id: 'c2', turn_id: 'e1', status: 'queued', points: 10 }, 202),
         'GET /api/assist/cases/c2': () => jsonResponse(standaloneCase({ id: 'c2' }, false)),
       },
     });
@@ -420,7 +420,7 @@ describe('/zh-writing：貼上題目', () => {
     await user.click(screen.getByRole('button', { name: '下一步：確認點數' }));
     const panel = await screen.findByRole('group', { name: '確認點數' });
     expect(within(panel).getByTestId('zh-exemplar-confirm-label')).toHaveTextContent('AI 示範，不是得獎作品');
-    await user.click(within(panel).getByRole('button', { name: '確定，用 8 點' }));
+    await user.click(within(panel).getByRole('button', { name: '確定，用 10 點' }));
     await waitFor(() => expect(screen.getByTestId('location')).toHaveTextContent('/zh-writing/c2'));
     expect(fetch.calls.filter((c) => c.method === 'POST').map((c) => c.body)).toEqual([
       {
@@ -461,7 +461,7 @@ describe('/zh-writing：貼上題目', () => {
     await user.type(screen.getByRole('textbox', { name: '題目（必填）' }), ZH_SAMPLE_QUESTIONS.writing);
     await user.type(screen.getByRole('textbox', { name: '素材（選填）' }), '這是一段素材文字。');
     await user.click(screen.getByRole('button', { name: '下一步：確認點數' }));
-    await user.click(await screen.findByRole('button', { name: '確定，用 8 點' }));
+    await user.click(await screen.findByRole('button', { name: '確定，用 10 點' }));
     const material = screen.getByRole('textbox', { name: '素材（選填）' });
     await waitFor(() => expect(document.activeElement).toBe(material));
     expect(screen.queryByRole('group', { name: '確認點數' })).toBeNull();
@@ -548,26 +548,26 @@ describe('/zh-writing/:id：結果頁', () => {
     await waitFor(() => expect(document.querySelector('mark[data-active="true"]')?.textContent).toBe('最適合讀書'));
     expect(screen.getByRole('button', { name: '收起題目全文' })).toHaveAttribute('aria-expanded', 'true');
     // 還能再看一篇；頁尾是保存說明、學習助手的連結與刪除。
-    expect(within(section).getByRole('button', { name: '再看一篇 AI 示範（8 點）' })).toBeInTheDocument();
+    expect(within(section).getByRole('button', { name: '再看一篇 AI 示範（10 點）' })).toBeInTheDocument();
     const footer = screen.getByTestId('zh-writing-result-footer');
     expect(within(footer).getByText(ZH_EXEMPLAR_RECORDS_NOTE)).toBeInTheDocument();
     expect(within(footer).getByRole('link', { name: '在學習助手打開這一題（國寫指導、追問）' })).toHaveAttribute('href', '/assistant/case/c1');
     expect(screen.queryByRole('button', { name: /複製|列印/ })).toBeNull();
   });
 
-  it('失敗：退還說明與「再試一次（8 點）」→ 確認 → POST {source:case, case_id}', async () => {
+  it('失敗：退還說明與「再試一次（10 點）」→ 確認 → POST {source:case, case_id}', async () => {
     const user = userEvent.setup();
     const { fetch } = render('/zh-writing/c1', {
       extra: {
         'GET /api/assist/cases/c1': () => jsonResponse(standaloneCase({ turns: [exemplarTurn('e1', 1, 'failed', undefined, 'timeout')] })),
-        'POST /api/assist/zh-exemplars': () => jsonResponse({ op_id: 'op2', case_id: 'c1', turn_id: 'e2', status: 'queued', points: 8 }, 202),
+        'POST /api/assist/zh-exemplars': () => jsonResponse({ op_id: 'op2', case_id: 'c1', turn_id: 'e2', status: 'queued', points: 10 }, 202),
       },
     });
     expect(await screen.findByTestId('zh-exemplar-failed')).toHaveTextContent('AI 回應逾時，點數已經退還。');
-    await user.click(screen.getByRole('button', { name: '再試一次（8 點）' }));
+    await user.click(screen.getByRole('button', { name: '再試一次（10 點）' }));
     const panel = screen.getByRole('group', { name: '確認點數' });
     expect(within(panel).getByTestId('zh-exemplar-confirm-label')).toBeInTheDocument();
-    await user.click(within(panel).getByRole('button', { name: '確定，用 8 點' }));
+    await user.click(within(panel).getByRole('button', { name: '確定，用 10 點' }));
     await waitFor(() => expect(fetch.calls.filter((c) => c.method === 'POST').map((c) => c.body)).toEqual([{ source: 'case', case_id: 'c1' }]));
   });
 
@@ -584,7 +584,7 @@ describe('/zh-writing/:id：結果頁', () => {
     expect(screen.getByTestId('zh-exemplar-hidden')).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: '第 1 篇' }));
     expect(screen.queryByTestId('zh-exemplar-hidden')).toBeNull();
-    expect(screen.queryByRole('button', { name: /AI 示範（8 點）/ })).toBeNull();
+    expect(screen.queryByRole('button', { name: /AI 示範（10 點）/ })).toBeNull();
   });
 
   it('唯讀模式（國寫範文沒開）：照常看已有的示範，沒有「再看一篇」；刪除照常', async () => {
@@ -594,7 +594,7 @@ describe('/zh-writing/:id：結果頁', () => {
     });
     expect(await screen.findByTestId('zh-exemplar-label')).toBeInTheDocument();
     expect(screen.getByText('國寫範文暫停使用中，暫時不能送出新的題目；你之前看過的示範仍然可以看與刪除。')).toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: /AI 示範（8 點）/ })).toBeNull();
+    expect(screen.queryByRole('button', { name: /AI 示範（10 點）/ })).toBeNull();
     expect(screen.getByRole('button', { name: '刪除這一題' })).toBeEnabled();
   });
 
@@ -606,8 +606,8 @@ describe('/zh-writing/:id：結果頁', () => {
         'POST /api/assist/zh-exemplars': () => apiError(409, 'conflict'),
       },
     });
-    await user.click(await screen.findByRole('button', { name: '看一篇 AI 示範（8 點）' }));
-    await user.click(screen.getByRole('button', { name: '確定，用 8 點' }));
+    await user.click(await screen.findByRole('button', { name: '看一篇 AI 示範（10 點）' }));
+    await user.click(screen.getByRole('button', { name: '確定，用 10 點' }));
     expect(await screen.findByText('這一題要先在學習助手看過國寫指導，才能在這裡再看一篇 AI 示範。')).toBeInTheDocument();
   });
 
@@ -654,7 +654,7 @@ describe('入口', () => {
     const card = await screen.findByRole('link', { name: /^國寫範文/ });
     expect(card).toHaveAttribute('href', '/zh-writing');
     expect(card).toHaveTextContent('不必先看國寫指導');
-    expect(screen.getByTestId('zh-points-line')).toHaveTextContent('國寫範文（AI 示範）一篇 8 點');
+    expect(screen.getByTestId('zh-points-line')).toHaveTextContent('國寫範文（AI 示範）一篇 10 點');
     on.unmount();
     renderAssist('/assistant', FEATURES_ZH_ONLY);
     expect(await screen.findByRole('link', { name: /問國文題/ })).toBeInTheDocument();

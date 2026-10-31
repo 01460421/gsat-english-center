@@ -5,13 +5,13 @@
  *     可以自己刪除）。
  *   - 兩個分頁：「選歷屆題目」（111–115 學測國寫十題；PastPrompts）、「貼上題目」（題型、題目、素材、字數規定；ZhPasteForm）。
  *     分頁記在網址 ?tab=paste（預設歷屆題目），選了哪一題記在 ?prompt=。
- *   - 確認：行內面板（ZhExemplarConfirm standalone：8 點、今天還有幾點、固定標籤「AI 示範，不是得獎作品」、不能當成自己的作品繳交）。
+ *   - 確認：行內面板（ZhExemplarConfirm standalone：10 點、今天還有幾點、固定標籤「AI 示範，不是得獎作品」、不能當成自己的作品繳交）。
  *     送出成功 → /zh-writing/{case_id}（輪詢與結果）。
  *   - 「我的國寫範文」：登入才有（GET /api/assist/zh-exemplars）；空清單只在能送出時邀請學生選題。選題分頁另外讀 ?via=past
  *     （每一題看過幾篇）。送出成功時兩份都先重讀再換頁（萬一換頁沒有卸載這一頁，按「上一頁」回來看到的也是「示範產生中」）。
  *   - 不能送出（沒登入、AI 沒核准、待同意、全站暫停）：不顯示分頁，只說明怎麼開通；開關關著時已登入是唯讀模式（暫停說明＋我的國寫
  *     範文），沒登入只顯示暫停（ZhWritingGate）。
- * 點數、上限、退還與開關和學習助手裡的「看一篇 AI 示範」相同（8 點、每題 2 篇、每天 3 篇、失敗全額退還、AI_ZH_EXEMPLAR）；
+ * 點數、上限、退還與開關和學習助手裡的「看一篇 AI 示範」相同（10 點、每題 2 篇、每天 3 篇、失敗全額退還、AI_ZH_EXEMPLAR）；
  * 不需要先看國寫指導。桌機是預設寬度（desktopLayout.ts），手機與桌機同一棵樹。
  */
 import { ZH_EXEMPLAR_RECORDS_NOTE, type AssistTaskAccepted } from '@gsat/shared';

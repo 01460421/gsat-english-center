@@ -286,7 +286,7 @@ workflow 會依序：型別檢查與測試 → 檢查 token 與 workers.dev 子�
 |---|---|---|
 | `AI_ASSISTANT_SUBJECTS` | 國文的貼上、解析、追問（英文以外的科目；第一版只有國文） | `AI_ASSISTANT` |
 | `AI_ASSISTANT_SUBJECTS_PHOTO` | 國文的拍照 | `AI_ASSISTANT`、`AI_ASSISTANT_PHOTO`、`AI_ASSISTANT_SUBJECTS` |
-| `AI_ZH_EXEMPLAR` | 國寫範文：國寫案例看過國寫指導之後的「看一篇 AI 示範」，以及不必先看國寫指導的國寫範文獨立頁（選歷屆國寫或貼上題目；8 點、每天 3 篇、同一題 2 篇） | `AI_ASSISTANT`、`AI_ASSISTANT_SUBJECTS` |
+| `AI_ZH_EXEMPLAR` | 國寫範文：國寫案例看過國寫指導之後的「看一篇 AI 示範」，以及不必先看國寫指導的國寫範文獨立頁（選歷屆國寫或貼上題目；10 點、每天 3 篇、同一題 2 篇；effort 是另一個設定 `AI_EFFORT_ZH_EXEMPLAR`，預設 high） | `AI_ASSISTANT`、`AI_ASSISTANT_SUBJECTS` |
 
 - **目前兩個都是 `"on"`（2026-10-30 上線，和作文範文同一個 PR）**：國文的貼上、解析、追問與拍照都開放給已核准的學生。拍照的照片組（J 組）沒有全部達標，站主決定第一版就開拍照（「拍照也可」）；保護措施（確認畫面的字形題提醒、錯字少於題目暗示的數量時標「不確定」、轉錄看不出題目時退點）與之後要補的手機實拍見 [design/assistant-subjects.md](design/assistant-subjects.md) 的實作備註。`/api/features` 只在 `"on"` 時有 `"assistantSubjects":[{"subject":"chinese","photo":…}]`；`"admin"` 時公開端點不透露，管理員登入後 `/api/me` 的 `assistant_preview` 多一個 `subjects`。每次部署的 **Summary** 有「學習助手國文」「學習助手國文拍照」兩列，寫出 `wrangler.toml` 的值，應該都是「對所有人開放」。
 - 上線時三份說明同一次升版（2026-10-30，和作文範文共用這一次；國文的點數不寫在說明裡，調點數不必再升版）：所有人下次登入要重新同意隱私權說明與服務條款，已申請（等核准、候補）或已核准的學生下次使用 AI 前要在 `/ai/apply` 重新同意 AI 處理說明（未滿 18 歲的也要再勾一次已告知父母或監護人）。

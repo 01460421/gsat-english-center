@@ -392,7 +392,7 @@ function zhFollowupOutput() {
 
 /** 國寫情意題（本站自寫的題目）。 */
 const ZH_WRITING_QUESTION = '以「那一扇窗」為題，寫一篇文章，描述與這扇窗有關的經驗，並抒發你的感受與體會。（文長不限）';
-const ZH_EXEMPLAR_POINTS = 8;
+const ZH_EXEMPLAR_POINTS = 10;
 
 /** 國寫指導的假輸出（會通過國文的後處理：要件的引文出自題目、不給等第）。 */
 function zhWritingOutputE2E() {
@@ -948,8 +948,9 @@ async function startFakeAnthropic({ apiKey }) {
       if (body.stream !== true) p('不是串流請求');
       for (const k of ['temperature', 'top_p', 'top_k', 'thinking', 'tool_choice', 'tools', 'metadata']) if (k in body) p(`不該送 ${k}`);
       if (!Number.isInteger(body.max_tokens) || body.max_tokens <= 0) p('max_tokens 不合法');
-      // effort：批改與解析 medium、轉錄與追問 low（wrangler.toml 的 AI_EFFORT_*）。
-      if (body.output_config?.effort !== (task === 'ocr' || task === 'assist_ocr' || task === 'assist_followup' || task === 'assist_zh_followup' ? 'low' : 'medium')) p(`effort=${body.output_config?.effort}`);
+      // effort：批改與解析 medium、轉錄與追問 low、國寫範文 high（wrangler.toml 的 AI_EFFORT_*；國寫範文是 AI_EFFORT_ZH_EXEMPLAR）。
+      const wantEffort = task === 'ocr' || task === 'assist_ocr' || task === 'assist_followup' || task === 'assist_zh_followup' ? 'low' : task === 'assist_zh_exemplar' ? 'high' : 'medium';
+      if (body.output_config?.effort !== wantEffort) p(`effort=${body.output_config?.effort}`);
       if (body.output_config?.format?.type !== 'json_schema' || typeof body.output_config?.format?.schema !== 'object') p('沒有 json_schema 結構化輸出');
       if (body.fallbacks !== 'default') p('沒有 fallbacks: default');
       if (!Array.isArray(body.messages) || body.messages.length !== 1 || body.messages[0].role !== 'user') p('messages 必須只有一則 user');
@@ -986,8 +987,8 @@ async function startFakeAnthropic({ apiKey }) {
         if (userText.includes('<site_explanation>')) p('國文解析請求不該有 <site_explanation>');
         if (!userText.includes('composition guidance (國寫)')) state.zhAnalyze.push({ related: userText.includes('Related case:') });
       } else if (task === 'assist_zh_exemplar') {
-        // 國寫範文（國寫範文設計 §2）：max_tokens 14,000；<task>、題目全部區塊、國寫指導的摘要；沒有學生的文字（段落、疑問）。
-        if (body.max_tokens !== 14_000) p(`max_tokens=${body.max_tokens}`);
+        // 國寫範文（國寫範文設計 §2）：max_tokens 20,000（2026-10-31 由 14,000 改）；<task>、題目全部區塊、國寫指導的摘要；沒有學生的文字（段落、疑問）。
+        if (body.max_tokens !== 20_000) p(`max_tokens=${body.max_tokens}`);
         if (!userText.startsWith('<task>\n') || !userText.includes('<student_provided_question>') || !userText.includes('<analysis_digest>')) p('範文請求沒有 <task>、題目或摘要');
         if (userText.includes('<student_text')) p('範文請求不該有學生的文字');
         state.zhExemplar.push({ title: userText.includes('Title given: 「那一扇窗」') });

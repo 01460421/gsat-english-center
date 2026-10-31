@@ -158,7 +158,7 @@ export const QUOTA: AiQuotaResponse = {
   site: { paused: false, budget_available: true },
   approval: { cap: 49, approved: 12, full: false },
   resets_at: { day: '2026-10-09T16:00:00Z', month: '2026-10-31T16:00:00Z' },
-  task_points: { translation_grade: 3, essay_grade: 7, essay_ocr: 2, assist_ocr: 2, assist_analyze: 6, assist_followup: 3, assist_report: 10, essay_exemplars: 8, assist_zh_exemplar: 8 },
+  task_points: { translation_grade: 3, essay_grade: 7, essay_ocr: 2, assist_ocr: 2, assist_analyze: 6, assist_followup: 3, assist_report: 10, essay_exemplars: 8, assist_zh_exemplar: 10 },
 };
 
 export const ADMIN_HEALTH: AdminHealthResponse = {
@@ -815,7 +815,7 @@ export class FakeAssist {
   }
 
   /**
-   * 國寫範文（8 點；國寫範文設計 §7）：國文的國寫案例、國寫指導完成後；每一題最多 2 篇（完成＋進行中，429 assist_limit）。
+   * 國寫範文（10 點；國寫範文設計 §7）：國文的國寫案例、國寫指導完成後；每一題最多 2 篇（完成＋進行中，429 assist_limit）。
    * turn 的種類是 zh_exemplar（Worker 的資料庫是 followup，詳情回 zh_exemplar），排入佇列 → 輪詢完成。
    */
   private zhExemplar(c: AssistCaseDetail): Reply {

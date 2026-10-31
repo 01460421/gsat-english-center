@@ -1,5 +1,5 @@
 /**
- * 國寫範文的端點與 consumer（國寫範文設計 §6、§7、§9）：POST /api/assist/cases/:id/zh-exemplar 的檢查順序與上限、預扣 8 點、
+ * 國寫範文的端點與 consumer（國寫範文設計 §6、§7、§9）：POST /api/assist/cases/:id/zh-exemplar 的檢查順序與上限、預扣 10 點、
  * consumer 的重寫（同一次投遞與跨投遞）、退還、結算寫回，以及詳情、進行中、匯出、刪除與追問上下文。
  * Anthropic 一律用假回應；題目與模型輸出都是本站自寫的句子（helpers/zh.ts）；比賽語料是本站自寫的誘餌造的集合。
  */
@@ -146,14 +146,14 @@ describe('POST /api/assist/cases/:id/zh-exemplar 的檢查（§7）', () => {
     expect(row(s.env, `SELECT COUNT(*) AS n FROM ai_ops WHERE task = 'assist_zh_exemplar'`).n).toBe(0);
   });
 
-  it('202：預扣 8 點；turn 是 followup、meta_json.task＝zh_exemplar、沒有學生文字；案例的狀態與追問次數不變；進行中的 kind 是 zh_exemplar', async () => {
+  it('202：預扣 10 點；turn 是 followup、meta_json.task＝zh_exemplar、沒有學生文字；案例的狀態與追問次數不變；進行中的 kind 是 zh_exemplar', async () => {
     const s = setup();
     const caseId = await writingCase(s);
     const before = caseState(s, caseId);
     const res = await requestExemplar(s, caseId);
     expect(res.status, JSON.stringify(res.body)).toBe(202);
-    expect(res.body).toMatchObject({ case_id: caseId, status: 'queued', points: 8 });
-    expect(row(s.env, 'SELECT task, points_reserved, ref_id FROM ai_ops WHERE id = ?', res.body.op_id)).toEqual({ task: 'assist_zh_exemplar', points_reserved: 8, ref_id: res.body.turn_id });
+    expect(res.body).toMatchObject({ case_id: caseId, status: 'queued', points: 10 });
+    expect(row(s.env, 'SELECT task, points_reserved, ref_id FROM ai_ops WHERE id = ?', res.body.op_id)).toEqual({ task: 'assist_zh_exemplar', points_reserved: 10, ref_id: res.body.turn_id });
     const turn = row(s.env, 'SELECT kind, status, input_text, label, mode, meta_json FROM assist_turns WHERE id = ?', res.body.turn_id);
     expect(turn).toMatchObject({ kind: 'followup', status: 'queued', input_text: null, label: null, mode: null });
     expect(JSON.parse(turn.meta_json)).toEqual({ subject: 'chinese', task: 'zh_exemplar' });
@@ -204,12 +204,13 @@ describe('consumer：請求、結算與重寫（§2、§5.6）', () => {
     expect(msg.acked).toBe(true);
     const req = fake.requests[0]!;
     expect(req.system).toBe(assistZhExemplarSystemText());
-    expect(req.body.max_tokens).toBe(14_000);
+    expect(req.body.max_tokens).toBe(20_000);
+    expect(req.body.output_config.effort).toBe('high');
     expect(req.body.system[0].cache_control).toEqual({ type: 'ephemeral', ttl: '1h' });
     expect(req.userText).toContain('Title given: 「那一扇窗」');
     expect(req.userText).toContain(`<student_provided_question>\n[question]\n${ZH_WRITING_PROMPT}\n</student_provided_question>`);
     expect(req.userText).toContain('<analysis_digest>');
-    expect(row(s.env, 'SELECT status, points_charged FROM ai_ops WHERE id = ?', body.op_id)).toEqual({ status: 'settled', points_charged: 8 });
+    expect(row(s.env, 'SELECT status, points_charged FROM ai_ops WHERE id = ?', body.op_id)).toEqual({ status: 'settled', points_charged: 10 });
     expect(caseState(s, caseId)).toEqual(before);
     const meta = JSON.parse(row(s.env, 'SELECT meta_json FROM assist_turns WHERE id = ?', body.turn_id).meta_json);
     expect(meta).toMatchObject({ subject: 'chinese', task: 'zh_exemplar', section: 'zh_writing_emotion', content_failures: 0, zh_fp: 'test-zh-0001' });
