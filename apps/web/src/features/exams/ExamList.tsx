@@ -153,7 +153,7 @@ export function ExamList({ indexPromise, view = 'cards' }: { indexPromise: Promi
         listSearch={location.search}
         filters={
           <>
-            <fieldset className="flex flex-wrap items-center gap-2">
+            <fieldset className="flex flex-wrap items-center gap-2 @max-ws/main:gap-1.5">
               <legend className="sr-only">考試</legend>
               {KIND_FILTERS.map((k) => {
                 const count = index.exams.filter((e) => matchesKind(e, k.value)).length;
@@ -185,6 +185,7 @@ export function ExamList({ indexPromise, view = 'cards' }: { indexPromise: Promi
                 value={year === null ? '' : String(year)}
                 onChange={(e) => update({ year: e.currentTarget.value === '' ? null : Number(e.currentTarget.value) })}
                 compact
+                className="@max-ws/main:pr-7 @max-ws/main:pl-2 @max-ws/main:text-xs"
               >
                 <option value="">全部學年度</option>
                 {years.map((y) => (
@@ -213,7 +214,7 @@ export function ExamList({ indexPromise, view = 'cards' }: { indexPromise: Promi
   return (
     <div className="space-y-4">
       <div className={`${cardFrameCls} p-4 space-y-3`}>
-        <fieldset>
+        <fieldset className="min-w-0">
           <legend className="mb-2 text-sm font-semibold">考試</legend>
           <div className={chipRowCls}>
             {KIND_FILTERS.map((k) => {

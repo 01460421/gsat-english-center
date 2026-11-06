@@ -42,7 +42,7 @@ export function KindFilter({
     ...WRITING_KINDS.map((k) => ({ value: k, label: EXAM_KIND_LABELS[k] })),
   ];
   return (
-    <fieldset>
+    <fieldset className="min-w-0">
       <legend className="sr-only">{legend}</legend>
       <div className={chipRowCls}>
         {options.map((o) => (

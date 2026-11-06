@@ -55,7 +55,9 @@ import { Tooltip, useTooltipTarget } from './desktop/Tooltip';
 import { PageIcon } from './icons';
 import { RouteErrorBoundary } from './RouteErrorBoundary';
 import { ThemeToggle } from './ThemeToggle';
-import { btn, iconBtnCls } from './ui/buttons';
+import { Dialog } from './ui/Dialog';
+import { ToastProvider } from './ui/Toast';
+import { iconBtnCls } from './ui/buttons';
 
 /** 鍵盤快捷鍵說明：第一次打開才下載（只在 ≥ lg 用得到）。 */
 const ShortcutHelp = lazy(() => import('./desktop/ShortcutHelp'));
@@ -607,42 +609,13 @@ class ShortcutHelpBoundary extends Component<{ onClose: () => void; children: Re
 }
 
 function ShortcutHelpUnavailable({ onClose }: { onClose: () => void }) {
-  const ref = useRef<HTMLDialogElement>(null);
-  const titleId = useId();
-  useEffect(() => {
-    const dialog = ref.current;
-    if (!dialog) return;
-    const opener = document.activeElement instanceof HTMLElement && document.activeElement !== document.body ? document.activeElement : null;
-    if (!dialog.open) dialog.showModal();
-    const onDialogClose = () => {
-      if (!dialog.open) onClose();
-    };
-    dialog.addEventListener('close', onDialogClose);
-    return () => {
-      dialog.removeEventListener('close', onDialogClose);
-      if (dialog.open) dialog.close();
-      if (opener?.isConnected) opener.focus({ preventScroll: true });
-    };
-  }, [onClose]);
   return (
-    <dialog
-      ref={ref}
-      aria-labelledby={titleId}
-      aria-modal="true"
-      className="m-auto w-[min(28rem,calc(100%-2rem))] rounded-card border border-line bg-surface p-5 text-fg shadow-lg backdrop:bg-scrim"
-    >
-      <h2 id={titleId} className="text-lg font-semibold">
-        鍵盤快捷鍵
-      </h2>
-      <p className="mt-2 text-[0.95rem]">說明暫時載入不了，可能是網站剛更新。請重新整理頁面後再試一次。</p>
-      <button
-        type="button"
-        onClick={() => ref.current?.close()}
-        className={btn('secondary', 'md', 'mt-4')}
-      >
-        關閉
-      </button>
-    </dialog>
+    <Dialog
+      title="鍵盤快捷鍵"
+      onClose={onClose}
+      size="sm"
+      description="說明暫時載入不了，可能是網站剛更新。請重新整理頁面後再試一次。"
+    />
   );
 }
 
@@ -730,60 +703,62 @@ export function Layout() {
   const closeMenuAfterNavigate = useCallback(() => setMenuOpen(false), []);
 
   return (
-    <div className="min-h-dvh bg-bg text-fg">
-      <a
-        href="#main"
-        className="sr-only z-50 rounded-lg bg-primary px-4 py-2 text-on-primary focus:not-sr-only focus:fixed focus:top-2 focus:left-2"
-      >
-        跳到主要內容
-      </a>
-      {/* 登入後還沒同意條款或沒填年齡區間：導到 /account/welcome（features/account/RequireAccount.tsx）。 */}
-      <OnboardingRedirect />
-      <Sidebar
-        sidebar={sidebar.state}
-        canCollapse={canCollapse}
-        onToggle={toggleSidebar}
-        activePath={sidebarActivePath(location.pathname)}
-        onOpenHelp={openHelp}
-        onLinkClickCapture={interceptLeave}
-      />
-      <TopBar />
-      {/*
-        ≥ lg：main 是 container（@container/main，分欄看它的內容寬，§2.2）、直排 flex 讓頁尾貼底；
-        內容容器一定要 lg:w-full：flex 直排容器裡左右 margin: auto 的子元素不會被拉伸，會縮成內容寬度。
-      */}
-      <main
-        id="main"
-        ref={mainRef}
-        className={`pb-[calc(4.5rem+env(safe-area-inset-bottom))] lg:pb-0 ${sidebar.state === 'collapsed' ? 'lg:pl-16' : 'lg:pl-64'} lg:flex lg:min-h-dvh lg:flex-col lg:@container/main`}
-      >
-        <MainWidthProvider mainRef={mainRef} sidebar={sidebar.state}>
-          <div className={`mx-auto max-w-5xl px-4 py-6 lg:w-full lg:flex-1 lg:px-(--page-px) ${MODE_CLASSES[mode]}`}>
-            {/* key：換頁時重設錯誤邊界，上一頁的錯誤不會卡在下一頁。 */}
-            <RouteErrorBoundary key={location.pathname}>
-              <Suspense fallback={<PageLoading />}>
-                <OpenShortcutHelpContext.Provider value={openHelp}>
-                  <TimedSessionContext value={timedSessions}>
-                    <Outlet />
-                  </TimedSessionContext>
-                </OpenShortcutHelpContext.Provider>
-              </Suspense>
-            </RouteErrorBoundary>
-          </div>
-          <SiteFooter mode={mode} onOpenHelp={openHelp} onLinkClickCapture={interceptLeave} />
-        </MainWidthProvider>
-      </main>
-      <BottomNav menuOpen={menuOpen} onOpenMenu={() => setMenuOpen(true)} moreButtonRef={moreButtonRef} />
-      {menuOpen && <MoreMenu onDismiss={dismissMenu} onNavigate={closeMenuAfterNavigate} />}
-      {isDesktop && <BackToTop />}
-      {isDesktop && leavePrompt && <LeaveSessionDialog prompt={leavePrompt} onStay={stay} onLeave={leave} />}
-      {isDesktop && helpOpen && (
-        <ShortcutHelpBoundary onClose={closeHelp}>
-          <Suspense fallback={null}>
-            <ShortcutHelp onClose={closeHelp} />
-          </Suspense>
-        </ShortcutHelpBoundary>
-      )}
-    </div>
+    <ToastProvider>
+      <div className="min-h-dvh bg-bg text-fg">
+        <a
+          href="#main"
+          className="sr-only z-50 rounded-lg bg-primary px-4 py-2 text-on-primary focus:not-sr-only focus:fixed focus:top-2 focus:left-2"
+        >
+          跳到主要內容
+        </a>
+        {/* 登入後還沒同意條款或沒填年齡區間：導到 /account/welcome（features/account/RequireAccount.tsx）。 */}
+        <OnboardingRedirect />
+        <Sidebar
+          sidebar={sidebar.state}
+          canCollapse={canCollapse}
+          onToggle={toggleSidebar}
+          activePath={sidebarActivePath(location.pathname)}
+          onOpenHelp={openHelp}
+          onLinkClickCapture={interceptLeave}
+        />
+        <TopBar />
+        {/*
+          ≥ lg：main 是 container（@container/main，分欄看它的內容寬，§2.2）、直排 flex 讓頁尾貼底；
+          內容容器一定要 lg:w-full：flex 直排容器裡左右 margin: auto 的子元素不會被拉伸，會縮成內容寬度。
+        */}
+        <main
+          id="main"
+          ref={mainRef}
+          className={`pb-[calc(4.5rem+env(safe-area-inset-bottom))] lg:pb-0 ${sidebar.state === 'collapsed' ? 'lg:pl-16' : 'lg:pl-64'} lg:flex lg:min-h-dvh lg:flex-col lg:@container/main`}
+        >
+          <MainWidthProvider mainRef={mainRef} sidebar={sidebar.state}>
+            <div className={`mx-auto max-w-5xl px-4 py-6 lg:w-full lg:flex-1 lg:px-(--page-px) ${MODE_CLASSES[mode]}`}>
+              {/* key：換頁時重設錯誤邊界，上一頁的錯誤不會卡在下一頁。 */}
+              <RouteErrorBoundary key={location.pathname}>
+                <Suspense fallback={<PageLoading />}>
+                  <OpenShortcutHelpContext.Provider value={openHelp}>
+                    <TimedSessionContext value={timedSessions}>
+                      <Outlet />
+                    </TimedSessionContext>
+                  </OpenShortcutHelpContext.Provider>
+                </Suspense>
+              </RouteErrorBoundary>
+            </div>
+            <SiteFooter mode={mode} onOpenHelp={openHelp} onLinkClickCapture={interceptLeave} />
+          </MainWidthProvider>
+        </main>
+        <BottomNav menuOpen={menuOpen} onOpenMenu={() => setMenuOpen(true)} moreButtonRef={moreButtonRef} />
+        {menuOpen && <MoreMenu onDismiss={dismissMenu} onNavigate={closeMenuAfterNavigate} />}
+        {isDesktop && <BackToTop />}
+        {isDesktop && leavePrompt && <LeaveSessionDialog prompt={leavePrompt} onStay={stay} onLeave={leave} />}
+        {isDesktop && helpOpen && (
+          <ShortcutHelpBoundary onClose={closeHelp}>
+            <Suspense fallback={null}>
+              <ShortcutHelp onClose={closeHelp} />
+            </Suspense>
+          </ShortcutHelpBoundary>
+        )}
+      </div>
+    </ToastProvider>
   );
 }
