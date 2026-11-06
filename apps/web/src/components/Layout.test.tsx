@@ -298,6 +298,6 @@ describe('計時中離開確認', () => {
     const names = within(nav)
       .getAllByRole('list')
       .map((list) => list.getAttribute('aria-label') ?? document.getElementById(list.getAttribute('aria-labelledby') ?? '')?.textContent);
-    expect(names).toEqual(['開始', '單字', '選擇題型', '混合題與非選擇題', '實戰']);
+    expect(names).toEqual(['開始', '單字', '選擇題型', '混合題與非選擇題', '實戰', '數學']);
   });
 });

@@ -1,0 +1,517 @@
+{
+ "schema": "gsat-math-solutions/v1",
+ "paper_id": "gsat-mathb-111",
+ "note": "本站自撰詳解；選擇（填）題答案經兩位獨立解題者與官方答案比對，非選擇題經兩位獨立解題者比對最終結果。",
+ "items": [
+  {
+   "no": 1,
+   "type": "single",
+   "unit": "實數（絕對值不等式）",
+   "unit_tags": [
+    "real_numbers"
+   ],
+   "difficulty": {
+    "level": "穩定基礎",
+    "official_p": 0.74,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：依 $x$ 的正負去掉絕對值，分段解不等式。\n\n**詳解**\n\n1. $x\\ge0$：$2x+x<10$，$x<\\dfrac{10}{3}$，整數 $x=0,1,2,3$，共 $4$ 個。\n2. $x<0$：$-2x+x<10$，$-x<10$，$x>-10$，整數 $x=-9,-8,\\dots,-1$，共 $9$ 個。\n3. 合計 $13$ 個。\n\n**答案**：(1)",
+   "answer_display": "(1)",
+   "check": {
+    "official": "1",
+    "solver_a": "1",
+    "solver_b": "1",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 2,
+   "type": "single",
+   "unit": "實數（週期）",
+   "unit_tags": [
+    "real_numbers"
+   ],
+   "difficulty": {
+    "level": "穩定基礎",
+    "official_p": 0.83,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：一個循環「藍－白－紅－白」共 $5+2+6+2=15$ 秒，用除法找出第 $99$～$101$ 秒落在循環中的哪一段。\n\n**詳解**\n\n1. $99=15\\times6+9$，第 $90$ 秒起是第 $7$ 個循環的開始。\n2. 在一個循環內：第 $0$～$5$ 秒藍、$5$～$7$ 秒白、$7$～$13$ 秒紅、$13$～$15$ 秒白。\n3. 第 $99$～$101$ 秒對應循環內第 $9$～$11$ 秒，落在紅燈時段（$7$～$13$ 秒）。\n\n**答案**：(3)",
+   "answer_display": "(3)",
+   "check": {
+    "official": "3",
+    "solver_a": "3",
+    "solver_b": "3",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 3,
+   "type": "single",
+   "unit": "排列組合",
+   "unit_tags": [
+    "counting"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.5,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：「不相鄰」的選法用插空法；再扣掉含 $3$ 號的情形。\n\n**詳解**\n\n1. 從 $8$ 棟選 $3$ 棟互不相鄰：等價於從 $8-3+1=6$ 個位置選 $3$ 個，$C^6_3=20$ 種。\n2. 含 $3$ 號的選法：另外兩棟不能是 $2,4$ 號，也不能彼此相鄰，從 $\\{1,5,6,7,8\\}$ 選：\n   - 含 $1$ 號：另一棟從 $5,6,7,8$ 選，$4$ 種；\n   - 不含 $1$ 號：從 $5,6,7,8$ 選兩棟不相鄰：$(5,7),(5,8),(6,8)$，$3$ 種。\n\n   共 $7$ 種。\n3. 所求 $=20-7=13$ 種。\n\n**答案**：(2)",
+   "answer_display": "(2)",
+   "check": {
+    "official": "2",
+    "solver_a": "2",
+    "solver_b": "2",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 4,
+   "type": "single",
+   "unit": "指數對數、平面向量",
+   "unit_tags": [
+    "exp_log",
+    "vector_plane"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.49,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：$Q=P+\\overrightarrow{PQ}$，再用對數律化簡 $x$ 坐標、比較 $y$ 坐標兩數大小。\n\n**詳解**\n\n1. $x$ 坐標：$\\log\\dfrac12+\\log\\dfrac15=\\log\\dfrac1{10}=-1<0$。\n2. $y$ 坐標：$2^{-5}-10^{-5}=\\dfrac1{32}-\\dfrac1{100000}>0$。\n3. $Q(-1,\\ \\text{正數})$ 在第二象限。\n\n**答案**：(2)",
+   "answer_display": "(2)",
+   "check": {
+    "official": "2",
+    "solver_a": "2",
+    "solver_b": "2",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 5,
+   "type": "single",
+   "unit": "矩陣",
+   "unit_tags": [
+    "matrix"
+   ],
+   "difficulty": {
+    "level": "穩定基礎",
+    "official_p": 0.65,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：先算 $A^2$，會發現 $A^2=2I$，高次方就很好算。\n\n**詳解**\n\n1. $A^2=\\begin{bmatrix}1&1\\\\1&-1\\end{bmatrix}\\begin{bmatrix}1&1\\\\1&-1\\end{bmatrix}=\\begin{bmatrix}2&0\\\\0&2\\end{bmatrix}=2I$。\n2. $A^7=(A^2)^3A=8A$，所以 $A^7-3A=5A=\\begin{bmatrix}5&5\\\\5&-5\\end{bmatrix}$。\n3. $a+b+c+d=5+5+5-5=10$。\n\n**答案**：(5)",
+   "answer_display": "(5)",
+   "check": {
+    "official": "5",
+    "solver_a": "5",
+    "solver_b": "5",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 6,
+   "type": "single",
+   "unit": "幾何（球面、經緯度）、三角函數",
+   "unit_tags": [
+    "geometry",
+    "trigonometry"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.53,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：沿經線的弧長 $=r\\times$（圓心角的弧度）；北極點緯度為北緯 $90^\\circ$。\n\n**詳解**\n\n1. 弧長 $\\dfrac{7}{12}\\pi r$ 對應圓心角 $\\dfrac{7\\pi}{12}=105^\\circ$。\n2. 從北極點（北緯 $90^\\circ$）沿經線往南 $105^\\circ$，到達緯度 $90^\\circ-105^\\circ=-15^\\circ$，即南緯 $15^\\circ$。\n3. 經度不影響此弧長，選項中南緯 $15^\\circ$ 的只有 (3)。\n\n**答案**：(3)",
+   "answer_display": "(3)",
+   "check": {
+    "official": "3",
+    "solver_a": "3",
+    "solver_b": "3",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 7,
+   "type": "single",
+   "unit": "數學建模（單點透視）、實數",
+   "unit_tags": [
+    "data_modeling",
+    "real_numbers"
+   ],
+   "difficulty": {
+    "level": "超越頂標",
+    "official_p": 0.27,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：等距四點的 $K$ 值可直接算；畫紙上的四點 $K$ 值必須相同，逐一檢查選項。\n\n**詳解**\n\n1. 空間中四點等距，設坐標 $0,1,2,3$：$K=\\dfrac{3\\times1}{2\\times2}=\\dfrac34$。\n2. 選項的 $K$ 值（$P_1P_4\\cdot P_2P_3\\,/\\,P_1P_3\\cdot P_2P_4$）：\n   - (1) $1,2,4,8$：$\\dfrac{7\\cdot2}{3\\cdot6}=\\dfrac79$；\n   - (2) $3,4,6,9$：$\\dfrac{6\\cdot2}{3\\cdot5}=\\dfrac45$；\n   - (3) $1,5,8,9$：$\\dfrac{8\\cdot3}{7\\cdot4}=\\dfrac67$；\n   - (4) $1,2,4,9$：$\\dfrac{8\\cdot2}{3\\cdot7}=\\dfrac{16}{21}$；\n   - (5) $1,7,9,10$：$\\dfrac{9\\cdot2}{8\\cdot3}=\\dfrac34$ ✓。\n\n**答案**：(5)\n\n**補充**：透視畫法中，等距的點畫在紙上不再等距（越遠越密），但這個「交比」保持不變。",
+   "answer_display": "(5)",
+   "check": {
+    "official": "5",
+    "solver_a": "5",
+    "solver_b": "5",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 8,
+   "type": "multi",
+   "unit": "直線與坐標、圓（點到直線距離）",
+   "unit_tags": [
+    "coordinate_line",
+    "circle"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.54,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：光束在直線 $y=ax$（$x\\ge0$）上；擊中圓盤 $\\iff$ 圓心到直線距離 $\\le1$。\n\n**詳解**：圓心 $(x_0,y_0)$ 到 $ax-y=0$ 的距離 $\\dfrac{|ax_0-y_0|}{\\sqrt{a^2+1}}\\le1$。\n\n1. $(2,2)$：$(2a-2)^2\\le a^2+1\\iff3a^2-8a+3\\le0\\iff\\dfrac{4-\\sqrt7}{3}\\le a\\le\\dfrac{4+\\sqrt7}{3}$（約 $0.45\\sim2.22$）。\n2. $(4,6)$：$(4a-6)^2\\le a^2+1\\iff15a^2-48a+35\\le0$，約 $1.12\\le a\\le2.08$。\n3. $(8,1)$：$(8a-1)^2\\le a^2+1\\iff63a^2-16a\\le0\\iff0\\le a\\le\\dfrac{16}{63}$（約 $0.25$）。\n\n**選項分析**\n\n- (1) 對：方向 $(1,a)$ 的射線從原點出發，落在斜率 $a$ 的直線 $y=ax$ 上。\n- (2) 對：$a=\\frac32$ 時直線 $3x-2y=0$ 恰好通過圓心 $(4,6)$。\n- (3) 錯：第 3 個靶要 $a\\le\\frac{16}{63}$，但第 1 個靶要 $a\\ge0.45$，沒有共同的 $a$。\n- (4) 錯：取 $a\\in[1.12,2.08]$ 一道光同時擊中前兩個靶，再一道光擊中 $(8,1)$，兩道就夠。\n- (5) 對：見步驟 3。\n\n**答案**：(1)(2)(5)",
+   "answer_display": "(1)(2)(5)",
+   "check": {
+    "official": "1,2,5",
+    "solver_a": "1,2,5",
+    "solver_b": "1,2,5",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 9,
+   "type": "multi",
+   "unit": "多項式函數（三次函數圖形）",
+   "unit_tags": [
+    "polynomial"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.42,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：三次函數 $ax^3+bx^2+cx+d$ 的對稱中心在 $x=-\\dfrac{b}{3a}$；在對稱中心附近，圖形近似於該點的切線。\n\n**詳解**\n\n1. $f(x)=2x^3-3x+1=(x-1)(2x^2+2x-1)$。\n2. 沒有 $x^2$ 項，對稱中心 $x=0$，即 $(0,f(0))=(0,1)$；在此附近近似直線 $y=-3x+1$（一次項係數為斜率）。\n\n**選項分析**\n\n- (1) 對：$f(1)=2-3+1=0$。\n- (2) 錯：$2x^2+2x-1=0$ 的判別式 $4+8>0$，另有兩實根，共三個交點。\n- (3) 錯：對稱中心是 $(0,1)$。\n- (4) 錯：近似直線是 $y=-3x+1$。\n- (5) 錯：平移不改變首項係數，$3x^3$ 與 $2x^3$ 不同。\n\n**答案**：(1)",
+   "answer_display": "(1)",
+   "check": {
+    "official": "1",
+    "solver_a": "1",
+    "solver_b": "1",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 10,
+   "type": "multi",
+   "unit": "數據分析（線性變換）",
+   "unit_tags": [
+    "statistics"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.46,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：$y=ax+b$ 時，$\\mu_y=a\\mu_x+b$、$\\sigma_y=|a|\\sigma_x$，可反求原始的平均與標準差。\n\n**詳解**\n\n1. 甲：$\\mu_{x_1}=\\dfrac{60-20}{0.8}=50$，$\\sigma_{x_1}=\\dfrac{16}{0.8}=20$。\n2. 乙：$\\mu_{x_2}=\\dfrac{60-25}{0.75}=\\dfrac{140}{3}\\approx46.7$，$\\sigma_{x_2}=\\dfrac{15}{0.75}=20$。\n\n**選項分析**\n\n- (1) 對：$y_1-x_1=20-0.2x_1\\ge0\\iff x_1\\le100$，滿分 $100$，恆成立。\n- (2) 對：$50>46.7$。\n- (3) 錯：兩班原始標準差都是 $20$。\n- (4) 對：若 $x_1\\le x_2$，則 $y_1=0.8x_1+20\\le0.8x_2+20=(0.75x_2+25)+(0.05x_2-5)\\le y_2$（因 $x_2\\le100$）。所以 $y_1>y_2$ 必有 $x_1>x_2$。\n- (5) 錯：甲調整後不及格 $\\iff x_1<50$；乙 $\\iff x_2<\\frac{140}{3}$。原始不及格是 $x<60$，分界不同。例如甲班低於 $50$ 分的人較多（調整後不及格人數較多），但乙班有更多人落在 $\\frac{140}{3}\\sim60$ 分之間，乙班原始不及格人數反而可能較多，所以「必定」不成立。\n\n**答案**：(1)(2)(4)",
+   "answer_display": "(1)(2)(4)",
+   "check": {
+    "official": "1,2,4",
+    "solver_a": "1,2,4",
+    "solver_b": "1,2,4",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 11,
+   "type": "multi",
+   "unit": "平面向量（內積）",
+   "unit_tags": [
+    "vector_plane"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.5,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：$\\vec v\\cdot\\overrightarrow{OX}<0$ 對**所有**滿足條件的 $\\vec v$ 都成立 $\\iff$ $\\overrightarrow{OX}$ 落在 $-\\overrightarrow{OA}$ 與 $-\\overrightarrow{OB}$ 所夾的角內（$\\overrightarrow{OX}=-(s\\overrightarrow{OA}+t\\overrightarrow{OB})$，$s,t\\ge0$）。\n\n**詳解**\n\n1. 若 $\\overrightarrow{OX}=-(s\\overrightarrow{OA}+t\\overrightarrow{OB})$（$s,t\\ge0$ 不全為 $0$），則 $\\vec v\\cdot\\overrightarrow{OX}=-(s\\,\\vec v\\cdot\\overrightarrow{OA}+t\\,\\vec v\\cdot\\overrightarrow{OB})<0$，一定成立。\n2. 若 $\\overrightarrow{OX}$ 不在這個角內，總找得到滿足條件的 $\\vec v$ 使內積 $\\ge0$（例如 $\\vec v$ 取接近 $\\overrightarrow{OA}$ 或 $\\overrightarrow{OB}$ 的垂直方向）。\n3. 依圖：$A$ 在第四象限靠近 $x$ 軸，$-\\overrightarrow{OA}$ 指向第二象限、略高於負 $x$ 軸；$B$ 在第一象限（約 $45^\\circ$ 方向），$-\\overrightarrow{OB}$ 指向第三象限約 $225^\\circ$ 方向。這個角約從 $167^\\circ$ 到 $222^\\circ$。\n4. $D$（第二象限、緊貼 $x$ 軸，約 $177^\\circ$）與 $E$（第三象限、靠近 $x$ 軸，約 $187^\\circ$）在角內；$C$（約 $102^\\circ$）、$F$（約 $258^\\circ$）、$G$（第四象限）都不在。\n\n**選項分析**\n\n由圖估計（以原點為準）：$A\\approx(159,-37)$、$B\\approx(142,130)$，滿足條件的 $\\vec v$ 方向約在 $-47^\\circ$ 到 $77^\\circ$ 之間。\n\n- (1) 錯：取 $\\vec v$ 為 $70^\\circ$ 方向（約 $(0.34,0.94)$），$\\vec v\\cdot\\overrightarrow{OA}>0$、$\\vec v\\cdot\\overrightarrow{OB}>0$，而 $C$ 在 $y$ 軸附近偏上，$\\vec v\\cdot\\overrightarrow{OC}>0$。\n- (2) 對：$D$ 在 $-\\overrightarrow{OA}$ 與 $-\\overrightarrow{OB}$ 所夾的角內。\n- (3) 對：$E$ 也在角內。\n- (4) 錯：取 $\\vec v$ 為 $-40^\\circ$ 方向（約 $(0.77,-0.64)$），仍滿足兩個條件，但 $F$ 在 $y$ 軸附近偏下，$\\vec v\\cdot\\overrightarrow{OF}>0$。\n- (5) 錯：取 $\\vec v=(1,0)$，滿足條件，而 $G$ 在第四象限，$\\vec v\\cdot\\overrightarrow{OG}>0$。\n\n**答案**：(2)(3)",
+   "answer_display": "(2)(3)",
+   "check": {
+    "official": "2,3",
+    "solver_a": "2,3",
+    "solver_b": "2,3",
+    "agree": true
+   },
+   "flags": [
+    {
+     "severity": "resolved",
+     "detail": "題目圖（各點位置）的替代文字只描述象限，解題者 B 依文字推斷並標「不確定」，結果與官方答案一致。詳解依原圖估計各點方向。之後已把圖 f11 的替代文字補上各點的估計坐標與方向角（與本詳解的估計一致）。"
+    }
+   ]
+  },
+  {
+   "no": 12,
+   "type": "multi",
+   "unit": "多項式函數（根的範圍）、函數",
+   "unit_tags": [
+    "polynomial",
+    "functions"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.39,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：$a(\\square)^2+b(\\square)+c=0$ 的意思是「$\\square$ 等於原方程式的根 $r$」，$r\\in(1,3)$；再解出 $x$ 的範圍。\n\n**詳解**：設原方程式的根為 $r$，$1<r<3$。\n\n**選項分析**\n\n- (1) 錯：$x-2=r$，$x=r+2\\in(3,5)$。\n- (2) 錯：$x+2=r$，$x\\in(-1,1)$。\n- (3) 對：$2x-7=r$，$x=\\dfrac{r+7}{2}\\in(4,5)$。\n- (4) 錯：$\\dfrac{x+7}2=r$，$x=2r-7\\in(-5,-1)$。\n- (5) 對：$3x-11=r$，$x=\\dfrac{r+11}{3}\\in\\left(4,\\dfrac{14}{3}\\right)\\subset(4,5)$。\n\n**答案**：(3)(5)",
+   "answer_display": "(3)(5)",
+   "check": {
+    "official": "3,5",
+    "solver_a": "3,5",
+    "solver_b": "3,5",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 13,
+   "type": "fill",
+   "unit": "指數對數",
+   "unit_tags": [
+    "exp_log"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.48,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：由 $2\\log y=1$ 先求 $y^2$，再代入指數式。\n\n**詳解**\n\n1. $2\\log y=1\\Rightarrow\\log y^2=1\\Rightarrow y^2=10$。\n2. $x^{-\\frac13}y^2=1\\Rightarrow x^{-\\frac13}=\\dfrac1{10}\\Rightarrow x^{\\frac13}=10\\Rightarrow x=1000$。\n3. $\\dfrac{x-y^2}{10}=\\dfrac{1000-10}{10}=99$。\n\n**答案**：$99$（13-1 填 $9$，13-2 填 $9$）",
+   "answer_display": "$99$",
+   "check": {
+    "official": {
+     "13-1": "9",
+     "13-2": "9"
+    },
+    "solver_a": {
+     "13-1": "9",
+     "13-2": "9"
+    },
+    "solver_b": {
+     "13-1": "9",
+     "13-2": "9"
+    },
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 14,
+   "type": "fill",
+   "unit": "平面向量（內積）",
+   "unit_tags": [
+    "vector_plane"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.44,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：$\\overline{AB}^2=|\\overrightarrow{OB}-\\overrightarrow{OA}|^2=|\\overrightarrow{OA}|^2+|\\overrightarrow{OB}|^2-2\\overrightarrow{OA}\\cdot\\overrightarrow{OB}$。\n\n**詳解**\n\n1. $64=49+49-2\\overrightarrow{OA}\\cdot\\overrightarrow{OB}$。\n2. $\\overrightarrow{OA}\\cdot\\overrightarrow{OB}=\\dfrac{98-64}{2}=17$。\n\n**答案**：$17$（14-1 填 $1$，14-2 填 $7$）",
+   "answer_display": "$17$",
+   "check": {
+    "official": {
+     "14-1": "1",
+     "14-2": "7"
+    },
+    "solver_a": {
+     "14-1": "1",
+     "14-2": "7"
+    },
+    "solver_b": {
+     "14-1": "1",
+     "14-2": "7"
+    },
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 15,
+   "type": "fill",
+   "unit": "機率（條件機率）",
+   "unit_tags": [
+    "probability"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.52,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：貝氏定理；「沒被找到的有 $90\\%$ 未裝設」表示其中只有 $10\\%$ 有裝設。\n\n**詳解**\n\n1. 被找到且有裝設：$0.7\\times0.6=0.42$。\n2. 沒被找到且有裝設：$0.3\\times0.1=0.03$。\n3. $P(\\text{被找到}\\mid\\text{有裝設})=\\dfrac{0.42}{0.42+0.03}=\\dfrac{42}{45}=\\dfrac{14}{15}$。\n\n**答案**：$\\dfrac{14}{15}$（15-1 填 $1$，15-2 填 $4$，15-3 填 $1$，15-4 填 $5$）\n\n**常見錯誤**：把 $90\\%$ 直接當成「有裝設」的比例。",
+   "answer_display": "$\\frac{14}{15}$",
+   "check": {
+    "official": {
+     "15-1": "1",
+     "15-2": "4",
+     "15-3": "1",
+     "15-4": "5"
+    },
+    "solver_a": {
+     "15-1": "1",
+     "15-2": "4",
+     "15-3": "1",
+     "15-4": "5"
+    },
+    "solver_b": {
+     "15-1": "1",
+     "15-2": "4",
+     "15-3": "1",
+     "15-4": "5"
+    },
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 16,
+   "type": "fill",
+   "unit": "機率（排列組合）",
+   "unit_tags": [
+    "probability"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.39,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：由「兩球同色」的機率反推各色球數，再用餘事件。\n\n**詳解**\n\n1. 任取兩球共 $C^{10}_2=45$ 種。\n2. 皆藍：$\\dfrac{C^{b}_2}{45}=\\dfrac1{15}\\Rightarrow C^b_2=3\\Rightarrow b=3$。\n3. 皆綠：$\\dfrac{C^{g}_2}{45}=\\dfrac29\\Rightarrow C^g_2=10\\Rightarrow g=5$；黃球 $10-3-5=2$ 顆，皆黃 $C^2_2=1$ 種。\n4. 同色共 $3+10+1=14$ 種，相異顏色機率 $=1-\\dfrac{14}{45}=\\dfrac{31}{45}$。\n\n**答案**：$\\dfrac{31}{45}$（16-1 填 $3$，16-2 填 $1$，16-3 填 $4$，16-4 填 $5$）",
+   "answer_display": "$\\frac{31}{45}$",
+   "check": {
+    "official": {
+     "16-1": "3",
+     "16-2": "1",
+     "16-3": "4",
+     "16-4": "5"
+    },
+    "solver_a": {
+     "16-1": "3",
+     "16-2": "1",
+     "16-3": "4",
+     "16-4": "5"
+    },
+    "solver_b": {
+     "16-1": "3",
+     "16-2": "1",
+     "16-3": "4",
+     "16-4": "5"
+    },
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 17,
+   "type": "fill",
+   "unit": "排列組合",
+   "unit_tags": [
+    "counting"
+   ],
+   "difficulty": {
+    "level": "超越頂標",
+    "official_p": 0.07,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：老師固定在第 $4$ 位，左右各 $3$ 個位置；第 $3$ 位與第 $5$ 位被老師隔開，不算相鄰。用「全部 $-$ 不合」計算。\n\n**詳解**\n\n1. 六位同學排在六個位置：$6!=720$。\n2. 三男全在左側：$3!\\times3!=36$；全在右側也是 $36$。三男不同側：$720-72=648$。\n3. 再扣掉「那對男女相鄰」的情形：相鄰位置只有 $(1,2),(2,3),(5,6),(6,7)$ 共 $4$ 組，兩人可對調，其餘 $4$ 人排 $4$ 位：$4\\times2\\times4!=192$。這些排法中，那位女生和那位男生在同一側，該側就不可能三位都是男生，所以 $192$ 種全部都屬於「三男不同側」。\n4. 所求 $=648-192=456$ 種。\n\n**答案**：$456$（17-1 填 $4$，17-2 填 $5$，17-3 填 $6$）",
+   "answer_display": "$456$",
+   "check": {
+    "official": {
+     "17-1": "4",
+     "17-2": "5",
+     "17-3": "6"
+    },
+    "solver_a": {
+     "17-1": "4",
+     "17-2": "5",
+     "17-3": "6"
+    },
+    "solver_b": {
+     "17-1": "4",
+     "17-2": "5",
+     "17-3": "6"
+    },
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 18,
+   "type": "single",
+   "unit": "三角函數（弧度）",
+   "unit_tags": [
+    "trigonometry"
+   ],
+   "difficulty": {
+    "level": "穩定基礎",
+    "official_p": 0.7,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：$180^\\circ=\\pi$ 弧度。\n\n**詳解**：$18^\\circ=18\\times\\dfrac{\\pi}{180}=\\dfrac{\\pi}{10}$。\n\n**答案**：(4)",
+   "answer_display": "(4)",
+   "check": {
+    "official": "4",
+    "solver_a": "4",
+    "solver_b": "4",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 19,
+   "type": "constructed",
+   "unit": "三角函數",
+   "unit_tags": [
+    "trigonometry"
+   ],
+   "difficulty": {
+    "level": "穩定基礎",
+    "official_p": null,
+    "basis": "本站估計"
+   },
+   "solution_md": "**解題關鍵**：塔身、鉛直線與偏移距離形成直角三角形，$\\sin\\theta^\\circ=\\dfrac{\\text{偏移距離}}{\\text{塔高}}$；$0\\le\\theta<90$ 時，正弦值越大角度越大。\n\n**詳解**\n\n1. $\\sin\\theta_1^\\circ=\\dfrac{2.3}{48}$，$\\sin\\theta_2^\\circ=\\dfrac{2.3}{19}$，$\\sin\\theta_3^\\circ=\\dfrac{4}{57}$。\n2. 比較：$\\dfrac{2.3}{19}\\approx0.121$，$\\dfrac{4}{57}\\approx0.070$，$\\dfrac{2.3}{48}\\approx0.048$。\n   - 也可不用小數：$\\frac{2.3}{19}>\\frac{2.3}{48}$（分子相同分母小）；$\\frac{4}{57}$ 與 $\\frac{2.3}{48}$ 交叉相乘：$4\\times48=192>2.3\\times57=131.1$；$\\frac{2.3}{19}$ 與 $\\frac{4}{57}$：$2.3\\times57=131.1>4\\times19=76$。\n3. 正弦在 $0^\\circ\\sim90^\\circ$ 遞增，所以 $\\theta_2>\\theta_3>\\theta_1$。\n\n**答案**：$\\theta_2>\\theta_3>\\theta_1$。\n\n**評分重點（本站整理）**\n\n- 列出 $\\sin\\theta=\\dfrac{\\text{偏移距離}}{\\text{塔高}}$。\n- 正確比較三個比值，並說明正弦在銳角範圍遞增。",
+   "answer_display": "$\\theta_2>\\theta_3>\\theta_1$",
+   "check": {
+    "official": null,
+    "solver_a": "θ2 > θ3 > θ1",
+    "solver_b": "θ2 > θ3 > θ1",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 20,
+   "type": "constructed",
+   "unit": "三角函數",
+   "unit_tags": [
+    "trigonometry"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": null,
+    "basis": "本站估計"
+   },
+   "solution_md": "**解題關鍵**：塔高 $\\ell$ 時，偏移距離 $=\\ell\\sin\\theta$、塔頂到地面距離 $=\\ell\\cos\\theta$。先由偏移距離的差求 $\\ell$。\n\n**詳解**\n\n1. 偏移距離：$\\ell\\sin\\alpha^\\circ=\\dfrac{\\ell}{5}=\\dfrac{5\\ell}{25}$，$\\ell\\sin\\beta^\\circ=\\dfrac{7\\ell}{25}$，相差 $\\dfrac{2\\ell}{25}=20$，得 $\\ell=250$。\n2. $\\cos\\alpha^\\circ=\\sqrt{1-\\dfrac1{25}}=\\dfrac{2\\sqrt6}{5}$，$\\cos\\beta^\\circ=\\sqrt{1-\\dfrac{49}{625}}=\\dfrac{24}{25}$（皆為銳角，取正）。\n3. 塔頂到地面距離：$250\\cdot\\dfrac{2\\sqrt6}{5}=100\\sqrt6$，$250\\cdot\\dfrac{24}{25}=240$。\n4. 相差 $100\\sqrt6-240\\approx244.9-240=4.9$ 公尺。\n\n**答案**：$100\\sqrt6-240$ 公尺（約 $4.9$ 公尺）。\n\n**評分重點（本站整理）**\n\n- 由偏移距離的差列式求出塔高 $250$ 公尺。\n- 正確求出兩個餘弦值，並用「塔高 $\\times\\cos$」表示塔頂到地面的距離。\n- 相減的結果要化簡；判斷 $100\\sqrt6>240$（$\\sqrt6\\approx2.449$）。",
+   "answer_display": "$100\\sqrt6-240$ 公尺（約 $4.9$ 公尺）",
+   "check": {
+    "official": null,
+    "solver_a": "100√6 − 240（約 4.9 公尺）",
+    "solver_b": "100√6 − 240 ≈ 4.9 公尺",
+    "agree": true
+   },
+   "flags": []
+  }
+ ]
+}

@@ -19,6 +19,7 @@ import {
   Rows3,
   Settings,
   Shuffle,
+  Sigma,
   SpellCheck,
   TextCursorInput,
   Timer,
@@ -43,6 +44,7 @@ const ICONS: Record<IconKey, LucideIcon> = {
   mock: Timer,
   assistant: MessageCircleQuestionMark,
   'zh-writing': Feather,
+  math: Sigma,
   settings: Settings,
   about: Info,
 };

@@ -23,6 +23,7 @@ const READY: readonly PagePath[] = [
   '/exams',
   '/mock',
   '/assistant',
+  '/math',
   '/settings',
   '/about',
 ];

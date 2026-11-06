@@ -41,3 +41,5 @@ export * from './exemplars';
 // 加強卷：技能代碼的別名表、題目來源契約（docs/design/weak-paper.md §5.2、§8.2）。
 export * from './skill-aliases';
 export * from './item-source';
+// 學測數學歷屆試題（gsat-math-exam/v1）：型別、選填 template 與題幹標記的切分、官方計分方式的批改（docs/design/math.md §5）。
+export * from './math-exam';
