@@ -597,11 +597,10 @@ def _tmpl(n: Node, warnings):
         return out
     if sel == 30:
         return r"\langle %s \rangle" % s0
-    if sel == 31:  # vector arrow
-        if var & 0x8:  # 下方
+    if sel == 31:  # vector arrow：tvVE_LEFT 0x1、tvVE_RIGHT 0x2、tvVE_UNDER 0x4、tvVE_HARPOON 0x8
+        if var & 0x4:  # 箭號在下方
             return r"\underrightarrow{%s}" % s0
-        if var & 0x2 or var == 0:
-            return r"\overrightarrow{%s}" % s0
+        # 魚叉箭號（0x8）在題本上就是向量箭號，統一寫 \overrightarrow
         return r"\overrightarrow{%s}" % s0
     if sel == 32:
         return r"\widetilde{%s}" % s0
