@@ -1,5 +1,5 @@
 /**
- * 學測數學入口（/math）：數A／數B 分頁（之後加入舊課綱卷子時多一個「舊課綱」分頁），依學年度列出卷子。
+ * 學測數學入口（/math）：數A／數B 分頁，有舊課綱（100–110）卷子時多一個「舊課綱」分頁，依學年度列出卷子。
  *
  * 分頁放在網址（?subject=b、?subject=old；數A 是預設）：重新整理、分享連結、從卷子頁回來時都還在。
  * 這一頁只下載卷子清單（/data/math/index.json，幾 KB），不載 KaTeX；公式在卷子頁才排版。
@@ -29,7 +29,7 @@ export function parseSubjectTab(value: string | null): SubjectTab {
 const SUBJECT_NOTES: Record<SubjectTab, string> = {
   a: '數學A：高一與高二 A 類課程（含空間向量、矩陣、線性方程組），偏重代數與幾何的連結；理工、醫藥、商管等校系常採計。',
   b: '數學B：高一與高二 B 類課程（含圓錐曲線、球面與數學建模），情境題多；人文、社會、藝術等校系常採計。',
-  old: '舊課綱學測數學（100–110 學年度）：題型與現行數A／數B 不同（多選題固定級距計分、沒有非選擇題），可以當作高一範圍的練習。',
+  old: '舊課綱學測數學（100–110 學年度）：只有單選、多選與選填題（滿分 100 全部自動批改），選填格照題本標列號（⑭⑮…）。部分內容（例如複數平面、轉移矩陣）不在現行課綱，詳解陸續補上。',
 };
 
 function PaperCard({ paper, listSearch }: { paper: MathPaperSummary; listSearch: string }) {
@@ -52,7 +52,7 @@ function PaperCard({ paper, listSearch }: { paper: MathPaperSummary; listSearch:
         <ChevronRight aria-hidden="true" className="mt-1.5 size-4 shrink-0 text-muted group-hover:text-primary" />
       </span>
       <span className="text-sm">
-        {paper.time_minutes} 分鐘・{paper.question_count} 題・自動批改 {paper.auto_max} 分＋非選擇題 {paper.manual_max} 分
+        {paper.time_minutes} 分鐘・{paper.question_count} 題・自動批改 {paper.auto_max} 分{paper.manual_max > 0 ? `＋非選擇題 ${paper.manual_max} 分` : ''}
         {paper.has_stats ? '・附全國答對率' : ''}
       </span>
       <span className="flex flex-wrap gap-1.5 text-xs">
@@ -150,7 +150,7 @@ export default function MathLandingPage() {
           </Suspense>
         </DataErrorBoundary>
         <footer className="rounded-2xl border border-line bg-surface p-4 text-sm text-muted lg:max-w-3xl">
-          試題來源：大學入學考試中心 111–115 學年度學科能力測驗數學A、數學B考科。題目、選項與選擇（填）題答案依官方公告的試題與答案整理，圖從官方題本裁切並附文字描述；每份卷子頁都附有官方檔案連結，內容如有出入以官方檔案為準。詳解為本站撰寫，不是官方解答。
+          試題來源：大學入學考試中心 111–115 學年度學科能力測驗數學A、數學B考科，100–110 學年度學科能力測驗數學考科（舊課綱）。題目、選項與選擇（填）題答案依官方公告的試題與答案整理，圖從官方題本裁切並附文字描述；每份卷子頁都附有官方檔案連結，內容如有出入以官方檔案為準。詳解為本站撰寫，不是官方解答。
         </footer>
       </div>
     </article>

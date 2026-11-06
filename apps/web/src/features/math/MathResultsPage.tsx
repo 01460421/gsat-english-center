@@ -5,7 +5,7 @@
  * 成績單把「自動批改分數（選擇＋選填，滿分 88；111 數B 是 90）」和「非選擇題」分開：非選擇題不自動給分，
  * 學生看詳解後可以自評（0～配分，存在這台裝置），合計另外列，不混進自動批改分數。拍照 AI 批改是之後的步驟，這裡只有預告。
  */
-import { MATH_ITEM_TYPE_LABELS, choiceAnswerText, iterateMathItems, scoreMathPaper, type MathItem } from '@gsat/shared';
+import { MATH_ITEM_TYPE_LABELS, choiceAnswerText, iterateMathItems, mathCorrectRate, scoreMathPaper, type MathItem } from '@gsat/shared';
 import { ChevronLeft } from 'lucide-react';
 import { Suspense, use, useEffect, useId, useMemo, useRef, useState, type RefObject } from 'react';
 import { Link, useNavigate, useParams } from 'react-router';
@@ -67,7 +67,7 @@ function Summary({ paper, selfScores, headingRef }: { paper: MathPaper; selfScor
   const constructed = items.filter((i) => i.type === 'constructed');
   const selfDone = constructed.filter((i) => selfScores[i.label] !== undefined);
   const selfTotal = selfDone.reduce((n, i) => n + (selfScores[i.label] ?? 0), 0);
-  const hasStats = items.some((i) => typeof i.stats?.correct_rate === 'number');
+  const hasStats = items.some((i) => mathCorrectRate(i) !== null);
   const titleId = useId();
 
   return (
@@ -196,7 +196,7 @@ function Summary({ paper, selfScores, headingRef }: { paper: MathPaper; selfScor
                     {o?.kind === 'auto' ? `${fmt(o.earned)}／${fmt(o.max)}` : `${selfScores[item.label] !== undefined ? fmt(selfScores[item.label] ?? 0) : '—'}／${fmt(item.points)}`}
                   </td>
                   {hasStats && (
-                    <td className="py-1.5 tabular-nums">{typeof item.stats?.correct_rate === 'number' ? pct(item.stats.correct_rate) : '—'}</td>
+                    <td className="py-1.5 tabular-nums">{mathCorrectRate(item) !== null ? pct(mathCorrectRate(item) ?? 0) : '—'}</td>
                   )}
                 </tr>
               );
@@ -206,7 +206,7 @@ function Summary({ paper, selfScores, headingRef }: { paper: MathPaper; selfScor
       </div>
       <ul className="mt-4 ml-5 list-disc space-y-1 text-sm text-muted">
         <li>依題本封面的計分方式：單選答對得全分；多選答錯 k 個選項得 (n − 2k)/n 題分；選填每格全對才給分。</li>
-        <li>{hasStats ? '全國答對率取自官方統計。' : '這份卷子的官方答對率尚未整理進來。'}每題的本站詳解在下方，往下捲動即可檢討。</li>
+        <li>{hasStats ? '全國答對率取自官方統計（多選題是得分率；非選擇題官方沒有公布）。' : '這份卷子的官方答對率尚未整理進來。'}每題的本站詳解在下方，往下捲動即可檢討。</li>
       </ul>
     </section>
   );

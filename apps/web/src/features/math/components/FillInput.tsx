@@ -6,15 +6,22 @@
  *   - 焦點在某一列時直接按數字鍵或減號就劃記那一格，並跳到下一列；Backspace／Delete 清除這一列；
  *   - 每一列有「清除」按鈕（radio 選了就不能用點的取消）。
  * 上方用 KaTeX 排出作答格式（每一格標格號），下方即時預覽「你的答案」，讓學生確認帶分數、根號位置這類格式。
+ * 格號：108 課綱寫「13-1」；舊課綱（fill.official_cells）用題本與答案卡的列號圈號「⑭」（fillCellLabel）。
  * 手機：12 個劃記排成兩排各 6 個（36 px 見方），320 px 寬也放得下；sm 以上排成一排。
  */
-import { fillCellDisplay, fillCellLatex, fillTemplateLatex, FILL_CELL_VALUES, type MathFill } from '@gsat/shared';
+import { fillCellDisplay, fillCellLabel, fillCellLatex, fillTemplateLatex, FILL_CELL_VALUES, type MathFill } from '@gsat/shared';
 import { useId, useRef, type KeyboardEvent } from 'react';
 import { Tex } from './MathText';
 
 /** 作答格式：每一格是標了格號的小方框。 */
-export function fillFormatLatex(fill: Pick<MathFill, 'template'>): string {
-  return `\\displaystyle ${fillTemplateLatex(fill.template, (id) => `\\boxed{\\scriptstyle\\text{${id}}}`)}`;
+export function fillFormatLatex(fill: Pick<MathFill, 'template' | 'cells' | 'official_cells'>): string {
+  return `\\displaystyle ${fillTemplateLatex(fill.template, (id) => `\\boxed{\\scriptstyle\\text{${fillCellLabel(fill, id)}}}`)}`;
+}
+
+/** 螢幕報讀用的格名：舊課綱唸「第 14 列」，108 課綱唸「13-1」。 */
+function cellSpoken(fill: Pick<MathFill, 'cells' | 'official_cells'>, id: string): string {
+  const row = fill.official_cells?.[fill.cells.indexOf(id)];
+  return row !== undefined ? `第 ${row} 列` : id;
 }
 
 /** 目前的作答：劃了的格子放數值，沒劃的放空方框。 */
@@ -83,7 +90,9 @@ export function FillInput({
         <span className="min-w-0 text-base" aria-hidden="true">
           <Tex tex={fillFormatLatex(fill)} />
         </span>
-        <span className="sr-only">本題有 {fill.cells.length} 格：{fill.cells.join('、')}</span>
+        <span className="sr-only">
+          本題有 {fill.cells.length} 格：{fill.cells.map((c) => cellSpoken(fill, c)).join('、')}
+        </span>
       </div>
       <div ref={rowsRef} className="space-y-2">
         {fill.cells.map((cell, i) => {
@@ -93,11 +102,11 @@ export function FillInput({
           return (
             <fieldset key={cell} data-fill-row onKeyDown={onRowKeyDown(i)} className="min-w-0" disabled={disabled}>
               <legend className="sr-only">
-                第 {label} 題第 {cell} 格，{value === '' ? '尚未劃記' : `目前 ${fillCellDisplay(value)}`}
+                第 {label} 題{fill.official_cells ? cellSpoken(fill, cell) : `第 ${cell} 格`}，{value === '' ? '尚未劃記' : `目前 ${fillCellDisplay(value)}`}
               </legend>
               <div className="flex flex-wrap items-start gap-x-2 gap-y-1">
-                <span aria-hidden="true" className="w-12 shrink-0 pt-2 text-sm font-semibold tabular-nums text-muted">
-                  {cell}
+                <span aria-hidden="true" className={`w-12 shrink-0 font-semibold tabular-nums text-muted ${fill.official_cells ? 'pt-1 text-xl leading-7' : 'pt-2 text-sm'}`}>
+                  {fillCellLabel(fill, cell)}
                 </span>
                 <div className="grid grid-cols-6 gap-1 sm:grid-cols-12">
                   {FILL_CELL_VALUES.map((v) => {
@@ -130,7 +139,7 @@ export function FillInput({
                     type="button"
                     onClick={() => set(i, '')}
                     className="min-h-9 rounded-full px-2 text-xs text-primary underline underline-offset-2"
-                    aria-label={`清除第 ${cell} 格`}
+                    aria-label={`清除${fill.official_cells ? cellSpoken(fill, cell) : `第 ${cell} 格`}`}
                   >
                     清除
                   </button>

@@ -20,7 +20,7 @@
 
 export const MATH_EXAM_SCHEMA_ID = 'gsat-math-exam/v1';
 
-/** math_a＝數學A、math_b＝數學B（108 課綱，111 起）；math＝舊課綱學測數學（100–110，尚未結構化）。 */
+/** math_a＝數學A、math_b＝數學B（108 課綱，111 起）；math＝舊課綱學測數學（100–110）。 */
 export const MATH_SUBJECTS = ['math_a', 'math_b', 'math'] as const;
 export type MathSubject = (typeof MATH_SUBJECTS)[number];
 
@@ -30,11 +30,11 @@ export const MATH_SUBJECT_LABELS: Record<MathSubject, string> = {
   math: '學測數學',
 };
 
-/** 課綱。舊課綱的卷子之後加入時標「舊課綱」，不混進數A／數B。 */
+/** 課綱。舊課綱（100–110）的卷子標「舊課綱」，不混進數A／數B。 */
 export const MATH_ERAS = ['108課綱', '舊課綱'] as const;
 export type MathEra = (typeof MATH_ERAS)[number];
 
-/** 卷子屬於哪個課綱：資料有 era 就用（之後的舊課綱卷可以明寫），否則依考科判斷（math_a／math_b＝108 課綱，math＝舊課綱）。 */
+/** 卷子屬於哪個課綱：資料有 era 就用（資料都有寫），否則依考科判斷（math_a／math_b＝108 課綱，math＝舊課綱）。 */
 export function mathEraOf(paper: { subject: string; era?: unknown }): MathEra {
   if (typeof paper.era === 'string' && (MATH_ERAS as readonly string[]).includes(paper.era)) return paper.era as MathEra;
   return paper.subject === 'math' ? '舊課綱' : '108課綱';
@@ -69,6 +69,25 @@ export type FillCellValue = (typeof FILL_CELL_VALUES)[number];
 
 export function isFillCellValue(v: unknown): v is FillCellValue {
   return typeof v === 'string' && (FILL_CELL_VALUES as readonly string[]).includes(v);
+}
+
+/**
+ * 一格在畫面上的名稱：舊課綱用題本的列號圈號（⑭），108 課綱用「題號-格號」（13-1）。
+ * 圈號只有到 50（㊿）；超過或資料不一致時退回 cells 的寫法。
+ */
+export function fillCellLabel(fill: Pick<MathFill, 'cells' | 'official_cells'>, id: string): string {
+  const i = fill.cells.indexOf(id);
+  const row = i >= 0 ? fill.official_cells?.[i] : undefined;
+  const n = row !== undefined && /^\d+$/.test(row) ? Number(row) : NaN;
+  return circledNumber(n) ?? id;
+}
+
+/** 1–50 的圈號（①…⑳ U+2460、㉑…㉟ U+3251、㊱…㊿ U+32B1）。 */
+export function circledNumber(n: number): string | null {
+  if (!Number.isInteger(n) || n < 1 || n > 50) return null;
+  if (n <= 20) return String.fromCodePoint(0x2460 + n - 1);
+  if (n <= 35) return String.fromCodePoint(0x3251 + n - 21);
+  return String.fromCodePoint(0x32b1 + n - 36);
 }
 
 /** 畫面上顯示的格值：負號用數學的「−」。 */
@@ -153,17 +172,41 @@ export interface MathTable {
 
 export interface MathFill {
   cells: string[];
+  /**
+   * 舊課綱（100–110）才有：每一格在題本與答案卡上的列號（⑭⑮… → ["14","15"]），與 cells 一一對應。
+   * 畫面上用圈號標格子（fillCellLabel），和題本一致。
+   */
+  official_cells?: string[];
   /** LaTeX，格子寫成 [[題號-格號]]。 */
   template: string;
   answer_cells: Record<string, string>;
   answer_latex: string;
 }
 
-/** 官方答對率等統計（併入後才有；數值 0–1，同英文 gsat-exam/v1.1 的 QuestionStats）。 */
+/**
+ * 官方試題統計（tools/merge_math_stats.py 從官方「答對率及鑑別度表」「選擇題選項分析」併入；格式文件 §stats）。
+ * 比率都是 0–1，原表空白為 null。108 課綱的非選擇題沒有 stats。
+ */
 export interface MathItemStats {
-  correct_rate?: number | null;
-  discrimination?: number | null;
-  option_rates?: Record<string, number> | null;
+  /** 全體到考考生答對率；多選題是得分率。 */
+  P: number | null;
+  /** 高分組／低分組答對率（多選題為得分率）。 */
+  Ph?: number | null;
+  Pl?: number | null;
+  /** 鑑別度 Ph − Pl。 */
+  D?: number | null;
+  /** 多選題全對率（只有多選題有）。 */
+  T?: number | null;
+  /** 單選／多選：全體考生畫記各選項的比例。 */
+  options?: Record<string, number | null>;
+  /** 單選／多選：未作答比例。 */
+  omit?: number | null;
+}
+
+/** 官方答對率（多選題是得分率）；沒有統計時 null。 */
+export function mathCorrectRate(item: { stats?: MathItemStats | null }): number | null {
+  const p = item.stats?.P;
+  return typeof p === 'number' && Number.isFinite(p) ? p : null;
 }
 
 export interface MathItem {
@@ -475,7 +518,9 @@ export function scoreMathPaper(paper: Pick<MathPaperBase, 'sections'>, answers: 
 /** 前端拿到的一題詳解（build-data.mjs 從詳解檔挑出公開的欄位）。 */
 export interface MathSolution {
   no: number;
+  /** 本站單元名稱（中文，例如「機率（條件機率）」；舊格式可能是 tags.units 的代號）。 */
   unit: string | null;
+  /** 難度分級（穩定基礎／進階練習／超越頂標）。 */
   difficulty: string | null;
   /** Markdown＋$…$ 公式。 */
   solution_md: string;

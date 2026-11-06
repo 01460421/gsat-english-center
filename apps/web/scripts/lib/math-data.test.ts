@@ -188,6 +188,30 @@ describe('normalizeSolutions', () => {
     expect(c({ official_match: false })).toBe(false);
     expect(c(undefined)).toBe(false);
   });
+  it('gsat-math-solutions/v1：difficulty 物件取 level、check.agree、物件 flags', () => {
+    const v1 = (extra: Record<string, unknown>) => ({
+      no: 1,
+      unit: '機率（條件機率）',
+      difficulty: { level: '進階練習', official_p: 0.42, basis: '官方答對率' },
+      solution_md: '**解題關鍵**：…',
+      answer_display: '(2)',
+      check: { official: '2', solver_a: '2', solver_b: '2', agree: true },
+      flags: [],
+      ...extra,
+    });
+    const ok = normalizeSolutions({ schema: 'gsat-math-solutions/v1', items: [v1({})] }, nos, 'x').items['1'];
+    expect(ok).toEqual({ no: 1, unit: '機率（條件機率）', difficulty: '進階練習', solution_md: '**解題關鍵**：…', answer_display: '(2)', checked: true });
+    // 解題者 B 不一致、已複核（resolved）且 A 的答案等於官方：照常發布、算驗算通過。
+    const resolved = v1({ check: { official: '2', solver_a: '2', solver_b: '3', agree: false }, flags: [{ severity: 'resolved', detail: '複核後官方正確' }] });
+    expect(normalizeSolutions([resolved], nos, 'x').items['1']?.checked).toBe(true);
+    // A 的最終答案和官方不同：不算通過。
+    const wrongA = v1({ check: { official: '2', solver_a: '3', solver_b: '2', agree: false }, flags: [{ severity: 'resolved', detail: '…' }] });
+    expect(normalizeSolutions([wrongA], nos, 'x').items['1']?.checked).toBe(false);
+    // 待站主裁決（owner_review）的題目不發布。
+    const pending = normalizeSolutions([v1({ flags: [{ severity: 'owner_review', detail: '待決' }] })], nos, 'x');
+    expect(pending.items).toEqual({});
+    expect(pending.skipped[0]).toMatch(/owner_review/);
+  });
   it('格式不對時丟錯', () => {
     expect(() => normalizeSolutions('x', nos, 'x')).toThrow(MathDataError);
   });

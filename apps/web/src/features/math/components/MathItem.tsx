@@ -8,6 +8,7 @@ import {
   MATH_ITEM_TYPE_LABELS,
   choiceAnswerText,
   gradeMathItem,
+  mathCorrectRate,
   referencedTables,
   splitMathStem,
   type MathAutoOutcome,
@@ -183,7 +184,8 @@ const STATUS_TONE: Record<MathAutoOutcome['status'], string> = { correct: 'text-
 function Feedback({ item }: { item: MathItem }) {
   const answer = useAttemptSelector((s) => s.answers[item.label]);
   const outcome = gradeMathItem(item, answer);
-  const rate = item.stats?.correct_rate;
+  const rate = mathCorrectRate(item);
+  const full = item.type === 'multi' ? item.stats?.T : null;
   return (
     <div className="mt-3 space-y-1 border-t border-line pt-3 text-sm">
       {outcome.kind === 'auto' && (
@@ -209,7 +211,12 @@ function Feedback({ item }: { item: MathItem }) {
           </p>
         )
       )}
-      {typeof rate === 'number' && <p className="text-muted">全國答對率 {Math.round(rate * 100)}%（官方統計）</p>}
+      {rate !== null && (
+        <p className="text-muted">
+          {item.type === 'multi' ? '全國得分率' : '全國答對率'} {Math.round(rate * 100)}%
+          {typeof full === 'number' && `、全對率 ${Math.round(full * 100)}%`}（官方統計）
+        </p>
+      )}
     </div>
   );
 }

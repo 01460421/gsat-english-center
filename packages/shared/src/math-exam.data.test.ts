@@ -15,7 +15,10 @@ import {
   MATH_SECTION_TYPES,
   MATH_SUBJECTS,
   MATH_UNITS,
+  fillCellLabel,
   isFillCellValue,
+  mathCorrectRate,
+  mathEraOf,
   iterateMathItems,
   parseFillTemplate,
   referencedTables,
@@ -43,6 +46,9 @@ describe.skipIf(files.length === 0)('data/exams/parsed-math', () => {
     expect(`${paper.id}.json`).toBe(name);
     expect(MATH_SUBJECTS).toContain(paper.subject);
     expect(Number.isInteger(paper.year)).toBe(true);
+    // 課綱：資料明寫 era，而且和考科一致（舊課綱＝subject math）。
+    expect(paper.era).toBe(paper.subject === 'math' ? '舊課綱' : '108課綱');
+    expect(mathEraOf(paper)).toBe(paper.era);
     for (const section of paper.sections) {
       expect(MATH_SECTION_TYPES).toContain(section.type);
       for (const group of section.groups) {
@@ -74,12 +80,25 @@ describe.skipIf(files.length === 0)('data/exams/parsed-math', () => {
           const cells = parseFillTemplate(fill.template).flatMap((t) => (t.kind === 'cell' ? [t.id] : []));
           expect(cells, at).toEqual(fill.cells);
           for (const id of fill.cells) expect(isFillCellValue(fill.answer_cells[id]), `${at} ${id}`).toBe(true);
+          if (paper.era === '舊課綱') {
+            // 舊課綱的格子用題本列號的圈號標示（⑭），每一格都要換得出圈號。
+            expect(fill.official_cells?.length, at).toBe(fill.cells.length);
+            for (const id of fill.cells) expect(fillCellLabel(fill, id), `${at} ${id}`).toMatch(/^[\u2460-\u2473\u3251-\u325f\u32b1-\u32bf]$/u);
+          } else expect(fill.official_cells, at).toBeUndefined();
           break;
         }
         case 'constructed':
           expect(item.answer, at).toBeNull();
           expect(item.constructed?.official_answer_stored, at).toBe(false);
           break;
+      }
+      // 官方統計：選擇（填）題都有答對率（0–1），非選擇題沒有（官方表不列）。
+      if (item.type === 'constructed') expect(item.stats, at).toBeUndefined();
+      else {
+        const p = mathCorrectRate(item);
+        expect(p, at).not.toBeNull();
+        expect(p ?? -1, at).toBeGreaterThanOrEqual(0);
+        expect(p ?? 2, at).toBeLessThanOrEqual(1);
       }
       // 不收錄官方的非選擇題參考答案與評分原則（D8）。
       for (const banned of ['scoring_notes', 'reference_answer', 'rubric']) expect(Object.hasOwn(item, banned), at).toBe(false);

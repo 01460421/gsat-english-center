@@ -98,7 +98,7 @@ test('練習模式：看答案與詳解（Markdown＋公式），非選擇題的
         version: 'e2e',
         id: PAPER_ID,
         count: 1,
-        items: { '1': { no: 1, unit: 'probability', difficulty: 'basic', solution_md: '**期望值**：$E=180\\cdot\\frac{1}{9}+90\\cdot\\frac{1}{9}$\n\n$$E=30$$', answer_display: '(2)', checked: true } },
+        items: { '1': { no: 1, unit: 'probability', difficulty: '穩定基礎', solution_md: '**期望值**：$E=180\\cdot\\frac{1}{9}+90\\cdot\\frac{1}{9}$\n\n$$E=30$$', answer_display: '(2)', checked: true } },
       },
     }),
   );

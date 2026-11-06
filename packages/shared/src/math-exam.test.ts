@@ -5,7 +5,9 @@ import { describe, expect, it } from 'vitest';
 import {
   FILL_CELL_VALUES,
   choiceAnswerText,
+  circledNumber,
   fillCellDisplay,
+  fillCellLabel,
   fillTemplateLatex,
   gradeFill,
   gradeMathItem,
@@ -13,6 +15,7 @@ import {
   gradeSingle,
   isFillCellValue,
   isMathAnswered,
+  mathCorrectRate,
   mathEraOf,
   parseFillTemplate,
   referencedTables,
@@ -178,5 +181,32 @@ describe('mathEraOf', () => {
     expect(mathEraOf({ subject: 'math' })).toBe('舊課綱');
     expect(mathEraOf({ subject: 'math_a', era: '舊課綱' })).toBe('舊課綱');
     expect(mathEraOf({ subject: 'math', era: 'x' })).toBe('舊課綱');
+  });
+});
+
+describe('選填格名稱（舊課綱用列號圈號）', () => {
+  it('circledNumber：1–50', () => {
+    expect(circledNumber(1)).toBe('①');
+    expect(circledNumber(14)).toBe('⑭');
+    expect(circledNumber(20)).toBe('⑳');
+    expect(circledNumber(21)).toBe('㉑');
+    expect(circledNumber(35)).toBe('㉟');
+    expect(circledNumber(36)).toBe('㊱');
+    expect(circledNumber(50)).toBe('㊿');
+    expect(circledNumber(0)).toBeNull();
+    expect(circledNumber(51)).toBeNull();
+  });
+  it('fillCellLabel：有 official_cells 用圈號，否則用格號', () => {
+    expect(fillCellLabel({ cells: ['14-1', '14-2'], official_cells: ['14', '15'] }, '14-2')).toBe('⑮');
+    expect(fillCellLabel({ cells: ['13-1', '13-2'] }, '13-2')).toBe('13-2');
+    expect(fillCellLabel({ cells: ['13-1'], official_cells: ['x'] }, '13-1')).toBe('13-1');
+  });
+});
+
+describe('mathCorrectRate', () => {
+  it('取 stats.P，沒有時 null', () => {
+    expect(mathCorrectRate({ stats: { P: 0.42 } })).toBe(0.42);
+    expect(mathCorrectRate({ stats: { P: null } })).toBeNull();
+    expect(mathCorrectRate({})).toBeNull();
   });
 });

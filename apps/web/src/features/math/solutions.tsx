@@ -45,9 +45,11 @@ function SolutionBody({ promise, item }: { promise: Promise<MathSolutions>; item
         <span className="rounded-full bg-primary-soft px-2 py-0.5 font-semibold text-primary">本站詳解</span>
         <span>{sol.checked ? 'AI 撰寫・已獨立驗算' : 'AI 撰寫'}</span>
         {sol.unit && <span>・單元：{mathUnitLabel(sol.unit)}</span>}
+        {sol.difficulty && <span className="rounded-full bg-surface-2 px-2 py-0.5">{sol.difficulty}</span>}
       </p>
       <MathMarkdown md={sol.solution_md} />
-      {sol.answer_display && (
+      {/* 詳解本文已經有「答案」段落時不再重複。 */}
+      {sol.answer_display && !sol.solution_md.includes('**答案**') && (
         <p className="text-sm">
           <span className="font-semibold">答案：</span>
           <MathText text={sol.answer_display} />

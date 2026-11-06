@@ -94,6 +94,8 @@ function SetupPanel({ paper, onStart }: { paper: MathPaper; onStart: (mode: Atte
 
 /** 卷子結構與計分方式（開始畫面）。 */
 function Structure({ paper }: { paper: MathPaper }) {
+  const old = paper.era === '舊課綱';
+  const hasConstructed = paper.sections.some((s) => s.groups.some((g) => g.items.some((i) => i.type === 'constructed')));
   return (
     <section aria-label="卷子結構與計分方式" className="space-y-3 rounded-2xl border border-line bg-surface p-5">
       <h2 className="font-semibold">卷子結構</h2>
@@ -113,9 +115,16 @@ function Structure({ paper }: { paper: MathPaper }) {
       <h2 className="pt-2 font-semibold">計分方式（依題本封面）</h2>
       <ul className="ml-5 list-disc space-y-1 text-sm">
         <li>單選題：答對得該題分數；答錯、未作答或劃記多於一個選項以零分計。</li>
-        <li>多選題：每個選項獨立判定；全對得全部分數，答錯 k 個選項得 (n − 2k)/n 的分數（5 個選項時錯 1 個得 3/5、錯 2 個得 1/5），低於零分或全未作答以零分計。</li>
-        <li>選填題：每一格都答對才給分，答錯不倒扣。作答方式仿答題卷：每一格點選 0–9、−、±。</li>
-        <li>非選擇題：請在紙上作答，交卷後對照本站詳解自評（不列入自動批改分數）。拍照 AI 批改即將推出。</li>
+        {old ? (
+          <li>多選題：每個選項獨立判定；全對得 5 分，答錯 1 個選項得 3 分，答錯 2 個選項得 1 分，其餘或全未作答以零分計。</li>
+        ) : (
+          <li>多選題：每個選項獨立判定；全對得全部分數，答錯 k 個選項得 (n − 2k)/n 的分數（5 個選項時錯 1 個得 3/5、錯 2 個得 1/5），低於零分或全未作答以零分計。</li>
+        )}
+        <li>
+          選填題：每一格都答對才給分，答錯不倒扣。作答方式仿答題卷：每一格點選 0–9、−、±。
+          {old && '格子照題本標示答案卡的列號（⑭⑮…）。'}
+        </li>
+        {hasConstructed && <li>非選擇題：請在紙上作答，交卷後對照本站詳解自評（不列入自動批改分數）。拍照 AI 批改即將推出。</li>}
       </ul>
     </section>
   );

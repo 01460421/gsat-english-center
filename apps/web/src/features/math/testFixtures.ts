@@ -25,7 +25,7 @@ export const MINI_MATH: MathPaper = {
     {
       id: 's1', type: 'single', title: '一、單選題（占5分）', instructions: null, points_total: 5,
       groups: [{ id: 's1g1', group_label: null, stem: null, figures: [], tables: [], items: [
-        { no: 1, label: '1', type: 'single', stem: '$1+1=$？', options: OPTS, answer: '2', points: 5, figures: [], tables: [], tags: { units: ['real_numbers'] }, stats: { correct_rate: 0.81 } },
+        { no: 1, label: '1', type: 'single', stem: '$1+1=$？', options: OPTS, answer: '2', points: 5, figures: [], tables: [], tags: { units: ['real_numbers'] }, stats: { P: 0.81 } },
       ] }],
     },
     {
@@ -66,7 +66,7 @@ export const MINI_SOLUTIONS: MathSolutions = {
   version: 'test',
   id: 'gsat-matha-115',
   count: 1,
-  items: { '1': { no: 1, unit: 'real_numbers', difficulty: 'basic', solution_md: '**關鍵**：$1+1=2$。\n\n- 所以選 (2)', answer_display: '(2)', checked: true } },
+  items: { '1': { no: 1, unit: 'real_numbers', difficulty: '穩定基礎', solution_md: '**關鍵**：$1+1=2$。\n\n- 所以選 (2)', answer_display: '(2)', checked: true } },
 };
 
 export function jsonResponse(body: unknown): Response {

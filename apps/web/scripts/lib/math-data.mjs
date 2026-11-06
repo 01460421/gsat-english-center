@@ -14,8 +14,11 @@
  * 這裡輸出前再檢查一次禁止欄位；官方檔案連結也不列 republish:false 的檔案（評分原則、解析）。
  * 詳解檔是本站撰寫的；含禁止字詞（官方機構名稱、「評分原則」）或 flags 標了不發布的題目不輸出，該題顯示「詳解準備中」。
  *
- * 詳解檔的格式由另一條流程決定，這裡寬鬆接受：最上層是陣列、{ items: [...] } 或 { items: { "13": {...} } }，
- * 每題有 no、solution_md（必填）、unit、difficulty、answer_display、check、flags。
+ * 詳解檔的格式（gsat-math-solutions/v1，docs/design/math-solutions-report.md §4，tools/validate_math_solutions.py 檢查）：
+ * { items: [{ no, solution_md, unit, difficulty: { level, official_p, basis }, answer_display,
+ *             check: { official, solver_a, solver_b, agree }, flags: [{ severity, detail }] }] }。
+ * 這裡另外寬鬆接受舊的草稿寫法（最上層是陣列、{ items: { "13": {...} } }、difficulty 是字串、flags 是字串、check 是 "pass"）。
+ * 舊課綱（100–110）的詳解另排：沒有詳解檔時該卷每題顯示「詳解準備中」。
  * 前端型別在 packages/shared/src/math-exam.ts（MathSolution）與 src/data/math.ts。
  */
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
@@ -34,8 +37,11 @@ const ITEM_TYPES = new Set(['single', 'multi', 'fill', 'constructed']);
 const SECTION_TYPES = new Set(['single', 'multi', 'fill', 'mixed']);
 /** 不能公開的欄位（官方的非選擇題參考答案、評分原則）。 */
 const BANNED_KEYS = ['scoring_notes', 'reference_answer', 'rubric', 'official_answer'];
-/** 詳解 flags 裡代表「不要發布」的值。 */
-const WITHHOLD_FLAGS = new Set(['withhold', 'hide', 'hidden', 'do_not_publish', 'reject', 'rejected', 'mismatch', 'failed', 'fail']);
+/**
+ * 詳解 flags 裡代表「不要發布」的值：字串 flag，或物件 flag 的 severity。
+ * owner_review＝解題者與官方答案不一致、待站主裁決，裁決前不發布；resolved＝已複核，照常發布。
+ */
+const WITHHOLD_FLAGS = new Set(['withhold', 'hide', 'hidden', 'do_not_publish', 'reject', 'rejected', 'mismatch', 'failed', 'fail', 'owner_review']);
 /** 詳解文字的禁止字詞（全站規則：介面不出現官方機構名稱；D8：不引用評分原則）。 */
 const BANNED_SOLUTION_WORDS = ['大考中心', '大學入學考試中心', 'CEEC', '評分原則'];
 /** 官方檔案連結的名稱（manifest 的 subkind → 畫面文字）。 */
@@ -210,10 +216,20 @@ export function mathPaperDetail(raw, file, ctx) {
   };
 }
 
-/** @param {unknown} check */
-function checkPassed(check) {
+/**
+ * 詳解是否通過獨立驗算。gsat-math-solutions/v1：check.agree＝兩位解題者與官方一致；
+ * 不一致但所有 flag 都是 resolved（已複核）而且解題者 A 的最終答案等於官方答案，也算通過（複核後成立）。
+ * @param {unknown} check
+ * @param {unknown[]} [flags]
+ */
+function checkPassed(check, flags = []) {
   if (check === true) return true;
   if (typeof check === 'string') return /^(pass|passed|ok|verified|true|match)$/i.test(check.trim());
+  if (isObject(check) && 'agree' in check) {
+    if (check.agree === true) return true;
+    const resolved = flags.length > 0 && flags.every((f) => isObject(f) && f.severity === 'resolved');
+    return resolved && check.official !== null && check.official !== undefined && JSON.stringify(check.solver_a) === JSON.stringify(check.official);
+  }
   if (isObject(check)) {
     if (typeof check.status === 'string') return /^(pass|passed|ok|verified)$/i.test(check.status);
     if (typeof check.pass === 'boolean') return check.pass;
@@ -260,8 +276,10 @@ export function normalizeSolutions(raw, itemNos, at) {
       skipped.push(`第 ${no} 題沒有 solution_md`);
       continue;
     }
-    const flags = Array.isArray(entry.flags) ? entry.flags.filter((f) => typeof f === 'string') : [];
-    const withhold = flags.find((f) => WITHHOLD_FLAGS.has(f.toLowerCase()));
+    const flags = Array.isArray(entry.flags) ? entry.flags : [];
+    const withhold = flags
+      .map((f) => (typeof f === 'string' ? f : isObject(f) && typeof f.severity === 'string' ? f.severity : ''))
+      .find((f) => WITHHOLD_FLAGS.has(f.toLowerCase()));
     if (withhold) {
       skipped.push(`第 ${no} 題標了 ${withhold}`);
       continue;
@@ -275,10 +293,10 @@ export function normalizeSolutions(raw, itemNos, at) {
     items[String(no)] = {
       no,
       unit: optString(entry.unit),
-      difficulty: optString(entry.difficulty),
+      difficulty: isObject(entry.difficulty) ? optString(entry.difficulty.level) : optString(entry.difficulty),
       solution_md: md,
       answer_display: display,
-      checked: checkPassed(entry.check),
+      checked: checkPassed(entry.check, flags),
     };
   }
   return { items, skipped };
@@ -304,7 +322,7 @@ export function mathPaperSummary(d, solutionCount) {
         manualMax += Number(it.points);
         constructedCount += 1;
       } else autoMax += Number(it.points);
-      if (isObject(it.stats) && typeof it.stats.correct_rate === 'number') hasStats = true;
+      if (isObject(it.stats) && typeof it.stats.P === 'number') hasStats = true;
       const tags = isObject(it.tags) && Array.isArray(it.tags.units) ? it.tags.units : [];
       for (const u of tags) units[String(u)] = (units[String(u)] ?? 0) + 1;
     }
