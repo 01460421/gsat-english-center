@@ -1,0 +1,513 @@
+{
+ "schema": "gsat-math-solutions/v1",
+ "paper_id": "gsat-matha-115",
+ "note": "本站自撰詳解；選擇（填）題答案經兩位獨立解題者與官方答案比對，非選擇題經兩位獨立解題者比對最終結果。",
+ "items": [
+  {
+   "no": 1,
+   "type": "single",
+   "unit": "機率（期望值）",
+   "unit_tags": [
+    "probability"
+   ],
+   "difficulty": {
+    "level": "穩定基礎",
+    "official_p": 0.84,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：期望值 $=\\sum(\\text{獎金}\\times\\text{機率})$；注意「吉」「祥」各 $\\frac13$，還有其他籤。\n\n**詳解**\n\n1. 兩次都「吉」：$\\dfrac13\\times\\dfrac13=\\dfrac19$，獎金 $180$ 元。\n2. 兩次都「祥」：$\\dfrac19$，獎金 $90$ 元。\n3. 其他情形獎金 $0$。\n4. 期望值 $=180\\times\\dfrac19+90\\times\\dfrac19=20+10=30$ 元。\n\n**答案**：(2)\n\n**常見錯誤**：以為每次只有「吉」「祥」兩種結果、各 $\\frac12$，算成 $67.5$ 元；題目給的是各 $\\frac13$。",
+   "answer_display": "(2)",
+   "check": {
+    "official": "2",
+    "solver_a": "2",
+    "solver_b": "2",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 2,
+   "type": "single",
+   "unit": "實數（高斯符號）、函數",
+   "unit_tags": [
+    "real_numbers",
+    "functions"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.55,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：直接代值，用「$k^2\\le N<(k+1)^2\\Rightarrow[\\sqrt N]=k$」估計。\n\n**詳解**\n\n1. $f(0)=[\\sqrt{99}]+[\\sqrt{99}]=9+9=18$（$81\\le99<100$）。\n2. $f(1)=[\\sqrt{98}]+[\\sqrt{100}]=9+10=19$。\n3. $f(-20)=[\\sqrt{119}]+[\\sqrt{79}]=10+8=18$（$100\\le119<121$，$64\\le79<81$）。\n4. 所以 $f(-20)=f(0)=18<f(1)=19$，即 $f(-20)\\le f(0)<f(1)$。\n\n**答案**：(1)",
+   "answer_display": "(1)",
+   "check": {
+    "official": "1",
+    "solver_a": "1",
+    "solver_b": "1",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 3,
+   "type": "single",
+   "unit": "指數對數、數列與級數",
+   "unit_tags": [
+    "exp_log",
+    "sequence"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.41,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：$\\dfrac{f(c_2)}{f(c_1)}=a^{c_2-c_1}$，由公差與公比求出 $a$。\n\n**詳解**\n\n1. $\\dfrac{f(c_2)}{f(c_1)}=a^{\\frac{10}{3}}=4=2^2$，所以 $a=2^{\\frac{6}{10}}=2^{\\frac35}$。\n2. 所求公比 $=\\dfrac{f(8)}{f(10)}=a^{8-10}=a^{-2}=2^{-\\frac65}$。\n\n**答案**：(1)\n\n**常見錯誤**：把數列順序 $f(10),f(8),f(6)$ 看成遞增，算成 $a^2=2^{\\frac65}$ 而選 (4)。",
+   "answer_display": "(1)",
+   "check": {
+    "official": "1",
+    "solver_a": "1",
+    "solver_b": "1",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 4,
+   "type": "single",
+   "unit": "排列組合",
+   "unit_tags": [
+    "counting"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.56,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：分「草藥、食物、藥水」三類計算「不同的道具種數」，不是材料組合數。\n\n**詳解**\n\n1. 草藥：$3$ 種皆基本材料，不論怎麼選都是同一種草藥，共 $1$ 種。\n2. 食物：$2$ 基本 $+1$ 進階，種類只由進階材料決定，共 $10$ 種。\n3. 藥水：其他組合各不相同。\n   - $1$ 基本 $+2$ 進階：$6\\times C^{10}_2=270$；\n   - $3$ 進階：$C^{10}_3=120$。\n\n   共 $390$ 種。\n4. 總計 $1+10+390=401$ 種。\n\n**答案**：(3)\n\n**常見錯誤**：直接算 $C^{16}_3=560$（選 (5)），沒有扣掉合成出相同道具的組合。",
+   "answer_display": "(3)",
+   "check": {
+    "official": "3",
+    "solver_a": "3",
+    "solver_b": "3",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 5,
+   "type": "single",
+   "unit": "矩陣、線性方程組",
+   "unit_tags": [
+    "matrix",
+    "linear_system"
+   ],
+   "difficulty": {
+    "level": "超越頂標",
+    "official_p": 0.26,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：$\\vec e_1=(1,1,0)^T$、$\\vec e_2=(0,-1,1)^T$、$\\vec e_3=(1,0,-1)^T$ 線性獨立，任何 $\\vec v$ 可寫成它們的線性組合；$A$ 把 $\\vec e_1,\\vec e_2$ 互換、把 $\\vec e_3$ 送到 $\\vec 0$。\n\n**詳解**\n\n1. 題目給：$A\\vec e_1=\\vec e_2$、$A\\vec e_2=\\vec e_1$、$A\\vec e_3=\\vec 0$。行列式 $\\begin{vmatrix}1&1&0\\\\0&-1&1\\\\1&0&-1\\end{vmatrix}=2\\ne0$，三向量線性獨立。\n2. 設 $\\vec v=x\\vec e_1+y\\vec e_2+z\\vec e_3$，則 $A\\vec v=x\\vec e_2+y\\vec e_1$。\n3. 目標 $(1,0,1)^T=\\vec e_1+\\vec e_2$（$(1,1,0)+(0,-1,1)=(1,0,1)$），所以 $x=y=1$，$z$ 任意：\n$$\\vec v=\\vec e_1+\\vec e_2+z\\vec e_3=(1+z,\\ 0,\\ 1-z)^T.$$\n4. $\\vec v$ 垂直 $(0,1,0)^T\\iff v_2=0$，對所有 $z$ 都成立。所以有無窮多個。\n\n**答案**：(5)\n\n**常見錯誤**：以為「三個條件、三個未知數」就恰有一解；但 $A$ 不可逆（$A\\vec e_3=\\vec0$），而且垂直條件 $v_2=0$ 是自動成立的。",
+   "answer_display": "(5)",
+   "check": {
+    "official": "5",
+    "solver_a": "5",
+    "solver_b": "5",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 6,
+   "type": "single",
+   "unit": "直線與坐標、幾何",
+   "unit_tags": [
+    "coordinate_line",
+    "geometry"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.37,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：等腰分三種情形（$CA=CB$、$AC=AB$、$BC=BA$）；記得排除 $C$ 與 $A,B$ 共線的退化情形。\n\n**詳解**\n\n1. 設 $C(t,-6)$，$\\overline{AB}=\\sqrt{9+16}=5$。\n2. $\\overline{CA}=\\overline{CB}$：$(t-2)^2+16=(t+1)^2+64$，$-6t=45$，$t=-\\dfrac{15}{2}$。\n3. $\\overline{AC}=\\overline{AB}=5$：$(t-2)^2+16=25$，$t=5$ 或 $-1$。\n4. $\\overline{BC}=\\overline{BA}=5$：$(t+1)^2+64=25$，無解。\n5. 直線 $AB$：$y+2=-\\dfrac43(x-2)$，$y=-6$ 時 $x=5$，所以 $C(5,-6)$ 在直線 $AB$ 上，三點共線不成三角形，捨去。\n6. 符合的 $C$：$t=-\\dfrac{15}2,\\ -1$，共 $2$ 個。\n\n**答案**：(2)\n\n**常見錯誤**：忘了檢查共線，得到 $3$ 個。",
+   "answer_display": "(2)",
+   "check": {
+    "official": "2",
+    "solver_a": "2",
+    "solver_b": "2",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 7,
+   "type": "multi",
+   "unit": "二元一次不等式",
+   "unit_tags": [
+    "inequality_lp"
+   ],
+   "difficulty": {
+    "level": "穩定基礎",
+    "official_p": 0.74,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：兩個不等式都是「在直線下方」：$y<2x-3$ 且 $y<-\\dfrac{x+1}{2}$。畫出兩直線，區域是交點 $(1,-1)$ 下方的楔形區域。\n\n**詳解**\n\n1. $2x-y-3>0\\iff y<2x-3$；$x+2y+1<0\\iff y<-\\dfrac{x+1}{2}$。兩直線交於 $(1,-1)$。\n\n**選項分析**\n\n- (1) 錯：$y>0$ 需 $-\\dfrac{x+1}{2}>0$，即 $x<-1$，但此時 $2x-3<-5<0<y$，矛盾。\n- (2) 錯：$x<0$ 時 $2x-3<0$，$y$ 必為負，不會在第二象限。\n- (3) 對：例如 $(0,-5)$：$0+5-3>0$、$0-10+1<0$。\n- (4) 對：例如 $(2,-2)$：$4+2-3>0$、$2-4+1<0$。\n- (5) 錯：$y=0$ 需 $x>\\dfrac32$ 且 $x<-1$，矛盾。\n\n**答案**：(3)(4)",
+   "answer_display": "(3)(4)",
+   "check": {
+    "official": "3,4",
+    "solver_a": "3,4",
+    "solver_b": "3,4",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 8,
+   "type": "multi",
+   "unit": "矩陣、數列與級數",
+   "unit_tags": [
+    "matrix",
+    "sequence"
+   ],
+   "difficulty": {
+    "level": "穩定基礎",
+    "official_p": 0.7,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：$A^2=2A+I$（凱萊-哈密頓的特例），得 $A^{n+2}=2A^{n+1}+A^n$；$A$ 對稱，所以 $A^n$ 也對稱，$b_n=c_n$。\n\n**詳解**\n\n1. $A^2=\\begin{bmatrix}5&2\\\\2&1\\end{bmatrix}$，$A^3=\\begin{bmatrix}12&5\\\\5&2\\end{bmatrix}$，$A^4=\\begin{bmatrix}29&12\\\\12&5\\end{bmatrix}$。\n\n**選項分析**\n\n- (1) 錯：$b_2=c_2=2$。\n- (2) 對：$2A+I=\\begin{bmatrix}5&2\\\\2&1\\end{bmatrix}=A^2$。\n- (3) 錯：由 $A^{n+2}=2A^{n+1}+A^n$，正確的是 $c_{n+2}=2c_{n+1}+c_n$。例如 $c_4=12$，而 $c_3+2c_2=5+4=9$。\n- (4) 錯：左邊是 $A^n$ 的第二行 $\\begin{bmatrix}b_n\\\\d_n\\end{bmatrix}$；右邊 $A^{n+1}$ 的第二行 $=A^n\\left(A\\begin{bmatrix}0\\\\1\\end{bmatrix}\\right)=A^n\\begin{bmatrix}1\\\\0\\end{bmatrix}=\\begin{bmatrix}a_n\\\\c_n\\end{bmatrix}$，一般不相等（例如 $b_2=2\\ne b_3=5$）。\n- (5) 對：$A^{2n}=(A^n)^2$，$a_{2n}=a_n^2+b_nc_n$，$d_{2n}=c_nb_n+d_n^2$，相減得 $d_{2n}-a_{2n}=d_n^2-a_n^2$。\n\n**答案**：(2)(5)",
+   "answer_display": "(2)(5)",
+   "check": {
+    "official": "2,5",
+    "solver_a": "2,5",
+    "solver_b": "2,5",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 9,
+   "type": "multi",
+   "unit": "數據分析（標準化、迴歸）",
+   "unit_tags": [
+    "statistics"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.44,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：把 $T$ 分數寫成原始分數的一次函數：數學 $T=50+\\dfrac{10}{12}(S-60)=\\dfrac56S$；英文 $T=50+\\dfrac{10}{8}(S-60)=\\dfrac54S-25$。\n\n**詳解**：以上兩式由定義 $T=50+10\\cdot\\dfrac{S-\\mu}{\\sigma}$ 代入 $\\mu=60$、$\\sigma=12$ 或 $8$ 化簡而得，各選項都用這兩式判斷。\n\n**選項分析**\n\n- (1) 對：$\\dfrac54\\times52-25=40$。\n- (2) 對：數學 $T=\\dfrac56S\\le S$（原始成績 $S\\ge0$）。\n- (3) 錯：兩科換算的係數不同（$\\frac56$ 與 $\\frac54$）。例如乙：數學 $90$、英文 $60$（平均 $75$），$T$ 平均 $=\\frac{75+50}{2}=62.5$；丙：數學 $60$、英文 $80$（平均 $70$），$T$ 平均 $=\\frac{50+75}{2}=62.5$。原始平均較高，$T$ 平均卻沒有較高。\n- (4) 對：數學 $\\dfrac56S\\ge40\\iff S\\ge48$；英文 $\\dfrac54S-25\\ge40\\iff S\\ge52$。數學及格分數較低。\n- (5) 錯：原始成績的迴歸斜率 $=r\\cdot\\dfrac{12}{8}=1.5r$；$T$ 分數兩科標準差都是 $10$，斜率 $=r$。$r\\ne0$ 時不相同。\n\n**答案**：(1)(2)(4)",
+   "answer_display": "(1)(2)(4)",
+   "check": {
+    "official": "1,2,4",
+    "solver_a": "1,2,4",
+    "solver_b": "1,2,4",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 10,
+   "type": "multi",
+   "unit": "平面向量（梯形、面積）",
+   "unit_tags": [
+    "vector_plane"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.36,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：$\\overline{AB}\\parallel\\overline{DC}$，設 $\\overrightarrow{DC}=k\\overrightarrow{AB}$（$k>0$）；$\\Delta ABE\\sim\\Delta CDE$，$E$ 分 $\\overline{BD}$ 為 $1:k$。\n\n**詳解**\n\n1. $\\Delta ABD$ 面積 $=\\dfrac12|2\\cdot5-(-6)\\cdot1|=8$。\n2. $\\overline{BE}:\\overline{ED}=\\overline{AB}:\\overline{DC}=1:k$，$\\Delta ABE=\\dfrac{1}{1+k}\\cdot8=3$，得 $k=\\dfrac53$。\n3. $\\overrightarrow{AC}=\\overrightarrow{AD}+\\dfrac53\\overrightarrow{AB}=\\left(\\dfrac{13}{3},-5\\right)$，$\\overrightarrow{AE}=\\dfrac{1}{1+k}\\overrightarrow{AC}=\\dfrac38\\overrightarrow{AC}=\\left(\\dfrac{13}{8},-\\dfrac{15}{8}\\right)$。\n\n**選項分析**\n\n- (1) 對：$\\cos\\angle BAD=\\dfrac{2-30}{\\sqrt{40}\\sqrt{26}}=\\dfrac{-28}{4\\sqrt{65}}=-\\dfrac{7\\sqrt{65}}{65}$。\n- (2) 錯：面積為 $8$。\n- (3) 錯：$\\overrightarrow{AE}=\\left(\\dfrac{13}{8},-\\dfrac{15}{8}\\right)$。\n- (4) 錯：$\\Delta BCD$ 與 $\\Delta ABD$ 等高、底的比為 $k$，面積 $\\dfrac{40}{3}$；梯形面積 $=8+\\dfrac{40}{3}=\\dfrac{64}{3}$。\n- (5) 對：$\\overrightarrow{BC}=\\overrightarrow{AC}-\\overrightarrow{AB}=\\left(\\dfrac73,1\\right)$，$\\overline{BC}=\\dfrac{\\sqrt{58}}{3}<\\dfrac{\\sqrt{64}}{3}=\\dfrac83$。\n\n**答案**：(1)(5)",
+   "answer_display": "(1)(5)",
+   "check": {
+    "official": "1,5",
+    "solver_a": "1,5",
+    "solver_b": "1,5",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 11,
+   "type": "multi",
+   "unit": "三角函數（圖形）、函數",
+   "unit_tags": [
+    "trigonometry",
+    "functions"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.33,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：每條 $L_m$ 都過 $(0,1)$，而 $(0,1)$ 也在 $\\Gamma$ 上；$\\cos$ 是偶函數。\n\n**詳解**：$\\Gamma$ 的週期為 $4$；$y=0$ 發生在 $x$ 為奇數時，$y=-1$ 發生在 $x=4j+2$ 時；交點滿足 $mx+1=\\cos\\dfrac{\\pi x}{2}$。\n\n**選項分析**\n\n- (1) 錯：$(0,1)$ 永遠是交點，$x$ 坐標 $0$ 不是負數。\n- (2) 對：$b=ma+1=\\cos\\frac{\\pi a}{2}$。則 $\\cos\\left(-\\frac{\\pi a}2\\right)=\\cos\\frac{\\pi a}2=b$，且 $(-m)(-a)+1=ma+1=b$，所以 $(-a,b)$ 在 $L_{-m}$ 與 $\\Gamma$ 上。\n- (3) 錯：$\\cos\\left(\\dfrac\\pi2\\cdot\\dfrac{20}3\\right)=\\cos\\dfrac{10\\pi}{3}=\\cos\\dfrac{4\\pi}{3}=-\\dfrac12\\ne\\dfrac12$，點不在 $\\Gamma$ 上。\n- (4) 對：$\\cos\\frac{\\pi x}2=-1\\iff x=4j+2$（$j$ 為整數）；又 $mx+1=-1$，$x=-\\dfrac2m$。所以 $-\\dfrac2m=2(2j+1)$，$\\dfrac1m=-(2j+1)$ 是奇數。\n- (5) 錯：反例 $m=-1$：交點在 $x$ 軸上的 $(1,0)$；而 $L_{-1}:y=1-x$ 與 $\\Gamma$ 交於 $x=0,1,2$（$x=2$ 時兩者都是 $-1$），$x<0$ 時直線 $>1$、$x>2$ 時直線 $<-1$ 都不會再交，共 $3$ 個交點，是奇數。\n\n**答案**：(2)(4)",
+   "answer_display": "(2)(4)",
+   "check": {
+    "official": "2,4",
+    "solver_a": "2,4",
+    "solver_b": "2,4",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 12,
+   "type": "multi",
+   "unit": "多項式函數（三次函數的對稱中心）",
+   "unit_tags": [
+    "polynomial"
+   ],
+   "difficulty": {
+    "level": "超越頂標",
+    "official_p": 0.28,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：設 $f(x)=x^3+px^2+qx+r$，則 $g(x)=-x^3+px^2+(q-2)x+r$；對稱中心 $x$ 坐標分別為 $-\\dfrac p3$ 與 $\\dfrac p3$。\n\n**詳解**\n\n1. $a_1=-\\dfrac{p}{3}$，$a_2=-\\dfrac{p}{3\\cdot(-1)}=\\dfrac p3$。\n\n**選項分析**\n\n- (1) 錯：$f(x)=g(x)\\iff2x^3+2x=0\\iff x(x^2+1)=0$，只有 $x=0$，恰交於一點。\n- (2) 對：$a_1+a_2=0$。\n- (3) 錯：令 $a=a_1$（$p=-3a$），$b_1=f(a)=-2a^3+qa+r$，$b_2=g(-a)=-2a^3-(q-2)a+r$，$b_1+b_2=-4a^3+2a+2r$，隨 $a,r$ 改變，不能唯一確定。\n- (4) 對：$a_1=a_2\\Rightarrow p=0\\Rightarrow a_1=a_2=0$，$b_1=f(0)=r=g(0)=b_2$。\n- (5) 錯：$b_1-b_2=2a(q-1)$。若 $q=1$、$a\\ne0$，則 $b_1=b_2$ 但 $a_1=a\\ne-a=a_2$。\n\n**答案**：(2)(4)",
+   "answer_display": "(2)(4)",
+   "check": {
+    "official": "2,4",
+    "solver_a": "2,4",
+    "solver_b": "2,4",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 13,
+   "type": "fill",
+   "unit": "機率（條件機率）",
+   "unit_tags": [
+    "probability"
+   ],
+   "difficulty": {
+    "level": "穩定基礎",
+    "official_p": 0.73,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：貝氏定理：$P(\\text{碩士}\\mid\\text{通過})=\\dfrac{P(\\text{碩士且通過})}{P(\\text{通過})}$。\n\n**詳解**\n\n1. 學士且通過：$\\dfrac14\\times\\dfrac15=\\dfrac{1}{20}$；碩士且通過：$\\dfrac34\\times\\dfrac35=\\dfrac{9}{20}$。\n2. $P(\\text{碩士}\\mid\\text{通過})=\\dfrac{9/20}{1/20+9/20}=\\dfrac{9}{10}$。\n\n**答案**：$\\dfrac{9}{10}$（13-1 填 $9$，13-2 填 $1$，13-3 填 $0$）",
+   "answer_display": "$\\frac{9}{10}$",
+   "check": {
+    "official": {
+     "13-1": "9",
+     "13-2": "1",
+     "13-3": "0"
+    },
+    "solver_a": {
+     "13-1": "9",
+     "13-2": "1",
+     "13-3": "0"
+    },
+    "solver_b": {
+     "13-1": "9",
+     "13-2": "1",
+     "13-3": "0"
+    },
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 14,
+   "type": "fill",
+   "unit": "直線與坐標、平面向量",
+   "unit_tags": [
+    "coordinate_line",
+    "vector_plane"
+   ],
+   "difficulty": {
+    "level": "超越頂標",
+    "official_p": 0.19,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：向量與直線垂直 $\\iff$ 與直線的方向向量內積為 $0$；直線 $y=bx-1$ 的方向向量為 $(1,b)$。\n\n**詳解**\n\n1. $(a,b)\\cdot(1,b)=a+b^2=0$，所以 $a=-b^2$。\n2. $a+b=-b^2+b=-\\left(b-\\dfrac12\\right)^2+\\dfrac14$，最大值 $\\dfrac14$（$b=\\frac12$、$a=-\\frac14$）。\n\n**答案**：$\\dfrac14$（14-1 填 $1$，14-2 填 $4$）\n\n**注意**：「向量與直線垂直」是和直線的**方向向量**垂直（內積為 $0$），也就是向量平行於直線的法向量 $(b,-1)$。",
+   "answer_display": "$\\frac{1}{4}$",
+   "check": {
+    "official": {
+     "14-1": "1",
+     "14-2": "4"
+    },
+    "solver_a": {
+     "14-1": "1",
+     "14-2": "4"
+    },
+    "solver_b": {
+     "14-1": "1",
+     "14-2": "4"
+    },
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 15,
+   "type": "fill",
+   "unit": "指數對數、數列與級數",
+   "unit_tags": [
+    "exp_log",
+    "sequence"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.31,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：三點的 $x$ 坐標等距（等差），共線 $\\iff$ 中間點的 $y$ 坐標是兩端的平均。\n\n**詳解**\n\n1. $a,b,c$ 等差，$b$ 是 $a,c$ 的中點；三點共線 $\\iff2\\log4b=\\log3a+\\log6c$。\n2. 化簡：$16b^2=18ac$，即 $8b^2=9ac$。\n3. 設公差 $d>0$，$a=b-d$、$c=b+d$：$8b^2=9(b^2-d^2)$，$b^2=9d^2$，$b=3d$，$a=2d$。\n4. $\\dfrac ba=\\dfrac32$。\n\n**答案**：$\\dfrac32$（15-1 填 $3$，15-2 填 $2$）",
+   "answer_display": "$\\frac{3}{2}$",
+   "check": {
+    "official": {
+     "15-1": "3",
+     "15-2": "2"
+    },
+    "solver_a": {
+     "15-1": "3",
+     "15-2": "2"
+    },
+    "solver_b": {
+     "15-1": "3",
+     "15-2": "2"
+    },
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 16,
+   "type": "fill",
+   "unit": "多項式函數（二次函數）、直線與坐標",
+   "unit_tags": [
+    "polynomial",
+    "coordinate_line"
+   ],
+   "difficulty": {
+    "level": "超越頂標",
+    "official_p": 0.2,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：兩 $x$ 截距對稱於 $x=0$，頂點在 $y$ 軸上；平移不改變開口大小（二次項係數）。\n\n**詳解**\n\n1. $\\Gamma$ 交 $x$ 軸於 $\\pm\\dfrac12$，頂點 $x$ 坐標為 $0$；又在 $y=1+2x$ 上，$P(0,1)$。由 $f\\left(\\frac12\\right)=0$ 得 $f(x)=1-4x^2$。\n2. 平移後頂點 $Q(h,1+2h)$，新圖形 $y=-4(x-h)^2+1+2h$ 過 $B\\left(\\frac12,0\\right)$：\n$$-4\\left(\\frac12-h\\right)^2+1+2h=0\\ \\Longrightarrow\\ 6h-4h^2=0,$$\n$h=0$（即 $P$，不合）或 $h=\\dfrac32$，$Q\\left(\\dfrac32,4\\right)$。\n3. $\\overline{PQ}=\\sqrt{\\left(\\frac32\\right)^2+3^2}=\\sqrt{\\dfrac{45}{4}}=\\dfrac{3\\sqrt5}{2}$。\n\n**答案**：$\\dfrac{3\\sqrt5}{2}$（16-1 填 $3$，16-2 填 $5$，16-3 填 $2$）",
+   "answer_display": "$\\frac{3\\sqrt{5}}{2}$",
+   "check": {
+    "official": {
+     "16-1": "3",
+     "16-2": "5",
+     "16-3": "2"
+    },
+    "solver_a": {
+     "16-1": "3",
+     "16-2": "5",
+     "16-3": "2"
+    },
+    "solver_b": {
+     "16-1": "3",
+     "16-2": "5",
+     "16-3": "2"
+    },
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 17,
+   "type": "fill",
+   "unit": "三角函數（正弦定理、三倍角）、幾何",
+   "unit_tags": [
+    "trigonometry",
+    "geometry",
+    "vector_plane"
+   ],
+   "difficulty": {
+    "level": "超越頂標",
+    "official_p": 0.06,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：設 $\\angle ACD=\\theta$，在 $\\Delta BCD$ 用正弦定理，由 $\\overline{BC}=2\\overline{BD}$ 求出 $\\sin\\theta$；$k=\\dfrac{\\overline{AD}}{\\overline{AB}}=\\dfrac{\\tan\\theta}{\\tan3\\theta}$。\n\n**詳解**\n\n1. $\\angle ACD=\\theta$、$\\angle BCD=2\\theta$、$\\angle ACB=3\\theta$。$\\Delta ACD$ 中 $\\angle ADC=90^\\circ-\\theta$，所以 $\\angle BDC=90^\\circ+\\theta$。\n2. $\\Delta BCD$ 正弦定理：$\\dfrac{\\overline{BC}}{\\sin(90^\\circ+\\theta)}=\\dfrac{\\overline{BD}}{\\sin2\\theta}$，所以 $2=\\dfrac{\\overline{BC}}{\\overline{BD}}=\\dfrac{\\cos\\theta}{2\\sin\\theta\\cos\\theta}=\\dfrac{1}{2\\sin\\theta}$，$\\sin\\theta=\\dfrac14$。\n3. $\\cos\\theta=\\dfrac{\\sqrt{15}}4$，$t=\\tan\\theta=\\dfrac{1}{\\sqrt{15}}$，$t^2=\\dfrac1{15}$。\n4. $\\tan3\\theta=\\dfrac{3t-t^3}{1-3t^2}=\\dfrac{t\\left(3-\\frac1{15}\\right)}{1-\\frac{3}{15}}=t\\cdot\\dfrac{44/15}{12/15}=\\dfrac{11}{3}t$。\n5. 設 $\\overline{AC}=1$，$\\overline{AD}=\\tan\\theta$、$\\overline{AB}=\\tan3\\theta$，$k=\\dfrac{t}{\\frac{11}3t}=\\dfrac{3}{11}$。\n\n**答案**：$\\dfrac{3}{11}$（17-1 填 $3$，17-2 填 $1$，17-3 填 $1$）",
+   "answer_display": "$\\frac{3}{11}$",
+   "check": {
+    "official": {
+     "17-1": "3",
+     "17-2": "1",
+     "17-3": "1"
+    },
+    "solver_a": {
+     "17-1": "3",
+     "17-2": "1",
+     "17-3": "1"
+    },
+    "solver_b": {
+     "17-1": "3",
+     "17-2": "1",
+     "17-3": "1"
+    },
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 18,
+   "type": "single",
+   "unit": "空間向量（外積）",
+   "unit_tags": [
+    "vector_space"
+   ],
+   "difficulty": {
+    "level": "穩定基礎",
+    "official_p": 0.69,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：平行四邊形面積 $=|\\overrightarrow{AB}\\times\\overrightarrow{AD}|$。\n\n**詳解**：$|(-5,5,5)|=\\sqrt{25+25+25}=5\\sqrt3$。\n\n**答案**：(3)",
+   "answer_display": "(3)",
+   "check": {
+    "official": "3",
+    "solver_a": "3",
+    "solver_b": "3",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 19,
+   "type": "constructed",
+   "unit": "空間向量、空間中的平面與直線",
+   "unit_tags": [
+    "vector_space",
+    "space_line_plane"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": null,
+    "basis": "本站估計"
+   },
+   "solution_md": "**解題關鍵**：$\\overrightarrow{AB}\\times\\overrightarrow{AD}$ 就是平面 $ABCD$ 的法向量。\n\n**詳解**\n\n1. 法向量 $(-5,5,5)\\parallel(1,-1,-1)$。\n2. 平面過 $B(1,2,0)$：$1\\cdot(x-1)-1\\cdot(y-2)-1\\cdot(z-0)=0$，即 $x-y-z=-1$。\n\n**答案**：$x-y-z=-1$（等價寫法 $-x+y+z=1$ 或 $x-y-z+1=0$）。\n\n**評分重點（本站整理）**\n\n- 指出外積 $\\overrightarrow{AB}\\times\\overrightarrow{AD}$ 垂直平面 $ABCD$，作為法向量。\n- 代入 $B$ 點求常數項，方程式正確。",
+   "answer_display": "$x-y-z=-1$（或寫成 $-x+y+z=1$）",
+   "check": {
+    "official": null,
+    "solver_a": "x − y − z = −1（即 −x + y + z = 1）",
+    "solver_b": "x−y−z+1=0",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 20,
+   "type": "constructed",
+   "unit": "空間向量",
+   "unit_tags": [
+    "vector_space"
+   ],
+   "difficulty": {
+    "level": "超越頂標",
+    "official_p": null,
+    "basis": "本站估計"
+   },
+   "solution_md": "**解題關鍵**：由三個外積反推三邊向量：$\\overrightarrow{AP}$ 同時垂直 $\\overrightarrow{AD}\\times\\overrightarrow{AP}$ 與 $\\overrightarrow{AP}\\times\\overrightarrow{AB}$，依此類推；凸多面體上離 $A$ 最遠的點一定是頂點。\n\n**詳解**\n\n1. **求 $\\overrightarrow{AP}$**：$\\overrightarrow{AP}$ 垂直 $(-2,0,-4)$ 與 $(6,-10,-8)$，平行於兩者的外積 $(-40,-40,20)\\parallel(-2,-2,1)$；$|(-2,-2,1)|=3$，又 $\\overline{AP}=6$，所以 $\\overrightarrow{AP}=\\pm(-4,-4,2)$。\n2. **體積**：$V=\\left|\\overrightarrow{AP}\\cdot(\\overrightarrow{AB}\\times\\overrightarrow{AD})\\right|=|(-4,-4,2)\\cdot(-5,5,5)|=|20-20+10|=10$。\n3. **求 $\\overrightarrow{AB},\\overrightarrow{AD}$**：$\\overrightarrow{AB}$ 垂直 $(-5,5,5)$ 與 $(6,-10,-8)$，平行 $(1,-1,2)$；$\\overrightarrow{AD}$ 垂直 $(-5,5,5)$ 與 $(-2,0,-4)$，平行 $(2,3,-1)$。代回三個外積比對係數，可得一組 $\\overrightarrow{AB}=(1,-1,2)$、$\\overrightarrow{AD}=(2,3,-1)$、$\\overrightarrow{AP}=(4,4,-2)$（另一組是三者同時變號，長度關係完全相同）。驗算：$(1,-1,2)\\times(2,3,-1)=(-5,5,5)$ ✓。\n4. **最長距離**：點 $A$ 到平行六面體上一點的距離，最大值發生在頂點。各頂點向量 $x\\overrightarrow{AB}+y\\overrightarrow{AD}+z\\overrightarrow{AP}$（$x,y,z\\in\\{0,1\\}$）。先算內積：$|\\overrightarrow{AB}|^2=6$、$|\\overrightarrow{AD}|^2=14$、$|\\overrightarrow{AP}|^2=36$、$\\overrightarrow{AB}\\cdot\\overrightarrow{AD}=-3$、$\\overrightarrow{AB}\\cdot\\overrightarrow{AP}=-4$、$\\overrightarrow{AD}\\cdot\\overrightarrow{AP}=22$。\n   - $\\overrightarrow{AD}+\\overrightarrow{AP}$（頂點 $S$）：$14+36+2\\cdot22=94$；\n   - $\\overrightarrow{AB}+\\overrightarrow{AD}+\\overrightarrow{AP}$（頂點 $R$）：$6+14+36+2(-3-4+22)=86$；\n   - 其餘頂點：$\\overrightarrow{AB}+\\overrightarrow{AP}$ 為 $34$，$\\overrightarrow{AP}$ 為 $36$，$\\overrightarrow{AB}+\\overrightarrow{AD}$ 為 $14$，$\\overrightarrow{AD}$ 為 $14$，$\\overrightarrow{AB}$ 為 $6$。\n5. 最大為 $94$，最長距離 $\\sqrt{94}$（在頂點 $S$）。\n\n**另法（體積）**：恆等式 $\\left[\\vec u\\times\\vec v,\\ \\vec v\\times\\vec w,\\ \\vec w\\times\\vec u\\right]=[\\vec u,\\vec v,\\vec w]^2$；三個外積排成的行列式 $=(-5,5,5)\\cdot(-40,-40,20)=100$，所以 $V^2=100$，$V=10$。\n\n**答案**：體積 $10$；最長距離 $\\sqrt{94}$。\n\n**評分重點（本站整理）**\n\n- 由外積的垂直性質定出 $\\overrightarrow{AP}$ 的方向，配合 $\\overline{AP}=6$ 求出向量（或用上面的恆等式），體積正確。\n- 說明最遠點在頂點，並比較各頂點距離；注意最遠的不一定是「對角頂點」$R$（本題是 $S$）。",
+   "answer_display": "體積 $=10$；最長距離 $=\\sqrt{94}$",
+   "check": {
+    "official": null,
+    "solver_a": "體積 10；最長距離 √94",
+    "solver_b": "體積 10；最長距離 √94",
+    "agree": true
+   },
+   "flags": []
+  }
+ ]
+}
