@@ -39,13 +39,13 @@ P2 是最小可用版本：有題目、能作答批改、有可信的詳解。P3
 ## 2. 資料（P1，已完成）
 
 - 原始檔：`tools/fetch_ceec_math.py` → `data/raw/ceec/gsat-math{a,b}/…`（不進版控）、清單 `data/exams/math-manifest.json`（進版控）。評分原則、參考答案、解析標 `republish:false`，只供內部參考。
-- 結構化：`data/exams/parsed-math/gsat-math{a,b}-{111..115}.json`、圖 `data/exams/figures-math/`。格式 `gsat-math-exam/v1`。
+- 結構化：`data/exams/parsed-math/gsat-math{a,b}-{111..115}.json`、圖 `data/exams/figures-math/`。格式 `gsat-math-exam/v1`。官方答對率／鑑別度與選項分析由 `merge_math_stats.py --all` 併入每題 `stats`（111–115 只有選擇（填）題，非選擇題官方不列；併入時核對選項分析的正確選項＝我們的答案，129 題單選／多選全部一致）。
 - 工具鏈：`docx_math_draft.py`（Word 版題本的 MathType→LaTeX、EQ 欄位、自動編號）→ `build_math_exam.py`（骨架）→ 人工對照 PDF 影像校對 → `crop_math_figures.py`（依 bbox 裁圖）→ `validate_math_exam.py`（含 KaTeX）。
 - **舊課綱 100–110**（站主決定：上線，標示「舊課綱」，§12 問題 2）：`data/exams/parsed-math/gsat-math-{100..110}.json`，`era: "舊課綱"`、`subject: "math"`；11 卷 220 題（單選、多選、選填 A、B…，沒有非選擇題，滿分全由機器計分）、37 張圖、13 個表。選填格另存答案卡列號 `fill.official_cells`；官方答對率／鑑別度與選項分析已由 `merge_math_stats.py` 併入每題 `stats`（併入時同時核對答案）。100–102 的官方 Word 檔是舊版 .doc，以 LibreOffice 轉檔後同樣走 MathType→LaTeX；無法轉換的 Equation 3.0 物件依 PDF 補打並記在 `extraction.corrections`。
 - **P2 要加的**：
   - `packages/shared/src/mathExam.ts`：TypeScript 型別與共用函式（批改、`fill.template` 解析、`[[FILL]]`／`[[TABLE:k]]` 切分），`npm run test:data` 用實際 JSON 檢查型別（比照英文 `exam.ts`）。
   - `apps/web/scripts/build-data.mjs` 輸出 `public/data/math/{id}.json`（題目）與 `public/data/math/index.json`（列表、單元統計）；圖檔複製到 `public/data/math/figures/`。
-  - 官方答對率／鑑別度、選項分析（`stats-1/2.xls`）併入 `question.stats`（todo 已列）；供 P2 顯示「全國答對率」與 P4 難度校準。
+  - ~~官方答對率／鑑別度、選項分析（`stats-1/2.xls`）併入 `question.stats`~~：已完成（100–115 全部，`item.stats`），P2 顯示「全國答對率」，P4 難度校準可用。
   - CI：加 `npm run validate:math` 與 `python3 -m unittest tools/tests/test_math_tools.py`；KaTeX 檢查改用 `apps/web/node_modules/katex`。
 
 ---
@@ -120,6 +120,8 @@ P2 是最小可用版本：有題目、能作答批改、有可信的詳解。P3
    - 格式：所有公式能被 KaTeX 排版；不含禁止字詞（官方機構名稱、「評分原則」字樣）。
 4. **不一致**：重試一次（換種子提示）；仍不一致進人工佇列，網站對該題暫不顯示詳解。
 5. **人工審核**：P2 上線前至少抽審 20%＋全部難題（官方答對率 < 30% 的題目）；審核結果記錄在詳解檔（誰、何時、結論）。
+
+> 實際做法與結果（111–115 數A／數B 200 題，雙重獨立驗算）見 [`math-solutions-report.md`](math-solutions-report.md)；存放格式以該報告 §4（`data/exams/math-solutions/{id}.json`，`gsat-math-solutions/v1`）為準，§6.3 是早期構想。舊課綱 100–110 的詳解另排。
 
 ### 6.3 存放
 
@@ -206,7 +208,7 @@ P2 是最小可用版本：有題目、能作答批改、有可信的詳解。P3
 ## 12. 待站主決定
 
 1. **先上數A 還是兩科同時**？建議同時（資料與元件共用，多做的只有詳解數量）。
-2. ~~**舊課綱學測數學（100–110，11 卷約 220 題）**要不要結構化並上線~~ → **已決定上線，標示「舊課綱」**（不算數A／數B）。資料已完成（§2）；詳解與前端列表另排。
+2. ~~**舊課綱學測數學（100–110，11 卷約 220 題）**要不要結構化並上線~~ → **已決定上線，標示「舊課綱」**（不算數A／數B）。資料與網頁已完成（§2、§14）；詳解另排（目前顯示「詳解準備中」）。
 3. **非選擇題**只提供「看詳解自評」可以嗎？還是 P3 就要「拍照上傳、AI 回饋」（扣點）？
 4. **詳解審核**：上線前全部人工審，或「驗算全通過＋抽審 20%＋難題全審」即可？審核人是誰？
 5. **收費或廣告計畫**：若有，考試說明等「非營利」聲明的文件要避免使用，試題仍可用（研究 §7）。
@@ -233,11 +235,12 @@ P2 是最小可用版本：有題目、能作答批改、有可信的詳解。P3
 
 1. **檔案**：共用型別與批改 `packages/shared/src/math-exam.ts`（`gradeSingle`／`gradeMulti`／`gradeFill`、`scoreMathPaper`、`splitMathStem`、`parseFillTemplate`）；資料輸出 `apps/web/scripts/lib/math-data.mjs`（`math/index.json`、`math/{id}.json`、`math/solutions/{id}.json`、`math/figures/{id}/*.png`）；前端 `apps/web/src/data/math.ts`、`apps/web/src/features/math/`。
 2. **路由**：`/math`（數A／數B 分頁，網址 `?subject=b`；有 `era: "舊課綱"` 的卷子時自動多一個「舊課綱」分頁）、`/math/:paperId`（練習模式／考試模式）、`/math/:paperId/results`（成績與詳解）。側邊欄多一個「數學」群組；首頁卡片與手機「更多」面板跟著 `modules.ts` 自動列出。
-3. **課綱**：卷子的 `era` 由資料的 `era` 欄位決定，沒有時依 `subject`（`math_a`／`math_b`＝108課綱，`math`＝舊課綱）。100–110 的舊課綱卷子放進 `data/exams/parsed-math/gsat-math-{year}.json` 就會出現，不必改程式（多選題的 5／3／1／0 級距在 5 分題、5 個選項時與 (n−2k)/n 相同）。
-4. **詳解**：`data/exams/math-solutions/{id}.json` 由另一條流程產生，格式寬鬆接受（陣列、`{items:[…]}`、`{items:{題號:{…}}}`；每題 `no`、`solution_md`、`unit`、`difficulty`、`answer_display`、`check`、`flags`）。沒有檔案或沒有那一題時顯示「詳解準備中」；`flags` 含 `withhold`／`reject`／`mismatch` 等、或文字含機構名稱或「評分原則」的題目不輸出。`check` 通過時標「AI 撰寫・已獨立驗算」。詳解在看答案或交卷後才下載。
+3. **課綱**：卷子的 `era` 由資料的 `era` 欄位決定，沒有時依 `subject`（`math_a`／`math_b`＝108課綱，`math`＝舊課綱）。100–110 的 11 卷在「舊課綱」分頁（`?subject=old`），沿用同一套作答與批改（多選題的 5／3／1／0 級距在 5 分題、5 個選項時與 (n−2k)/n 相同；開始畫面的計分說明照題本寫級距）。選填格用 `fill.official_cells` 標題本與答案卡的列號圈號（⑭⑮…，`fillCellLabel`；螢幕報讀唸「第 14 列」）；101 第 D 題、109 第 G 題這種兩格之間夾文字的 template，題幹的作答格與「作答格式」都照 template 排出整句。
+4. **詳解**：`data/exams/math-solutions/{id}.json`（`gsat-math-solutions/v1`，見 `math-solutions-report.md` §4；111–115 共 200 題）。輸出時取 `difficulty.level` 顯示難度分級；`check.agree` 為 true，或不一致但 flags 全是 `resolved` 且解題者 A 的答案等於官方時標「AI 撰寫・已獨立驗算」；flag 的 severity 是 `owner_review`（待站主裁決）、或文字含機構名稱或「評分原則」的題目不輸出。本文已有「**答案**」段落時不另列答案。沒有檔案或沒有那一題時顯示「詳解準備中」（目前是舊課綱 100–110）。詳解在看答案或交卷後才下載。`validate_math_solutions.py` 另檢查 `difficulty.official_p` 等於試題的 `stats.P`。
 5. **選填輸入**：§4.3 的「`\htmlId` 覆蓋按鈕」沒有做，採用文件裡的退路：題幹的 `[[FILL]]` 位置畫空方框，下方 KaTeX 排「作答格式」（每格標格號）與即時的「你的答案」，每一格一列 12 個劃記（原生 radio，透明蓋滿圓圈；手機兩排各 6 顆、36px）。焦點在某一列時直接按數字或減號就劃記並跳到下一列，Backspace 清除。
 6. **KaTeX**：`import('katex')`＋CSS 獨立 chunk（JS 259 KB／gzip 77.5 KB、CSS 28.8 KB），只在卷子頁與成績頁載入；入口頁不載（e2e 驗）。用 `katex.render` 排進 `<span>`（不經 innerHTML，`source-scan.test.ts` 的規則）。主程式 352.32 → 353.72 KB（gzip 112.92 → 113.40），增加的只有路由與模組清單。
 7. **非選擇題**：卷子頁顯示紙上作答說明與「拍照 AI 批改即將推出」（不是按鈕、不呼叫 API）；成績頁可以自評 0～配分（存在本機 `gsat-math-self:v1:{id}`），自評合計另列，不混進自動批改分數。作答紀錄存在 `gsat-math-attempt:v1:{id}`，沿用英文的 `AttemptStore`。
 8. **出處**：頁尾與入口照英文歷屆試題寫「試題來源：大學入學考試中心…」（§12 問題 6 待站主確認）；其他文案一律「官方」，`features/math/copy.test.ts` 檢查。
 9. **側邊欄高度**：多了「數學」群組（約 50px），1366×640 未登入與 1280×600 會出現淡出遮罩（`desktop-shell.spec.ts` 已改）；desktop-ui.md §16.5 的高度預算需要設計者重新決定。
-10. **還沒做**：官方答對率併入 `item.stats`（前端已會顯示，資料待 P1 todo）；依單元篩題；混合題組文字在手機收合；PDF（P3）；級分估計（P3）。
+10. **官方統計**：看答案後與成績頁逐題表顯示「全國答對率」（`stats.P`；多選題寫「得分率」並附全對率 `T`）；非選擇題官方沒有公布。
+11. **還沒做**：舊課綱 100–110 的詳解；詳解人工審核（`review` 欄位）；依單元篩題；混合題組文字在手機收合；PDF（P3）；級分估計（P3）。
