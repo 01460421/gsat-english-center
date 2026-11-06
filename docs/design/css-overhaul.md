@@ -559,16 +559,16 @@ CSS 不是瓶頸（gzip 12.7 KB、一個檔、沒有網路字型），**不拆 C
 
 | 檢查 | 結果 |
 |---|---|
-| 淺色截圖（390＋1280，27 頁；`compare.mjs`） | 容許差 0：54 張中 52 張逐像素相同，另 2 張是反鋸齒雜訊（`390-light/19-account-anon` 12 px、`390-light/24-zh-writing` 15 px，最大色差都是 1；前者重截一次就相同）。容許差 2：**全部相同**（exit 0） |
+| 淺色截圖（390＋1280，27 頁；`compare.mjs`） | 容許差 0：最後一版 54 張中 53 張逐像素相同，1 張是反鋸齒雜訊（`1280-light/01-home` 11 px、最大色差 1；前一次截圖則是 `390-light/19-account-anon`、`24-zh-writing` 各十幾 px，重截就消失）。容許差 2：**全部相同**（exit 0） |
 | 深色截圖 | 54 張都有差異，全部是 `--line`（卡片框線、分隔線）與 `--surface-2`（說明框、表頭、膠囊底）的顏色；版面、尺寸不變。對照：`before/390-dark/03-practice` ↔ `after-A/390-dark/03-practice`、`before/1280-dark/06-exams` ↔ `after-A/1280-dark/06-exams` |
-| axe color-contrast | 改版前、後兩種主題 × 390／1280 × 27 頁都是 0 違規 |
-| CSS | 69,575 → 69,78x B；gzip 12.91 → 13.07 KB（+0.16 KB，主要是 token 定義；`bg-bad/10` 這類類別原本附帶的 `@supports` 後備規則少了） |
+| axe color-contrast | 改版前、後兩種主題 × 390／1280 × 27 頁都是 0 違規（「需要人工確認」1–4 個，都是疊在半透明底上的字，前後相同） |
+| CSS | 69,575 → 69,781 B；gzip（vite 報告）12.91 → 13.07 KB（+0.16 KB，主要是 token 定義；`bg-bad/10` 這類類別原本附帶的 `@supports` 後備規則少了）。主程式 JS 112.92 → 112.90 KB |
 | `npm run typecheck`、`npm test`（api 1,451、web 2,353、shared 805）、`npm run test:data`、`npm run build` | 全部通過 |
 | Playwright 全套（`E2E_PORT=4901`） | 見 §9.3 |
 
 ### 9.3 E2E
 
-（實作時填入）
+`E2E_PORT=4901 npx playwright test`（四個 project：desktop、mobile、desktop-ui、desktop-lg）：**412 通過、37 略過（各 project 本來就不跑的）、0 失敗**，12.1 分鐘。其中 `smoke.spec.ts` 的「選擇的主題在重新整理後仍然生效」、`writing-bank.spec.ts` 的題目插圖白底（改用 `bg-paper` 後仍是 `rgb(255, 255, 255)`）、`practice.spec.ts` 的深色圖表色都通過。
 
 ---
 
