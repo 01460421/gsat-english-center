@@ -204,7 +204,7 @@ export function DataTable<T>({
               return (
                 <tr key={rowKey(row)} onClick={link ? onRowClick : undefined} className={link ? 'cursor-pointer hover:bg-surface-2' : ''}>
                   {columns.map((c, i) => (
-                    <td key={c.id} className={`border-b border-line px-3 py-2 align-middle ${alignCls(c)} ${c.className ?? ''}`}>
+                    <td key={c.id} className={`border-b border-line-subtle px-3 py-2 align-middle ${alignCls(c)} ${c.className ?? ''}`}>
                       {i === 0 && link ? (
                         <>
                           <Link

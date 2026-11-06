@@ -18,6 +18,7 @@
  *   bg／surface／surface-2      頁面底色／卡片、輸入框、對話框／表頭、說明框、軌道
  *   fg／muted                   主要文字／次要文字（兩種主題對 bg、surface、surface-2 都 ≥ 4.5:1）
  *   line                        裝飾性的分隔與卡片框線（不要求 3:1）
+ *   line-subtle                 密集表格的列分隔（深色維持改版前較淡的 --line，表格不會太重）
  *   line-strong                 互動元件的邊界：輸入框、選單、未選中的膠囊（對 bg、surface、surface-2 ≥ 3:1，WCAG 1.4.11）
  *   primary／primary-hover／primary-soft／on-primary   主要動作、連結、選中；hover；選中的淡底；主色上的字
  *   ok／bad（＋-soft 淡底、bad-line 框線）              答對、完成／答錯、錯誤
@@ -35,6 +36,7 @@
   --fg: #1a1f26;
   --muted: #566170;
   --line: #dde2e8;
+  --line-subtle: #dde2e8;
   --line-strong: #7d8794;
   --primary: #3149a8;
   --primary-hover: #283d8f;
@@ -88,6 +90,7 @@
     --fg: #e5e9ef;
     --muted: #9ba6b4;
     --line: #343e4b;
+    --line-subtle: #2b3440;
     --line-strong: #6b7686;
     --primary: #9db0ff;
     --primary-hover: #b8c6ff;
@@ -119,6 +122,7 @@
   --fg: #e5e9ef;
   --muted: #9ba6b4;
   --line: #343e4b;
+  --line-subtle: #2b3440;
   --line-strong: #6b7686;
   --primary: #9db0ff;
   --primary-hover: #b8c6ff;
@@ -156,6 +160,7 @@
   --color-badge-fg: var(--badge-fg);
   --color-ok: var(--ok);
   --color-bad: var(--bad);
+  --color-line-subtle: var(--line-subtle);
   --color-line-strong: var(--line-strong);
   --color-primary-hover: var(--primary-hover);
   --color-ok-soft: var(--ok-soft);
