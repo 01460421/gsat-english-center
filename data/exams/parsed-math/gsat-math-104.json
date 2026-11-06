@@ -1,0 +1,1269 @@
+{
+ "schema": "gsat-math-exam/v1",
+ "id": "gsat-math-104",
+ "exam": "gsat",
+ "subject": "math",
+ "era": "舊課綱",
+ "year": 104,
+ "session": "regular",
+ "title": "104學年度學科能力測驗數學考科",
+ "time_minutes": 100,
+ "full_score": 100,
+ "sources": {
+  "paper": "data/raw/ceec/gsat-math/104/paper-1.pdf",
+  "paper_word": [
+   "data/raw/ceec/gsat-math/104/paper-2.docx"
+  ],
+  "answer": [
+   "data/raw/ceec/gsat-math/104/answer.pdf"
+  ],
+  "stats": [
+   "data/raw/ceec/gsat-math/104/stats-1.xls",
+   "data/raw/ceec/gsat-math/104/stats-2.xls",
+   "data/raw/ceec/gsat-math/104/stats-3.xls",
+   "data/raw/ceec/gsat-math/104/stats-4.xls"
+  ]
+ },
+ "scoring_rules": {
+  "single": "各題答對者，得5分；答錯、未作答或畫記多於一個選項者，該題以零分計算。",
+  "multi": "各題之選項獨立判定，所有選項均答對者，得5分；答錯1個選項者，得3分；答錯2個選項者，得1分；答錯多於2個選項或所有選項均未作答者，該題以零分計算。",
+  "fill": "每題完全答對給5分，答錯不倒扣，未完全答對不給分。"
+ },
+ "parts": [
+  {
+   "title": "第壹部分：選擇題（占50分）",
+   "points": 50,
+   "instructions": null,
+   "sections": [
+    "s1",
+    "s2"
+   ]
+  },
+  {
+   "title": "第貳部分：選填題（占50分）",
+   "points": 50,
+   "instructions": null,
+   "sections": [
+    "s3"
+   ]
+  }
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "type": "single",
+   "title": "一、單選題（占20分）",
+   "instructions": "說明：第1題至第4題，每題有5個選項，其中只有一個是正確或最適當的選項，請畫記在答案卡之「選擇（填）題答案區」。各題答對者，得5分；答錯、未作答或畫記多於一個選項者，該題以零分計算。",
+   "points_total": 20,
+   "groups": [
+    {
+     "id": "s1g1",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 1,
+       "label": "1",
+       "type": "single",
+       "stem": "每週同一時間點記錄某植物的成長高度，連續五週的數據為 $a_{1}=1,\\ a_{2}=2,\\ a_{3}=6,\\ a_{4}=15,\\ a_{5}=31$。請問此成長高度數列滿足下列選項中哪一個式子？",
+       "options": {
+        "1": "$a_{t+1}=3a_{t}-1$，$t=1,\\ 2,\\ 3,\\ 4$",
+        "2": "$a_{t}=t!$，$t=1,\\ 2,\\ 3,\\ 4,\\ 5$",
+        "3": "$a_{t+1}=a_{t}+t^{2}$，$t=1,\\ 2,\\ 3,\\ 4$",
+        "4": "$a_{t}=2^{t}-1$，$t=1,\\ 2,\\ 3,\\ 4,\\ 5$",
+        "5": "$a_{t+1}=ta_{t}+1$，$t=1,\\ 2,\\ 3,\\ 4$"
+       },
+       "answer": "3",
+       "points": 5,
+       "tags": {
+        "units": [
+         "sequence"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.88,
+        "Ph": 0.99,
+        "Pl": 0.67,
+        "D": 0.32,
+        "options": {
+         "1": 0.02,
+         "2": 0.04,
+         "3": 0.88,
+         "4": 0.04,
+         "5": 0.02
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g2",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 2,
+       "label": "2",
+       "type": "single",
+       "stem": "第1天獲得1元、第2天獲得2元、第3天獲得4元、第4天獲得8元、依此每天所獲得的錢為前一天的兩倍，如此進行到第30天，試問這30天所獲得的錢，總數最接近下列哪一個選項？",
+       "options": {
+        "1": "10,000元",
+        "2": "1,000,000元",
+        "3": "100,000,000元",
+        "4": "1,000,000,000元",
+        "5": "1,000,000,000,000元"
+       },
+       "answer": "4",
+       "points": 5,
+       "tags": {
+        "units": [
+         "sequence",
+         "exp_log"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.68,
+        "Ph": 0.88,
+        "Pl": 0.44,
+        "D": 0.44,
+        "options": {
+         "1": 0.02,
+         "2": 0.06,
+         "3": 0.19,
+         "4": 0.68,
+         "5": 0.04
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g3",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 3,
+       "label": "3",
+       "type": "single",
+       "stem": "有兩組供機器運作的配件$A$、$B$，其單獨發生故障的機率分別為0.1、0.15。只有當$A,\\ B$都發生故障時，此機器才無法運作。$A$、$B$兩配件若用串接方式，前面故障會導致後面故障，但若後面故障則不會影響前面的故障情形；若用並列方式，則故障情形互不影響。若考慮以下三種情形：(一) 將$B$串接於$A$之後 (二) 將$A$串接於$B$之後 (三) 將$A,\\ B$獨立並列 在情況(一)、(二)、(三)之下，機器無法運作的機率分別為$p_{1}$、$p_{2}$、$p_{3}$。請選出正確的選項。",
+       "options": {
+        "1": "$p_{1}>p_{2}>p_{3}$",
+        "2": "$p_{2}>p_{1}>p_{3}$",
+        "3": "$p_{3}>p_{2}>p_{1}$",
+        "4": "$p_{3}>p_{1}>p_{2}$",
+        "5": "$p_{1}=p_{2}>p_{3}$"
+       },
+       "answer": "2",
+       "points": 5,
+       "tags": {
+        "units": [
+         "probability"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.57,
+        "Ph": 0.78,
+        "Pl": 0.33,
+        "D": 0.45,
+        "options": {
+         "1": 0.15,
+         "2": 0.57,
+         "3": 0.08,
+         "4": 0.05,
+         "5": 0.14
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g4",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 4,
+       "label": "4",
+       "type": "single",
+       "stem": "一線性規劃問題的可行解區域為坐標平面上的正八邊形$ABCDEFGH$及其內部，如右圖。已知目標函數$ax+by+3$（其中$a,\\ b$為實數）的最大值只發生在$B$點。請問當目標函數改為$3-bx-ay$時，最大值會發生在下列哪一點？",
+       "options": {
+        "1": "$A$",
+        "2": "$B$",
+        "3": "$C$",
+        "4": "$D$",
+        "5": "$E$"
+       },
+       "answer": "1",
+       "points": 5,
+       "figures": [
+        {
+         "id": "f4",
+         "kind": "diagram",
+         "alt": "坐標平面第一象限中的灰色正八邊形 ABCDEFGH：A、H 在下方（H 左、A 右，靠近 x 軸），B、C 在右側（B 下、C 上），D、E 在上方（D 右、E 左），F、G 在左側（F 上、G 下，靠近 y 軸）。",
+         "source": {
+          "page": 3,
+          "bbox_pt": [
+           384,
+           104,
+           523,
+           253
+          ]
+         },
+         "file": "data/exams/figures-math/gsat-math-104/f4.png",
+         "width": 382,
+         "height": 399
+        }
+       ],
+       "tags": {
+        "units": [
+         "inequality_lp"
+        ]
+       },
+       "tables": [],
+       "stats": {
+        "P": 0.31,
+        "Ph": 0.51,
+        "Pl": 0.15,
+        "D": 0.36,
+        "options": {
+         "1": 0.31,
+         "2": 0.14,
+         "3": 0.13,
+         "4": 0.16,
+         "5": 0.26
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "type": "multi",
+   "title": "二、多選題（占30分）",
+   "instructions": "說明：第5題至第10題，每題有5個選項，其中至少有一個是正確的選項，請將正確選項畫記在答案卡之「選擇（填）題答案區」。各題之選項獨立判定，所有選項均答對者，得5分；答錯1個選項者，得3分；答錯2個選項者，得1分；答錯多於2個選項或所有選項均未作答者，該題以零分計算。",
+   "points_total": 30,
+   "groups": [
+    {
+     "id": "s2g1",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 5,
+       "label": "5",
+       "type": "multi",
+       "stem": "小明參加某次路跑10公里組的比賽，下表爲小明手錶所記錄之各公里的完成時間、平均心率及步數：[[TABLE:1]] 在這10公里的比賽過程，請依據上述數據，選出正確的選項。",
+       "options": {
+        "1": "由每公里的平均心率得知小明最高心率爲188",
+        "2": "小明此次路跑，每步距離的平均小於1公尺",
+        "3": "每公里完成時間和每公里平均心率的相關係數爲正相關",
+        "4": "每公里步數和每公里平均心率的相關係數爲正相關",
+        "5": "每公里完成時間和每公里步數的相關係數爲負相關"
+       },
+       "answer": [
+        "2",
+        "4",
+        "5"
+       ],
+       "points": 5,
+       "tables": [
+        {
+         "caption": null,
+         "rows": [
+          [
+           "",
+           "完成時間",
+           "平均心率",
+           "步數"
+          ],
+          [
+           "第一公里",
+           "5:00",
+           "161",
+           "990"
+          ],
+          [
+           "第二公里",
+           "4:50",
+           "162",
+           "1000"
+          ],
+          [
+           "第三公里",
+           "4:50",
+           "165",
+           "1005"
+          ],
+          [
+           "第四公里",
+           "4:55",
+           "162",
+           "995"
+          ],
+          [
+           "第五公里",
+           "4:40",
+           "171",
+           "1015"
+          ],
+          [
+           "第六公里",
+           "4:41",
+           "170",
+           "1005"
+          ],
+          [
+           "第七公里",
+           "4:35",
+           "173",
+           "1050"
+          ],
+          [
+           "第八公里",
+           "4:35",
+           "181",
+           "1050"
+          ],
+          [
+           "第九公里",
+           "4:40",
+           "171",
+           "1050"
+          ],
+          [
+           "第十公里",
+           "4:34",
+           "188",
+           "1100"
+          ]
+         ]
+        }
+       ],
+       "tags": {
+        "units": [
+         "statistics"
+        ]
+       },
+       "figures": [],
+       "stats": {
+        "P": 0.48,
+        "Ph": 0.76,
+        "Pl": 0.2,
+        "D": 0.56,
+        "T": 0.28,
+        "options": {
+         "1": 0.41,
+         "2": 0.58,
+         "3": 0.2,
+         "4": 0.78,
+         "5": 0.73
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g2",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 6,
+       "label": "6",
+       "type": "multi",
+       "stem": "設$f(x)$是首項係數為1的實係數二次多項式。請選出正確的選項。",
+       "options": {
+        "1": "若$f(2)=0$，則$x-2$可整除$f(x)$",
+        "2": "若$f(2)=0$，則$f(x)$為整係數多項式",
+        "3": "若$f(\\sqrt{2})=0$，則$f(-\\sqrt{2})=0$",
+        "4": "若$f(2i)=0$，則$f(-2i)=0$",
+        "5": "若$f(2i)=0$，則$f(x)$為整係數多項式"
+       },
+       "answer": [
+        "1",
+        "4",
+        "5"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "polynomial"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.45,
+        "Ph": 0.74,
+        "Pl": 0.18,
+        "D": 0.56,
+        "T": 0.25,
+        "options": {
+         "1": 0.84,
+         "2": 0.43,
+         "3": 0.24,
+         "4": 0.76,
+         "5": 0.48
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g3",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 7,
+       "label": "7",
+       "type": "multi",
+       "stem": "坐標平面上，在函數圖形$y=2^{x}$上，標示$A$、$B$、$C$、$D$四個點，其$x$坐標分別為$-1$、0、1、2。請選出正確的選項。",
+       "options": {
+        "1": "點$B$落在直線$AC$下方",
+        "2": "在直線$AB$、直線$BC$、直線$CD$中，以直線$CD$的斜率最大",
+        "3": "$A$、$B$、$C$、$D$四個點，以點$B$最靠近$x$軸",
+        "4": "直線$y=2x$與$y=2^{x}$的圖形有兩個交點",
+        "5": "點$A$與點$C$對稱於$y$軸"
+       },
+       "answer": [
+        "1",
+        "2",
+        "4"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "exp_log",
+         "coordinate_line"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.67,
+        "Ph": 0.92,
+        "Pl": 0.32,
+        "D": 0.6,
+        "T": 0.52,
+        "options": {
+         "1": 0.78,
+         "2": 0.85,
+         "3": 0.21,
+         "4": 0.75,
+         "5": 0.14
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g4",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 8,
+       "label": "8",
+       "type": "multi",
+       "stem": "坐標平面上有一雙曲線，其漸近線為$x-y=0$和$x+y=0$。關於此雙曲線的性質，請選出正確的選項。",
+       "options": {
+        "1": "此雙曲線的方程式為$\\frac{x^{2}}{r^{2}}-\\frac{y^{2}}{r^{2}}=1$或$\\frac{x^{2}}{r^{2}}-\\frac{y^{2}}{r^{2}}=-1$，其中$r$為非零實數",
+        "2": "此雙曲線的貫軸長等於共軛軸長",
+        "3": "若點$(a,\\ b)$為此雙曲線在第一象限上一點，則當$a>1000$時，$|a-b|<1$",
+        "4": "若點$(a,\\ b),\\ (a',\\ b')$為此雙曲線在第一象限上兩點且$a<a'$，則$b<b'$",
+        "5": "此雙曲線同時對稱於$x$軸與$y$軸"
+       },
+       "answer": [
+        "1",
+        "2",
+        "4",
+        "5"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "conics"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.48,
+        "Ph": 0.71,
+        "Pl": 0.24,
+        "D": 0.47,
+        "T": 0.21,
+        "options": {
+         "1": 0.7,
+         "2": 0.8,
+         "3": 0.41,
+         "4": 0.65,
+         "5": 0.79
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g5",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 9,
+       "label": "9",
+       "type": "multi",
+       "stem": "如圖，以$M$為圓心、$\\overline{MA}=8$為半徑畫圓，$\\overline{AE}$為該圓的直徑，$B$、$C$、$D$三點皆在圓上，且$\\overline{AB}=\\overline{BC}=\\overline{CD}=\\overline{DE}$。若$\\overrightarrow{MD}=8(\\cos (\\theta+90^{\\circ}),\\ \\sin (\\theta+90^{\\circ}))$。請選出正確的選項。",
+       "options": {
+        "1": "$\\overrightarrow{MA}=8(\\cos \\theta,\\ \\sin \\theta)$",
+        "2": "$\\overrightarrow{MC}=8(\\cos (\\theta+45^{\\circ}),\\ \\sin (\\theta+45^{\\circ}))$",
+        "3": "（內積）$\\overrightarrow{MA}\\cdot \\overrightarrow{MA}=8$",
+        "4": "（內積）$\\overrightarrow{MB}\\cdot \\overrightarrow{MD}=0$",
+        "5": "$\\overrightarrow{BD}=8(\\cos \\theta+\\cos (\\theta+90^{\\circ}),\\ \\sin \\theta+\\sin (\\theta+90^{\\circ}))$"
+       },
+       "answer": [
+        "2",
+        "4"
+       ],
+       "points": 5,
+       "figures": [
+        {
+         "id": "f9",
+         "kind": "diagram",
+         "alt": "示意圖：以 M 為圓心的半圓，直徑 AE（E 在左下、A 在右，M 為 AE 中點），半圓上依序有 A、B、C、D、E 五點，弦 AB、BC、CD、DE 等長。",
+         "source": {
+          "page": 4,
+          "bbox_pt": [
+           352,
+           636,
+           535,
+           752
+          ]
+         },
+         "file": "data/exams/figures-math/gsat-math-104/f9.png",
+         "width": 464,
+         "height": 306
+        }
+       ],
+       "tags": {
+        "units": [
+         "vector_plane",
+         "trigonometry",
+         "circle"
+        ]
+       },
+       "tables": [],
+       "stats": {
+        "P": 0.49,
+        "Ph": 0.77,
+        "Pl": 0.25,
+        "D": 0.52,
+        "T": 0.29,
+        "options": {
+         "1": 0.3,
+         "2": 0.73,
+         "3": 0.32,
+         "4": 0.78,
+         "5": 0.36
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g6",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 10,
+       "label": "10",
+       "type": "multi",
+       "stem": "某一班共有45人，問卷調查有手機與平板電腦的人數。從統計資料顯示此班有35人有手機，而有24人有平板電腦。設：A為同時有手機與平板電腦的人數 B為有手機，但沒有平板電腦的人數 C為沒有手機，但有平板電腦的人數 D為沒有手機，也沒有平板電腦的人數 請選出恆成立的不等式選項。",
+       "options": {
+        "1": "A＞B",
+        "2": "A＞C",
+        "3": "B＞C",
+        "4": "B＞D",
+        "5": "C＞D"
+       },
+       "answer": [
+        "2",
+        "3",
+        "4"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "logic_set"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.45,
+        "Ph": 0.64,
+        "Pl": 0.29,
+        "D": 0.35,
+        "T": 0.21,
+        "options": {
+         "1": 0.19,
+         "2": 0.51,
+         "3": 0.84,
+         "4": 0.82,
+         "5": 0.46
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "type": "fill",
+   "title": "第貳部分：選填題（占50分）",
+   "instructions": "說明：1.第A至J題，將答案畫記在答案卡之「選擇（填）題答案區」所標示的列號（11–37）。 2.每題完全答對給5分，答錯不倒扣，未完全答對不給分。",
+   "points_total": 50,
+   "groups": [
+    {
+     "id": "s3g1",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 11,
+       "label": "A",
+       "type": "fill",
+       "stem": "如圖，老王在平地點$A$測得遠方山頂點$P$的仰角為$13^{\\circ}$。老王朝著山的方向前進37公丈後來到點$B$，再測得山頂點$P$的仰角為$15^{\\circ}$。則山高約為[[FILL]]公丈。（四捨五入至個位數，$\\tan 13^{\\circ}\\approx 0.231$，$\\tan 15^{\\circ}\\approx 0.268$）",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "11-1",
+         "11-2"
+        ],
+        "official_cells": [
+         "11",
+         "12"
+        ],
+        "template": "[[11-1]][[11-2]]",
+        "answer_cells": {
+         "11-1": "6",
+         "11-2": "2"
+        },
+        "answer_latex": "62"
+       },
+       "figures": [
+        {
+         "id": "fA",
+         "kind": "diagram",
+         "alt": "示意圖：水平地面上由左到右為 A、B 兩點（AB=37）與山腳，山頂 P 在最右側山腳正上方（直角）；從 A 看 P 的仰角 13°，從 B 看 P 的仰角 15°。",
+         "source": {
+          "page": 5,
+          "bbox_pt": [
+           185,
+           392,
+           521,
+           492
+          ]
+         },
+         "file": "data/exams/figures-math/gsat-math-104/fA.png",
+         "width": 932,
+         "height": 267
+        }
+       ],
+       "tags": {
+        "units": [
+         "trigonometry",
+         "data_modeling"
+        ]
+       },
+       "tables": [],
+       "stats": {
+        "P": 0.43,
+        "Ph": 0.81,
+        "Pl": 0.04,
+        "D": 0.77
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g2",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 12,
+       "label": "B",
+       "type": "fill",
+       "stem": "不透明袋中有3白3紅共6個球，球大小形狀相同，僅顏色相異。甲、乙、丙、丁、戊5人依甲第一、乙第二、……、戊第五的次序，從袋中各取一球，取後不放回。試問在甲、乙取出不同色球的條件下，戊取得紅球的機率為 [[FILL]]。（化為最簡分數）",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "12-1",
+         "12-2"
+        ],
+        "official_cells": [
+         "13",
+         "14"
+        ],
+        "template": "\\frac{[[12-1]]}{[[12-2]]}",
+        "answer_cells": {
+         "12-1": "1",
+         "12-2": "2"
+        },
+        "answer_latex": "\\frac{1}{2}"
+       },
+       "tags": {
+        "units": [
+         "probability"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.39,
+        "Ph": 0.64,
+        "Pl": 0.18,
+        "D": 0.46
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g3",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 13,
+       "label": "C",
+       "type": "fill",
+       "stem": "小燦預定在陽台上種植玫瑰、百合、菊花和向日葵等四種盆栽。如果陽台上的空間最多能種8盆，可以不必擺滿，並且每種花至少一盆，則小燦買盆栽的方法共有[[FILL]]種。",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "13-1",
+         "13-2"
+        ],
+        "official_cells": [
+         "15",
+         "16"
+        ],
+        "template": "[[13-1]][[13-2]]",
+        "answer_cells": {
+         "13-1": "7",
+         "13-2": "0"
+        },
+        "answer_latex": "70"
+       },
+       "tags": {
+        "units": [
+         "counting"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.21,
+        "Ph": 0.49,
+        "Pl": 0.03,
+        "D": 0.46
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g4",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 14,
+       "label": "D",
+       "type": "fill",
+       "stem": "平面$x-y+z=0$與三平面$x=2$，$x-y=-2$，$x+y=2$分別相交所得的三直線可圍成一個三角形。此三角形之周長化成最簡根式，可表為$a\\sqrt{b}+c\\sqrt{d}$，其中$a,\\ b,\\ c,\\ d$為正整數且$b<d$，則[[FILL]]。",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "14-1",
+         "14-2",
+         "14-3",
+         "14-4"
+        ],
+        "official_cells": [
+         "17",
+         "18",
+         "19",
+         "20"
+        ],
+        "template": "a=[[14-1]],\\ b=[[14-2]],\\ c=[[14-3]],\\ d=[[14-4]]",
+        "answer_cells": {
+         "14-1": "6",
+         "14-2": "2",
+         "14-3": "2",
+         "14-4": "6"
+        },
+        "answer_latex": "a=6,\\ b=2,\\ c=2,\\ d=6"
+       },
+       "tags": {
+        "units": [
+         "space_line_plane",
+         "geometry"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.13,
+        "Ph": 0.36,
+        "Pl": 0.0,
+        "D": 0.36
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g5",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 15,
+       "label": "E",
+       "type": "fill",
+       "stem": "坐標平面上，直線$L_{1}$與$L_{2}$的方程式分別為$x+2y=0$與$3x-5y=0$。為了確定平面上某一定點$P$的坐標，從$L_{1}$上的一點$Q_{1}$偵測得向量$\\overrightarrow{Q_{1}P}=(-7,9)$，再從$L_{2}$上的點$Q_{2}$偵測得向量$\\overrightarrow{Q_{2}P}=(-6,-8)$，則$P$點的坐標為[[FILL]]。",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "15-1",
+         "15-2"
+        ],
+        "official_cells": [
+         "21",
+         "22"
+        ],
+        "template": "([[15-1]],[[15-2]])",
+        "answer_cells": {
+         "15-1": "9",
+         "15-2": "1"
+        },
+        "answer_latex": "(9,1)"
+       },
+       "tags": {
+        "units": [
+         "vector_plane",
+         "coordinate_line"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.31,
+        "Ph": 0.71,
+        "Pl": 0.01,
+        "D": 0.7
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g6",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 16,
+       "label": "F",
+       "type": "fill",
+       "stem": "小華準備向銀行貸款3百萬元當做創業基金，其年利率爲3%，約定三年期滿一次還清貸款的本利和。銀行貸款一般以複利（每年複利一次）計息還款，但給小華創業優惠改以單利計息還款。試問在此優惠下，小華在三年期滿還款時可以比一般複利計息少繳[[FILL]]元。",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "16-1",
+         "16-2",
+         "16-3",
+         "16-4"
+        ],
+        "official_cells": [
+         "23",
+         "24",
+         "25",
+         "26"
+        ],
+        "template": "[[16-1]][[16-2]][[16-3]][[16-4]]",
+        "answer_cells": {
+         "16-1": "8",
+         "16-2": "1",
+         "16-3": "8",
+         "16-4": "1"
+        },
+        "answer_latex": "8181"
+       },
+       "tags": {
+        "units": [
+         "sequence",
+         "data_modeling"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.26,
+        "Ph": 0.57,
+        "Pl": 0.03,
+        "D": 0.54
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g7",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 17,
+       "label": "G",
+       "type": "fill",
+       "stem": "某一公司，有A、B、C三個營業據點，開始時各有36位營業員，為了讓營業員了解各據點業務狀況，所以進行兩次調動。每次調動都是：將當時A據點營業員中的1/6調到B據點、1/6調到C據點；將當時B據點營業員中的1/6調到A據點、1/3調到C據點；將當時C據點營業員中的1/6調到A據點、1/6調到B據點。則兩次的調動後，C據點有[[FILL]]位營業員。",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "17-1",
+         "17-2"
+        ],
+        "official_cells": [
+         "27",
+         "28"
+        ],
+        "template": "[[17-1]][[17-2]]",
+        "answer_cells": {
+         "17-1": "4",
+         "17-2": "4"
+        },
+        "answer_latex": "44"
+       },
+       "tags": {
+        "units": [
+         "matrix",
+         "data_modeling"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.46,
+        "Ph": 0.81,
+        "Pl": 0.1,
+        "D": 0.71
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g8",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 18,
+       "label": "H",
+       "type": "fill",
+       "stem": "有一底面為正方形的四角錐，其展開圖如下圖所示，其中兩側面的三角形邊長為3,4,5，則此角錐的體積為[[FILL]]。（化為最簡根式）",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "18-1",
+         "18-2",
+         "18-3"
+        ],
+        "official_cells": [
+         "29",
+         "30",
+         "31"
+        ],
+        "template": "\\frac{[[18-1]][[18-2]]\\sqrt{[[18-3]]}}{3}",
+        "answer_cells": {
+         "18-1": "1",
+         "18-2": "6",
+         "18-3": "5"
+        },
+        "answer_latex": "\\frac{16\\sqrt{5}}{3}"
+       },
+       "figures": [
+        {
+         "id": "fH",
+         "kind": "diagram",
+         "alt": "四角錐展開圖：中間是正方形底面，四邊各接一個三角形側面；上下兩個側面是邊長 3、4、5 的直角三角形（邊長 4 與正方形共用、邊長 3 在左側、斜邊 5），左右兩個側面三角形未標邊長。",
+         "source": {
+          "page": 7,
+          "bbox_pt": [
+           400,
+           142,
+           532,
+           264
+          ]
+         },
+         "file": "data/exams/figures-math/gsat-math-104/fH.png",
+         "width": 362,
+         "height": 336
+        }
+       ],
+       "tags": {
+        "units": [
+         "geometry",
+         "space_line_plane"
+        ]
+       },
+       "tables": [],
+       "stats": {
+        "P": 0.43,
+        "Ph": 0.77,
+        "Pl": 0.11,
+        "D": 0.66
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g9",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 19,
+       "label": "I",
+       "type": "fill",
+       "stem": "在空間中，一個斜面的「坡度」定義為斜面與水平面夾角$\\theta$的正切值$\\tan \\theta$。若一金字塔（底部為一正方形，四個斜面為等腰三角形）的每一個斜面的坡度皆為$\\frac{2}{5}$，如圖。則相鄰斜面的夾角的餘弦函數的絕對值為[[FILL]]。（化為最簡分數）",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "19-1",
+         "19-2",
+         "19-3",
+         "19-4"
+        ],
+        "official_cells": [
+         "32",
+         "33",
+         "34",
+         "35"
+        ],
+        "template": "\\frac{[[19-1]][[19-2]]}{[[19-3]][[19-4]]}",
+        "answer_cells": {
+         "19-1": "2",
+         "19-2": "5",
+         "19-3": "2",
+         "19-4": "9"
+        },
+        "answer_latex": "\\frac{25}{29}"
+       },
+       "figures": [
+        {
+         "id": "fI",
+         "kind": "diagram",
+         "alt": "金字塔俯視示意圖：正方形底面（畫成平行四邊形）與頂點的四條側稜（灰線），頂點在中心上方。",
+         "source": {
+          "page": 7,
+          "bbox_pt": [
+           402,
+           362,
+           525,
+           456
+          ]
+         },
+         "file": "data/exams/figures-math/gsat-math-104/fI.png",
+         "width": 340,
+         "height": 261
+        }
+       ],
+       "tags": {
+        "units": [
+         "space_line_plane",
+         "vector_space"
+        ]
+       },
+       "tables": [],
+       "stats": {
+        "P": 0.13,
+        "Ph": 0.33,
+        "Pl": 0.0,
+        "D": 0.33
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g10",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 20,
+       "label": "J",
+       "type": "fill",
+       "stem": "下圖為汽車迴轉示意圖。汽車迴轉時，將方向盤轉動到極限，以低速讓汽車進行轉向圓周運動，汽車轉向時所形成的圓周的半徑就是迴轉半徑，如圖中的$\\overline{BC}$即是。已知在低速前進時，圖中$A$處的輪胎行進方向與$\\overline{AC}$垂直，$B$處的輪胎行進方向與$\\overline{BC}$垂直。在圖中，已知軸距$\\overline{AB}$為2.85公尺，方向盤轉到極限時，輪子方向偏了28度，試問此車的迴轉半徑$\\overline{BC}$為[[FILL]]公尺。（小數點後第一位以下四捨五入，$\\sin 28^{\\circ}\\approx 0.4695,\\ \\cos 28^{\\circ}\\approx 0.8829$）",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "20-1",
+         "20-2"
+        ],
+        "official_cells": [
+         "36",
+         "37"
+        ],
+        "template": "[[20-1]].[[20-2]]",
+        "answer_cells": {
+         "20-1": "6",
+         "20-2": "1"
+        },
+        "answer_latex": "6.1"
+       },
+       "figures": [
+        {
+         "id": "fJ",
+         "kind": "diagram",
+         "alt": "汽車迴轉示意圖：長方形車身，左側 A 處為後輪、右側 B 處為前輪，軸距 AB=2.85 公尺；前輪偏轉 28°；C 在 A 的正上方，C 到 A 的連線與後輪方向垂直，C 到 B 的連線（迴轉半徑）與前輪方向垂直。",
+         "source": {
+          "page": 7,
+          "bbox_pt": [
+           356,
+           586,
+           535,
+           748
+          ]
+         },
+         "file": "data/exams/figures-math/gsat-math-104/fJ.png",
+         "width": 469,
+         "height": 427
+        }
+       ],
+       "tags": {
+        "units": [
+         "trigonometry",
+         "data_modeling"
+        ]
+       },
+       "tables": [],
+       "stats": {
+        "P": 0.32,
+        "Ph": 0.71,
+        "Pl": 0.02,
+        "D": 0.69
+       }
+      }
+     ],
+     "tables": []
+    }
+   ]
+  }
+ ],
+ "reference_formulas": [
+  "1. 首項為$a$，公差為$d$的等差數列前$n$項之和為$S=\\frac{n(2a+(n-1)d)}{2}$",
+  "首項為$a$，公比為$r\\quad (r\\ne 1)$的等比數列前$n$項之和為$S=\\frac{a(1-r^{n})}{1-r}$",
+  "2. 三角函數的和角公式：$\\sin (A+B)=\\sin A\\cos B+\\cos A\\sin B$",
+  "$\\cos (A+B)=\\cos A\\cos B-\\sin A\\sin B$",
+  "$\\tan (A+B)=\\frac{\\tan A+\\tan B}{1-\\tan A\\tan B}$",
+  "3. $\\Delta ABC$的正弦定理：$\\frac{a}{\\sin A}=\\frac{b}{\\sin B}=\\frac{c}{\\sin C}=2R$ （$R$為$\\Delta ABC$外接圓半徑）",
+  "$\\Delta ABC$的餘弦定理：$\\quad c^{2}=a^{2}+b^{2}-2ab\\cos C$",
+  "4. 一維數據$X:x_{1},x_{2},...,x_{n}$，算術平均數$\\mu_{X}=\\frac{1}{n}(x_{1}+x_{2}+\\cdots+x_{n})=\\frac{1}{n}\\sum_{i=1}^{n} x_{i}$",
+  "標準差$\\sigma_{X}=\\sqrt{\\frac{1}{n}\\sum_{i=1}^{n} (x_{i}-\\mu_{X})^{2}}=\\sqrt{\\frac{1}{n}((\\sum_{i=1}^{n} x_{i}^{2})-n\\mu_{X}^{2})}$",
+  "5. 二維數據$(X,Y):(x_{1},y_{1}),(x_{2},y_{2}),...,(x_{n},y_{n})$，相關係數$r_{X,Y}=\\frac{\\sum_{i=1}^{n} (x_{i}-\\mu_{X})(y_{i}-\\mu_{Y})}{n\\sigma_{X}\\sigma_{Y}}$",
+  "迴歸直線（最適合直線）方程式$y-\\mu_{Y}=r_{X,Y}\\frac{\\sigma_{Y}}{\\sigma_{X}}(x-\\mu_{X})$",
+  "6. 參考數值：$\\sqrt{2}\\approx 1.414\\quad,\\quad \\sqrt{3}\\approx 1.732\\quad,\\quad \\sqrt{5}\\approx 2.236\\quad,\\quad \\sqrt{6}\\approx 2.449\\quad,\\quad \\pi \\approx 3.142$",
+  "7. 對數值：$\\log_{10}2\\approx 0.3010,\\quad \\quad \\log_{10}3\\approx 0.4771,\\ \\log_{10}5\\approx 0.6990,\\ \\log_{10}7\\approx 0.8451$",
+  "8. 角錐體積=$\\frac{1}{3}$底面積$\\times$高"
+ ],
+ "extraction": {
+  "method": "tools/docx_math_draft.py（官方 Word 版題本，MathType→LaTeX）產生骨架，答案取自 answer.pdf（pdftotext）；逐頁以 pdftoppm 頁面影像人工校對，選填題 template 依題本答案格式人工撰寫",
+  "corrections": [
+   "第9題題幹與選項：Word 版公式轉出的向量箭號在字母下方（\\underrightarrow），依 PDF 改為上方箭號 \\overrightarrow；「sin」改為 \\sin",
+   "第A題題幹：點 A、P、B、P 在 Word 版是 Equation 3.0 物件（轉換器無法讀取），依 PDF 補為 $A$、$P$、$B$、$P$；作答格 ⑪⑫ 改為 [[FILL]]",
+   "第E題題幹：向量箭號由 \\underrightarrow 改為 \\overrightarrow（同第9題）"
+  ],
+  "issues": [],
+  "verified_by": "visual-check"
+ }
+}
