@@ -11,7 +11,7 @@ const tokens = (cls: string) => cls.split(/\s+/);
 
 describe('class', () => {
   it('選中都不是實心主色（bg-primary＋on-primary）', () => {
-    for (const cls of [tabCls(true), segmentCls(true), chipCls(true), tierTileCls(true), chipCls(), segmentCls(), tierTileCls()]) {
+    for (const cls of [tabCls(true), segmentCls(true), chipCls(true), tierTileCls(true), chipCls(), tierTileCls()]) {
       expect(tokens(cls)).not.toContain('bg-primary');
       expect(cls).not.toMatch(/text-on-primary/);
     }
@@ -27,8 +27,7 @@ describe('class', () => {
 
   it('選中狀態從語意讀；高對比模式選中用 Highlight', () => {
     expect(tokens(chipCls())).toEqual(expect.arrayContaining(['has-[:checked]:bg-primary-soft', 'aria-pressed:bg-primary-soft', 'forced-colors:has-[:checked]:bg-[color:Highlight]']));
-    expect(tokens(tabCls())).toEqual(expect.arrayContaining(['aria-[current=page]:text-primary', 'aria-selected:text-primary']));
-    expect(tokens(segmentCls())).toContain('aria-pressed:bg-surface');
+    expect(tokens(tabCls())).toContain('aria-[current=page]:text-primary');
     expect(tokens(chipCls())).toContain('has-[:focus-visible]:outline-offset-2');
   });
 });

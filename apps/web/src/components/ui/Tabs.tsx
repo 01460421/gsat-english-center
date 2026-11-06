@@ -8,7 +8,7 @@
  *   難度          tierTileCls：方塊；選中＝primary-soft 底＋2px primary 框
  *
  * 選中狀態從元素自己的語意讀（不另外存）：has-[:checked]（label 包 radio／checkbox）、aria-pressed（切換鈕）、
- * aria-current="page"（換頁的連結）、aria-selected（tab）。也可以傳 selected 給函式版。
+ * aria-current="page"（換頁的連結）；或傳 selected 給函式版（分段控制一律傳）。
  * 高對比模式（forced-colors）：選中改成 Highlight 底＋HighlightText 字（不然底色被拿掉、看不出選了哪個）。
  */
 import { Check } from 'lucide-react';
@@ -25,10 +25,10 @@ const TAB_BASE =
 const TAB_ON = 'border-primary text-primary forced-colors:border-[color:Highlight]';
 const TAB_OFF = 'border-transparent text-muted hover:text-fg';
 
-/** 一個分頁；selected 不給時看 aria-current="page"／aria-selected。 */
+/** 一個分頁；selected 不給時看 aria-current="page"（SubNav 的連結）。 */
 export function tabCls(selected?: boolean): string {
   if (selected === undefined) {
-    return `${TAB_BASE} ${TAB_OFF} aria-[current=page]:border-primary aria-[current=page]:text-primary aria-selected:border-primary aria-selected:text-primary forced-colors:aria-[current=page]:border-[color:Highlight] forced-colors:aria-selected:border-[color:Highlight]`;
+    return `${TAB_BASE} ${TAB_OFF} aria-[current=page]:border-primary aria-[current=page]:text-primary forced-colors:aria-[current=page]:border-[color:Highlight]`;
   }
   return `${TAB_BASE} ${selected ? TAB_ON : TAB_OFF}`;
 }
@@ -70,19 +70,15 @@ const SEG_BASE =
   'inline-flex min-h-11 cursor-pointer items-center justify-center gap-1.5 rounded-full border px-4 text-meta whitespace-nowrap transition-colors duration-150 motion-reduce:transition-none lg:min-h-9 has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-(--focus-ring)';
 const SEG_ON = 'border-line-strong bg-surface font-semibold text-fg shadow-(--shadow-card) forced-colors:border-[color:Highlight]';
 const SEG_OFF = 'border-transparent text-muted hover:text-fg';
-const SEG_VARIANTS =
-  'has-[:checked]:border-line-strong has-[:checked]:bg-surface has-[:checked]:font-semibold has-[:checked]:text-fg has-[:checked]:shadow-(--shadow-card) aria-pressed:border-line-strong aria-pressed:bg-surface aria-pressed:font-semibold aria-pressed:text-fg aria-pressed:shadow-(--shadow-card) aria-[current=page]:border-line-strong aria-[current=page]:bg-surface aria-[current=page]:font-semibold aria-[current=page]:text-fg forced-colors:has-[:checked]:border-[color:Highlight] forced-colors:aria-pressed:border-[color:Highlight] forced-colors:aria-[current=page]:border-[color:Highlight]';
-
-/** 分段控制的一段；selected 不給時看 has-[:checked]／aria-pressed／aria-current。 */
-export function segmentCls(selected?: boolean): string {
-  if (selected === undefined) return `${SEG_BASE} ${SEG_OFF} ${SEG_VARIANTS}`;
+/** 分段控制的一段（切換鈕本身用 aria-pressed 或 radio 表達選中，這裡依 selected 給外觀）。 */
+export function segmentCls(selected: boolean): string {
   return `${SEG_BASE} ${selected ? SEG_ON : SEG_OFF}`;
 }
 
 // ───────────── 篩選膠囊 ─────────────
 
 const CHIP_BASE =
-  'relative inline-flex min-h-11 cursor-pointer items-center justify-center gap-1.5 rounded-full border px-3.5 text-meta whitespace-nowrap transition-colors duration-150 motion-reduce:transition-none lg:min-h-8 lg:px-3 has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-(--focus-ring) has-[:disabled]:cursor-not-allowed has-[:disabled]:border-line has-[:disabled]:text-muted';
+  'relative inline-flex min-h-11 cursor-pointer items-center justify-center gap-1.5 rounded-full border px-3.5 text-meta transition-colors duration-150 motion-reduce:transition-none lg:min-h-8 lg:px-3 has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-(--focus-ring) has-[:disabled]:cursor-not-allowed has-[:disabled]:border-line has-[:disabled]:text-muted';
 const CHIP_ON =
   'border-primary bg-primary-soft font-semibold text-primary forced-colors:border-[color:Highlight] forced-colors:bg-[color:Highlight] forced-colors:text-[color:HighlightText] forced-colors:forced-color-adjust-none';
 const CHIP_OFF = 'border-line-strong bg-surface text-fg hover:border-primary hover:text-primary';
@@ -125,11 +121,11 @@ const TIER_OFF = 'border-line-strong bg-surface text-fg hover:border-primary';
 /** 「出題中」：虛線、muted（還不能選或內容很少）。 */
 const TIER_PENDING = 'border-dashed border-line-strong bg-surface-2 text-muted hover:border-primary';
 
-/** 難度方塊；state 給 'pending' 時是「出題中」的虛線方塊。selected 不給時看 has-[:checked]／aria-current。 */
+/** 難度方塊；state 給 'pending' 時是「出題中」的虛線方塊。selected 不給時看 has-[:checked]（label 包 radio）。 */
 export function tierTileCls(selected?: boolean, state: 'ready' | 'pending' = 'ready'): string {
   const off = state === 'pending' ? TIER_PENDING : TIER_OFF;
   if (selected === undefined) {
-    return `${TIER_BASE} ${off} has-[:checked]:border-2 has-[:checked]:border-primary has-[:checked]:bg-primary-soft has-[:checked]:text-primary aria-[current=page]:border-2 aria-[current=page]:border-primary aria-[current=page]:bg-primary-soft aria-[current=page]:text-primary forced-colors:has-[:checked]:border-[color:Highlight] forced-colors:has-[:checked]:bg-[color:Highlight] forced-colors:has-[:checked]:text-[color:HighlightText] forced-colors:has-[:checked]:forced-color-adjust-none`;
+    return `${TIER_BASE} ${off} has-[:checked]:border-2 has-[:checked]:border-primary has-[:checked]:bg-primary-soft has-[:checked]:text-primary forced-colors:has-[:checked]:border-[color:Highlight] forced-colors:has-[:checked]:bg-[color:Highlight] forced-colors:has-[:checked]:text-[color:HighlightText] forced-colors:has-[:checked]:forced-color-adjust-none`;
   }
   return `${TIER_BASE} ${selected ? TIER_ON : off}`;
 }

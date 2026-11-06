@@ -141,7 +141,7 @@ function ClozePanel({ q, id, onDone }: { q: ChoiceQ; id: string; onDone: () => v
               store.setAnswer(q.label, letter);
               onDone();
             }}
-            className="min-w-0 rounded-lg border border-line bg-surface px-3 py-2 text-left wrap-anywhere hover:border-primary aria-pressed:border-primary aria-pressed:bg-primary-soft disabled:opacity-70"
+            className="min-w-0 rounded-lg border border-line bg-surface px-3 py-2 text-left wrap-anywhere hover:border-primary aria-pressed:border-primary aria-pressed:bg-primary-soft disabled:cursor-not-allowed disabled:bg-surface-2 disabled:text-muted"
           >
             <span className="font-semibold">({letter})</span> <RichText text={q.options?.[letter] ?? ''} variant="inline" className="inline" lang="en" />
           </button>
