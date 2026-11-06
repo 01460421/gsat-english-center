@@ -197,7 +197,7 @@ describe('系統提示與請求', () => {
       'No quoted dialogue anywhere',
       '母親只淡淡要我早點睡',
       'Figures of speech',
-      'no ornament for its own sake',
+      'avoid ornament for its own sake',
       'Rules that protect the student',
       'Never copy, imitate, recite or mention any published essay',
       'Never invent a quotation, an author, a study, a statistic, a news event or a named person',
@@ -233,16 +233,16 @@ describe('系統提示與請求', () => {
       'Do not explain the image (…大概也是這樣), add a vow (往後我會…), end on a maxim (與其…不如…)',
       'one image per idea, never mixed',
       'Do not announce the structure with transitions',
-      'Stock moves: 我愣住了',
+      'Avoid stock moves such as 那一瞬間…彷彿回到, 我愣住了',
       'Before you output, reread the answer twice. First as a strict marker, and fix what fails',
     ]) {
       expect(system, want).toContain(want);
     }
-    // 2026-11-06 去 AI 味（站主：「國文作文還有很厚重的 AI 味」）：AI 慣用句型的上限、不靠機關（藏物揭密、課堂知識解碼、偵探推理、
+    // 2026-11-06 去 AI 味（站主：「國文作文還有很厚重的 AI 味」）：只對情意（知性套用後盲評降一級，維持原本的 Language）。AI 慣用句型的上限、不靠機關（藏物揭密、課堂知識解碼、偵探推理、
     // 意象一對一對應道理）、感情可以明說、結尾要有餘韻而不是把線索收齊；輸出前再以「熟悉 AI 文字的讀者」重讀一次。
     for (const want of [
-      'Voice: the essay must read as if a gifted senior-high student wrote it by hand',
-      'Machine-sounding patterns the website counts in every sample',
+      '情意 voice (情意 only; 知性 follows the Language rule above): the essay must read as if a gifted senior-high student wrote it by hand',
+      'Machine-sounding patterns the website counts in every 情意 sample',
       'Contrastive reframing (不是A，而是B; 並非…而是…; 不是A，是B; 不只是…更是…): at most once',
       'Epiphany formulas (那一刻, 那一瞬間, 剎那, 我才明白, 終於懂得, 這才發現, 我意識到, 原來…): none',
       'Summing-up lines (這就是…, 這便是…, 這正是…, 或許，這就是…; 教會了我, 讓我明白, 我學會了): none',
@@ -253,7 +253,7 @@ describe('系統提示與請求', () => {
       'not every detail has to be a clue',
       'Feeling is part of the essay, not something to hide',
       'end on a clever closing detail that ties every thread',
-      'Then as a reader who knows how AI writing sounds',
+      'Then, for 情意, as a reader who knows how AI writing sounds',
     ]) {
       expect(system, want).toContain(want);
     }
