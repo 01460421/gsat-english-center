@@ -111,7 +111,7 @@ test('練習模式：看答案與詳解（Markdown＋公式），非選擇題的
   await q1.getByRole('radio', { name: /^\(2\)/ }).check();
   await q1.getByRole('button', { name: '看答案與詳解' }).click();
   await expect(q1.getByText('答對', { exact: true })).toBeVisible();
-  await expect(q1.getByText('期望值')).toBeVisible();
+  await expect(q1.getByText('期望值', { exact: true })).toBeVisible();
   await expect(q1.locator('.katex-display')).toBeVisible();
   await expect(q1.getByText('AI 撰寫・已獨立驗算')).toBeVisible();
 

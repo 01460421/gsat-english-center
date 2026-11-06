@@ -102,7 +102,7 @@ function PaperList({ indexPromise }: { indexPromise: Promise<MathIndex> }) {
           ))}
         </div>
       </fieldset>
-      {tab && <p className="text-sm text-muted">{SUBJECT_NOTES[tab.value]}</p>}
+      {tab && <p className="max-w-3xl text-sm text-muted">{SUBJECT_NOTES[tab.value]}</p>}
       <p role="status" className="text-sm text-muted">
         共 {papers.length} 份卷子・{papers.reduce((n, p) => n + p.question_count, 0)} 題
       </p>
@@ -126,10 +126,10 @@ export default function MathLandingPage() {
   const [retry, setRetry] = useState(0);
   const indexPromise = useMemo(() => loadMathIndex(), [retry]);
   return (
-    <article className="lg:bleed lg:[&>*]:max-w-[72rem]">
+    <article className="lg:bleed lg:[&>*]:max-w-[72rem] lg:[&_p]:max-w-3xl">
       <PageHeader page={page} />
       <div className="grid grid-cols-1 gap-4">
-        <p className="text-[0.95rem]">
+        <p className="max-w-3xl text-[0.95rem]">
           點選卷子開始作答：<strong>練習模式</strong>每題寫完就能看答案與本站詳解；<strong>考試模式</strong>依題本時間倒數計時，交卷後看成績、逐題對錯與詳解。選填題仿答題卷的劃記格作答（每格 0–9、−、±），依官方計分方式自動批改；非選擇題請在紙上寫，交卷後對照詳解自評（拍照 AI 批改即將推出）。進度會自動存在這台裝置。
         </p>
         <DataErrorBoundary
@@ -149,7 +149,7 @@ export default function MathLandingPage() {
             <PaperList indexPromise={indexPromise} />
           </Suspense>
         </DataErrorBoundary>
-        <footer className="rounded-2xl border border-line bg-surface p-4 text-sm text-muted">
+        <footer className="rounded-2xl border border-line bg-surface p-4 text-sm text-muted lg:max-w-3xl">
           試題來源：大學入學考試中心 111–115 學年度學科能力測驗數學A、數學B考科。題目、選項與選擇（填）題答案依官方公告的試題與答案整理，圖從官方題本裁切並附文字描述；每份卷子頁都附有官方檔案連結，內容如有出入以官方檔案為準。詳解為本站撰寫，不是官方解答。
         </footer>
       </div>

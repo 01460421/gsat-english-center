@@ -76,39 +76,49 @@ async function inkPixels(page: Page, el: Locator): Promise<number> {
 }
 
 test.describe('側邊欄', () => {
-  test('1366×640：已登入與未登入的導覽清單都不用捲', async ({ page }) => {
+  /**
+   * 加入「數學」群組（docs/design/math.md P2）之後清單內容約 539px（原本 489px＋群組標題 22＋一項 28）：
+   * 1366×640 已登入可用 535（只差 4px，哨兵仍在可見範圍，不出現遮罩）、未登入 489；1280×600 已登入 495、未登入 449。
+   * 差得多的三種情況出現淡出遮罩；不論哪一種，捲到底後最後一項（數學）都看得到、沒有遮罩。
+   */
+  async function expectLastItemReachable(page: Page, masked: boolean) {
+    if (masked) {
+      expect((await listOverflow(page)).overflowing).toBe(true);
+      await expect(sidebarList(page)).toHaveAttribute('data-overflow', '');
+    }
+    await sidebarList(page).evaluate((el) => el.scrollTo({ top: el.scrollHeight }));
+    await expect(sidebarList(page)).not.toHaveAttribute('data-overflow');
+    await expect(sidebarList(page).getByRole('link', { name: '數學' })).toBeInViewport();
+  }
+
+  test('1366×640：未登入有淡出遮罩、已登入只差幾 px 不出現遮罩；捲到底後數學都看得到', async ({ page }) => {
     onlyDesktopUi();
     const errors = collectErrors(page);
     await page.setViewportSize({ width: 1366, height: 640 });
     const backend = await fakeBackend(page, { me: { user: null } });
     await page.goto('/');
     await expect(page.getByRole('link', { name: '使用 Google 登入', exact: true })).toBeVisible();
-    expect(await listOverflow(page)).toEqual({ overflowing: false, masked: false });
+    await expectLastItemReachable(page, true);
 
     backend.me = signedInMe({ ai_status: 'approved' });
     await page.reload();
     await expect(page.getByRole('button', { name: '小明（帳號選單）' })).toBeVisible();
-    expect(await listOverflow(page)).toEqual({ overflowing: false, masked: false });
+    await expectLastItemReachable(page, false);
     expect(errors).toEqual([]);
   });
 
-  test('1280×600：已登入不用捲；未登入時有淡出遮罩，捲到底後最後一項看得到、遮罩消失', async ({ page }) => {
+  test('1280×600：已登入與未登入都有淡出遮罩，捲到底後最後一項看得到、遮罩消失', async ({ page }) => {
     onlyDesktopUi();
     await page.setViewportSize({ width: 1280, height: 600 });
     const backend = await fakeBackend(page, { me: signedInMe() });
     await page.goto('/');
     await expect(page.getByRole('button', { name: '小明（帳號選單）' })).toBeVisible();
-    expect(await listOverflow(page)).toEqual({ overflowing: false, masked: false });
+    await expectLastItemReachable(page, true);
 
     backend.me = { user: null };
     await page.reload();
     await expect(page.getByRole('link', { name: '使用 Google 登入', exact: true })).toBeVisible();
-    // 未登入的清單 489px、可用 449px（§16.5），一定溢出：不溢出表示版面或量法變了，遮罩的檢查就沒有意義，要先修這個測試。
-    expect((await listOverflow(page)).overflowing).toBe(true);
-    await expect(sidebarList(page)).toHaveAttribute('data-overflow', '');
-    await sidebarList(page).evaluate((el) => el.scrollTo({ top: el.scrollHeight }));
-    await expect(sidebarList(page)).not.toHaveAttribute('data-overflow');
-    await expect(sidebarList(page).getByRole('link', { name: '模擬考' })).toBeInViewport();
+    await expectLastItemReachable(page, true);
   });
 
   test('600 高、未登入：換到清單下面的頁（模擬考、歷屆試題），目前頁自動捲進清單的可見範圍、不壓在淡出遮罩底下', async ({ page }) => {
