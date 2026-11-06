@@ -1,0 +1,511 @@
+{
+ "schema": "gsat-math-solutions/v1",
+ "paper_id": "gsat-matha-112",
+ "note": "本站自撰詳解；選擇（填）題答案經兩位獨立解題者與官方答案比對，非選擇題經兩位獨立解題者比對最終結果。",
+ "items": [
+  {
+   "no": 1,
+   "type": "single",
+   "unit": "指數對數、實數",
+   "unit_tags": [
+    "exp_log",
+    "real_numbers"
+   ],
+   "difficulty": {
+    "level": "穩定基礎",
+    "official_p": 0.78,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：連按 $3$ 次正平方根等於取 $\\frac18$ 次方。\n\n**詳解**\n\n1. 按一次 $\\sqrt{\\ }$：$N^{\\frac12}$；兩次：$N^{\\frac14}$；三次：$N^{\\frac18}$。\n2. $N^{\\frac18}=2$，所以 $N=2^8$。\n\n**答案**：(4)\n\n**常見錯誤**：以為按 $3$ 次就是 $N^{\\frac13}$ 或 $N^{\\frac16}$，誤選 (1)、(3)。",
+   "answer_display": "(4)",
+   "check": {
+    "official": "4",
+    "solver_a": "4",
+    "solver_b": "4",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 2,
+   "type": "single",
+   "unit": "三角函數、圓",
+   "unit_tags": [
+    "trigonometry",
+    "circle"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.59,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：切線垂直於過切點的半徑，$\\overline{OC}\\perp\\overline{DE}$，在直角三角形中找出等於 $\\theta$ 的角。\n\n**詳解**\n\n1. $\\overline{OC}=1$ 且 $\\overline{OC}\\perp\\overline{DE}$。\n2. 在直角 $\\Delta ODE$ 中，$\\angle OED=\\theta$，所以 $\\angle ODE=90^\\circ-\\theta$。\n3. 在直角 $\\Delta OCD$（直角在 $C$）中，$\\angle COD=90^\\circ-\\angle ODC=\\theta$。\n4. 因此 $\\tan\\theta=\\tan\\angle COD=\\dfrac{\\overline{CD}}{\\overline{OC}}=\\dfrac{\\overline{CD}}{1}=\\overline{CD}$。\n\n**答案**：(5)\n\n**常見錯誤**：在 $\\Delta OCE$ 中寫成 $\\tan\\theta=\\dfrac{\\overline{CE}}{\\overline{OC}}$，把對邊鄰邊弄反而選 (4)；正確是 $\\tan\\theta=\\dfrac{\\overline{OC}}{\\overline{CE}}=\\dfrac{1}{\\overline{CE}}$，它等於 $\\overline{CD}$（因為 $\\overline{CE}\\cdot\\overline{CD}=\\overline{OC}^2=1$）。",
+   "answer_display": "(5)",
+   "check": {
+    "official": "5",
+    "solver_a": "5",
+    "solver_b": "5",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 3,
+   "type": "single",
+   "unit": "數據分析、指數對數",
+   "unit_tags": [
+    "statistics",
+    "exp_log"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.51,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：$(s,\\log t)$ 的點落在直線上，表示 $\\log t$ 是 $s$ 的一次函數；由圖讀出斜率與截距，再改寫成指數式。\n\n**詳解**\n\n1. 由散布圖，點沿著通過原點附近、斜率約 $\\dfrac12$ 的直線分布，所以迴歸直線約為 $\\log t=\\dfrac12 s$。\n2. 兩邊乘 $2$：$2\\log t=s$，即 $\\log t^2=s$，所以 $t^2=10^s$。\n3. 檢查其他選項：(3) $t=10^s$ 對應 $\\log t=s$，斜率 $1$；(5) 對應斜率 $\\frac13$；(1)(2) 是 $s$ 與 $t$ 成正比，取對數後不是直線。\n\n**答案**：(4)",
+   "answer_display": "(4)",
+   "check": {
+    "official": "4",
+    "solver_a": "4",
+    "solver_b": "4",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 4,
+   "type": "single",
+   "unit": "排列組合",
+   "unit_tags": [
+    "counting"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.44,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：第 $5$ 位同時屬於「前 $5$ 位」與「後 $5$ 位」，它必須是最大的數字 $9$。\n\n**詳解**\n\n1. 前 $5$ 位遞增，所以第 $5$ 位是前 $5$ 位中最大的；後 $5$ 位（第 $5$～$9$ 位）遞減，所以第 $5$ 位也是後 $5$ 位中最大的。因此第 $5$ 位是全部 $9$ 個數字中最大的，即 $9$。\n2. 從其餘 $8$ 個數字中選 $4$ 個放在前 $4$ 位（由小到大排，只有一種排法），剩下 $4$ 個放在後 $4$ 位（由大到小，只有一種排法）。\n3. 共 $C^8_4=\\dfrac{8!}{4!\\,4!}$ 個。\n\n**答案**：(1)\n\n**常見錯誤**：以為前 $5$ 位與後 $5$ 位是分開的 $10$ 個位置，算成 $C^9_5$。",
+   "answer_display": "(1)",
+   "check": {
+    "official": "1",
+    "solver_a": "1",
+    "solver_b": "1",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 5,
+   "type": "single",
+   "unit": "空間向量、空間中的平面與直線",
+   "unit_tags": [
+    "vector_space",
+    "space_line_plane"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.47,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：三階行列式 $\\begin{vmatrix}\\vec{u}\\\\ \\vec{a}\\\\ \\vec{b}\\end{vmatrix}=\\vec{u}\\cdot(\\vec{a}\\times\\vec{b})$，而 $\\overrightarrow{PQ}\\times\\overrightarrow{PR}$ 平行於平面的法向量。\n\n**詳解**\n\n1. $\\overrightarrow{PQ},\\overrightarrow{PR}$ 都在平面 $2x-3y+5z=\\sqrt7$ 上且不平行，所以 $\\overrightarrow{PQ}\\times\\overrightarrow{PR}=k(2,-3,5)$，其中 $k\\ne0$。\n2. 每個選項的行列式 $=(\\text{第一列})\\cdot k(2,-3,5)$：\n   - (1) $(-1,1,1)\\cdot(2,-3,5)=-2-3+5=0$；\n   - (2) $(1,-1,1)\\cdot(2,-3,5)=2+3+5=10$；\n   - (3) $(1,1,-1)\\cdot(2,-3,5)=2-3-5=-6$；\n   - (4) $(-1,-1,1)\\cdot(2,-3,5)=-2+3+5=6$；\n   - (5) $(-1,-1,-1)\\cdot(2,-3,5)=-2+3-5=-4$。\n3. 絕對值分別為 $0,10|k|,6|k|,6|k|,4|k|$，最大的是 (2)。\n\n**答案**：(2)",
+   "answer_display": "(2)",
+   "check": {
+    "official": "2",
+    "solver_a": "2",
+    "solver_b": "2",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 6,
+   "type": "single",
+   "unit": "空間向量、機率（期望值）",
+   "unit_tags": [
+    "vector_space",
+    "probability"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.35,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：把 $O$ 放在原點、三稜沿坐標軸，七個頂點的位置向量都由 $0,1$ 組成；用「和的平方」一次算出所有兩兩內積的總和。\n\n**詳解**\n\n1. 設 $O(0,0,0)$，其餘七頂點為 $(1,0,0),(0,1,0),(0,0,1),(1,1,0),(1,0,1),(0,1,1),(1,1,1)$。\n2. 任取兩相異頂點共 $C^7_2=21$ 種，等可能。\n3. 七個向量的和 $\\vec{S}=(4,4,4)$（每個坐標為 $1$ 的頂點各有 $4$ 個），$|\\vec S|^2=48$；各向量長度平方和 $=3\\times1+3\\times2+3=12$。\n4. 兩兩內積總和 $=\\dfrac{|\\vec S|^2-\\sum|\\vec v_i|^2}{2}=\\dfrac{48-12}{2}=18$。\n5. 期望值 $=\\dfrac{18}{21}=\\dfrac67$。\n\n**答案**：(3)\n\n**另解（分類計數）**：設單位向量 $\\vec e_1,\\vec e_2,\\vec e_3$、面對角線 $\\vec e_i+\\vec e_j$、體對角線 $\\vec e_1+\\vec e_2+\\vec e_3$。\n\n- 兩個單位向量：$3$ 對，內積 $0$；\n- 單位向量與面對角線：$9$ 對，其中 $6$ 對內積 $1$、$3$ 對內積 $0$，和 $6$；\n- 單位向量與體對角線：$3$ 對，內積皆 $1$，和 $3$；\n- 兩條面對角線：$3$ 對，內積皆 $1$，和 $3$；\n- 面對角線與體對角線：$3$ 對，內積皆 $2$，和 $6$。\n\n共 $21$ 對、內積總和 $18$，期望值 $\\dfrac{18}{21}=\\dfrac67$。",
+   "answer_display": "(3)",
+   "check": {
+    "official": "3",
+    "solver_a": "3",
+    "solver_b": "3",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 7,
+   "type": "multi",
+   "unit": "數列與級數（數列應用）",
+   "unit_tags": [
+    "sequence"
+   ],
+   "difficulty": {
+    "level": "穩定基礎",
+    "official_p": 0.65,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：把第 $m$ 個月的月薪寫成公式：甲 $=s+200\\left\\lfloor\\dfrac{m-1}{3}\\right\\rfloor$，乙 $=s+1000\\left\\lfloor\\dfrac{m-1}{12}\\right\\rfloor$（$s$ 為起薪，$\\lfloor\\ \\rfloor$ 為高斯符號）。\n\n**詳解**\n\n1. 甲在第 $4,7,10,\\dots$ 個月各加薪 $200$ 元；乙在第 $13,25,\\dots$ 個月各加薪 $1000$ 元。\n\n**選項分析**\n\n- (1) 錯：第 $9$ 個月甲已加薪 $\\left\\lfloor\\frac83\\right\\rfloor=2$ 次，只比第 $1$ 個月多 $400$ 元（要到第 $10$ 個月才多 $600$ 元）。\n- (2) 錯：第 $13$ 個月甲加薪 $4$ 次共 $800$ 元，乙加薪 $1000$ 元，甲比乙低。\n- (3) 對：第 $19$ 個月甲加薪 $6$ 次共 $1200$ 元，乙仍是 $1000$ 元，甲較高。\n- (4) 錯：前 $18$ 個月甲比起薪多領 $200\\times3\\times(0+1+2+3+4+5)=9000$ 元；乙只有第 $13$～$18$ 個月多領，共 $6\\times1000=6000$ 元。甲總共領得**較多**。\n- (5) 對：第 $25$～$36$ 個月乙都多 $2000$ 元；甲在第 $25$～$27$、$28$～$30$、$31$～$33$、$34$～$36$ 個月分別多 $1600,1800,2000,2200$ 元，只有第 $34,35,36$ 這 $3$ 個月甲比乙高。\n\n**答案**：(3)(5)\n\n**常見錯誤**：把「滿 $3$ 個月後下個月開始加薪」誤解成第 $3$ 個月就加薪，所有月份會差一個月。",
+   "answer_display": "(3)(5)",
+   "check": {
+    "official": "3,5",
+    "solver_a": "3,5",
+    "solver_b": "3,5",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 8,
+   "type": "multi",
+   "unit": "機率（獨立事件）、數列與級數",
+   "unit_tags": [
+    "probability",
+    "sequence"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.44,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：「至少中獎 $1$ 次」用餘事件：$p_n=1-0.9^n$。\n\n**詳解**\n\n1. $n$ 次都沒中的機率 $0.9^n$，所以 $p_n=1-0.9^n$。\n\n**選項分析**\n\n- (1) 對：$0.9^{n+1}<0.9^n$，所以 $p_{n+1}>p_n$。\n- (2) 錯：$p_3=1-0.729=0.271\\ne0.3$。\n- (3) 錯：$p_{n+1}-p_n=0.9^n-0.9^{n+1}=0.1\\times0.9^n$ 隨 $n$ 改變，不是等差數列。\n- (4) 對：第一次未中、第二次中 $=0.9\\times0.1=0.09$；$p_2-p_1=(1-0.81)-0.1=0.09$，相等。（意義：「前兩次至少中一次」扣掉「第一次就中」，剩下的正是「第一次沒中、第二次中」。）\n- (5) 錯：例如 $n=2$，至少中 $2$ 次的機率 $0.01$，而 $2p_2=0.38$。且 $2p_n$ 可能大於 $1$，不可能是機率。\n\n**答案**：(1)(4)",
+   "answer_display": "(1)(4)",
+   "check": {
+    "official": "1,4",
+    "solver_a": "1,4",
+    "solver_b": "1,4",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 9,
+   "type": "multi",
+   "unit": "指數對數、數列與級數",
+   "unit_tags": [
+    "exp_log",
+    "sequence"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.46,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：$\\log_3 a_k$ 成等差數列，正負交錯相加時兩兩配對。\n\n**詳解**\n\n1. $a_k=3\\cdot(3\\sqrt3)^{k-1}=3\\cdot3^{\\frac32(k-1)}$，所以 $\\log_3a_k=1+\\dfrac32(k-1)=\\dfrac32k-\\dfrac12$，公差 $\\dfrac32$ 的等差數列。\n2. 相鄰兩項配對：$\\log_3a_{2j-1}-\\log_3a_{2j}=-\\dfrac32$。\n3. 若 $n=2m$（偶數），總和 $=-\\dfrac32m<0$，不可能大於 $18$。\n4. 若 $n=2m+1$（奇數），總和 $=-\\dfrac32m+\\log_3a_{2m+1}=-\\dfrac32m+\\dfrac32(2m+1)-\\dfrac12=\\dfrac32m+1$。\n5. $\\dfrac32m+1>18\\iff m>\\dfrac{34}{3}\\iff m\\ge12\\iff n\\ge25$（$n$ 奇數）。\n\n**選項分析**：(1) $n=23$：$m=11$，和 $=17.5$，不合；(2) $24$、(4) $26$ 為偶數，和為負，不合；(3) $n=25$：和 $=19$，合；(5) $n=27$：和 $=20.5$，合。\n\n**答案**：(3)(5)",
+   "answer_display": "(3)(5)",
+   "check": {
+    "official": "3,5",
+    "solver_a": "3,5",
+    "solver_b": "3,5",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 10,
+   "type": "multi",
+   "unit": "直線與坐標",
+   "unit_tags": [
+    "coordinate_line"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.45,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：$L$ 與 $x=0$、$x=10$ 的交點可直接用 $k$ 表示：$D(0,2k)$、$E(10,8-2k)$。\n\n**詳解**\n\n1. $x=0$：$5y=10k$，$D(0,2k)$。$x=10$：$5y=10k-10(2k-4)=40-10k$，$E(10,8-2k)$。\n2. $L$ 的斜率 $=-\\dfrac{2k-4}{5}=\\dfrac{4-2k}{5}$。\n\n**選項分析**\n\n- (1) 對：$k=4$ 時 $L:5y+4x-40=0$，代入 $A(10,0)$：$40-40=0$。\n- (2) 錯：過 $C(0,6)$ 需 $2k=6$，$k=3$，$L:5y+2x-30=0$，斜率 $-\\dfrac25$，不是 $-\\dfrac52$。\n- (3) 對：$D$ 在 $\\overline{OC}$ 上 $\\iff0\\le2k\\le6\\iff0\\le k\\le3$。\n- (4) 錯：$k=\\frac12$ 時 $E(10,7)$，$7>6$，$E$ 在長方形外。\n- (5) 對：$\\overline{DE}$ 在長方形內 $\\iff0\\le2k\\le6$ 且 $0\\le8-2k\\le6\\iff1\\le k\\le3$，此時斜率 $\\dfrac{4-2k}{5}$ 介於 $-\\dfrac25$ 與 $\\dfrac25$。斜率 $\\dfrac{3}{10}$ 對應 $k=\\dfrac54$，在範圍內，所以可能。\n\n**答案**：(1)(3)(5)",
+   "answer_display": "(1)(3)(5)",
+   "check": {
+    "official": "1,3,5",
+    "solver_a": "1,3,5",
+    "solver_b": "1,3,5",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 11,
+   "type": "multi",
+   "unit": "矩陣（平面線性變換）",
+   "unit_tags": [
+    "matrix"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.38,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：寫出四個矩陣：$A=\\begin{bmatrix}0&1\\\\-1&0\\end{bmatrix}$（順時針 $90^\\circ$）、$B=\\begin{bmatrix}0&-1\\\\1&0\\end{bmatrix}$（逆時針 $90^\\circ$）、$C=\\begin{bmatrix}0&1\\\\1&0\\end{bmatrix}$（對 $y=x$ 鏡射）、$D=\\begin{bmatrix}0&-1\\\\-1&0\\end{bmatrix}$（對 $y=-x$ 鏡射）。\n\n**詳解**：直接計算各選項。\n\n**選項分析**\n\n- (1) 錯：$A$ 把 $(1,0)$ 送到 $(0,-1)$，$C$ 把 $(1,0)$ 送到 $(0,1)$，不同。\n- (2) 對：由矩陣直接看出 $A=-B$。\n- (3) 錯：鏡射做兩次回到原位，$D^{-1}=D$；但 $C=-D\\ne D$。\n- (4) 錯：$AB=I$（先逆轉再順轉回原位），$CD=\\begin{bmatrix}0&1\\\\1&0\\end{bmatrix}\\begin{bmatrix}0&-1\\\\-1&0\\end{bmatrix}=\\begin{bmatrix}-1&0\\\\0&-1\\end{bmatrix}=-I$。\n- (5) 對：$AC=\\begin{bmatrix}1&0\\\\0&-1\\end{bmatrix}$，$BD=\\begin{bmatrix}0&-1\\\\1&0\\end{bmatrix}\\begin{bmatrix}0&-1\\\\-1&0\\end{bmatrix}=\\begin{bmatrix}1&0\\\\0&-1\\end{bmatrix}$，相等（都是對 $x$ 軸鏡射）。\n\n**答案**：(2)(5)\n\n**常見錯誤**：把順時針與逆時針旋轉矩陣弄反；旋轉 $\\theta$（逆時針）的矩陣是 $\\begin{bmatrix}\\cos\\theta&-\\sin\\theta\\\\ \\sin\\theta&\\cos\\theta\\end{bmatrix}$。",
+   "answer_display": "(2)(5)",
+   "check": {
+    "official": "2,5",
+    "solver_a": "2,5",
+    "solver_b": "2,5",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 12,
+   "type": "multi",
+   "unit": "三角函數（疊合與圖形）",
+   "unit_tags": [
+    "trigonometry"
+   ],
+   "difficulty": {
+    "level": "超越頂標",
+    "official_p": 0.21,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：疊合 $f(x)=\\sin x+\\sqrt3\\cos x=2\\sin\\left(x+\\dfrac{\\pi}{3}\\right)$。\n\n**詳解**\n\n1. $f(x)=2\\left(\\dfrac12\\sin x+\\dfrac{\\sqrt3}{2}\\cos x\\right)=2\\sin\\left(x+\\dfrac\\pi3\\right)$。\n2. 對稱軸發生在最高點或最低點：$x+\\dfrac\\pi3=\\dfrac\\pi2+k\\pi$，即 $x=\\dfrac\\pi6+k\\pi$。\n\n**選項分析**\n\n- (1) 對：$k=0$ 時 $x=\\dfrac\\pi6$。\n- (2) 錯：$x=\\dfrac\\pi6$ 時 $f=2$，$x=\\dfrac{7\\pi}{6}$ 時 $f=-2$，兩者都是對稱軸但函數值不同。\n- (3) 錯：$\\sin\\left(x+\\frac\\pi3\\right)=\\dfrac{\\sqrt3}2$，$x+\\dfrac\\pi3\\in\\left[\\dfrac\\pi3,\\dfrac{7\\pi}3\\right)$，解為 $x+\\dfrac\\pi3=\\dfrac\\pi3$ 或 $\\dfrac{2\\pi}3$，即 $x=0$ 或 $\\dfrac\\pi3$，有兩個。\n- (4) 錯：令 $u=x+\\dfrac\\pi3$，$\\sin u=\\dfrac14$。設 $\\alpha$ 為銳角且 $\\sin\\alpha=\\frac14$（$\\alpha<\\frac\\pi3$），在 $\\left[\\dfrac\\pi3,\\dfrac{7\\pi}3\\right)$ 內的解為 $u=\\pi-\\alpha$ 與 $u=2\\pi+\\alpha$，和為 $3\\pi$；所以 $x$ 的和 $=3\\pi-2\\cdot\\dfrac\\pi3=\\dfrac{7\\pi}{3}>2\\pi$。\n- (5) 對：$4\\sin^2\\dfrac x2=2-2\\cos x$，其圖形是 $y=-2\\cos x=2\\sin\\left(x-\\dfrac\\pi2\\right)$ 上移 $2$；而 $f(x)=2\\sin\\left(x+\\dfrac\\pi3\\right)$ 與 $2\\sin\\left(x-\\dfrac\\pi2\\right)$ 只差左右平移 $\\dfrac{5\\pi}{6}$。具體地，$f(x)=4\\sin^2\\dfrac{x+\\frac{5\\pi}{6}}{2}-2$，即左移 $\\dfrac{5\\pi}6$、下移 $2$。\n\n**答案**：(1)(5)",
+   "answer_display": "(1)(5)",
+   "check": {
+    "official": "1,5",
+    "solver_a": "1,5",
+    "solver_b": "1,5",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 13,
+   "type": "fill",
+   "unit": "線性方程組",
+   "unit_tags": [
+    "linear_system"
+   ],
+   "difficulty": {
+    "level": "穩定基礎",
+    "official_p": 0.87,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：設三種飲料單價，列三元一次方程組；觀察係數，用一次加減消去就能得到咖啡價格。\n\n**詳解**\n\n1. 設果汁、奶茶、咖啡每杯 $x,y,z$ 元：\n$$\\begin{cases}60x+80y+50z=12900\\\\30x+40y+30z=6850\\\\50x+70y+40z=10800\\end{cases}$$\n2. 第一式減去第二式的 $2$ 倍：$(50-60)z=12900-13700$，即 $-10z=-800$，$z=80$。\n3. （驗算可再求出 $x,y$：代回後 $30x+40y=4450$、$50x+70y=7600$，得 $x=55$、$y=70$，三式皆成立。）\n\n**答案**：$80$ 元（13-1 填 $8$，13-2 填 $0$）",
+   "answer_display": "$80$",
+   "check": {
+    "official": {
+     "13-1": "8",
+     "13-2": "0"
+    },
+    "solver_a": {
+     "13-1": "8",
+     "13-2": "0"
+    },
+    "solver_b": {
+     "13-1": "8",
+     "13-2": "0"
+    },
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 14,
+   "type": "fill",
+   "unit": "多項式函數（除法原理）",
+   "unit_tags": [
+    "polynomial"
+   ],
+   "difficulty": {
+    "level": "穩定基礎",
+    "official_p": 0.67,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：被除式與除式都是二次且首項係數分別為 $a$、$1$，所以商是常數 $a$。\n\n**詳解**\n\n1. 除式 $x^2+(2-a)x-2a$，被除式首項 $ax^2$，商為 $a$，餘式 $6$：\n$$ax^2+(2a+b)x-12=a\\left[x^2+(2-a)x-2a\\right]+6.$$\n2. 比較 $x$ 項：$2a+b=2a-a^2$，得 $b=-a^2$。\n3. 比較常數項：$-12=-2a^2+6$，得 $a^2=9$；又 $a>0$，$a=3$，$b=-9$。\n\n**答案**：$(a,b)=(3,-9)$（14-1 填 $3$，14-2 填 $-$，14-3 填 $9$）",
+   "answer_display": "$(a,b)=(3,-9)$",
+   "check": {
+    "official": {
+     "14-1": "3",
+     "14-2": "-",
+     "14-3": "9"
+    },
+    "solver_a": {
+     "14-1": "3",
+     "14-2": "-",
+     "14-3": "9"
+    },
+    "solver_b": {
+     "14-1": "3",
+     "14-2": "-",
+     "14-3": "9"
+    },
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 15,
+   "type": "fill",
+   "unit": "平面向量",
+   "unit_tags": [
+    "vector_plane"
+   ],
+   "difficulty": {
+    "level": "超越頂標",
+    "official_p": 0.25,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：建坐標 $O(0,0)$、$A(p,0)$、$B(0,q)$；$3\\overline{AD}=8\\overline{BD}$ 要考慮 $D$ 在 $\\overline{AB}$ 內分或外分。\n\n**詳解**\n\n1. 設 $\\overline{OA}=p$、$\\overline{OB}=q$，$A(p,0)$、$B(0,q)$。$C=\\left(\\dfrac35p,\\dfrac25q\\right)$。\n2. $\\overline{AD}:\\overline{BD}=8:3$。\n   - 若 $D$ 內分 $\\overline{AB}$：$D=\\dfrac{3A+8B}{11}=\\left(\\dfrac{3p}{11},\\dfrac{8q}{11}\\right)$，則 $\\overrightarrow{OC}\\cdot\\overrightarrow{OD}$ 兩項都正，不可能為 $0$。\n   - 所以 $D$ 外分（在 $B$ 外側）：$\\overrightarrow{OD}=\\dfrac{8\\overrightarrow{OB}-3\\overrightarrow{OA}}{5}=\\left(-\\dfrac{3p}{5},\\dfrac{8q}{5}\\right)$。\n3. $\\overrightarrow{OC}\\cdot\\overrightarrow{OD}=-\\dfrac{9p^2}{25}+\\dfrac{16q^2}{25}=0$，得 $\\dfrac{q}{p}=\\dfrac34$。\n\n**答案**：$\\dfrac{\\overline{OB}}{\\overline{OA}}=\\dfrac34$（15-1 填 $3$，15-2 填 $4$）\n\n**常見錯誤**：只考慮內分點，結果找不到垂直的情形。",
+   "answer_display": "$\\frac{3}{4}$",
+   "check": {
+    "official": {
+     "15-1": "3",
+     "15-2": "4"
+    },
+    "solver_a": {
+     "15-1": "3",
+     "15-2": "4"
+    },
+    "solver_b": {
+     "15-1": "3",
+     "15-2": "4"
+    },
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 16,
+   "type": "fill",
+   "unit": "空間中的平面與直線",
+   "unit_tags": [
+    "space_line_plane"
+   ],
+   "difficulty": {
+    "level": "超越頂標",
+    "official_p": 0.24,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：投影點與 $A,B,C$ 等距，就是 $\\Delta ABC$ 的外心；$P$ 在過外心、方向為法向量 $(1,0,1)$ 的直線上。\n\n**詳解**\n\n1. 平面 $E$ 上的點寫成 $X(x,y,2-x)$。\n2. $|XB|^2=x^2+(y-1)^2+x^2$，$|XC|^2=(x+2)^2+(y-1)^2+(x+2)^2$。令兩者相等：$x^2=(x+2)^2$，$x=-1$。\n3. $|XA|^2=2(x-2)^2+(y+1)^2$。令 $|XA|^2=|XB|^2$ 並代 $x=-1$：$18+(y+1)^2=2+(y-1)^2$，得 $4y=-16$，$y=-4$。外心 $M(-1,-4,3)$。\n4. $P=M+t(1,0,1)=(-1+t,-4,3+t)$，在平面 $z=1$ 上：$t=-2$，$P(-3,-4,1)$。\n5. $P$ 到 $E$ 的距離 $=\\overline{PM}=|t|\\sqrt2=2\\sqrt2$。（驗算：$\\dfrac{|-3+1-2|}{\\sqrt2}=\\dfrac{4}{\\sqrt2}=2\\sqrt2$。）\n\n**答案**：$2\\sqrt2$（16-1 填 $2$，16-2 填 $2$）",
+   "answer_display": "$2\\sqrt{2}$",
+   "check": {
+    "official": {
+     "16-1": "2",
+     "16-2": "2"
+    },
+    "solver_a": {
+     "16-1": "2",
+     "16-2": "2"
+    },
+    "solver_b": {
+     "16-1": "2",
+     "16-2": "2"
+    },
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 17,
+   "type": "fill",
+   "unit": "空間中的平面與直線、空間向量",
+   "unit_tags": [
+    "space_line_plane",
+    "vector_space"
+   ],
+   "difficulty": {
+    "level": "超越頂標",
+    "official_p": 0.1,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：先發現 $L_1\\perp L_2$；$L_3$ 是公垂線，$P$ 到 $L_3$ 的距離就是 $P$ 到垂足的距離，最後 $\\overline{PQ}$ 由三段兩兩垂直的線段用畢氏定理求得。\n\n**詳解**\n\n1. 方向向量 $\\vec u=(1,-1,1)$、$\\vec v=(2,1,-1)$，$\\vec u\\cdot\\vec v=2-1-1=0$，所以 $L_1\\perp L_2$。\n2. 求公垂線垂足：令 $\\vec w=L_2(s)-L_1(t)=(1+2s-t,\\ 4+s+t,\\ 4-s-t)$。\n   - $\\vec w\\cdot\\vec u=1-3t=0$，$t=\\dfrac13$，垂足 $F_1\\left(\\dfrac43,\\dfrac23,\\dfrac73\\right)$；\n   - $\\vec w\\cdot\\vec v=2+6s=0$，$s=-\\dfrac13$，垂足 $F_2\\left(\\dfrac43,\\dfrac{14}3,\\dfrac{19}3\\right)$。\n   - $\\overline{F_1F_2}=\\sqrt{0+16+16}=4\\sqrt2$。\n3. $L_1\\perp L_3$ 且交於 $F_1$，所以 $L_1$ 上的點 $P$ 到 $L_3$ 的距離就是 $\\overline{PF_1}=3$；同理 $\\overline{QF_2}=3$。\n4. $\\overrightarrow{PF_1}\\parallel\\vec u$、$\\overrightarrow{F_1F_2}$ 沿 $L_3$、$\\overrightarrow{F_2Q}\\parallel\\vec v$，三者兩兩垂直，所以\n$$\\overline{PQ}^2=3^2+(4\\sqrt2)^2+3^2=50,\\quad \\overline{PQ}=5\\sqrt2.$$\n\n**答案**：$5\\sqrt2$（17-1 填 $5$，17-2 填 $2$）\n\n**常見錯誤**：沒注意到 $L_1\\perp L_2$，以為 $\\overline{PQ}$ 會隨 $P,Q$ 位置改變；其實 $\\overrightarrow{PF_1}\\perp\\overrightarrow{F_2Q}$，答案是定值。",
+   "answer_display": "$5\\sqrt{2}$",
+   "check": {
+    "official": {
+     "17-1": "5",
+     "17-2": "2"
+    },
+    "solver_a": {
+     "17-1": "5",
+     "17-2": "2"
+    },
+    "solver_b": {
+     "17-1": "2",
+     "17-2": "10"
+    },
+    "agree": false
+   },
+   "flags": [
+    {
+     "severity": "resolved",
+     "detail": "解題者 B 得 $2\\sqrt{10}$（公垂線段長算成 $\\sqrt{22}$）。複核：垂足 $F_1(\\frac43,\\frac23,\\frac73)$、$F_2(\\frac43,\\frac{14}3,\\frac{19}3)$，$\\overrightarrow{F_1F_2}=(0,4,4)$ 同時垂直兩方向向量，長 $4\\sqrt2$，$\\overline{PQ}=\\sqrt{9+32+9}=5\\sqrt2$，與官方答案及解題者 A 一致。"
+    }
+   ]
+  },
+  {
+   "no": 18,
+   "type": "single",
+   "unit": "三角函數、幾何",
+   "unit_tags": [
+    "trigonometry",
+    "geometry"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.56,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：$\\overline{AP}=\\overline{AO}=1$，$\\Delta AOP$ 是等腰三角形。\n\n**詳解**\n\n1. $\\Delta AOP$ 中 $\\overline{AO}=\\overline{AP}=1$，底角 $\\angle AOP=\\angle APO=\\theta$。\n2. 由 $A$ 作 $\\overline{OP}$ 的垂線，垂足是 $\\overline{OP}$ 中點，$\\dfrac{\\overline{OP}}{2}=1\\cdot\\cos\\theta$。\n3. 所以 $\\overline{OP}=2\\cos\\theta$。\n\n**答案**：(4)",
+   "answer_display": "(4)",
+   "check": {
+    "official": "4",
+    "solver_a": "4",
+    "solver_b": "4",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 19,
+   "type": "constructed",
+   "unit": "三角函數、平面向量",
+   "unit_tags": [
+    "trigonometry",
+    "vector_plane"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": null,
+    "basis": "本站估計"
+   },
+   "solution_md": "**解題關鍵**：$\\Delta OBQ$ 也是等腰三角形（$\\overline{BO}=\\overline{BQ}=2$），用第 18 題的方法求 $\\overline{OQ}$；$Q$ 的方向角是 $\\theta+90^\\circ$。\n\n**詳解**\n\n1. $\\sin\\theta=\\dfrac35$，$P$ 在上半平面且 $\\overline{OP}=2\\cos\\theta>0$，$\\theta$ 為銳角，$\\cos\\theta=\\dfrac45$。\n2. $\\overline{OP}=2\\cos\\theta=\\dfrac85$，$P=\\dfrac85(\\cos\\theta,\\sin\\theta)=\\left(\\dfrac{32}{25},\\dfrac{24}{25}\\right)$。\n3. $\\angle POQ=90^\\circ$，$\\overrightarrow{OQ}$ 的方向角為 $\\theta+90^\\circ$，所以 $\\angle BOQ=180^\\circ-(\\theta+90^\\circ)=90^\\circ-\\theta$。\n4. $\\Delta OBQ$ 中 $\\overline{BO}=\\overline{BQ}=2$，同第 18 題：$\\overline{OQ}=2\\cdot2\\cos(90^\\circ-\\theta)=4\\sin\\theta=\\dfrac{12}{5}$。\n5. $Q=\\dfrac{12}{5}\\big(\\cos(\\theta+90^\\circ),\\sin(\\theta+90^\\circ)\\big)=\\dfrac{12}{5}(-\\sin\\theta,\\cos\\theta)=\\left(-\\dfrac{36}{25},\\dfrac{48}{25}\\right)$。\n6. $\\overrightarrow{AP}=\\left(\\dfrac{32}{25}-1,\\dfrac{24}{25}\\right)=\\left(\\dfrac{7}{25},\\dfrac{24}{25}\\right)$，$\\overrightarrow{BQ}=\\left(-\\dfrac{36}{25}+2,\\dfrac{48}{25}\\right)=\\left(\\dfrac{14}{25},\\dfrac{48}{25}\\right)=2\\overrightarrow{AP}$。\n\n**答案**：$Q\\left(-\\dfrac{36}{25},\\dfrac{48}{25}\\right)$，且 $\\overrightarrow{BQ}=2\\overrightarrow{AP}$。\n\n**補充（不必代值的理由）**：$\\Delta AOP$ 的頂角 $\\angle OAP=180^\\circ-2\\theta$，$\\overrightarrow{AO}$ 指向 $180^\\circ$ 方向，$P$ 在上方，所以 $\\overrightarrow{AP}$ 的方向角為 $180^\\circ-(180^\\circ-2\\theta)=2\\theta$；$\\Delta BOQ$ 的頂角 $\\angle OBQ=180^\\circ-2(90^\\circ-\\theta)=2\\theta$，$\\overrightarrow{BO}$ 指向 $0^\\circ$ 方向，所以 $\\overrightarrow{BQ}$ 的方向角也是 $2\\theta$。兩向量同向、長度為 $2$ 比 $1$，故 $\\overrightarrow{BQ}=2\\overrightarrow{AP}$ 對任意銳角 $\\theta$ 都成立。\n\n**評分重點（本站整理）**\n\n- 正確判斷 $\\cos\\theta=\\frac45$、$\\angle BOQ=90^\\circ-\\theta$，求出 $\\overline{OQ}=\\frac{12}{5}$。\n- $Q$ 坐標正確（注意 $x$ 坐標為負）。\n- 寫出 $\\overrightarrow{AP}$、$\\overrightarrow{BQ}$ 的分量並比較，或用方向角說明兩者同向且長度比為 $2$。",
+   "answer_display": "$Q\\left(-\\dfrac{36}{25},\\dfrac{48}{25}\\right)$；$\\overrightarrow{AP}=\\left(\\dfrac{7}{25},\\dfrac{24}{25}\\right)$、$\\overrightarrow{BQ}=\\left(\\dfrac{14}{25},\\dfrac{48}{25}\\right)=2\\overrightarrow{AP}$",
+   "check": {
+    "official": null,
+    "solver_a": "Q(−36/25, 48/25)；BQ=(14/25,48/25)=2AP，AP=(7/25,24/25)",
+    "solver_b": "Q=(−36/25,48/25)；AP=(7/25,24/25)，BQ=(14/25,48/25)=2AP",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 20,
+   "type": "constructed",
+   "unit": "直線與坐標、幾何",
+   "unit_tags": [
+    "coordinate_line",
+    "geometry"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": null,
+    "basis": "本站估計"
+   },
+   "solution_md": "**解題關鍵**：由第 19 題 $\\overrightarrow{BQ}=2\\overrightarrow{AP}$，$\\overline{AP}\\parallel\\overline{BQ}$，四邊形 $PABQ$ 是梯形，高就是 $A$ 到直線 $BQ$ 的距離。\n\n**詳解**\n\n1. 直線 $BQ$ 過 $B(-2,0)$，方向 $\\left(\\frac{14}{25},\\frac{48}{25}\\right)\\parallel(7,24)$，法向量 $(24,-7)$：\n$$24(x+2)-7y=0,\\ \\text{即}\\ 24x-7y+48=0.$$\n2. $A(1,0)$ 到直線 $BQ$ 的距離 $=\\dfrac{|24+48|}{\\sqrt{24^2+7^2}}=\\dfrac{72}{25}$。\n3. 梯形 $PABQ$ 的兩底 $\\overline{AP}=1$、$\\overline{BQ}=2$，高 $=\\dfrac{72}{25}$（$A$ 在直線 $AP$ 上，兩平行線的距離就是 $A$ 到 $BQ$ 的距離）。\n4. 面積 $=\\dfrac{(1+2)}{2}\\cdot\\dfrac{72}{25}=\\dfrac{108}{25}$。\n5. 驗算（行列式／鞋帶公式）：以 $\\frac1{25}$ 為單位，$P(32,24)$、$A(25,0)$、$B(-50,0)$、$Q(-36,48)$，面積 $=\\dfrac12\\cdot5400\\cdot\\dfrac{1}{625}=\\dfrac{108}{25}$。\n\n**答案**：距離 $\\dfrac{72}{25}$；面積 $\\dfrac{108}{25}$。\n\n**評分重點（本站整理）**\n\n- 直線 $BQ$ 方程式與點到直線距離公式正確。\n- 說明 $\\overline{AP}\\parallel\\overline{BQ}$（由第 19 題），再用梯形面積公式；或用坐標直接算面積。",
+   "answer_display": "$A$ 到直線 $BQ$ 的距離 $=\\dfrac{72}{25}$；四邊形 $PABQ$ 的面積 $=\\dfrac{108}{25}$",
+   "check": {
+    "official": null,
+    "solver_a": "距離 72/25；四邊形 PABQ 面積 108/25",
+    "solver_b": "距離 72/25；面積 108/25",
+    "agree": true
+   },
+   "flags": []
+  }
+ ]
+}

@@ -1,0 +1,1022 @@
+{
+ "schema": "gsat-math-exam/v1",
+ "id": "gsat-matha-115",
+ "exam": "gsat",
+ "subject": "math_a",
+ "era": "108課綱",
+ "year": 115,
+ "session": "regular",
+ "title": "115學年度學科能力測驗數學A考科",
+ "time_minutes": 100,
+ "full_score": 100,
+ "sources": {
+  "paper": "data/raw/ceec/gsat-matha/115/paper-1.pdf",
+  "paper_word": [
+   "data/raw/ceec/gsat-matha/115/paper-2.docx"
+  ],
+  "answer": [
+   "data/raw/ceec/gsat-matha/115/answer.pdf"
+  ],
+  "answer_sheet": [
+   "data/raw/ceec/gsat-matha/115/other.pdf"
+  ],
+  "stats": [
+   "data/raw/ceec/gsat-matha/115/stats-1.xls",
+   "data/raw/ceec/gsat-matha/115/stats-2.xls",
+   "data/raw/ceec/gsat-matha/115/stats-3.xls",
+   "data/raw/ceec/gsat-matha/115/stats-4.xls"
+  ],
+  "scoring_not_stored": [
+   "data/raw/ceec/gsat-matha/115/scoring.pdf"
+  ]
+ },
+ "scoring_rules": {
+  "single": "每題有$n$個選項，其中只有一個是正確或最適當的選項。各題答對者，得該題的分數；答錯、未作答或劃記多於一個選項者，該題以零分計算。",
+  "multi": "每題有$n$個選項，其中至少有一個是正確的選項。各題之選項獨立判定，所有選項均答對者，得該題全部的分數；答錯 $k$個選項者，得該題$\\frac{n-2k}{n}$的分數；但得分低於零分或所有選項均未作答者，該題以零分計算。",
+  "fill": "每題有$n$個空格，須全部答對才給分，答錯不倒扣。"
+ },
+ "parts": [
+  {
+   "title": "第壹部分、選擇（填）題（占85分）",
+   "points": 85,
+   "instructions": null,
+   "sections": [
+    "s1",
+    "s2",
+    "s3"
+   ]
+  },
+  {
+   "title": "第貳部分、混合題或非選擇題（占15分）",
+   "points": 15,
+   "instructions": "說明︰本部分共有1題組，單選題每題3分，非選擇題配分標於題末。限在答題卷標示題號的作答區內作答。選擇（填）題與「非選擇題作圖部分」使用 2B 鉛筆作答，更正時以橡皮擦擦拭，切勿使用修正帶（液）。非選擇題請由左而右橫式書寫，作答時必須寫出計算過程或理由，否則將酌予扣分。",
+   "sections": [
+    "s4"
+   ]
+  }
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "type": "single",
+   "title": "一、單選題（占30分）",
+   "instructions": "說明：第1題至第6題，每題5分。",
+   "points_total": 30,
+   "groups": [
+    {
+     "id": "s1g1",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 1,
+       "label": "1",
+       "type": "single",
+       "stem": "財神廟舉辦抽發財金活動：參加者抽兩次籤，每次抽籤出現「吉」、「祥」的機率皆為$\\frac{1}{3}$。如果兩次都抽得「吉」，獲得獎金180元；如果兩次都抽得「祥」，獲得獎金90元；其餘情況則無獎金。試問參加者可獲獎金的期望值為何？",
+       "options": {
+        "1": "20元",
+        "2": "30元",
+        "3": "45元",
+        "4": "60元",
+        "5": "90元"
+       },
+       "answer": "2",
+       "points": 5,
+       "tags": {
+        "units": [
+         "probability"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.84,
+        "Ph": 0.99,
+        "Pl": 0.57,
+        "D": 0.42,
+        "options": {
+         "1": 0.01,
+         "2": 0.84,
+         "3": 0.05,
+         "4": 0.05,
+         "5": 0.05
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g2",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 2,
+       "label": "2",
+       "type": "single",
+       "stem": "對任一實數$a$，令$[a]$代表滿足$[a]\\le a<[a]+1$的整數，例如：$[3]=3$，$[3.1]=3$，$[-3.1]=-4$。關於函數$f(x)=[\\sqrt{99-x}]+[\\sqrt{99+x}]$，其中$-99\\le x\\le 99$；試選出正確的選項。",
+       "options": {
+        "1": "$f(-20)\\le f(0)<f(1)$",
+        "2": "$f(-20)<f(1)\\le f(0)$",
+        "3": "$f(1)<f(-20)\\le f(0)$",
+        "4": "$f(0)<f(-20)\\le f(1)$",
+        "5": "$f(0)\\le f(1)<f(-20)$"
+       },
+       "answer": "1",
+       "points": 5,
+       "tags": {
+        "units": [
+         "real_numbers",
+         "functions"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.55,
+        "Ph": 0.83,
+        "Pl": 0.26,
+        "D": 0.57,
+        "options": {
+         "1": 0.55,
+         "2": 0.13,
+         "3": 0.09,
+         "4": 0.14,
+         "5": 0.09
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g3",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 3,
+       "label": "3",
+       "type": "single",
+       "stem": "設$f(x)=a^{x}$，其中$a$為正實數。已知$c_{1},c_{2},c_{3}$是公差為$\\frac{10}{3}$的等差數列，且$f(c_{1}),f(c_{2}),f(c_{3})$是公比為4的等比數列。則等比數列$f(10),f(8),f(6)$的公比為何？",
+       "options": {
+        "1": "$2^{\\frac{-6}{5}}$",
+        "2": "$2^{\\frac{-3}{5}}$",
+        "3": "$2^{\\frac{3}{5}}$",
+        "4": "$2^{\\frac{6}{5}}$",
+        "5": "$2^{\\frac{5}{3}}$"
+       },
+       "answer": "1",
+       "points": 5,
+       "tags": {
+        "units": [
+         "exp_log",
+         "sequence"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.41,
+        "Ph": 0.69,
+        "Pl": 0.16,
+        "D": 0.53,
+        "options": {
+         "1": 0.41,
+         "2": 0.1,
+         "3": 0.16,
+         "4": 0.24,
+         "5": 0.08
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g4",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 4,
+       "label": "4",
+       "type": "single",
+       "stem": "某網遊有16種材料，其中6種為基本材料，10種為進階材料。任選3種不同材料可以合成出草藥、食物、藥水中的1類道具，其合成規則如下：若3種材料均為基本材料，則合成結果必為同一種草藥；若3種材料中2種為基本材料、1種為進階材料，則合成結果會根據不同的進階材料得到不同種的食物，但不會受到基本材料不同而改變；其他的組合都會合成出不同種的藥水。試問此網遊總共可合成出多少種道具？",
+       "options": {
+        "1": "256",
+        "2": "370",
+        "3": "401",
+        "4": "455",
+        "5": "560"
+       },
+       "answer": "3",
+       "points": 5,
+       "tags": {
+        "units": [
+         "counting"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.56,
+        "Ph": 0.85,
+        "Pl": 0.27,
+        "D": 0.58,
+        "options": {
+         "1": 0.06,
+         "2": 0.06,
+         "3": 0.56,
+         "4": 0.14,
+         "5": 0.18
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g5",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 5,
+       "label": "5",
+       "type": "single",
+       "stem": "已知實數三階方陣$A$滿足$A\\begin{bmatrix}1 \\\\ 1 \\\\ 0\\end{bmatrix}=\\begin{bmatrix}0 \\\\-1 \\\\ 1\\end{bmatrix}$，$A\\begin{bmatrix}0 \\\\ -1 \\\\ 1\\end{bmatrix}=\\begin{bmatrix}1 \\\\ 1 \\\\ 0\\end{bmatrix}$，$A\\begin{bmatrix}1 \\\\ 0 \\\\-1\\end{bmatrix}=\\begin{bmatrix}0 \\\\ 0 \\\\ 0\\end{bmatrix}$。試問有多少個行向量$\\overrightarrow{v}=\\begin{bmatrix}v_{1} \\\\ v_{2} \\\\ v_{3}\\end{bmatrix}$滿足$A\\overrightarrow{v}=\\begin{bmatrix}1 \\\\ 0 \\\\ 1\\end{bmatrix}$且$\\overrightarrow{v}$垂直於行向量$\\begin{bmatrix}0 \\\\ 1 \\\\ 0\\end{bmatrix}$？",
+       "options": {
+        "1": "1個",
+        "2": "2個",
+        "3": "3個",
+        "4": "0個",
+        "5": "無窮多個"
+       },
+       "answer": "5",
+       "points": 5,
+       "tags": {
+        "units": [
+         "matrix",
+         "linear_system"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.26,
+        "Ph": 0.45,
+        "Pl": 0.11,
+        "D": 0.34,
+        "options": {
+         "1": 0.15,
+         "2": 0.16,
+         "3": 0.18,
+         "4": 0.25,
+         "5": 0.26
+        },
+        "omit": 0.01
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g6",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 6,
+       "label": "6",
+       "type": "single",
+       "stem": "坐標平面上有$A(2,-2),B(-1,2)$兩點，試問直線$y=-6$上有多少個點$C$使得$\\Delta ABC$為等腰三角形？",
+       "options": {
+        "1": "1",
+        "2": "2",
+        "3": "3",
+        "4": "4",
+        "5": "5"
+       },
+       "answer": "2",
+       "points": 5,
+       "tags": {
+        "units": [
+         "coordinate_line",
+         "geometry"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.37,
+        "Ph": 0.48,
+        "Pl": 0.26,
+        "D": 0.22,
+        "options": {
+         "1": 0.29,
+         "2": 0.37,
+         "3": 0.27,
+         "4": 0.05,
+         "5": 0.02
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "type": "multi",
+   "title": "二、多選題（占30分）",
+   "instructions": "說明：第7題至第12題，每題5分。",
+   "points_total": 30,
+   "groups": [
+    {
+     "id": "s2g1",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 7,
+       "label": "7",
+       "type": "multi",
+       "stem": "坐標平面上同時滿足$\\left\\{\\begin{matrix}2x-y-3>0 \\\\ x+2y+1<0\\end{matrix} \\right.$的點$P(x,y)$可能位在下列哪些選項？",
+       "options": {
+        "1": "第一象限",
+        "2": "第二象限",
+        "3": "第三象限",
+        "4": "第四象限",
+        "5": "$x$軸"
+       },
+       "answer": [
+        "3",
+        "4"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "inequality_lp"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.74,
+        "Ph": 0.92,
+        "Pl": 0.49,
+        "D": 0.43,
+        "T": 0.66,
+        "options": {
+         "1": 0.13,
+         "2": 0.16,
+         "3": 0.84,
+         "4": 0.9,
+         "5": 0.19
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g2",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 8,
+       "label": "8",
+       "type": "multi",
+       "stem": "已知$A=\\begin{bmatrix}2 & 1 \\\\ 1 & 0\\end{bmatrix}$，且對所有正整數$n\\ge 2$，令$A^{n}=\\begin{bmatrix}a_{n} & b_{n} \\\\ c_{n} & d_{n}\\end{bmatrix}$。試選出正確的選項。",
+       "options": {
+        "1": "$b_{2}<c_{2}$",
+        "2": "$A^{2}=2A+\\begin{bmatrix}1 & 0 \\\\ 0 & 1\\end{bmatrix}$",
+        "3": "$c_{n+2}=c_{n+1}+2c_{n}$",
+        "4": "$\\begin{bmatrix}a_{n} & b_{n} \\\\ c_{n} & d_{n}\\end{bmatrix}\\begin{bmatrix}0 \\\\ 1\\end{bmatrix}=\\begin{bmatrix}b_{n+1} \\\\ d_{n+1}\\end{bmatrix}$",
+        "5": "$d_{2n}-a_{2n}=(d_{n})^{2}-(a_{n})^{2}$"
+       },
+       "answer": [
+        "2",
+        "5"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "matrix",
+         "sequence"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.7,
+        "Ph": 0.9,
+        "Pl": 0.42,
+        "D": 0.48,
+        "T": 0.56,
+        "options": {
+         "1": 0.08,
+         "2": 0.85,
+         "3": 0.21,
+         "4": 0.22,
+         "5": 0.81
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g3",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 9,
+       "label": "9",
+       "type": "multi",
+       "stem": "$T$分數為評量成績的一種方式，其計算方式如下：設全班平均成績為$\\mu$且標準差為$\\sigma$。若某生原始成績為$S$，則他該科之$T$分數為$T=50+10\\left(\\frac{S-\\mu}{\\sigma} \\right)$。已知某班期末數學和英文兩科的平均成績皆為60，數學成績的標準差為12，英文成績的標準差為8。試選出正確的選項。",
+       "options": {
+        "1": "若甲生英文的原始成績為52，則其$T$分數為40",
+        "2": "各生數學的$T$分數不會超過其原始成績",
+        "3": "若乙生兩科的原始成績平均比丙生兩科的原始成績平均高，則乙生兩科的$T$分數平均比丙生兩科的$T$分數平均高",
+        "4": "若該班級兩科的及格標準均為$T$分數大於或等於40，則數學及格的原始成績比英文及格的原始成績低",
+        "5": "該班原始成績數學對英文的迴歸直線（即最適直線）之斜率與該班$T$分數數學對英文的迴歸直線之斜率相同"
+       },
+       "answer": [
+        "1",
+        "2",
+        "4"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "statistics"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.44,
+        "Ph": 0.61,
+        "Pl": 0.29,
+        "D": 0.32,
+        "T": 0.21,
+        "options": {
+         "1": 0.88,
+         "2": 0.66,
+         "3": 0.44,
+         "4": 0.58,
+         "5": 0.26
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g4",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 10,
+       "label": "10",
+       "type": "multi",
+       "stem": "已知四邊形$ABCD$中，$\\overline{AB}$平行$\\overline{DC}$，$\\overline{AC}$與$\\overline{BD}$交於$E$。若$\\overrightarrow{AB}=(2,-6)$，$\\overrightarrow{AD}=(1,5)$且$\\Delta ABE$面積為3。試選出正確的選項。",
+       "options": {
+        "1": "$\\cos \\angle BAD=\\frac{-7\\sqrt{65}}{65}$",
+        "2": "$\\Delta ABD$面積為9",
+        "3": "$\\overrightarrow{AE}=(\\frac{3}{2},\\frac{1}{2})$",
+        "4": "四邊形$ABCD$面積為$\\frac{65}{3}$",
+        "5": "$\\overline{BC}<\\frac{8}{3}$"
+       },
+       "answer": [
+        "1",
+        "5"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "vector_plane"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.36,
+        "Ph": 0.57,
+        "Pl": 0.18,
+        "D": 0.39,
+        "T": 0.1,
+        "options": {
+         "1": 0.74,
+         "2": 0.23,
+         "3": 0.4,
+         "4": 0.59,
+         "5": 0.62
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g5",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 11,
+       "label": "11",
+       "type": "multi",
+       "stem": "令$\\Gamma$為坐標平面上$y=\\cos (\\frac{\\pi}{2}x)$的圖形。對任一實數$m\\ne 0$，以$L_{m}$表示直線$y=mx+1$。試選出正確的選項。",
+       "options": {
+        "1": "$m>0$時，$L_{m}$和$\\Gamma$交點的$x$坐標皆為負",
+        "2": "若$(a,b)$為$L_{m}$和$\\Gamma$的交點，則$(-a,b)$為$L_{-m}$和$\\Gamma$的交點",
+        "3": "可以找到一實數$m\\ne 0$使得$L_{m}$和$\\Gamma$交於點$(\\frac{20}{3},\\frac{1}{2})$",
+        "4": "若$L_{m}$與$\\Gamma$有一交點在直線$y=-1$上，則$\\frac{1}{m}$是奇數",
+        "5": "若$L_{m}$與$\\Gamma$有一交點在$x$軸上，則$L_{m}$與$\\Gamma$有偶數個交點"
+       },
+       "answer": [
+        "2",
+        "4"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "trigonometry",
+         "functions"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.33,
+        "Ph": 0.47,
+        "Pl": 0.22,
+        "D": 0.25,
+        "T": 0.12,
+        "options": {
+         "1": 0.34,
+         "2": 0.66,
+         "3": 0.47,
+         "4": 0.64,
+         "5": 0.46
+        },
+        "omit": 0.01
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g6",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 12,
+       "label": "12",
+       "type": "multi",
+       "stem": "令$f(x)$、$g(x)$為實係數三次多項式且$f(x)$的首項係數為$1$，已知$f(x)-g(x)=2x^{3}+2x$。令$\\Gamma_{1}$和$\\Gamma_{2}$分別為$f(x)$和$g(x)$在坐標平面上的函數圖形，其對稱中心分別為$(a_{1},b_{1}),(a_{2},b_{2})$。試選出正確的選項。",
+       "options": {
+        "1": "$\\Gamma_{1}$和$\\Gamma_{2}$恰交於三點",
+        "2": "$a_{1}+a_{2}$可唯一確定",
+        "3": "$b_{1}+b_{2}$可唯一確定",
+        "4": "若$a_{1}=a_{2}$，則$b_{1}=b_{2}$",
+        "5": "若$b_{1}=b_{2}$，則$a_{1}=a_{2}$"
+       },
+       "answer": [
+        "2",
+        "4"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "polynomial"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.28,
+        "Ph": 0.4,
+        "Pl": 0.2,
+        "D": 0.2,
+        "T": 0.11,
+        "options": {
+         "1": 0.47,
+         "2": 0.66,
+         "3": 0.45,
+         "4": 0.56,
+         "5": 0.5
+        },
+        "omit": 0.01
+       }
+      }
+     ],
+     "tables": []
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "type": "fill",
+   "title": "三、選填題（占25分）",
+   "instructions": "說明：第13題至第17題，每題5分。",
+   "points_total": 25,
+   "groups": [
+    {
+     "id": "s3g1",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 13,
+       "label": "13",
+       "type": "fill",
+       "stem": "某高中聘用的全體教師$\\frac{1}{4}$只有學士學位，$\\frac{3}{4}$有碩士學位。只有學士學位的教師中有$\\frac{1}{5}$通過英聽檢定，有碩士學位的教師中有$\\frac{3}{5}$通過英聽檢定。已知每位教師被抽到的機會相等，若隨機抽選一位通過英聽檢定的教師，則該教師有碩士學位的條件機率為[[FILL]]。（化為最簡分數）",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "13-1",
+         "13-2",
+         "13-3"
+        ],
+        "template": "\\frac{[[13-1]]}{[[13-2]][[13-3]]}",
+        "answer_cells": {
+         "13-1": "9",
+         "13-2": "1",
+         "13-3": "0"
+        },
+        "answer_latex": "\\frac{9}{10}"
+       },
+       "tags": {
+        "units": [
+         "probability"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.73,
+        "Ph": 0.96,
+        "Pl": 0.38,
+        "D": 0.58
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g2",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 14,
+       "label": "14",
+       "type": "fill",
+       "stem": "坐標平面上，向量$(a,b)$與直線$y=bx-1$垂直，則$a+b$的最大可能值為[[FILL]]。 （化為最簡分數）",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "14-1",
+         "14-2"
+        ],
+        "template": "\\frac{[[14-1]]}{[[14-2]]}",
+        "answer_cells": {
+         "14-1": "1",
+         "14-2": "4"
+        },
+        "answer_latex": "\\frac{1}{4}"
+       },
+       "tags": {
+        "units": [
+         "coordinate_line",
+         "vector_plane"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.19,
+        "Ph": 0.49,
+        "Pl": 0.01,
+        "D": 0.48
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g3",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 15,
+       "label": "15",
+       "type": "fill",
+       "stem": "已知三正數$a,b,c$成一等差數列，其中$a<b<c$，且坐標平面上三點$(a,\\log 3a)$、$(b,\\log 4b)$、$(c,\\log 6c)$在同一直線上，則$\\frac{b}{a}$之值為[[FILL]]。（化為最簡分數）",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "15-1",
+         "15-2"
+        ],
+        "template": "\\frac{[[15-1]]}{[[15-2]]}",
+        "answer_cells": {
+         "15-1": "3",
+         "15-2": "2"
+        },
+        "answer_latex": "\\frac{3}{2}"
+       },
+       "tags": {
+        "units": [
+         "exp_log",
+         "sequence"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.31,
+        "Ph": 0.63,
+        "Pl": 0.07,
+        "D": 0.56
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g4",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 16,
+       "label": "16",
+       "type": "fill",
+       "stem": "坐標平面上，已知二次函數圖形$\\Gamma :y=f(x)$的頂點$P$在直線$y=1+2x$上，且交$x$軸於點$A(-\\frac{1}{2},0),B(\\frac{1}{2},0)$。將$\\Gamma$平移使得平移後圖形的頂點$Q$仍在直線$y=1+2x$上，且亦通過點$B(\\frac{1}{2},0)$，此時$P$、$Q$為兩相異點，則$\\overline{PQ}=$[[FILL]]。（化為最簡根式）",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "16-1",
+         "16-2",
+         "16-3"
+        ],
+        "template": "\\frac{[[16-1]]\\sqrt{[[16-2]]}}{[[16-3]]}",
+        "answer_cells": {
+         "16-1": "3",
+         "16-2": "5",
+         "16-3": "2"
+        },
+        "answer_latex": "\\frac{3\\sqrt{5}}{2}"
+       },
+       "tags": {
+        "units": [
+         "polynomial",
+         "coordinate_line"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.2,
+        "Ph": 0.47,
+        "Pl": 0.03,
+        "D": 0.44
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g5",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 17,
+       "label": "17",
+       "type": "fill",
+       "stem": "直角$\\Delta ABC$中，$\\angle CAB$為直角，$\\overline{AB}$邊上一點$D$，滿足$\\angle BCD=2\\angle ACD$，且$\\overline{BC}=2\\overline{BD}$。 若$\\overrightarrow{AD}=k\\overrightarrow{AB}$，則$k=$[[FILL]]。（化為最簡分數）",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "17-1",
+         "17-2",
+         "17-3"
+        ],
+        "template": "\\frac{[[17-1]]}{[[17-2]][[17-3]]}",
+        "answer_cells": {
+         "17-1": "3",
+         "17-2": "1",
+         "17-3": "1"
+        },
+        "answer_latex": "\\frac{3}{11}"
+       },
+       "tags": {
+        "units": [
+         "trigonometry",
+         "geometry",
+         "vector_plane"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.06,
+        "Ph": 0.13,
+        "Pl": 0.01,
+        "D": 0.12
+       }
+      }
+     ],
+     "tables": []
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "type": "mixed",
+   "title": "第貳部分、混合題或非選擇題（占15分）",
+   "instructions": "說明︰本部分共有1題組，單選題每題3分，非選擇題配分標於題末。限在答題卷標示題號的作答區內作答。選擇（填）題與「非選擇題作圖部分」使用 2B 鉛筆作答，更正時以橡皮擦擦拭，切勿使用修正帶（液）。非選擇題請由左而右橫式書寫，作答時必須寫出計算過程或理由，否則將酌予扣分。",
+   "points_total": 15,
+   "groups": [
+    {
+     "id": "s4g1",
+     "group_label": "18-20題為題組",
+     "stem": "坐標空間中有一平行六面體$PQRS-ABCD$，如圖所示。 已知$\\overrightarrow{AB}\\times \\overrightarrow{AD}=(-5,5,5)$、$\\overrightarrow{AD}\\times \\overrightarrow{AP}=(-2,0,-4)$、 $\\overrightarrow{AP}\\times \\overrightarrow{AB}=(6,-10,-8)$，$\\overline{AP}=6$。試回答下列問題。",
+     "figures": [
+      {
+       "id": "f18",
+       "kind": "diagram",
+       "alt": "平行六面體 PQRS−ABCD 示意圖：底面 ABCD（D 在左前、C 在前、B 在右、A 在後），上底面 PQRS（S 在左、P 在後、Q 在右、R 在前），稜 AP、BQ、CR、DS 互相平行；被遮住的 AP、AB、AD 三稜以虛線表示。",
+       "source": {
+        "page": 7,
+        "bbox_pt": [
+         380,
+         425,
+         535,
+         512
+        ]
+       },
+       "file": "data/exams/figures-math/gsat-matha-115/f18.png",
+       "width": 379,
+       "height": 206
+      }
+     ],
+     "items": [
+      {
+       "no": 18,
+       "label": "18",
+       "type": "single",
+       "stem": "試問平行四邊形$ABCD$的面積為何？（單選題，3分）",
+       "options": {
+        "1": "$2\\sqrt{5}$",
+        "2": "$5\\sqrt{2}$",
+        "3": "$5\\sqrt{3}$",
+        "4": "$6\\sqrt{3}$",
+        "5": "$10\\sqrt{2}$"
+       },
+       "answer": "3",
+       "points": 3,
+       "tags": {
+        "units": [
+         "vector_space"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.69,
+        "Ph": 0.94,
+        "Pl": 0.42,
+        "D": 0.52,
+        "options": {
+         "1": 0.03,
+         "2": 0.12,
+         "3": 0.69,
+         "4": 0.08,
+         "5": 0.05
+        },
+        "omit": 0.02
+       }
+      },
+      {
+       "no": 19,
+       "label": "19",
+       "type": "constructed",
+       "stem": "設$B$點坐標為$(1,2,0)$，試求平面$ABCD$的平面方程式。（非選擇題，4分）",
+       "options": null,
+       "answer": null,
+       "points": 4,
+       "constructed": {
+        "official_answer_stored": false,
+        "has_drawing": false
+       },
+       "tags": {
+        "units": [
+         "vector_space",
+         "space_line_plane"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      },
+      {
+       "no": 20,
+       "label": "20",
+       "type": "constructed",
+       "stem": "試求平行六面體的體積，並求平行六面體上（含邊界）距點$A$的最長距離。（非選擇題，8分）",
+       "options": null,
+       "answer": null,
+       "points": 8,
+       "constructed": {
+        "official_answer_stored": false,
+        "has_drawing": false
+       },
+       "tags": {
+        "units": [
+         "vector_space"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    }
+   ]
+  }
+ ],
+ "reference_formulas": [
+  "1. 首項為$a$，公差為$d$的等差數列前$n$項之和為$S=\\frac{n(2a+(n-1)d)}{2}$",
+  "首項為$a$，公比為$r\\quad (r\\ne 1)$的等比數列前$n$項之和為$S=\\frac{a(1-r^{n})}{1-r}$",
+  "2. 三角函數的和角公式：$\\sin (A+B)=\\sin A\\cos B+\\cos A\\sin B$",
+  "$\\cos (A+B)=\\cos A\\cos B-\\sin A\\sin B$",
+  "$\\tan (A+B)=\\frac{\\tan A+\\tan B}{1-\\tan A\\tan B}$",
+  "3. $\\Delta ABC$的正弦定理：$\\frac{a}{\\sin A}=\\frac{b}{\\sin B}=\\frac{c}{\\sin C}=2R$（$R$為$\\Delta ABC$外接圓半徑）",
+  "$\\Delta ABC$的餘弦定理：$c^{2}=a^{2}+b^{2}-2ab\\cos C$",
+  "4. 一維數據$X:x_{1},x_{2},\\cdots,x_{n}$，",
+  "算術平均數$\\mu_{X}=\\frac{1}{n}(x_{1}+x_{2}+\\cdots+x_{n})$",
+  "標準差$\\sigma_{X}=\\sqrt{\\frac{1}{n}[(x_{1}-\\mu_{X})^{2}+(x_{2}-\\mu_{X})^{2}+\\cdots+(x_{n}-\\mu_{X})^{2}]}=\\sqrt{\\frac{1}{n}[(x_{1}^{2}+x_{2}^{2}+\\cdots+x_{n}^{2})-n\\mu_{X}^{2}]}$",
+  "5. 二維數據$(X,Y):(x_{1},y_{1}),(x_{2},y_{2}),\\cdots,(x_{n},y_{n})$，",
+  "相關係數$r_{X,Y}=\\frac{(x_{1}-\\mu_{X})(y_{1}-\\mu_{Y})+(x_{2}-\\mu_{X})(y_{2}-\\mu_{Y})+\\cdots+(x_{n}-\\mu_{X})(y_{n}-\\mu_{Y})}{n\\sigma_{X}\\sigma_{Y}}$",
+  "迴歸直線（最適合直線）方程式$y-\\mu_{Y}=r_{X,Y}\\frac{\\sigma_{Y}}{\\sigma_{X}}(x-\\mu_{X})$",
+  "6. 參考數值：$\\sqrt{2}\\approx 1.414\\quad,\\quad \\sqrt{3}\\approx 1.732\\quad,\\quad \\sqrt{5}\\approx 2.236\\quad,\\quad \\sqrt{6}\\approx 2.449\\quad,\\quad \\pi \\approx 3.142$",
+  "7. 對數值：$\\log 2\\approx 0.3010,\\quad \\quad \\log 3\\approx 0.4771,\\ \\log 5\\approx 0.6990,\\ \\log 7\\approx 0.8451$"
+ ],
+ "extraction": {
+  "method": "tools/docx_math_draft.py（Word 版題本，MathType→LaTeX）產生骨架，答案取自 answer.pdf（pdftotext）；逐題以 pdftoppm 頁面影像人工校對",
+  "issues": [],
+  "verified_by": "visual-check",
+  "corrections": [
+   "第5 stem：Word 版「A\\left[-\\begin{matrix}0 \\\\ 1 \\\\ 1\\end{matrix} \\right]」→ 依 PDF 改為「A\\begin{bmatrix}0 \\\\ -1 \\\\ 1\\end{bmatrix}」（MathType 物件把負號以位移放在矩陣第二列；PDF 為 [0, −1, 1]）"
+  ]
+ }
+}

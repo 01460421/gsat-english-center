@@ -1,0 +1,1065 @@
+{
+ "schema": "gsat-math-exam/v1",
+ "id": "gsat-mathb-111",
+ "exam": "gsat",
+ "subject": "math_b",
+ "era": "108課綱",
+ "year": 111,
+ "session": "regular",
+ "title": "111學年度學科能力測驗數學B考科",
+ "time_minutes": 100,
+ "full_score": 100,
+ "sources": {
+  "paper": "data/raw/ceec/gsat-mathb/111/paper-1.pdf",
+  "paper_word": [
+   "data/raw/ceec/gsat-mathb/111/paper-2.docx"
+  ],
+  "answer": [
+   "data/raw/ceec/gsat-mathb/111/answer.pdf"
+  ],
+  "answer_sheet": [
+   "data/raw/ceec/gsat-mathb/111/other.pdf"
+  ],
+  "stats": [
+   "data/raw/ceec/gsat-matha/111/stats-1.xls",
+   "data/raw/ceec/gsat-matha/111/stats-2.xls",
+   "data/raw/ceec/gsat-matha/111/stats-3.xls",
+   "data/raw/ceec/gsat-matha/111/stats-4.xls"
+  ],
+  "scoring_not_stored": [
+   "data/raw/ceec/gsat-mathb/111/scoring.pdf"
+  ]
+ },
+ "scoring_rules": {
+  "single": "每題有$n$個選項，其中只有一個是正確或最適當的選項。各題答對者，得該題的分數；答錯、未作答或劃記多於一個選項者，該題以零分計算。",
+  "multi": "每題有$n$個選項，其中至少有一個是正確的選項。各題之選項獨立判定，所有選項均答對者，得該題全部的分數；答錯$k$個選項者，得該題$\\frac{n-2k}{n}$的分數；但得分低於零分或所有選項均未作答者，該題以零分計算。",
+  "fill": "每題有$n$個空格，須全部答對才給分，答錯不倒扣。"
+ },
+ "parts": [
+  {
+   "title": "第壹部分、選擇（填）題（占85分）",
+   "points": 85,
+   "instructions": null,
+   "sections": [
+    "s1",
+    "s2",
+    "s3"
+   ]
+  },
+  {
+   "title": "第貳部分、混合題或非選擇題（占15分）",
+   "points": 15,
+   "instructions": "說明︰本部分共有1題組，每一子題配分標於題末。限在答題卷標示題號的作答區內作答。選擇題與「非選擇題作圖部分」使用 2B 鉛筆作答，更正時，應以橡皮擦擦拭，切勿使用修正液（帶）。非選擇題請由左而右橫式書寫，作答時必須寫出計算過程或理由，否則將酌予扣分。",
+   "sections": [
+    "s4"
+   ]
+  }
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "type": "single",
+   "title": "一、單選題（占35分）",
+   "instructions": "說明：第1題至第7題，每題5分。",
+   "points_total": 35,
+   "groups": [
+    {
+     "id": "s1g1",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 1,
+       "label": "1",
+       "type": "single",
+       "stem": "試問有多少個整數$x$滿足$2|x|+x<10$？",
+       "options": {
+        "1": "13個",
+        "2": "14個",
+        "3": "15個",
+        "4": "16個",
+        "5": "無窮多個"
+       },
+       "answer": "1",
+       "points": 5,
+       "tags": {
+        "units": [
+         "real_numbers"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.74,
+        "Ph": 0.93,
+        "Pl": 0.45,
+        "D": 0.48,
+        "options": {
+         "1": 0.74,
+         "2": 0.09,
+         "3": 0.04,
+         "4": 0.02,
+         "5": 0.1
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g2",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 2,
+       "label": "2",
+       "type": "single",
+       "stem": "某燈會布置變色閃燈，每次啟動後的閃燈顏色會依照以下的順序做週期性變換：藍-白-紅-白-藍-白-紅-白-藍-白-紅-白…，每四次一循環，其中藍光每次持續5秒，白光每次持續2秒，而紅光每次持續6秒。假設換燈號的時間極短可被忽略，試選出啟動後第99至101秒之間的燈號。",
+       "options": {
+        "1": "皆為藍燈",
+        "2": "皆為白燈",
+        "3": "皆為紅燈",
+        "4": "先亮藍燈再亮白燈",
+        "5": "先亮白燈再亮紅燈"
+       },
+       "answer": "3",
+       "points": 5,
+       "tags": {
+        "units": [
+         "real_numbers"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.83,
+        "Ph": 0.96,
+        "Pl": 0.63,
+        "D": 0.33,
+        "options": {
+         "1": 0.04,
+         "2": 0.03,
+         "3": 0.83,
+         "4": 0.05,
+         "5": 0.05
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g3",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 3,
+       "label": "3",
+       "type": "single",
+       "stem": "有八棟大廈排成一列，由左至右分別編號1,2,3,4,5,6,7,8。今電信公司想選取其中三棟大廈的屋頂分別設立一座電信基地台。若基地台不能設立於相鄰的兩棟大廈，以免訊號互相干擾，試問在3號大廈不設立基地台的情況下，有多少種設立基地台的選取方法？",
+       "options": {
+        "1": "12",
+        "2": "13",
+        "3": "20",
+        "4": "30",
+        "5": "35"
+       },
+       "answer": "2",
+       "points": 5,
+       "tags": {
+        "units": [
+         "counting"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.5,
+        "Ph": 0.74,
+        "Pl": 0.29,
+        "D": 0.45,
+        "options": {
+         "1": 0.14,
+         "2": 0.5,
+         "3": 0.14,
+         "4": 0.14,
+         "5": 0.07
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g4",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 4,
+       "label": "4",
+       "type": "single",
+       "stem": "在坐標平面上，已知向量$\\overrightarrow{PQ}=\\left(\\log \\frac{1}{5},-10^{-5} \\right)$，其中點$P$的坐標為$\\left(\\log \\frac{1}{2},2^{-5} \\right)$。試選出正確的選項。",
+       "options": {
+        "1": "點$Q$在第一象限",
+        "2": "點$Q$在第二象限",
+        "3": "點$Q$在第三象限",
+        "4": "點$Q$在第四象限",
+        "5": "點$Q$位於坐標軸上"
+       },
+       "answer": "2",
+       "points": 5,
+       "tags": {
+        "units": [
+         "exp_log",
+         "vector_plane"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.49,
+        "Ph": 0.84,
+        "Pl": 0.22,
+        "D": 0.62,
+        "options": {
+         "1": 0.11,
+         "2": 0.49,
+         "3": 0.17,
+         "4": 0.2,
+         "5": 0.03
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g5",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 5,
+       "label": "5",
+       "type": "single",
+       "stem": "設矩陣$A=\\begin{bmatrix}1 & 1 \\\\ 1 &-1\\end{bmatrix}$，若$A^{7}-3A=\\begin{bmatrix}a & b \\\\ c & d\\end{bmatrix}$，則$a+b+c+d$之值為下列哪一個選項？",
+       "options": {
+        "1": "$-8$",
+        "2": "$-5$",
+        "3": "$5$",
+        "4": "$8$",
+        "5": "$10$"
+       },
+       "answer": "5",
+       "points": 5,
+       "tags": {
+        "units": [
+         "matrix"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.65,
+        "Ph": 0.97,
+        "Pl": 0.23,
+        "D": 0.74,
+        "options": {
+         "1": 0.06,
+         "2": 0.1,
+         "3": 0.07,
+         "4": 0.11,
+         "5": 0.65
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g6",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 6,
+       "label": "6",
+       "type": "single",
+       "stem": "假設地球為一半徑$r$的球體，有一質點自甲地沿著該地所在經線往北移動，抵達北極點時移動所經過的弧線之長度為$\\frac{7}{12}\\pi r$。試問哪一個選項最可能是甲地的位置？",
+       "options": {
+        "1": "東經$75^{\\circ}$、北緯$15^{\\circ}$",
+        "2": "東經$30^{\\circ}$、南緯$75^{\\circ}$",
+        "3": "東經$75^{\\circ}$、南緯$15^{\\circ}$",
+        "4": "西經$30^{\\circ}$、北緯$75^{\\circ}$",
+        "5": "西經$15^{\\circ}$、南緯$30^{\\circ}$"
+       },
+       "answer": "3",
+       "points": 5,
+       "tags": {
+        "units": [
+         "geometry",
+         "trigonometry"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.53,
+        "Ph": 0.86,
+        "Pl": 0.23,
+        "D": 0.63,
+        "options": {
+         "1": 0.1,
+         "2": 0.13,
+         "3": 0.53,
+         "4": 0.15,
+         "5": 0.08
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g7",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 7,
+       "label": "7",
+       "type": "single",
+       "stem": "畫家把空間景物用單點透視法畫在平面的畫紙上時，有以下原則要遵守： 一、空間中的直線畫在畫紙上必須是一條直線。 二、空間直線上點的相關位置必須和畫紙所畫的點的相關位置一致。三、空間直線上的任四個相異點的$K$值，和畫紙所畫的四個點之$K$值必須相同，其中$K$值的定義如下：直線上任給四個有順序的相異點$P_{1},P_{2},P_{3},P_{4}$，如下圖。 其所對應的$K$值定義為 $K=\\frac{\\overline{P_{1}P_{4}}\\times \\overline{P_{2}P_{3}}}{\\overline{P_{1}P_{3}}\\times \\overline{P_{2}P_{4}}}$。 今某畫家依照以上原則，將空間中一直線及該線上的四相異點$Q_{1},Q_{2},Q_{3},Q_{4}$描繪在畫紙上，其中$\\overline{Q_{1}Q_{2}}=\\overline{Q_{2}Q_{3}}=\\overline{Q_{3}Q_{4}}$。若將畫紙上所畫的直線視為一數線，並將線上的點用坐標來表示，則在下列選項的四個坐標中，試問哪一組最可能是該四點在畫紙上的坐標？",
+       "options": {
+        "1": "$1,2,4,8$",
+        "2": "$3,4,6,9$",
+        "3": "$1,5,8,9$",
+        "4": "$1,2,4,9$",
+        "5": "$1,7,9,10$"
+       },
+       "answer": "5",
+       "points": 5,
+       "figures": [
+        {
+         "id": "f7",
+         "kind": "diagram",
+         "alt": "一條由左下往右上的直線，線上依序標出四點 P₁、P₂、P₃、P₄（P₁ 最左下、P₄ 最右上），點的間距不相等。",
+         "source": {
+          "page": 3,
+          "bbox_pt": [
+           158,
+           425,
+           438,
+           502
+          ]
+         },
+         "file": "data/exams/figures-math/gsat-mathb-111/f7.png",
+         "width": 725,
+         "height": 184
+        }
+       ],
+       "tags": {
+        "units": [
+         "data_modeling",
+         "real_numbers"
+        ]
+       },
+       "tables": [],
+       "stats": {
+        "P": 0.27,
+        "Ph": 0.56,
+        "Pl": 0.08,
+        "D": 0.48,
+        "options": {
+         "1": 0.16,
+         "2": 0.22,
+         "3": 0.14,
+         "4": 0.21,
+         "5": 0.27
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "type": "multi",
+   "title": "二、多選題（占25分）",
+   "instructions": "說明：第8題至第12題，每題5分。",
+   "points_total": 25,
+   "groups": [
+    {
+     "id": "s2g1",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 8,
+       "label": "8",
+       "type": "multi",
+       "stem": "有一射擊遊戲，將發射台設置於坐標平面的原點，並放置三個半徑為1的圓盤靶子，其圓心分別為$(2,2)$、$(4,6)$與$(8,1)$。玩家選定一正數$a$，並按下按鈕後，發射台將向點$(1,a)$方向發射一道雷射光束（形成一射線）。假設雷射光束擊中靶子後可以穿透並繼續沿原方向前進（削過圓盤邊緣也視為擊中）。試選出正確的選項。",
+       "options": {
+        "1": "雷射光束落在通過原點且斜率為$a$的直線上",
+        "2": "若$a=\\frac{3}{2}$，則雷射光束會擊中圓心為$(4,6)$的圓盤靶子",
+        "3": "玩家可以僅發射一道雷射光束就擊中三個圓盤靶子",
+        "4": "玩家至少需要發射三道雷射光束才可擊中三個圓盤靶子",
+        "5": "玩家發射一道雷射光束後，若擊中圓心為$(8,1)$的圓盤靶子，則$a\\le \\frac{16}{63}$"
+       },
+       "answer": [
+        "1",
+        "2",
+        "5"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "coordinate_line",
+         "circle"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.54,
+        "Ph": 0.77,
+        "Pl": 0.29,
+        "D": 0.48,
+        "T": 0.3,
+        "options": {
+         "1": 0.76,
+         "2": 0.79,
+         "3": 0.15,
+         "4": 0.27,
+         "5": 0.59
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g2",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 9,
+       "label": "9",
+       "type": "multi",
+       "stem": "設$f(x)=2x^{3}-3x+1$，下列關於函數$y=f(x)$的圖形之描述，試選出正確的選項。",
+       "options": {
+        "1": "$y=f(x)$的圖形通過點$(1,0)$",
+        "2": "$y=f(x)$的圖形與$x$軸只有一個交點",
+        "3": "點$(1,0)$是$y=f(x)$的圖形之對稱中心",
+        "4": "$y=f(x)$的圖形在對稱中心附近會近似於一直線$y=3x-3$",
+        "5": "$y=3x^{3}-6x^{2}+2x$的圖形可由$y=f(x)$的圖形經適當平移得到"
+       },
+       "answer": [
+        "1"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "polynomial"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.42,
+        "Ph": 0.67,
+        "Pl": 0.22,
+        "D": 0.45,
+        "T": 0.16,
+        "options": {
+         "1": 0.85,
+         "2": 0.37,
+         "3": 0.36,
+         "4": 0.44,
+         "5": 0.28
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g3",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 10,
+       "label": "10",
+       "type": "multi",
+       "stem": "甲、乙兩班各有40位同學參加某次數學考試（總分為100分），考試後甲、乙兩班分別以$y_{1}=0.8x_{1}+20$和$y_{2}=0.75x_{2}+25$的方式來調整分數，其中$x_{1},x_{2}$分別代表甲、乙兩班的原始考試分數，$y_{1},y_{2}$分別代表甲、乙兩班調整後的分數。已知調整後兩班的平均分數均為60分，調整後的標準差分別為16分和15分。試選出正確的選項。",
+       "options": {
+        "1": "甲班每位同學調整後的分數均不低於其原始分數",
+        "2": "甲班原始分數的平均分數比乙班原始分數的平均分數高",
+        "3": "甲班原始分數的標準差比乙班原始分數的標準差高",
+        "4": "若甲班A同學調整後的分數比乙班B同學調整後的分數高，則A同學的原始分數比B同學的原始分數高",
+        "5": "若甲班調整後不及格（小於60分）的人數比乙班調整後不及格的人數多，則甲班原始分數不及格的人數必定比乙班原始分數不及格的人數多"
+       },
+       "answer": [
+        "1",
+        "2",
+        "4"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "statistics"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.46,
+        "Ph": 0.69,
+        "Pl": 0.23,
+        "D": 0.46,
+        "T": 0.26,
+        "options": {
+         "1": 0.78,
+         "2": 0.68,
+         "3": 0.35,
+         "4": 0.63,
+         "5": 0.33
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g4",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 11,
+       "label": "11",
+       "type": "multi",
+       "stem": "考慮坐標平面上的點$O(0,0)$、$A$、$B$、$C$、$D$、$E$、$F$、$G$，如下圖所示：其中$B$點、$C$與$D$點、$E$與$F$點、$G$與$A$點依序在一、二、三、四象限內。若$\\overrightarrow{v}$為坐標平面上的向量，且滿足$\\overrightarrow{v}\\cdot \\overrightarrow{OA}>0$及$\\overrightarrow{v}\\cdot \\overrightarrow{OB}>0$，則$\\overrightarrow{v}$與下列哪些向量的內積一定小於$0$？",
+       "options": {
+        "1": "$\\overrightarrow{OC}$",
+        "2": "$\\overrightarrow{OD}$",
+        "3": "$\\overrightarrow{OE}$",
+        "4": "$\\overrightarrow{OF}$",
+        "5": "$\\overrightarrow{OG}$"
+       },
+       "answer": [
+        "2",
+        "3"
+       ],
+       "points": 5,
+       "figures": [
+        {
+         "id": "f11",
+         "kind": "diagram",
+         "alt": "坐標平面上的原點 O 與 7 個點，坐標軸沒有刻度。以下坐標依圖上長度估計（單位任意，比例與原圖相同），方向角是 O 到該點的向量從 x 軸正向逆時針量的角度：A 約 (4.0, −0.9)，第四象限、靠近 x 軸正向，方向角約 347°（即 −13°）；B 約 (3.5, 3.2)，第一象限，約 42°；C 約 (−0.9, 4.2)，第二象限、靠近 y 軸正向，約 102°；D 約 (−5.3, 0.3)，第二象限、幾乎在 x 軸負向上，約 177°；E 約 (−4.4, −0.6)，第三象限、靠近 x 軸負向，約 188°；F 約 (−0.8, −3.8)，第三象限、靠近 y 軸負向，約 258°；G 約 (2.5, −2.6)，第四象限，約 314°（即 −46°）。",
+         "source": {
+          "page": 5,
+          "bbox_pt": [
+           203,
+           107,
+           396,
+           297
+          ]
+         },
+         "file": "data/exams/figures-math/gsat-mathb-111/f11.png",
+         "width": 510,
+         "height": 514
+        }
+       ],
+       "tags": {
+        "units": [
+         "vector_plane"
+        ]
+       },
+       "tables": [],
+       "stats": {
+        "P": 0.5,
+        "Ph": 0.8,
+        "Pl": 0.26,
+        "D": 0.54,
+        "T": 0.34,
+        "options": {
+         "1": 0.29,
+         "2": 0.73,
+         "3": 0.79,
+         "4": 0.47,
+         "5": 0.21
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g5",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 12,
+       "label": "12",
+       "type": "multi",
+       "stem": "設$a,b,c$都是非零的實數，且二次方程式$ax^{2}+bx+c=0$的兩根都落在1和3之間。試選出兩根必定都落在4和5之間的方程式。",
+       "options": {
+        "1": "$a(x-2)^{2}+b(x-2)+c=0$",
+        "2": "$a(x+2)^{2}+b(x+2)+c=0$",
+        "3": "$a(2x-7)^{2}+b(2x-7)+c=0$",
+        "4": "$a(\\frac{x+7}{2})^{2}+b(\\frac{x+7}{2})+c=0$",
+        "5": "$a(3x-11)^{2}+b(3x-11)+c=0$"
+       },
+       "answer": [
+        "3",
+        "5"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "polynomial",
+         "functions"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.39,
+        "Ph": 0.6,
+        "Pl": 0.23,
+        "D": 0.37,
+        "T": 0.2,
+        "options": {
+         "1": 0.38,
+         "2": 0.34,
+         "3": 0.69,
+         "4": 0.44,
+         "5": 0.64
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "type": "fill",
+   "title": "三、選填題（占25分）",
+   "instructions": "說明：第13題至第17題，每題5分。",
+   "points_total": 25,
+   "groups": [
+    {
+     "id": "s3g1",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 13,
+       "label": "13",
+       "type": "fill",
+       "stem": "若$x,y$為兩正實數，且滿足$x^{\\frac{-1}{3}}y^{2}=1$及$2\\log y=1$，則$\\frac{x-y^{2}}{10}=$[[FILL]]。",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "13-1",
+         "13-2"
+        ],
+        "template": "[[13-1]][[13-2]]",
+        "answer_cells": {
+         "13-1": "9",
+         "13-2": "9"
+        },
+        "answer_latex": "99"
+       },
+       "tags": {
+        "units": [
+         "exp_log"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.48,
+        "Ph": 0.95,
+        "Pl": 0.02,
+        "D": 0.93
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g2",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 14,
+       "label": "14",
+       "type": "fill",
+       "stem": "坐標平面上有一個半徑為7的圓，其圓心為$O$點。已知圓上有$A,B$兩點，且$\\overline{AB}=8$，則內積$\\overrightarrow{OA}\\cdot \\overrightarrow{OB}=$[[FILL]]。",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "14-1",
+         "14-2"
+        ],
+        "template": "[[14-1]][[14-2]]",
+        "answer_cells": {
+         "14-1": "1",
+         "14-2": "7"
+        },
+        "answer_latex": "17"
+       },
+       "tags": {
+        "units": [
+         "vector_plane"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.44,
+        "Ph": 0.92,
+        "Pl": 0.02,
+        "D": 0.9
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g3",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 15,
+       "label": "15",
+       "type": "fill",
+       "stem": "根據某國對失蹤輕航機的調查得知：失蹤輕航機中有70%後來會被找到，在被找到的輕航機當中，有60%裝設緊急定位傳送器；而沒被找到的失蹤輕航機當中，則有90%未裝設緊急定位傳送器。緊急定位傳送器會在飛機失事墜毀時發送訊號，讓搜救人員可以定位。現有一架輕航機失蹤，若已知該機有裝設緊急定位傳送器，則它會被找到的機率為[[FILL]]。（化為最簡分數）",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "15-1",
+         "15-2",
+         "15-3",
+         "15-4"
+        ],
+        "template": "\\frac{[[15-1]][[15-2]]}{[[15-3]][[15-4]]}",
+        "answer_cells": {
+         "15-1": "1",
+         "15-2": "4",
+         "15-3": "1",
+         "15-4": "5"
+        },
+        "answer_latex": "\\frac{14}{15}"
+       },
+       "tags": {
+        "units": [
+         "probability"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.52,
+        "Ph": 0.92,
+        "Pl": 0.06,
+        "D": 0.86
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g4",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 16,
+       "label": "16",
+       "type": "fill",
+       "stem": "袋中有藍、綠、黃三種顏色的球共10顆。今從袋中隨機抽取兩顆球（每顆球被抽中的機率相等），若抽出的兩顆球皆為藍色的機率為$\\frac{1}{15}$，皆為綠色的機率為$\\frac{2}{9}$，則從袋中隨機抽出兩球，此兩球為相異顏色的機率為[[FILL]]。（化為最簡分數）",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "16-1",
+         "16-2",
+         "16-3",
+         "16-4"
+        ],
+        "template": "\\frac{[[16-1]][[16-2]]}{[[16-3]][[16-4]]}",
+        "answer_cells": {
+         "16-1": "3",
+         "16-2": "1",
+         "16-3": "4",
+         "16-4": "5"
+        },
+        "answer_latex": "\\frac{31}{45}"
+       },
+       "tags": {
+        "units": [
+         "probability"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.39,
+        "Ph": 0.82,
+        "Pl": 0.02,
+        "D": 0.8
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g5",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 17,
+       "label": "17",
+       "type": "fill",
+       "stem": "有三女三男共六位在校時和老師常有互動的同學，畢業後老師邀聚餐，餐後七人站一橫排照相留念。已知同學中有一女一男兩位曾有過不愉快，照相時不想相鄰，而老師站在正中間且三位男生不完全站在老師的同一側，則可能的排列方式共有[[FILL]]種。",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "17-1",
+         "17-2",
+         "17-3"
+        ],
+        "template": "[[17-1]][[17-2]][[17-3]]",
+        "answer_cells": {
+         "17-1": "4",
+         "17-2": "5",
+         "17-3": "6"
+        },
+        "answer_latex": "456"
+       },
+       "tags": {
+        "units": [
+         "counting"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.07,
+        "Ph": 0.18,
+        "Pl": 0.0,
+        "D": 0.18
+       }
+      }
+     ],
+     "tables": []
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "type": "mixed",
+   "title": "第貳部分、混合題或非選擇題（占15分）",
+   "instructions": "說明︰本部分共有1題組，每一子題配分標於題末。限在答題卷標示題號的作答區內作答。選擇題與「非選擇題作圖部分」使用 2B 鉛筆作答，更正時，應以橡皮擦擦拭，切勿使用修正液（帶）。非選擇題請由左而右橫式書寫，作答時必須寫出計算過程或理由，否則將酌予扣分。",
+   "points_total": 15,
+   "groups": [
+    {
+     "id": "s4g1",
+     "group_label": "18-20題為題組",
+     "stem": "瘦長的塔因為年代久遠，塔身容易傾斜。在下方右圖中，以粗黑線條代表塔身，而塔身的長度稱為塔高，塔身與鉛直虛線的夾角$\\theta^{\\circ}$稱為該塔的傾斜度（$0\\le \\theta<90$），又塔頂至鉛直虛線的距離稱為該塔的偏移距離。根據上述資料，試回答下列問題。",
+     "figures": [
+      {
+       "id": "f18a",
+       "kind": "illustration",
+       "alt": "比薩斜塔的素描插圖（圓柱形多層塔，向右傾斜），僅為情境配圖。",
+       "source": {
+        "page": 7,
+        "bbox_pt": [
+         176,
+         262,
+         265,
+         412
+        ]
+       },
+       "file": "data/exams/figures-math/gsat-mathb-111/f18a.png",
+       "width": 239,
+       "height": 362
+      },
+      {
+       "id": "f18b",
+       "kind": "diagram",
+       "alt": "斜塔示意圖：塔基在水平線上，一條鉛直虛線（鉛直線）由塔基向上；粗黑線段為塔身，由塔基斜向右上到塔頂，與鉛直線夾角標示為 θ°；塔頂到鉛直線的水平距離標示為「偏移距離」。",
+       "source": {
+        "page": 7,
+        "bbox_pt": [
+         292,
+         258,
+         420,
+         412
+        ]
+       },
+       "file": "data/exams/figures-math/gsat-mathb-111/f18b.png",
+       "width": 322,
+       "height": 411
+      }
+     ],
+     "items": [
+      {
+       "no": 18,
+       "label": "18",
+       "type": "single",
+       "stem": "已知世界上傾斜度最高的摩天大樓坐落於阿布達比，其傾斜度達到$18^{\\circ}$，此傾斜度換算成弳（或弧度）為下列哪一個選項？（單選題，5分）",
+       "options": {
+        "1": "$\\frac{\\pi}{36}$",
+        "2": "$\\frac{\\pi}{18}$",
+        "3": "$\\frac{\\pi}{20}$",
+        "4": "$\\frac{\\pi}{10}$",
+        "5": "$\\frac{\\pi}{8}$"
+       },
+       "answer": "4",
+       "points": 5,
+       "tags": {
+        "units": [
+         "trigonometry"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.7,
+        "Ph": 0.97,
+        "Pl": 0.29,
+        "D": 0.68,
+        "options": {
+         "1": 0.04,
+         "2": 0.1,
+         "3": 0.14,
+         "4": 0.7,
+         "5": 0.02
+        },
+        "omit": 0.01
+       }
+      },
+      {
+       "no": 19,
+       "label": "19",
+       "type": "constructed",
+       "stem": "中國虎丘塔、護珠塔與義大利的比薩斜塔是三座著名斜塔，它們的塔高分別為48、19與57（公尺），偏移距離分別為$2.3$、$2.3$與4（公尺），塔的傾斜度分別記為$\\theta_{1}^{\\circ}$、$\\theta_{2}^{\\circ}$與$\\theta_{3}^{\\circ}$。試比較$\\theta_{1}$、$\\theta_{2}$與$\\theta_{3}$三數的大小關係。（非選擇題，4分）",
+       "options": null,
+       "answer": null,
+       "points": 4,
+       "constructed": {
+        "official_answer_stored": false,
+        "has_drawing": false
+       },
+       "tags": {
+        "units": [
+         "trigonometry"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      },
+      {
+       "no": 20,
+       "label": "20",
+       "type": "constructed",
+       "stem": "假設有塔高相等的兩座鐵塔，它們的傾斜度$\\alpha^{\\circ}$，$\\beta^{\\circ}$分別滿足$\\sin \\alpha^{\\circ}=\\frac{1}{5}$與$\\sin \\beta^{\\circ}=\\frac{7}{25}$。已知兩座鐵塔的偏移距離相差20公尺，試求它們的塔頂到地面之距離相差多少公尺。（非選擇題，6分）",
+       "options": null,
+       "answer": null,
+       "points": 6,
+       "constructed": {
+        "official_answer_stored": false,
+        "has_drawing": false
+       },
+       "tags": {
+        "units": [
+         "trigonometry"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    }
+   ]
+  }
+ ],
+ "reference_formulas": [
+  "1. 首項為$a$，公差為$d$的等差數列前$n$項之和為$S=\\frac{n(2a+(n-1)d)}{2}$",
+  "首項為$a$，公比為$r\\quad (r\\ne 1)$的等比數列前$n$項之和為$S=\\frac{a(1-r^{n})}{1-r}$",
+  "2. $\\Delta ABC$的正弦定理： $\\frac{a}{\\sin A}=\\frac{b}{\\sin B}=\\frac{c}{\\sin C}=2R$ （$R$為$\\Delta ABC$外接圓半徑）",
+  "$\\Delta ABC$的餘弦定理： $c^{2}=a^{2}+b^{2}-2ab\\cos C$",
+  "3. 一維數據$X:x_{1},x_{2},\\cdots,x_{n}$，",
+  "算術平均數$\\mu_{X}=\\frac{1}{n}(x_{1}+x_{2}+\\cdots+x_{n})$",
+  "標準差$\\sigma_{X}=\\sqrt{\\frac{1}{n}[(x_{1}-\\mu_{X})^{2}+(x_{2}-\\mu_{X})^{2}+\\cdots+(x_{n}-\\mu_{X})^{2}]}=\\sqrt{\\frac{1}{n}[(x_{1}^{2}+x_{2}^{2}+\\cdots+x_{n}^{2})-n\\mu_{X}^{2}]}$",
+  "4. 二維數據$(X,Y):(x_{1},y_{1}),(x_{2},y_{2}),\\cdots,(x_{n},y_{n})$，",
+  "相關係數$r_{X,Y}=\\frac{(x_{1}-\\mu_{X})(y_{1}-\\mu_{Y})+(x_{2}-\\mu_{X})(y_{2}-\\mu_{Y})+\\cdots+(x_{n}-\\mu_{X})(y_{n}-\\mu_{Y})}{n\\sigma_{X}\\sigma_{Y}}$",
+  "迴歸直線（最適合直線）方程式$y-\\mu_{Y}=r_{X,Y}\\frac{\\sigma_{Y}}{\\sigma_{X}}(x-\\mu_{X})$",
+  "5. 參考數值：$\\sqrt{2}\\approx 1.414\\quad,\\quad \\sqrt{3}\\approx 1.732\\quad,\\quad \\sqrt{5}\\approx 2.236\\quad,\\quad \\sqrt{6}\\approx 2.449\\quad,\\quad \\pi \\approx 3.142$",
+  "6. 對數值：$\\log 2\\approx 0.3010,\\quad \\quad \\log 3\\approx 0.4771,\\ \\log 5\\approx 0.6990,\\ \\log 7\\approx 0.8451$"
+ ],
+ "extraction": {
+  "method": "tools/docx_math_draft.py（Word 版題本，MathType→LaTeX）產生骨架，答案取自 answer.pdf（pdftotext）；逐題以 pdftoppm 頁面影像人工校對",
+  "issues": [],
+  "verified_by": "visual-check",
+  "corrections": [
+   "第15題：Word 版答案格文字方塊中混入第17題的格式框，已刪除（依 PDF）"
+  ]
+ }
+}

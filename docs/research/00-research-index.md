@@ -33,6 +33,7 @@
 | 07 | [07-textbook-scope.md](07-textbook-scope.md) | 四套審定本的冊次與執照、龍騰版逐課句型、93–115 學測中譯英 46 句的句構統計，以及句型、連接詞、片語資料庫。 | `data/curriculum/grammar-patterns.json` |
 | 08 | [08-exam-commentary.md](08-exam-commentary.md) | 111–115 學測英文逐年分析（選文主題、考點、混合題、作文、難度與最難題）、108–110 指考補充，以及跨年趨勢與 App 出題建議。 | — |
 | 09 | [09-exam-inventory.md](09-exam-inventory.md) | 大考中心英文考科檔案清單：841 個檔案（約 418.7 MiB）的覆蓋表、文字層狀況、多科合併檔與缺漏原因。 | `data/exams/manifest.json` |
+| 10 | [10-math-gsat.md](10-math-gsat.md) | 學測數學A／數學B（111 起）：課綱範圍、題型與計分、111–115 題型配置與單元分布、舊學測數學（≤110）可用性、官方資料與授權（2026-11-06 新增）。 | `data/exams/math-manifest.json`、`data/exams/parsed-math/` |
 
 ### 1.2 研究文件以外、本次一併讀過的產出
 

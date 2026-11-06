@@ -1,0 +1,1251 @@
+{
+ "schema": "gsat-math-exam/v1",
+ "id": "gsat-math-109",
+ "exam": "gsat",
+ "subject": "math",
+ "era": "舊課綱",
+ "year": 109,
+ "session": "regular",
+ "title": "109學年度學科能力測驗數學考科",
+ "time_minutes": 100,
+ "full_score": 100,
+ "sources": {
+  "paper": "data/raw/ceec/gsat-math/109/paper-1.pdf",
+  "paper_word": [
+   "data/raw/ceec/gsat-math/109/paper-2.docx"
+  ],
+  "answer": [
+   "data/raw/ceec/gsat-math/109/answer.pdf"
+  ],
+  "stats": [
+   "data/raw/ceec/gsat-math/109/stats-1.xls",
+   "data/raw/ceec/gsat-math/109/stats-2.xls",
+   "data/raw/ceec/gsat-math/109/stats-3.xls",
+   "data/raw/ceec/gsat-math/109/stats-4.xls"
+  ]
+ },
+ "scoring_rules": {
+  "single": "各題答對者，得5分；答錯、未作答或畫記多於一個選項者，該題以零分計算。",
+  "multi": "各題之選項獨立判定，所有選項均答對者，得5分；答錯1個選項者，得3分；答錯2個選項者，得1分；答錯多於2個選項或所有選項均未作答者，該題以零分計算。",
+  "fill": "每題完全答對給5分，答錯不倒扣，未完全答對不給分。"
+ },
+ "parts": [
+  {
+   "title": "第壹部分：選擇題（占65分）",
+   "points": 65,
+   "instructions": null,
+   "sections": [
+    "s1",
+    "s2"
+   ]
+  },
+  {
+   "title": "第貳部分：選填題（占35分）",
+   "points": 35,
+   "instructions": null,
+   "sections": [
+    "s3"
+   ]
+  }
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "type": "single",
+   "title": "一、單選題（占35分）",
+   "instructions": "說明：第1題至第7題，每題有5個選項，其中只有一個是正確或最適當的選項，請畫記在答案卡之「選擇（填）題答案區」。各題答對者，得5分；答錯、未作答或畫記多於一個選項者，該題以零分計算。",
+   "points_total": 35,
+   "groups": [
+    {
+     "id": "s1g1",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 1,
+       "label": "1",
+       "type": "single",
+       "stem": "已知兩個直角三角形三邊長分別為3,4,5、5,12,13，$\\alpha,\\beta$分別為它們的一角，如下圖所示。試選出正確的選項。",
+       "options": {
+        "1": "$\\sin \\alpha>\\sin \\beta>\\sin 30^{\\circ}$",
+        "2": "$\\sin \\alpha>\\sin 30^{\\circ}>\\sin \\beta$",
+        "3": "$\\sin \\beta>\\sin \\alpha>\\sin 30^{\\circ}$",
+        "4": "$\\sin \\beta>\\sin 30^{\\circ}>\\sin \\alpha$",
+        "5": "$\\sin 30^{\\circ}>\\sin \\alpha>\\sin \\beta$"
+       },
+       "answer": "2",
+       "points": 5,
+       "figures": [
+        {
+         "id": "f1",
+         "kind": "diagram",
+         "alt": "兩個直角三角形：左邊三角形兩股為 3（直立）與 4（底邊），斜邊 5，角 α 位於底邊 4 與斜邊 5 的夾角（與邊長 3 相對）；右邊三角形兩股為 5（直立）與 12（底邊），斜邊 13，角 β 位於底邊 12 與斜邊 13 的夾角（與邊長 5 相對）。",
+         "source": {
+          "page": 2,
+          "bbox_pt": [
+           289,
+           249,
+           513,
+           328
+          ]
+         },
+         "file": "data/exams/figures-math/gsat-math-109/f1.png",
+         "width": 604,
+         "height": 212
+        }
+       ],
+       "tags": {
+        "units": [
+         "trigonometry"
+        ]
+       },
+       "tables": [],
+       "stats": {
+        "P": 0.79,
+        "Ph": 0.99,
+        "Pl": 0.49,
+        "D": 0.5,
+        "options": {
+         "1": 0.05,
+         "2": 0.79,
+         "3": 0.08,
+         "4": 0.04,
+         "5": 0.04
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g2",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 2,
+       "label": "2",
+       "type": "single",
+       "stem": "空間中有相異四點$A,B,C,D$，已知內積$\\overrightarrow{AB}\\cdot \\overrightarrow{AC}=\\overrightarrow{AB}\\cdot \\overrightarrow{AD}$。試選出正確的選項。",
+       "options": {
+        "1": "$\\overrightarrow{AB}\\cdot \\overrightarrow{CD}=0$",
+        "2": "$\\overline{AC}=\\overline{AD}$",
+        "3": "$\\overrightarrow{AB}$與$\\overrightarrow{CD}$平行",
+        "4": "$\\overrightarrow{AD}\\cdot \\overrightarrow{BC}=0$",
+        "5": "$A,B,C,D$四點在同一平面上"
+       },
+       "answer": "1",
+       "points": 5,
+       "tags": {
+        "units": [
+         "vector_space"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.43,
+        "Ph": 0.84,
+        "Pl": 0.1,
+        "D": 0.74,
+        "options": {
+         "1": 0.43,
+         "2": 0.23,
+         "3": 0.14,
+         "4": 0.1,
+         "5": 0.1
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g3",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 3,
+       "label": "3",
+       "type": "single",
+       "stem": "如圖所示，$O$為正六邊形之中心。試問下列哪個向量的終點$P$落在$\\Delta ODE$內部（不含邊界）？",
+       "options": {
+        "1": "$\\overrightarrow{OP}=\\overrightarrow{OC}+\\overrightarrow{OE}$",
+        "2": "$\\overrightarrow{OP}=\\frac{1}{4}\\overrightarrow{OC}+\\frac{1}{2}\\overrightarrow{OE}$",
+        "3": "$\\overrightarrow{OP}=-\\frac{1}{4}\\overrightarrow{OC}+\\frac{1}{2}\\overrightarrow{OE}$",
+        "4": "$\\overrightarrow{OP}=\\frac{1}{4}\\overrightarrow{OC}-\\frac{1}{2}\\overrightarrow{OE}$",
+        "5": "$\\overrightarrow{OP}=-\\frac{1}{4}\\overrightarrow{OC}-\\frac{1}{2}\\overrightarrow{OE}$"
+       },
+       "answer": "2",
+       "points": 5,
+       "figures": [
+        {
+         "id": "f3",
+         "kind": "diagram",
+         "alt": "正六邊形 ABCDEF，中心為 O：E、D 在上方（E 左、D 右），F 在左、C 在右，A、B 在下方（A 左、B 右）；以 O 連接六個頂點，並畫出 FC、EB、DA 三條對角線，把六邊形分成六個正三角形。",
+         "source": {
+          "page": 2,
+          "bbox_pt": [
+           369,
+           579,
+           533,
+           728
+          ]
+         },
+         "file": "data/exams/figures-math/gsat-math-109/f3.png",
+         "width": 432,
+         "height": 379
+        }
+       ],
+       "tags": {
+        "units": [
+         "vector_plane"
+        ]
+       },
+       "tables": [],
+       "stats": {
+        "P": 0.76,
+        "Ph": 0.99,
+        "Pl": 0.41,
+        "D": 0.58,
+        "options": {
+         "1": 0.03,
+         "2": 0.76,
+         "3": 0.11,
+         "4": 0.08,
+         "5": 0.02
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g4",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 4,
+       "label": "4",
+       "type": "single",
+       "stem": "令$I=\\begin{bmatrix}1 & 0 \\\\ 0 & 1\\end{bmatrix}$，$A=\\begin{bmatrix}1 & 1 \\\\ 3 & 4\\end{bmatrix}$，$B=I+A+A^{-1}$，試選出代表$BA$的選項。",
+       "options": {
+        "1": "$\\begin{bmatrix}1 & 0 \\\\ 0 & 1\\end{bmatrix}$",
+        "2": "$\\begin{bmatrix}6 & 0 \\\\ 0 & 6\\end{bmatrix}$",
+        "3": "$\\begin{bmatrix}4 &-1 \\\\-3 & 1\\end{bmatrix}$",
+        "4": "$\\begin{bmatrix}1 & 1 \\\\ 3 & 4\\end{bmatrix}$",
+        "5": "$\\begin{bmatrix}6 & 6 \\\\ 18 & 24\\end{bmatrix}$"
+       },
+       "answer": "5",
+       "points": 5,
+       "tags": {
+        "units": [
+         "matrix"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.61,
+        "Ph": 0.89,
+        "Pl": 0.24,
+        "D": 0.65,
+        "options": {
+         "1": 0.05,
+         "2": 0.14,
+         "3": 0.1,
+         "4": 0.1,
+         "5": 0.61
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g5",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 5,
+       "label": "5",
+       "type": "single",
+       "stem": "試問數線上有多少個整數點與點$\\sqrt{101}$的距離小於5，但與點$\\sqrt{38}$的距離大於3？",
+       "options": {
+        "1": "1個",
+        "2": "4個",
+        "3": "6個",
+        "4": "8個",
+        "5": "10個"
+       },
+       "answer": "3",
+       "points": 5,
+       "tags": {
+        "units": [
+         "real_numbers"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.68,
+        "Ph": 0.94,
+        "Pl": 0.35,
+        "D": 0.59,
+        "options": {
+         "1": 0.11,
+         "2": 0.13,
+         "3": 0.68,
+         "4": 0.06,
+         "5": 0.02
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g6",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 6,
+       "label": "6",
+       "type": "single",
+       "stem": "連續投擲一公正骰子兩次，設出現的點數依序為$a,b$。試問發生$\\log (a^{2})+\\log b>1$的機率為多少？",
+       "options": {
+        "1": "$\\frac{1}{3}$",
+        "2": "$\\frac{1}{2}$",
+        "3": "$\\frac{2}{3}$",
+        "4": "$\\frac{3}{4}$",
+        "5": "$\\frac{5}{6}$"
+       },
+       "answer": "4",
+       "points": 5,
+       "tags": {
+        "units": [
+         "exp_log",
+         "probability"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.61,
+        "Ph": 0.95,
+        "Pl": 0.23,
+        "D": 0.72,
+        "options": {
+         "1": 0.07,
+         "2": 0.06,
+         "3": 0.16,
+         "4": 0.61,
+         "5": 0.09
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g7",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 7,
+       "label": "7",
+       "type": "single",
+       "stem": "坐標平面上，函數圖形$y=-\\sqrt{3}x^{3}$上有兩點$P,Q$到原點距離皆為1。已知點$P$坐標為$(\\cos \\theta,\\sin \\theta)$，試問點$Q$坐標為何？",
+       "options": {
+        "1": "$(\\cos (-\\theta),\\sin (-\\theta))$",
+        "2": "$(-\\cos \\theta,\\sin \\theta)$",
+        "3": "$(\\cos (-\\theta),-\\sin \\theta)$",
+        "4": "$(-\\cos \\theta,\\sin (-\\theta))$",
+        "5": "$(\\cos \\theta,-\\sin \\theta)$"
+       },
+       "answer": "4",
+       "points": 5,
+       "tags": {
+        "units": [
+         "functions",
+         "trigonometry",
+         "polynomial"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.46,
+        "Ph": 0.87,
+        "Pl": 0.15,
+        "D": 0.72,
+        "options": {
+         "1": 0.13,
+         "2": 0.15,
+         "3": 0.14,
+         "4": 0.46,
+         "5": 0.11
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "type": "multi",
+   "title": "二、多選題（占30分）",
+   "instructions": "說明：第8題至第13題，每題有5個選項，其中至少有一個是正確的選項，請將正確選項畫記在答案卡之「選擇（填）題答案區」。各題之選項獨立判定，所有選項均答對者，得5分；答錯1個選項者，得3分；答錯2個選項者，得1分；答錯多於2個選項或所有選項均未作答者，該題以零分計算。",
+   "points_total": 30,
+   "groups": [
+    {
+     "id": "s2g1",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 8,
+       "label": "8",
+       "type": "multi",
+       "stem": "有一個遊戲的規則如下：丟三顆公正骰子，若所得的點數恰滿足下列（A）或（B）兩個條件之一，可得到獎金100元；若兩個條件都滿足，則共得200元獎金；若兩個條件都不滿足，則無獎金。（A）三個點數皆為奇數或者皆為偶數 （B）三個點數由小排到大為等差數列若已知有兩顆骰子的點數分別為1,3，且所得獎金為100元，則未知的骰子點數可能為何？",
+       "options": {
+        "1": "2",
+        "2": "3",
+        "3": "4",
+        "4": "5",
+        "5": "6"
+       },
+       "answer": [
+        "1",
+        "2"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "sequence",
+         "logic_set"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.72,
+        "Ph": 0.93,
+        "Pl": 0.44,
+        "D": 0.49,
+        "T": 0.58,
+        "options": {
+         "1": 0.78,
+         "2": 0.85,
+         "3": 0.08,
+         "4": 0.25,
+         "5": 0.08
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g2",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 9,
+       "label": "9",
+       "type": "multi",
+       "stem": "在坐標平面上，有一通過原點$O$的直線$L$，以及一半徑為2、圓心為原點$O$的圓$\\Gamma$。$P,Q$為$\\Gamma$上相異2點，且$\\overline{OP},\\overline{OQ}$分別與$L$所夾的銳角皆為$30^{\\circ}$，試選出內積$\\overrightarrow{OP}\\cdot\\overrightarrow{OQ}$之值可能發生的選項。",
+       "options": {
+        "1": "$2\\sqrt{3}$",
+        "2": "$-2\\sqrt{3}$",
+        "3": "$0$",
+        "4": "$-2$",
+        "5": "$-4$"
+       },
+       "answer": [
+        "4",
+        "5"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "vector_plane",
+         "circle"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.42,
+        "Ph": 0.81,
+        "Pl": 0.13,
+        "D": 0.68,
+        "T": 0.31,
+        "options": {
+         "1": 0.36,
+         "2": 0.4,
+         "3": 0.33,
+         "4": 0.68,
+         "5": 0.6
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g3",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 10,
+       "label": "10",
+       "type": "multi",
+       "stem": "考慮多項式$f(x)=3x^{4}+11x^{2}-4$，試選出正確的選項。",
+       "options": {
+        "1": "$y=f(x)$的圖形和y軸交點的y坐標小於0",
+        "2": "$f(x)=0$有4個實根",
+        "3": "$f(x)=0$至少有一個有理根",
+        "4": "$f(x)=0$有一根介於0與1之間",
+        "5": "$f(x)=0$有一根介於1與2之間"
+       },
+       "answer": [
+        "1",
+        "4"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "polynomial"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.54,
+        "Ph": 0.86,
+        "Pl": 0.21,
+        "D": 0.65,
+        "T": 0.33,
+        "options": {
+         "1": 0.78,
+         "2": 0.21,
+         "3": 0.53,
+         "4": 0.79,
+         "5": 0.2
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g4",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 11,
+       "label": "11",
+       "type": "multi",
+       "stem": "設$a,b,c$為實數且滿足$\\log a=1.1$、$\\log b=2.2$、$\\log c=3.3$。試選出正確的選項。",
+       "options": {
+        "1": "$a+c=2b$",
+        "2": "$1<a<10$",
+        "3": "$1000<c<2000$",
+        "4": "$b=2a$",
+        "5": "$a,b,c$成等比數列"
+       },
+       "answer": [
+        "3",
+        "5"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "exp_log",
+         "sequence"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.62,
+        "Ph": 0.95,
+        "Pl": 0.22,
+        "D": 0.73,
+        "T": 0.5,
+        "options": {
+         "1": 0.22,
+         "2": 0.23,
+         "3": 0.76,
+         "4": 0.26,
+         "5": 0.78
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g5",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 12,
+       "label": "12",
+       "type": "multi",
+       "stem": "下表是2011年至2018年某國總就業人口與農業就業人口的部分相關數據，各年度的人口以人數計，有些是以千人計，有些以萬人計，例如2011年總就業人口為1,070.9萬人，65歲以上男性農業就業人口為69.1千人。試根據表格資料選出正確的選項。[[TABLE:1]]",
+       "options": {
+        "1": "從2013年至2018年，65歲以上的男性農業就業人口逐年遞增",
+        "2": "從2013年至2018年，50歲至64歲之男性農業就業人口逐年遞增",
+        "3": "上表中，每一年的男性農業就業人口占總就業人口的比率都小於百分之五",
+        "4": "上表中，每一年50歲至64歲之男性農業就業人口都少於49歲以下之男性農業就業人口",
+        "5": "就65歲以上之男性農業就業人口而言，2018年比2011年增加了不到一萬人"
+       },
+       "answer": [
+        "1",
+        "3"
+       ],
+       "points": 5,
+       "tables": [
+        {
+         "caption": null,
+         "rows": [
+          [
+           "年別",
+           "總就業人口（萬人）",
+           "農業就業人口（萬人）",
+           "男性農業就業人口（千人）",
+           "39歲以下（千人）",
+           "40-49歲（千人）",
+           "50-64歲（千人）",
+           "65歲以上（千人）"
+          ],
+          [
+           "2011年",
+           "1,070.9",
+           "54.2",
+           "386.3",
+           "67.6",
+           "85.4",
+           "164.2",
+           "69.1"
+          ],
+          [
+           "2012年",
+           "1,086.0",
+           "54.4",
+           "394.9",
+           "67.5",
+           "87.0",
+           "169.5",
+           "70.9"
+          ],
+          [
+           "2013年",
+           "1,096.7",
+           "54.4",
+           "391.5",
+           "66.6",
+           "83.9",
+           "171.3",
+           "69.7"
+          ],
+          [
+           "2014年",
+           "1,107.9",
+           "54.8",
+           "391.2",
+           "65.8",
+           "79.8",
+           "173.0",
+           "72.6"
+          ],
+          [
+           "2015年",
+           "1,119.8",
+           "55.5",
+           "403.1",
+           "71.7",
+           "76.9",
+           "181.3",
+           "73.2"
+          ],
+          [
+           "2016年",
+           "1,126.7",
+           "55.7",
+           "404.5",
+           "77.4",
+           "77.4",
+           "176.4",
+           "73.3"
+          ],
+          [
+           "2017年",
+           "1,135.2",
+           "55.7",
+           "405.1",
+           "73.9",
+           "78.1",
+           "178.3",
+           "74.8"
+          ],
+          [
+           "2018年",
+           "1,143.4",
+           "56.1",
+           "415.1",
+           "72.0",
+           "78.8",
+           "184.9",
+           "79.4"
+          ]
+         ],
+         "note": "題本表頭有兩層：「就業人口」橫跨總就業人口、農業就業人口、男性農業就業人口三欄；「男性農業就業人口按年齡別分」橫跨 39歲以下 至 65歲以上 四欄；「年別」跨兩列。"
+        }
+       ],
+       "tags": {
+        "units": [
+         "statistics",
+         "data_modeling"
+        ]
+       },
+       "figures": [],
+       "stats": {
+        "P": 0.76,
+        "Ph": 0.93,
+        "Pl": 0.55,
+        "D": 0.38,
+        "T": 0.61,
+        "options": {
+         "1": 0.92,
+         "2": 0.14,
+         "3": 0.82,
+         "4": 0.11,
+         "5": 0.13
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g6",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 13,
+       "label": "13",
+       "type": "multi",
+       "stem": "如示意圖，四面體$OABC$中，$\\Delta OAB$和$\\Delta OAC$均為正三角形，$\\angle BOC=30^{\\circ}$。試選出正確的選項。",
+       "options": {
+        "1": "$\\overline{BC}>\\overline{OC}$",
+        "2": "$\\Delta OBC$是等腰三角形",
+        "3": "$\\Delta OBC$的面積大於$\\Delta OAB$的面積",
+        "4": "$\\angle CAB=30^{\\circ}$",
+        "5": "平面OAB和平面OAC的夾角（以銳角計）小於$30^{\\circ}$"
+       },
+       "answer": [
+        "2",
+        "4"
+       ],
+       "points": 5,
+       "figures": [
+        {
+         "id": "f13",
+         "kind": "diagram",
+         "alt": "四面體 OABC 示意圖：O 在上方，A 在左側，B 在右下，C 在右側偏上；AC 以虛線表示，其餘稜 OA、OB、OC、AB、BC 為實線。",
+         "source": {
+          "page": 6,
+          "bbox_pt": [
+           409,
+           103,
+           533,
+           230
+          ]
+         },
+         "file": "data/exams/figures-math/gsat-math-109/f13.png",
+         "width": 321,
+         "height": 328
+        }
+       ],
+       "tags": {
+        "units": [
+         "geometry",
+         "space_line_plane",
+         "trigonometry"
+        ]
+       },
+       "tables": [],
+       "stats": {
+        "P": 0.64,
+        "Ph": 0.84,
+        "Pl": 0.43,
+        "D": 0.41,
+        "T": 0.44,
+        "options": {
+         "1": 0.17,
+         "2": 0.87,
+         "3": 0.14,
+         "4": 0.79,
+         "5": 0.36
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "type": "fill",
+   "title": "第貳部分：選填題（占35分）",
+   "instructions": "說明：1.第A至G題，將答案畫記在答案卡之「選擇（填）題答案區」所標示的列號（14–36）2.每題完全答對給5分，答錯不倒扣，未完全答對不給分。",
+   "points_total": 35,
+   "groups": [
+    {
+     "id": "s3g1",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 14,
+       "label": "A",
+       "type": "fill",
+       "stem": "網路賣家以200元的成本取得某件模型，並以成本的5倍作為售價，差價即為利潤。但過了一段時間無人問津，因此賣家決定以逐次減少一半利潤的方式調降售價。若依此方式進行，則調降三次後該模型的售價為[[FILL]]元。",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "14-1",
+         "14-2",
+         "14-3"
+        ],
+        "official_cells": [
+         "14",
+         "15",
+         "16"
+        ],
+        "template": "[[14-1]][[14-2]][[14-3]]",
+        "answer_cells": {
+         "14-1": "3",
+         "14-2": "0",
+         "14-3": "0"
+        },
+        "answer_latex": "300"
+       },
+       "tags": {
+        "units": [
+         "sequence",
+         "data_modeling"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.78,
+        "Ph": 0.97,
+        "Pl": 0.5,
+        "D": 0.47
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g2",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 15,
+       "label": "B",
+       "type": "fill",
+       "stem": "有一按鈕遊戲機，每投幣一枚，可按遊戲機三次。第一次按下會出現黑色或白色的機率各為$\\frac{1}{2}$；第二或第三次按下，出現與前一次同色的機率為$\\frac{1}{3}$，不同色的機率為$\\frac{2}{3}$。今某甲投幣一枚後，按三次均出現同色的機率為[[FILL]]。（化為最簡分數）",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "15-1",
+         "15-2"
+        ],
+        "official_cells": [
+         "17",
+         "18"
+        ],
+        "template": "\\frac{[[15-1]]}{[[15-2]]}",
+        "answer_cells": {
+         "15-1": "1",
+         "15-2": "9"
+        },
+        "answer_latex": "\\frac{1}{9}"
+       },
+       "tags": {
+        "units": [
+         "probability"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.69,
+        "Ph": 0.96,
+        "Pl": 0.31,
+        "D": 0.65
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g3",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 16,
+       "label": "C",
+       "type": "fill",
+       "stem": "設$S$為坐標平面上直線$2x+y=10$被平行線$x-2y+15=0$與$x-2y=0$所截的線段（含端點）。若直線$3x-y=c$與$S$有交點，則$c$的最小值為[[FILL]]。",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "16-1",
+         "16-2"
+        ],
+        "official_cells": [
+         "19",
+         "20"
+        ],
+        "template": "[[16-1]][[16-2]]",
+        "answer_cells": {
+         "16-1": "-",
+         "16-2": "5"
+        },
+        "answer_latex": "-5"
+       },
+       "tags": {
+        "units": [
+         "coordinate_line",
+         "inequality_lp"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.53,
+        "Ph": 0.93,
+        "Pl": 0.11,
+        "D": 0.82
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g4",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 17,
+       "label": "D",
+       "type": "fill",
+       "stem": "平面上有一箏形ABCD，其中$\\overline{AB}=\\overline{BC}=\\sqrt{2}$，$\\overline{AD}=\\overline{CD}=2$，$\\angle BAD=135^{\\circ}$。則[[FILL]]。（化為最簡根式）",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "17-1",
+         "17-2",
+         "17-3",
+         "17-4"
+        ],
+        "official_cells": [
+         "21",
+         "22",
+         "23",
+         "24"
+        ],
+        "template": "\\overline{AC}=\\frac{[[17-1]]\\sqrt{[[17-2]][[17-3]]}}{[[17-4]]}",
+        "answer_cells": {
+         "17-1": "2",
+         "17-2": "1",
+         "17-3": "0",
+         "17-4": "5"
+        },
+        "answer_latex": "\\overline{AC}=\\frac{2\\sqrt{10}}{5}"
+       },
+       "tags": {
+        "units": [
+         "trigonometry",
+         "geometry"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.35,
+        "Ph": 0.84,
+        "Pl": 0.01,
+        "D": 0.83
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g5",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 18,
+       "label": "E",
+       "type": "fill",
+       "stem": "空間中有三點$A(1,7,2)$、$B(2,-6,3)$、$C(0,-4,1)$。若直線$L$通過$A$點並與直線$BC$相交且垂直，則$L$和直線$BC$的交點坐標為[[FILL]]。",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "18-1",
+         "18-2",
+         "18-3",
+         "18-4",
+         "18-5",
+         "18-6"
+        ],
+        "official_cells": [
+         "25",
+         "26",
+         "27",
+         "28",
+         "29",
+         "30"
+        ],
+        "template": "([[18-1]][[18-2]],[[18-3]][[18-4]],[[18-5]][[18-6]])",
+        "answer_cells": {
+         "18-1": "-",
+         "18-2": "3",
+         "18-3": "-",
+         "18-4": "1",
+         "18-5": "-",
+         "18-6": "2"
+        },
+        "answer_latex": "(-3,-1,-2)"
+       },
+       "tags": {
+        "units": [
+         "vector_space",
+         "space_line_plane"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.33,
+        "Ph": 0.83,
+        "Pl": 0.0,
+        "D": 0.83
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g6",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 19,
+       "label": "F",
+       "type": "fill",
+       "stem": "坐標平面上有一條拋物線$\\Gamma$，其上有四個點構成等腰梯形，且等腰梯形的對稱軸與$\\Gamma$的對稱軸重合。已知該等腰梯形的上底為4、下底為6、高為14，則$\\Gamma$ 的焦距為[[FILL]]。（化為最簡分數）",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "19-1",
+         "19-2",
+         "19-3"
+        ],
+        "official_cells": [
+         "31",
+         "32",
+         "33"
+        ],
+        "template": "\\frac{[[19-1]]}{[[19-2]][[19-3]]}",
+        "answer_cells": {
+         "19-1": "5",
+         "19-2": "5",
+         "19-3": "6"
+        },
+        "answer_latex": "\\frac{5}{56}"
+       },
+       "tags": {
+        "units": [
+         "conics"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.21,
+        "Ph": 0.55,
+        "Pl": 0.0,
+        "D": 0.55
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g7",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 20,
+       "label": "G",
+       "type": "fill",
+       "stem": "設計師為天文館設計以不銹鋼片製成的月亮形狀，其中有一款設計圖如右圖所示：圖中，圓弧$QRT$是一個以$O$點為圓心、$\\overline{QT}$為直徑的半圓，$\\overline{QT}=2\\sqrt{3}$。圓弧$QST$的圓心在$P$點，$\\overline{PQ}=\\overline{PT}=2$。圓弧$QRT$與圓弧$QST$所圍出的灰色區域$QRTSQ$即為某一天所見的月亮形狀。設此灰色區域的面積為$a\\pi+\\sqrt{b}$，其中$\\pi$為圓周率，$a$為有理數，$b$為整數，則[[FILL]]。",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "20-1",
+         "20-2",
+         "20-3"
+        ],
+        "official_cells": [
+         "34",
+         "35",
+         "36"
+        ],
+        "template": "a=\\frac{[[20-1]]}{[[20-2]]}\\text{（化為最簡分數）},\\ b=[[20-3]]",
+        "answer_cells": {
+         "20-1": "1",
+         "20-2": "6",
+         "20-3": "3"
+        },
+        "answer_latex": "a=\\frac{1}{6}\\text{（化為最簡分數）},\\ b=3"
+       },
+       "figures": [
+        {
+         "id": "fG",
+         "kind": "diagram",
+         "alt": "月亮形狀設計圖：Q 在上、T 在下，QT 為虛線直徑，O 為 QT 中點；圓弧 QRT 是以 O 為圓心向右凸出的半圓（R 在最右）；圓弧 QST 的圓心 P 在 O 左方，PQ、PT 以虛線連接，弧 QST 也向右凸，經過 O 右方的點 S（S 在 O 與 R 之間）；兩弧之間的新月形區域塗灰。",
+         "source": {
+          "page": 7,
+          "bbox_pt": [
+           376,
+           511,
+           517,
+           685
+          ]
+         },
+         "file": "data/exams/figures-math/gsat-math-109/fG.png",
+         "width": 370,
+         "height": 469
+        }
+       ],
+       "tags": {
+        "units": [
+         "circle",
+         "geometry",
+         "trigonometry"
+        ]
+       },
+       "tables": [],
+       "stats": {
+        "P": 0.48,
+        "Ph": 0.91,
+        "Pl": 0.06,
+        "D": 0.85
+       }
+      }
+     ],
+     "tables": []
+    }
+   ]
+  }
+ ],
+ "reference_formulas": [
+  "1. 首項為$a$，公差為$d$的等差數列前$n$項之和為$S=\\frac{n(2a+(n-1)d)}{2}$",
+  "首項為$a$，公比為$r(r\\ne 1)$的等比數列前$n$項之和為$S=\\frac{a(1-r^{n})}{1-r}$",
+  "2. 三角函數的和角公式：$\\sin (A+B)=\\sin A\\cos B+\\cos A\\sin B$",
+  "$\\cos (A+B)=\\cos A\\cos B-\\sin A\\sin B$",
+  "$\\tan (A+B)=\\frac{\\tan A+\\tan B}{1-\\tan A\\tan B}$",
+  "3. $\\Delta ABC$的正弦定理：$\\frac{a}{\\sin A}=\\frac{b}{\\sin B}=\\frac{c}{\\sin C}=2R$ （$R$為$\\Delta ABC$外接圓半徑）",
+  "$\\Delta ABC$的餘弦定理：$c^{2}=a^{2}+b^{2}-2ab\\cos C$",
+  "4. 一維數據$X:x_{1},x_{2},\\ldots,x_{n}$，算術平均數$\\mu_{X}=\\frac{1}{n}(x_{1}+x_{2}+\\cdots+x_{n})=\\frac{1}{n}\\sum_{i=1}^{n} x_{i}$",
+  "標準差$\\sigma_{X}=\\sqrt{\\frac{1}{n}\\sum_{i=1}^{n} (x_{i}-\\mu_{X})^{2}}=\\sqrt{\\frac{1}{n}\\left((\\sum_{i=1}^{n} x_{i}^{2})-n\\mu_{X}^{2} \\right)}$",
+  "5. 二維數據$(X,Y):(x_{1},y_{1}),(x_{2},y_{2}),\\ldots,(x_{n},y_{n})$，相關係數$r_{X,Y}=\\frac{\\sum_{i=1}^{n} (x_{i}-\\mu_{X})(y_{i}-\\mu_{Y})}{n\\sigma_{X}\\sigma_{Y}}$",
+  "迴歸直線（最適合直線）方程式$y-\\mu_{Y}=r_{X,Y}\\frac{\\sigma_{Y}}{\\sigma_{X}}(x-\\mu_{X})$",
+  "6. 參考數值：$\\sqrt{2}\\approx 1.414$, $\\sqrt{3}\\approx 1.732$, $\\sqrt{5}\\approx 2.236$, $\\sqrt{6}\\approx 2.449$, $\\pi \\approx 3.142$",
+  "7. 對數值：$\\log_{10}2\\approx 0.3010$, $\\log_{10}3\\approx 0.4771$, $\\log_{10}5\\approx 0.6990$, $\\log_{10}7\\approx 0.8451$",
+  "8. 角錐體積=$\\frac{1}{3}$底面積×高"
+ ],
+ "extraction": {
+  "method": "tools/docx_math_draft.py（官方 Word 版題本，MathType→LaTeX）產生骨架，答案取自 answer.pdf（pdftotext）；逐頁以 pdftoppm 頁面影像人工校對，選填題 template 依題本答案格式人工撰寫",
+  "corrections": [],
+  "issues": [],
+  "verified_by": "visual-check"
+ }
+}

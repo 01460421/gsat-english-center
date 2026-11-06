@@ -1,0 +1,1201 @@
+{
+ "schema": "gsat-math-exam/v1",
+ "id": "gsat-math-103",
+ "exam": "gsat",
+ "subject": "math",
+ "era": "舊課綱",
+ "year": 103,
+ "session": "regular",
+ "title": "103學年度學科能力測驗數學考科",
+ "time_minutes": 100,
+ "full_score": 100,
+ "sources": {
+  "paper": "data/raw/ceec/gsat-math/103/paper-1.pdf",
+  "paper_word": [
+   "data/raw/ceec/gsat-math/103/paper-2.docx"
+  ],
+  "answer": [
+   "data/raw/ceec/gsat-math/103/answer.pdf"
+  ],
+  "stats": [
+   "data/raw/ceec/gsat-math/103/stats-1.xls",
+   "data/raw/ceec/gsat-math/103/stats-2.xls",
+   "data/raw/ceec/gsat-math/103/stats-3.xls",
+   "data/raw/ceec/gsat-math/103/stats-4.xls"
+  ]
+ },
+ "scoring_rules": {
+  "single": "各題答對者，得5分；答錯、未作答或畫記多於一個選項者，該題以零分計算。",
+  "multi": "各題之選項獨立判定，所有選項均答對者，得5分；答錯1個選項者，得3分；答錯2個選項者，得1分；答錯多於2個選項或所有選項均未作答者，該題以零分計算。",
+  "fill": "每題完全答對給5分，答錯不倒扣，未完全答對不給分。"
+ },
+ "parts": [
+  {
+   "title": "第壹部分：選擇題（占60分）",
+   "points": 60,
+   "instructions": null,
+   "sections": [
+    "s1",
+    "s2"
+   ]
+  },
+  {
+   "title": "第貳部分：選填題（占40分）",
+   "points": 40,
+   "instructions": null,
+   "sections": [
+    "s3"
+   ]
+  }
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "type": "single",
+   "title": "一、單選題（占30分）",
+   "instructions": "說明：第1題至第6題，每題有5個選項，其中只有一個是正確或最適當的選項，請畫記在答案卡之「選擇（填）題答案區」。各題答對者，得5分；答錯、未作答或畫記多於一個選項者，該題以零分計算。",
+   "points_total": 30,
+   "groups": [
+    {
+     "id": "s1g1",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 1,
+       "label": "1",
+       "type": "single",
+       "stem": "請問下列哪一個選項等於$\\log (2^{(3^{5})})$？",
+       "options": {
+        "1": "$5\\log (2^{3})$",
+        "2": "$3\\times 5\\log 2$",
+        "3": "$5\\log 2\\times \\log 3$",
+        "4": "$5(\\log 2+\\log 3)$",
+        "5": "$3^{5}\\log 2$"
+       },
+       "answer": "5",
+       "points": 5,
+       "tags": {
+        "units": [
+         "exp_log"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.82,
+        "Ph": 0.99,
+        "Pl": 0.54,
+        "D": 0.45,
+        "options": {
+         "1": 0.07,
+         "2": 0.04,
+         "3": 0.05,
+         "4": 0.03,
+         "5": 0.82
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g2",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 2,
+       "label": "2",
+       "type": "single",
+       "stem": "令$A(5,0,12)$、$B(-5,0,12)$為坐標空間中之兩點，且令$P$為$xy$平面上滿足$\\overline{PA}=\\overline{PB}=13$的點。請問下列哪一個選項中的點可能為$P$？",
+       "options": {
+        "1": "$(5,0,0)$",
+        "2": "$(5,5,0)$",
+        "3": "$(0,12,0)$",
+        "4": "$(0,0,0)$",
+        "5": "$(0,0,24)$"
+       },
+       "answer": "4",
+       "points": 5,
+       "tags": {
+        "units": [
+         "vector_space",
+         "space_line_plane"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.74,
+        "Ph": 0.95,
+        "Pl": 0.42,
+        "D": 0.53,
+        "options": {
+         "1": 0.02,
+         "2": 0.07,
+         "3": 0.1,
+         "4": 0.74,
+         "5": 0.07
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g3",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 3,
+       "label": "3",
+       "type": "single",
+       "stem": "在坐標平面上，以$(1,1),(-1,1),(-1,-1)$及$(1,-1)$等四個點為頂點的正方形，與圓$x^{2}+y^{2}+2x+2y+1=0$有幾個交點？",
+       "options": {
+        "1": "1個",
+        "2": "2個",
+        "3": "3個",
+        "4": "4個",
+        "5": "0個"
+       },
+       "answer": "2",
+       "points": 5,
+       "tags": {
+        "units": [
+         "circle",
+         "coordinate_line"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.73,
+        "Ph": 0.96,
+        "Pl": 0.37,
+        "D": 0.59,
+        "options": {
+         "1": 0.04,
+         "2": 0.73,
+         "3": 0.08,
+         "4": 0.06,
+         "5": 0.09
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g4",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 4,
+       "label": "4",
+       "type": "single",
+       "stem": "請問滿足絕對值不等式$|4x-12|\\le 2x$的實數$x$所形成的區間，其長度為下列哪一個選項？",
+       "options": {
+        "1": "1",
+        "2": "2",
+        "3": "3",
+        "4": "4",
+        "5": "6"
+       },
+       "answer": "4",
+       "points": 5,
+       "tags": {
+        "units": [
+         "real_numbers"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.68,
+        "Ph": 0.95,
+        "Pl": 0.3,
+        "D": 0.65,
+        "options": {
+         "1": 0.03,
+         "2": 0.07,
+         "3": 0.09,
+         "4": 0.68,
+         "5": 0.12
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g5",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 5,
+       "label": "5",
+       "type": "single",
+       "stem": "設$(1+\\sqrt{2})^{6}=a+b\\sqrt{2}$，其中$a,b$為整數。請問$b$等於下列哪一個選項？",
+       "options": {
+        "1": "$C_{0}^{6}+2C_{2}^{6}+2^{2}C_{4}^{6}+2^{3}C_{6}^{6}$",
+        "2": "$C_{1}^{6}+2C_{3}^{6}+2^{2}C_{5}^{6}$",
+        "3": "$C_{0}^{6}+2C_{1}^{6}+2^{2}C_{2}^{6}+2^{3}C_{3}^{6}+2^{4}C_{4}^{6}+2^{5}C_{5}^{6}+2^{6}C_{6}^{6}$",
+        "4": "$2C_{1}^{6}+2^{2}C_{3}^{6}+2^{3}C_{5}^{6}$",
+        "5": "$C_{0}^{6}+2^{2}C_{2}^{6}+2^{4}C_{4}^{6}+2^{6}C_{6}^{6}$"
+       },
+       "answer": "2",
+       "points": 5,
+       "tags": {
+        "units": [
+         "counting"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.69,
+        "Ph": 0.97,
+        "Pl": 0.33,
+        "D": 0.64,
+        "options": {
+         "1": 0.08,
+         "2": 0.69,
+         "3": 0.13,
+         "4": 0.07,
+         "5": 0.03
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g6",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 6,
+       "label": "6",
+       "type": "single",
+       "stem": "某疾病可分為兩種類型：第一類占70%，可藉由藥物A治療，其每一次療程的成功率為70%，且每一次療程的成功與否互相獨立；其餘為第二類，藥物A治療方式完全無效。在不知道患者所患此疾病的類型，且用藥物A第一次療程失敗的情況下，進行第二次療程成功的條件機率最接近下列哪一個選項？",
+       "options": {
+        "1": "0.25",
+        "2": "0.3",
+        "3": "0.35",
+        "4": "0.4",
+        "5": "0.45"
+       },
+       "answer": "2",
+       "points": 5,
+       "tags": {
+        "units": [
+         "probability"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.33,
+        "Ph": 0.55,
+        "Pl": 0.22,
+        "D": 0.33,
+        "options": {
+         "1": 0.2,
+         "2": 0.33,
+         "3": 0.22,
+         "4": 0.09,
+         "5": 0.16
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "type": "multi",
+   "title": "二、多選題（占30分）",
+   "instructions": "說明：第7題至第12題，每題有5個選項，其中至少有一個是正確的選項，請將正確選項畫記在答案卡之「選擇（填）題答案區」。各題之選項獨立判定，所有選項均答對者，得5分；答錯1個選項者，得3分；答錯2個選項者，得1分；答錯多於2個選項或所有選項均未作答者，該題以零分計算。",
+   "points_total": 30,
+   "groups": [
+    {
+     "id": "s2g1",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 7,
+       "label": "7",
+       "type": "multi",
+       "stem": "設坐標平面上，$x$坐標與$y$坐標皆為整數的點稱為格子點。請選出圖形上有格子點的選項。",
+       "options": {
+        "1": "$y=x^{2}$",
+        "2": "$3y=9x+1$",
+        "3": "$y^{2}=-x-2$",
+        "4": "$x^{2}+y^{2}=3$",
+        "5": "$y=\\log_{9}x+\\frac{1}{2}$"
+       },
+       "answer": [
+        "1",
+        "3",
+        "5"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "functions",
+         "exp_log",
+         "conics"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.62,
+        "Ph": 0.89,
+        "Pl": 0.32,
+        "D": 0.57,
+        "T": 0.4,
+        "options": {
+         "1": 0.89,
+         "2": 0.19,
+         "3": 0.82,
+         "4": 0.15,
+         "5": 0.55
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g2",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 8,
+       "label": "8",
+       "type": "multi",
+       "stem": "關於下列不等式，請選出正確的選項。",
+       "options": {
+        "1": "$\\sqrt{13}>3.5$",
+        "2": "$\\sqrt{13}<3.6$",
+        "3": "$\\sqrt{13}-\\sqrt{3}>\\sqrt{10}$",
+        "4": "$\\sqrt{13}+\\sqrt{3}>\\sqrt{16}$",
+        "5": "$\\frac{1}{\\sqrt{13}-\\sqrt{3}}>0.6$"
+       },
+       "answer": [
+        "1",
+        "4"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "real_numbers"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.73,
+        "Ph": 0.92,
+        "Pl": 0.45,
+        "D": 0.47,
+        "T": 0.59,
+        "options": {
+         "1": 0.87,
+         "2": 0.16,
+         "3": 0.14,
+         "4": 0.87,
+         "5": 0.2
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g3",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 9,
+       "label": "9",
+       "type": "multi",
+       "stem": "一物體由坐標平面中的點$(-3,6)$出發，沿著向量$\\overrightarrow{v}$所指的方向持續前進，可以進入第一象限。請選出正確的選項。",
+       "options": {
+        "1": "$\\overrightarrow{v}=(1,-2)$",
+        "2": "$\\overrightarrow{v}=(1,-1)$",
+        "3": "$\\overrightarrow{v}=(0.001,0)$",
+        "4": "$\\overrightarrow{v}=(0.001,1)$",
+        "5": "$\\overrightarrow{v}=(-0.001,1)$"
+       },
+       "answer": [
+        "2",
+        "3",
+        "4"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "vector_plane",
+         "coordinate_line"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.71,
+        "Ph": 0.94,
+        "Pl": 0.42,
+        "D": 0.52,
+        "T": 0.53,
+        "options": {
+         "1": 0.16,
+         "2": 0.8,
+         "3": 0.86,
+         "4": 0.85,
+         "5": 0.16
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g4",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 10,
+       "label": "10",
+       "type": "multi",
+       "stem": "設$f(x)$為實係數二次多項式，且已知$f(1)>0$、$f(2)<0$、$f(3)>0$。令$g(x)=f(x)+(x-2)(x-3)$，請選出正確的選項。",
+       "options": {
+        "1": "$y=f(x)$的圖形是開口向下的拋物線",
+        "2": "$y=g(x)$的圖形是開口向下的拋物線",
+        "3": "$g(1)>f(1)$",
+        "4": "$g(x)=0$在1與2之間恰有一個實根",
+        "5": "若$\\alpha$為$f(x)=0$的最大實根，則$g(\\alpha)>0$"
+       },
+       "answer": [
+        "3",
+        "4"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "polynomial"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.53,
+        "Ph": 0.83,
+        "Pl": 0.24,
+        "D": 0.59,
+        "T": 0.31,
+        "options": {
+         "1": 0.18,
+         "2": 0.24,
+         "3": 0.83,
+         "4": 0.72,
+         "5": 0.46
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g5",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 11,
+       "label": "11",
+       "type": "multi",
+       "stem": "設$a_{1}=1$且$a_{1},a_{2},a_{3},\\ldots$為等差數列。請選出正確的選項。",
+       "options": {
+        "1": "若$a_{100}>0$，則$a_{1000}>0$",
+        "2": "若$a_{100}<0$，則$a_{1000}<0$",
+        "3": "若$a_{1000}>0$，則$a_{100}>0$",
+        "4": "若$a_{1000}<0$，則$a_{100}<0$",
+        "5": "$a_{1000}-a_{10}=10(a_{100}-a_{1})$"
+       },
+       "answer": [
+        "2",
+        "3",
+        "5"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "sequence"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.5,
+        "Ph": 0.8,
+        "Pl": 0.2,
+        "D": 0.6,
+        "T": 0.32,
+        "options": {
+         "1": 0.48,
+         "2": 0.86,
+         "3": 0.79,
+         "4": 0.25,
+         "5": 0.68
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g6",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 12,
+       "label": "12",
+       "type": "multi",
+       "stem": "所謂某個年齡範圍的失業率，是指該年齡範圍的失業人數與勞動力人數之比，以百分數表達（進行統計分析時，所有年齡以整數表示）。下表為去年某國四個年齡範圍的失業率，其中的年齡範圍有所重疊。[[TABLE:1]] 請根據上表選出正確的選項。",
+       "options": {
+        "1": "在上述四個年齡範圍中，以40~44歲的失業率為最高",
+        "2": "40~44歲勞動力人數多於45~49歲勞動力人數",
+        "3": "40~49歲的失業率等於$\\left(\\frac{13.17+7.08}{2} \\right)\\%$",
+        "4": "35~39歲勞動力人數少於40~44歲勞動力人數",
+        "5": "如果40~44歲的失業率降低，則45~49歲的失業率會升高"
+       },
+       "answer": [
+        "1",
+        "4"
+       ],
+       "points": 5,
+       "tables": [
+        {
+         "caption": null,
+         "rows": [
+          [
+           "年齡範圍",
+           "35~44歲",
+           "35~39歲",
+           "40~44歲",
+           "45~49歲"
+          ],
+          [
+           "失業率",
+           "12.66(%)",
+           "9.80(%)",
+           "13.17(%)",
+           "7.08(%)"
+          ]
+         ]
+        }
+       ],
+       "tags": {
+        "units": [
+         "statistics",
+         "data_modeling"
+        ]
+       },
+       "figures": [],
+       "stats": {
+        "P": 0.44,
+        "Ph": 0.67,
+        "Pl": 0.25,
+        "D": 0.42,
+        "T": 0.19,
+        "options": {
+         "1": 0.89,
+         "2": 0.23,
+         "3": 0.32,
+         "4": 0.38,
+         "5": 0.26
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "type": "fill",
+   "title": "第貳部分：選填題（占40分）",
+   "instructions": "說明：1.第A至H題，將答案畫記在答案卡之「選擇（填）題答案區」所標示的列號（13–36）。2.每題完全答對給5分，答錯不倒扣，未完全答對不給分。",
+   "points_total": 40,
+   "groups": [
+    {
+     "id": "s3g1",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 13,
+       "label": "A",
+       "type": "fill",
+       "stem": "設圓O之半徑為$24$，$\\overline{OC}=26$，$\\overline{OC}$交圓O於A點，$\\overline{CD}$切圓O於D點，B為A點到$\\overline{OD}$的垂足，如右邊的示意圖。則[[FILL]]。(化為最簡分數)",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "13-1",
+         "13-2",
+         "13-3",
+         "13-4",
+         "13-5"
+        ],
+        "official_cells": [
+         "13",
+         "14",
+         "15",
+         "16",
+         "17"
+        ],
+        "template": "\\overline{AB}=\\frac{[[13-1]][[13-2]][[13-3]]}{[[13-4]][[13-5]]}",
+        "answer_cells": {
+         "13-1": "1",
+         "13-2": "2",
+         "13-3": "0",
+         "13-4": "1",
+         "13-5": "3"
+        },
+        "answer_latex": "\\overline{AB}=\\frac{120}{13}"
+       },
+       "figures": [
+        {
+         "id": "fA",
+         "kind": "diagram",
+         "alt": "示意圖：以 O 為圓心的大圓，O 在左側；OC 為向右上的線段，交圓於 A，C 在圓外；D 在圓上、位於 O 的正右方，CD 鉛直且與圓相切於 D；B 在 OD 上、A 的正下方（AB⊥OD）。",
+         "source": {
+          "page": 6,
+          "bbox_pt": [
+           379,
+           171,
+           534,
+           315
+          ]
+         },
+         "file": "data/exams/figures-math/gsat-math-103/fA.png",
+         "width": 430,
+         "height": 400
+        }
+       ],
+       "tags": {
+        "units": [
+         "circle",
+         "geometry"
+        ]
+       },
+       "tables": [],
+       "stats": {
+        "P": 0.64,
+        "Ph": 0.97,
+        "Pl": 0.17,
+        "D": 0.8
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g2",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 14,
+       "label": "B",
+       "type": "fill",
+       "stem": "坐標平面上，若直線$y=ax+b$(其中$a,b$為實數)與二次函數$y=x^{2}$的圖形恰交於一點，亦與二次函數$y=(x-2)^{2}+12$的圖形恰交於一點，則[[FILL]]。",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "14-1",
+         "14-2",
+         "14-3"
+        ],
+        "official_cells": [
+         "18",
+         "19",
+         "20"
+        ],
+        "template": "a=[[14-1]],\\ b=[[14-2]][[14-3]]",
+        "answer_cells": {
+         "14-1": "6",
+         "14-2": "-",
+         "14-3": "9"
+        },
+        "answer_latex": "a=6,\\ b=-9"
+       },
+       "tags": {
+        "units": [
+         "polynomial",
+         "coordinate_line"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.15,
+        "Ph": 0.42,
+        "Pl": 0.0,
+        "D": 0.42
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g3",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 15,
+       "label": "C",
+       "type": "fill",
+       "stem": "小鎮A距離一筆直道路6公里，並與道路上的小鎮B相距12公里。今欲在此道路上蓋一家超級市場使其與A, B等距，則此超級市場與A的距離須為[[FILL]]公里。(化為最簡根式)",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "15-1",
+         "15-2"
+        ],
+        "official_cells": [
+         "21",
+         "22"
+        ],
+        "template": "[[15-1]]\\sqrt{[[15-2]]}",
+        "answer_cells": {
+         "15-1": "4",
+         "15-2": "3"
+        },
+        "answer_latex": "4\\sqrt{3}"
+       },
+       "tags": {
+        "units": [
+         "geometry",
+         "trigonometry"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.49,
+        "Ph": 0.87,
+        "Pl": 0.07,
+        "D": 0.8
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g4",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 16,
+       "label": "D",
+       "type": "fill",
+       "stem": "坐標空間中有四點$A(2,0,0)$、$B(3,4,2)$、$C(-2,4,0)$與$D(-1,3,1)$。若點$P$在直線$CD$上變動，則內積$\\overrightarrow{PA}\\cdot\\overrightarrow{PB}$之最小可能值為[[FILL]]。(化為最簡分數)",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "16-1",
+         "16-2"
+        ],
+        "official_cells": [
+         "23",
+         "24"
+        ],
+        "template": "\\frac{[[16-1]]}{[[16-2]]}",
+        "answer_cells": {
+         "16-1": "5",
+         "16-2": "4"
+        },
+        "answer_latex": "\\frac{5}{4}"
+       },
+       "tags": {
+        "units": [
+         "vector_space",
+         "space_line_plane"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.31,
+        "Ph": 0.76,
+        "Pl": 0.01,
+        "D": 0.75
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g5",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 17,
+       "label": "E",
+       "type": "fill",
+       "stem": "設$\\overrightarrow{u}$,$\\overrightarrow{v}$為兩個長度皆為1的向量。若$\\overrightarrow{u}$+$\\overrightarrow{v}$與$\\overrightarrow{u}$的夾角為$75^{\\circ}$，則$\\overrightarrow{u}$與$\\overrightarrow{v}$的內積為[[FILL]]。(化為最簡根式)",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "17-1",
+         "17-2",
+         "17-3"
+        ],
+        "official_cells": [
+         "25",
+         "26",
+         "27"
+        ],
+        "template": "\\frac{[[17-1]]\\sqrt{[[17-2]]}}{[[17-3]]}",
+        "answer_cells": {
+         "17-1": "-",
+         "17-2": "3",
+         "17-3": "2"
+        },
+        "answer_latex": "\\frac{-\\sqrt{3}}{2}"
+       },
+       "tags": {
+        "units": [
+         "vector_plane",
+         "trigonometry"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.31,
+        "Ph": 0.75,
+        "Pl": 0.01,
+        "D": 0.74
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g6",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 18,
+       "label": "F",
+       "type": "fill",
+       "stem": "一個房間的地面是由12個正方形所組成，如右圖。今想用長方形瓷磚舖滿地面，已知每一塊長方形瓷磚可以覆蓋兩個相鄰的正方形，即（兩格左右相鄰的橫放長方形）或（兩格上下相鄰的直放長方形）。則用6塊瓷磚舖滿房間地面的方法有[[FILL]]種。",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "18-1",
+         "18-2"
+        ],
+        "official_cells": [
+         "28",
+         "29"
+        ],
+        "template": "[[18-1]][[18-2]]",
+        "answer_cells": {
+         "18-1": "1",
+         "18-2": "1"
+        },
+        "answer_latex": "11"
+       },
+       "figures": [
+        {
+         "id": "fF",
+         "kind": "diagram",
+         "alt": "房間地面由 12 個相同正方形組成：上兩列各 5 格（共 10 格）、第三列只有最左邊 2 格。",
+         "source": {
+          "page": 7,
+          "bbox_pt": [
+           361,
+           234,
+           495,
+           313
+          ]
+         },
+         "file": "data/exams/figures-math/gsat-math-103/fF.png",
+         "width": 371,
+         "height": 219
+        },
+        {
+         "id": "fF2",
+         "kind": "diagram",
+         "alt": "瓷磚擺法一：兩個左右相鄰的正方形（橫放的 1×2 長方形）。",
+         "source": {
+          "page": 7,
+          "bbox_pt": [
+           130,
+           318,
+           188.5,
+           352
+          ]
+         },
+         "file": "data/exams/figures-math/gsat-math-103/fF2.png",
+         "width": 162,
+         "height": 92
+        },
+        {
+         "id": "fF3",
+         "kind": "diagram",
+         "alt": "瓷磚擺法二：兩個上下相鄰的正方形（直放的 2×1 長方形）。",
+         "source": {
+          "page": 7,
+          "bbox_pt": [
+           199,
+           293,
+           229.5,
+           352
+          ]
+         },
+         "file": "data/exams/figures-math/gsat-math-103/fF3.png",
+         "width": 84,
+         "height": 163
+        }
+       ],
+       "tags": {
+        "units": [
+         "counting"
+        ]
+       },
+       "tables": [],
+       "stats": {
+        "P": 0.22,
+        "Ph": 0.44,
+        "Pl": 0.05,
+        "D": 0.39
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g7",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 19,
+       "label": "G",
+       "type": "fill",
+       "stem": "已知$\\begin{bmatrix}a & b \\\\ c & d\\end{bmatrix}$是一個轉移矩陣，並且其行列式(值)為$\\frac{5}{8}$。則[[FILL]]。(化為最簡分數)",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "19-1",
+         "19-2",
+         "19-3"
+        ],
+        "official_cells": [
+         "30",
+         "31",
+         "32"
+        ],
+        "template": "a+d=\\frac{[[19-1]][[19-2]]}{[[19-3]]}",
+        "answer_cells": {
+         "19-1": "1",
+         "19-2": "3",
+         "19-3": "8"
+        },
+        "answer_latex": "a+d=\\frac{13}{8}"
+       },
+       "tags": {
+        "units": [
+         "matrix",
+         "probability"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.35,
+        "Ph": 0.76,
+        "Pl": 0.04,
+        "D": 0.72
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g8",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 20,
+       "label": "H",
+       "type": "fill",
+       "stem": "如圖，正三角形$ABC$的邊長為1，並且$\\angle 1=\\angle 2=\\angle 3=15^{\\circ}$。已知$\\sin 15^{\\circ}=\\frac{\\sqrt{6}-\\sqrt{2}}{4}$，則正三角形$DEF$的邊長為[[FILL]]。(化為最簡根式)",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "20-1",
+         "20-2",
+         "20-3",
+         "20-4"
+        ],
+        "official_cells": [
+         "33",
+         "34",
+         "35",
+         "36"
+        ],
+        "template": "\\frac{\\sqrt{[[20-1]]}}{[[20-2]]}-\\frac{\\sqrt{[[20-3]]}}{[[20-4]]}",
+        "answer_cells": {
+         "20-1": "6",
+         "20-2": "2",
+         "20-3": "2",
+         "20-4": "2"
+        },
+        "answer_latex": "\\frac{\\sqrt{6}}{2}-\\frac{\\sqrt{2}}{2}"
+       },
+       "figures": [
+        {
+         "id": "fH",
+         "kind": "diagram",
+         "alt": "正三角形 ABC（A 在上、B 左下、C 右下）內有正三角形 DEF：D 在 A 附近、E 在 B 附近、F 在 C 附近；AD、BE、CF 延伸所成的線段 AE、BF、CD 圍出 DEF，∠1（在 A，介於 AB 與 AD 之間）、∠2（在 B，介於 BC 與 BE 之間）、∠3（在 C，介於 CA 與 CF 之間）皆為 15°。",
+         "source": {
+          "page": 7,
+          "bbox_pt": [
+           386,
+           604,
+           533,
+           753
+          ],
+          "mask_pt": [
+           [
+            386,
+            604,
+            406,
+            624
+           ]
+          ]
+         },
+         "file": "data/exams/figures-math/gsat-math-103/fH.png",
+         "width": 384,
+         "height": 373
+        }
+       ],
+       "tags": {
+        "units": [
+         "trigonometry",
+         "geometry"
+        ]
+       },
+       "tables": [],
+       "stats": {
+        "P": 0.28,
+        "Ph": 0.64,
+        "Pl": 0.02,
+        "D": 0.62
+       }
+      }
+     ],
+     "tables": []
+    }
+   ]
+  }
+ ],
+ "reference_formulas": [
+  "1. 首項為$a$，公差為$d$的等差數列前$n$項之和為$S=\\frac{n(2a+(n-1)d)}{2}$",
+  "首項為$a$，公比為$r\\quad (r\\ne 1)$的等比數列前$n$項之和為$S=\\frac{a(1-r^{n})}{1-r}$",
+  "2. 三角函數的和角公式：$\\sin (A+B)=\\sin A\\cos B+\\cos A\\sin B$",
+  "$\\cos (A+B)=\\cos A\\cos B-\\sin A\\sin B$",
+  "$\\tan (A+B)=\\frac{\\tan A+\\tan B}{1-\\tan A\\tan B}$",
+  "3. $\\Delta ABC$的正弦定理：$\\frac{a}{\\sin A}=\\frac{b}{\\sin B}=\\frac{c}{\\sin C}=2R$ ($R$為$\\Delta ABC$外接圓半徑)",
+  "$\\Delta ABC$的餘弦定理：$\\quad c^{2}=a^{2}+b^{2}-2ab\\cos C$",
+  "4. 一維數據$X:x_{1},x_{2},...,x_{n}$，算術平均數$\\mu_{X}=\\frac{1}{n}(x_{1}+x_{2}+\\cdots+x_{n})=\\frac{1}{n}\\sum_{i=1}^{n} x_{i}$",
+  "標準差$\\sigma_{X}=\\sqrt{\\frac{1}{n}\\sum_{i=1}^{n} (x_{i}-\\mu_{X})^{2}}=\\sqrt{\\frac{1}{n}((\\sum_{i=1}^{n} x_{i}^{2})-n\\mu_{X}^{2})}$",
+  "5. 二維數據$(X,Y):(x_{1},y_{1}),(x_{2},y_{2}),...,(x_{n},y_{n})$，相關係數$r_{X,Y}=\\frac{\\sum_{i=1}^{n} (x_{i}-\\mu_{X})(y_{i}-\\mu_{Y})}{n\\sigma_{X}\\sigma_{Y}}$",
+  "迴歸直線(最適合直線)方程式$y-\\mu_{Y}=r_{X,Y}\\frac{\\sigma_{Y}}{\\sigma_{X}}(x-\\mu_{X})$",
+  "6. 參考數值：$\\sqrt{2}\\approx 1.414\\quad,\\quad \\sqrt{3}\\approx 1.732\\quad,\\quad \\sqrt{5}\\approx 2.236\\quad,\\quad \\sqrt{6}\\approx 2.449\\quad,\\quad \\pi \\approx 3.142$",
+  "7. 對數值：$\\log_{10}2\\approx 0.3010,\\quad \\quad \\log_{10}3\\approx 0.4771,\\ \\log_{10}5\\approx 0.6990,\\ \\log_{10}7\\approx 0.8451$"
+ ],
+ "extraction": {
+  "method": "tools/docx_math_draft.py（官方 Word 版題本，MathType→LaTeX）產生骨架，答案取自 answer.pdf（pdftotext）；逐頁以 pdftoppm 頁面影像人工校對，選填題 template 依題本答案格式人工撰寫",
+  "corrections": [
+   "第F題題幹：題本以兩個小圖示表示瓷磚的兩種擺法（橫放 1×2、直放 2×1），JSON 以括號文字描述，並另附裁圖 fF2、fF3"
+  ],
+  "issues": [
+   "第12題題幹「其中的年齡範圍有所重疊」在題本為粗體加底線，JSON 未標示（schema 沒有強調標記）"
+  ],
+  "verified_by": "visual-check"
+ }
+}

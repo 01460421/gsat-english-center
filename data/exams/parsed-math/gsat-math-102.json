@@ -1,0 +1,1148 @@
+{
+ "schema": "gsat-math-exam/v1",
+ "id": "gsat-math-102",
+ "exam": "gsat",
+ "subject": "math",
+ "era": "舊課綱",
+ "year": 102,
+ "session": "regular",
+ "title": "102學年度學科能力測驗數學考科",
+ "time_minutes": 100,
+ "full_score": 100,
+ "sources": {
+  "paper": "data/raw/ceec/gsat-math/102/paper-1.pdf",
+  "paper_word": [
+   "data/raw/ceec/gsat-math/102/paper-2.doc"
+  ],
+  "answer": [
+   "data/raw/ceec/gsat-math/102/answer.pdf"
+  ],
+  "stats": [
+   "data/raw/ceec/gsat-math/102/stats-1.xls",
+   "data/raw/ceec/gsat-math/102/stats-2.xls",
+   "data/raw/ceec/gsat-math/102/stats-3.xls",
+   "data/raw/ceec/gsat-math/102/stats-4.xls"
+  ]
+ },
+ "scoring_rules": {
+  "single": "各題答對者，得5分；答錯、未作答或畫記多於一個選項者，該題以零分計算。",
+  "multi": "各題之選項獨立判定，所有選項均答對者，得5分；答錯1個選項者，得3分；答錯2個選項者，得1分；答錯多於2個選項或所有選項均未作答者，該題以零分計算。",
+  "fill": "每題完全答對給5分，答錯不倒扣，未完全答對不給分。"
+ },
+ "parts": [
+  {
+   "title": "第壹部分：選擇題（占60分）",
+   "points": 60,
+   "instructions": null,
+   "sections": [
+    "s1",
+    "s2"
+   ]
+  },
+  {
+   "title": "第貳部分：選填題（占40分）",
+   "points": 40,
+   "instructions": null,
+   "sections": [
+    "s3"
+   ]
+  }
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "type": "single",
+   "title": "一、單選題（占30分）",
+   "instructions": "說明：第1題至第6題，每題有5個選項，其中只有一個是正確或最適當的選項，請畫記在答案卡之「選擇（填）題答案區」。各題答對者，得5分；答錯、未作答或畫記多於一個選項者，該題以零分計算。",
+   "points_total": 30,
+   "groups": [
+    {
+     "id": "s1g1",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 1,
+       "label": "1",
+       "type": "single",
+       "stem": "學校規定上學期成績需同時滿足以下兩項要求，才有資格參選模範生。一、國文成績或英文成績70分(含)以上；二、數學成績及格。已知小文上學期國文65分而且他不符合參選模範生資格。請問下列哪一個選項的推論是正確的？",
+       "options": {
+        "1": "小文的英文成績未達70分",
+        "2": "小文的數學成績不及格",
+        "3": "小文的英文成績70分以上但數學成績不及格",
+        "4": "小文的英文成績未達70分且數學成績不及格",
+        "5": "小文的英文成績未達70分或數學成績不及格"
+       },
+       "answer": "5",
+       "points": 5,
+       "tags": {
+        "units": [
+         "logic_set"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.7,
+        "Ph": 0.88,
+        "Pl": 0.49,
+        "D": 0.39,
+        "options": {
+         "1": 0.04,
+         "2": 0.06,
+         "3": 0.08,
+         "4": 0.11,
+         "5": 0.7
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g2",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 2,
+       "label": "2",
+       "type": "single",
+       "stem": "令$a=2.6^{10}-2.6^{9}$，$b=2.6^{11}-2.6^{10}$，$c=\\frac{2.6^{11}-2.6^{9}}{2}$。請選出正確的大小關係。",
+       "options": {
+        "1": "$a>b>c$",
+        "2": "$a>c>b$",
+        "3": "$b>a>c$",
+        "4": "$b>c>a$",
+        "5": "$c>b>a$"
+       },
+       "answer": "4",
+       "points": 5,
+       "tags": {
+        "units": [
+         "real_numbers",
+         "exp_log"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.66,
+        "Ph": 0.9,
+        "Pl": 0.36,
+        "D": 0.54,
+        "options": {
+         "1": 0.05,
+         "2": 0.04,
+         "3": 0.17,
+         "4": 0.66,
+         "5": 0.09
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g3",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 3,
+       "label": "3",
+       "type": "single",
+       "stem": "袋子裡有3顆白球，$2$顆黑球。由甲、乙、丙三人依序各抽取1顆球，抽取後不放回。若每顆球被取出的機會相等，請問在甲和乙抽到相同顏色球的條件下，丙抽到白球之條件機率為何？",
+       "options": {
+        "1": "$\\frac{1}{3}$",
+        "2": "$\\frac{5}{12}$",
+        "3": "$\\frac{1}{2}$",
+        "4": "$\\frac{3}{5}$",
+        "5": "$\\frac{2}{3}$"
+       },
+       "answer": "3",
+       "points": 5,
+       "tags": {
+        "units": [
+         "probability"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.35,
+        "Ph": 0.67,
+        "Pl": 0.12,
+        "D": 0.55,
+        "options": {
+         "1": 0.21,
+         "2": 0.11,
+         "3": 0.35,
+         "4": 0.18,
+         "5": 0.14
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g4",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 4,
+       "label": "4",
+       "type": "single",
+       "stem": "已知以下各選項資料的迴歸直線(最適合直線)皆相同且皆為負相關，請選出相關係數最小的選項。",
+       "options": {
+        "1": "$\\begin{array}{c|c|c|c}x&2&3&5\\\\\\hline y&1&13&1\\end{array}$",
+        "2": "$\\begin{array}{c|c|c|c}x&2&3&5\\\\\\hline y&3&10&2\\end{array}$",
+        "3": "$\\begin{array}{c|c|c|c}x&2&3&5\\\\\\hline y&5&7&3\\end{array}$",
+        "4": "$\\begin{array}{c|c|c|c}x&2&3&5\\\\\\hline y&9&1&5\\end{array}$",
+        "5": "$\\begin{array}{c|c|c|c}x&2&3&5\\\\\\hline y&7&4&4\\end{array}$"
+       },
+       "answer": "5",
+       "points": 5,
+       "tags": {
+        "units": [
+         "statistics"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.3,
+        "Ph": 0.46,
+        "Pl": 0.19,
+        "D": 0.27,
+        "options": {
+         "1": 0.36,
+         "2": 0.07,
+         "3": 0.17,
+         "4": 0.09,
+         "5": 0.3
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g5",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 5,
+       "label": "5",
+       "type": "single",
+       "stem": "將24顆雞蛋分裝到紅、黃、綠的三個籃子。每個籃子都要有雞蛋，且黃、綠兩個籃子裡都裝奇數顆。請選出分裝的方法數。",
+       "options": {
+        "1": "55",
+        "2": "66",
+        "3": "132",
+        "4": "198",
+        "5": "253"
+       },
+       "answer": "2",
+       "points": 5,
+       "tags": {
+        "units": [
+         "counting"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.5,
+        "Ph": 0.75,
+        "Pl": 0.25,
+        "D": 0.5,
+        "options": {
+         "1": 0.07,
+         "2": 0.5,
+         "3": 0.26,
+         "4": 0.11,
+         "5": 0.05
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g6",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 6,
+       "label": "6",
+       "type": "single",
+       "stem": "莎韻觀測遠方等速率垂直上升的熱氣球。在上午$10:00$熱氣球的仰角為$30^{\\circ}$，到上午$10:10$仰角變成$34^{\\circ}$。請利用下表判斷到上午$10:30$時，熱氣球的仰角最接近下列哪一個度數？[[TABLE:1]]",
+       "options": {
+        "1": "$39^{\\circ}$",
+        "2": "$40^{\\circ}$",
+        "3": "$41^{\\circ}$",
+        "4": "$42^{\\circ}$",
+        "5": "$43^{\\circ}$"
+       },
+       "answer": "3",
+       "points": 5,
+       "tables": [
+        {
+         "caption": null,
+         "rows": [
+          [
+           "$\\theta$",
+           "$30^{\\circ}$",
+           "$34^{\\circ}$",
+           "$39^{\\circ}$",
+           "$40^{\\circ}$",
+           "$41^{\\circ}$",
+           "$42^{\\circ}$",
+           "$43^{\\circ}$"
+          ],
+          [
+           "$\\sin \\theta$",
+           "0.500",
+           "0.559",
+           "0.629",
+           "0.643",
+           "0.656",
+           "0.669",
+           "0.682"
+          ],
+          [
+           "$\\cos \\theta$",
+           "0.866",
+           "0.829",
+           "0.777",
+           "0.766",
+           "0.755",
+           "0.743",
+           "0.731"
+          ],
+          [
+           "$\\tan \\theta$",
+           "0.577",
+           "0.675",
+           "0.810",
+           "0.839",
+           "0.869",
+           "0.900",
+           "0.933"
+          ]
+         ]
+        }
+       ],
+       "tags": {
+        "units": [
+         "trigonometry",
+         "data_modeling"
+        ]
+       },
+       "figures": [],
+       "stats": {
+        "P": 0.39,
+        "Ph": 0.71,
+        "Pl": 0.15,
+        "D": 0.56,
+        "options": {
+         "1": 0.06,
+         "2": 0.1,
+         "3": 0.39,
+         "4": 0.32,
+         "5": 0.13
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "type": "multi",
+   "title": "二、多選題（占30分）",
+   "instructions": "說明：第7題至第12題，每題有5個選項，其中至少有一個是正確的選項，請將正確選項畫記在答案卡之「選擇（填）題答案區」。各題之選項獨立判定，所有選項均答對者，得5分；答錯1個選項者，得3分；答錯2個選項者，得1分；答錯多於2個選項或所有選項均未作答者，該題以零分計算。",
+   "points_total": 30,
+   "groups": [
+    {
+     "id": "s2g1",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 7,
+       "label": "7",
+       "type": "multi",
+       "stem": "設$n$為正整數，符號$\\begin{bmatrix}1 & 1 \\\\ 0 & 2\\end{bmatrix}^{n}$代表矩陣$\\begin{bmatrix}1 & 1 \\\\ 0 & 2\\end{bmatrix}$自乘$n$次。令$\\begin{bmatrix}1 & 1 \\\\ 0 & 2\\end{bmatrix}^{n}=\\begin{bmatrix}a_{n} & b_{n} \\\\ c_{n} & d_{n}\\end{bmatrix}$，請選出正確的選項。",
+       "options": {
+        "1": "$a_{2}=1$",
+        "2": "$a_{1},a_{2},a_{3}$為等比數列",
+        "3": "$d_{1},d_{2},d_{3}$為等比數列",
+        "4": "$b_{1},b_{2},b_{3}$為等差數列",
+        "5": "$c_{1},c_{2},c_{3}$為等差數列"
+       },
+       "answer": [
+        "1",
+        "2",
+        "3",
+        "5"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "matrix",
+         "sequence"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.6,
+        "Ph": 0.85,
+        "Pl": 0.28,
+        "D": 0.57,
+        "T": 0.42,
+        "options": {
+         "1": 0.85,
+         "2": 0.74,
+         "3": 0.86,
+         "4": 0.17,
+         "5": 0.6
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g2",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 8,
+       "label": "8",
+       "type": "multi",
+       "stem": "設$a>1>b>0$，關於下列不等式，請選出正確的選項。",
+       "options": {
+        "1": "$(-a)^{7}>(-a)^{9}$",
+        "2": "$b^{-9}>b^{-7}$",
+        "3": "$\\log_{10}\\frac{1}{a}>\\log_{10}\\frac{1}{b}$",
+        "4": "$\\log_{a}1>\\log_{b}1$",
+        "5": "$\\log_{a}b\\ge \\log_{b}a$"
+       },
+       "answer": [
+        "1",
+        "2"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "exp_log",
+         "real_numbers"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.47,
+        "Ph": 0.68,
+        "Pl": 0.23,
+        "D": 0.45,
+        "T": 0.22,
+        "options": {
+         "1": 0.82,
+         "2": 0.72,
+         "3": 0.17,
+         "4": 0.38,
+         "5": 0.48
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g3",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 9,
+       "label": "9",
+       "type": "multi",
+       "stem": "設$a<b<c$。已知實係數多項式函數$y=f(x)$的圖形為一開口向上的拋物線，且與$x$軸交於$(a,0)$、$(b,0)$兩點；實係數多項式函數$y=g(x)$的圖形亦為一開口向上的拋物線，且跟$x$軸相交於$(b,0)$、$(c,0)$兩點。請選出$y=f(x)+g(x)$的圖形可能的選項。",
+       "options": {
+        "1": "水平直線",
+        "2": "和$x$軸僅交於一點的直線",
+        "3": "和$x$軸無交點的拋物線",
+        "4": "和$x$軸僅交於一點的拋物線",
+        "5": "和$x$軸交於兩點的拋物線"
+       },
+       "answer": [
+        "4",
+        "5"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "polynomial",
+         "functions"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.43,
+        "Ph": 0.64,
+        "Pl": 0.25,
+        "D": 0.39,
+        "T": 0.19,
+        "options": {
+         "1": 0.21,
+         "2": 0.37,
+         "3": 0.36,
+         "4": 0.64,
+         "5": 0.72
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g4",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 10,
+       "label": "10",
+       "type": "multi",
+       "stem": "坐標平面上考慮兩點$Q_{1}(1,0),Q_{2}(-1,0)$。在下列各方程式的圖形中，請選出其上至少有一點$P$滿足內積$\\overrightarrow{PQ_{1}}\\cdot\\overrightarrow{PQ_{2}}<0$的選項。",
+       "options": {
+        "1": "$y=\\frac{1}{2}$",
+        "2": "$y=x^{2}+1$",
+        "3": "$-x^{2}+2y^{2}=1$",
+        "4": "$4x^{2}+y^{2}=1$",
+        "5": "$\\frac{x^{2}}{2}-\\frac{y^{2}}{2}=1$"
+       },
+       "answer": [
+        "1",
+        "3",
+        "4"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "vector_plane",
+         "conics",
+         "circle"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.36,
+        "Ph": 0.6,
+        "Pl": 0.18,
+        "D": 0.42,
+        "T": 0.16,
+        "options": {
+         "1": 0.65,
+         "2": 0.37,
+         "3": 0.64,
+         "4": 0.63,
+         "5": 0.41
+        },
+        "omit": 0.01
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g5",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 11,
+       "label": "11",
+       "type": "multi",
+       "stem": "設$F_{1},F_{2}$為橢圓$\\Gamma$的兩個焦點。$S$為以$F_{1}$為中心的正方形($S$的各邊可不與$\\Gamma$的對稱軸平行)。試問$S$可能有幾個頂點落在$\\Gamma$上？",
+       "options": {
+        "1": "1",
+        "2": "2",
+        "3": "3",
+        "4": "4",
+        "5": "0"
+       },
+       "answer": [
+        "1",
+        "2",
+        "5"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "conics"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.42,
+        "Ph": 0.58,
+        "Pl": 0.23,
+        "D": 0.35,
+        "T": 0.18,
+        "options": {
+         "1": 0.5,
+         "2": 0.82,
+         "3": 0.48,
+         "4": 0.23,
+         "5": 0.75
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g6",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 12,
+       "label": "12",
+       "type": "multi",
+       "stem": "設實數組成的數列$\\langle a_{n}\\rangle$是公比為$-0.8$的等比數列，實數組成的數列$\\langle b_{n}\\rangle$是首項為10的等差數列。已知$a_{9}>b_{9}$且$a_{10}>b_{10}$。請選出正確的選項。",
+       "options": {
+        "1": "$a_{9}\\times a_{10}<0$",
+        "2": "$b_{10}>0$",
+        "3": "$b_{9}>b_{10}$",
+        "4": "$a_{9}>a_{10}$",
+        "5": "$a_{8}>b_{8}$"
+       },
+       "answer": [
+        "1",
+        "3"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "sequence"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.45,
+        "Ph": 0.67,
+        "Pl": 0.22,
+        "D": 0.45,
+        "T": 0.21,
+        "options": {
+         "1": 0.75,
+         "2": 0.21,
+         "3": 0.72,
+         "4": 0.42,
+         "5": 0.43
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "type": "fill",
+   "title": "第貳部分：選填題（占40分）",
+   "instructions": "說明：1.第A至H題，將答案畫記在答案卡之「選擇（填）題答案區」所標示的列號（13–35）。 2.每題完全答對給5分，答錯不倒扣，未完全答對不給分。",
+   "points_total": 40,
+   "groups": [
+    {
+     "id": "s3g1",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 13,
+       "label": "A",
+       "type": "fill",
+       "stem": "設$k$為一整數。已知$\\frac{k}{3}<\\sqrt{31}<\\frac{k+1}{3}$，則[[FILL]]。",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "13-1",
+         "13-2"
+        ],
+        "official_cells": [
+         "13",
+         "14"
+        ],
+        "template": "k=[[13-1]][[13-2]]",
+        "answer_cells": {
+         "13-1": "1",
+         "13-2": "6"
+        },
+        "answer_latex": "k=16"
+       },
+       "tags": {
+        "units": [
+         "real_numbers"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.68,
+        "Ph": 0.95,
+        "Pl": 0.27,
+        "D": 0.68
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g2",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 14,
+       "label": "B",
+       "type": "fill",
+       "stem": "設$a,b$為實數且$(a+bi)(2+6i)=-80$，其中$i^{2}=-1$。則[[FILL]]。",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "14-1",
+         "14-2",
+         "14-3",
+         "14-4"
+        ],
+        "official_cells": [
+         "15",
+         "16",
+         "17",
+         "18"
+        ],
+        "template": "(a,b)=([[14-1]][[14-2]],[[14-3]][[14-4]])",
+        "answer_cells": {
+         "14-1": "-",
+         "14-2": "4",
+         "14-3": "1",
+         "14-4": "2"
+        },
+        "answer_latex": "(a,b)=(-4,12)"
+       },
+       "tags": {
+        "units": [
+         "real_numbers"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.59,
+        "Ph": 0.97,
+        "Pl": 0.09,
+        "D": 0.88
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g3",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 15,
+       "label": "C",
+       "type": "fill",
+       "stem": "坐標平面中$A(a,3),\\ B(16,b),\\ C(19,12)$三點共線。已知$C$不在$A,B$之間，且$\\overline{AC}:\\overline{BC}=3:1$，則[[FILL]]。",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "15-1",
+         "15-2"
+        ],
+        "official_cells": [
+         "19",
+         "20"
+        ],
+        "template": "a+b=[[15-1]][[15-2]]",
+        "answer_cells": {
+         "15-1": "1",
+         "15-2": "9"
+        },
+        "answer_latex": "a+b=19"
+       },
+       "tags": {
+        "units": [
+         "coordinate_line"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.64,
+        "Ph": 0.94,
+        "Pl": 0.24,
+        "D": 0.7
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g4",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 16,
+       "label": "D",
+       "type": "fill",
+       "stem": "阿德賣100公斤的香蕉，第一天每公斤賣40元；沒賣完的部份，第二天降價為每公斤36元；第三天再降為每公斤32元，到第三天全部賣完，三天所得共為3720元。假設阿德在第三天所賣香蕉的公斤數為$t$，可算得第二天賣出香蕉的公斤數為$at+b$，其中[[FILL]]。",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "16-1",
+         "16-2",
+         "16-3",
+         "16-4"
+        ],
+        "official_cells": [
+         "21",
+         "22",
+         "23",
+         "24"
+        ],
+        "template": "a=[[16-1]][[16-2]],\\ b=[[16-3]][[16-4]]",
+        "answer_cells": {
+         "16-1": "-",
+         "16-2": "2",
+         "16-3": "7",
+         "16-4": "0"
+        },
+        "answer_latex": "a=-2,\\ b=70"
+       },
+       "tags": {
+        "units": [
+         "linear_system",
+         "data_modeling"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.23,
+        "Ph": 0.53,
+        "Pl": 0.01,
+        "D": 0.52
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g5",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 17,
+       "label": "E",
+       "type": "fill",
+       "stem": "坐標平面上，一圓與直線$x-y=1$以及直線$x-y=5$所截的弦長皆為14。則此圓的面積為[[FILL]]。",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "17-1",
+         "17-2"
+        ],
+        "official_cells": [
+         "25",
+         "26"
+        ],
+        "template": "[[17-1]][[17-2]]\\pi",
+        "answer_cells": {
+         "17-1": "5",
+         "17-2": "1"
+        },
+        "answer_latex": "51\\pi"
+       },
+       "tags": {
+        "units": [
+         "circle"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.29,
+        "Ph": 0.67,
+        "Pl": 0.01,
+        "D": 0.66
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g6",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 18,
+       "label": "F",
+       "type": "fill",
+       "stem": "令$\\overrightarrow{A}$，$\\overrightarrow{B}$為坐標平面上兩向量。已知$\\overrightarrow{A}$的長度為1，$\\overrightarrow{B}$的長度為2且$\\overrightarrow{A}$與$\\overrightarrow{B}$之間的夾角為$60^{\\circ}$。令$\\overrightarrow{u}=\\overrightarrow{A}+\\overrightarrow{B}$，$\\overrightarrow{v}=x\\overrightarrow{A}+y\\overrightarrow{B}$，其中$x,y$為實數且符合$6\\le x+y\\le 8$以及$-2\\le x-y\\le 0$，則內積$\\overrightarrow{u}\\cdot\\overrightarrow{v}$的最大值為[[FILL]]。",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "18-1",
+         "18-2"
+        ],
+        "official_cells": [
+         "27",
+         "28"
+        ],
+        "template": "[[18-1]][[18-2]]",
+        "answer_cells": {
+         "18-1": "3",
+         "18-2": "1"
+        },
+        "answer_latex": "31"
+       },
+       "tags": {
+        "units": [
+         "vector_plane",
+         "inequality_lp"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.11,
+        "Ph": 0.29,
+        "Pl": 0.01,
+        "D": 0.28
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g7",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 19,
+       "label": "G",
+       "type": "fill",
+       "stem": "設銳角三角形$ABC$的外接圓半徑為8。已知外接圓圓心到$\\overline{AB}$的距離為2，而到$\\overline{BC}$的距離為7，則[[FILL]]。（化成最簡根式）",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "19-1",
+         "19-2",
+         "19-3"
+        ],
+        "official_cells": [
+         "29",
+         "30",
+         "31"
+        ],
+        "template": "\\overline{AC}=[[19-1]]\\sqrt{[[19-2]][[19-3]]}",
+        "answer_cells": {
+         "19-1": "4",
+         "19-2": "1",
+         "19-3": "5"
+        },
+        "answer_latex": "\\overline{AC}=4\\sqrt{15}"
+       },
+       "tags": {
+        "units": [
+         "trigonometry",
+         "circle",
+         "geometry"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.19,
+        "Ph": 0.46,
+        "Pl": 0.01,
+        "D": 0.45
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g8",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 20,
+       "label": "H",
+       "type": "fill",
+       "stem": "如下圖，在坐標空間中，$A,B,C,D,E,F,G,H$為正立方體的八個頂點，已知其中四個點的坐標$A(0,0,0)$、$B(6,0,0)$、$D(0,6,0)$及$E(0,0,6)$，$P$在線段$\\overline{CG}$上且$\\overline{CP}:\\overline{PG}=1:5$，$R$在線段$\\overline{EH}$上且$\\overline{ER}:\\overline{RH}=1:1$，$Q$在線段$\\overline{AD}$上。若空間中通過$P,Q,R$這三點的平面，與直線$AG$不相交，則$Q$點的$y$坐標為[[FILL]]。(化成最簡分數)",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "20-1",
+         "20-2",
+         "20-3",
+         "20-4"
+        ],
+        "official_cells": [
+         "32",
+         "33",
+         "34",
+         "35"
+        ],
+        "template": "\\frac{[[20-1]][[20-2]]}{[[20-3]][[20-4]]}",
+        "answer_cells": {
+         "20-1": "1",
+         "20-2": "5",
+         "20-3": "1",
+         "20-4": "1"
+        },
+        "answer_latex": "\\frac{15}{11}"
+       },
+       "figures": [
+        {
+         "id": "fH",
+         "kind": "diagram",
+         "alt": "坐標空間中的正立方體 ABCD−EFGH：A 在原點，x 軸朝左下（B 在 x 軸上）、y 軸朝右（D 在 y 軸上）、z 軸朝上（E 在 z 軸上）；C 在 B、D 對角，F、G、H 分別在 B、C、D 正上方。R 在 EH 中點，Q 在 AD 上，P 在 CG 上靠近 C；看不見的稜 AB、AD、AE 以虛線表示。",
+         "source": {
+          "page": 7,
+          "bbox_pt": [
+           192,
+           531,
+           419,
+           734
+          ]
+         },
+         "file": "data/exams/figures-math/gsat-math-102/fH.png",
+         "width": 583,
+         "height": 525
+        }
+       ],
+       "tags": {
+        "units": [
+         "space_line_plane",
+         "vector_space"
+        ]
+       },
+       "tables": [],
+       "stats": {
+        "P": 0.18,
+        "Ph": 0.48,
+        "Pl": 0.0,
+        "D": 0.48
+       }
+      }
+     ],
+     "tables": []
+    }
+   ]
+  }
+ ],
+ "reference_formulas": [
+  "1. 首項為$a$，公差為$d$的等差數列前$n$項之和為$S=\\frac{n(2a+(n-1)d)}{2}$",
+  "首項為$a$，公比為$r\\quad (r\\ne 1)$的等比數列前$n$項之和為$S=\\frac{a(1-r^{n})}{1-r}$",
+  "2. 三角函數的和角公式：$\\sin (A+B)=\\sin A\\cos B+\\cos A\\sin B$",
+  "$\\cos (A+B)=\\cos A\\cos B-\\sin A\\sin B$",
+  "$\\tan (A+B)=\\frac{\\tan A+\\tan B}{1-\\tan A\\tan B}$",
+  "3. $\\Delta ABC$的正弦定理：$\\frac{a}{\\sin A}=\\frac{b}{\\sin B}=\\frac{c}{\\sin C}=2R$ ($R$為$\\Delta ABC$外接圓半徑)",
+  "$\\Delta ABC$的餘弦定理：$\\quad c^{2}=a^{2}+b^{2}-2ab\\cos C$",
+  "4. 一維數據$X:x_{1},x_{2},...,x_{n}$，算術平均數$\\mu_{X}=\\frac{1}{n}(x_{1}+x_{2}+\\cdots+x_{n})=\\frac{1}{n}\\sum_{i=1}^{n} x_{i}$",
+  "標準差$\\sigma_{X}=\\sqrt{\\frac{1}{n}\\sum_{i=1}^{n} (x_{i}-\\mu_{X})^{2}}=\\sqrt{\\frac{1}{n}((\\sum_{i=1}^{n} x_{i}^{2})-n\\mu_{X}^{2})}$",
+  "5. 二維數據$(X,Y):(x_{1},y_{1}),(x_{2},y_{2}),...,(x_{n},y_{n})$，相關係數$r_{X,Y}=\\frac{\\sum_{i=1}^{n} (x_{i}-\\mu_{X})(y_{i}-\\mu_{Y})}{n\\sigma_{X}\\sigma_{Y}}$",
+  "迴歸直線(最適合直線)方程式$y-\\mu_{Y}=r_{X,Y}\\frac{\\sigma_{Y}}{\\sigma_{X}}(x-\\mu_{X})$",
+  "6. 參考數值：$\\sqrt{2}\\approx 1.414\\quad,\\quad \\sqrt{3}\\approx 1.732\\quad,\\quad \\sqrt{5}\\approx 2.236\\quad,\\quad \\sqrt{6}\\approx 2.449\\quad,\\quad \\pi \\approx 3.142$",
+  "7. 對數值：$\\log_{10}2\\approx 0.3010,\\quad \\quad \\log_{10}3\\approx 0.4771,\\ \\log_{10}5\\approx 0.6990,\\ \\log_{10}7\\approx 0.8451$"
+ ],
+ "extraction": {
+  "method": "tools/docx_math_draft.py（官方 Word 版題本，舊版 .doc 先以 LibreOffice 轉 .docx，MathType→LaTeX）產生骨架，答案取自 answer.pdf（pdftotext）；逐頁以 pdftoppm 頁面影像人工校對，選填題 template 依題本答案格式人工撰寫",
+  "corrections": [
+   "第6題表格：第二列列首「sin θ」在 Word 版是 Equation 3.0 物件（轉換器無法讀取），依 PDF 補為 $\\sin \\theta$",
+   "第10題題幹：向量在 Word 版是 EQ 欄位，舊版 .doc 經 LibreOffice 轉檔後內容遺失；依 PDF 補為 $\\overrightarrow{PQ_{1}}\\cdot\\overrightarrow{PQ_{2}}<0$",
+   "第F題題幹：所有向量（A、B、u、v）在 Word 版是 EQ 欄位，轉檔後內容遺失；依 PDF 逐一補回"
+  ],
+  "issues": [
+   "第1題「小文」、第6題「莎韻」、第D題「阿德」在題本加專名號（底線），JSON 未標示（schema 沒有強調標記）"
+  ],
+  "verified_by": "visual-check"
+ }
+}

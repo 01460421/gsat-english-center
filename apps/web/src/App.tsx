@@ -30,6 +30,7 @@ const PAGE_COMPONENTS: Record<PagePath, ComponentType> = {
   '/mock': lazy(() => import('./pages/MockExamPage')),
   '/assistant': lazy(() => import('./features/assistant/AssistantHomePage')),
   '/zh-writing': lazy(() => import('./features/assistant/zhWriting/ZhWritingPage')),
+  '/math': lazy(() => import('./features/math/MathLandingPage')),
   '/settings': lazy(() => import('./pages/SettingsPage')),
   '/about': lazy(() => import('./pages/AboutPage')),
 };
@@ -98,6 +99,12 @@ const AssistantPapersPage = lazy(() => import('./features/assistant/papers/Paper
  * 沒登入只顯示暫停（ZhWritingGate，不打學習助手的 API）。
  */
 const ZhWritingResultPage = lazy(() => import('./features/assistant/zhWriting/ZhWritingResultPage'));
+/**
+ * 學測數學（docs/design/math.md P2）的子頁：作答頁 /math/:paperId 與成績頁 /math/:paperId/results。
+ * KaTeX 只在這兩頁載入（features/math/katex.ts 的動態匯入），英文頁面與主程式不受影響。
+ */
+const MathPaperPage = lazy(() => import('./features/math/MathPaperPage'));
+const MathResultsPage = lazy(() => import('./features/math/MathResultsPage'));
 
 export function App() {
   return (
@@ -141,6 +148,8 @@ export function App() {
         <Route path="assistant/report" element={<AssistantReportPage />} />
         <Route path="assistant/report/:version" element={<AssistantReportPage />} />
         <Route path="zh-writing/:id" element={<ZhWritingResultPage />} />
+        <Route path="math/:paperId" element={<MathPaperPage />} />
+        <Route path="math/:paperId/results" element={<MathResultsPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
