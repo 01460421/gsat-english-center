@@ -32,6 +32,14 @@ const SUBJECT_NOTES: Record<SubjectTab, string> = {
   old: '舊課綱學測數學（100–110 學年度）：只有單選、多選與選填題（滿分 100 全部自動批改），選填格照題本標列號（⑭⑮…）。部分內容（例如複數平面、轉移矩陣）不在現行課綱，詳解陸續補上。',
 };
 
+/** 大題名稱的短寫：「一、單選題（占30分）」→「單選題」；舊課綱「第貳部分：選填題（占35分）」→「選填題」。 */
+export function sectionChipLabel(title: string): string {
+  return title
+    .replace(/^.*?、/, '')
+    .replace(/^第.部分：/, '')
+    .replace(/（.*?）/, '');
+}
+
 function PaperCard({ paper, listSearch }: { paper: MathPaperSummary; listSearch: string }) {
   const progress = mathProgress(paper.id);
   return (
@@ -58,7 +66,7 @@ function PaperCard({ paper, listSearch }: { paper: MathPaperSummary; listSearch:
       <span className="flex flex-wrap gap-1.5 text-xs">
         {paper.sections.map((s) => (
           <span key={s.id} className="rounded-md bg-surface-2 px-2 py-0.5">
-            {s.title.replace(/^.*?、/, '').replace(/（.*?）/, '')} <span className="tabular-nums">{s.question_count}</span> 題
+            {sectionChipLabel(s.title)} <span className="tabular-nums">{s.question_count}</span> 題
           </span>
         ))}
         <span className={`rounded-md px-2 py-0.5 ${paper.solution_count > 0 ? 'bg-ok/10 text-ok' : 'bg-badge-bg text-badge-fg'}`}>

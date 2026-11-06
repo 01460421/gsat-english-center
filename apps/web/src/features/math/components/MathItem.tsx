@@ -16,7 +16,7 @@ import {
   type MathItem,
 } from '@gsat/shared';
 import { Camera } from 'lucide-react';
-import { useId, type ReactNode } from 'react';
+import { Fragment, useId, type ReactNode } from 'react';
 import { useAttemptSelector, useAttemptStore, useQuestionState } from '../../exams/AttemptContext';
 import { SolutionView } from '../solutions';
 import { FillInput, fillAnswerLatex } from './FillInput';
@@ -36,6 +36,9 @@ function asList(v: string | readonly string[] | undefined): string[] {
   return typeof v === 'string' ? [v] : [...v];
 }
 
+/** 作答格後面要跟著作答格同一行的標點。 */
+const TRAILING_PUNCT = /^[。，、；：？！）」』]+/;
+
 /** 題幹：文字與公式、[[FILL]] 的位置畫作答格式（小方框），[[TABLE:k]] 畫表格；沒有標位置的表格接在後面。 */
 function Stem({ item }: { item: MathItem }) {
   const tokens = splitMathStem(item.stem);
@@ -46,14 +49,31 @@ function Stem({ item }: { item: MathItem }) {
     if (inline.length > 0) nodes.push(<p key={key} className="leading-relaxed break-words">{inline}</p>);
     inline = [];
   };
+  // 作答格後面緊接的標點（「為□□。」的「。」）和作答格綁在同一行，窄螢幕不會讓標點單獨掉到下一行。
+  let carry = '';
   tokens.forEach((t, i) => {
-    if (t.kind === 'text') inline.push(<MathText key={i} text={t.text} />);
-    else if (t.kind === 'fill') {
-      inline.push(
-        <span key={i} className="mx-0.5 inline-block rounded bg-primary-soft px-1 align-middle">
+    if (t.kind === 'text') {
+      const text = carry !== '' ? t.text.slice(carry.length) : t.text;
+      carry = '';
+      if (text !== '') inline.push(<MathText key={i} text={text} />);
+    } else if (t.kind === 'fill') {
+      const next = tokens[i + 1];
+      carry = next?.kind === 'text' ? (TRAILING_PUNCT.exec(next.text)?.[0] ?? '') : '';
+      const box = (
+        <span className={`mx-0.5 inline-block rounded bg-primary-soft px-1 align-middle whitespace-normal ${carry !== '' ? 'max-w-[calc(100%-1.5em)]' : 'max-w-full'}`}>
           <span className="sr-only">（作答格）</span>
           {item.fill ? <Tex tex={fillFormatInline(item)} /> : '＿＿'}
-        </span>,
+        </span>
+      );
+      inline.push(
+        carry !== '' ? (
+          <span key={i} className="whitespace-nowrap">
+            {box}
+            {carry}
+          </span>
+        ) : (
+          <Fragment key={i}>{box}</Fragment>
+        ),
       );
     } else {
       flush(`p${i}`);

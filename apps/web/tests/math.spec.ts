@@ -4,6 +4,7 @@
  *   2. 練習模式：作答、看答案與詳解（詳解檔用 page.route 假造一題，檢查 Markdown＋KaTeX）；非選擇題的拍照批改預告；
  *   3. 考試模式：整份作答（單選、多選、仿答題卷的選填格，選填用滑鼠點與鍵盤輸入兩種方式）→ 交卷 → 成績頁的分數與逐題結果；
  *   4. 版面：手機 360 px 與 320 px 不水平捲動；KaTeX 只在卷子頁載入（入口頁沒有 .katex，也沒有下載 KaTeX 的 chunk）。
+ *   5. 舊課綱（100–110）：分頁、選填格用題本列號（⑭⑮）、整份作答交卷得滿分、詳解準備中。
  *
  * 用的是建置產生的真實資料（public/data/math/），答案直接讀 data/exams/parsed-math/gsat-matha-115.json。
  * 設環境變數 MATH_SHOTS_DIR 時另外存截圖（手動檢查用，不進版控）。
@@ -190,7 +191,10 @@ test('考試模式：整份作答、交卷、成績頁的分數與逐題結果',
   await expect(table.getByRole('row')).toHaveCount(items.length + 1);
   await expect(table.getByRole('row').nth(7)).toContainText('部分');
   await expect(card(page, '7').getByText('部分得分')).toBeVisible();
-  await expect(card(page, '1').getByText('詳解準備中')).toBeVisible();
+  // 111–115 有本站詳解（data/exams/math-solutions/），交卷後直接顯示，並有全國答對率。
+  await expect(card(page, '1').getByText('本站詳解', { exact: true })).toBeVisible();
+  await expect(card(page, '1').getByText('解題關鍵').first()).toBeVisible();
+  await expect(card(page, '1').getByText(/全國答對率 \d+%（官方統計）/)).toBeVisible();
 
   // 非選擇題自評，合計含自評。
   await card(page, '19').getByRole('combobox', { name: '自評分數' }).selectOption('4');
@@ -210,5 +214,65 @@ test('考試模式：整份作答、交卷、成績頁的分數與逐題結果',
     await expectNoHorizontalOverflow(page);
   }
   await shot(page, testInfo, 'results');
+  expect(errors).toEqual([]);
+});
+
+const OLD_ID = 'gsat-math-110';
+const oldPaper = JSON.parse(readFileSync(path.join(ROOT, 'data', 'exams', 'parsed-math', `${OLD_ID}.json`), 'utf8')) as RawPaper & {
+  sections: { groups: { items: (RawItem & { fill?: { official_cells?: string[] } })[] }[] }[];
+};
+const oldItems = oldPaper.sections.flatMap((s) => s.groups.flatMap((g) => g.items));
+
+test('舊課綱：分頁、選填格標題本列號、整份作答交卷滿分、詳解準備中', async ({ page }, testInfo) => {
+  test.setTimeout(90_000);
+  const errors = collectErrors(page);
+  await page.goto('/math?subject=old');
+  await expect(page.getByRole('radio', { name: /舊課綱/ })).toBeChecked();
+  await expect(page.locator('main a[href^="/math/gsat-math-1"]')).toHaveCount(11);
+  await expect(page.getByRole('link', { name: /110 學年度/ }).getByText('詳解準備中')).toBeVisible();
+  await expect(page.getByRole('link', { name: /110 學年度/ })).not.toContainText('非選擇題');
+
+  await page.getByRole('link', { name: /110 學年度/ }).click();
+  await expect(page.getByRole('heading', { level: 1, name: oldPaper.title })).toBeVisible();
+  await page.getByRole('radio', { name: /考試模式/ }).check();
+  await page.getByRole('button', { name: '開始作答' }).click();
+
+  // 第 A 題（列號 14、15）：格名是題本的圈號。
+  const a = card(page, 'A');
+  await expect(a.locator('[data-fill-row]').first()).toContainText('⑭');
+  await expect(a.locator('[data-fill-row]').nth(1)).toContainText('⑮');
+  await expect(a.getByRole('group', { name: /第 A 題第 14 列/ })).toBeVisible();
+
+  for (const item of oldItems) {
+    const c = card(page, item.label);
+    if (item.type === 'single') await c.getByRole('radio', { name: new RegExp(`^\\(${String(item.answer)}\\)`) }).check();
+    else if (item.type === 'multi') for (const o of item.answer as string[]) await c.getByRole('checkbox', { name: new RegExp(`^\\(${o}\\)`) }).check();
+    else if (item.fill) {
+      const rows = item.fill.official_cells ?? [];
+      for (const [i, cell] of item.fill.cells.entries()) {
+        await c
+          .getByRole('group', { name: new RegExp(`第 ${rows[i] ?? ''} 列`) })
+          .getByRole('radio', { name: cellName(item.fill.answer_cells[cell] ?? ''), exact: true })
+          .check();
+      }
+    }
+  }
+  await shot(page, testInfo, 'old-answered');
+  await page.getByRole('button', { name: '交卷' }).click();
+  await page.getByRole('group', { name: '確認交卷' }).getByRole('button', { name: '確定交卷' }).click();
+  await expect(page).toHaveURL(new RegExp(`/math/${OLD_ID}/results$`));
+  const summary = page.locator('section', { has: page.getByRole('heading', { name: '交卷結果' }) });
+  await expect(summary.getByText('自動批改（選擇＋選填）').locator('..')).toContainText('100／100');
+  await expect(summary.getByText('非選擇題（自評）')).toHaveCount(0);
+  await expect(card(page, 'A').getByText('詳解準備中')).toBeVisible();
+  await expect(card(page, '1').getByText(/全國答對率 \d+%（官方統計）/)).toBeVisible();
+
+  await page.waitForLoadState('networkidle');
+  await expectNoHorizontalOverflow(page);
+  if (testInfo.project.name === 'mobile') {
+    await page.setViewportSize({ width: 320, height: 667 });
+    await expectNoHorizontalOverflow(page);
+  }
+  await shot(page, testInfo, 'old-results');
   expect(errors).toEqual([]);
 });

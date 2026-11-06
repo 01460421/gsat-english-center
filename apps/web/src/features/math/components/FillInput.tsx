@@ -15,7 +15,11 @@ import { Tex } from './MathText';
 
 /** 作答格式：每一格是標了格號的小方框。 */
 export function fillFormatLatex(fill: Pick<MathFill, 'template' | 'cells' | 'official_cells'>): string {
-  return `\\displaystyle ${fillTemplateLatex(fill.template, (id) => `\\boxed{\\scriptstyle\\text{${fillCellLabel(fill, id)}}}`)}`;
+  // 舊課綱的圈號（⑭）KaTeX 字型沒有，會退回系統字型而且沒有字高資料：用一般字級並加 \vphantom 撐出方框高度，
+  // 否則方框會縮成一條線、圈號又小到看不清。108 課綱的「13-1」照舊用小字。
+  const box = (id: string) =>
+    fill.official_cells ? `\\boxed{\\vphantom{(}\\text{${fillCellLabel(fill, id)}}}` : `\\boxed{\\scriptstyle\\text{${id}}}`;
+  return `\\displaystyle ${fillTemplateLatex(fill.template, box)}`;
 }
 
 /** 螢幕報讀用的格名：舊課綱唸「第 14 列」，108 課綱唸「13-1」。 */
