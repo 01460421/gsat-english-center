@@ -1,0 +1,1189 @@
+{
+ "schema": "gsat-math-exam/v1",
+ "id": "gsat-math-110",
+ "exam": "gsat",
+ "subject": "math",
+ "era": "舊課綱",
+ "year": 110,
+ "session": "regular",
+ "title": "110學年度學科能力測驗數學考科",
+ "time_minutes": 100,
+ "full_score": 100,
+ "sources": {
+  "paper": "data/raw/ceec/gsat-math/110/paper-1.pdf",
+  "paper_word": [
+   "data/raw/ceec/gsat-math/110/paper-2.docx"
+  ],
+  "answer": [
+   "data/raw/ceec/gsat-math/110/answer.pdf"
+  ],
+  "stats": [
+   "data/raw/ceec/gsat-math/110/stats-1.xls",
+   "data/raw/ceec/gsat-math/110/stats-2.xls",
+   "data/raw/ceec/gsat-math/110/stats-3.xls",
+   "data/raw/ceec/gsat-math/110/stats-4.xls"
+  ]
+ },
+ "scoring_rules": {
+  "single": "各題答對者，得5分；答錯、未作答或劃記多於一個選項者，該題以零分計算。",
+  "multi": "各題之選項獨立判定，所有選項均答對者，得5分；答錯1個選項者，得3分；答錯2個選項者，得1分；答錯多於2個選項或所有選項均未作答者，該題以零分計算。",
+  "fill": "每題完全答對給5分，答錯不倒扣，未完全答對不給分。"
+ },
+ "parts": [
+  {
+   "title": "第壹部分：選擇題（占65分）",
+   "points": 65,
+   "instructions": null,
+   "sections": [
+    "s1",
+    "s2"
+   ]
+  },
+  {
+   "title": "第貳部分：選填題（占35分）",
+   "points": 35,
+   "instructions": null,
+   "sections": [
+    "s3"
+   ]
+  }
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "type": "single",
+   "title": "一、單選題（占30分）",
+   "instructions": "說明：第1題至第6題，每題有5個選項，其中只有一個是正確或最適當的選項，請劃記在答案卡之「選擇（填）題答案區」。各題答對者，得5分；答錯、未作答或劃記多於一個選項者，該題以零分計算。",
+   "points_total": 30,
+   "groups": [
+    {
+     "id": "s1g1",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 1,
+       "label": "1",
+       "type": "single",
+       "stem": "設$A=\\begin{bmatrix}1 & 2 \\\\ 0 & 3\\end{bmatrix}$。若$A^{4}=\\begin{bmatrix}a & b \\\\ c & d\\end{bmatrix}$，則$a+b+c+d$之值為下列哪一個選項？",
+       "options": {
+        "1": "158",
+        "2": "162",
+        "3": "166",
+        "4": "170",
+        "5": "174"
+       },
+       "answer": "2",
+       "points": 5,
+       "tags": {
+        "units": [
+         "matrix"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.84,
+        "Ph": 1.0,
+        "Pl": 0.57,
+        "D": 0.43,
+        "options": {
+         "1": 0.03,
+         "2": 0.84,
+         "3": 0.08,
+         "4": 0.03,
+         "5": 0.02
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g2",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 2,
+       "label": "2",
+       "type": "single",
+       "stem": "五項實數數列$a_{1},a_{2},a_{3},a_{4},a_{5}$的每一項都大於1，且每相鄰的兩項中，都有一數是另一數的兩倍。若$a_{1}=\\log_{10}36$，則$a_{5}$有多少種可能的值？",
+       "options": {
+        "1": "3",
+        "2": "4",
+        "3": "5",
+        "4": "7",
+        "5": "8"
+       },
+       "answer": "1",
+       "points": 5,
+       "tags": {
+        "units": [
+         "exp_log",
+         "sequence"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.3,
+        "Ph": 0.53,
+        "Pl": 0.1,
+        "D": 0.43,
+        "options": {
+         "1": 0.3,
+         "2": 0.15,
+         "3": 0.33,
+         "4": 0.13,
+         "5": 0.09
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g3",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 3,
+       "label": "3",
+       "type": "single",
+       "stem": "如圖，$\\Delta ABC$為銳角三角形，$P$為$\\Delta ABC$外接圓$\\Gamma$外的一點，且$\\overline{PB}$與$\\overline{PC}$都與圓$\\Gamma$相切。設$\\angle BPC=\\theta$，試問$\\cos A$的值為下列哪一個選項？",
+       "options": {
+        "1": "$\\sin 2\\theta$",
+        "2": "$\\frac{\\sin \\theta}{2}$",
+        "3": "$\\sin \\frac{\\theta}{2}$",
+        "4": "$\\frac{\\cos \\theta}{2}$",
+        "5": "$\\cos \\frac{\\theta}{2}$"
+       },
+       "answer": "3",
+       "points": 5,
+       "figures": [
+        {
+         "id": "f3",
+         "kind": "diagram",
+         "alt": "圓 Γ 為 ΔABC 的外接圓：A 在圓的上方、B 在左下、C 在右側；P 在圓外右下方，PB、PC 分別與圓 Γ 相切於 B、C。",
+         "source": {
+          "page": 2,
+          "bbox_pt": [
+           431,
+           461,
+           527,
+           574
+          ]
+         },
+         "file": "data/exams/figures-math/gsat-math-110/f3.png",
+         "width": 226,
+         "height": 298
+        }
+       ],
+       "tags": {
+        "units": [
+         "trigonometry",
+         "circle",
+         "geometry"
+        ]
+       },
+       "tables": [],
+       "stats": {
+        "P": 0.5,
+        "Ph": 0.79,
+        "Pl": 0.25,
+        "D": 0.54,
+        "options": {
+         "1": 0.1,
+         "2": 0.13,
+         "3": 0.5,
+         "4": 0.13,
+         "5": 0.15
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g4",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 4,
+       "label": "4",
+       "type": "single",
+       "stem": "設$\\overrightarrow{a}$與$\\overrightarrow{b}$都是平面上不為零的向量。若$2\\overrightarrow{a}+\\overrightarrow{b}$與$\\overrightarrow{a}+2\\overrightarrow{b}$所張成的三角形面積為6，則$3\\overrightarrow{a}+\\overrightarrow{b}$與$\\overrightarrow{a}+3\\overrightarrow{b}$所張成的三角形面積為下列哪一個選項？",
+       "options": {
+        "1": "8",
+        "2": "9",
+        "3": "12",
+        "4": "13.5",
+        "5": "16"
+       },
+       "answer": "5",
+       "points": 5,
+       "tags": {
+        "units": [
+         "vector_plane"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.31,
+        "Ph": 0.64,
+        "Pl": 0.07,
+        "D": 0.57,
+        "options": {
+         "1": 0.12,
+         "2": 0.22,
+         "3": 0.17,
+         "4": 0.17,
+         "5": 0.31
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g5",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 5,
+       "label": "5",
+       "type": "single",
+       "stem": "設$f(x)$為實係數三次多項式函數，滿足$(x+1)f(x)$除以$x^{3}+2$的餘式為$x+2$。若$f(0)=4$，則$f(2)$的值為下列哪一個選項？",
+       "options": {
+        "1": "8",
+        "2": "10",
+        "3": "15",
+        "4": "18",
+        "5": "20"
+       },
+       "answer": "4",
+       "points": 5,
+       "tags": {
+        "units": [
+         "polynomial"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.41,
+        "Ph": 0.66,
+        "Pl": 0.19,
+        "D": 0.47,
+        "options": {
+         "1": 0.18,
+         "2": 0.15,
+         "3": 0.18,
+         "4": 0.41,
+         "5": 0.08
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g6",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 6,
+       "label": "6",
+       "type": "single",
+       "stem": "坐標平面上有一邊長為3的正六邊形$ABCDEF$，其中$A(3,0),\\ D(-3,0)$。試問橢圓$\\frac{x^{2}}{16}+\\frac{y^{2}}{7}=1$與正六邊形$ABCDEF$有多少個交點？",
+       "options": {
+        "1": "0",
+        "2": "2",
+        "3": "4",
+        "4": "6",
+        "5": "8"
+       },
+       "answer": "5",
+       "points": 5,
+       "tags": {
+        "units": [
+         "conics"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.15,
+        "Ph": 0.33,
+        "Pl": 0.05,
+        "D": 0.28,
+        "options": {
+         "1": 0.23,
+         "2": 0.13,
+         "3": 0.42,
+         "4": 0.07,
+         "5": 0.15
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "type": "multi",
+   "title": "二、多選題（占35分）",
+   "instructions": "說明：第7題至第13題，每題有5個選項，其中至少有一個是正確的選項，請將正確選項劃記在答案卡之「選擇（填）題答案區」。各題之選項獨立判定，所有選項均答對者，得5分；答錯1個選項者，得3分；答錯2個選項者，得1分；答錯多於2個選項或所有選項均未作答者，該題以零分計算。",
+   "points_total": 35,
+   "groups": [
+    {
+     "id": "s2g1",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 7,
+       "label": "7",
+       "type": "multi",
+       "stem": "心理學家找了1000位受試者進行暗室實驗，每位受試者都要觀看及辨識6、8、9三張數字卡，發現將實際數字看成某個數字的機率如下表：[[TABLE:1]] 例如：實際數字6被看成6、8、9的機率分別為0.4、0.3、0.2，而被看成其他數字的機率是0.1。根據上述實驗結果，試選出正確的選項。",
+       "options": {
+        "1": "如果實際數字是8，則至少有一半的可能性會被看成是8",
+        "2": "如果實際數字是6，則有六成的可能性會被看成不是6",
+        "3": "在6、8、9三數字中，被誤認的可能性以9最低",
+        "4": "如果被看成的數字是6，則實際上就是6的可能性不到一半",
+        "5": "如果被看成的數字是9，則實際上就是9的可能性超過$\\frac{2}{3}$"
+       },
+       "answer": [
+        "2",
+        "3",
+        "4"
+       ],
+       "points": 5,
+       "tables": [
+        {
+         "caption": null,
+         "rows": [
+          [
+           "實際數字＼看成數字",
+           "6",
+           "8",
+           "9",
+           "其他"
+          ],
+          [
+           "6",
+           "0.4",
+           "0.3",
+           "0.2",
+           "0.1"
+          ],
+          [
+           "8",
+           "0.3",
+           "0.4",
+           "0.1",
+           "0.2"
+          ],
+          [
+           "9",
+           "0.2",
+           "0.2",
+           "0.5",
+           "0.1"
+          ]
+         ],
+         "note": "左上角為斜線格：右上「看成數字」為欄、左下「實際數字」為列。"
+        }
+       ],
+       "tags": {
+        "units": [
+         "probability"
+        ]
+       },
+       "figures": [],
+       "stats": {
+        "P": 0.81,
+        "Ph": 0.94,
+        "Pl": 0.61,
+        "D": 0.33,
+        "T": 0.68,
+        "options": {
+         "1": 0.06,
+         "2": 0.91,
+         "3": 0.89,
+         "4": 0.86,
+         "5": 0.12
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g2",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 8,
+       "label": "8",
+       "type": "multi",
+       "stem": "如圖，$L$為坐標平面上通過原點$O$的直線，$\\Gamma$是以$O$為圓心的圓，且$L$與$\\Gamma$有一個交點$A(3,4)$。已知$B,C$為$\\Gamma$上的相異兩點滿足$\\overrightarrow{BC}=\\overrightarrow{OA}$。試選出正確的選項。",
+       "options": {
+        "1": "$L$與$\\Gamma$的另一個交點為$(-4,-3)$",
+        "2": "直線$BC$的斜率為$\\frac{3}{4}$",
+        "3": "$\\angle AOC=60^{\\circ}$",
+        "4": "$\\Delta ABC$的面積為$\\frac{25\\sqrt{3}}{2}$",
+        "5": "$B$與$C$在同一象限內"
+       },
+       "answer": [
+        "3",
+        "5"
+       ],
+       "points": 5,
+       "figures": [
+        {
+         "id": "f8",
+         "kind": "diagram",
+         "alt": "坐標平面示意圖：以原點 O 為圓心的圓 Γ，過原點且斜率為正的直線 L 與圓在第一象限交於點 A。",
+         "source": {
+          "page": 4,
+          "bbox_pt": [
+           399,
+           130,
+           525,
+           254
+          ]
+         },
+         "file": "data/exams/figures-math/gsat-math-110/f8.png",
+         "width": 325,
+         "height": 328
+        }
+       ],
+       "tags": {
+        "units": [
+         "circle",
+         "vector_plane",
+         "coordinate_line"
+        ]
+       },
+       "tables": [],
+       "stats": {
+        "P": 0.41,
+        "Ph": 0.63,
+        "Pl": 0.21,
+        "D": 0.42,
+        "T": 0.18,
+        "options": {
+         "1": 0.19,
+         "2": 0.29,
+         "3": 0.66,
+         "4": 0.56,
+         "5": 0.7
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g3",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 9,
+       "label": "9",
+       "type": "multi",
+       "stem": "某村的村長選舉設有兩個投票所。已知兩位候選人在各投票所得到的有效票數比例如下表（廢票不列入計算）：[[TABLE:1]] 假設第一投票所與第二投票所的有效票數分別為$x$與$y$（其中$x>0,y>0$），且以總得票數較高者為當選人。根據上述表格，試選出正確的選項。",
+       "options": {
+        "1": "當有效票數的總和$x+y$已知時，就可決定當選人",
+        "2": "當$x:y$的比值小於$\\frac{1}{2}$時，就可決定當選人",
+        "3": "當$x>y$時，就可決定當選人",
+        "4": "當甲候選人在第一投票所的有效票數比在第二投票所的有效票數多時，就可決定當選人",
+        "5": "當乙候選人在第二投票所的有效票數比在第一投票所的有效票數多時，就可決定當選人"
+       },
+       "answer": [
+        "2",
+        "3",
+        "4"
+       ],
+       "points": 5,
+       "tables": [
+        {
+         "caption": null,
+         "rows": [
+          [
+           "",
+           "甲候選人",
+           "乙候選人"
+          ],
+          [
+           "第一投票所",
+           "40%",
+           "60%"
+          ],
+          [
+           "第二投票所",
+           "55%",
+           "45%"
+          ]
+         ]
+        }
+       ],
+       "tags": {
+        "units": [
+         "data_modeling"
+        ]
+       },
+       "figures": [],
+       "stats": {
+        "P": 0.34,
+        "Ph": 0.54,
+        "Pl": 0.17,
+        "D": 0.37,
+        "T": 0.14,
+        "options": {
+         "1": 0.32,
+         "2": 0.69,
+         "3": 0.56,
+         "4": 0.53,
+         "5": 0.44
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g4",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 10,
+       "label": "10",
+       "type": "multi",
+       "stem": "在$\\Delta ABC$中，已經知道$\\overline{AB}=4$和$\\overline{AC}=6$，此時尚不足以確定$\\Delta ABC$的形狀與大小。但是，只要再知道某些條件（例如：再知道$\\overline{BC}$的長度），就可確定$\\Delta ABC$唯一的形狀與大小。試選出正確的選項。",
+       "options": {
+        "1": "如果再知道$\\cos A$的值，就可確定$\\Delta ABC$唯一的形狀與大小",
+        "2": "如果再知道$\\cos B$的值，就可確定$\\Delta ABC$唯一的形狀與大小",
+        "3": "如果再知道$\\cos C$的值，就可確定$\\Delta ABC$唯一的形狀與大小",
+        "4": "如果再知道$\\Delta ABC$的面積，就可確定$\\Delta ABC$唯一的形狀與大小",
+        "5": "如果再知道$\\Delta ABC$的外接圓半徑，就可確定$\\Delta ABC$唯一的形狀與大小"
+       },
+       "answer": [
+        "1",
+        "2"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "trigonometry"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.22,
+        "Ph": 0.34,
+        "Pl": 0.13,
+        "D": 0.21,
+        "T": 0.03,
+        "options": {
+         "1": 0.79,
+         "2": 0.48,
+         "3": 0.41,
+         "4": 0.52,
+         "5": 0.57
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g5",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 11,
+       "label": "11",
+       "type": "multi",
+       "stem": "平面上有一梯形$ABCD$，其上底$\\overline{AB}=10$、下底$\\overline{CD}=15$，且腰長$\\overline{AD}=\\overline{BC}+1$。試選出正確的選項。",
+       "options": {
+        "1": "$\\angle A>\\angle B$",
+        "2": "$\\angle B+\\angle D<180^{\\circ}$",
+        "3": "$\\overrightarrow{BA}\\cdot\\overrightarrow{BC}<0$",
+        "4": "$\\overline{BC}$的長可能是2",
+        "5": "$\\overrightarrow{CB}\\cdot\\overrightarrow{CD}<30$"
+       },
+       "answer": [
+        "1",
+        "2",
+        "5"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "vector_plane",
+         "trigonometry",
+         "geometry"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.27,
+        "Ph": 0.36,
+        "Pl": 0.2,
+        "D": 0.16,
+        "T": 0.09,
+        "options": {
+         "1": 0.65,
+         "2": 0.57,
+         "3": 0.52,
+         "4": 0.4,
+         "5": 0.52
+        },
+        "omit": 0.0
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g6",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 12,
+       "label": "12",
+       "type": "multi",
+       "stem": "設$P(X)$表示事件$X$發生的機率，而$P(X|Y)$表示在事件$Y$發生的條件下，事件$X$發生的機率。今有2顆黑球、2顆白球、3顆紅球共7顆大小相同的球排成一列。設事件$A$為2顆黑球相鄰的事件，事件$B$為2顆黑球不相鄰的事件，而事件$C$為任2顆紅球都不相鄰的事件。試選出正確的選項。",
+       "options": {
+        "1": "$P(A)>P(B)$",
+        "2": "$P(C)=\\frac{2}{7}$",
+        "3": "$2P(C|A)+5P(C|B)<2$",
+        "4": "$P(C|A)>0.2$",
+        "5": "$P(C|B)>0.3$"
+       },
+       "answer": [
+        "2",
+        "5"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "probability",
+         "counting"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.23,
+        "Ph": 0.34,
+        "Pl": 0.15,
+        "D": 0.19,
+        "T": 0.06,
+        "options": {
+         "1": 0.22,
+         "2": 0.59,
+         "3": 0.66,
+         "4": 0.59,
+         "5": 0.6
+        },
+        "omit": 0.01
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g7",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 13,
+       "label": "13",
+       "type": "multi",
+       "stem": "設多項式函數$f(x)=x^{3}+ax^{2}+bx+c$，其中$a,b,c$均為有理數。試選出正確的選項。",
+       "options": {
+        "1": "函數$y=f(x)$與拋物線$y=x^{2}+100$的圖形可能沒有交點",
+        "2": "若$f(0)f(1)<0<f(0)f(2)$，則方程式$f(x)=0$必有三個相異實根",
+        "3": "若$1+3i$是方程式$f(x)=0$的複數根，則方程式$f(x)=0$有一個有理根",
+        "4": "存在有理數$a,b,c$使得$f(1),f(2),f(3),f(4)$依序形成等差數列",
+        "5": "存在有理數$a,b,c$使得$f(1),f(2),f(3),f(4)$依序形成等比數列"
+       },
+       "answer": [
+        "2",
+        "3",
+        "5"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "polynomial",
+         "sequence"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.31,
+        "Ph": 0.4,
+        "Pl": 0.23,
+        "D": 0.17,
+        "T": 0.09,
+        "options": {
+         "1": 0.45,
+         "2": 0.56,
+         "3": 0.79,
+         "4": 0.37,
+         "5": 0.45
+        },
+        "omit": 0.01
+       }
+      }
+     ],
+     "tables": []
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "type": "fill",
+   "title": "第貳部分：選填題（占35分）",
+   "instructions": "說明：1.第A至G題，將答案劃記在答案卡之「選擇（填）題答案區」所標示的列號（14 – 32） 2.每題完全答對給5分，答錯不倒扣，未完全答對不給分。",
+   "points_total": 35,
+   "groups": [
+    {
+     "id": "s3g1",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 14,
+       "label": "A",
+       "type": "fill",
+       "stem": "某機器貓從數線上原點位置朝數線的正向移動，其移動方式如下：以8秒為一週期，每一週期先以每秒4單位長等速度移動6秒，再休息2秒。如此繼續下去，則此機器貓在開始移動後[[FILL]]秒會抵達數線上坐標為116的位置。",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "14-1",
+         "14-2"
+        ],
+        "official_cells": [
+         "14",
+         "15"
+        ],
+        "template": "[[14-1]][[14-2]]",
+        "answer_cells": {
+         "14-1": "3",
+         "14-2": "7"
+        },
+        "answer_latex": "37"
+       },
+       "tags": {
+        "units": [
+         "sequence",
+         "data_modeling"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.7,
+        "Ph": 0.93,
+        "Pl": 0.36,
+        "D": 0.57
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g2",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 15,
+       "label": "B",
+       "type": "fill",
+       "stem": "坐標空間中有兩條直線$L_{1},L_{2}$與一平面$E$，其中直線$L_{1}\\text{：}\\frac{x}{2}=\\frac{y}{-3}=\\frac{z}{-5}$，而$L_{2}$的參數式為$\\begin{cases}x=1\\\\y=1+2t\\\\z=1+3t\\end{cases}$（$t$為實數）。若$L_{1}$落在$E$上，且$L_{2}$與$E$不相交，則$E$的方程式為[[FILL]]。",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "15-1",
+         "15-2",
+         "15-3"
+        ],
+        "official_cells": [
+         "16",
+         "17",
+         "18"
+        ],
+        "template": "x-[[15-1]]y+[[15-2]]z=[[15-3]]",
+        "answer_cells": {
+         "15-1": "6",
+         "15-2": "4",
+         "15-3": "0"
+        },
+        "answer_latex": "x-6y+4z=0"
+       },
+       "tags": {
+        "units": [
+         "space_line_plane",
+         "vector_space"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.38,
+        "Ph": 0.82,
+        "Pl": 0.02,
+        "D": 0.8
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g3",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 16,
+       "label": "C",
+       "type": "fill",
+       "stem": "從$1,2,3,4,5,6,7,8,9$這九個數中任意取出三個相異的數，每數被取出的機率皆相等，則三數乘積是一完全平方數的機率為[[FILL]]。（化成最簡分數）",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "16-1",
+         "16-2",
+         "16-3"
+        ],
+        "official_cells": [
+         "19",
+         "20",
+         "21"
+        ],
+        "template": "\\frac{[[16-1]]}{[[16-2]][[16-3]]}",
+        "answer_cells": {
+         "16-1": "1",
+         "16-2": "1",
+         "16-3": "4"
+        },
+        "answer_latex": "\\frac{1}{14}"
+       },
+       "tags": {
+        "units": [
+         "probability",
+         "counting"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.13,
+        "Ph": 0.26,
+        "Pl": 0.02,
+        "D": 0.24
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g4",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 17,
+       "label": "D",
+       "type": "fill",
+       "stem": "在坐標平面上，$\\Gamma$是邊長為4的正方形，其中心位在點$(1,1)$，且各邊與坐標軸平行。已知函數$y=a\\times 2^{x}$的圖形與$\\Gamma$相交，其中$a$為實數，則$a$的最大可能範圍為[[FILL]]。",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "17-1",
+         "17-2",
+         "17-3"
+        ],
+        "official_cells": [
+         "22",
+         "23",
+         "24"
+        ],
+        "template": "[[17-1]][[17-2]]\\le a\\le [[17-3]]",
+        "answer_cells": {
+         "17-1": "-",
+         "17-2": "2",
+         "17-3": "6"
+        },
+        "answer_latex": "-2\\le a\\le 6"
+       },
+       "tags": {
+        "units": [
+         "exp_log",
+         "functions"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.22,
+        "Ph": 0.53,
+        "Pl": 0.01,
+        "D": 0.52
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g5",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 18,
+       "label": "E",
+       "type": "fill",
+       "stem": "將$\\left(\\sqrt[3]{49} \\right)^{100}$寫成科學記號$\\left(\\sqrt[3]{49} \\right)^{100}=a\\times 10^{n}$，其中$1\\le a<10$，且$n$為正整數。若$a$的整數部分為$m$，則數對$(m,n)=$[[FILL]]。",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "18-1",
+         "18-2",
+         "18-3"
+        ],
+        "official_cells": [
+         "25",
+         "26",
+         "27"
+        ],
+        "template": "([[18-1]],[[18-2]][[18-3]])",
+        "answer_cells": {
+         "18-1": "2",
+         "18-2": "5",
+         "18-3": "6"
+        },
+        "answer_latex": "(2,56)"
+       },
+       "tags": {
+        "units": [
+         "exp_log",
+         "real_numbers"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.26,
+        "Ph": 0.66,
+        "Pl": 0.01,
+        "D": 0.65
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g6",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 19,
+       "label": "F",
+       "type": "fill",
+       "stem": "如圖，機器人在地面上從一點$P$出發，按照以下規則移動：先朝某方向前進一公尺後，依前進方向逆時針旋轉$45^{\\circ}$；朝新方向前進一公尺後，依前進方向順時針旋轉$90^{\\circ}$；再朝新方向前進一公尺後，依前進方向逆時針旋轉$45^{\\circ}$；再朝新方向前進一公尺後，依前進方向順時針旋轉$90^{\\circ}$，……，以此類推。已知機器人移動的路徑會形成一個封閉區域，則此封閉區域的面積為[[FILL]]平方公尺。（化成最簡根式）",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "19-1",
+         "19-2",
+         "19-3"
+        ],
+        "official_cells": [
+         "28",
+         "29",
+         "30"
+        ],
+        "template": "[[19-1]]+[[19-2]]\\sqrt{[[19-3]]}",
+        "answer_cells": {
+         "19-1": "8",
+         "19-2": "4",
+         "19-3": "2"
+        },
+        "answer_latex": "8+4\\sqrt{2}"
+       },
+       "figures": [
+        {
+         "id": "fF",
+         "kind": "diagram",
+         "alt": "機器人路徑示意圖：從點 P 出發的折線，每段 1 公尺並以箭頭標示前進方向，依規則交替逆時針轉 45°、順時針轉 90°（只畫出開頭幾段）。",
+         "source": {
+          "page": 7,
+          "bbox_pt": [
+           219,
+           481,
+           351,
+           532
+          ]
+         },
+         "file": "data/exams/figures-math/gsat-math-110/fF.png",
+         "width": 329,
+         "height": 118
+        }
+       ],
+       "tags": {
+        "units": [
+         "geometry"
+        ]
+       },
+       "tables": [],
+       "stats": {
+        "P": 0.38,
+        "Ph": 0.73,
+        "Pl": 0.05,
+        "D": 0.68
+       }
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g7",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 20,
+       "label": "G",
+       "type": "fill",
+       "stem": "在四面體$ABCD$中，$\\overline{AB}=\\overline{AC}=\\overline{AD}=4\\sqrt{6}$、$\\overline{BD}=\\overline{CD}=8$，且$\\cos \\angle BAC=\\frac{1}{3}$，則點$D$到平面$ABC$的距離為[[FILL]]。（化成最簡根式）",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "20-1",
+         "20-2"
+        ],
+        "official_cells": [
+         "31",
+         "32"
+        ],
+        "template": "[[20-1]]\\sqrt{[[20-2]]}",
+        "answer_cells": {
+         "20-1": "4",
+         "20-2": "2"
+        },
+        "answer_latex": "4\\sqrt{2}"
+       },
+       "tags": {
+        "units": [
+         "vector_space",
+         "space_line_plane",
+         "geometry"
+        ]
+       },
+       "figures": [],
+       "tables": [],
+       "stats": {
+        "P": 0.21,
+        "Ph": 0.46,
+        "Pl": 0.03,
+        "D": 0.43
+       }
+      }
+     ],
+     "tables": []
+    }
+   ]
+  }
+ ],
+ "reference_formulas": [
+  "1. 首項為$a$，公差為$d$的等差數列前$n$項之和為$S=\\frac{n(2a+(n-1)d)}{2}$",
+  "首項為$a$，公比為$r\\quad (r\\ne 1)$的等比數列前$n$項之和為$S=\\frac{a(1-r^{n})}{1-r}$",
+  "2. 三角函數的和角公式：$\\sin (A+B)=\\sin A\\cos B+\\cos A\\sin B$",
+  "$\\cos (A+B)=\\cos A\\cos B-\\sin A\\sin B$",
+  "$\\tan (A+B)=\\frac{\\tan A+\\tan B}{1-\\tan A\\tan B}$",
+  "3. $\\Delta ABC$的正弦定理：$\\frac{a}{\\sin A}=\\frac{b}{\\sin B}=\\frac{c}{\\sin C}=2R$ （$R$為$\\Delta ABC$外接圓半徑）",
+  "$\\Delta ABC$的餘弦定理：$\\quad c^{2}=a^{2}+b^{2}-2ab\\cos C$",
+  "4. 一維數據$X:x_{1},x_{2},\\cdots ,x_{n}$，算術平均數$\\mu_{X}=\\frac{1}{n}(x_{1}+x_{2}+\\cdots+x_{n})=\\frac{1}{n}\\sum_{i=1}^{n} x_{i}$",
+  "標準差$\\sigma_{X}=\\sqrt{\\frac{1}{n}\\sum_{i=1}^{n} (x_{i}-\\mu_{X})^{2}}=\\sqrt{\\frac{1}{n}((\\sum_{i=1}^{n} x_{i}^{2})-n\\mu_{X}^{2})}$",
+  "5. 二維數據$(X,Y):(x_{1},y_{1}),(x_{2},y_{2}),\\cdots ,(x_{n},y_{n})$，相關係數$r_{X,Y}=\\frac{\\sum_{i=1}^{n} (x_{i}-\\mu_{X})(y_{i}-\\mu_{Y})}{n\\sigma_{X}\\sigma_{Y}}$",
+  "迴歸直線（最適合直線）方程式$y-\\mu_{Y}=r_{X,Y}\\frac{\\sigma_{Y}}{\\sigma_{X}}(x-\\mu_{X})$",
+  "6. 參考數值：$\\sqrt{2}\\approx 1.414\\quad,\\quad \\sqrt{3}\\approx 1.732\\quad,\\quad \\sqrt{5}\\approx 2.236\\quad,\\quad \\sqrt{6}\\approx 2.449\\quad,\\sqrt{7}\\approx 2.646\\quad,\\pi \\approx 3.142$",
+  "7. 對數值：$\\log_{10}2\\approx 0.3010,\\quad \\quad \\log_{10}3\\approx 0.4771,\\ \\log_{10}5\\approx 0.6990,\\ \\log_{10}7\\approx 0.8451$",
+  "8. 角錐體積=$\\frac{1}{3}$(底面積$\\times$高)"
+ ],
+ "extraction": {
+  "method": "tools/docx_math_draft.py（官方 Word 版題本，MathType→LaTeX）產生骨架，答案取自 answer.pdf（pdftotext）；逐頁以 pdftoppm 頁面影像人工校對，選填題 template 依題本答案格式人工撰寫",
+  "corrections": [],
+  "issues": [],
+  "verified_by": "visual-check"
+ }
+}

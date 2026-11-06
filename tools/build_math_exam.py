@@ -493,6 +493,11 @@ def build_old(year, docx=None):
             guess = None
             if boxes:
                 a, b = boxes[0].start(), boxes[-1].end()
+                # 作答格若在一段公式裡（例如 $x-[[BOX]]y+[[BOX]]z=[[BOX]]$），整段公式都算格式
+                if stem[:a].count("$") % 2:
+                    a = stem.rfind("$", 0, a)
+                if stem[b:].count("$") % 2:
+                    b = stem.find("$", b) + 1
                 guess = BOX_RX.sub("[[?]]", stem[a:b]).replace("$", "")
                 stem = stem[:a] + "[[FILL]]" + stem[b:]
             cur_item["stem"] = stem
