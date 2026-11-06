@@ -1,6 +1,12 @@
 @import 'tailwindcss';
 
 /*
+ * 視窗內高 ≥ 800px（50rem）：桌機側邊欄在高的視窗用寬鬆一點的間距（docs/design/desktop-polish.md §3.1、§8 的高度預算）。
+ * 寫成 tall:py-1 這類 class；矮的視窗（1366×640、1280×600）維持精簡的密度。
+ */
+@custom-variant tall (@media (min-height: 50rem));
+
+/*
  * 設計 token（docs/design/css-overhaul.md §3）：所有顏色都是 CSS 變數，元件只用語意化的 Tailwind 類別（bg-surface、text-muted…），
  * 不直接寫 bg-white／text-gray-500／bg-black/40。這樣切換主題只要換變數，不必在每個元件加 dark: 變體
  * （也不能用 dark:：它只看系統設定，不看本站手動切換的 data-theme）。

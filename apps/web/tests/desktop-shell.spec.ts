@@ -2,7 +2,8 @@
  * 桌機殼層（docs/design/desktop-ui.md §3、§11.3）：在建置後的產物上跑，project 是 desktop-ui（1366×640）與 desktop-lg（1024×600）。
  * 頁面各自的桌機版面（首頁儀表板、/exams 表格、/practice 矩陣…）的斷言跟著 PR A2 加。
  *
- *   1. 側邊欄的高度：1366×640 已登入與未登入都不用捲；1280×600 已登入不用捲，未登入可以捲但一定有淡出遮罩、捲到底後遮罩消失。
+ *   1. 側邊欄的高度：1366×640 已登入與未登入都不用捲（再多一個群組也不用，desktop-polish.md §8.2）；1280×600 也不用捲；
+ *      更矮的視窗可以捲但一定有淡出遮罩、捲到底後遮罩消失。
  *   2. 頁尾貼底（短頁）；工作區路由的內距與寬度模式。
  *   3. 收合：[ 鍵與按鈕、重新整理後仍是收合、收合時鍵盤聚焦看得到提示泡泡；觸控為主的裝置沒有收合。
  *   4. 工作區路由的自動收合（寬度不夠、沒設定過）；自己按過展開之後不再自動收合。
@@ -16,7 +17,7 @@
  */
 import { expect, test, type Locator, type Page } from '@playwright/test';
 import { PAGES } from '../src/modules';
-import { collectErrors, fakeBackend, ok, signedInMe } from './support/backend';
+import { collectErrors, fakeBackend, FEATURES_ZH_EXEMPLAR_ON, ok, signedInMe } from './support/backend';
 
 const sidebar = (page: Page) => page.locator('aside[data-sidebar]');
 const sidebarList = (page: Page) => page.locator('[data-sidebar-list]');
@@ -92,7 +93,7 @@ test.describe('側邊欄', () => {
     expect(errors).toEqual([]);
   });
 
-  test('1280×600：已登入不用捲；未登入時有淡出遮罩，捲到底後最後一項看得到、遮罩消失', async ({ page }) => {
+  test('1280×600：已登入與未登入都不用捲；更矮的視窗（1280×520，瀏覽器放大）有淡出遮罩，捲到底後最後一項看得到、遮罩消失', async ({ page }) => {
     onlyDesktopUi();
     await page.setViewportSize({ width: 1280, height: 600 });
     const backend = await fakeBackend(page, { me: signedInMe() });
@@ -103,12 +104,44 @@ test.describe('側邊欄', () => {
     backend.me = { user: null };
     await page.reload();
     await expect(page.getByRole('link', { name: '使用 Google 登入', exact: true })).toBeVisible();
-    // 未登入的清單 489px、可用 449px（§16.5），一定溢出：不溢出表示版面或量法變了，遮罩的檢查就沒有意義，要先修這個測試。
-    expect((await listOverflow(page)).overflowing).toBe(true);
+    // CSS 改版 PR B 把清單改密（desktop-polish.md §8.2 的高度預算）：未登入的清單 441px、可用 461px，不用捲。
+    expect(await listOverflow(page)).toEqual({ overflowing: false, masked: false });
+
+    // 可用 381px 一定溢出：不溢出表示版面或量法變了，遮罩的檢查就沒有意義，要先修這個測試。
+    await page.setViewportSize({ width: 1280, height: 520 });
+    await expect.poll(async () => (await listOverflow(page)).overflowing).toBe(true);
     await expect(sidebarList(page)).toHaveAttribute('data-overflow', '');
     await sidebarList(page).evaluate((el) => el.scrollTo({ top: el.scrollHeight }));
     await expect(sidebarList(page)).not.toHaveAttribute('data-overflow');
     await expect(sidebarList(page).getByRole('link', { name: '模擬考' })).toBeInViewport();
+  });
+
+  test('高度預算：1366×640 再多一個群組（標題＋一項，例如「數學」）也不用捲：未登入、已登入、學習助手與國寫範文都開', async ({ page }) => {
+    onlyDesktopUi();
+    await page.setViewportSize({ width: 1366, height: 640 });
+    const backend = await fakeBackend(page, { me: { user: null } });
+    /** 複製最後一個群組、只留第一項，接在後面（模擬 modules.ts 多一個 NAV_GROUPS），回傳清單內容高與可用高。 */
+    const withExtraGroup = () =>
+      sidebarList(page).evaluate((list) => {
+        const groups = [...list.querySelectorAll(':scope > div')].filter((d) => d.querySelector('ul'));
+        const last = groups[groups.length - 1] as HTMLElement;
+        const clone = last.cloneNode(true) as HTMLElement;
+        clone.querySelectorAll('li').forEach((li, i) => {
+          if (i > 0) li.remove();
+        });
+        last.after(clone);
+        return { overflowing: list.scrollHeight > list.clientHeight };
+      });
+    await page.goto('/');
+    await expect(page.getByRole('link', { name: '使用 Google 登入', exact: true })).toBeVisible();
+    expect(await withExtraGroup(), '未登入').toEqual({ overflowing: false });
+
+    backend.me = signedInMe({ ai_status: 'approved' });
+    backend.features = FEATURES_ZH_EXEMPLAR_ON;
+    await page.reload();
+    await expect(page.getByRole('button', { name: '小明（帳號選單）' })).toBeVisible();
+    await expect(sidebarList(page).getByRole('link', { name: '學習助手' })).toBeVisible();
+    expect(await withExtraGroup(), '已登入、功能全開').toEqual({ overflowing: false });
   });
 
   test('600 高、未登入：換到清單下面的頁（模擬考、歷屆試題），目前頁自動捲進清單的可見範圍、不壓在淡出遮罩底下', async ({ page }) => {

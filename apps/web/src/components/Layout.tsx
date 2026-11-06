@@ -74,7 +74,8 @@ function Brand() {
 // ───────────────────────── 桌機側邊欄（只在 ≥ lg 顯示） ─────────────────────────
 
 /**
- * 導覽清單的一項：28px 高（仍 ≥ 24px，WCAG 2.5.8）。目前頁除了底色，左側另有 3px 的色條（框線，§4.11）。
+ * 導覽清單的一項：26px 高（視窗內高 ≥ 800px 時 32px；收合時 24px，都 ≥ 24px，WCAG 2.5.8）。高度預算見 docs/design/desktop-polish.md
+ * §8.2：1366×640 放得下 6 個清單群組（加上「數學」）而不用捲。目前頁除了底色，左側另有 3px 的色條（框線，§4.11）。
  * 高對比模式（forced-colors）會拿掉底色，而且把透明的框線換成系統色，每一項都會出現同樣的色條：所以非目前頁的色條
  * 指定成 Canvas（和背景同色、看不見），目前頁指定成 Highlight（作者指定的系統色不會被換掉），收合時也看得出目前頁。
  * 收合時文字改成 sr-only（可存取名稱不變），滑鼠移入或鍵盤聚焦時由提示泡泡顯示（data-tip）。
@@ -86,8 +87,8 @@ function SidebarLink({ page, active, collapsed }: { page: PageMeta; active: bool
       to={page.path}
       aria-current={active ? 'page' : undefined}
       data-tip={collapsed ? page.navLabel : undefined}
-      className={`flex items-center gap-3 rounded-md border-l-[3px] py-0.5 text-[0.95rem] leading-6 ${
-        collapsed ? 'justify-center px-0' : 'pr-3 pl-[0.5625rem]'
+      className={`flex items-center gap-3 rounded-nav border-l-[3px] text-[0.95rem] leading-6 ${
+        collapsed ? 'justify-center px-0 py-0.5' : 'py-px pr-3 pl-[0.5625rem] tall:py-1'
       } ${
         active
           ? 'border-primary bg-primary-soft font-semibold text-primary forced-colors:border-[color:Highlight]'
@@ -157,7 +158,7 @@ function SidebarList({ collapsed, activePath, onScroll }: { collapsed: boolean; 
       data-sidebar-list=""
       data-overflow={overflow ? '' : undefined}
       onScroll={onScroll}
-      className="min-h-0 flex-1 overflow-y-auto px-1.5 py-1 lg:data-overflow:[mask-image:linear-gradient(to_bottom,black_calc(100%-2rem),transparent)]"
+      className="min-h-0 flex-1 overflow-y-auto px-1.5 py-0.5 lg:data-overflow:[mask-image:linear-gradient(to_bottom,black_calc(100%-2rem),transparent)]"
     >
       {NAV_GROUPS.filter((group) => group.id !== 'system').map((group) => {
         const pages = PAGES.filter((p) => p.group === group.id && isPageEnabled(p, flags));
@@ -175,7 +176,7 @@ function SidebarList({ collapsed, activePath, onScroll }: { collapsed: boolean; 
                   <div aria-hidden="true" className="mx-3 my-1 border-t border-line" />
                 </>
               ) : (
-                <p id={labelId} className="px-3 pt-1 pb-0.5 text-xs leading-4 font-semibold tracking-wide text-muted">
+                <p id={labelId} className="px-3 pt-1 text-xs leading-3.5 font-semibold tracking-wide text-muted tall:pt-2.5 tall:pb-0.5 tall:leading-4">
                   {group.label}
                 </p>
               ))}
@@ -253,7 +254,7 @@ function SidebarTools({
     );
   }
   return (
-    <div className="shrink-0 border-t border-line p-1.5">
+    <div className="shrink-0 border-t border-line px-1.5 pt-1.5 pb-1">
       {account === 'signed-in' ? (
         <div className="flex items-center gap-0.5">
           <div className="min-w-0 flex-1">
@@ -264,7 +265,7 @@ function SidebarTools({
       ) : (
         <>
           {account === 'signed-out' && (
-            <div className="px-1 pb-1">
+            <div className="px-1 pb-0.5">
               <LoginButton placement="sidebar" />
             </div>
           )}
@@ -308,7 +309,7 @@ function Sidebar({
       onClickCapture={onLinkClickCapture}
       {...tip.handlers}
     >
-      <div className={`flex h-12 shrink-0 items-center ${collapsed ? 'justify-center' : 'justify-between gap-2 pr-1.5 pl-4'}`}>
+      <div className={`flex h-11 shrink-0 items-center ${collapsed ? 'justify-center' : 'justify-between gap-2 pr-1.5 pl-4'}`}>
         {/* 收合時品牌只剩收合鈕的位置；首頁仍是清單的第一項。 */}
         {!collapsed && <Brand />}
         {canCollapse && (

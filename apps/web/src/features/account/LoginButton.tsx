@@ -71,7 +71,7 @@ export function LoginButton({ placement = 'topbar', collapsed = false }: { place
         <div>
           <a
             href={loginHref(next)}
-            className="flex min-h-9 w-full items-center justify-center gap-2 rounded-full border border-line-strong px-4 text-control font-semibold hover:border-primary hover:text-primary"
+            className="flex min-h-8 w-full items-center justify-center gap-2 rounded-full border border-line-strong px-4 text-control font-semibold hover:border-primary hover:text-primary"
           >
             <LogIn aria-hidden="true" className="size-4" />
             使用 Google 登入
@@ -167,7 +167,7 @@ function AccountMenu({ me, placement, collapsed }: { me: MeResponseSignedIn; pla
           className={
             collapsed
               ? 'inline-flex size-8 items-center justify-center rounded-full hover:bg-surface-2'
-              : 'flex min-h-10 w-full items-center gap-2 rounded-lg px-1.5 py-1 text-left hover:bg-surface-2'
+              : 'flex min-h-9 w-full items-center gap-2 rounded-lg px-1.5 py-0.5 text-left hover:bg-surface-2'
           }
         >
           <Avatar name={name} />
