@@ -12,7 +12,7 @@
 import type { MathEra, MathPaperBase, MathSectionType, MathSolution, MathSubject } from '@gsat/shared';
 import { DATA_BASE_URL, DataLoadError, fetchDataFile, isRecord, memoizeAsync } from './client';
 
-/** 卷子 id：數A／數B gsat-matha-115、gsat-mathb-115；舊課綱 gsat-math-105（之後加入）。 */
+/** 卷子 id：數A／數B gsat-matha-115、gsat-mathb-115；舊課綱 gsat-math-100…110。 */
 export const MATH_PAPER_ID_PATTERN = /^gsat-math[ab]?-\d{2,3}$/;
 
 export interface MathOfficialFile {

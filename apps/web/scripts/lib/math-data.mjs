@@ -7,8 +7,8 @@
  *   math/solutions/{id}.json   本站詳解（data/exams/math-solutions/{id}.json；沒有詳解檔時 items 是空的，畫面顯示「詳解準備中」）
  *   math/figures/{id}/{fig}.png  圖檔（從 data/exams/figures-math/ 原樣複製）
  *
- * 課綱（era）：卷子有 era 就用，否則依考科判斷（math_a／math_b＝108課綱，math＝舊課綱）。之後加入 100–110 的舊課綱卷子
- * （id gsat-math-{year}、subject math）時不必改程式，列表會自動出現「舊課綱」分頁與標記。
+ * 課綱（era）：卷子有 era 就用，否則依考科判斷（math_a／math_b＝108課綱，math＝舊課綱）。100–110 的舊課綱卷子
+ * （id gsat-math-{year}、subject math）在列表的「舊課綱」分頁。
  *
  * D8（docs/design/math.md 開頭）：官方的非選擇題參考答案、評分原則、解析不輸出——試題檔本來就不收（validator 擋），
  * 這裡輸出前再檢查一次禁止欄位；官方檔案連結也不列 republish:false 的檔案（評分原則、解析）。
