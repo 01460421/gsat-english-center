@@ -186,6 +186,7 @@
 
 - 圖一律從**官方 PDF** 裁切（不是 Word 檔裡的圖片），200 dpi、裁掉四周空白、16 階灰階 PNG。重跑 `crop_math_figures.py` 會得到位元組相同的檔案。
 - 題目中的標籤（A、B、P、θ…）在 PDF 裡常是另外的文字物件，bbox 要把它們包進去。
+- 矩形裁不乾淨（圖框裡混到題幹文字）時，可在 `source` 加 `mask_pt: [[x0, top, x1, bottom], …]`，裁圖時把這些區塊塗白。
 - 圖放在所屬題組（`group.figures`，題組共用）或小題（`item.figures`）；選項是圖時放 `item.options_figures`。
 
 ## table（表）

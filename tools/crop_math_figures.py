@@ -5,6 +5,7 @@
 
 依據 data/exams/parsed-math/{id}.json 裡每張圖的 `source`：
   { "page": 7, "bbox_pt": [x0, top, x1, bottom] }   # PDF 點座標（72 pt = 1 吋），原點在左上
+  可選 "mask_pt": [[x0, top, x1, bottom], ...]：bbox 內要塗白的區塊（例如圖框裡混到的題幹文字）
 以 pdftoppm 200 dpi 算圖，裁掉四周空白（留 6 px），轉灰階並減色成 16 階 PNG，
 再把 `file`、`width`、`height` 寫回 JSON。可重跑；圖檔進版控。
 
@@ -41,8 +42,8 @@ def iter_figures(doc):
                     yield f
 
 
-def crop(pdf, page, bbox, out_png):
-    from PIL import Image, ImageOps  # pillow：只處理我們自己算出的 PNG
+def crop(pdf, page, bbox, out_png, masks=()):
+    from PIL import Image, ImageDraw, ImageOps  # pillow：只處理我們自己算出的 PNG
     x0, y0, x1, y1 = bbox
     s = DPI / 72.0
     with tempfile.TemporaryDirectory() as td:
@@ -53,6 +54,9 @@ def crop(pdf, page, bbox, out_png):
                         "-gray", "-png", "-singlefile", pdf, base],
                        check=True, timeout=120, capture_output=True)
         im = Image.open(base + ".png").convert("L")
+        for mx0, my0, mx1, my1 in masks:
+            ImageDraw.Draw(im).rectangle([int((mx0 - x0) * s), int((my0 - y0) * s),
+                                          int((mx1 - x0) * s), int((my1 - y0) * s)], fill=255)
         box = ImageOps.invert(im).point(lambda v: 255 if v > 24 else 0).getbbox()
         if box:
             l, t, r, b = box
@@ -75,7 +79,7 @@ def process(doc_id):
         if not src:
             continue
         rel = f"data/exams/figures-math/{doc_id}/{fig['id']}.png"
-        w, h = crop(pdf, src["page"], src["bbox_pt"], os.path.join(ROOT, rel))
+        w, h = crop(pdf, src["page"], src["bbox_pt"], os.path.join(ROOT, rel), src.get("mask_pt") or ())
         fig["file"], fig["width"], fig["height"] = rel, w, h
         n += 1
     tmp = path + ".tmp"
