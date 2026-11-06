@@ -7,6 +7,7 @@ import type { AssistSectionMethod } from '@gsat/shared';
 import { useId } from 'react';
 import { AiBadge } from '../../writing/components/ui';
 import { cardCompactCls } from '../../../components/ui/Card';
+import { DisclosureChevron, disclosureInlineSummaryCls } from '../../../components/ui/Disclosure';
 
 export function MethodCard({ method, note }: { method: AssistSectionMethod; note?: string | null }) {
   const id = useId();
@@ -35,7 +36,10 @@ export function MethodCard({ method, note }: { method: AssistSectionMethod; note
         </ol>
       </div>
       <details className="report-expand group">
-        <summary className="min-h-11 cursor-pointer py-2 text-sm font-medium text-primary">常見陷阱與提分重點</summary>
+        <summary className={`${disclosureInlineSummaryCls} text-sm font-medium`}>
+          <DisclosureChevron inline />
+          常見陷阱與提分重點
+        </summary>
         <div className="space-y-2 pt-1">
           <ul className="list-disc space-y-1 pl-5 text-[0.95rem]">
             {method.traps.map((t) => (

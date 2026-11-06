@@ -55,6 +55,7 @@ import { isExemplarSetPending, useExemplarPoller, type ExemplarPoller } from './
 import { loadSitePrompt } from './lib/sitePrompts';
 import { defaultLevelFor, useYourEssay } from './lib/yourEssay';
 import { badgeCls } from '../../../components/ui/Badge';
+import { DisclosureChevron, disclosureSummaryCls } from '../../../components/ui/Disclosure';
 
 export default function ExemplarSetPage() {
   const { id = '' } = useParams();
@@ -433,9 +434,10 @@ function SetView({ detail, poller }: { detail: ExemplarSetDetail; poller: Exempl
       {view && (
         <>
           {(view.safety_flag ?? detail.safety_flag) && <AssistSafetyCare note="下面的範文照常提供。" />}
-          <details ref={promptRef} className={`${card} exemplar-expand`}>
-            <summary className="min-h-11 cursor-pointer py-2 font-semibold">
+          <details ref={promptRef} className={`group ${card} exemplar-expand`}>
+            <summary className={disclosureSummaryCls}>
               <h2 className="inline text-lg">題目</h2>
+              <DisclosureChevron />
             </summary>
             <div className="mt-2">{promptBlock}</div>
           </details>

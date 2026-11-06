@@ -27,6 +27,7 @@ import { ExampleSentence } from '../ui/ExampleSentence';
 import { btnPrimary, btnSecondary, btnText, cardCls, sectionTitleCls } from '../ui/styles';
 import { useLoad } from '../ui/useLoad';
 import { btn } from '../../../components/ui/buttons';
+import { DisclosureChevron, disclosureInlineSummaryCls } from '../../../components/ui/Disclosure';
 
 function Section({ title, children, credit }: { title: string; children: ReactNode; credit?: string }) {
   return (
@@ -137,8 +138,11 @@ function MeaningSection({ entry }: { entry: VocabEntry }) {
         ))}
       </ul>
       {main.length > 0 && others.length > 0 && (
-        <details className="mt-3">
-          <summary className="cursor-pointer text-sm text-primary">其他詞性與專業領域的釋義（{others.length}）</summary>
+        <details className="group mt-3">
+          <summary className={`${disclosureInlineSummaryCls} text-sm`}>
+            <DisclosureChevron inline />
+            其他詞性與專業領域的釋義（{others.length}）
+          </summary>
           <ul className="mt-2 space-y-1.5 text-muted">
             {others.map((z, i) => (
               <SenseLine key={i} sense={z} />

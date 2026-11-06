@@ -32,6 +32,7 @@ import { useQuota } from './lib/hooks';
 import { ExemplarsEntryCard } from './exemplars/components/ExemplarsButton';
 import { useExemplarsEnabled } from './exemplars/lib/useExemplarsEnabled';
 import { cardLinkCls } from '../../components/ui/Card';
+import { DisclosureChevron, disclosureSummaryCls } from '../../components/ui/Disclosure';
 
 function EntryCard({ to, icon, title, children }: { to: string; icon: ReactNode; title: string; children: ReactNode }) {
   return (
@@ -160,11 +161,12 @@ export default function WritingHomePage() {
               </section>
             )}
             <section aria-labelledby="modes-heading" className={card}>
-              <details>
-                <summary className="cursor-pointer">
+              <details className="group">
+                <summary className={`${disclosureSummaryCls} -my-2`}>
                   <h2 id="modes-heading" className="inline font-semibold">
                     兩種批改方式
                   </h2>
+                  <DisclosureChevron />
                 </summary>
                 <div className="[&_dl]:grid-cols-1">
                   <ModesList />

@@ -8,6 +8,7 @@ import { badgeCls } from '../../../components/ui/Badge';
 import { btn } from '../../../components/ui/buttons';
 import { textareaCls } from '../../../components/ui/fields';
 import { cardCompactCls } from '../../../components/ui/Card';
+import { DisclosureChevron } from '../../../components/ui/Disclosure';
 
 /** 按鈕：共用元件（components/ui/buttons.ts，設計文件 css-overhaul §4.1）。 */
 export const primaryButton = btn('primary', 'md');
@@ -66,8 +67,9 @@ export function ReportAiContent({ variant }: { variant?: AiVariant }) {
   const assistant = variant === 'assistant';
   const exemplar = variant === 'exemplar';
   return (
-    <details className="text-sm">
-      <summary className="cursor-pointer py-3 text-muted hover:text-primary">
+    <details className="group text-sm">
+      <summary className="inline-flex min-h-11 cursor-pointer list-none items-center gap-1 text-muted hover:text-primary [&::-webkit-details-marker]:hidden">
+        <DisclosureChevron inline />
         回報不當內容
         <span className="ml-2 rounded-full bg-surface-2 px-2 py-0.5 text-xs">即將開放</span>
       </summary>
