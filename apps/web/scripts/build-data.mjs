@@ -18,6 +18,9 @@
  *   data/sources.json                      題目來源登記（本站題庫與出版社的出處句、授權範圍、到期日；可以不存在＝只有本站題庫）
  *   data/publisher/{來源}/v1/…             出版社模考的正規化檔（gsat-pub/v1；可以不存在，docs/design/weak-paper.md §8.4）
  *   data/zh-writing/prompts.json           國寫範文獨立頁的歷屆國寫題目（111–115 每年知性、情意各一；gsat-zh-writing-prompts/v1）
+ *   data/exams/parsed-math/*.json          學測數學A／數學B 歷屆試題（gsat-math-exam/v1，docs/math-exam-json-schema.md）；圖在 data/exams/figures-math/
+ *   data/exams/math-solutions/{id}.json    數學本站詳解（另一條流程產生；可以不存在＝該卷顯示「詳解準備中」）
+ *   data/exams/math-manifest.json          數學官方檔案清單（試題、答案、答題卷的官方網址）
  *   （新增輸入路徑時，根目錄 vercel.json 的 ignoreCommand 要一起加，否則只改那個路徑的提交不會重新建置；
  *    Vercel 限制 ignoreCommand 最多 256 字，超過時部署一建立就失敗，路徑太多就改列上層目錄）
  *
@@ -44,6 +47,9 @@
  *                        規則在 scripts/lib/bank-paper-skills.mjs（docs/design/weak-paper.md §6.2）
  *   bank/sources.json    公開的來源登記（出處句、授權範圍、是否有效、到期日 ends_on；不含合約編號），
  *                        規則在 scripts/lib/item-sources.mjs（docs/design/weak-paper.md §8.3、§7.6）
+ *   math/index.json、math/{id}.json、math/solutions/{id}.json、math/figures/{id}/*.png
+ *                        學測數學歷屆試題（/math）：卷子摘要、卷子內容、本站詳解與圖檔。規則在 scripts/lib/math-data.mjs
+ *                        （docs/design/math.md P2）；前端型別在 src/data/math.ts 與 packages/shared/src/math-exam.ts
  *   zh-writing/prompts.json  國寫範文獨立頁的歷屆國寫題目（題本的題目、素材、引導問題與字數規定；沒有參考答案、評分原則或佳作）。
  *                        原樣輸出（加 version），型別與守衛在 packages/shared/src/zh-writing-prompts.ts；Worker 另外打包同一份
  *
@@ -66,7 +72,7 @@
  */
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, writeFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { gzipSync } from 'node:zlib';
@@ -95,6 +101,7 @@ import {
 import { BANK_MOCK_LETTERS_SCRIPT } from './lib/bank-mock-letters.mjs';
 import { BANK_MOCK_POOL_SCRIPT, BankMockPoolError, MOCK_POOL_PATH, buildMockPool, mockPoolLogLines, readTopicPlans } from './lib/bank-mock-pool.mjs';
 import { BANK_MOCK_THEMES_SCRIPT } from './lib/bank-mock-themes.mjs';
+import { MATH_DATA_SCRIPT, MathDataError, buildMathData } from './lib/math-data.mjs';
 import { BANK_PAPER_SKILLS_SCRIPT, PAPER_SKILLS_PATH, buildPaperSkills } from './lib/bank-paper-skills.mjs';
 import { SCORE_SCALES_SCRIPT, ScoreScalesError, buildScoreScales } from './lib/score-scales.mjs';
 import {
@@ -145,6 +152,12 @@ const PUBLISHER_DIR = process.env.GSAT_PUBLISHER_DIR ? path.resolve(process.env.
 /** 國寫範文獨立頁的歷屆國寫題目（docs/design/assistant-subjects.md「國寫範文」的「獨立頁」）：必須存在、格式要對。 */
 const ZH_WRITING_PROMPTS_FILE = path.join(DATA_DIR, 'zh-writing', 'prompts.json');
 const ZH_WRITING_PROMPTS_FORMAT = 'gsat-zh-writing-prompts/v1';
+/**
+ * 學測數學歷屆試題（docs/design/math.md P2）。試題目錄必須存在；詳解目錄由另一條流程陸續寫入，可以不存在。
+ */
+const MATH_PARSED_DIR = path.join(DATA_DIR, 'exams', 'parsed-math');
+const MATH_SOLUTIONS_DIR = path.join(DATA_DIR, 'exams', 'math-solutions');
+const MATH_MANIFEST_FILE = path.join(DATA_DIR, 'exams', 'math-manifest.json');
 /** 寫作題庫的 SVG 清理（版本雜湊用：清理規則改了，輸出就可能改變）。 */
 const SVG_SANITIZE_SCRIPT = path.join(REPO_ROOT, 'packages', 'shared', 'scripts', 'svg-sanitize.mjs');
 /** PDF 字型的缺字檢查（版本雜湊用：自組模擬考的組卷池依它判斷題本缺字的題組）。 */
@@ -317,6 +330,8 @@ function formatBytes(bytes) {
 
 /** 最後輸出的檔案（相對 OUT_DIR）與內容；全部檢查通過才一次寫入。 @type {Map<string, string>} */
 const outputs = new Map();
+/** 原樣複製的二進位檔（數學的圖）：輸出路徑（相對 OUT_DIR）→ 來源檔。和 outputs 一起寫進暫存目錄。 @type {Map<string, string>} */
+const assetOutputs = new Map();
 
 /** @param {string} relPath @param {unknown} value */
 function emit(relPath, value) {
@@ -1073,6 +1088,14 @@ function main() {
     publisher: { chosen: publisher.chosen, sources: new Map(registry.sources.map((src) => [src.id, src])) },
   });
   const mockPool = buildMockBankPool(bank, writingBank);
+  const math = buildMathData({
+    parsedDir: MATH_PARSED_DIR,
+    solutionsDir: MATH_SOLUTIONS_DIR,
+    manifestFile: MATH_MANIFEST_FILE,
+    repoRoot: REPO_ROOT,
+    relative,
+  });
+  check(math.papers.length > 0, `${relative(MATH_PARSED_DIR)} 裡沒有任何數學試題檔`);
   const version = contentVersion([
     ITEM_SOURCES_SCRIPT,
     ...(registry.exists ? [SOURCES_FILE] : []),
@@ -1088,6 +1111,8 @@ function main() {
     BANK_MOCK_LETTERS_SCRIPT,
     BANK_PAPER_SKILLS_SCRIPT,
     FONT_COVERAGE_SCRIPT,
+    MATH_DATA_SCRIPT,
+    ...math.inputs,
     // 字型子集改變會改變哪些題組因為題本缺字不能組新卷（docs/design/bank-mock.md §7.6），資料版本要跟著變。
     ...fontVersionInputs(),
     INPUTS.lexicon,
@@ -1131,6 +1156,12 @@ function main() {
   emit(SOURCES_PATH, publicSourceRegistry(sources.effective, version));
   // 國寫範文獨立頁的歷屆國寫題目（packages/shared/src/zh-writing-prompts.ts 的 ZH_WRITING_PROMPTS_PATH）。
   emit('zh-writing/prompts.json', { ...buildZhWritingPrompts(), version });
+  // 學測數學歷屆試題（scripts/lib/math-data.mjs）：摘要、每卷內容、本站詳解（沒有詳解檔時 items 是空的）、圖檔。
+  emit('math/index.json', { version, count: math.summaries.length, papers: math.summaries });
+  for (const d of math.papers) emit(`math/${String(d.id)}.json`, d);
+  for (const s of math.solutions) emit(`math/solutions/${s.id}.json`, { version, id: s.id, count: s.count, items: s.items });
+  for (const [rel, source] of math.assets) assetOutputs.set(rel, source);
+  for (const w of math.warnings) console.warn(`[build-data] 注意：${w}`);
   assertNoOfficialTranslations(outputs, exams.officialTextsById);
   // D8 第 4 道（docs/design/bank-writing.md §6）：寫作檔的禁止鍵、答案提前外流、官方文字（和選題同一支比對函式）、未清理的 SVG。
   assertWritingBankOutputs(outputs, writingBank.corpus);
@@ -1162,6 +1193,8 @@ function main() {
       questions: questionCount,
       bank_groups: bank.entries.length,
       writing_bank_groups: writingBank.index.length,
+      math_papers: math.summaries.length,
+      math_items: math.summaries.reduce((n, s) => n + s.question_count, 0),
     },
     files: fileSizes,
   });
@@ -1173,6 +1206,11 @@ function main() {
     const file = path.join(tmpDir, rel);
     mkdirSync(path.dirname(file), { recursive: true });
     writeFileSync(file, content);
+  }
+  for (const [rel, source] of assetOutputs) {
+    const file = path.join(tmpDir, rel);
+    mkdirSync(path.dirname(file), { recursive: true });
+    copyFileSync(source, file);
   }
   rmSync(OUT_DIR, { recursive: true, force: true });
   renameSync(tmpDir, OUT_DIR);
@@ -1209,6 +1247,12 @@ function main() {
   logSources(sources, publisher, registry.exists);
   logWritingBank(writingBank);
   logMockPool(mockPool);
+  const mathFiles = sum((rel) => rel.startsWith('math/') && !rel.startsWith('math/solutions/') && rel !== 'math/index.json');
+  const solved = math.solutions.reduce((n, s) => n + s.count, 0);
+  console.log(
+    `[build-data] 數學：${math.summaries.length} 份卷子（${math.summaries.reduce((n, s) => n + s.question_count, 0)} 題）、` +
+      `本站詳解 ${solved} 題、圖 ${math.assets.size} 張；math/{id}.json 合計 ${formatBytes(mathFiles.bytes)}（gzip ${formatBytes(mathFiles.gzip)}）`,
+  );
   console.log(`[build-data] 完成，用時 ${((Date.now() - started) / 1000).toFixed(1)} 秒`);
 }
 
@@ -1316,7 +1360,8 @@ try {
     err instanceof BankSelectError ||
     err instanceof WritingBankError ||
     err instanceof BankMockPoolError ||
-    err instanceof ItemSourcesError
+    err instanceof ItemSourcesError ||
+    err instanceof MathDataError
   ) {
     console.error(`[build-data] 錯誤：${err.message}`);
     process.exit(1);
