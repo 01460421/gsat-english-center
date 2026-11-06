@@ -15,10 +15,19 @@ export interface KatexApi {
 }
 
 let pending: Promise<KatexApi> | null = null;
+let loaded: KatexApi | null = null;
+
+/** 已經下載好的 KaTeX（還沒好是 null）：元件拿得到就直接用，不必再經過一次 Suspense。 */
+export function katexIfLoaded(): KatexApi | null {
+  return loaded;
+}
 
 export function loadKatex(): Promise<KatexApi> {
   pending ??= Promise.all([import('katex'), import('katex/dist/katex.min.css')]).then(
-    ([mod]) => mod.default,
+    ([mod]) => {
+      loaded = mod.default;
+      return loaded;
+    },
     (err: unknown) => {
       pending = null;
       throw err;

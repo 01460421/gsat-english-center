@@ -8,14 +8,22 @@
  * 長的行內公式放進可以橫向捲動的容器（手機 320 px 不讓整頁水平捲動）；$$…$$ 是置中的獨立一行。
  */
 import { Fragment, use, useLayoutEffect, useMemo, useRef } from 'react';
-import { KATEX_OPTIONS, loadKatex, type KatexApi } from '../katex';
+import { KATEX_OPTIONS, katexIfLoaded, loadKatex, type KatexApi } from '../katex';
 import { LONG_INLINE_TEX, splitMathText } from '../mathText';
 
 export function Tex({ tex, display = false, katex: given }: { tex: string; display?: boolean; katex?: KatexApi }) {
-  const katex = given ?? use(loadKatex());
+  const katex = given ?? katexIfLoaded() ?? use(loadKatex());
   const ref = useRef<HTMLSpanElement>(null);
   useLayoutEffect(() => {
-    if (ref.current) katex.render(tex, ref.current, { ...KATEX_OPTIONS, displayMode: display });
+    const el = ref.current;
+    if (!el) return;
+    try {
+      katex.render(tex, el, { ...KATEX_OPTIONS, displayMode: display });
+    } catch (err) {
+      // throwOnError: false 時語法錯誤不會丟例外；會丟的是環境問題（例如文件在 quirks 模式）。退回顯示原始 LaTeX，題目仍然看得懂。
+      el.textContent = tex;
+      console.warn('公式排版失敗，改顯示原文', err);
+    }
   }, [katex, tex, display]);
   if (display) return <span ref={ref} className="math-display block max-w-full overflow-x-auto overflow-y-hidden py-1" />;
   if (tex.length >= LONG_INLINE_TEX) {
@@ -28,7 +36,7 @@ export function Tex({ tex, display = false, katex: given }: { tex: string; displ
 
 /** 一段含公式的文字。 */
 export function MathText({ text, className }: { text: string; className?: string }) {
-  const katex = use(loadKatex());
+  const katex = katexIfLoaded() ?? use(loadKatex());
   const segments = useMemo(() => splitMathText(text), [text]);
   return (
     <span className={className}>
