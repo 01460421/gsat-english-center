@@ -153,7 +153,7 @@ export function ExamList({ indexPromise, view = 'cards' }: { indexPromise: Promi
         listSearch={location.search}
         filters={
           <>
-            <fieldset className="flex flex-wrap items-center gap-2 @max-ws/main:gap-1.5">
+            <fieldset className="flex flex-wrap items-center gap-1.5">
               <legend className="sr-only">考試</legend>
               {KIND_FILTERS.map((k) => {
                 const count = index.exams.filter((e) => matchesKind(e, k.value)).length;
@@ -171,7 +171,7 @@ export function ExamList({ indexPromise, view = 'cards' }: { indexPromise: Promi
                       className="sr-only"
                     />
                     {k.label}
-                    <span className="ml-1 tabular-nums opacity-80">{count}</span>
+                    <span className="ml-1 font-normal tabular-nums">{count}</span>
                   </label>
                 );
               })}
@@ -230,7 +230,7 @@ export function ExamList({ indexPromise, view = 'cards' }: { indexPromise: Promi
                     className="sr-only"
                   />
                   {k.label}
-                  <span className="ml-1 tabular-nums opacity-80">{count}</span>
+                  <span className="ml-1 font-normal tabular-nums">{count}</span>
                 </label>
               );
             })}

@@ -37,7 +37,7 @@ export const textareaCls = `${textareaBaseCls} border-line-strong`;
 export const selectCls = `w-full appearance-none ${SHAPE} ${SINGLE_LINE} border-line-strong pr-9`;
 
 /** 篩選列（sticky）裡的精簡版：手機一樣 44 高，桌機 36。 */
-export const selectCompactCls = `appearance-none ${SHAPE} border-line-strong min-h-11 py-1.5 pr-9 leading-6 lg:min-h-9 lg:py-1 lg:text-meta`;
+export const selectCompactCls = `appearance-none ${SHAPE} border-line-strong min-h-11 py-1.5 pr-9 leading-6 lg:min-h-9 lg:py-1 lg:pr-8 lg:pl-2.5 lg:text-meta`;
 
 /** 欄位上方的標籤。 */
 export const labelCls = 'mb-1.5 block text-meta font-semibold text-fg';

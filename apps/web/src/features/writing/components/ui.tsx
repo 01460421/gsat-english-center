@@ -170,11 +170,12 @@ export function BackLink({ to, children }: { to: string; children: ReactNode }) 
   );
 }
 
+/** 另開新分頁的連結：行內（句子裡的連結不撐高，WCAG 2.5.8 的行內例外；放在清單裡時由清單的 li 給高度）。 */
 export function ExternalA({ href, children }: { href: string; children: ReactNode }) {
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-8 items-center gap-1 text-primary underline-offset-2 hover:underline">
+    <a href={href} target="_blank" rel="noopener noreferrer" className="text-primary underline-offset-2 hover:underline">
       {children}
-      <ExternalLink aria-hidden="true" className="size-3" />
+      <ExternalLink aria-hidden="true" className="ml-0.5 inline size-3 align-baseline" />
       <span className="sr-only">（另開新分頁）</span>
     </a>
   );

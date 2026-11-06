@@ -295,7 +295,7 @@ export function ExamSourceNote({ exam }: { exam: Exam }) {
         <ul className="flex flex-wrap gap-x-4 gap-y-1">
           {exam.official_files.map((f) => (
             <li key={f.url}>
-              <a href={f.url} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-8 items-center gap-1 text-primary underline-offset-2 hover:underline">
+              <a href={f.url} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-1 text-primary lg:min-h-8 underline-offset-2 hover:underline">
                 {f.label}
                 <span className="text-xs uppercase">（{f.format}）</span>
                 <ExternalLink aria-hidden="true" className="size-3" />

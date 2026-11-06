@@ -38,7 +38,7 @@ function Intro({ className, bank = false }: { className?: string; bank?: boolean
       {bank && (
         <>
           級分與五標只適用於歷屆卷。
-          <a href="#bank-mock" className="mt-1 block font-medium text-primary underline underline-offset-2">
+          <a href="#bank-mock" className="mt-1 flex min-h-11 items-center font-medium text-primary underline underline-offset-2">
             也可以從本站題庫依難度組一份新卷 ↓
           </a>
         </>

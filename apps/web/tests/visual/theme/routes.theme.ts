@@ -4,7 +4,8 @@
  * 每個主要路由進頁面就截一張整頁圖，並量：
  *   - overflow：文件比視窗寬（水平捲動）＋超出右緣最多的幾個元素；
  *   - tinyText：可見文字小於 12px／14px 的元素數（含例子）；
- *   - targets：可點的元素（a、button、input、select、summary、[role=button|tab|radio|checkbox]）寬或高小於 24／44px 的個數；
+ *   - targets：可點的元素（a、button、input、select、summary、[role=button|tab|radio|checkbox]）寬或高小於 24／44px 的個數
+ *     （examples 是 < 24 的例子、examples44 是 < 44 的例子）；
  *   - cls：layout-shift 的累計值（載入到截圖之間，不含使用者輸入後 500ms 內的位移）；
  *   - axe：有給 THEME_SHOTS_AXE 時，axe-core 的 color-contrast 違規數（含例子）。
  * 主題：深色用 localStorage 的 gsat-theme（走手動切換那條路，index.html 的繪製前腳本會在第一次繪製前套用）。
@@ -132,6 +133,7 @@ function measure() {
   let lt44 = 0;
   let total = 0;
   const small: string[] = [];
+  const small44: string[] = [];
   for (const raw of Array.from(document.querySelectorAll(sel))) {
     // 包在 label 裡的 input（含視覺隱藏的 sr-only）由外層的 label 當點擊目標；跳到主要內容的連結只在聚焦時出現，不算。
     const el = raw.tagName === 'INPUT' && raw.closest('label') ? raw.closest('label') : raw.classList.contains('sr-only') ? null : raw;
@@ -141,7 +143,10 @@ function measure() {
     total += 1;
     const r = el.getBoundingClientRect();
     const m = Math.min(r.width, r.height);
-    if (m < 44) lt44 += 1;
+    if (m < 44) {
+      lt44 += 1;
+      if (small44.length < 10) small44.push(`${Math.round(r.width)}×${Math.round(r.height)} ${describe(el)}`);
+    }
     if (m < 24) {
       lt24 += 1;
       if (small.length < 8) small.push(`${Math.round(r.width)}×${Math.round(r.height)} ${describe(el)}`);
@@ -166,7 +171,7 @@ function measure() {
     fontSizes: sizes,
     tiny12: { count: tiny12Count, examples: tiny12 },
     tiny12to14: { count: tiny14Count, examples: tiny14 },
-    targets: { total, lt24, lt44, examples: small },
+    targets: { total, lt24, lt44, examples: small, examples44: small44 },
     cls: (window as unknown as { __cls?: number }).__cls ?? 0,
     clsSources: (window as unknown as { __clsSources?: string[] }).__clsSources ?? [],
     dataTheme: document.documentElement.dataset['theme'] ?? 'system',

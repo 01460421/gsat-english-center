@@ -305,7 +305,7 @@ function ReportBody({ exam, paper, initial }: { exam: Exam; paper: MockPaper; in
           <ul className="flex flex-wrap gap-x-4 gap-y-1">
             {scale.sources.map((s) => (
               <li key={s.url}>
-                <a href={s.url} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-8 items-center gap-1 text-primary underline-offset-2 hover:underline">
+                <a href={s.url} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-1 text-primary lg:min-h-8 underline-offset-2 hover:underline">
                   {s.label}
                   <ExternalLink aria-hidden="true" className="size-3" />
                   <span className="sr-only">（另開新分頁）</span>

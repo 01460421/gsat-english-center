@@ -21,6 +21,7 @@ import { ERROR_CATEGORY_LABELS, HighlightedText, categoryClass, type MarkedError
 import { RATER_LABELS } from './TranslationResult';
 import { AiBadge, card } from './ui';
 import { chipCls } from '../../../components/ui/Tabs';
+import { DisclosureChevron, disclosureSummaryCls } from '../../../components/ui/Disclosure';
 
 const DEDUCTION_TEXT: Record<EssayDeduction['code'], string> = {
   too_short: `字數明顯不足（少於 ${ESSAY_SHORT_WORDS} 個單詞）`,
@@ -240,9 +241,10 @@ export function EssayResult({
       </section>
 
       {grading.paragraph_advice.length > 0 && (
-        <details className={card}>
-          <summary className="cursor-pointer text-lg font-semibold">
-            <span>逐段建議（{grading.paragraph_advice.length}）</span> <AiBadge />
+        <details className={`group ${card}`}>
+          <summary className={`${disclosureSummaryCls} text-lg`}>
+            <span className="flex flex-wrap items-center gap-2"><span>逐段建議（{grading.paragraph_advice.length}）</span> <AiBadge /></span>
+            <DisclosureChevron />
           </summary>
           <ol className="mt-2 space-y-2">
             {[...grading.paragraph_advice]
@@ -257,9 +259,10 @@ export function EssayResult({
         </details>
       )}
 
-      <details className={card}>
-        <summary className="cursor-pointer text-lg font-semibold">
-          <span>標出的錯誤（{grading.errors.length}）</span> <AiBadge />
+      <details className={`group ${card}`}>
+        <summary className={`${disclosureSummaryCls} text-lg`}>
+          <span className="flex flex-wrap items-center gap-2"><span>標出的錯誤（{grading.errors.length}）</span> <AiBadge /></span>
+          <DisclosureChevron />
         </summary>
         {categories.length > 1 && (
           <div role="group" aria-label="依類型篩選" className="mt-3 flex flex-wrap gap-2">
@@ -311,9 +314,10 @@ export function EssayResult({
       </details>
 
       {grading.rewrite && (
-        <details className={card}>
-          <summary className="cursor-pointer text-lg font-semibold">
-            保留原意的參考改寫 <AiBadge />
+        <details className={`group ${card}`}>
+          <summary className={`${disclosureSummaryCls} text-lg`}>
+            <span className="flex flex-wrap items-center gap-2">保留原意的參考改寫 <AiBadge /></span>
+            <DisclosureChevron />
           </summary>
           <p lang="en" className="mt-2 whitespace-pre-wrap break-words">
             {grading.rewrite}

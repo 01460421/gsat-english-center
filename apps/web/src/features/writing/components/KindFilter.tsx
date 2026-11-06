@@ -52,7 +52,7 @@ export function KindFilter({
           >
             <input type="radio" name="writing-kind" value={o.value} checked={value === o.value} onChange={() => onChange(o.value)} className="sr-only" />
             {o.label}
-            <span className="ml-1 tabular-nums opacity-80">{counts[o.value]}</span>
+            <span className="ml-1 font-normal tabular-nums">{counts[o.value]}</span>
           </label>
         ))}
       </div>
