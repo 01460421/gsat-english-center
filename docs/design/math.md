@@ -219,6 +219,21 @@ P2 是最小可用版本：有題目、能作答批改、有可信的詳解。P3
 
 ---
 
+## 14. P2 實作備註（2026-11-06，網頁模組）
+
+和前面各節不同、或前面沒寫到的做法（以這裡為準）：
+
+1. **檔案**：共用型別與批改 `packages/shared/src/math-exam.ts`（`gradeSingle`／`gradeMulti`／`gradeFill`、`scoreMathPaper`、`splitMathStem`、`parseFillTemplate`）；資料輸出 `apps/web/scripts/lib/math-data.mjs`（`math/index.json`、`math/{id}.json`、`math/solutions/{id}.json`、`math/figures/{id}/*.png`）；前端 `apps/web/src/data/math.ts`、`apps/web/src/features/math/`。
+2. **路由**：`/math`（數A／數B 分頁，網址 `?subject=b`；有 `era: "舊課綱"` 的卷子時自動多一個「舊課綱」分頁）、`/math/:paperId`（練習模式／考試模式）、`/math/:paperId/results`（成績與詳解）。側邊欄多一個「數學」群組；首頁卡片與手機「更多」面板跟著 `modules.ts` 自動列出。
+3. **課綱**：卷子的 `era` 由資料的 `era` 欄位決定，沒有時依 `subject`（`math_a`／`math_b`＝108課綱，`math`＝舊課綱）。100–110 的舊課綱卷子放進 `data/exams/parsed-math/gsat-math-{year}.json` 就會出現，不必改程式（多選題的 5／3／1／0 級距在 5 分題、5 個選項時與 (n−2k)/n 相同）。
+4. **詳解**：`data/exams/math-solutions/{id}.json` 由另一條流程產生，格式寬鬆接受（陣列、`{items:[…]}`、`{items:{題號:{…}}}`；每題 `no`、`solution_md`、`unit`、`difficulty`、`answer_display`、`check`、`flags`）。沒有檔案或沒有那一題時顯示「詳解準備中」；`flags` 含 `withhold`／`reject`／`mismatch` 等、或文字含機構名稱或「評分原則」的題目不輸出。`check` 通過時標「AI 撰寫・已獨立驗算」。詳解在看答案或交卷後才下載。
+5. **選填輸入**：§4.3 的「`\htmlId` 覆蓋按鈕」沒有做，採用文件裡的退路：題幹的 `[[FILL]]` 位置畫空方框，下方 KaTeX 排「作答格式」（每格標格號）與即時的「你的答案」，每一格一列 12 個劃記（原生 radio，透明蓋滿圓圈；手機兩排各 6 顆、36px）。焦點在某一列時直接按數字或減號就劃記並跳到下一列，Backspace 清除。
+6. **KaTeX**：`import('katex')`＋CSS 獨立 chunk（JS 259 KB／gzip 77.5 KB、CSS 28.8 KB），只在卷子頁與成績頁載入；入口頁不載（e2e 驗）。用 `katex.render` 排進 `<span>`（不經 innerHTML，`source-scan.test.ts` 的規則）。主程式 352.32 → 353.72 KB（gzip 112.92 → 113.40），增加的只有路由與模組清單。
+7. **非選擇題**：卷子頁顯示紙上作答說明與「拍照 AI 批改即將推出」（不是按鈕、不呼叫 API）；成績頁可以自評 0～配分（存在本機 `gsat-math-self:v1:{id}`），自評合計另列，不混進自動批改分數。作答紀錄存在 `gsat-math-attempt:v1:{id}`，沿用英文的 `AttemptStore`。
+8. **出處**：頁尾與入口照英文歷屆試題寫「試題來源：大學入學考試中心…」（§12 問題 6 待站主確認）；其他文案一律「官方」，`features/math/copy.test.ts` 檢查。
+9. **側邊欄高度**：多了「數學」群組（約 50px），1366×640 未登入與 1280×600 會出現淡出遮罩（`desktop-shell.spec.ts` 已改）；desktop-ui.md §16.5 的高度預算需要設計者重新決定。
+10. **還沒做**：官方答對率併入 `item.stats`（前端已會顯示，資料待 P1 todo）；依單元篩題；混合題組文字在手機收合；PDF（P3）；級分估計（P3）。
+
 ## 13. 不做（本設計範圍外）
 
 - 分科測驗數學甲、數學乙（不是學測；之後若要做，資料工具可沿用）。
