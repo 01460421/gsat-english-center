@@ -1,13 +1,13 @@
 # 全站 CSS 改版：稽核與計畫（視覺質感、手機排版、載入速度、深色模式）
 
-> 版本：2026-11-06 第 1 版（稽核＋計畫＋PR A 已實作）。
+> 版本：2026-11-06 第 2 版（稽核＋計畫＋PR A、PR B 已實作）。
 > 需求（站主）：「優化網站的css」，確認後範圍是四件事一起做：**視覺質感**（按鈕、欄位、卡片、標章、表格、間距、字級一致）、**手機版排版**（360–430 px：溢出、擠、字太小、點擊目標太小）、**載入速度**（CSS 大小、沒用到的樣式、版面位移、字型載入、關鍵 CSS）、**深色模式**（跟隨系統＋手動切換，記在這台裝置）。
 > 基準：分支 css-polish＝origin/main **b217954**。檔名與行號以 b217954 為準。
 > 相關文件：[desktop-ui.md](desktop-ui.md)（桌機殼層，已上線）、[desktop-polish.md](desktop-polish.md)（桌機打磨；PR 1 已上線，PR 2–5 未做）。**本文和 desktop-polish.md 的關係見 §1.3**：它的 §2 視覺規格改成全寬度適用，「手機逐像素不變」的硬性條件由本文取代。
-> 截圖：repo 根目錄的 `.shots/`（不進 git，`.gitignore` 已列）。`before/` 是 b217954、`after-A/` 是 PR A。子資料夾＝視窗寬度－主題（`390-light`、`1280-dark`…），量測數字在 `_meta/<視窗>/<頁面>.json`。下文用 `before/390-light/06-exams` 這種寫法引用（省略 `.png`）。工具與指令見[附錄](#附錄截圖與量測指令)。
+> 截圖：repo 根目錄的 `.shots/`（不進 git，`.gitignore` 已列）。`before/` 是 b217954、`after-A/` 是 PR A、`after-B/` 是 PR B。子資料夾＝視窗寬度－主題（`390-light`、`1280-dark`…），量測數字在 `_meta/<視窗>/<頁面>.json`。下文用 `before/390-light/06-exams` 這種寫法引用（省略 `.png`）。工具與指令見[附錄](#附錄截圖與量測指令)。
 > 標記：「（實測）」＝在 b217954 的建置產物＋Chromium 1243 上量到；「（計算）」＝用 token 色碼算出的 WCAG 對比；「（設計值）」＝實作時量、寫回本文。
 
-**目錄**：[0. 摘要](#0-摘要)｜[1. 範圍與原則](#1-範圍與原則)｜[2. 稽核結果](#2-稽核結果)｜[3. 設計 token](#3-設計-token)｜[4. 元件規格](#4-元件規格)｜[5. 手機規則](#5-手機規則)｜[6. 深色模式](#6-深色模式)｜[7. 載入速度](#7-載入速度)｜[8. 分階段上線](#8-分階段上線)｜[9. PR A 實作備註](#9-pr-a-實作備註)｜[附錄](#附錄截圖與量測指令)
+**目錄**：[0. 摘要](#0-摘要)｜[1. 範圍與原則](#1-範圍與原則)｜[2. 稽核結果](#2-稽核結果)｜[3. 設計 token](#3-設計-token)｜[4. 元件規格](#4-元件規格)｜[5. 手機規則](#5-手機規則)｜[6. 深色模式](#6-深色模式)｜[7. 載入速度](#7-載入速度)｜[8. 分階段上線](#8-分階段上線)｜[9. PR A 實作備註](#9-pr-a-實作備註)｜[10. PR B 實作備註](#10-pr-b-實作備註)｜[附錄](#附錄截圖與量測指令)
 
 ---
 
@@ -37,7 +37,7 @@
 | PR | 內容 | 畫面變化 | 狀態 |
 |---|---|---|---|
 | **A** | token（顏色角色淺色＋深色、字級、圓角、陰影、焦點框）與 Tailwind 對應；寫死的顏色換成 token；深色層次修正；token 守門測試；截圖與量測工具 | 淺色 0 變化（54 張中 52 張逐像素相同，2 張是 1 色階的反鋸齒雜訊）；深色只有框線與說明框變深 | **已做**（§9） |
-| **B** | 共用元件：`Button`、`Field`、`Select`、`Check`、`Card`、`Badge`、`Table`、`Tabs`／`Segmented`／`ChoiceChip`、`Dialog`、`Toast`、`Alert`；各功能的樣式常數改成 re-export | 全站：輸入框邊界、按鈕一致、停用狀態、點擊目標 ≥ 44 | 待做 |
+| **B** | 共用元件：`Button`、`Field`、`Select`、`Check`、`Card`、`Badge`、`Table`、`Tabs`／`Segmented`／`ChoiceChip`、`Dialog`、`Toast`、`Alert`；各功能的樣式常數改成 re-export | 全站：輸入框邊界、按鈕一致、停用狀態、點擊目標 ≥ 44 | **已做**（§10） |
 | **C** | 逐頁的手機修正（底部導覽字級、篩選列、作答工具列、題型頁難度切換、歷屆列表卡片、寫作與學習助手表單） | 手機 | 待做 |
 | **D** | 版面位移（main 最小高度、骨架佔位）、長列表 `content-visibility`、CSS／JS 預算進 CI | 載入過程；最終畫面幾乎不變 | 待做 |
 
@@ -569,6 +569,71 @@ CSS 不是瓶頸（gzip 12.7 KB、一個檔、沒有網路字型），**不拆 C
 ### 9.3 E2E
 
 `E2E_PORT=4901 npx playwright test`（四個 project：desktop、mobile、desktop-ui、desktop-lg）：**412 通過、37 略過（各 project 本來就不跑的）、0 失敗**，12.1 分鐘。其中 `smoke.spec.ts` 的「選擇的主題在重新整理後仍然生效」、`writing-bank.spec.ts` 的題目插圖白底（改用 `bg-paper` 後仍是 `rgb(255, 255, 255)`）、`practice.spec.ts` 的深色圖表色都通過。
+
+---
+
+## 10. PR B 實作備註
+
+### 10.1 改了什麼
+
+新增 `apps/web/src/components/ui/`（每個檔都有單元測試，`*.test.tsx`）：
+
+| 檔案 | 內容 | 套用到 |
+|---|---|---|
+| `buttons.ts`、`Button.tsx` | `btn(variant, size, extra)`：primary／secondary／ghost／danger／danger-ghost／link × sm／md／lg／icon；`iconBtnCls`；`Button` 的 `disabledReason`（旁邊一行原因＋`aria-describedby`）與 `busy`（`aria-busy`＋處理中文字） | 約 150 個按鈕字串；單字、帳號、寫作、學習助手的按鈕常數改成由 `btn()` 產生（import 不變）；主題切換與對話框的關閉鈕 `iconBtnCls`（手機 44×44） |
+| `fields.ts`、`Field.tsx` | `fieldCls`／`fieldBaseCls`／`numberFieldCls`／`textareaCls`／`selectCls`／`selectCompactCls`、`labelCls`／`hintCls`／`errorTextCls`；`Field`（標籤、說明、錯誤連好）、`Input`、`Textarea`、`Select`（`appearance-none`＋`ChevronDown`） | 12 種輸入框寫法全部換掉；18 個原生 `<select>` 改用 `Select`；五個功能的欄位常數 re-export |
+| `Check.tsx` | `checkInputCls`（20px）、`checkLabelCls`、`optionCardCls`／`optionCardTopCls`、`Check` | 55 個 checkbox／radio 改 20px；11 處選項卡（設定、帳號、單字測驗、模擬考開考前、組卷…） |
+| `Card.tsx` | `cardCls`（區塊）、`cardCompactCls`（列表）、`cardLinkCls`（可點，有陰影）、`calloutCls`（說明框）、`resultCardCls`＋`resultCardHeadCls`（結果卡）、`insetBoxCls`、`cardFrameCls`；`Card`、`CardChevron` | 約 90 處卡片；頁尾的出處說明改說明框；交卷結果、總分改結果卡；`rounded-2xl` 全部改名 `rounded-card`（同為 16px） |
+| `Badge.tsx` | `badgeCls(tone, size)`、`badgeShapeCls(size)`、`Badge` | 帳號狀態、即將開放、AI 標示、歷屆進度、新制／補考、作答對錯、自評分數、標記等 |
+| `Alert.tsx` | `alertCls(tone)`、`Alert`（info／warn／ai／error／success） | 帳號 `Notice`、寫作 `Notice`／`ErrorMessage`、AI 聲明 `AiNotice`、各頁 `bg-badge-bg/60` 的提醒框 |
+| `Table.tsx` | `tableCls`／`thCls`／`tdCls`／`numCls`／`groupRowCls`／`stickyFirstColCls`／`tableFrameCls`、`ScrollRegion` | `DataTable`（sticky 表頭改成不透明的 surface-2、排序圖示不再是 `opacity-50`）；五個鍵盤捲不到的寬表格加 region 名稱與 `tabIndex` |
+| `Tabs.tsx` | `tabCls`／`tabListCls`／`SubNav`、`segmentCls`／`segmentedTrackCls`、`chipCls`／`ChoiceChip`／`chipRowCls`、`tierTileCls` | 底線分頁（/words、題目來源、拍照／貼上、範文、`PaneTabs`）；分段（作答方式、編輯方式、紀錄種類、後台期間）；篩選膠囊約 25 處；難度方塊兩處 |
+| `Dialog.tsx` | 原生 `<dialog>` 的 `Dialog`（標題列＋關閉、捲動的內容、固定的動作列；焦點進出；Esc） | 五個 `<dialog>`：快捷鍵說明、說明載入失敗、計時中離開、模擬考交卷、範文「和網站題目相同」 |
+| `Toast.tsx` | `ToastProvider`（Layout 掛常駐的 `aria-live="polite"`）、`useToast` | 只做元件，沒有改現有的就地回饋（§4.11） |
+| `Disclosure.tsx` | `Disclosure`、`disclosureSummaryCls`／`disclosureInlineSummaryCls`、`DisclosureChevron` | 批改結果的題目、逐段建議、標出的錯誤、參考改寫；範文的題目；/writing 的兩種批改方式；單字卡的其他釋義；學習報告與方法卡的「更多」；回報不當內容 |
+
+`index.css` 新增：`--text-control`（桌機 md 按鈕 15px）、`--ok-line`（成功提示的框線）、`@custom-variant tall`（視窗內高 ≥ 800，側邊欄用）。量測工具 `tests/visual/theme/routes.theme.ts` 另外記 < 44 的例子（`targets.examples44`）。
+
+**側邊欄**（另一個分支的「數學」群組會多約 50 px）：矮視窗改密（項目 26、群組標題 18、品牌列 44、未登入的工具列 95），高視窗放寬（項目 32、標題 28）。1366×640 加了數學之後未登入 485／501、已登入功能全開 537／545，都不用捲；預算表與之後加群組的算法在 [desktop-polish.md §8.2](desktop-polish.md#82-側邊欄的高度預算css-改版-pr-b2026-11-06)。
+
+### 10.2 和計畫不同的地方
+
+1. **手機的 `sm` 按鈕與篩選膠囊是真的 44 高**（§4.1 寫「視覺 36、觸控區用 `before:` 撐到 44」、§4.5 寫膠囊 40＋偽元素）：偽元素撐出的觸控區不算在元素的 `getBoundingClientRect` 裡，量測工具（也是驗收標準）會把它們算成 < 44；所以手機上 `sm` 只把字（14px）與左右內距縮小，高度一樣 44。桌機照計畫：`sm` 36、膠囊 32。
+2. **選擇控制項的選中狀態從語意讀**：膠囊、難度方塊用 `has-[:checked]`（label 包 radio）或 `aria-pressed`，分頁用 `aria-current`；元件沒有另外的 `selected` 狀態要同步。高對比模式選中一律 Highlight＋`forced-color-adjust: none`（`desktop-shell.spec` 的墨水像素測試照樣通過）。
+3. **結果卡不重排 JSX**：§4.6 的「頂端 primary-soft 標題列」做成第一個子元素（h2 或「原得總分」）加 `resultCardHeadCls`（負外距貼齊卡片上緣），焦點目標（交卷後聚焦的 h2）不變。
+4. **可點卡片的右上箭頭**：既有的列表卡大多已經有 `ChevronRight`；只加了陰影與 hover，沒有在每個元件補箭頭（`CardChevron` 給新程式用）。
+5. **對話框**：模擬考交卷在手機仍沒有右上角的關閉鈕（原本的手機行為，`mobile-guard` 有測）；說明載入失敗只留右上角「關閉」（原本底部也有一顆同名的「關閉」，兩顆同名按鈕會讓讀屏與測試分不出來）。
+6. **`ExternalA` 改成行內連結**：原本 `inline-flex min-h-8`，放在句子裡時句號會被擠到下一行；改成行內之後屬於 WCAG 2.5.8 的行內例外。清單裡的檔案連結（歷屆考卷、模擬考出處）另外改成手機 44 高。
+7. **AI 聲明（`AiNotice`）的字是 badge-fg**（§4.12 的 warn／ai 外觀）：原本是 fg 字＋六成濃度的底；裡面的 AI 標章和底同色，靠 Sparkles 與粗體區分。
+8. **沒有換成淡底的實心主色**：模擬考題號面板「已作答」的格子、級分對照表的目前級分：這兩個是狀態（已完成、你在這一級），不是選擇控制項；作答的選項卡（`Questions.tsx`）照 §4.4 不換。
+9. **表格**：只有 `DataTable` 與學習助手的兩張表改用 `thCls`；其他 28 張表維持各自的樣式（有 `ScrollRegion` 的規則，外觀留給 PR C 逐頁時改）。
+
+### 10.3 結果（實測，`.shots/after-B`，建置產物＋Chromium，390／1280 × 淺色／深色 × 27 頁）
+
+| 檢查 | PR A（`after-A`） | PR B（`after-B`） |
+|---|---|---|
+| 390 寬每頁 < 44 的點擊目標（最多／超過 3 個的頁數） | 12／11 頁 | **6／1 頁**：剩下的是每頁的品牌連結（130×28），以及綜合測驗作答頁選文裡 5 個行內空格按鈕（32 高，§5.3 列給 PR C 的「leading-8＋觸控區上下各撐 6 px」）；批改結果還有 2 個錯誤標號（PR C） |
+| axe color-contrast（兩種主題 × 兩種寬度） | 0 | **0**（中途抓到篩選膠囊的題數 `opacity-80` 在選中的淡主色底上 4.29:1，已改成實色） |
+| 水平溢出（390） | 0 | 0 |
+| 控制項框線 | `line` 1.22–1.30:1 | `line-strong`：淺色對 bg／surface／surface-2 3.40／3.64／3.22、深色 4.05／3.72／3.27（`tokens.test.ts`）；輸入框、選單、外框按鈕、未選中的膠囊、選項卡的 class 都檢查是 `border-line-strong`（`fields.test.tsx`、`tabs.test.tsx`） |
+| 停用 | `opacity-50`／`60`／`70`（38 處） | 0 處；surface-2 底＋muted 字，兩個看不出原因的停用按鈕補上原因 |
+| 元件寫法（不同的 class 字串） | 主要按鈕 39、次要 61、危險 4、輸入框 10、卡片 52、膠囊 21 | 0、6、0、1、0、3（剩下的是標記、身心關懷、行內填空框、作答選項卡這類刻意不同的） |
+| CSS（vite 報告） | 71.64 kB、gzip 13.32 kB | 73.93 kB、gzip 13.96 kB（+0.64 KB，§7.4 單一 PR ≤ 1 KB） |
+| JS | 主程式（首次載入的全部 chunk）gzip 115.9 KB；全部 chunk 4,247,683 B | 首次載入 119.4 KB（+3.6 KB，見 §10.4 第 3 點）；全部 chunk 4,222,975 B（−24.7 KB：按鈕、卡片字串收成共用常數） |
+
+淺色截圖：54 張都有差異，看過的對照（`after-A` ↔ `after-B`）都是這個 PR 要的改變：按鈕字重與高度、輸入框的框線與白底、停用狀態、選擇控制項從實心改淡底、可點卡片的陰影、說明框、結果卡的標題列、AI 聲明的底色、/words 的分頁、桌機側邊欄的間距（800 高以上放寬）。沒有找到非預期的差異（中途發現的兩個已修：句子裡的連結把句號擠到下一行、/exams 1280 寬的篩選列折成兩行）。
+
+檢查：`npm run typecheck`、`npm test`（api 1,451、web 2,388、shared 805）、`npm run test:data`（web 66、shared 228）、`npm run build` 全部通過。Playwright 全套（`E2E_PORT=4902`，desktop、mobile、desktop-ui、desktop-lg）：412 通過、38 略過（各 project 本來就不跑的）、1 失敗＝`desktop-safety.spec`「選文、題幹、選項標 lang」在全套的負載下逾時一次，單獨重跑通過（前一次全套也通過；和這個 PR 的改動無關）。刻意改動而更新的測試：`section-practice.spec`（深色的目前難度改成淡主色底）、`desktop-shell.spec`（側邊欄的高度預算，見 desktop-polish §8.2）、`MockPages.test`（交卷對話框的動作列）、`ModelTextView.test`（舊版副本的膠囊與 checkbox）。
+
+### 10.4 留給 PR C／D 的
+
+1. **綜合測驗、文意選填的行內空格**（32 高，5–10 個）：PR C 照 §5.3 做；做完 390 寬每一頁就只剩品牌連結。品牌連結（28 高）也可以在 PR C 的頂端列一起撐到 44。
+2. **字級下限**：底部導覽 0.7rem（每頁 5 個 < 12 px）、批改結果的錯誤標號、模擬考題號面板與級分表的 0.65rem 都還在（PR C §5.2、§5.3）；共用元件裡已經沒有 < 12px 的字。
+3. **首次載入的 JS 多了 3.6 KB（gzip）**：共用元件（`Alert` 的五個圖示、`Dialog`、`Toast`、`Badge`）因為 Layout 與帳號選單用到而進了首次載入；rolldown 也把 react-router 與共用模組拆成另一個 chunk（首次載入 7 → 12 個檔）。PR D 加預算檢查時：`Alert` 的圖示改成依 tone 動態載入，或 Layout 的對話框（離開確認、說明載入失敗）改 lazy。
+4. **其他 `<details>`**（約 30 個）、**其他表格**（28 張）、**頁首與返回連結**的寫法還沒統一（desktop-polish §3.1 的 `PageHeader`、`BackLink`）。
+5. **少量濃度寫法**：`bg-bad/15`、`bg-bad/5`、`border-primary/40`、`bg-primary-soft/60`、`bg-badge-bg/70`（標示與螢光筆、身心關懷框）還在；改元件時收成 token。
+6. **Toast** 還沒有任何地方用；PR C 的「登出所有裝置」、背景同步失敗可以接上。
+7. **側邊欄**：加了數學之後 1366×640 未登入只剩 16 px，再加一項就要捲（desktop-polish §8.2 有之後的省法）；數學分支合併時，它把 `desktop-shell.spec` 改成「有淡出遮罩」的兩項要改回「不用捲」。
 
 ---
 
