@@ -457,6 +457,8 @@ PR B 新增 `apps/web/src/components/ui/`，各功能現有的樣式常數（`vo
 3. `<meta name="color-scheme" content="light dark">` 讓 CSS 到之前的畫布顏色也跟著系統。
 4. 跟隨系統不需要 JS。
 
+實測（PR A 的建置產物，擋掉所有 JS 只留 HTML＋CSS＋繪製前腳本）：系統淺色＋本站深色 → `data-theme="dark"`、body `rgb(15, 19, 24)`；系統深色＋本站淺色 → `data-theme="light"`、`rgb(246, 247, 249)`；系統深色＋跟隨系統 → 沒有 `data-theme`、`rgb(15, 19, 24)`。也就是主程式還沒載入前，畫面已經是正確的主題。
+
 驗收（每個 PR）：`tests/smoke.spec.ts` 的主題測試（重新整理後仍是深色、`theme-color` 正確）＋手動在「系統淺色、本站深色」下重新整理，錄影逐格看不到白底。之後加 CSP 時要把行內腳本的 sha256 加進 `script-src`。
 
 ---
