@@ -8,7 +8,7 @@
 | `python3 -I tools/docx_math_draft.py <paper.docx>` | Word 版題本 → 草稿（MathType 公式轉 LaTeX，見 `tools/mathtype_latex.py`） |
 | `python3 -I tools/build_math_exam.py --subject a --year 115` | 草稿＋答案 PDF → JSON 骨架（不覆寫已校對檔，除非 `--force`）；舊課綱用 `--subject old`（見 §舊課綱） |
 | `python3 -I tools/crop_math_figures.py --all` | 依 JSON 裡每張圖的頁碼與 bbox 從 PDF 裁圖 |
-| `python3 -I tools/merge_math_stats.py --old` | 官方答對率／鑑別度、選項分析 → 每題 `stats`（目前只做舊課綱） |
+| `python3 -I tools/merge_math_stats.py --all` | 官方答對率／鑑別度、選項分析 → 每題 `stats`（`--old` 舊課綱、`--new` 數A／數B） |
 | `python3 tools/validate_math_exam.py --all [--katex <node_modules/katex>]` | 檢查格式；`--katex` 另以 KaTeX 實際排版每一段公式。有 error 以 1 結束 |
 | `data/exams/parsed-math-todo.json` | 看過原卷後仍待決的事項 |
 
@@ -160,7 +160,9 @@
 | `options` | 單選／多選題：全體考生畫記各選項的比例（多選題各選項獨立，加總不是 1） |
 | `omit` | 單選／多選題：全體考生未作答比例 |
 
-合併時交叉檢查：表上「*」（多選）與 `type` 一致、題號與卷內 `no` 一致、選項分析標示的正確選項等於 `answer`；不一致就停下來不寫檔。數學A／B（111 起）的統計還沒有併入（todo）。
+合併時交叉檢查：表上「*」（多選）與 `type` 一致、題號與卷內 `no` 一致、選項分析標示的正確選項等於 `answer`；不一致就停下來不寫檔。
+
+數學A／B（111 起）：官方表是各科合併檔，只掛在 manifest 的 `gsat-matha` 下一次，工作表「數學A」「數學B」；表上只有選擇（填）題（第 1–18 題，含混合題組裡的單選與選填），**非選擇題沒有 `stats`**。本站詳解 `data/exams/math-solutions/` 的 `difficulty.official_p` 取自同一張表的 P，`validate_math_solutions.py` 檢查兩邊相等。
 
 ## 文字與公式
 
@@ -234,4 +236,4 @@
 3. 圖：用 pdfplumber 列出頁面上的影像與向量物件決定 bbox，裁切後再看一次裁圖。
 4. `validate_math_exam.py --all --katex …` 沒有 error 才算完成。
 5. 無法依 PDF 決定的事寫進 `data/exams/parsed-math-todo.json`，不要猜。
-6. 舊課綱：`merge_math_stats.py` 併入官方統計（同時核對答案）。
+6. `merge_math_stats.py` 併入官方統計（同時核對答案）。

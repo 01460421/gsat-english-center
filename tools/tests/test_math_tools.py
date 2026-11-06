@@ -15,6 +15,7 @@ sys.path.insert(0, str(TOOLS))
 import build_math_exam as bme  # noqa: E402
 import docx_math_draft as dd  # noqa: E402
 import mathtype_latex as ml  # noqa: E402
+import merge_math_stats as mms  # noqa: E402
 import validate_math_exam as vme  # noqa: E402
 
 
@@ -161,6 +162,56 @@ class ValidatorTest(unittest.TestCase):
             p.write_text(json.dumps(d, ensure_ascii=False), encoding="utf-8")
             r = vme.validate(str(p), [])
         self.assertTrue(any("era" in e for e in r.errors))
+
+
+class MergeStatsTest(unittest.TestCase):
+    """官方統計表的讀法（108 課綱的表：工作表數學A／數學B、只有選擇（填）題、儲存格前有空白）。"""
+
+    PD = [
+        ["111學年度學科能力測驗"] + [""] * 4,
+        ["題號", "P", "Ph", "Pl", "T", "D"],
+        ["1", "29.0", "35.0", "21.0", "", "14.0"],
+        ["*7", "57.0", "73.0", "40.0", "37.0", "33.0"],
+        ["13", "46.0", "69.0", "21.0", "", "48.0"],
+        ["註：相關說明詳見國文科答對率及鑑別度表之備註。", "", "", "", "", ""],
+    ]
+    OA = [
+        ["題號", "組別", "未答", "1.0", "2.0", "3.0", "4.0", "5.0", "6.0"],
+        ["1", "T", "0.0", "5", "32", "9", "*29", "24", ""],
+        ["", "H", "0.0", "1", "33", "3", "35", "28", ""],
+        ["*7", "T", "1.0", "23", "*69", "27", "*87", "24", ""],
+    ]
+
+    def test_sources(self):
+        self.assertEqual(mms.SOURCES["math_a"], ("gsat-matha", "數學A"))
+        self.assertEqual(mms.SOURCES["math_b"], ("gsat-matha", "數學B"))
+        self.assertEqual(mms.SOURCES["math"], ("gsat-math", "數學"))
+
+    def test_read_pd(self):
+        pd = mms.read_pd(self.PD)
+        self.assertEqual(sorted(pd), [1, 7, 13])
+        self.assertEqual(pd[7][0], True)
+        self.assertEqual(pd[1][1]["P"], 0.29)
+        self.assertIsNone(pd[13][1]["T"])
+
+    def test_read_oa_marks_key(self):
+        oa = mms.read_oa(self.OA)
+        self.assertEqual(oa[1]["key"], ["4"])
+        self.assertEqual(oa[7]["key"], ["2", "4"])
+        self.assertEqual(oa[7]["T"]["4"], 0.87)
+        self.assertEqual(oa[1]["omit"], 0.0)
+
+    def test_repo_108_papers_have_stats_except_constructed(self):
+        for name in ("gsat-matha-111", "gsat-mathb-115"):
+            path = TOOLS.parent / "data" / "exams" / "parsed-math" / f"{name}.json"
+            d = json.loads(path.read_text(encoding="utf-8"))
+            for s in d["sections"]:
+                for g in s["groups"]:
+                    for it in g["items"]:
+                        if it["type"] == "constructed":
+                            self.assertNotIn("stats", it)
+                        else:
+                            self.assertIsInstance(it["stats"]["P"], float)
 
 
 if __name__ == "__main__":

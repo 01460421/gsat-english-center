@@ -4,18 +4,30 @@
 把官方「答對率及鑑別度表」（pd_table）與「選擇題選項分析」（option_analysis）的數學科數字
 併入 data/exams/parsed-math/{id}.json 每一小題的 `stats`（docs/math-exam-json-schema.md §stats）。
 
-  python3 -I tools/merge_math_stats.py gsat-math-110 [gsat-math-109 ...]
+  python3 -I tools/merge_math_stats.py gsat-math-110 [gsat-matha-115 ...]
   python3 -I tools/merge_math_stats.py --old          # 全部舊課綱（gsat-math-*）
+  python3 -I tools/merge_math_stats.py --new          # 全部 108 課綱（gsat-matha-*、gsat-mathb-*）
+  python3 -I tools/merge_math_stats.py --all          # 兩者
 
-來源：data/exams/math-manifest.json 中該卷 exam／year 的 stats 檔（各科合併的 .xls，
-工作表「數學」）。讀檔前比對 manifest 的 sha256；只用 xlrd 讀儲存格，不執行任何內容。
+來源：data/exams/math-manifest.json 中的 stats 檔（各科合併的 .xls）。讀檔前比對 manifest 的 sha256；
+只用 xlrd 讀儲存格，不執行任何內容。
+
+| 卷子 | manifest 的 exam | 工作表 |
+|---|---|---|
+| gsat-math-{100..110}（舊課綱） | gsat-math | 數學 |
+| gsat-matha-{111..}（數學A） | gsat-matha | 數學A |
+| gsat-mathb-{111..}（數學B） | gsat-matha（數A、數B 合併檔只掛在 gsat-matha 下一次） | 數學B |
+
+兩種版面相同（題號、P、Ph、Pl、…、T、D；選項分析每題 T／H／L 三列、正確選項前加「*」），
+只差在 108 課綱的表只列選擇（填）題：非選擇題（constructed，每卷第 19、20 題）不在表上，也不寫 stats。
+P 欄與詳解檔 data/exams/math-solutions/ 的 difficulty.official_p 來自同一個 pd_table（stats-1.xls），
+兩邊一致由 tools/validate_math_solutions.py 檢查。
 
 交叉檢查（不一致就停下來，不寫檔）：
-- 表上題號前有「*」者必須是多選題，反之亦然；題號必須對得上卷內每一小題的 `no`
+- 表上題號前有「*」者必須是多選題，反之亦然；題號必須對得上卷內每一題（非選擇題除外）的 `no`
   （舊課綱選填題 A、B、C… 在表上依序是單選、多選之後的題號）。
-- 選項分析中標「*」的選項必須等於 JSON 的官方答案。
-
-數學 A／B（111 起）的統計是掛在 gsat-matha 下的合併檔，工作表名稱不同，尚未處理。
+- 選項分析中標「*」的選項必須等於 JSON 的官方答案；選項分析列出的題目必須正好是卷內的單選、多選題
+  （108 課綱混合題組裡的單選題也在內）。
 """
 from __future__ import annotations
 
@@ -54,13 +66,21 @@ def stats_files(exam, year):
     return out
 
 
-def math_sheet(path):
+# subject → (manifest 的 exam, 工作表名稱)
+SOURCES = {
+    "math": ("gsat-math", "數學"),
+    "math_a": ("gsat-matha", "數學A"),
+    "math_b": ("gsat-matha", "數學B"),
+}
+
+
+def math_sheet(path, sheet="數學"):
     import xlrd  # 只讀儲存格
     book = xlrd.open_workbook(os.path.join(ROOT, path))
     for sh in book.sheets():
-        if sh.name.strip() == "數學":
+        if sh.name.strip() == sheet:
             return [[str(c.value).strip() for c in sh.row(r)] for r in range(sh.nrows)]
-    raise SystemExit(f"{path}: 找不到「數學」工作表")
+    raise SystemExit(f"{path}: 找不到「{sheet}」工作表")
 
 
 def _num(v):
@@ -109,15 +129,25 @@ def merge(doc_id):
     path = os.path.join(PARSED, doc_id + ".json")
     with open(path, encoding="utf-8") as f:
         doc = json.load(f)
-    exam = re.sub(r"-\d+$", "", doc_id)
+    if doc.get("subject") not in SOURCES:
+        raise SystemExit(f"{doc_id}: 不認得的 subject {doc.get('subject')}")
+    exam, sheet = SOURCES[doc["subject"]]
     files = stats_files(exam, doc["year"])
     if "pd_table" not in files:
         raise SystemExit(f"{doc_id}: manifest 沒有 pd_table")
-    pd = read_pd(math_sheet(files["pd_table"]))
-    oa = read_oa(math_sheet(files["option_analysis"])) if "option_analysis" in files else {}
-    items = [it for s in doc["sections"] for g in s["groups"] for it in g["items"]]
+    pd = read_pd(math_sheet(files["pd_table"], sheet))
+    oa = read_oa(math_sheet(files["option_analysis"], sheet)) if "option_analysis" in files else {}
+    all_items = [it for s in doc["sections"] for g in s["groups"] for it in g["items"]]
+    items = [it for it in all_items if it["type"] != "constructed"]
     if sorted(pd) != [it["no"] for it in items]:
-        raise SystemExit(f"{doc_id}: 統計表題號 {sorted(pd)} 與卷內題號不符")
+        raise SystemExit(f"{doc_id}: 統計表題號 {sorted(pd)} 與卷內選擇（填）題題號不符")
+    if oa:
+        choice = sorted(it["no"] for it in items if it["type"] in ("single", "multi"))
+        if sorted(oa) != choice:
+            raise SystemExit(f"{doc_id}: 選項分析題號 {sorted(oa)} 與卷內單選／多選題 {choice} 不符")
+    for it in all_items:
+        if it["type"] == "constructed":
+            it.pop("stats", None)  # 官方表沒有非選擇題
     for it in items:
         star, rec = pd[it["no"]]
         if star != (it["type"] == "multi"):
@@ -150,10 +180,14 @@ def main(argv=None):
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("ids", nargs="*")
     ap.add_argument("--old", action="store_true", help="全部 gsat-math-*（舊課綱）")
+    ap.add_argument("--new", action="store_true", help="全部 gsat-matha-*、gsat-mathb-*（108 課綱）")
+    ap.add_argument("--all", action="store_true", help="--old 與 --new")
     a = ap.parse_args(argv)
     ids = list(a.ids)
-    if a.old:
+    if a.old or a.all:
         ids += sorted(os.path.basename(p)[:-5] for p in glob.glob(os.path.join(PARSED, "gsat-math-*.json")))
+    if a.new or a.all:
+        ids += sorted(os.path.basename(p)[:-5] for p in glob.glob(os.path.join(PARSED, "gsat-math[ab]-*.json")))
     for i in ids:
         merge(i)
     return 0

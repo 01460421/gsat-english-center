@@ -10,6 +10,10 @@
 
 檢查項目：
 - 題目齊全：每一題（依 data/exams/parsed-math/{paper-id}.json）都有詳解，題號與題型一致，沒有多餘的題。
+  --all 時 108 課綱每一卷都要有詳解檔；舊課綱（era「舊課綱」，100–110）的詳解另排，沒有檔案只列出、不算 error
+  （網站該卷顯示「詳解準備中」）。
+- difficulty.official_p 等於試題 JSON 的 stats.P（兩者都取自官方答對率及鑑別度表，
+  stats 由 tools/merge_math_stats.py 併入）；沒有 stats 的題目 official_p 必須是 null。
 - check.official 與歷屆試題 JSON 的官方答案（選擇、選填各格）一致；非選擇題 official 必須是 null。
 - 選擇（填）題 check.agree 必須等於「解題者 A＝解題者 B＝官方」；非選擇題 agree 由兩位解題者比對。
   agree 為 false 的題目必須有 flags（severity：resolved＝已複核、說明差異；owner_review＝待站主決定）。
@@ -156,6 +160,11 @@ def validate(path, jobs):
             r.err(f"{w}: difficulty.level 應為 {sorted(LEVELS)}")
         elif dif.get("official_p") is None and dif.get("basis") != "本站估計":
             r.err(f"{w}: 沒有官方答對率時 basis 應為「本站估計」")
+        else:
+            stats_p = (it.get("stats") or {}).get("P")
+            if dif.get("official_p") != stats_p:
+                r.err(f"{w}: difficulty.official_p {dif.get('official_p')} ≠ 試題 stats.P {stats_p}"
+                      "（重跑 tools/merge_math_stats.py 或更正詳解）")
         md = x["solution_md"]
         check_text(r, f"{w}.solution_md", md, jobs)
         check_text(r, f"{w}.answer_display", x["answer_display"], jobs)
@@ -241,14 +250,20 @@ def main(argv=None):
     a = ap.parse_args(argv)
     files = list(a.files)
     n_err = 0
+    pending = []
     if a.all:
         for p in sorted(glob.glob(os.path.join(PARSED, "*.json"))):
             sp = os.path.join(SOLS, os.path.basename(p))
-            if not os.path.exists(sp):
+            if os.path.exists(sp):
+                files.append(sp)
+            elif json.load(open(p, encoding="utf-8")).get("era") == "舊課綱":
+                pending.append(os.path.basename(p)[:-5])
+            else:
                 print(f"ERROR 缺詳解檔 {os.path.relpath(sp, ROOT)}")
                 n_err += 1
-            else:
-                files.append(sp)
+        if pending:
+            print(f"[pending] 舊課綱 {len(pending)} 卷尚無詳解檔（另排）：{pending[0]} … {pending[-1]}",
+                  file=sys.stderr)
     jobs = []
     reps = [validate(f, jobs) for f in files]
     kdir = a.katex or next((d for d in KATEX_DIRS if os.path.isdir(d)), None)
