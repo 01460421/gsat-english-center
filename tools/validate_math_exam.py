@@ -35,6 +35,8 @@ UNITS = {
     "vector_space", "space_line_plane", "matrix", "linear_system", "inequality_lp",
     "geometry", "functions", "logic_set", "data_modeling",
 }
+ERAS = {"108課綱", "舊課綱"}
+STATS_KEYS = {"P", "Ph", "Pl", "D", "T", "options", "omit"}
 FIG_KINDS = {"diagram", "graph", "chart", "table_image", "photo", "illustration", "other"}
 FILL_CELL_VALUES = set("0123456789") | {"-", "±"}
 # 這些欄位一出現就代表可能收進了官方參考答案或評分原則（受著作權保護，不得收錄）
@@ -102,16 +104,26 @@ def validate(path, katex_jobs):
         return r
     if d.get("schema") != SCHEMA:
         r.err(f"schema 應為 {SCHEMA}")
-    m = re.fullmatch(r"gsat-math([ab])-(\d{3})", d.get("id", ""))
+    m = re.fullmatch(r"gsat-math([ab]?)-(\d{3})", d.get("id", ""))
+    old = d.get("era") == "舊課綱"
+    if d.get("era") not in ERAS:
+        r.err(f"era 應為 {sorted(ERAS)} 之一")
     if not m:
-        r.err("id 格式應為 gsat-math{a|b}-{學年度}")
+        r.err("id 格式應為 gsat-math{a|b}-{學年度}（108 課綱）或 gsat-math-{學年度}（舊課綱）")
     else:
-        if d.get("subject") != f"math_{m.group(1)}":
+        if d.get("subject") != (f"math_{m.group(1)}" if m.group(1) else "math"):
             r.err("subject 與 id 不符")
         if d.get("year") != int(m.group(2)):
             r.err("year 與 id 不符")
         if os.path.basename(path) != d["id"] + ".json":
             r.err("檔名與 id 不符")
+        if bool(m.group(1)) == old:
+            r.err("era 與 id 不符：gsat-math{a|b}-* 為 108課綱，gsat-math-* 為舊課綱")
+        if (int(m.group(2)) >= 111) == old:
+            r.err("era 與 year 不符：111 起為 108課綱，110 以前為舊課綱")
+    for k in d:
+        if k.startswith("_"):
+            r.err(f"頂層欄位 {k} 是建置過程的暫存資料，完成前要刪除")
     for k, p in walk_keys(d):
         if k in FORBIDDEN_KEYS:
             r.err(f"{p}: 不得收錄官方參考答案／評分原則（欄位 {k}）")
@@ -141,6 +153,7 @@ def validate(path, katex_jobs):
         r.err("parts.sections 與 sections 不一致")
 
     nos, labels = [], set()
+    fill_rows, fill_letters = [], []
     total = 0
     fig_ids = set()
     for s in d.get("sections", []):
@@ -164,6 +177,11 @@ def validate(path, katex_jobs):
                     r.err(f"{where}: label 重複")
                 labels.add(it.get("label"))
                 t = it.get("type")
+                if old and t == "fill":
+                    fill_letters.append(it.get("label"))
+                    where = f"第{it.get('label')}題"
+                elif it.get("label") != str(no):
+                    r.err(f"{where}: label 應為題號 {no}")
                 if t not in ITEM_TYPES:
                     r.err(f"{where}: type 不合法 {t}")
                 if s["type"] in ("single", "multi", "fill") and t != s["type"]:
@@ -201,6 +219,15 @@ def validate(path, katex_jobs):
                     if a is not None:
                         r.err(f"{where}: 選填題 answer 應為 null（答案在 fill）")
                     check_fill(r, it, where, katex_jobs)
+                    oc = (it.get("fill") or {}).get("official_cells")
+                    if old:
+                        if not isinstance(oc, list) or len(oc) != len((it.get("fill") or {}).get("cells") or []) \
+                                or not all(isinstance(x, str) and x.isdigit() for x in oc):
+                            r.err(f"{where}: 舊課綱選填題要有 fill.official_cells（答案卡列號，與 cells 一一對應）")
+                        else:
+                            fill_rows += [int(x) for x in oc]
+                    elif oc is not None:
+                        r.err(f"{where}: fill.official_cells 只用於舊課綱")
                 elif t == "constructed":
                     if a is not None:
                         r.err(f"{where}: 非選擇題不得存答案")
@@ -213,6 +240,8 @@ def validate(path, katex_jobs):
                     check_figure(r, d, fg, f"{where}({k})", fig_ids)
                 for tb in it.get("tables", []):
                     check_table(r, tb, where, katex_jobs)
+                if "stats" in it:
+                    check_stats(r, it, where)
                 units = (it.get("tags") or {}).get("units")
                 if not units:
                     r.warn(f"{where}: 沒有 tags.units")
@@ -225,6 +254,18 @@ def validate(path, katex_jobs):
         r.err(f"全卷配分合計 {total} ≠ 100")
     if nos != list(range(1, len(nos) + 1)):
         r.err(f"題號不連續：{nos}")
+    if old:
+        n_fill = len(fill_letters)
+        if fill_letters != [chr(ord("A") + i) for i in range(n_fill)]:
+            r.err(f"舊課綱選填題 label 應依序為 A、B、C…：{fill_letters}")
+        first = len(nos) - n_fill + 1
+        if fill_rows and fill_rows != list(range(first, first + len(fill_rows))):
+            r.err(f"選填題答案卡列號應從 {first} 起全卷連號：{fill_rows}")
+        fill_sec = [s for s in d.get("sections", []) if s.get("type") == "fill"]
+        mm = re.search(r"列號\s*[（(]\s*(\d+)\s*[–\-－~]\s*(\d+)\s*[）)]",
+                       (fill_sec[0].get("instructions") or "") if fill_sec else "")
+        if fill_rows and mm and (fill_rows[0], fill_rows[-1]) != (int(mm.group(1)), int(mm.group(2))):
+            r.err(f"選填列號 {fill_rows[0]}–{fill_rows[-1]} 與大題說明「{mm.group(0)}」不符")
     for i, f in enumerate(d.get("reference_formulas", [])):
         check_text(r, f"reference_formulas[{i}]", f)
         katex_jobs += [(r, f"reference_formulas[{i}]", seg) for seg in math_segments(f)]
@@ -260,6 +301,30 @@ def check_fill(r, it, where, katex_jobs):
     boxed = re.sub(r"\[\[(\d+-\d+)\]\]", r"\\boxed{\1}", tpl)
     katex_jobs.append((r, f"{where}.fill.template", boxed))
     katex_jobs.append((r, f"{where}.fill.answer_latex", f.get("answer_latex") or ""))
+
+
+def check_stats(r, it, where):
+    st = it.get("stats")
+    if not isinstance(st, dict):
+        r.err(f"{where}: stats 應為物件")
+        return
+    for k in st:
+        if k not in STATS_KEYS:
+            r.err(f"{where}: stats 不認得的欄位 {k}")
+    for k in ("P", "Ph", "Pl", "T", "omit"):
+        v = st.get(k)
+        if v is not None and not (isinstance(v, (int, float)) and 0 <= v <= 1):
+            r.err(f"{where}: stats.{k}={v!r} 應為 0–1 的小數")
+    d_ = st.get("D")
+    if d_ is not None and not (isinstance(d_, (int, float)) and -1 <= d_ <= 1):
+        r.err(f"{where}: stats.D={d_!r} 應為 −1–1")
+    if "T" in st and it.get("type") != "multi":
+        r.err(f"{where}: stats.T（全對率）只用於多選題")
+    if "options" in st:
+        if it.get("type") not in ("single", "multi") or set(st["options"]) != set(it.get("options") or {}):
+            r.err(f"{where}: stats.options 的鍵應與選項相同")
+        elif any(v is not None and not (0 <= v <= 1) for v in st["options"].values()):
+            r.err(f"{where}: stats.options 的比例應為 0–1")
 
 
 def check_figure(r, d, fg, where, fig_ids):

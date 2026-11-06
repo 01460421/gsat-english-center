@@ -266,6 +266,17 @@ class Walker:
         self.cache[name] = out
         return out
 
+    def is_mtef(self, rid):
+        target = self.rels.get(rid)
+        if not target:
+            return False
+        name = "word/" + target if not target.startswith("/") else target[1:]
+        try:
+            ml.cfb_stream(_read(self.z, name), "Equation Native")
+            return True
+        except Exception:  # noqa: BLE001
+            return False
+
     def run_text(self, el):
         """一個 w:r 或其他行內節點的文字；處理 Word 欄位（EQ 欄位轉 LaTeX）。"""
         out = []
@@ -302,7 +313,9 @@ class Walker:
             elif tag == "{%s}OLEObject" % NS["o"]:
                 prog = node.get("ProgID") or ""
                 rid = node.get(R_ID)
-                if prog.startswith("Equation"):
+                if prog.startswith("Equation") or (not prog and self.is_mtef(rid)):
+                    # 舊版 .doc 經 LibreOffice 轉成 .docx 時 ProgID 是空字串，
+                    # 但 oleObject 仍保留 "Equation Native" 串流
                     out.append(self.eq(rid))
                 else:
                     out.append(f"[[OLE {prog} {self.rels.get(rid)}]]")

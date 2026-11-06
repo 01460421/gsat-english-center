@@ -105,6 +105,37 @@ class BuilderTest(unittest.TestCase):
         self.assertEqual(tables[0]["rows"], [["", "藍", "綠"], ["1號", "2", ""]])
 
 
+class OldEraTest(unittest.TestCase):
+    """舊課綱（100–110）：答案檔解析、以答案卡列號寫的選填 template。"""
+
+    def test_answer_text_old(self):
+        txt = ("題號   答案          題號        答案\n"
+               "1     5              13   1         25   －\n"
+               "7    135    B        19   －    G    31   3\n"
+               "8    1,4             20   9\n")
+        mc, cells = bme.parse_answer_text_old(txt, 12)
+        self.assertEqual(mc, {"1": ["5"], "7": ["1", "3", "5"], "8": ["1", "4"]})
+        self.assertEqual(cells, {"13": "1", "25": "-", "19": "-", "31": "3", "20": "9"})
+
+    def test_apply_official_template(self):
+        it = {"no": 16, "label": "C", "type": "fill"}
+        rows = bme.apply_official_template(it, r"\frac{[[19]]}{[[20]][[21]]}",
+                                           {"19": "1", "20": "1", "21": "4"})
+        self.assertEqual(rows, ["19", "20", "21"])
+        f = it["fill"]
+        self.assertEqual(f["cells"], ["16-1", "16-2", "16-3"])
+        self.assertEqual(f["template"], r"\frac{[[16-1]]}{[[16-2]][[16-3]]}")
+        self.assertEqual(f["answer_latex"], r"\frac{1}{14}")
+        with self.assertRaises(ValueError):
+            bme.apply_official_template(dict(it), "[[21]][[20]]", {"20": "1", "21": "4"})
+
+    def test_finalize_requires_all_rows(self):
+        doc = {"_fill_key": {"14": "3", "15": "7"},
+               "sections": [{"groups": [{"items": [{"type": "fill", "fill": {"official_cells": ["14"]}}]}]}]}
+        with self.assertRaises(ValueError):
+            bme.finalize_old_fill(doc)
+
+
 class ValidatorTest(unittest.TestCase):
     def test_repo_file_passes(self):
         path = TOOLS.parent / "data" / "exams" / "parsed-math" / "gsat-matha-115.json"
@@ -120,6 +151,16 @@ class ValidatorTest(unittest.TestCase):
             p.write_text(json.dumps(d, ensure_ascii=False), encoding="utf-8")
             r = vme.validate(str(p), [])
         self.assertTrue(any("不得收錄" in e for e in r.errors))
+
+    def test_era_must_match_id(self):
+        path = TOOLS.parent / "data" / "exams" / "parsed-math" / "gsat-matha-115.json"
+        d = json.loads(path.read_text(encoding="utf-8"))
+        d["era"] = "舊課綱"
+        with tempfile.TemporaryDirectory() as td:
+            p = Path(td) / "gsat-matha-115.json"
+            p.write_text(json.dumps(d, ensure_ascii=False), encoding="utf-8")
+            r = vme.validate(str(p), [])
+        self.assertTrue(any("era" in e for e in r.errors))
 
 
 if __name__ == "__main__":
