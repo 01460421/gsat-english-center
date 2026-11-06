@@ -1,0 +1,523 @@
+{
+ "schema": "gsat-math-solutions/v1",
+ "paper_id": "gsat-matha-111",
+ "note": "本站自撰詳解；選擇（填）題答案經兩位獨立解題者與官方答案比對，非選擇題經兩位獨立解題者比對最終結果。",
+ "items": [
+  {
+   "no": 1,
+   "type": "single",
+   "unit": "排列組合",
+   "unit_tags": [
+    "counting"
+   ],
+   "difficulty": {
+    "level": "超越頂標",
+    "official_p": 0.29,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：先由「不同口味兩球的組合數 $C^n_2>100$」求出最小的 $n$，再算「可重複」的選法數。\n\n**詳解**\n\n1. 兩球口味不同的組合數為 $C^n_2=\\dfrac{n(n-1)}{2}$。\n2. 試算：$C^{14}_2=91\\le 100$，$C^{15}_2=105>100$，所以最少需要 $n=15$ 桶。\n3. 顧客任選兩球且可以同口味，分成兩類：\n   - 兩球不同口味：$C^{15}_2=105$ 種；\n   - 兩球同口味：$15$ 種。\n4. 共 $105+15=120$ 種（也可以用重複組合 $H^{15}_2=C^{16}_2=120$）。\n\n**答案**：(4)\n\n**常見錯誤**：只算不同口味的 $105$ 而選 (2)；或把「兩球」當成有順序而算出 $15^2=225$，選 (5)。",
+   "answer_display": "(4)",
+   "check": {
+    "official": "4",
+    "solver_a": "4",
+    "solver_b": "4",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 2,
+   "type": "single",
+   "unit": "指數對數",
+   "unit_tags": [
+    "exp_log"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.4,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：$\\log_b a$ 與 $\\log_a b$ 互為倒數。\n\n**詳解**\n\n1. 正確值是 $\\log_a b$，誤按得到 $\\log_b a$。令 $t=\\log_a b$，因為 $a>1$、$b>1$，所以 $t>0$，且 $\\log_b a=\\dfrac{1}{t}$。\n2. 依題意 $\\dfrac{1}{t}=\\dfrac{9}{4}t$，得 $t^2=\\dfrac{4}{9}$，取正值 $t=\\dfrac{2}{3}$。\n3. $\\log_a b=\\dfrac{2}{3}$ 表示 $b=a^{\\frac{2}{3}}$，兩邊三次方得 $b^3=a^2$。\n\n**答案**：(1)\n\n**常見錯誤**：把「誤按的值是正確值的 $\\frac94$ 倍」寫反成 $t=\\frac94\\cdot\\frac1t$，會得到 $t=\\frac32$，誤選 (2)。",
+   "answer_display": "(1)",
+   "check": {
+    "official": "1",
+    "solver_a": "1",
+    "solver_b": "1",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 3,
+   "type": "single",
+   "unit": "數據分析",
+   "unit_tags": [
+    "statistics"
+   ],
+   "difficulty": {
+    "level": "超越頂標",
+    "official_p": 0.12,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：數據沿著斜率約 $2$ 的方向散開；投影到和這個方向**垂直**的直線上，投影點最集中，變異數最小。\n\n**詳解**\n\n1. 由散布圖，點大致落在通過原點、斜率約為 $2$ 的直線附近，也就是數據主要沿方向 $(1,2)$ 分散。\n2. 若投影到 $y=2x$（與數據走向平行），投影點幾乎保留全部的分散程度，變異數最大。\n3. 投影到與 $(1,2)$ 垂直的方向 $(2,-1)$，也就是斜率 $-\\dfrac12$ 的直線 $y=-\\dfrac{x}{2}$ 時，各點沿主要方向的差異都被「壓扁」，只剩下偏離直線帶的小幅差異，因此變異數最小。\n4. 其他選項的方向與 $(1,2)$ 不垂直，投影後仍保留部分主要方向的分散，變異數較大。\n\n**答案**：(5)\n\n**常見錯誤**：直覺選與數據走向相同的 $y=2x$，那其實是變異數**最大**的方向。",
+   "answer_display": "(5)",
+   "check": {
+    "official": "5",
+    "solver_a": "5",
+    "solver_b": "5",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 4,
+   "type": "single",
+   "unit": "數列與級數、指數對數",
+   "unit_tags": [
+    "sequence",
+    "exp_log"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.57,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：$\\log a_1,\\log a_3,\\log a_6$ 成等差 $\\iff a_1,a_3,a_6$ 成等比。\n\n**詳解**\n\n1. $\\log a_1+\\log a_6=2\\log a_3$，即 $a_1a_6=a_3^2$，所以 $a_1,a_3,a_6$ 成等比數列。\n2. 以 $a_3=a_1+2d$、$a_6=a_1+5d$ 代入：$(a_1+2d)^2=a_1(a_1+5d)$。\n3. 展開：$a_1^2+4a_1d+4d^2=a_1^2+5a_1d$，得 $4d^2=a_1d$；因 $d>0$，$a_1=4d$。\n4. 於是 $a_1=4d$、$a_3=6d$、$a_6=9d$，公比為 $\\dfrac{6d}{4d}=\\dfrac32$。\n5. 所求公差 $=\\log a_3-\\log a_1=\\log\\dfrac{a_3}{a_1}=\\log\\dfrac32$。\n\n**答案**：(3)\n\n**常見錯誤**：把對數數列的公差誤認為原數列的公差 $d$，而選 (1)。",
+   "answer_display": "(3)",
+   "check": {
+    "official": "3",
+    "solver_a": "3",
+    "solver_b": "3",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 5,
+   "type": "single",
+   "unit": "機率（條件機率）",
+   "unit_tags": [
+    "probability"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.53,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：用條件機率（貝氏定理）分別算 $P$ 與 $P'$；連續三次採檢視為獨立。\n\n**詳解**\n\n1. 染病機率 $0.3$，染病者判陰性機率 $1-0.8=0.2$；未染病機率 $0.7$，未染病者判陰性機率 $0.6$。\n2. 單次判陰性：\n   - 染病且陰性：$0.3\\times0.2=0.06$；\n   - 未染病且陰性：$0.7\\times0.6=0.42$。\n\n   $P=\\dfrac{0.06}{0.06+0.42}=\\dfrac{0.06}{0.48}=\\dfrac18$。\n3. 連續三次皆陰性：\n   - 染病：$0.3\\times0.2^3=0.0024$；\n   - 未染病：$0.7\\times0.6^3=0.1512$。\n\n   $P'=\\dfrac{0.0024}{0.0024+0.1512}=\\dfrac{0.0024}{0.1536}=\\dfrac{1}{64}$。\n4. $\\dfrac{P}{P'}=\\dfrac{1/8}{1/64}=8$。\n\n**答案**：(2)\n\n**常見錯誤**：只算 $0.2$ 與 $0.2^3$ 的比值 $25$，忘了分母（全部陰性者）也跟著改變。",
+   "answer_display": "(2)",
+   "check": {
+    "official": "2",
+    "solver_a": "2",
+    "solver_b": "2",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 6,
+   "type": "single",
+   "unit": "直線與坐標、三角函數",
+   "unit_tags": [
+    "coordinate_line",
+    "trigonometry"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.48,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：正三角形的每個內角都是 $60^\\circ$，所以 $L_1,L_2$ 的夾角為 $60^\\circ$，第三邊 $L$ 垂直於這個 $60^\\circ$ 角的平分線。\n\n**詳解**\n\n1. $L$ 與 $L_1,L_2$ 圍成正三角形，所以 $L_1,L_2$ 的交角（三角形的一個內角）為 $60^\\circ$；正三角形的頂角平分線垂直於對邊，故 $L$ 垂直於該 $60^\\circ$ 角的平分線。\n2. 兩條角平分線互相垂直，斜率分別為 $\\dfrac{11}{9}$ 與 $-\\dfrac{9}{11}$。哪一條平分 $60^\\circ$ 角？\n   - 設斜率 $\\dfrac{11}{9}$ 的平分線傾斜角為 $\\theta$（$\\tan\\theta=\\frac{11}{9}$，$\\theta\\approx 50.7^\\circ$）。若它平分 $60^\\circ$ 角，則 $L_1,L_2$ 的傾斜角為 $\\theta\\pm30^\\circ$，約 $80.7^\\circ$ 與 $20.7^\\circ$，兩斜率皆正，符合題意。\n   - 若它平分的是 $120^\\circ$ 角，兩直線傾斜角為 $\\theta\\pm60^\\circ$，其中約 $110.7^\\circ$ 的斜率為負，不合。\n3. 所以 $L$ 垂直於斜率 $\\dfrac{11}{9}$ 的平分線，$L$ 的斜率為 $-\\dfrac{9}{11}$。\n4. $L$ 過 $(2,\\frac13)$：$y-\\dfrac13=-\\dfrac{9}{11}(x-2)$，整理得 $9x+11y=18+\\dfrac{11}{3}=\\dfrac{65}{3}$，即 $27x+33y=65$。\n\n**答案**：(5)\n\n**常見錯誤**：以為 $L$ 平行或垂直於斜率 $\\frac{11}{9}$ 的直線就好，卻沒代點檢查；(2) 的斜率也是 $-\\frac{9}{11}$，但不過點 $(2,\\frac13)$。",
+   "answer_display": "(5)",
+   "check": {
+    "official": "5",
+    "solver_a": "5",
+    "solver_b": "5",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 7,
+   "type": "multi",
+   "unit": "實數（絕對值不等式）",
+   "unit_tags": [
+    "real_numbers"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.57,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：$|A|\\ge|B|\\iff A^2\\ge B^2$，先解出所有整數 $n$，再逐一檢查選項。\n\n**詳解**\n\n1. $|5n-21|\\ge 7|n| \\iff (5n-21)^2\\ge 49n^2$。\n2. 展開：$25n^2-210n+441\\ge 49n^2$，即 $24n^2+210n-441\\le0$，同除以 $3$：$8n^2+70n-147\\le0$。\n3. 因式分解 $(2n+21)(4n-7)\\le 0$，得 $-\\dfrac{21}{2}\\le n\\le\\dfrac74$，整數解為 $n=-10,-9,\\dots,0,1$，共 $12$ 個。\n\n**選項分析**\n\n- (1) 錯：$|5n-7n|=2|n|\\ge21$ 需 $|n|\\ge10.5$，例如 $n=0$ 不成立。\n- (2) 對：$5n-21\\ne0$（$n$ 為整數），原式同除以 $|5n-21|$ 得 $\\left|\\dfrac{7n}{5n-21}\\right|\\le1$，即 $-1\\le\\dfrac{7n}{5n-21}\\le1$。\n- (3) 錯：$7n\\le5n-21\\iff n\\le-10.5$，例如 $n=0$ 不成立。\n- (4) 對：就是步驟 1 的等價式。\n- (5) 錯：只有 $12$ 個整數解。\n\n**答案**：(2)(4)\n\n**常見錯誤**：把 $|5n-21|\\ge7|n|$ 直接拆成 $5n-21\\ge7n$ 或 $5n-21\\le-7n$，漏掉 $n$ 的正負情形。",
+   "answer_display": "(2)(4)",
+   "check": {
+    "official": "2,4",
+    "solver_a": "2,4",
+    "solver_b": "2,4",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 8,
+   "type": "multi",
+   "unit": "三角函數（正弦、餘弦定理）、直線與坐標",
+   "unit_tags": [
+    "trigonometry",
+    "coordinate_line"
+   ],
+   "difficulty": {
+    "level": "穩定基礎",
+    "official_p": 0.6,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：先算三邊長平方，用餘弦定理判斷角的大小與鈍角，再用正弦定理求外接圓半徑。\n\n**詳解**\n\n1. $\\overline{AB}^2=1^2+2^2=5$，$\\overline{BC}^2=3^2+1^2=10$，$\\overline{AC}^2=4^2+1^2=17$。\n2. 最大邊 $\\overline{AC}$ 所對的角 $B$：$\\cos B=\\dfrac{5+10-17}{2\\sqrt5\\sqrt{10}}=\\dfrac{-2}{10\\sqrt2}=-\\dfrac{\\sqrt2}{10}$，所以 $B$ 為鈍角，$\\sin B=\\sqrt{1-\\dfrac{2}{100}}=\\dfrac{7\\sqrt2}{10}$。\n3. 外接圓半徑 $R=\\dfrac{\\overline{AC}}{2\\sin B}=\\dfrac{\\sqrt{17}}{2\\cdot\\frac{7\\sqrt2}{10}}=\\dfrac{5\\sqrt{34}}{14}\\approx\\dfrac{5\\times5.83}{14}\\approx2.08$。\n\n**選項分析**\n\n- (1) 對：$17>10>5$。\n- (2) 錯：由正弦定理，$\\sin A:\\sin C=\\overline{BC}:\\overline{AB}=\\sqrt{10}:\\sqrt5$，所以 $\\sin A>\\sin C$。\n- (3) 錯：$\\overline{AC}^2=17>5+10$，$B$ 是鈍角。\n- (4) 對：見步驟 2。\n- (5) 錯：$R\\approx2.08>2$（或比較 $R^2=\\frac{850}{196}>4$）。\n\n**答案**：(1)(4)",
+   "answer_display": "(1)(4)",
+   "check": {
+    "official": "1,4",
+    "solver_a": "1,4",
+    "solver_b": "1,4",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 9,
+   "type": "multi",
+   "unit": "平面向量",
+   "unit_tags": [
+    "vector_plane"
+   ],
+   "difficulty": {
+    "level": "超越頂標",
+    "official_p": 0.19,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：若 $\\overrightarrow{AX}=x\\overrightarrow{AB}+y\\overrightarrow{AC}$，則 $\\Delta ABX$ 面積 $=|y|\\cdot\\Delta ABC$、$\\Delta ACX$ 面積 $=|x|\\cdot\\Delta ABC$、$\\Delta BCX$ 面積 $=|1-x-y|\\cdot\\Delta ABC$。\n\n**詳解**\n\n1. $P$ 在 $\\Delta ABC$ 內部 $\\iff a>0,\\ b>0,\\ a+b<1$。\n2. 面積公式的理由：$\\Delta ABX$ 以 $\\overline{AB}$ 為底，$X$ 到直線 $AB$ 的距離是 $C$ 到 $AB$ 距離的 $|y|$ 倍；其餘同理。設 $\\Delta ABC$ 面積為 $S$。\n\n**選項分析**\n\n- (1) 錯：$Q$ 的係數為 $(b,a)$，仍滿足內部條件，所以 $Q$ 在內部；但 $R$ 的係數為 $(a,\\,b-0.05)$，若 $b\\le0.05$，$R$ 就不在內部，不一定成立。\n- (2) 錯：$|\\overrightarrow{AP}|=|\\overrightarrow{AQ}|$ 一般不成立（例如 $\\overline{AB}\\ne\\overline{AC}$ 時），沒有保證。\n- (3) 對：$\\Delta ABP=bS$，$Q$ 的 $\\overrightarrow{AB}$ 係數為 $b$，所以 $\\Delta ACQ=bS$，兩者相等。\n- (4) 對：$\\Delta BCP=(1-a-b)S$，$\\Delta BCQ=(1-b-a)S$，相等。\n- (5) 錯：$\\Delta ABP=bS$，$\\Delta ABR=|b-0.05|S$。若 $b=0.01$，則 $\\Delta ABR=0.04S>\\Delta ABP$，不一定成立。\n\n**答案**：(3)(4)\n\n**常見錯誤**：(5) 只想到 $b-0.05<b$，忘了係數變成負數時面積要取絕對值。",
+   "answer_display": "(3)(4)",
+   "check": {
+    "official": "3,4",
+    "solver_a": "3,4",
+    "solver_b": "3,4",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 10,
+   "type": "multi",
+   "unit": "多項式函數（三次函數的對稱中心）",
+   "unit_tags": [
+    "polynomial"
+   ],
+   "difficulty": {
+    "level": "超越頂標",
+    "official_p": 0.2,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：三次函數 $y=px^3+qx^2+rx+s$ 的對稱中心在 $x=-\\dfrac{q}{3p}$；先由 $g$ 的對稱中心定出 $b,c$ 與 $a$ 的關係。\n\n**詳解**\n\n1. $g(x)=f(-x)-3=-ax^3+bx^2-cx$，且 $g(0)=0$。\n2. 對稱中心 $x$ 坐標：$-\\dfrac{b}{3(-a)}=1$，得 $b=3a$。\n3. 對稱中心在圖形上：$g(1)=-a+b-c=0$，得 $c=b-a=2a$。\n4. 所以 $g(x)=-ax^3+3ax^2-2ax=-ax(x-1)(x-2)$。\n5. $g(-1)=-a(-1)(-2)(-3)=6a<0$，得 $a<0$。\n6. $f(x)=ax^3+3ax^2+2ax+3$。\n\n**選項分析**\n\n- (1) 對：$g(x)=0$ 的根為 $0,1,2$。\n- (2) 對：見步驟 5。\n- (3) 錯：$f(x)=g(-x)+3$，是把 $g$ 的圖形對 $y$ 軸鏡射再上移 $3$，對稱中心 $(1,0)\\to(-1,0)\\to(-1,3)$，不是 $(-1,-3)$。\n- (4) 錯：$f(100)=a(100^3+3\\cdot100^2+2\\cdot100)+3=1030200a+3$。題目只知道 $a<0$，若 $a=-10^{-6}$，則 $f(100)\\approx-1.03+3>0$，所以不一定小於 $0$。\n- (5) 錯：$f'(x)=3ax^2+6ax+2a$，$f'(-1)=3a-6a+2a=-a$，切線斜率是 $-a$ 而不是 $a$（$a\\ne0$）。\n\n**答案**：(1)(2)\n\n**常見錯誤**：(4) 看到「首項係數為負、$x$ 很大」就直接判定 $f(100)<0$；但 $100$ 是一個固定的數，常數項 $3$ 可能壓過 $1030200a$，必須考慮 $|a|$ 很小的情形。",
+   "answer_display": "(1)(2)",
+   "check": {
+    "official": "1,2",
+    "solver_a": "1,2",
+    "solver_b": "1,2,4",
+    "agree": false,
+    "solver_a_initial": "1,2,4"
+   },
+   "flags": [
+    {
+     "severity": "resolved",
+     "detail": "解題者 A 初解與解題者 B 都誤選 (4)；複核後確認官方答案 (1)(2) 正確：$a$ 只知為負，$|a|$ 很小時 $f(100)>0$（例如 $a=-10^{-6}$）。詳解已改正並把這一點寫成常見錯誤。"
+    }
+   ]
+  },
+  {
+   "no": 11,
+   "type": "multi",
+   "unit": "空間中的平面與直線、三角函數",
+   "unit_tags": [
+    "space_line_plane",
+    "trigonometry",
+    "geometry"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.38,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：$ADEB$、$ADFC$ 都是矩形 $\\Rightarrow AD\\perp AB$、$AD\\perp AC$，所以 $AD$ 垂直底面 $ABC$，這是直角三角柱。設柱高 $\\overline{AD}=\\overline{BE}=\\overline{CF}=h$。\n\n**詳解**\n\n1. 底面中 $\\angle ACB=90^\\circ$，$\\overline{AB}=\\sqrt{25+36}=\\sqrt{61}$。\n2. 側稜垂直底面，所以 $\\overline{BE}\\perp\\overline{BC}$、$\\overline{BE}\\perp\\overline{AB}$；又 $\\overline{AC}\\perp\\overline{BC}$ 且 $\\overline{AC}\\perp\\overline{CF}$，所以 $\\overline{AC}$ 垂直平面 $BCFE$，$\\overline{AC}\\perp\\overline{CE}$。\n3. 由直角三角形：\n   - $\\tan\\angle CEB=\\dfrac{\\overline{BC}}{\\overline{BE}}=\\dfrac6h$；\n   - $\\tan\\angle AEB=\\dfrac{\\overline{AB}}{\\overline{BE}}=\\dfrac{\\sqrt{61}}{h}$；\n   - $\\overline{CE}=\\sqrt{36+h^2}$，$\\tan\\angle AEC=\\dfrac{\\overline{AC}}{\\overline{CE}}=\\dfrac{5}{\\sqrt{36+h^2}}$，$\\sin\\angle CEB=\\dfrac{\\overline{BC}}{\\overline{CE}}=\\dfrac{6}{\\sqrt{36+h^2}}$。\n\n**選項分析**\n\n- (1) 錯：平面 $ACE$ 把柱體切成四面體 $E\\text{-}ABC$ 與以四邊形 $ACFD$ 為底、$E$ 為頂點的四角錐，後者不是四面體。\n- (2) 對：$AD$ 是兩平面的交線，且 $AB\\perp AD$、$AC\\perp AD$，兩平面的夾角就是 $\\angle BAC$；$\\tan\\angle BAC=\\dfrac65>1$，所以大於 $45^\\circ$。\n- (3) 對：$\\dfrac6h<\\dfrac{\\sqrt{61}}h$，兩角皆為銳角，故 $\\angle CEB<\\angle AEB$。\n- (4) 對：$\\dfrac{5}{\\sqrt{36+h^2}}<\\dfrac{6}{\\sqrt{36+h^2}}$。\n- (5) 錯：比較 $\\dfrac6h$ 與 $\\dfrac5{\\sqrt{36+h^2}}$：平方後 $36(36+h^2)>25h^2$ 恆成立，所以 $\\tan\\angle CEB>\\tan\\angle AEC$，即 $\\angle CEB>\\angle AEC$。\n\n**答案**：(2)(3)(4)",
+   "answer_display": "(2)(3)(4)",
+   "check": {
+    "official": "2,3,4",
+    "solver_a": "2,3,4",
+    "solver_b": "2,3,4",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 12,
+   "type": "multi",
+   "unit": "多項式函數（除法原理）",
+   "unit_tags": [
+    "polynomial"
+   ],
+   "difficulty": {
+    "level": "超越頂標",
+    "official_p": 0.21,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：由除法原理 $g^2=f\\cdot q+g$，得 $f$ 整除 $g(g-1)$；再用「$f$ 沒有實根」限制 $g$。\n\n**詳解**\n\n1. 餘式 $g(x)$ 是二次式，所以 $\\deg f>2$；又 $(g(x))^2-g(x)=g(x)\\big(g(x)-1\\big)=f(x)q(x)$ 是四次式，故 $\\deg f=3$ 或 $4$。\n2. 三次多項式一定有實根，與「圖形與 $x$ 軸無交點」矛盾，所以 $\\deg f=4$，$q(x)$ 是非零常數 $k$：$f(x)=\\dfrac1k\\,g(x)\\big(g(x)-1\\big)$。\n3. $f$ 沒有實根 $\\iff$ $g(x)=0$ 與 $g(x)=1$ 都沒有實根。$g$ 的首項係數為正、開口向上，設頂點 $y$ 坐標為 $m$，則需 $m>0$ 且 $m>1$，即 $m>1$。\n4. 反過來，任何 $m>1$ 都可以取 $g(x)=x^2+m$、$f(x)=g(x)(g(x)-1)$ 達成。\n\n**選項分析**（頂點 $y$ 坐標 $m$ 必須大於 $1$；題目要選「不可能」的）\n\n- (1) $\\frac{\\sqrt2}{2}<1$，不可能，選。\n- (2) $m=1$ 時 $g(x)-1=0$ 有實根（頂點），$f$ 會碰到 $x$ 軸，不可能，選。\n- (3) $\\sqrt2>1$，可能（例如 $g(x)=x^2+\\sqrt2$），不選。\n- (4) $2>1$，可能，不選。\n- (5) $\\pi>1$，可能，不選。\n\n**答案**：(1)(2)\n\n**常見錯誤**：忘了 $g(x)-1$ 也是 $f$ 的因式，只要求 $g>0$ 而漏選 (2)。",
+   "answer_display": "(1)(2)",
+   "check": {
+    "official": "1,2",
+    "solver_a": "1,2",
+    "solver_b": "1,2",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 13,
+   "type": "fill",
+   "unit": "機率（期望值）",
+   "unit_tags": [
+    "probability"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.46,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：期望值具有可加性：每次十連抽的期望張數相同，乘上可抽的次數即可。\n\n**詳解**\n\n1. $23000\\div1500=15.33\\cdots$，所以共可十連抽 $15$ 次（剩 $500$ 枚不能再抽）。\n2. 每次十連抽中，第 $k$ 次抽中金卡的期望張數就是抽中的機率，故一次十連抽的期望張數為 $9\\times0.02+0.10=0.28$。\n3. $15$ 次的期望值：$15\\times0.28=4.2$ 張。\n\n**答案**：$4.2$（13-1 填 $4$，13-2 填 $2$）",
+   "answer_display": "$4.2$",
+   "check": {
+    "official": {
+     "13-1": "4",
+     "13-2": "2"
+    },
+    "solver_a": {
+     "13-1": "4",
+     "13-2": "2"
+    },
+    "solver_b": {
+     "13-1": "4",
+     "13-2": "2"
+    },
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 14,
+   "type": "fill",
+   "unit": "線性方程組、矩陣",
+   "unit_tags": [
+    "linear_system",
+    "matrix"
+   ],
+   "difficulty": {
+    "level": "超越頂標",
+    "official_p": 0.21,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：高斯消去法的列運算不改變解，所以化簡後的方程組與原方程組同解。先由化簡結果解出 $(x,y,z)$（含 $b$），再代回原方程組。\n\n**詳解**\n\n1. 恰有一組解，所以化簡後第三列 $bz=0$ 中 $b\\ne0$，得 $z=0$。\n2. 第二列 $by+5z=-5$，得 $y=-\\dfrac5b$；第一列 $x+2y+bz=7$，得 $x=7+\\dfrac{10}{b}$。\n3. 代入原第三式 $3x+8y+az=1$：$21+\\dfrac{30}{b}-\\dfrac{40}{b}=1$，即 $\\dfrac{10}{b}=20$，$b=\\dfrac12$。\n4. 於是 $x=27$，$y=-10$，$z=0$。代入原第二式 $x+ay=7$：$27-10a=7$，$a=2$。\n5. 檢查原第一式：$2\\cdot27+5\\cdot(-10)+0=4$，成立。且 $a=2$ 時係數行列式 $=\\dfrac{58}{3}\\ne0$，確實恰有一組解。\n\n**答案**：$a=2$，$b=\\dfrac12$（14-1 填 $2$，14-2 填 $1$，14-3 填 $2$）\n\n**常見錯誤**：直接拿化簡後矩陣的數字去比對原矩陣（例如以為第一列就是原第二式），這不一定成立；正確作法是比較「解」。",
+   "answer_display": "$a=2,\\ b=\\frac{1}{2}$",
+   "check": {
+    "official": {
+     "14-1": "2",
+     "14-2": "1",
+     "14-3": "2"
+    },
+    "solver_a": {
+     "14-1": "2",
+     "14-2": "1",
+     "14-3": "2"
+    },
+    "solver_b": {
+     "14-1": "2",
+     "14-2": "1",
+     "14-3": "2"
+    },
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 15,
+   "type": "fill",
+   "unit": "三角函數、幾何",
+   "unit_tags": [
+    "trigonometry",
+    "geometry"
+   ],
+   "difficulty": {
+    "level": "超越頂標",
+    "official_p": 0.16,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：相似三角形面積比是邊長比的平方；平行線間的距離（路寬）可以用 $\\overline{BC}\\sin30^\\circ$ 求得。\n\n**詳解**\n\n1. $DE\\parallel BC$，$\\Delta ADE\\sim\\Delta ABC$，面積比 $\\dfrac{9}{16}$，所以相似比 $\\dfrac34$。設 $\\Delta ABC$ 的高為 $H$，則 $\\Delta ADE$ 的高為 $\\dfrac34H$，路寬 $h=\\dfrac14H$。\n2. 協商後的馬路以平行線 $BE$、$FC$ 為邊線，路寬 $h$ 就是 $C$ 到直線 $BE$ 的距離：$h=\\overline{BC}\\sin\\angle EBC=16\\times\\dfrac12=8$。\n3. 所以 $H=4h=32$，$\\Delta ABC$ 面積 $=\\dfrac12\\times16\\times32=256$。\n4. $E$ 在直線 $DE$ 上，到 $BC$ 的距離就是 $h=8$，所以 $\\Delta BCE$ 面積 $=\\dfrac12\\times16\\times8=64$。\n5. 剩餘 $\\Delta ABE$ 面積 $=256-64=192$ 平方公尺。\n\n**答案**：$192$（15-1 填 $1$，15-2 填 $9$，15-3 填 $2$）",
+   "answer_display": "$192$",
+   "check": {
+    "official": {
+     "15-1": "1",
+     "15-2": "9",
+     "15-3": "2"
+    },
+    "solver_a": {
+     "15-1": "1",
+     "15-2": "9",
+     "15-3": "2"
+    },
+    "solver_b": {
+     "15-1": "1",
+     "15-2": "9",
+     "15-3": "2"
+    },
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 16,
+   "type": "fill",
+   "unit": "空間中的平面與直線",
+   "unit_tags": [
+    "space_line_plane"
+   ],
+   "difficulty": {
+    "level": "超越頂標",
+    "official_p": 0.18,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：$L'$ 在 $E$ 上的投影落在 $L$ 上，表示投影方向（$E$ 的法向量）落在平面 $x-y+2z=3$ 內，也就是兩平面互相垂直。\n\n**詳解**\n\n1. 設平面 $F:x-y+2z=3$，法向量 $\\overrightarrow{n_F}=(1,-1,2)$。$L,L'$ 都在 $F$ 上，$L\\subset E\\cap F$。\n2. $L'$ 上的點沿 $E$ 的法向量投影到 $E$ 時都落在 $L$ 上；因為 $L'$ 與 $L$ 相異且同在 $F$ 上，投影方向必須平行於 $F$，所以 $E\\perp F$，即 $\\overrightarrow{n_E}\\perp\\overrightarrow{n_F}$。\n3. 直線 $L$：令 $\\dfrac x2-1=y+1=-2z=t$，得 $x=2+2t,\\ y=-1+t,\\ z=-\\dfrac t2$，方向向量 $(2,1,-\\frac12)\\parallel(4,2,-1)$，過點 $(2,-1,0)$。\n4. $\\overrightarrow{n_E}$ 同時垂直 $(4,2,-1)$ 與 $(1,-1,2)$：$(4,2,-1)\\times(1,-1,2)=(3,-9,-6)\\parallel(1,-3,-2)$。\n5. $E$ 過 $(2,-1,0)$：$x-3y-2z=2+3-0=5$。\n\n**答案**：$x-3y-2z=5$。依格式 $x+\\square\\square y+\\square\\square z=\\square$，16-1 填 $-$、16-2 填 $3$、16-3 填 $-$、16-4 填 $2$、16-5 填 $5$。\n\n**常見錯誤**：把 $E$ 誤當成 $F$ 本身，或忘了負號要佔一格。",
+   "answer_display": "$x-3y-2z=5$（填 $x+(-3)y+(-2)z=5$）",
+   "check": {
+    "official": {
+     "16-1": "-",
+     "16-2": "3",
+     "16-3": "-",
+     "16-4": "2",
+     "16-5": "5"
+    },
+    "solver_a": {
+     "16-1": "-",
+     "16-2": "3",
+     "16-3": "-",
+     "16-4": "2",
+     "16-5": "5"
+    },
+    "solver_b": {
+     "16-1": "-",
+     "16-2": "3",
+     "16-3": "-",
+     "16-4": "2",
+     "16-5": "5"
+    },
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 17,
+   "type": "fill",
+   "unit": "空間向量（外積、體積）",
+   "unit_tags": [
+    "vector_space"
+   ],
+   "difficulty": {
+    "level": "超越頂標",
+    "official_p": 0.05,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：平行六面體體積 $=$ 底面積 $\\times$ 高；底面平行四邊形面積用外積，高是另一面頂點到底面所在平面的距離。\n\n**詳解**\n\n1. 令 $P_1(-1,2,1)$、$P_2(-4,1,3)$、$P_3(2,0,-3)$。$\\overrightarrow{P_1P_2}=(-3,-1,2)$，$\\overrightarrow{P_1P_3}=(3,-2,-4)$。\n2. 外積 $\\overrightarrow{P_1P_2}\\times\\overrightarrow{P_1P_3}=(8,-6,9)$，長度 $\\sqrt{64+36+81}=\\sqrt{181}$。不論哪一點是平行四邊形中間的頂點，平行四邊形面積都是三角形 $P_1P_2P_3$ 的 $2$ 倍，即 $\\sqrt{181}$。\n3. 底面所在平面：法向量 $(8,-6,9)$，過 $P_1$：$8x-6y+9z=-8-12+9=-11$。\n4. 另一面的頂點 $Q$ 在 $xy$ 平面且與原點距離 $1$：$Q=(\\cos\\theta,\\sin\\theta,0)$。高 $=\\dfrac{|8\\cos\\theta-6\\sin\\theta+11|}{\\sqrt{181}}$。\n5. $8\\cos\\theta-6\\sin\\theta$ 的最大值為 $\\sqrt{8^2+6^2}=10$，所以高的最大值為 $\\dfrac{21}{\\sqrt{181}}$。\n6. 最大體積 $=\\sqrt{181}\\times\\dfrac{21}{\\sqrt{181}}=21$。\n\n**答案**：$21$（17-1 填 $2$，17-2 填 $1$）",
+   "answer_display": "$21$",
+   "check": {
+    "official": {
+     "17-1": "2",
+     "17-2": "1"
+    },
+    "solver_a": {
+     "17-1": "2",
+     "17-2": "1"
+    },
+    "solver_b": {
+     "17-1": "2",
+     "17-2": "1"
+    },
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 18,
+   "type": "single",
+   "unit": "圓、三角函數",
+   "unit_tags": [
+    "circle",
+    "trigonometry"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.55,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：$\\overline{OA}=\\sqrt3$、$\\overline{AB}=1$、$\\overline{OB}=2$，滿足 $(\\sqrt3)^2+1^2=2^2$，所以 $\\angle OAB=90^\\circ$。\n\n**詳解**\n\n1. $B$ 在 $C_2$ 上，$\\overline{OB}=2$；掃描棒長 $\\overline{AB}=1$；$\\overline{OA}=\\sqrt3$。\n2. 由畢氏定理的逆定理，$\\angle OAB=90^\\circ$，即 $\\overline{AB}\\perp\\overline{OA}$。$\\overline{OA}$ 在 $x$ 軸上，所以 $B$ 在直線 $x=\\sqrt3$ 上。\n3. $B=(\\sqrt3,\\pm1)$，又 $y\\ge0$，所以 $B(\\sqrt3,1)$。\n\n**答案**：(4)",
+   "answer_display": "(4)",
+   "check": {
+    "official": "4",
+    "solver_a": "4",
+    "solver_b": "4",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 19,
+   "type": "constructed",
+   "unit": "三角函數、圓",
+   "unit_tags": [
+    "trigonometry",
+    "circle"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": null,
+    "basis": "本站估計"
+   },
+   "solution_md": "**解題關鍵**：掃描過程中 $\\Delta OAB$ 的三邊始終是 $\\sqrt3,1,2$，形狀固定，所以整支棒是繞原點 $O$ 「剛體旋轉」；棒永遠垂直半徑 $\\overline{OA}$，也就是與內圓相切。\n\n**詳解**\n\n1. **三角形形狀不變**：任一時刻黑端 $A_t$、白端 $B_t$ 滿足 $\\overline{OA_t}=\\sqrt3$、$\\overline{A_tB_t}=1$、$\\overline{OB_t}=2$，由第 18 題 $\\angle OA_tB_t=90^\\circ$，且 $\\cos\\angle A_tOB_t=\\dfrac{\\sqrt3}{2}$，$\\angle A_tOB_t=30^\\circ$。也就是白端的極角永遠比黑端多 $30^\\circ$。\n2. **停止位置**：白端停在 $B'(-2,0)$，極角 $180^\\circ$，所以黑端 $A'$ 的極角為 $150^\\circ$：$A'=\\left(\\sqrt3\\cos150^\\circ,\\sqrt3\\sin150^\\circ\\right)=\\left(-\\dfrac32,\\dfrac{\\sqrt3}{2}\\right)$。\n3. **$\\cos\\angle OA'B'$**：$\\angle OA'B'=90^\\circ$，所以 $\\cos\\angle OA'B'=0$。（也可驗算：$\\overrightarrow{A'O}\\cdot\\overrightarrow{A'B'}=\\left(\\frac32,-\\frac{\\sqrt3}2\\right)\\cdot\\left(-\\frac12,-\\frac{\\sqrt3}2\\right)=-\\frac34+\\frac34=0$。）\n4. **$A'$ 的極坐標**：$\\overline{OA'}=\\sqrt3$，極角 $150^\\circ$，即 $[\\sqrt3,150^\\circ]$（或 $[\\sqrt3,\\frac{5\\pi}{6}]$）。\n5. **區域 $R$**：棒從 $\\overline{AB}$（$x=\\sqrt3$，$0\\le y\\le1$）繞 $O$ 逆時針轉 $150^\\circ$ 到 $\\overline{A'B'}$。環狀區域中一點 $(r,\\varphi)$（$\\sqrt3\\le r\\le2$）落在某時刻的棒上，恰好當 $r\\cos(\\varphi-\\alpha)=\\sqrt3$，其中 $\\alpha$ 是當時黑端的極角；因此 $R$ 是：以 $\\overline{AB}$ 為起邊、$\\overline{A'B'}$ 為終邊，夾在內圓弧 $\\overset{\\frown}{AA'}$（極角 $0^\\circ\\to150^\\circ$）與外圓弧 $\\overset{\\frown}{BB'}$（極角 $30^\\circ\\to180^\\circ$）之間的區域。作圖時在這個範圍內畫斜線；$x$ 軸上 $x=\\sqrt3$ 到 $2$ 之間、$\\overline{AB}$ 右側的小塊，以及 $\\overline{A'B'}$ 與負 $x$ 軸之間的小塊，**不**屬於 $R$。\n\n**答案**：$\\cos\\angle OA'B'=0$；$A'$ 的極坐標為 $[\\sqrt3,150^\\circ]$；$R$ 如上所述。\n\n**評分重點（本站整理）**\n\n- 說明 $\\angle OAB=90^\\circ$、$\\angle AOB=30^\\circ$ 在掃描過程中不變（棒與內圓相切）。\n- 正確定出 $A'$ 的極角 $150^\\circ$ 與 $\\cos\\angle OA'B'=0$。\n- 作圖區域的起、終邊是兩支棒的位置，不是 $x$ 軸。",
+   "answer_display": "$\\cos\\angle OA'B'=0$；$A'\\,[\\sqrt3,150^\\circ]$；$R$ 是由起始棒 $\\overline{AB}$、終止棒 $\\overline{A'B'}$、內圓弧 $\\overset{\\frown}{AA'}$、外圓弧 $\\overset{\\frown}{BB'}$ 圍成的區域",
+   "check": {
+    "official": null,
+    "solver_a": "區域 R 為環狀區域中，起始棒 AB（x=√3, 0≤y≤1）、終止棒 A'B'、內圓弧 A→A'、外圓弧 B→B' 所圍；cos∠OA'B'=0；A' 極坐標 [√3, 150°]",
+    "solver_b": "cos∠OA'B'=0；A'=[√3,150°]；R 由 AB、A'B'、內圓 0°~150° 弧、外圓 30°~180° 弧所圍",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 20,
+   "type": "constructed",
+   "unit": "三角函數、圓",
+   "unit_tags": [
+    "trigonometry",
+    "circle"
+   ],
+   "difficulty": {
+    "level": "超越頂標",
+    "official_p": null,
+    "basis": "本站估計"
+   },
+   "solution_md": "**解題關鍵**：$R$ 是同一個圖形旋轉掃過的區域，每一個半徑 $r$ 上恰好掃過 $150^\\circ$ 的圓弧；$\\Omega$ 用「四分之一環 減去 $x>\\sqrt3$ 的弓形一半」計算。\n\n**詳解**\n\n1. **$R$ 的面積**：由第 19 題，環中半徑為 $r$（$\\sqrt3\\le r\\le2$）的圓上，被掃到的部分是一段圓心角 $150^\\circ=\\dfrac{5\\pi}{6}$ 的弧（從起始棒到終止棒，各點只是平移了同樣的角度）。所以 $R$ 的面積等於圓心角 $\\dfrac{5\\pi}{6}$ 的扇環面積：\n   $$\\frac12\\cdot\\frac{5\\pi}{6}\\cdot\\left(2^2-(\\sqrt3)^2\\right)=\\frac{5\\pi}{12}.$$\n2. **哪些第一象限的點沒被掃到**：起始棒在直線 $x=\\sqrt3$ 上。點 $(r,\\varphi)$ 在第一象限時，若 $r\\cos\\varphi>\\sqrt3$（即 $x>\\sqrt3$），它在起始棒的右側，沒有被掃到；其餘第一象限的環內點都會被掃到（棒最後轉到 $150^\\circ$，已越過 $y$ 軸）。\n3. **四分之一環面積**：$\\dfrac14\\pi(4-3)=\\dfrac{\\pi}{4}$。\n4. **$x>\\sqrt3$ 的部分**：圓 $x^2+y^2=4$ 被直線 $x=\\sqrt3$ 截出的弓形，對應圓心角 $60^\\circ$（$\\cos30^\\circ=\\frac{\\sqrt3}{2}$），弓形面積 $=\\dfrac12\\cdot2^2\\left(\\dfrac{\\pi}{3}-\\sin\\dfrac{\\pi}{3}\\right)=\\dfrac{2\\pi}{3}-\\sqrt3$；第一象限只占一半：$\\dfrac{\\pi}{3}-\\dfrac{\\sqrt3}{2}$。（這塊完全在內圓外，因為 $x>\\sqrt3$ 時 $x^2+y^2>3$。）\n5. $\\Omega$ 的面積 $=\\dfrac{\\pi}{4}-\\left(\\dfrac{\\pi}{3}-\\dfrac{\\sqrt3}{2}\\right)=\\dfrac{\\sqrt3}{2}-\\dfrac{\\pi}{12}$。\n\n**答案**：$\\Omega$ 的面積為 $\\dfrac{\\sqrt3}{2}-\\dfrac{\\pi}{12}$，$R$ 的面積為 $\\dfrac{5\\pi}{12}$。\n\n**評分重點（本站整理）**\n\n- 看出 $R$ 是扇環旋轉 $150^\\circ$ 的面積（或用「上半環 減去兩端未掃到的小塊」計算，結果相同）。\n- $\\Omega$ 要扣掉起始棒右側的弓形一半，弓形面積用「扇形 減 三角形」。\n- 最後答案要化簡；數值約為 $\\Omega\\approx0.604$、$R\\approx1.309$，可用來自我檢查。",
+   "answer_display": "$\\Omega$ 的面積 $=\\dfrac{\\sqrt3}{2}-\\dfrac{\\pi}{12}$；$R$ 的面積 $=\\dfrac{5\\pi}{12}$",
+   "check": {
+    "official": null,
+    "solver_a": "Ω 面積 = √3/2 − π/12；R 面積 = 5π/12",
+    "solver_b": "Ω = √3/2 − π/12；R = 5π/12",
+    "agree": true
+   },
+   "flags": []
+  }
+ ]
+}
