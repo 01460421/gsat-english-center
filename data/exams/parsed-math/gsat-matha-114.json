@@ -1,0 +1,826 @@
+{
+ "schema": "gsat-math-exam/v1",
+ "id": "gsat-matha-114",
+ "exam": "gsat",
+ "subject": "math_a",
+ "year": 114,
+ "session": "regular",
+ "title": "114學年度學科能力測驗數學A考科",
+ "time_minutes": 100,
+ "full_score": 100,
+ "sources": {
+  "paper": "data/raw/ceec/gsat-matha/114/paper-1.pdf",
+  "paper_word": [
+   "data/raw/ceec/gsat-matha/114/paper-2.docx"
+  ],
+  "answer": [
+   "data/raw/ceec/gsat-matha/114/answer.pdf"
+  ],
+  "answer_sheet": [
+   "data/raw/ceec/gsat-matha/114/other.pdf"
+  ],
+  "stats": [
+   "data/raw/ceec/gsat-matha/114/stats-1.xls",
+   "data/raw/ceec/gsat-matha/114/stats-2.xls"
+  ],
+  "scoring_not_stored": [
+   "data/raw/ceec/gsat-matha/114/scoring.pdf"
+  ]
+ },
+ "scoring_rules": {
+  "single": "每題有$n$個選項，其中只有一個是正確或最適當的選項。各題答對者，得該題的分數；答錯、未作答或劃記多於一個選項者，該題以零分計算。",
+  "multi": "每題有$n$個選項，其中至少有一個是正確的選項。各題之選項獨立判定，所有選項均答對者，得該題全部的分數；答錯 $k$個選項者，得該題$\\frac{n-2k}{n}$的分數；但得分低於零分或所有選項均未作答者，該題以零分計算。",
+  "fill": "每題有$n$個空格，須全部答對才給分，答錯不倒扣。"
+ },
+ "parts": [
+  {
+   "title": "第壹部分、選擇（填）題（占85分）",
+   "points": 85,
+   "instructions": null,
+   "sections": [
+    "s1",
+    "s2",
+    "s3"
+   ]
+  },
+  {
+   "title": "第貳部分、混合題或非選擇題（占15分）",
+   "points": 15,
+   "instructions": "說明︰本部分共有1題組，單選題每題3分，非選擇題配分標於題末。限在答題卷標示題號的作答區內作答。選擇（填）題與「非選擇題作圖部分」使用 2B 鉛筆作答，更正時以橡皮擦擦拭，切勿使用修正帶（液）。非選擇題請由左而右橫式書寫，作答時必須寫出計算過程或理由，否則將酌予扣分。",
+   "sections": [
+    "s4"
+   ]
+  }
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "type": "single",
+   "title": "一、單選題（占30分）",
+   "instructions": "說明：第1題至第6題，每題5分。",
+   "points_total": 30,
+   "groups": [
+    {
+     "id": "s1g1",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 1,
+       "label": "1",
+       "type": "single",
+       "stem": "不透明袋中有藍、綠色球各若干顆，且球上皆有$1$或$2$的編號，其顆數如下表，例如標有$1$號的藍色球有$2$顆。 [[TABLE:1]] 從此袋中隨機抽取一球（每顆球被抽到的機率相等），若已知抽到藍色球的事件與抽到$1$號球的事件互相獨立，試問$k$值為何？",
+       "options": {
+        "1": "$2$",
+        "2": "$3$",
+        "3": "$4$",
+        "4": "$5$",
+        "5": "$6$"
+       },
+       "answer": "5",
+       "points": 5,
+       "tables": [
+        {
+         "caption": null,
+         "rows": [
+          [
+           "",
+           "藍",
+           "綠"
+          ],
+          [
+           "$1$號",
+           "$2$",
+           "$4$"
+          ],
+          [
+           "$2$號",
+           "$3$",
+           "$k$"
+          ]
+         ]
+        }
+       ],
+       "tags": {
+        "units": [
+         "probability"
+        ]
+       },
+       "figures": []
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g2",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 2,
+       "label": "2",
+       "type": "single",
+       "stem": "坐標平面上，$P(a,0)$為$x$軸上一點，其中$a>0$。令$L_{1}$、$L_{2}$為通過$P$點，斜率分別為$-\\frac{4}{3}$、$-\\frac{3}{2}$的直線。已知$L_{1}$、$L_{2}$分別與兩坐標軸圍成的兩個直角三角形的面積差為$3$，試問$a$值為何？",
+       "options": {
+        "1": "$3\\sqrt{2}$",
+        "2": "$6$",
+        "3": "$6\\sqrt{2}$",
+        "4": "$9$",
+        "5": "$8\\sqrt{2}$"
+       },
+       "answer": "2",
+       "points": 5,
+       "tags": {
+        "units": [
+         "coordinate_line"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g3",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 3,
+       "label": "3",
+       "type": "single",
+       "stem": "某校舉辦音樂會，包含鋼琴表演5個、小提琴表演4個、歌唱表演3個等三類表演共12個不同曲目。該校想將同類表演排在一起，且歌唱必須排在鋼琴之後或是小提琴之後。試問這場音樂會可能的曲目排列方式共有幾種？",
+       "options": {
+        "1": "$5!\\times 4!\\times 3!$",
+        "2": "$2\\times 5!\\times 4!\\times 3!$",
+        "3": "$3\\times 5!\\times 4!\\times 3!$",
+        "4": "$4\\times 5!\\times 4!\\times 3!$",
+        "5": "$6\\times 5!\\times 4!\\times 3!$"
+       },
+       "answer": "4",
+       "points": 5,
+       "tags": {
+        "units": [
+         "counting"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g4",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 4,
+       "label": "4",
+       "type": "single",
+       "stem": "坐標平面上，$x$坐標與$y$坐標均為整數的點稱為格子點。試問在函數圖形$y=\\log_{2}x$、$x$軸與直線$x=\\frac{61}{2}$所圍有界區域的內部（不含邊界）共有多少個格子點？",
+       "options": {
+        "1": "$88$",
+        "2": "$89$",
+        "3": "$90$",
+        "4": "$91$",
+        "5": "$92$"
+       },
+       "answer": "3",
+       "points": 5,
+       "tags": {
+        "units": [
+         "exp_log",
+         "functions"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g5",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 5,
+       "label": "5",
+       "type": "single",
+       "stem": "設$0\\le \\theta \\le 2\\pi$。已知所有滿足$\\sin 2\\theta>\\sin \\theta$且$\\cos 2\\theta>\\cos \\theta$的$\\theta$可表為$a\\pi<\\theta<b\\pi$， 其中$a,b$為實數，試問$b-a$值為何？",
+       "options": {
+        "1": "$\\frac{1}{3}$",
+        "2": "$\\frac{1}{2}$",
+        "3": "$\\frac{2}{3}$",
+        "4": "$\\frac{3}{4}$",
+        "5": "$1$"
+       },
+       "answer": "1",
+       "points": 5,
+       "tags": {
+        "units": [
+         "trigonometry"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g6",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 6,
+       "label": "6",
+       "type": "single",
+       "stem": "坐標空間中有三個彼此互相垂直之向量$\\overrightarrow{u},\\overrightarrow{v},\\overrightarrow{w}$。已知$\\overrightarrow{u}-\\overrightarrow{v}=(2,-1,0)$， 且$\\overrightarrow{v}-\\overrightarrow{w}=(-1,2,3)$。試問由$\\overrightarrow{u},\\overrightarrow{v},\\overrightarrow{w}$所張出的平行六面體之體積為何？",
+       "options": {
+        "1": "$2\\sqrt{5}$",
+        "2": "$5\\sqrt{2}$",
+        "3": "$2\\sqrt{10}$",
+        "4": "$4\\sqrt{5}$",
+        "5": "$4\\sqrt{10}$"
+       },
+       "answer": "3",
+       "points": 5,
+       "tags": {
+        "units": [
+         "vector_space"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "type": "multi",
+   "title": "二、多選題（占30分）",
+   "instructions": "說明：第7題至第12題，每題5分。",
+   "points_total": 30,
+   "groups": [
+    {
+     "id": "s2g1",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 7,
+       "label": "7",
+       "type": "multi",
+       "stem": "已知數列$\\langle a_{n}\\rangle$滿足$3a_{n+1}=a_{n}+n$（對任意正整數$n$都成立）且$a_{1}=2$。令數列$\\langle b_{n}\\rangle$滿足$b_{n}=a_{n}-\\frac{n}{2}+\\frac{3}{4}$。試選出正確的選項。",
+       "options": {
+        "1": "$a_{2}=2$",
+        "2": "$b_{2}=\\frac{3}{4}$",
+        "3": "數列$\\langle b_{n}\\rangle$是公比為$\\frac{2}{3}$的等比數列",
+        "4": "對於任意正整數$n$，$3^{n}a_{n}$皆為正整數",
+        "5": "$b_{10}<10^{-4}$"
+       },
+       "answer": [
+        "2",
+        "4"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "sequence"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g2",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 8,
+       "label": "8",
+       "type": "multi",
+       "stem": "考慮坐標平面上滿足方程式$\\frac{2^{x^{2}}}{8}=\\frac{4^{x}}{2^{y^{2}}}$的點$P(x,y)$，試選出正確的選項。",
+       "options": {
+        "1": "當$x=3$時，滿足此方程式的解有相異$2$個",
+        "2": "若點$(a,b)$滿足此方程式，則點$(-a,-b)$也滿足此方程式",
+        "3": "所有可能的點$P(x,y)$構成的圖形為一個圓",
+        "4": "點$P(x,y)$可能在直線$x+y=4$上",
+        "5": "對於所有可能的點$P(x,y)$，其$x-y$的最大值為$1+2\\sqrt{2}$"
+       },
+       "answer": [
+        "3",
+        "5"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "exp_log",
+         "circle"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g3",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 9,
+       "label": "9",
+       "type": "multi",
+       "stem": "設$b$、$c$為實數。已知二次方程式$x^{2}+bx+c=0$有實根，但二次方程式$x^{2}+(b+2)x+c=0$沒有實根。試選出正確的選項。",
+       "options": {
+        "1": "$c<0$",
+        "2": "$b<0$",
+        "3": "$x^{2}+(b+1)x+c=0$有實根",
+        "4": "$x^{2}+(b+2)x-c=0$有實根",
+        "5": "$x^{2}+(b-2)x+c=0$有實根"
+       },
+       "answer": [
+        "2",
+        "4",
+        "5"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "polynomial"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g4",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 10,
+       "label": "10",
+       "type": "multi",
+       "stem": "令$\\Gamma$為坐標平面上$y=\\sin \\pi x$在$0\\le x\\le 3$內之函數圖形。一水平直線$L:y=k$與$\\Gamma$相交，其中三交點$P(x_{1},k),Q(x_{2},k),R(x_{3},k)$滿足$x_{1}<x_{2}<1<x_{3}$。試選出正確的選項。",
+       "options": {
+        "1": "$k>0$",
+        "2": "$L$與$\\Gamma$恰有$3$個交點",
+        "3": "$x_{1}+x_{2}<1$",
+        "4": "若$2\\overline{PQ}=\\overline{QR}$，則$k=\\frac{1}{2}$",
+        "5": "$L$與$\\Gamma$所有交點的$x$坐標之和大於$5$"
+       },
+       "answer": [
+        "1",
+        "4",
+        "5"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "trigonometry",
+         "functions"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g5",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 11,
+       "label": "11",
+       "type": "multi",
+       "stem": "在$\\Delta ABC$中，$\\overline{AB}=6,\\overline{AC}=5,\\overline{BC}=4$。令$\\overline{AB}$中點為D，$P$為$\\angle ABC$之角平分線與$\\overline{CD}$之交點，如圖所示。試選出正確的選項。",
+       "options": {
+        "1": "$\\overline{CP}=\\frac{3}{7}\\overline{CD}$",
+        "2": "$\\overrightarrow{AP}=\\frac{3}{7}\\overrightarrow{AB}+\\frac{2}{7}\\overrightarrow{AC}$",
+        "3": "$\\cos \\angle BAC=\\frac{3}{4}$",
+        "4": "$\\Delta ACP$面積為$\\frac{15}{14}\\sqrt{7}$",
+        "5": "（內積）$\\overrightarrow{AP}\\cdot \\overrightarrow{AC}=\\frac{120}{7}$"
+       },
+       "answer": [
+        "3",
+        "4",
+        "5"
+       ],
+       "points": 5,
+       "figures": [
+        {
+         "id": "f11",
+         "kind": "diagram",
+         "alt": "三角形 ABC 示意圖：A 在左下、B 在右下、C 在上方；D 為底邊 AB 上的點（中點），線段 CD 與從 B 出發的角平分線交於三角形內部的點 P。",
+         "source": {
+          "page": 5,
+          "bbox_pt": [
+           362,
+           116,
+           532,
+           226
+          ]
+         },
+         "file": "data/exams/figures-math/gsat-matha-114/f11.png",
+         "width": 460,
+         "height": 288
+        }
+       ],
+       "tags": {
+        "units": [
+         "vector_plane",
+         "trigonometry",
+         "geometry"
+        ]
+       },
+       "tables": []
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g6",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 12,
+       "label": "12",
+       "type": "multi",
+       "stem": "某種合金由甲和乙兩種金屬組成，某生想知道其中金屬比例與合金的波長關係。他做實驗測量「甲占比為$x\\%$的合金所對應的波長$y$（單位：奈米）」，並將得到的$20$筆數據$(x_{k},y_{k})$，$k=1,\\cdots,20$，在$xy$平面上標出對應的點，其迴歸直線（最適直線）為$y=21.3x-40$。 為符合投稿規範，須將報告描述為「乙占比為$u\\%$的合金所對應的波長$v$（單位：微米）」，他將數據$(x_{k},y_{k})$轉換為$(u_{k},v_{k})$，$k=1,\\cdots,20$，得到在$uv$平面的迴歸直線為$v=au+b$。 已知$1$奈米$=10^{-9}$公尺，$1$微米$=10^{-6}$公尺。試選出正確的選項。",
+       "options": {
+        "1": "$u_{k}=100-x_{k}$，$k=1,\\cdots,20$",
+        "2": "$v_{k}=1000y_{k}$，$k=1,\\cdots,20$",
+        "3": "$u_{1},u_{2},u_{3},\\ldots,u_{20}$的標準差等於$x_{1},x_{2},x_{3},\\ldots,x_{20}$的標準差",
+        "4": "$b=2.09$",
+        "5": "某生發現有另一筆數據$(u_{21},v_{21})$，且滿足$v_{21}=au_{21}+b$；若將這$21$筆數據$(u_{k},v_{k})$，$k=1,\\cdots,21$，在$uv$平面上標出對應的點，則其迴歸直線仍為$v=au+b$"
+       },
+       "answer": [
+        "1",
+        "3",
+        "4",
+        "5"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "statistics"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "type": "fill",
+   "title": "三、選填題（占25分）",
+   "instructions": "說明：第13題至第17題，每題5分。",
+   "points_total": 25,
+   "groups": [
+    {
+     "id": "s3g1",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 13,
+       "label": "13",
+       "type": "fill",
+       "stem": "已知實係數三次多項式$f(x)$除以$x+6$得商式$q(x)$和餘式$3$。若$q(x)$在$x=-6$有最大值$8$，則$y=f(x)$圖形的對稱中心坐標為[[FILL]]。",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "13-1",
+         "13-2",
+         "13-3"
+        ],
+        "template": "([[13-1]][[13-2]],[[13-3]])",
+        "answer_cells": {
+         "13-1": "-",
+         "13-2": "6",
+         "13-3": "3"
+        },
+        "answer_latex": "(-6,3)"
+       },
+       "tags": {
+        "units": [
+         "polynomial"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g2",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 14,
+       "label": "14",
+       "type": "fill",
+       "stem": "坐標空間中，已知點$A$的坐標為$(a,b,c)$，其中$a,b,c$皆為小於$0$的實數，且知點$A$與三平面$E_{1}:4y+3z=2$、$E_{2}:3y+4z=-5$、$E_{3}:x+2y+2z=-2$的距離都是$6$， 則$a+b+c=$[[FILL]]。",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "14-1",
+         "14-2",
+         "14-3"
+        ],
+        "template": "[[14-1]][[14-2]][[14-3]]",
+        "answer_cells": {
+         "14-1": "-",
+         "14-2": "1",
+         "14-3": "1"
+        },
+        "answer_latex": "-11"
+       },
+       "tags": {
+        "units": [
+         "space_line_plane"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g3",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 15,
+       "label": "15",
+       "type": "fill",
+       "stem": "假日市集有個攤位推出「試試手氣，定價$480$元的可愛玩偶最低只要$240$元」。規則為：顧客投擲一枚均勻硬幣至多$5$次，前$3$次連續擲得$3$個正面者則只能以$240$元購得一個玩偶，擲到第$4$次才累積得$3$個正面者則只能以$320$元購得一個，擲到第$5$次才累積得$3$個正面者則只能以$400$元購得一個；$5$次投完仍未累積$3$個正面者則只能以$480$元購得一個。參與此遊戲的顧客購得一個玩偶所花金額的期望值為[[FILL]]元。",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "15-1",
+         "15-2",
+         "15-3"
+        ],
+        "template": "[[15-1]][[15-2]][[15-3]]",
+        "answer_cells": {
+         "15-1": "4",
+         "15-2": "0",
+         "15-3": "5"
+        },
+        "answer_latex": "405"
+       },
+       "tags": {
+        "units": [
+         "probability"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g4",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 16,
+       "label": "16",
+       "type": "fill",
+       "stem": "坐標平面上，設$L_{1}$、$L_{2}$為通過點$(3,1)$且斜率分別為$m$、$-m$的兩條直線，其中$m$為一實數。另設$\\Gamma$為圓心在原點的一個圓。已知$\\Gamma$與$L_{1}$交於相異兩點$A$、$B$，且知 圓心到$L_{1}$的距離為$1$，又$\\Gamma$與$L_{2}$相切，則弦$\\overline{AB}$的長度為[[FILL]]。（化為最簡分數）",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "16-1",
+         "16-2",
+         "16-3"
+        ],
+        "template": "\\frac{[[16-1]][[16-2]]}{[[16-3]]}",
+        "answer_cells": {
+         "16-1": "2",
+         "16-2": "4",
+         "16-3": "5"
+        },
+        "answer_latex": "\\frac{24}{5}"
+       },
+       "tags": {
+        "units": [
+         "circle",
+         "coordinate_line"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g5",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 17,
+       "label": "17",
+       "type": "fill",
+       "stem": "$\\Delta ABC$中，已知$\\overline{AB}=\\overline{BC}=3$，$\\cos \\angle ABC=-\\frac{1}{8}$。在$\\Delta ABC$的外接圓上有一點$D$滿足$\\overline{BD}=4$，且$\\overline{AD}\\le \\overline{CD}$，則$\\overline{CD}=$[[FILL]]。（化為最簡根式）",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "17-1",
+         "17-2"
+        ],
+        "template": "[[17-1]]+\\sqrt{[[17-2]]}",
+        "answer_cells": {
+         "17-1": "3",
+         "17-2": "2"
+        },
+        "answer_latex": "3+\\sqrt{2}"
+       },
+       "tags": {
+        "units": [
+         "trigonometry",
+         "geometry"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "type": "mixed",
+   "title": "第貳部分、混合題或非選擇題（占15分）",
+   "instructions": "說明︰本部分共有1題組，單選題每題3分，非選擇題配分標於題末。限在答題卷標示題號的作答區內作答。選擇（填）題與「非選擇題作圖部分」使用 2B 鉛筆作答，更正時以橡皮擦擦拭，切勿使用修正帶（液）。非選擇題請由左而右橫式書寫，作答時必須寫出計算過程或理由，否則將酌予扣分。",
+   "points_total": 15,
+   "groups": [
+    {
+     "id": "s4g1",
+     "group_label": "18-20題為題組",
+     "stem": "已知$A=\\begin{bmatrix}a_{1} & a_{2} \\\\ a_{3} & a_{4}\\end{bmatrix}$、$B=\\begin{bmatrix}b_{1} & b_{2} \\\\ b_{3} & b_{4}\\end{bmatrix}$皆為坐標平面上以原點$O$為中心，逆時針旋轉一銳角的旋轉矩陣，且滿足$A^{2}=B^{3}=\\begin{bmatrix}0 & c \\\\ 1 & d\\end{bmatrix}$，其中$c,d$為實數。 設點$P(1,1)$經$A^{3}$變換後為點$Q$，且點$Q$經$B^{4}$變換後為點$R$。根據上述，試回答下列問題。",
+     "figures": [],
+     "items": [
+      {
+       "no": 18,
+       "label": "18",
+       "type": "single",
+       "stem": "試問$c$之值為何？（單選題，3分）",
+       "options": {
+        "1": "$0$",
+        "2": "$-1$",
+        "3": "$1$",
+        "4": "$-\\frac{1}{2}$",
+        "5": "$\\frac{1}{2}$"
+       },
+       "answer": "2",
+       "points": 3,
+       "tags": {
+        "units": [
+         "matrix",
+         "trigonometry"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      },
+      {
+       "no": 19,
+       "label": "19",
+       "type": "constructed",
+       "stem": "試求點$Q$的坐標，以及$\\overrightarrow{OR}$與向量$(1,0)$的夾角。（非選擇題，6分）",
+       "options": null,
+       "answer": null,
+       "points": 6,
+       "constructed": {
+        "official_answer_stored": false,
+        "has_drawing": false
+       },
+       "tags": {
+        "units": [
+         "matrix",
+         "vector_plane"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      },
+      {
+       "no": 20,
+       "label": "20",
+       "type": "constructed",
+       "stem": "設$L$為過點$P$且與直線$OQ$平行的直線，點$S$為$L$和直線$OR$的交點，試求$\\angle OSP$， 並求點$S$的坐標。（非選擇題，6分）",
+       "options": null,
+       "answer": null,
+       "points": 6,
+       "constructed": {
+        "official_answer_stored": false,
+        "has_drawing": false
+       },
+       "tags": {
+        "units": [
+         "matrix",
+         "coordinate_line"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    }
+   ]
+  }
+ ],
+ "reference_formulas": [
+  "1. 首項為$a$，公差為$d$的等差數列前$n$項之和為$S=\\frac{n(2a+(n-1)d)}{2}$",
+  "首項為$a$，公比為$r\\quad (r\\ne 1)$的等比數列前$n$項之和為$S=\\frac{\\quad a(1-r^{n})\\quad}{1-r}$",
+  "2. 三角函數的和角公式：$\\sin (A+B)=\\sin A\\cos B+\\cos A\\sin B$",
+  "$\\cos (A+B)=\\cos A\\cos B-\\sin A\\sin B$",
+  "$\\tan (A+B)=\\frac{\\tan A+\\tan B}{1-\\tan A\\tan B}$",
+  "3. $\\Delta ABC$的正弦定理：$\\frac{a}{\\sin A}=\\frac{b}{\\sin B}=\\frac{c}{\\sin C}=2R$（$R$為$\\Delta ABC$外接圓半徑）",
+  "$\\Delta ABC$的餘弦定理：$c^{2}=a^{2}+b^{2}-2ab\\cos C\\quad$",
+  "4. 一維數據$X:x_{1},x_{2},\\cdots,x_{n}$，",
+  "算術平均數$\\mu_{X}=\\frac{1}{n}(x_{1}+x_{2}+\\cdot \\cdot \\cdot+x_{n})$",
+  "標準差$\\sigma_{X}=\\sqrt{\\frac{1}{n}[(x_{1}-\\mu_{X})^{2}+(x_{2}-\\mu_{X})^{2}+\\cdots+(x_{n}-\\mu_{X})^{2}]}=\\sqrt{\\frac{1}{n}[(x_{1}^{2}+x_{2}^{2}+\\cdots+x_{n}^{2})-n\\mu_{X}^{2}]}$",
+  "5. 二維數據$(X,Y):(x_{1},y_{1}),(x_{2},y_{2}),\\cdots,(x_{n},y_{n})$，",
+  "相關係數$r_{X,Y}=\\frac{(x_{1}-\\mu_{X})(y_{1}-\\mu_{Y})+(x_{2}-\\mu_{X})(y_{2}-\\mu_{Y})+\\cdots+(x_{n}-\\mu_{X})(y_{n}-\\mu_{Y})}{n\\sigma_{X}\\sigma_{Y}}$",
+  "迴歸直線（最適合直線）方程式$y-\\mu_{Y}=r_{X,Y}\\frac{\\sigma_{Y}}{\\sigma_{X}}(x-\\mu_{X})$",
+  "6. 參考數值：$\\sqrt{2}\\approx 1.414\\quad,\\quad \\sqrt{3}\\approx 1.732\\quad,\\quad \\sqrt{5}\\approx 2.236\\quad,\\quad \\sqrt{6}\\approx 2.449\\quad,\\quad \\pi \\approx 3.142$",
+  "7. 對數值：$\\log 2\\approx 0.3010,\\quad \\quad \\log 3\\approx 0.4771,\\ \\log 5\\approx 0.6990,\\ \\log 7\\approx 0.8451\\quad \\quad \\quad$"
+ ],
+ "extraction": {
+  "method": "tools/docx_math_draft.py（Word 版題本，MathType→LaTeX）產生骨架，答案取自 answer.pdf（pdftotext）；逐題以 pdftoppm 頁面影像人工校對",
+  "issues": [],
+  "verified_by": "visual-check",
+  "corrections": [
+   "第7題：題本以「<」「>」排版數列符號，改用 \\langle \\rangle 呈現（語意相同）"
+  ]
+ }
+}
