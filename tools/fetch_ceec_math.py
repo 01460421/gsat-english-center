@@ -148,7 +148,12 @@ STATS_RULES = [
     (re.compile(r"選擇題選項分析|選項分析"), "option_analysis", "選擇題各選項選答比例分析"),
     (re.compile(r"非選擇題(?:各題)?分數人數統計表"), "nonmc_score_dist",
      "非選擇題各題得分人數分布"),
+    # 練習成績換算級分、難度校準用（各科合併檔，標籤不一定寫科目）
+    (re.compile(r"成績標準一覽表"), "score_standard", "各科成績標準（頂標、前標、均標、後標、底標）"),
+    (re.compile(r"(?:原始分數|原得總分)與級分對照表"), "score_conversion",
+     "原始分數／原得總分與級分對照"),
 ]
+SUBJECTLESS_OK = {"score_standard", "score_conversion"}
 
 
 def _stats_subject(label: str):
@@ -180,6 +185,8 @@ def discover_stats(tier2_min: int):
                 if not rx.search(label):
                     continue
                 subj = _stats_subject(label)
+                if subj is None and sub in SUBJECTLESS_OK:
+                    subj = "all"
                 if subj is None:
                     break
                 exams = []
@@ -287,7 +294,8 @@ def build_manifest(items):
             "session": "regular 或 makeup",
             "kind": "paper|answer|scoring|stats|other",
             "subkind": "paper, paper_word, answer, scoring, answer_sheet, cover, pd_table, "
-                       "option_analysis, nonmc_score_dist, paper_note, analysis, exam_spec",
+                       "option_analysis, nonmc_score_dist（數學目前沒有公布）, score_standard, "
+                       "score_conversion, paper_note, analysis, exam_spec",
             "republish": "false＝受著作權保護的解答、評分原則或解析：只能內部參考，"
                          "不得轉載、不得在網站顯示（欄位不存在＝試題或答案代號，可依授權規則使用）",
             "text_extractable": "同 data/exams/manifest.json：PDF 前兩頁（不足時前五頁）以 "
