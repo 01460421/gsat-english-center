@@ -1,0 +1,513 @@
+{
+ "schema": "gsat-math-solutions/v1",
+ "paper_id": "gsat-matha-113",
+ "note": "本站自撰詳解；選擇（填）題答案經兩位獨立解題者與官方答案比對，非選擇題經兩位獨立解題者比對最終結果。",
+ "items": [
+  {
+   "no": 1,
+   "type": "single",
+   "unit": "指數對數（指數衰退）",
+   "unit_tags": [
+    "exp_log"
+   ],
+   "difficulty": {
+    "level": "穩定基礎",
+    "official_p": 0.89,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：指數型衰退且半衰期為 $2$ 小時，$t$ 小時後殘留比例為 $\\left(\\dfrac12\\right)^{\\frac t2}$。\n\n**詳解**\n\n1. 設殘留比例 $r(t)=a^t$，$r(2)=\\dfrac12$，所以 $r(t)=\\left(\\dfrac12\\right)^{\\frac t2}$。\n2. 逐一檢查：\n   - $t=3$：$\\left(\\frac12\\right)^{1.5}=\\dfrac{1}{2\\sqrt2}\\approx0.354\\ne\\dfrac13$；\n   - $t=4$：$\\left(\\frac12\\right)^2=\\dfrac14$ ✓；\n   - $t=6$：$\\dfrac18\\ne\\dfrac16$；$t=8$：$\\dfrac1{16}\\ne\\dfrac18$；$t=10$：$\\dfrac1{32}\\ne\\dfrac1{10}$。\n\n**答案**：(2)\n\n**常見錯誤**：把指數衰退當成「與時間成反比」，以為 $3$ 小時剩 $\\frac13$。",
+   "answer_display": "(2)",
+   "check": {
+    "official": "2",
+    "solver_a": "2",
+    "solver_b": "2",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 2,
+   "type": "single",
+   "unit": "空間向量（外積）",
+   "unit_tags": [
+    "vector_space"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.57,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：建立坐標，外積 $\\overrightarrow{AD}\\times\\overrightarrow{AG}$ 同時垂直 $\\overrightarrow{AD}$ 與 $\\overrightarrow{AG}$；直接算或找與兩者都垂直的選項。\n\n**詳解**\n\n1. 依圖設邊長 $1$：$O(0,0,0)$、$A(1,0,0)$、$B(1,1,0)$、$C(0,1,0)$，頂面 $D(0,0,1)$、$E(1,0,1)$、$F(1,1,1)$、$G(0,1,1)$。\n2. $\\overrightarrow{AD}=(-1,0,1)$，$\\overrightarrow{AG}=(-1,1,1)$。\n3. $\\overrightarrow{AD}\\times\\overrightarrow{AG}=(0\\cdot1-1\\cdot1,\\ 1\\cdot(-1)-(-1)\\cdot1,\\ (-1)\\cdot1-0\\cdot(-1))=(-1,0,-1)$。\n4. 選項：$\\overrightarrow{AE}=(0,0,1)$、$\\overrightarrow{BE}=(0,-1,1)$、$\\overrightarrow{CE}=(1,-1,1)$、$\\overrightarrow{DE}=(1,0,0)$、$\\overrightarrow{OE}=(1,0,1)$。只有 $\\overrightarrow{OE}$ 與 $(-1,0,-1)$ 平行。\n\n**答案**：(5)\n\n**另解**：外積垂直平面 $ADG$。$\\overrightarrow{OE}\\cdot\\overrightarrow{AD}=0$ 且 $\\overrightarrow{OE}\\cdot\\overrightarrow{AG}=0$，所以 $\\overrightarrow{OE}$ 是該平面的法向量。",
+   "answer_display": "(5)",
+   "check": {
+    "official": "5",
+    "solver_a": "5",
+    "solver_b": "5",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 3,
+   "type": "single",
+   "unit": "多項式函數、數列與級數",
+   "unit_tags": [
+    "polynomial",
+    "sequence"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.31,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：已知三根與首項係數，$f(x)$ 可以寫成乘積形式，再代 $x=0$。\n\n**詳解**\n\n1. 三根為 $-7,\\,-7+a,\\,-7+2a$，所以 $f(x)=a(x+7)(x+7-a)(x+7-2a)$。\n2. $f(0)=7a(7-a)(7-2a)$。\n3. 逐一代入：\n   - $a=-6$：$7(-6)(13)(19)<0$；$a=-4$：$7(-4)(11)(15)<0$；$a=-2$：$7(-2)(9)(11)<0$；\n   - $a=2$：$7(2)(5)(3)>0$ ✓；\n   - $a=4$：$7(4)(3)(-1)<0$；$a=6$：$7(6)(1)(-5)<0$。\n4. 只有 $a=2$ 一個。\n\n**答案**：(1)",
+   "answer_display": "(1)",
+   "check": {
+    "official": "1",
+    "solver_a": "1",
+    "solver_b": "1",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 4,
+   "type": "single",
+   "unit": "三角函數",
+   "unit_tags": [
+    "trigonometry"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.39,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：展開和角公式後，用半角公式把方程式因式分解。\n\n**詳解**\n\n1. $\\sin x\\cdot\\dfrac{\\sqrt3}{2}+\\cos x\\cdot\\dfrac12=\\sin x+\\dfrac12$，整理得 $\\cos x-1=(2-\\sqrt3)\\sin x$。\n2. 以半角改寫：$\\cos x-1=-2\\sin^2\\dfrac x2$，$\\sin x=2\\sin\\dfrac x2\\cos\\dfrac x2$，得\n$$-2\\sin^2\\frac x2=2(2-\\sqrt3)\\sin\\frac x2\\cos\\frac x2\\ \\Longrightarrow\\ \\sin\\frac x2\\left[\\sin\\frac x2+(2-\\sqrt3)\\cos\\frac x2\\right]=0.$$\n3. $\\sin\\dfrac x2=0$：$\\dfrac x2\\in[0,\\pi)$，得 $x=0$。\n4. $\\tan\\dfrac x2=-(2-\\sqrt3)=-\\tan15^\\circ$：$\\dfrac x2\\in[0^\\circ,180^\\circ)$，得 $\\dfrac x2=165^\\circ$，$x=330^\\circ=\\dfrac{11\\pi}{6}$。\n5. 驗算 $x=\\dfrac{11\\pi}6$：左邊 $\\sin2\\pi=0$，右邊 $-\\dfrac12+\\dfrac12=0$ ✓。共 $2$ 個解。\n\n**答案**：(2)\n\n**常見錯誤**：誤用「$\\sin(A+B)=\\sin A+\\sin B$」以為恆成立；或解 $\\tan\\frac x2$ 時忘了 $\\frac x2$ 的範圍只有 $[0,\\pi)$。",
+   "answer_display": "(2)",
+   "check": {
+    "official": "2",
+    "solver_a": "2",
+    "solver_b": "2",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 5,
+   "type": "single",
+   "unit": "排列組合、數據分析（中位數）",
+   "unit_tags": [
+    "counting",
+    "statistics"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.35,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：$25$ 個數的中位數是第 $13$ 小的數。兩組中位數相差 $1$，可以推出中位數一定是 $25$ 與 $26$。\n\n**詳解**\n\n1. 設甲組中位數 $m$、乙組中位數 $m+1$。甲組有 $12$ 個數小於 $m$；乙組有 $12$ 個數小於 $m+1$，而 $m$ 在甲組，所以乙組這 $12$ 個數都小於 $m$。\n2. 小於 $m$ 的數共有 $12+12=24$ 個，即 $m-1=24$，$m=25$。所以甲組中位數 $25$、乙組中位數 $26$。\n3. $1\\sim24$ 要平分：甲、乙各 $12$ 個，有 $C^{24}_{12}$ 種；$27\\sim50$ 共 $24$ 個也要各分 $12$ 個，有 $C^{24}_{12}$ 種。\n4. 共 $\\left(C^{24}_{12}\\right)^2$ 種。\n\n**答案**：(4)",
+   "answer_display": "(4)",
+   "check": {
+    "official": "4",
+    "solver_a": "4",
+    "solver_b": "4",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 6,
+   "type": "single",
+   "unit": "三角函數（餘弦定理、半角）",
+   "unit_tags": [
+    "trigonometry",
+    "geometry"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.44,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：$\\overline{PA}=\\overline{PB}=9$，$\\Delta PAB$ 等腰，底角就是 $\\theta$；再用半角公式與餘弦定理求 $\\overline{BQ}$。\n\n**詳解**\n\n1. 兩砲彈都命中 $9$ 公里外的 $P$，所以 $\\overline{PA}=\\overline{PB}=9$，$\\angle PAB=\\angle PBA=\\theta$。\n2. 由 $P$ 作 $\\overline{AB}$ 的垂線，垂足為 $\\overline{AB}$ 中點：$\\cos\\theta=\\dfrac{3.5}{9}=\\dfrac{7}{18}$。\n3. 半角：$\\cos^2\\dfrac\\theta2=\\dfrac{1+\\cos\\theta}{2}=\\dfrac{25}{36}$，$\\cos\\dfrac\\theta2=\\dfrac56$（$\\frac\\theta2$ 為銳角）。\n4. $\\Delta ABQ$ 中 $\\overline{AB}=7$、$\\overline{AQ}=9$、$\\angle BAQ=\\dfrac\\theta2$：\n$$\\overline{BQ}^2=49+81-2\\cdot7\\cdot9\\cdot\\frac56=130-105=25,\\quad\\overline{BQ}=5.$$\n\n**答案**：(3)",
+   "answer_display": "(3)",
+   "check": {
+    "official": "3",
+    "solver_a": "3",
+    "solver_b": "3",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 7,
+   "type": "multi",
+   "unit": "指數對數、函數",
+   "unit_tags": [
+    "exp_log",
+    "functions"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.47,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：「圖形完全相同」要同時比較**定義域**與**對應關係**；$\\log(x^2)=2\\log|x|$，定義域是 $x\\ne0$。\n\n**詳解**：$\\Gamma$ 是 $y=\\log x$，定義域 $x>0$。\n\n**選項分析**\n\n- (1) 錯：$y=\\log5+\\log x-\\dfrac12$，而 $\\log5\\approx0.699\\ne\\dfrac12$，圖形是 $\\Gamma$ 上下平移，不同。\n- (2) 錯：$y=\\dfrac12\\log(x^2)=\\log|x|$，在 $x<0$ 也有圖形，比 $\\Gamma$ 多出一支。\n- (3) 對：$\\log(x^3)$ 需 $x^3>0$，即 $x>0$；此時 $3y=3\\log x$，$y=\\log x$。\n- (4) 對：$x=10^y\\iff y=\\log x$（$x>0$ 自動成立）。\n- (5) 錯：$3\\log x=y^3$，即 $y=\\sqrt[3]{3\\log x}$，例如 $x=10$ 時 $y=\\sqrt[3]3\\ne1$。\n\n**答案**：(3)(4)",
+   "answer_display": "(3)(4)",
+   "check": {
+    "official": "3,4",
+    "solver_a": "3,4",
+    "solver_b": "3,4",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 8,
+   "type": "multi",
+   "unit": "幾何、三角函數、數列與級數",
+   "unit_tags": [
+    "geometry",
+    "trigonometry",
+    "sequence"
+   ],
+   "difficulty": {
+    "level": "穩定基礎",
+    "official_p": 0.66,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：最大角對最大邊，比較 $(n+2)^2$ 與 $n^2+(n+1)^2$ 判斷銳、直、鈍角；面積用海龍公式化成 $n$ 的式子。\n\n**詳解**\n\n1. $n^2+(n+1)^2-(n+2)^2=n^2-2n-3=(n-3)(n+1)$：$n=2$ 時為負（鈍角），$n=3$ 時為 $0$（直角），$n\\ge4$ 時為正（銳角）。\n2. 海龍公式：$s=\\dfrac{3(n+1)}2$，$s-n=\\dfrac{n+3}2$，$s-(n+1)=\\dfrac{n+1}2$，$s-(n+2)=\\dfrac{n-1}2$，面積 $=\\dfrac{n+1}{4}\\sqrt{3(n+3)(n-1)}$。\n\n**選項分析**\n\n- (1) 錯：$T_2$ 是鈍角三角形、$T_3$ 是直角三角形。\n- (2) 對：周長 $3n+3$，公差 $3$。\n- (3) 對：面積的每個因子 $n+1$、$n+3$、$n-1$ 都隨 $n$ 增大，所以面積遞增。\n- (4) 錯：$T_5$ 的三邊 $5,6,7$，三高 $=\\dfrac{2\\Delta}{5},\\dfrac{2\\Delta}{6},\\dfrac{2\\Delta}{7}$。$\\dfrac15+\\dfrac17=\\dfrac{12}{35}\\ne\\dfrac26$，不成等差。\n- (5) 錯：$T_3$（$3,4,5$）的最大角 $90^\\circ$；$T_2$（$2,3,4$）最大角的餘弦為 $\\dfrac{4+9-16}{12}=-\\dfrac14$，大於 $90^\\circ$。所以 $T_3$ 的最大角較小。\n\n**答案**：(2)(3)",
+   "answer_display": "(2)(3)",
+   "check": {
+    "official": "2,3",
+    "solver_a": "2,3",
+    "solver_b": "2,3",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 9,
+   "type": "multi",
+   "unit": "數據分析（迴歸直線、標準差）",
+   "unit_tags": [
+    "statistics"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.36,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：迴歸直線必過 $(\\bar x,\\bar y)$；斜率 $=r\\dfrac{\\sigma_y}{\\sigma_x}$，可反求 $\\sigma_y$。\n\n**詳解**\n\n1. $\\overline{y_A}=2\\times5.2-0.6=9.8$，$\\overline{y_B}=1.5\\times6+0.4=9.4$。\n2. $\\sigma_{y_A}=\\dfrac{2\\times0.3}{0.6}=1$，$\\sigma_{y_B}=\\dfrac{1.5\\times0.1}{0.3}=0.5$。\n\n**選項分析**\n\n- (1) 錯：$9.8>9.4$。\n- (2) 錯：$A$ 的體重標準差 $1$ 大於 $B$ 的 $0.5$。\n- (3) 對：$|8.6-9.8|=1.2>1$。\n- (4) 錯：到 $L_A:2x-y-0.6=0$ 的距離 $=\\dfrac{|11.2-8.6-0.6|}{\\sqrt5}=\\dfrac{2}{\\sqrt5}\\approx0.89$；到 $L_B:1.5x-y+0.4=0$ 的距離 $=\\dfrac{|8.4-8.6+0.4|}{\\sqrt{3.25}}\\approx0.11$。到 $L_A$ 較遠。\n- (5) 錯：到 $(5.2,9.8)$ 的距離 $\\sqrt{0.4^2+1.2^2}=\\sqrt{1.6}$；到 $(6,9.4)$ 的距離 $\\sqrt{0.4^2+0.8^2}=\\sqrt{0.8}$，後者較近。\n\n**答案**：(3)",
+   "answer_display": "(3)",
+   "check": {
+    "official": "3",
+    "solver_a": "3",
+    "solver_b": "3",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 10,
+   "type": "multi",
+   "unit": "平面向量、直線與坐標、幾何",
+   "unit_tags": [
+    "vector_plane",
+    "coordinate_line",
+    "geometry"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.45,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：一邊在 $x$ 軸上的正六邊形，最右邊是一個頂點，高度是邊長的 $\\dfrac{\\sqrt3}{2}$ 倍；兩圖形恰有一個交點，就是這個頂點碰到正方形的左邊。\n\n**詳解**\n\n1. 設正六邊形邊長 $s$。它的最右頂點在中心 $B$ 的正右方 $s$ 處，高度等於 $B$ 的高度 $\\dfrac{\\sqrt3}{2}s$。\n2. 正方形在右邊、左邊為鉛直線段（高 $0$ 到 $6$）。兩者只有一個交點，所以交點 $P$ 是正六邊形最右頂點，落在正方形左邊上：$\\dfrac{\\sqrt3}{2}s=2\\sqrt3$，$s=4$。\n3. 設 $P(p,2\\sqrt3)$，則 $B(p-4,2\\sqrt3)$，$A(p+3,3)$。\n\n**選項分析**\n\n- (1) 錯：$A$ 的高度 $3$，$B$ 的高度 $2\\sqrt3\\approx3.46$，$A$ 較低。\n- (2) 錯：邊長為 $4$。\n- (3) 對：$\\overrightarrow{BA}=(7,\\,3-2\\sqrt3)$。\n- (4) 錯：$\\overrightarrow{PA}=(3,\\,3-2\\sqrt3)$，$\\overline{AP}^2=9+(3-2\\sqrt3)^2=30-12\\sqrt3\\approx9.22<10$。\n- (5) 對：斜率 $=\\dfrac{3-2\\sqrt3}{3}=1-\\dfrac{2}{\\sqrt3}\\approx-0.155>-\\dfrac1{\\sqrt3}\\approx-0.577$。\n\n**答案**：(3)(5)",
+   "answer_display": "(3)(5)",
+   "check": {
+    "official": "3,5",
+    "solver_a": "3,5",
+    "solver_b": "3,5",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 11,
+   "type": "multi",
+   "unit": "線性方程組、機率",
+   "unit_tags": [
+    "linear_system",
+    "probability"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.43,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：二元一次方程組的解由係數行列式 $\\Delta=ab-6$ 判斷；$\\Delta=0$ 時再看是否矛盾。$12$ 種 $(a,b)$ 等可能。\n\n**詳解**\n\n1. $\\Delta=\\begin{vmatrix}a&6\\\\1&b\\end{vmatrix}=ab-6$。$\\Delta=0$ 的情形：$(a,b)=(6,1)$ 或 $(3,2)$。\n   - $(6,1)$：$6x+6y=6$ 與 $x+y=1$ 是同一條直線，無限多解；\n   - $(3,2)$：$3x+6y=6$ 即 $x+2y=2$，與 $x+2y=1$ 平行，無解。\n2. 其餘 $10$ 種有唯一解。\n\n**選項分析**\n\n- (1) 錯：$a=b$ 只有 $(1,1),(2,2)$，機率 $\\dfrac{2}{12}=\\dfrac16$。\n- (2) 對：只有 $(3,2)$，機率 $\\dfrac1{12}$。\n- (3) 對：$\\dfrac{10}{12}=\\dfrac56$。\n- (4) 錯：反面（$b=2$）且有解：$a\\ne3$，共 $5$ 種，機率 $\\dfrac5{12}$。\n- (5) 錯：$b=2$ 時，第二式乘 $3$ 與第一式相減：$(a-3)x=3$，$x=\\dfrac{3}{a-3}$；$x>0\\iff a=4,5,6$。條件機率 $\\dfrac35$，不是 $\\dfrac25$。\n\n**答案**：(2)(3)",
+   "answer_display": "(2)(3)",
+   "check": {
+    "official": "2,3",
+    "solver_a": "2,3",
+    "solver_b": "2,3",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 12,
+   "type": "multi",
+   "unit": "矩陣（線性變換）",
+   "unit_tags": [
+    "matrix"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.36,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：$T\\begin{bmatrix}x\\\\y\\end{bmatrix}=\\begin{bmatrix}3x\\\\ax+y\\end{bmatrix}$；三頂點變成 $A'(3,a)$、$B'(0,1)$、$C'(-3,-a)$。\n\n**詳解**\n\n1. $\\det T=3$，面積變為原來的 $3$ 倍；$\\Delta ABC$ 面積 $=\\dfrac12\\cdot2\\cdot1=1$。\n2. 不動點：$3x=x$ 且 $ax+y=y\\iff x=0$，即 $y$ 軸上的點都不動。\n\n**選項分析**\n\n- (1) 錯：$a=0$ 時頂點 $(3,0),(0,1),(-3,0)$，雖然 $\\overline{A'B'}=\\overline{C'B'}=\\sqrt{10}$，但 $\\overrightarrow{B'A'}\\cdot\\overrightarrow{B'C'}=(3,-1)\\cdot(-3,-1)=-8\\ne0$，不是直角。\n- (2) 對：$\\Delta ABC$ 的邊上有 $B(0,1)$ 與 $\\overline{AC}$ 上的 $(0,0)$，都在 $y$ 軸上，不動。\n- (3) 錯：$A'C'$ 的中點是原點，$\\Gamma$ 位於直線 $y=\\frac a3x$ 含 $B'$ 的一側。若 $a\\ge0$，$\\Gamma$ 中 $x>0$ 的點都滿足 $y\\ge\\frac a3x\\ge0$，不會落在第四象限（例如 $a=1$）。\n- (4) 對：$\\det T=3\\ne0$，$T$ 可逆，取 $\\Omega=T^{-1}(\\Delta ABC)$ 即可。\n- (5) 對：$\\Gamma$ 的面積恆為 $3\\times1=3$。\n\n**答案**：(2)(4)(5)",
+   "answer_display": "(2)(4)(5)",
+   "check": {
+    "official": "2,4,5",
+    "solver_a": "2,4,5",
+    "solver_b": "2,4,5",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 13,
+   "type": "fill",
+   "unit": "線性方程組（比例問題）",
+   "unit_tags": [
+    "linear_system"
+   ],
+   "difficulty": {
+    "level": "穩定基礎",
+    "official_p": 0.67,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：「平均利潤」等於總利潤除以總數量，列式後消去即得比例。\n\n**詳解**\n\n1. 甲、乙合計：$100A+400B=280(A+B)$，得 $120B=180A$，即 $A:B=2:3$。\n2. 三型合計：$100A+400B+240C=260(A+B+C)$。左邊前兩項 $=280(A+B)$，所以 $280(A+B)+240C=260(A+B)+260C$，即 $20(A+B)=20C$，$C=A+B$。\n3. 取 $A=2$、$B=3$，則 $C=5$。\n\n**答案**：$A:B:C=2:3:5$（13-1 填 $2$，13-2 填 $3$，13-3 填 $5$）",
+   "answer_display": "$2:3:5$",
+   "check": {
+    "official": {
+     "13-1": "2",
+     "13-2": "3",
+     "13-3": "5"
+    },
+    "solver_a": {
+     "13-1": "2",
+     "13-2": "3",
+     "13-3": "5"
+    },
+    "solver_b": {
+     "13-1": "2",
+     "13-2": "3",
+     "13-3": "5"
+    },
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 14,
+   "type": "fill",
+   "unit": "多項式函數（除法原理、同餘）",
+   "unit_tags": [
+    "polynomial"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.38,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：除以 $x^2-2x+3$ 時，可用「$x^2\\equiv2x-3$」把高次式降次，只看餘式。\n\n**詳解**\n\n1. 設 $p(x)=x^2-2x+3$。$f\\equiv x+1$、$g\\equiv x-3$、$h\\equiv-2\\pmod{p}$。\n2. $xf(x)\\equiv x(x+1)=x^2+x\\equiv(2x-3)+x=3x-3$。\n3. $xf+ag+bh\\equiv(3x-3)+a(x-3)-2b=(3+a)x-(3+3a+2b)$。\n4. 被 $p(x)$ 整除 $\\iff$ 餘式為 $0$：$3+a=0$，$3+3a+2b=0$，得 $a=-3$、$b=3$。\n\n**答案**：$a=-3$，$b=3$（14-1 填 $-$，14-2 填 $3$，14-3 填 $3$）\n\n**常見錯誤**：把 $xf(x)$ 的餘式直接寫成 $x(x+1)$，忘了它是二次式還要再除一次。",
+   "answer_display": "$a=-3,\\ b=3$",
+   "check": {
+    "official": {
+     "14-1": "-",
+     "14-2": "3",
+     "14-3": "3"
+    },
+    "solver_a": {
+     "14-1": "-",
+     "14-2": "3",
+     "14-3": "3"
+    },
+    "solver_b": {
+     "14-1": "-",
+     "14-2": "3",
+     "14-3": "3"
+    },
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 15,
+   "type": "fill",
+   "unit": "機率（條件機率、期望值）",
+   "unit_tags": [
+    "probability"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.48,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：由公告的中獎機率反推球數；前 $100$ 人的結果已知，第 $101$ 人面對的是剩下的球。\n\n**詳解**\n\n1. $10$ 顆獎球占全部的 $0.4\\%$，總球數 $N=\\dfrac{10}{0.004}=2500$。\n2. 前 $100$ 人抽走 $100$ 顆，其中 $1$ 顆 $5000$ 元、$0$ 顆 $8000$ 元。剩下 $2400$ 顆，含 $5000$ 元 $4$ 顆、$8000$ 元 $5$ 顆。\n3. 第 $101$ 人每顆球被抽中的機率都是 $\\dfrac{1}{2400}$，期望值\n$$\\frac{4\\times5000+5\\times8000}{2400}=\\frac{60000}{2400}=25\\ \\text{元}.$$\n\n**答案**：$25$ 元（15-1 填 $2$，15-2 填 $5$）",
+   "answer_display": "$25$",
+   "check": {
+    "official": {
+     "15-1": "2",
+     "15-2": "5"
+    },
+    "solver_a": {
+     "15-1": "2",
+     "15-2": "5"
+    },
+    "solver_b": {
+     "15-1": "2",
+     "15-2": "5"
+    },
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 16,
+   "type": "fill",
+   "unit": "平面向量（正射影）",
+   "unit_tags": [
+    "vector_plane"
+   ],
+   "difficulty": {
+    "level": "超越頂標",
+    "official_p": 0.08,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：$(2,-3)$ 與 $(3,2)$ 互相垂直，$\\vec v$ 在兩方向的正射影長 $p,q$ 滿足 $p^2+q^2=|\\vec v|^2$。\n\n**詳解**\n\n1. 設 $|\\vec v|=L$，兩正射影長為 $p=L-1$、$q=L-2$（夾角皆銳角，所以都是正的）。\n2. 兩方向互相垂直：$L^2=(L-1)^2+(L-2)^2$，整理得 $L^2-6L+5=0$，$L=1$ 或 $5$。$L=1$ 時 $q<0$ 不合，所以 $L=5$，$p=4$、$q=3$。\n3. 以單位向量 $\\vec e_1=\\dfrac{(2,-3)}{\\sqrt{13}}$、$\\vec e_2=\\dfrac{(3,2)}{\\sqrt{13}}$ 表示：$\\vec v=4\\vec e_1+3\\vec e_2=\\dfrac{(17,-6)}{\\sqrt{13}}$。\n4. 在 $(4,7)$ 方向的正射影長：$\\dfrac{\\vec v\\cdot(4,7)}{\\sqrt{65}}=\\dfrac{68-42}{\\sqrt{13}\\sqrt{65}}=\\dfrac{26}{13\\sqrt5}=\\dfrac{2\\sqrt5}{5}$。\n\n**答案**：$\\dfrac{2\\sqrt5}{5}$（16-1 填 $2$，16-2 填 $5$，16-3 填 $5$）",
+   "answer_display": "$\\frac{2\\sqrt{5}}{5}$",
+   "check": {
+    "official": {
+     "16-1": "2",
+     "16-2": "5",
+     "16-3": "5"
+    },
+    "solver_a": {
+     "16-1": "2",
+     "16-2": "5",
+     "16-3": "5"
+    },
+    "solver_b": {
+     "16-1": "2",
+     "16-2": "5",
+     "16-3": "5"
+    },
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 17,
+   "type": "fill",
+   "unit": "圓、直線與坐標（區域）",
+   "unit_tags": [
+    "circle",
+    "coordinate_line"
+   ],
+   "difficulty": {
+    "level": "超越頂標",
+    "official_p": 0.05,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：與 $P$ 距離為 $|x-y|$ 的點形成以 $P$ 為圓心、半徑 $|x-y|$ 的圓；圓落在正方形內 $\\iff$ 半徑不超過 $P$ 到四邊的距離。\n\n**詳解**\n\n1. $P(x,y)$ 到四邊的距離為 $x,\\ 1-x,\\ y,\\ 1-y$。條件：$|x-y|\\le\\min(x,1-x,y,1-y)$。\n2. 區域對直線 $y=x$ 對稱，先看 $y\\ge x$：$y-x\\le x\\Rightarrow y\\le2x$；$y-x\\le1-y\\Rightarrow y\\le\\dfrac{1+x}{2}$；另兩個條件 $y-x\\le1-x$、$y-x\\le y$ 自動成立。\n3. 所以這半邊是由 $y\\ge x$、$y\\le2x$、$y\\le\\frac{1+x}2$ 圍成的三角形，頂點 $(0,0)$、$\\left(\\frac13,\\frac23\\right)$（$2x=\\frac{1+x}{2}$ 的交點）、$(1,1)$。\n4. 面積 $=\\dfrac12\\left|\\dfrac13\\cdot1-\\dfrac23\\cdot1\\right|=\\dfrac16$。\n5. 加上對稱的另一半，$R$ 的面積 $=\\dfrac13$。\n\n**答案**：$\\dfrac13$（17-1 填 $1$，17-2 填 $3$）",
+   "answer_display": "$\\frac{1}{3}$",
+   "check": {
+    "official": {
+     "17-1": "1",
+     "17-2": "3"
+    },
+    "solver_a": {
+     "17-1": "1",
+     "17-2": "3"
+    },
+    "solver_b": {
+     "17-1": "1",
+     "17-2": "3"
+    },
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 18,
+   "type": "single",
+   "unit": "空間中的平面與直線、空間向量",
+   "unit_tags": [
+    "space_line_plane",
+    "vector_space"
+   ],
+   "difficulty": {
+    "level": "穩定基礎",
+    "official_p": 0.64,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：原點在平面上的投影沿法向量 $(1,0,-1)$ 方向。\n\n**詳解**\n\n1. $Q=t(1,0,-1)$ 在平面 $x-z=4$ 上：$t+t=4$，$t=2$，$Q(2,0,-2)$。\n2. $\\cos\\alpha=\\dfrac{\\overrightarrow{OQ}\\cdot(1,0,0)}{|\\overrightarrow{OQ}|}=\\dfrac{2}{2\\sqrt2}=\\dfrac{\\sqrt2}{2}$。\n\n**答案**：(4)",
+   "answer_display": "(4)",
+   "check": {
+    "official": "4",
+    "solver_a": "4",
+    "solver_b": "4",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 19,
+   "type": "constructed",
+   "unit": "空間向量",
+   "unit_tags": [
+    "vector_space"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": null,
+    "basis": "本站估計"
+   },
+   "solution_md": "**解題關鍵**：用內積寫出 $\\cos\\theta$，夾角 $\\theta\\le\\dfrac\\pi6\\iff\\cos\\theta\\ge\\dfrac{\\sqrt3}2$（餘弦在 $[0,\\pi]$ 遞減）。\n\n**詳解**\n\n1. $\\overrightarrow{OP}=(a,b,c)\\ne\\vec0$，$\\cos\\theta=\\dfrac{(a,b,c)\\cdot(1,0,0)}{\\sqrt{a^2+b^2+c^2}}=\\dfrac{a}{\\sqrt{a^2+b^2+c^2}}$。\n2. $0\\le\\theta\\le\\dfrac\\pi6$，且 $\\cos$ 在 $[0,\\pi]$ 遞減，所以 $\\cos\\theta\\ge\\cos\\dfrac\\pi6=\\dfrac{\\sqrt3}{2}$。\n3. 因此 $a\\ge\\dfrac{\\sqrt3}{2}\\sqrt{a^2+b^2+c^2}>0$。兩邊皆為正，平方不改變大小：$a^2\\ge\\dfrac34(a^2+b^2+c^2)$。\n4. 移項：$\\dfrac14a^2\\ge\\dfrac34(b^2+c^2)$，即 $a^2\\ge3(b^2+c^2)$。\n\n**答案**：得證。\n\n**評分重點（本站整理）**\n\n- 正確寫出 $\\cos\\theta$ 的內積公式。\n- 說明 $\\cos\\theta\\ge\\frac{\\sqrt3}2$ 的理由（餘弦遞減），並注意 $a>0$ 才能平方。\n- 代數整理正確。",
+   "answer_display": "由 $\\cos\\theta=\\dfrac{a}{\\sqrt{a^2+b^2+c^2}}\\ge\\dfrac{\\sqrt3}{2}$ 推得 $a^2\\ge3(b^2+c^2)$",
+   "check": {
+    "official": null,
+    "solver_a": "由 cosθ=a/√(a²+b²+c²) ≥ √3/2，得 a>0 且平方整理成 a² ≥ 3(b²+c²)",
+    "solver_b": "cosθ ≥ √3/2 ⇒ a>0，平方得 4a² ≥ 3(a²+b²+c²) ⇒ a² ≥ 3(b²+c²)",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 20,
+   "type": "constructed",
+   "unit": "空間中的平面與直線、空間向量",
+   "unit_tags": [
+    "space_line_plane",
+    "vector_space"
+   ],
+   "difficulty": {
+    "level": "超越頂標",
+    "official_p": null,
+    "basis": "本站估計"
+   },
+   "solution_md": "**解題關鍵**：把 $P$ 在平面上（$a=c+4$）與 $b=0$ 代入第 19 題的條件；$\\overline{OP}^2$ 是 $c$ 的二次函數，要在限制範圍內求最小值。\n\n**詳解**\n\n1. $P(a,0,c)$ 在 $E$ 上：$a=c+4$。夾角條件（第 19 題）：$a>0$ 且 $a^2\\ge3c^2$，即 $a\\ge\\sqrt3|c|$。\n2. 代入：$c+4\\ge\\sqrt3|c|$。\n   - $c\\ge0$：$(\\sqrt3-1)c\\le4$，$c\\le\\dfrac{4}{\\sqrt3-1}=2+2\\sqrt3$；\n   - $c<0$：$(\\sqrt3+1)c\\ge-4$，$c\\ge-\\dfrac{4}{\\sqrt3+1}=2-2\\sqrt3$。\n\n   此時 $a=c+4\\ge6-2\\sqrt3>0$。所以 $2-2\\sqrt3\\le c\\le2+2\\sqrt3$。（等價地，平方後為 $c^2-4c-8\\le0$。）\n3. $\\overline{OP}^2=a^2+c^2=(c+4)^2+c^2=2(c+2)^2+8$。頂點 $c=-2$ 不在範圍內（$2-2\\sqrt3\\approx-1.46>-2$），而在範圍內函數遞增，所以最小值在 $c=2-2\\sqrt3$：\n$$\\overline{OP}^2=2(4-2\\sqrt3)^2+8=2(28-16\\sqrt3)+8=64-32\\sqrt3=\\left(4\\sqrt3-4\\right)^2.$$\n4. $\\overline{OP}$ 的最小值為 $4\\sqrt3-4$。\n\n**幾何意義**：在 $xz$ 平面上，$P$ 必須在以 $x$ 軸正向為軸、半頂角 $30^\\circ$ 的範圍內；原點到直線 $x-z=4$ 的垂足 $Q(2,0,-2)$ 與 $x$ 軸夾 $45^\\circ$，不在範圍內，所以最近點落在邊界射線上，此時 $\\overline{OP}=\\dfrac{a}{\\cos30^\\circ}=\\dfrac{6-2\\sqrt3}{\\sqrt3/2}=4\\sqrt3-4$。\n\n**答案**：$2-2\\sqrt3\\le c\\le2+2\\sqrt3$；$\\overline{OP}$ 的最小可能長度為 $4\\sqrt3-4$。\n\n**評分重點（本站整理）**\n\n- 正確列出 $a=c+4$ 與 $a\\ge\\sqrt3|c|$，分 $c$ 的正負（或平方時確認兩邊非負）解出範圍。\n- $\\overline{OP}^2$ 配方後，說明頂點不在範圍內，最小值出現在端點。\n- 根式化簡正確：$\\sqrt{64-32\\sqrt3}=4\\sqrt3-4$。",
+   "answer_display": "$2-2\\sqrt3\\le c\\le2+2\\sqrt3$；$\\overline{OP}$ 的最小值為 $4\\sqrt3-4$",
+   "check": {
+    "official": null,
+    "solver_a": "2−2√3 ≤ c ≤ 2+2√3；OP 最小長度 4√3−4",
+    "solver_b": "2−2√3 ≤ c ≤ 2+2√3；OP 最小 4√3−4",
+    "agree": true
+   },
+   "flags": []
+  }
+ ]
+}
