@@ -774,12 +774,12 @@
  ],
  "reference_formulas": [
   "1. 首項為$a$，公差為$d$的等差數列前$n$項之和為$S=\\frac{n(2a+(n-1)d)}{2}$",
-  "首項為$a$，公比為$r\\quad (r\\ne 1)$的等比數列前$n$項之和為$S=\\frac{\\quad a(1-r^{n})\\quad}{1-r}$",
+  "首項為$a$，公比為$r\\quad (r\\ne 1)$的等比數列前$n$項之和為$S=\\frac{a(1-r^{n})}{1-r}$",
   "2. 三角函數的和角公式：$\\sin (A+B)=\\sin A\\cos B+\\cos A\\sin B$",
   "$\\cos (A+B)=\\cos A\\cos B-\\sin A\\sin B$",
   "$\\tan (A+B)=\\frac{\\tan A+\\tan B}{1-\\tan A\\tan B}$",
   "3. $\\Delta ABC$的正弦定理：$\\frac{a}{\\sin A}=\\frac{b}{\\sin B}=\\frac{c}{\\sin C}=2R$ （$R$為$\\Delta ABC$外接圓半徑）",
-  "$\\Delta ABC$的餘弦定理：$c^{2}=a^{2}+b^{2}-2ab\\cos C\\quad$",
+  "$\\Delta ABC$的餘弦定理：$c^{2}=a^{2}+b^{2}-2ab\\cos C$",
   "4. 一維數據$X:x_{1},x_{2},\\cdots,x_{n}$，",
   "算術平均數$\\mu_{X}=\\frac{1}{n}(x_{1}+x_{2}+\\cdots+x_{n})$",
   "標準差$\\sigma_{X}=\\sqrt{\\frac{1}{n}[(x_{1}-\\mu_{X})^{2}+(x_{2}-\\mu_{X})^{2}+\\cdots+(x_{n}-\\mu_{X})^{2}]}=\\sqrt{\\frac{1}{n}[(x_{1}^{2}+x_{2}^{2}+\\cdots+x_{n}^{2})-n\\mu_{X}^{2}]}$",
@@ -787,7 +787,7 @@
   "相關係數$r_{X,Y}=\\frac{(x_{1}-\\mu_{X})(y_{1}-\\mu_{Y})+(x_{2}-\\mu_{X})(y_{2}-\\mu_{Y})+\\cdots+(x_{n}-\\mu_{X})(y_{n}-\\mu_{Y})}{n\\sigma_{X}\\sigma_{Y}}$",
   "迴歸直線（最適合直線）方程式$y-\\mu_{Y}=r_{X,Y}\\frac{\\sigma_{Y}}{\\sigma_{X}}(x-\\mu_{X})$",
   "6. 參考數值：$\\sqrt{2}\\approx 1.414\\quad,\\quad \\sqrt{3}\\approx 1.732\\quad,\\quad \\sqrt{5}\\approx 2.236\\quad,\\quad \\sqrt{6}\\approx 2.449\\quad,\\quad \\pi \\approx 3.142$",
-  "7. 對數值：$\\log 2\\approx 0.3010,\\quad \\quad \\log 3\\approx 0.4771,\\ \\log 5\\approx 0.6990,\\ \\log 7\\approx 0.8451\\quad \\quad \\quad$"
+  "7. 對數值：$\\log 2\\approx 0.3010,\\quad \\quad \\log 3\\approx 0.4771,\\ \\log 5\\approx 0.6990,\\ \\log 7\\approx 0.8451$"
  ],
  "extraction": {
   "method": "tools/docx_math_draft.py（Word 版題本，MathType→LaTeX）產生骨架，答案取自 answer.pdf（pdftotext）；逐題以 pdftoppm 頁面影像人工校對",
