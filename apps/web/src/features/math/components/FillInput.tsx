@@ -108,7 +108,7 @@ export function FillInput({
                     return (
                       <label
                         key={v}
-                        className={`flex size-9 items-center justify-center rounded-full border text-sm font-semibold tabular-nums select-none has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-primary ${tone} ${disabled ? 'cursor-default' : 'cursor-pointer hover:border-primary'}`}
+                        className={`relative flex size-9 items-center justify-center rounded-full border text-sm font-semibold tabular-nums select-none has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-primary ${tone} ${disabled ? 'cursor-default' : 'cursor-pointer hover:border-primary'}`}
                       >
                         <input
                           type="radio"
@@ -116,7 +116,8 @@ export function FillInput({
                           value={v}
                           checked={checked}
                           onChange={() => set(i, v)}
-                          className="sr-only"
+                          // 透明地蓋滿整顆劃記（不用 sr-only 的 1px）：點擊、觸控與輔助工具看到的位置就是這顆圓圈。
+                          className="absolute inset-0 size-full cursor-[inherit] appearance-none opacity-0"
                           aria-label={v === '-' ? '負號' : v === '±' ? '正負號' : v}
                         />
                         <span aria-hidden="true">{fillCellDisplay(v)}</span>
