@@ -40,7 +40,8 @@ P2 是最小可用版本：有題目、能作答批改、有可信的詳解。P3
 
 - 原始檔：`tools/fetch_ceec_math.py` → `data/raw/ceec/gsat-math{a,b}/…`（不進版控）、清單 `data/exams/math-manifest.json`（進版控）。評分原則、參考答案、解析標 `republish:false`，只供內部參考。
 - 結構化：`data/exams/parsed-math/gsat-math{a,b}-{111..115}.json`、圖 `data/exams/figures-math/`。格式 `gsat-math-exam/v1`。
-- 工具鏈：`docx_math_draft.py`（Word 版題本的 MathType→LaTeX、EQ 欄位、自動編號）→ `build_math_exam.py`（骨架）→ 人工對照 PDF 影像校對 → `crop_math_figures.py`（依 bbox 裁圖）→ `validate_math_exam.py`（含 KaTeX）。舊課綱 100–110 已下載，同一套工具可延伸（§12 問題 2）。
+- 工具鏈：`docx_math_draft.py`（Word 版題本的 MathType→LaTeX、EQ 欄位、自動編號）→ `build_math_exam.py`（骨架）→ 人工對照 PDF 影像校對 → `crop_math_figures.py`（依 bbox 裁圖）→ `validate_math_exam.py`（含 KaTeX）。
+- **舊課綱 100–110**（站主決定：上線，標示「舊課綱」，§12 問題 2）：`data/exams/parsed-math/gsat-math-{100..110}.json`，`era: "舊課綱"`、`subject: "math"`；11 卷 220 題（單選、多選、選填 A、B…，沒有非選擇題，滿分全由機器計分）、37 張圖、13 個表。選填格另存答案卡列號 `fill.official_cells`；官方答對率／鑑別度與選項分析已由 `merge_math_stats.py` 併入每題 `stats`（併入時同時核對答案）。100–102 的官方 Word 檔是舊版 .doc，以 LibreOffice 轉檔後同樣走 MathType→LaTeX；無法轉換的 Equation 3.0 物件依 PDF 補打並記在 `extraction.corrections`。
 - **P2 要加的**：
   - `packages/shared/src/mathExam.ts`：TypeScript 型別與共用函式（批改、`fill.template` 解析、`[[FILL]]`／`[[TABLE:k]]` 切分），`npm run test:data` 用實際 JSON 檢查型別（比照英文 `exam.ts`）。
   - `apps/web/scripts/build-data.mjs` 輸出 `public/data/math/{id}.json`（題目）與 `public/data/math/index.json`（列表、單元統計）；圖檔複製到 `public/data/math/figures/`。
@@ -205,7 +206,7 @@ P2 是最小可用版本：有題目、能作答批改、有可信的詳解。P3
 ## 12. 待站主決定
 
 1. **先上數A 還是兩科同時**？建議同時（資料與元件共用，多做的只有詳解數量）。
-2. **舊課綱學測數學（100–110，11 卷約 220 題）**要不要結構化並上線（標示「舊課綱」，不算數A／數B）？要的話 P2 之後另排一期，主要成本是人工看圖校對與詳解。
+2. ~~**舊課綱學測數學（100–110，11 卷約 220 題）**要不要結構化並上線~~ → **已決定上線，標示「舊課綱」**（不算數A／數B）。資料已完成（§2）；詳解與前端列表另排。
 3. **非選擇題**只提供「看詳解自評」可以嗎？還是 P3 就要「拍照上傳、AI 回饋」（扣點）？
 4. **詳解審核**：上線前全部人工審，或「驗算全通過＋抽審 20%＋難題全審」即可？審核人是誰？
 5. **收費或廣告計畫**：若有，考試說明等「非營利」聲明的文件要避免使用，試題仍可用（研究 §7）。
