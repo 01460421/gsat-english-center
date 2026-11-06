@@ -35,8 +35,9 @@ SOLS = os.path.join(ROOT, "data", "exams", "math-solutions")
 SCHEMA = "gsat-math-solutions/v1"
 LEVELS = {"穩定基礎", "進階練習", "超越頂標"}
 SEVERITIES = {"resolved", "owner_review"}
-FORBIDDEN = ["大考中心", "大學入學考試中心", "CEEC", "評分原則", "參考答案", "Claude", "Anthropic",
-             "GPT", "Gemini", "Opus", "Sonnet", "Haiku", "OpenAI"]
+# 與 packages/shared/src/assist-methods-zh.test.ts 的寫法一致（不分大小寫）
+FORBIDDEN_RE = re.compile(r"大考中心|考試中心|ceec|評分原則|參考答案|claude|anthropic|opus|sonnet|haiku|gpt|gemini|openai",
+                          re.I)
 REQUIRED_KEYS = {"no", "type", "unit", "unit_tags", "difficulty", "solution_md", "answer_display",
                  "check", "flags"}
 KATEX_DIRS = [os.path.join(ROOT, "apps", "web", "node_modules", "katex"),
@@ -90,9 +91,8 @@ def check_text(r, where, s, jobs):
     if not isinstance(s, str) or not s.strip():
         r.err(f"{where}: 空白")
         return
-    for w in FORBIDDEN:
-        if w in s:
-            r.err(f"{where}: 含禁止字詞「{w}」")
+    for w in sorted(set(m.group(0) for m in FORBIDDEN_RE.finditer(s))):
+        r.err(f"{where}: 含禁止字詞「{w}」")
     segs = math_segments(s)
     if segs is None:
         r.err(f"{where}: $ 不成對")
