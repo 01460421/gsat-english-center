@@ -93,23 +93,63 @@ SEC_TYPE = {"單選題": "single", "多選題": "multi", "選填題": "fill", "�
 ITEM_TYPE = {"單選題": "single", "多選題": "multi", "選填題": "fill", "非選擇題": "constructed"}
 
 
+def _option_marks(ln):
+    """一行中選項標記 (n) 的位置：不在 $…$ 內，且在行首或空白之後。"""
+    marks, in_math = [], False
+    for i, ch in enumerate(ln):
+        if ch == "$":
+            in_math = not in_math
+            continue
+        if in_math or ch != "(":
+            continue
+        m = OPT_RX.match(ln, i)
+        if m and (i == 0 or ln[i - 1] in " \t\u3000"):
+            marks.append((i, m.end(), m.group(1)))
+    return marks
+
+
 def split_options(lines):
     """選項行（可能一行多個、用 tab 分隔）→ {"1": "...", ...}；回傳 (stem_lines, options)。"""
     opts = {}
     stem = []
     cur = None
     for ln in lines:
-        if OPT_RX.match(ln.strip()):
-            parts = OPT_RX.split(ln.strip())
-            # parts = ['', '1', 'text', '2', 'text', ...]
-            for i in range(1, len(parts) - 1, 2):
-                cur = parts[i]
-                opts[cur] = parts[i + 1].strip()
+        s = re.sub(r"\]\]\(", "]] (", ln.strip())
+        lead = re.match(r"^((?:\[\[(?:IMG|TXBX) [^\]]*\]\]\s*)+)", s)
+        if lead and _option_marks(s[lead.end():])[:1] and _option_marks(s[lead.end():])[0][0] == 0:
+            stem.append(lead.group(1))  # 圖的標記留在題幹，選項照常切
+            s = s[lead.end():]
+        marks = _option_marks(s)
+        if marks and marks[0][0] == 0:
+            for j, (st, en, k) in enumerate(marks):
+                end = marks[j + 1][0] if j + 1 < len(marks) else len(s)
+                cur = k
+                opts[k] = s[en:end].strip()
         elif cur is not None:
-            opts[cur] = (opts[cur] + " " + ln.strip()).strip()
+            opts[cur] = (opts[cur] + " " + s).strip()
         else:
             stem.append(ln)
     return stem, opts
+
+
+def extract_tables(lines):
+    """草稿中的 [[TABLE]]…[[/TABLE]] 區塊 → rows；原位置換成 [[TABLE:k]]。"""
+    out, tables, cur = [], [], None
+    for ln in lines:
+        s = ln.strip()
+        if s == "[[TABLE]]":
+            cur = []
+            continue
+        if s == "[[/TABLE]]" and cur is not None:
+            tables.append({"caption": None, "rows": [[clean(c) for c in r.split("｜")] for r in cur]})
+            out.append(f"[[TABLE:{len(tables)}]]")
+            cur = None
+            continue
+        if cur is not None:
+            cur.append(ln.strip("\n"))
+        else:
+            out.append(ln)
+    return out, tables
 
 
 def clean(s):
@@ -148,6 +188,9 @@ def build(subject, year):
         nonlocal cur_item, item_lines
         if cur_item is None:
             return
+        item_lines, tables = extract_tables(item_lines)
+        if tables:
+            cur_item["tables"] = tables
         stem_lines, opts = split_options(item_lines)
         stem = clean(" ".join(stem_lines))
         mt = MIXED_TAG_RX.search(stem)
@@ -159,6 +202,14 @@ def build(subject, year):
         cur_item["options"] = {k: clean(v) for k, v in opts.items()} or None
         cur_group["items"].append(cur_item)
         cur_item, item_lines = None, []
+
+    def close_group_stem(g):
+        if g is None or "_lines" not in g:
+            return
+        lines_, tables = extract_tables(g.pop("_lines"))
+        g["stem"] = clean(" ".join(x.strip() for x in lines_)) or None
+        if tables:
+            g["tables"] = tables
 
     def new_group(label=None):
         nonlocal cur_group
@@ -231,6 +282,7 @@ def build(subject, year):
             flush_item()
             if cur_group is None or (cur_group["group_label"] is None and cur_group["items"]):
                 new_group()
+            close_group_stem(cur_group)
             no = int(im.group(2))
             st = SEC_TYPE.get(cur_sec["type"], cur_sec["type"])
             cur_item = {"no": no, "label": str(no),
@@ -242,7 +294,7 @@ def build(subject, year):
         if cur_item is not None:
             item_lines.append(ln)
         elif cur_group is not None:
-            cur_group["stem"] = clean(((cur_group["stem"] or "") + " " + s))
+            cur_group.setdefault("_lines", []).append(ln)
     flush_item()
 
     # 官方答案

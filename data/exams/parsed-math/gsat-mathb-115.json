@@ -1,0 +1,944 @@
+{
+ "schema": "gsat-math-exam/v1",
+ "id": "gsat-mathb-115",
+ "exam": "gsat",
+ "subject": "math_b",
+ "year": 115,
+ "session": "regular",
+ "title": "115學年度學科能力測驗數學B考科",
+ "time_minutes": 100,
+ "full_score": 100,
+ "sources": {
+  "paper": "data/raw/ceec/gsat-mathb/115/paper-1.pdf",
+  "paper_word": [
+   "data/raw/ceec/gsat-mathb/115/paper-2.docx"
+  ],
+  "answer": [
+   "data/raw/ceec/gsat-mathb/115/answer.pdf"
+  ],
+  "answer_sheet": [
+   "data/raw/ceec/gsat-mathb/115/other.pdf"
+  ],
+  "stats": [
+   "data/raw/ceec/gsat-matha/115/stats-1.xls",
+   "data/raw/ceec/gsat-matha/115/stats-2.xls"
+  ],
+  "scoring_not_stored": [
+   "data/raw/ceec/gsat-mathb/115/scoring.pdf"
+  ]
+ },
+ "scoring_rules": {
+  "single": "每題有 n 個選項，其中只有一個是正確或最適當的選項。各題答對者，得該題的分數；答錯、未作答或劃記多於一個選項者，該題以零分計算。",
+  "multi": "每題有 n 個選項，其中至少有一個是正確的選項。各題之選項獨立判定，所有選項均答對者，得該題全部的分數；答錯 k 個選項者，得該題$\\frac{n-2k}{n}$的分數；但得分低於零分或所有選項均未作答者，該題以零分計算。",
+  "fill": "每題有 n 個空格，須全部答對才給分，答錯不倒扣。"
+ },
+ "parts": [
+  {
+   "title": "第壹部分、選擇（填）題（占85分）",
+   "points": 85,
+   "instructions": null,
+   "sections": [
+    "s1",
+    "s2",
+    "s3"
+   ]
+  },
+  {
+   "title": "第貳部分、混合題或非選擇題（占15分）",
+   "points": 15,
+   "instructions": "說明︰本部分共有 1 題組，單選題每題 3 分，非選擇題配分標於題末。限在答題卷標示題號的作答區內作答。選擇（填）題與「非選擇題作圖部分」使用 2B 鉛筆作答，更正時以橡皮擦擦拭，切勿使用修正帶（液）。非選擇題請由左而右橫式書寫，作答時必須寫出計算過程或理由，否則將酌予扣分。",
+   "sections": [
+    "s4"
+   ]
+  }
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "type": "single",
+   "title": "一、單選題（占35分）",
+   "instructions": "說明：第1題至第7題，每題5分。",
+   "points_total": 35,
+   "groups": [
+    {
+     "id": "s1g1",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 1,
+       "label": "1",
+       "type": "single",
+       "stem": "當標準值為$95$，試選出有幾個整數$N$與標準值的誤差百分比$\\frac{|N-95|}{95}\\times 100\\%$小於$5\\%$。",
+       "options": {
+        "1": "4個",
+        "2": "5個",
+        "3": "8個",
+        "4": "9個",
+        "5": "10個"
+       },
+       "answer": "4",
+       "points": 5,
+       "tags": {
+        "units": [
+         "real_numbers"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g2",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 2,
+       "label": "2",
+       "type": "single",
+       "stem": "以計算機的自然對數按鍵$\\ln$（即$\\ln x=\\log_{e}x$）估算連續複利本利和$100e^{\\frac{3n}{100}}=135$所需期數$n$，試選出等於$n$的選項。",
+       "options": {
+        "1": "$\\frac{3}{100}\\ln (135-100)$",
+        "2": "$\\frac{100}{3}\\ln (135-100)$",
+        "3": "$\\frac{135}{100}\\ln \\left(\\frac{3}{100} \\right)$",
+        "4": "$\\frac{3}{100}\\ln \\left(\\frac{135}{100} \\right)$",
+        "5": "$\\frac{100}{3}\\ln \\left(\\frac{135}{100} \\right)$"
+       },
+       "answer": "5",
+       "points": 5,
+       "tags": {
+        "units": [
+         "exp_log"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g3",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 3,
+       "label": "3",
+       "type": "single",
+       "stem": "已知實數二階方陣$A$滿足$A\\begin{bmatrix}1 \\\\ 1\\end{bmatrix}=\\begin{bmatrix}0 \\\\ 1\\end{bmatrix}$以及$A\\begin{bmatrix}1 \\\\-1\\end{bmatrix}=\\begin{bmatrix}1 \\\\ 0\\end{bmatrix}$。試選出$A$的反方陣。",
+       "options": {
+        "1": "$\\begin{bmatrix}0 & 1 \\\\ 1 & 0\\end{bmatrix}$",
+        "2": "$\\begin{bmatrix}1 & 1 \\\\-1 & 1\\end{bmatrix}$",
+        "3": "$\\begin{bmatrix}1 & 1 \\\\ 1 &-1\\end{bmatrix}$",
+        "4": "$\\begin{bmatrix}1 & \\frac{1}{2} \\\\-\\frac{1}{2} & 1\\end{bmatrix}$",
+        "5": "$\\begin{bmatrix}1 &-\\frac{1}{2} \\\\ \\frac{1}{2} & 1\\end{bmatrix}$"
+       },
+       "answer": "2",
+       "points": 5,
+       "tags": {
+        "units": [
+         "matrix"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g4",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 4,
+       "label": "4",
+       "type": "single",
+       "stem": "電腦程式模擬在太平洋等速航行的甲、乙兩艘船。甲船沿著北緯60度向西航行，乙船沿著赤道向東航行。在某一時間點甲船在西經169度、乙船在東經140度，試選出當甲船到達東經171度時，乙船在東經幾度。",
+       "options": {
+        "1": "120度",
+        "2": "130度",
+        "3": "150度",
+        "4": "160度",
+        "5": "180度"
+       },
+       "answer": "3",
+       "points": 5,
+       "tags": {
+        "units": [
+         "geometry",
+         "trigonometry"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g5",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 5,
+       "label": "5",
+       "type": "single",
+       "stem": "某人購買公益彩券，第一次以$N$元為投注金額。之後每次要投注時，先將前次投注金額增加一半設為預定金額。如果預定金額大於$2N$元，則將預定金額減少一半投注；否則就以預定金額投注。前四次投注紀錄如下表： [[TABLE:1]] 試選出此人第七次的投注金額為多少元。",
+       "options": {
+        "1": "$\\frac{3^{6}}{2^{6}}N$",
+        "2": "$\\frac{3^{6}}{2^{8}}N$",
+        "3": "$\\frac{3^{6}}{2^{9}}N$",
+        "4": "$\\frac{3^{7}}{2^{7}}N$",
+        "5": "$\\frac{3^{7}}{2^{10}}N$"
+       },
+       "answer": "3",
+       "points": 5,
+       "tables": [
+        {
+         "caption": null,
+         "rows": [
+          [
+           "",
+           "第一次",
+           "第二次",
+           "第三次",
+           "第四次"
+          ],
+          [
+           "預定金額（元）",
+           "",
+           "$\\frac{3}{2}N$",
+           "$\\frac{9}{4}N$",
+           "$\\frac{27}{16}N$"
+          ],
+          [
+           "投注金額（元）",
+           "$N$",
+           "$\\frac{3}{2}N$",
+           "$\\frac{9}{8}N$",
+           "$\\frac{27}{16}N$"
+          ]
+         ],
+         "note": "「預定金額」列的「第一次」欄為斜線格（不適用）。"
+        }
+       ],
+       "tags": {
+        "units": [
+         "sequence"
+        ]
+       },
+       "figures": []
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g6",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 6,
+       "label": "6",
+       "type": "single",
+       "stem": "各國沿岸的「領海基線」其外側距離基線十二浬間之海域，為該國之「領海」。在以浬為單位的坐標平面上，某國有一部分的領海基線為直線$L:4x+3y-12=0$上的某一線段，且$(5,5)$位於該領海基線的內側，如圖所示。試選出該段領海在$L$與下列哪一條直線之間。",
+       "options": {
+        "1": "$4x+3y+48=0$",
+        "2": "$4x+3y+18=0$",
+        "3": "$4x+3y=0$",
+        "4": "$4x+3y-24=0$",
+        "5": "$4x+3y-72=0$"
+       },
+       "answer": "1",
+       "points": 5,
+       "figures": [
+        {
+         "id": "f6",
+         "kind": "diagram",
+         "alt": "示意圖：一條由左上往右下的斜線為領海基線（直線 L 的一段），基線左下方有一條平行的斜線，兩線之間的帶狀區域塗灰並標示「領海」；點 (5,5) 位於基線右上方（內側）。",
+         "source": {
+          "page": 3,
+          "bbox_pt": [
+           395,
+           436,
+           540,
+           522
+          ]
+         },
+         "file": "data/exams/figures-math/gsat-mathb-115/f6.png",
+         "width": 343,
+         "height": 236
+        }
+       ],
+       "tags": {
+        "units": [
+         "coordinate_line"
+        ]
+       },
+       "tables": []
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g7",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 7,
+       "label": "7",
+       "type": "single",
+       "stem": "有A、B、C三種福袋各一個，其中A、B、C中獎的機率分別為$\\frac{3}{4}$、$\\frac{2}{3}$、$\\frac{1}{2}$，且不同福袋中獎與否互不影響。設在福袋A中獎的條件下，至少有兩個福袋中獎的機率為$p$，且設在至少有兩個福袋中獎的條件下，福袋A中獎的機率為$q$。試選出$\\frac{p}{q}$之值。",
+       "options": {
+        "1": "$\\frac{11}{18}$",
+        "2": "$\\frac{17}{18}$",
+        "3": "$1$",
+        "4": "$\\frac{18}{17}$",
+        "5": "$\\frac{18}{11}$"
+       },
+       "answer": "2",
+       "points": 5,
+       "tags": {
+        "units": [
+         "probability"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "type": "multi",
+   "title": "二、多選題（占25分）",
+   "instructions": "說明：第8題至第12題，每題5分。",
+   "points_total": 25,
+   "groups": [
+    {
+     "id": "s2g1",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 8,
+       "label": "8",
+       "type": "multi",
+       "stem": "試選出與函數$y=3\\sin \\left(\\frac{\\pi}{5}x+\\pi \\right)+3$在每個實數$x$所得函數值皆相同的函數。",
+       "options": {
+        "1": "$y=6\\sin \\left(\\frac{\\pi}{5}x \\right)+3$",
+        "2": "$y=3\\sin \\left((\\frac{\\pi}{5}+2\\pi)x+\\pi \\right)+3$",
+        "3": "$y=3\\sin \\left(\\frac{\\pi}{5}x-\\pi \\right)+3$",
+        "4": "$y=-3\\sin \\left(\\frac{\\pi}{5}x \\right)-3$",
+        "5": "$y=-3\\sin \\left(\\frac{\\pi}{5}x \\right)+3$"
+       },
+       "answer": [
+        "3",
+        "5"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "trigonometry",
+         "functions"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g2",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 9,
+       "label": "9",
+       "type": "multi",
+       "stem": "設$f(x)=(1-x)(2-x)^{2}(4+x)$。試選出正確的選項。",
+       "options": {
+        "1": "$f(x)$除以$(1-x)(2-x)(4+x)$的餘式為$-x+2$",
+        "2": "若將$f(x)$表為$a(x-2)^{4}+b(x-2)^{3}+c(x-2)^{2}$，則$c=-6$",
+        "3": "$f(x)>0$的解區間為$(-4,2)$",
+        "4": "$\\frac{f(2026)}{f(-2022)}>1$",
+        "5": "$f(2026)>f(-2022)$"
+       },
+       "answer": [
+        "2",
+        "4"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "polynomial"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g3",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 10,
+       "label": "10",
+       "type": "multi",
+       "stem": "某研究探討昆蟲的身長與其體內兩種養分A、B濃度的關係。研究中蒐集某種昆蟲，測得牠們身長與體內A濃度的數據如下表。 [[TABLE:1]] 已知每隻昆蟲體內的B濃度均為A濃度的0.5倍。試選出正確的選項。",
+       "options": {
+        "1": "B濃度的標準差為$\\frac{15}{2}$單位",
+        "2": "若身長的中位數為65單位，則B濃度的中位數為25單位",
+        "3": "B濃度與A濃度的相關係數為0.5",
+        "4": "若找到一身長為65單位的昆蟲，利用A濃度對身長的迴歸直線（最適直線）預測，其體內A濃度為50單位",
+        "5": "B濃度(Y)對身長(X)的迴歸直線斜率為$\\frac{1}{2}$"
+       },
+       "answer": [
+        "1",
+        "4"
+       ],
+       "points": 5,
+       "tables": [
+        {
+         "caption": null,
+         "rows": [
+          [
+           "",
+           "平均數",
+           "變異數",
+           "相關係數"
+          ],
+          [
+           "身長",
+           "65單位",
+           "100平方單位",
+           "$0.75$"
+          ],
+          [
+           "A濃度",
+           "50單位",
+           "225平方單位",
+           ""
+          ]
+         ],
+         "note": "「相關係數」欄的 0.75 為「身長」「A濃度」兩列合併的儲存格，表示身長與 A 濃度的相關係數。"
+        }
+       ],
+       "tags": {
+        "units": [
+         "statistics"
+        ]
+       },
+       "figures": []
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g4",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 11,
+       "label": "11",
+       "type": "multi",
+       "stem": "有一立燈為了採光，採用兩個可以替換的大、小燈罩。兩燈罩皆為直圓錐面的一部分，裝在燈上其軸線位置相同、燈源皆在頂點，且大燈罩照射在地面上的光線範圍大於小燈罩的光線範圍，如圖所示。令大、小燈罩在地面上所成的光線邊緣分別為圓錐曲線$\\Gamma$、$\\gamma$的一部分。試選出正確的選項。",
+       "options": {
+        "1": "如果$\\Gamma$是橢圓，則$\\gamma$是拋物線",
+        "2": "如果$\\Gamma$是拋物線，則$\\gamma$是橢圓",
+        "3": "如果$\\Gamma$是雙曲線，則$\\gamma$是拋物線",
+        "4": "如果$\\gamma$是拋物線，則$\\Gamma$是拋物線",
+        "5": "如果$\\gamma$是雙曲線，則$\\Gamma$是雙曲線"
+       },
+       "answer": [
+        "2",
+        "5"
+       ],
+       "points": 5,
+       "figures": [
+        {
+         "id": "f11",
+         "kind": "diagram",
+         "alt": "立燈示意圖：燈桿立在平面（地面）上，頂端為「頂點」；由頂點沿虛線「軸線」斜向下方張開兩個同軸的直圓錐面燈罩，內側較窄的是「小燈罩」，外側較寬的是「大燈罩」。",
+         "source": {
+          "page": 5,
+          "bbox_pt": [
+           322,
+           143,
+           490,
+           309
+          ]
+         },
+         "file": "data/exams/figures-math/gsat-mathb-115/f11.png",
+         "width": 427,
+         "height": 389
+        }
+       ],
+       "tags": {
+        "units": [
+         "conics"
+        ]
+       },
+       "tables": []
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g5",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 12,
+       "label": "12",
+       "type": "multi",
+       "stem": "有兩容器，A瓶內有含糖100公克的紅茶1000毫升，B瓶內有不含糖的紅茶500毫升。用以下方式稀釋A瓶的甜度：將A瓶混合均勻後，倒出500毫升至B瓶，再將B瓶混合均勻後，倒500毫升回A瓶，稱此為一次稀釋。重複此稀釋動作，令第$n$次稀釋完，A瓶的含糖量為$a_{n}$公克。試選出正確的選項。",
+       "options": {
+        "1": "$a_{1}=75$",
+        "2": "第$n$次稀釋完，B瓶的含糖量為$50-\\frac{1}{2}a_{n}$公克",
+        "3": "$a_{n+1}=\\frac{1}{2}a_{n}+\\frac{1}{2}\\left(100-\\frac{1}{2}a_{n} \\right)$",
+        "4": "可找到實數$c$滿足數列$\\langle a_{n}-c\\rangle$為公比是$\\frac{1}{4}$的等比數列",
+        "5": "第100次稀釋完，A瓶的含糖量小於60公克"
+       },
+       "answer": [
+        "1",
+        "3",
+        "4"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "sequence"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "type": "fill",
+   "title": "三、選填題（占25分）",
+   "instructions": "說明：第13題至第17題，每題5分。",
+   "points_total": 25,
+   "groups": [
+    {
+     "id": "s3g1",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 13,
+       "label": "13",
+       "type": "fill",
+       "stem": "坐標平面上，$L_{1}$為通過原點O且斜角為$75^{\\circ}$的直線；$L_{2}$為通過點$(-20,0)$且斜角為$30^{\\circ}$的直線，如圖所示。則$L_{1}$、$L_{2}$的交點到原點的距離為[[FILL]]。（四捨五入至整數）",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "13-1",
+         "13-2"
+        ],
+        "template": "[[13-1]][[13-2]]",
+        "answer_cells": {
+         "13-1": "1",
+         "13-2": "4"
+        },
+        "answer_latex": "14"
+       },
+       "figures": [
+        {
+         "id": "f13",
+         "kind": "diagram",
+         "alt": "坐標平面示意圖：x 軸向右，標出原點 O；O 左方的 x 軸線段標示長度 20，左端為 L₂ 與 x 軸的交點。直線 L₂ 以較小的斜角向右上延伸，直線 L₁ 過原點 O 以較大的斜角向右上延伸，兩線在 x 軸上方相交，與 x 軸圍成三角形。",
+         "source": {
+          "page": 5,
+          "bbox_pt": [
+           375,
+           705,
+           515,
+           768
+          ]
+         },
+         "file": "data/exams/figures-math/gsat-mathb-115/f13.png",
+         "width": 371,
+         "height": 159
+        }
+       ],
+       "tags": {
+        "units": [
+         "trigonometry",
+         "coordinate_line"
+        ]
+       },
+       "tables": []
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g2",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 14,
+       "label": "14",
+       "type": "fill",
+       "stem": "將1, 2, 3, 4, 5, 6, 7 七個數字排成一個七位數。若要求排出的數字3, 4相鄰、5, 6相鄰以及6, 7相鄰，則共可排出[[FILL]]個七位數。",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "14-1",
+         "14-2"
+        ],
+        "template": "[[14-1]][[14-2]]",
+        "answer_cells": {
+         "14-1": "9",
+         "14-2": "6"
+        },
+        "answer_latex": "96"
+       },
+       "tags": {
+        "units": [
+         "counting"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g3",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 15,
+       "label": "15",
+       "type": "fill",
+       "stem": "某校健康檢查：全體學生中有近視的占$\\frac{1}{2}$、有蛀牙的占$\\frac{1}{3}$。設$p$為全體學生中無近視且無蛀牙的學生所占比例。將部分資料依所占比例以列聯表呈現如下： [[TABLE:1]] 已知有近視的學生中，有蛀牙的占少數；有蛀牙的學生中，有近視的占多數。則$p$的範圍為[[FILL]]。（化為最簡分數）",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "tables": [
+        {
+         "caption": null,
+         "rows": [
+          [
+           "",
+           "有近視",
+           "無近視",
+           "總和"
+          ],
+          [
+           "有蛀牙",
+           "",
+           "",
+           "$\\frac{1}{3}$"
+          ],
+          [
+           "無蛀牙",
+           "",
+           "$p$",
+           "$\\frac{2}{3}$"
+          ],
+          [
+           "總和",
+           "$\\frac{1}{2}$",
+           "$\\frac{1}{2}$",
+           "$1$"
+          ]
+         ]
+        }
+       ],
+       "fill": {
+        "cells": [
+         "15-1",
+         "15-2",
+         "15-3",
+         "15-4",
+         "15-5"
+        ],
+        "template": "\\frac{[[15-1]]}{[[15-2]]}<p<\\frac{[[15-3]]}{[[15-4]][[15-5]]}",
+        "answer_cells": {
+         "15-1": "1",
+         "15-2": "3",
+         "15-3": "5",
+         "15-4": "1",
+         "15-5": "2"
+        },
+        "answer_latex": "\\frac{1}{3}<p<\\frac{5}{12}"
+       },
+       "tags": {
+        "units": [
+         "probability"
+        ]
+       },
+       "figures": []
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g4",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 16,
+       "label": "16",
+       "type": "fill",
+       "stem": "坐標平面上，$L$為一次函數$y=f(x)$的圖形，$\\Gamma$為二次函數$y=g(x)$的圖形。已知$L$與$\\Gamma$交於$(1,0)$、$(5,4)$兩點，且點$(2,2)$在$\\Gamma$上。則$g(x)-f(x)$的最大值為[[FILL]]。（化為最簡分數）",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "16-1",
+         "16-2"
+        ],
+        "template": "\\frac{[[16-1]]}{[[16-2]]}",
+        "answer_cells": {
+         "16-1": "4",
+         "16-2": "3"
+        },
+        "answer_latex": "\\frac{4}{3}"
+       },
+       "tags": {
+        "units": [
+         "polynomial"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g5",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 17,
+       "label": "17",
+       "type": "fill",
+       "stem": "利用單點透視法將坐標空間的點繪製在畫布的坐標平面上。已知 （一）空間中與$y$軸平行的直線，在畫布上的消失點為$(0,15)$ （二）空間中與$z$軸平行的直線，在畫布上都與$y$軸平行若點$(0,0,0)$、$(3,4,0)$、$(3,0,3)$繪在畫布上分別為$(0,0)$、$(\\frac{13}{5},2)$、$(3,3)$，則點$(3,4,3)$ 繪在畫布上的$y$坐標為[[FILL]]。（化為最簡分數） （註：右圖為三點$(3,4,0)$、$(3,0,3)$、$(3,4,3)$於坐標空間的位置關係）",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "17-1",
+         "17-2",
+         "17-3"
+        ],
+        "template": "\\frac{[[17-1]][[17-2]]}{[[17-3]]}",
+        "answer_cells": {
+         "17-1": "2",
+         "17-2": "3",
+         "17-3": "5"
+        },
+        "answer_latex": "\\frac{23}{5}"
+       },
+       "figures": [
+        {
+         "id": "f17",
+         "kind": "diagram",
+         "alt": "坐標空間中的長方體示意圖：x 軸朝左前方、y 軸朝右、z 軸朝上；標出頂點 (3,0,3)、(3,4,0) 與 (3,4,3)，其中 (3,4,3) 為長方體右上前方的頂點。",
+         "source": {
+          "page": 7,
+          "bbox_pt": [
+           405,
+           158,
+           548,
+           248
+          ]
+         },
+         "file": "data/exams/figures-math/gsat-mathb-115/f17.png",
+         "width": 363,
+         "height": 237
+        }
+       ],
+       "tags": {
+        "units": [
+         "data_modeling",
+         "coordinate_line"
+        ]
+       },
+       "tables": []
+      }
+     ],
+     "tables": []
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "type": "mixed",
+   "title": "第貳部分、混合題或非選擇題（占15分）",
+   "instructions": "說明︰本部分共有 1 題組，單選題每題 3 分，非選擇題配分標於題末。限在答題卷標示題號的作答區內作答。選擇（填）題與「非選擇題作圖部分」使用 2B 鉛筆作答，更正時以橡皮擦擦拭，切勿使用修正帶（液）。非選擇題請由左而右橫式書寫，作答時必須寫出計算過程或理由，否則將酌予扣分。",
+   "points_total": 15,
+   "groups": [
+    {
+     "id": "s4g1",
+     "group_label": "18-20題為題組",
+     "stem": "有一張星軌照片，照片中的星星各自繞著以北極星為圓心且以逆時鐘方向旋轉$90^{\\circ}$角所畫出的圓弧軌跡。在此照片所設的坐標平面上令北極星為點$P$。已知甲星軌跡的起點、終點坐標分別為$(8,0)$、$(0,0)$，軌跡如圖所示。根據上述，試回答下列問題。",
+     "figures": [
+      {
+       "id": "f18",
+       "kind": "diagram",
+       "alt": "星軌照片的坐標平面示意圖：x 軸與 y 軸相交於原點；一個以虛線畫出的圓，其上半部有一段實線圓弧，從 x 軸上的點 (8,0) 逆時針畫到原點 (0,0)，兩端各標一點，為甲星軌跡。",
+       "source": {
+        "page": 7,
+        "bbox_pt": [
+         448,
+         458,
+         546,
+         563
+        ]
+       },
+       "file": "data/exams/figures-math/gsat-mathb-115/f18.png",
+       "width": 249,
+       "height": 279
+      }
+     ],
+     "items": [
+      {
+       "no": 18,
+       "label": "18",
+       "type": "single",
+       "stem": "試選出甲星軌跡的起點與終點連線線段的中垂線方程式。（單選題，3分）",
+       "options": {
+        "1": "$x=4$",
+        "2": "$y=4$",
+        "3": "$y=x-4$",
+        "4": "$y=-x+4$",
+        "5": "$y=4x$"
+       },
+       "answer": "1",
+       "points": 3,
+       "tags": {
+        "units": [
+         "coordinate_line"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      },
+      {
+       "no": 19,
+       "label": "19",
+       "type": "constructed",
+       "stem": "令$L$為通過點$(8,0)$且斜率為1的直線。試說明點$P$在$L$上，並求甲星軌跡所在的圓方程式。（非選擇題，6分）",
+       "options": null,
+       "answer": null,
+       "points": 6,
+       "constructed": {
+        "official_answer_stored": false,
+        "has_drawing": false
+       },
+       "tags": {
+        "units": [
+         "coordinate_line",
+         "circle"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      },
+      {
+       "no": 20,
+       "label": "20",
+       "type": "constructed",
+       "stem": "已知照片中乙星軌跡的起點$Q$坐標為$(2,8)$。令$R$為其軌跡終點，試求$\\overrightarrow{PR}$以及點$R$的坐標。（非選擇題，6分）",
+       "options": null,
+       "answer": null,
+       "points": 6,
+       "constructed": {
+        "official_answer_stored": false,
+        "has_drawing": false
+       },
+       "tags": {
+        "units": [
+         "vector_plane",
+         "matrix"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    }
+   ]
+  }
+ ],
+ "reference_formulas": [
+  "1. 首項為$a$，公差為$d$的等差數列前$n$項之和為$S=\\frac{n(2a+(n-1)d)}{2}$",
+  "首項為$a$，公比為$r\\quad (r\\ne 1)$的等比數列前$n$項之和為$S=\\frac{a(1-r^{n})}{1-r}$",
+  "2. $\\Delta ABC$的正弦定理：$\\frac{a}{\\sin A}=\\frac{b}{\\sin B}=\\frac{c}{\\sin C}=2R$（$R$為$\\Delta ABC$外接圓半徑）",
+  "$\\Delta ABC$的餘弦定理：$c^{2}=a^{2}+b^{2}-2ab\\cos C$",
+  "3. 一維數據$X:x_{1},x_{2},\\cdots,x_{n}$，",
+  "算術平均數$\\mu_{X}=\\frac{1}{n}(x_{1}+x_{2}+\\cdot \\cdot \\cdot+x_{n})$",
+  "標準差$\\sigma_{X}=\\sqrt{\\frac{1}{n}[(x_{1}-\\mu_{X})^{2}+(x_{2}-\\mu_{X})^{2}+\\cdots+(x_{n}-\\mu_{X})^{2}]}=\\sqrt{\\frac{1}{n}[(x_{1}^{2}+x_{2}^{2}+\\cdots+x_{n}^{2})-n\\mu_{X}^{2}]}$",
+  "4. 二維數據$(X,Y):(x_{1},y_{1}),(x_{2},y_{2}),\\cdots,(x_{n},y_{n})$，",
+  "相關係數$r_{X,Y}=\\frac{(x_{1}-\\mu_{X})(y_{1}-\\mu_{Y})+(x_{2}-\\mu_{X})(y_{2}-\\mu_{Y})+\\cdots+(x_{n}-\\mu_{X})(y_{n}-\\mu_{Y})}{n\\sigma_{X}\\sigma_{Y}}$",
+  "迴歸直線（最適合直線）方程式$y-\\mu_{Y}=r_{X,Y}\\frac{\\sigma_{Y}}{\\sigma_{X}}(x-\\mu_{X})$",
+  "5. 參考數值：$\\sqrt{2}\\approx 1.414,\\sqrt{3}\\approx 1.732,\\sqrt{5}\\approx 2.236,\\sqrt{6}\\approx 2.449,\\pi \\approx 3.142$",
+  "6. 對數值：$\\log 2\\approx 0.3010,\\quad \\quad \\log 3\\approx 0.4771,\\ \\log 5\\approx 0.6990,\\ \\log 7\\approx 0.8451$"
+ ],
+ "extraction": {
+  "method": "tools/docx_math_draft.py（Word 版題本，MathType→LaTeX）產生骨架，答案取自 answer.pdf（pdftotext）；逐題以 pdftoppm 頁面影像人工校對",
+  "issues": [],
+  "verified_by": "visual-check",
+  "corrections": []
+ }
+}
