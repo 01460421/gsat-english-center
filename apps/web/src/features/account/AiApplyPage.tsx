@@ -49,9 +49,10 @@ import { AI_STATUS_DESCRIPTIONS, AI_TIER_LABELS } from './labels';
 import { AI_CONSENT_VERSION, AI_PROCESSING_NOTICE } from './policy';
 import { PolicyView } from './PolicyView';
 import { RequireAccount } from './RequireAccount';
-import { btnPrimary, btnSecondary, cardCls, checkboxCls, fieldCls, labelCls, pageTitleCls, sectionTitleCls } from './styles';
+import { btnPrimary, btnSecondary, cardCls, checkboxCls, labelCls, pageTitleCls, sectionTitleCls } from './styles';
 import { AI_NOTICE, AiNoticeBadge, AiStatusBadge, ComingSoon, LoadingBlock, Notice } from './ui';
 import { isNum, isObject, useApiData } from './useApiData';
+import { textareaCls } from '../../components/ui/fields';
 
 /**
  * 上限的後備值：和 apps/api/wrangler.toml 的 [vars]（AI_POINTS_USER_DAY 等）相同。
@@ -596,7 +597,7 @@ function ApplyForm({
             onChange={(e) => setNote(e.target.value)}
             aria-describedby={noteHintId}
             placeholder="例如：準備學測，想每週練兩篇作文並看看哪裡要加強。"
-            className={`${fieldCls} resize-y`}
+            className={`${textareaCls}`}
           />
           <p id={noteHintId} className="mt-1 flex flex-wrap justify-between gap-x-3 text-sm text-muted">
             <span>站主審核時會看到這段說明。請不要寫真實姓名、學校或聯絡方式。</span>

@@ -18,7 +18,6 @@ import { BackLink } from '../writing/components/ui';
 import { useSignedIn } from '../writing/lib/access';
 import { backfillOutcomes } from './backfill';
 import { AssistGate, AssistHeader } from './components/AssistAccess';
-import { inputCls } from './components/parts';
 import { isAskedHref, readAsked } from './lib/asked';
 import { readPrefs } from './lib/prefs';
 import { getOutcomes } from './outcomes';
@@ -32,6 +31,7 @@ import { ZH_COPY } from './subjects/chinese/copy';
 import { useAssistSubjects } from './subjects/useAssistSubjects';
 import type { MistakeRow, MistakeSource } from './sources/types';
 import { btn } from '../../components/ui/buttons';
+import { Select } from '../../components/ui/Field';
 
 const SOURCE_LABELS: Record<MistakeSource, string> = {
   bank: '題庫練習',
@@ -214,59 +214,59 @@ function Body() {
         <label htmlFor={`${id}-source`} className="block text-sm font-medium">
           來源
         </label>
-        <select id={`${id}-source`} value={filters.source} onChange={(e) => set('source', e.currentTarget.value as Filters['source'])} className={`mt-1 min-h-11 ${inputCls}`}>
+        <Select id={`${id}-source`} value={filters.source} onChange={(e) => set('source', e.currentTarget.value as Filters['source'])} wrapperClassName="w-full mt-1">
           <option value="all">全部</option>
           {(Object.keys(SOURCE_LABELS) as MistakeSource[]).map((s) => (
             <option key={s} value={s}>
               {SOURCE_LABELS[s]}
             </option>
           ))}
-        </select>
+        </Select>
       </div>
       <div>
         <label htmlFor={`${id}-section`} className="block text-sm font-medium">
           大題
         </label>
-        <select id={`${id}-section`} value={filters.section} onChange={(e) => set('section', e.currentTarget.value as Filters['section'])} className={`mt-1 min-h-11 ${inputCls}`}>
+        <Select id={`${id}-section`} value={filters.section} onChange={(e) => set('section', e.currentTarget.value as Filters['section'])} wrapperClassName="w-full mt-1">
           <option value="all">全部</option>
           {sections.map((s) => (
             <option key={s} value={s}>
               {ASSIST_SECTION_LABELS[s]}
             </option>
           ))}
-        </select>
+        </Select>
       </div>
       <div>
         <label htmlFor={`${id}-days`} className="block text-sm font-medium">
           日期
         </label>
-        <select id={`${id}-days`} value={filters.days} onChange={(e) => set('days', Number(e.currentTarget.value) as Filters['days'])} className={`mt-1 min-h-11 ${inputCls}`}>
+        <Select id={`${id}-days`} value={filters.days} onChange={(e) => set('days', Number(e.currentTarget.value) as Filters['days'])} wrapperClassName="w-full mt-1">
           <option value={0}>全部</option>
           <option value={7}>最近 7 天</option>
           <option value={30}>最近 30 天</option>
-        </select>
+        </Select>
       </div>
       <div>
         <label htmlFor={`${id}-kind`} className="block text-sm font-medium">
           種類
         </label>
-        <select id={`${id}-kind`} value={filters.kind} onChange={(e) => set('kind', e.currentTarget.value as Filters['kind'])} className={`mt-1 min-h-11 ${inputCls}`}>
+        <Select id={`${id}-kind`} value={filters.kind} onChange={(e) => set('kind', e.currentTarget.value as Filters['kind'])} wrapperClassName="w-full mt-1">
           <option value="all">錯題與疑點</option>
           <option value="mistake">只看錯題</option>
           <option value="doubt">只看答對的疑點</option>
-        </select>
+        </Select>
       </div>
       <div>
         <label htmlFor={`${id}-sort`} className="block text-sm font-medium">
           排序
         </label>
-        <select id={`${id}-sort`} value={filters.sort} onChange={(e) => set('sort', e.currentTarget.value as Filters['sort'])} className={`mt-1 min-h-11 ${inputCls}`}>
+        <Select id={`${id}-sort`} value={filters.sort} onChange={(e) => set('sort', e.currentTarget.value as Filters['sort'])} wrapperClassName="w-full mt-1">
           <option value="suggested">建議先問</option>
           <option value="recent">新到舊</option>
-        </select>
+        </Select>
       </div>
       <label className="inline-flex min-h-11 cursor-pointer items-center gap-2">
-        <input type="checkbox" checked={filters.notAsked} onChange={(e) => set('notAsked', e.currentTarget.checked)} className="size-4 accent-primary" />
+        <input type="checkbox" checked={filters.notAsked} onChange={(e) => set('notAsked', e.currentTarget.checked)} className="size-5 shrink-0 accent-primary" />
         只看沒問過的
       </label>
     </div>

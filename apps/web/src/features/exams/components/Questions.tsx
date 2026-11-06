@@ -19,6 +19,7 @@ import { acceptedLetters, formatPoints, type AnswerValue, type AutoScoredQuestio
 import { ChoiceFeedback, OpenFeedback, sortedLetters } from './QuestionFeedback';
 import { RichText } from './RichText';
 import { btn } from '../../../components/ui/buttons';
+import { fieldCls, textareaCls } from '../../../components/ui/fields';
 
 /** 題目區塊的 DOM id：綜合測驗的空格按鈕、結果頁的「檢討」連結都靠它捲動過去。 */
 export function questionAnchorId(label: string): string {
@@ -183,8 +184,8 @@ export function ChoiceQuestionBlock({
   );
 }
 
-const textInputClass =
-  'w-full rounded-lg border border-line bg-bg px-3 py-2 text-fg placeholder:text-muted focus:border-primary disabled:opacity-70';
+/** 英文作答的多行與單行輸入框：共用元件（components/ui/fields.ts）。 */
+const textInputClass = textareaCls;
 
 /** 英文作答框共用的屬性：關掉拼字檢查、自動大寫、自動完成（理由見檔頭）。 */
 const englishInputProps = {
@@ -216,7 +217,7 @@ function InlineBlankInput({ q }: { q: Question }) {
       disabled={locked}
       onChange={(e) => store.setAnswer(q.label, e.currentTarget.value)}
       placeholder={q.label}
-      className={`mx-1 inline-block w-36 max-w-full rounded-md border bg-bg px-2 py-0.5 text-fg placeholder:text-muted focus:border-primary disabled:opacity-70 ${tooMany ? 'border-bad' : 'border-primary/60'}`}
+      className={`mx-1 inline-block w-36 max-w-full rounded-md border bg-surface px-2 py-0.5 text-fg placeholder:text-muted disabled:bg-surface-2 disabled:text-muted ${tooMany ? 'border-bad' : 'border-line-strong'}`}
       {...englishInputProps}
     />
   );
@@ -304,7 +305,7 @@ export function TextAnswerBlock({ q, multiline }: { q: Question; multiline: bool
       {multiline ? (
         <textarea id={id} rows={3} value={value} disabled={locked} onChange={(e) => store.setAnswer(q.label, e.currentTarget.value)} className={`mt-1 ${textInputClass}`} {...englishInputProps} />
       ) : (
-        <input id={id} type="text" value={value} disabled={locked} onChange={(e) => store.setAnswer(q.label, e.currentTarget.value)} className={`mt-1 ${textInputClass}`} {...englishInputProps} />
+        <input id={id} type="text" value={value} disabled={locked} onChange={(e) => store.setAnswer(q.label, e.currentTarget.value)} className={`mt-1 ${fieldCls}`} {...englishInputProps} />
       )}
       {q.mode === 'fill_in_blank' && <MultiWordWarning questions={[q]} />}
       <p className="mt-2 text-xs text-muted">
@@ -431,7 +432,7 @@ export function TableAnswerBlock({ q, group }: { q: Question; group: QuestionGro
                           next[index] = e.currentTarget.value;
                           store.setAnswer(q.label, next);
                         }}
-                        className={`min-w-32 ${textInputClass}`}
+                        className={`min-w-32 ${fieldCls}`}
                         {...englishInputProps}
                       />
                     </td>

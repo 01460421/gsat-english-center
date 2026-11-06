@@ -8,12 +8,14 @@ import { useId, type ReactNode } from 'react';
 import { AiBadge } from '../../writing/components/ui';
 import type { ItemStatus } from '../sources/types';
 import { btn } from '../../../components/ui/buttons';
+import { textareaCls } from '../../../components/ui/fields';
 
 /** 按鈕：共用元件（components/ui/buttons.ts，設計文件 css-overhaul §4.1）。 */
 export const primaryBtn = btn('primary', 'md');
 export const secondaryBtn = btn('secondary', 'md');
 export const cardCls = 'rounded-2xl border border-line bg-surface p-4 lg:p-5';
-export const inputCls = 'w-full rounded-lg border border-line bg-bg px-3 py-2 text-fg placeholder:text-muted focus:border-primary disabled:opacity-70';
+/** 文字框（多行為主；單行的 <input> 用 fieldCls）：共用元件（components/ui/fields.ts）。 */
+export const inputCls = textareaCls;
 
 /** 解析或報告的一個區塊：<section>＋h2（＋AI 標章）。 */
 export function AnalysisSection({

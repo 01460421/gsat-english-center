@@ -56,6 +56,7 @@ import {
 } from './reasons';
 import { MC_SECTIONS, computeWeakness, wrongGroupsFrom, type WeakTarget, type WeaknessProfile } from './weakness';
 import { btn } from '../../../components/ui/buttons';
+import { optionCardTopCls } from '../../../components/ui/Check';
 
 /** 「我的加強卷」先列幾份，其他收進「更多」。 */
 export const WEAK_PAPERS_SHOWN = 5;
@@ -82,7 +83,7 @@ const KIND_TITLES: Record<PaperKindChoice, string> = { w: '弱點加強卷', f: 
 const primaryBtn = btn('primary', 'md');
 const secondaryBtn = btn('secondary', 'sm');
 const cardCls = 'rounded-2xl border border-line bg-surface p-5 lg:p-6';
-const optionCls = 'flex cursor-pointer items-start gap-3 rounded-xl border border-line p-3 has-[:checked]:border-primary has-[:checked]:bg-primary-soft has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-60';
+const optionCls = optionCardTopCls;
 const pillCls = 'inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border border-line px-3 text-sm has-[:checked]:border-primary has-[:checked]:bg-primary-soft';
 
 interface Settings {
@@ -287,12 +288,12 @@ function TierField({ name, value, onChange, profile }: { name: string; value: Ti
     <Field legend="難度">
       <div className="flex flex-wrap gap-2">
         <label className={pillCls}>
-          <input type="radio" name={name} checked={value === 'auto'} onChange={() => onChange('auto')} className="size-4 accent-primary" />
+          <input type="radio" name={name} checked={value === 'auto'} onChange={() => onChange('auto')} className="size-5 shrink-0 accent-primary" />
           自動{value === 'auto' ? `：${TIER_LABELS[profile.baseTier]}（${BASIS_TEXT[profile.baseTierBasis]}）` : ''}
         </label>
         {TIERS.map((t) => (
           <label key={t} className={pillCls}>
-            <input type="radio" name={name} checked={value === t} onChange={() => onChange(t)} className="size-4 accent-primary" />
+            <input type="radio" name={name} checked={value === t} onChange={() => onChange(t)} className="size-5 shrink-0 accent-primary" />
             {TIER_LABELS[t]}
           </label>
         ))}
@@ -314,7 +315,7 @@ function SourcesField({ name, sources, selected, onChange }: { name: string; sou
               checked={selected.includes(s.id)}
               disabled={selected.length === 1 && selected.includes(s.id)}
               onChange={(e) => onChange(e.currentTarget.checked ? [...selected, s.id] : selected.filter((x) => x !== s.id))}
-              className="size-4 accent-primary"
+              className="size-5 shrink-0 accent-primary"
             />
             <span className="min-w-0 break-words">{s.label}</span>
           </label>
@@ -588,7 +589,7 @@ function Body() {
               <legend className="sr-only">卷別</legend>
               <div className="grid grid-cols-1 gap-2">
                 <label className={optionCls}>
-                  <input type="radio" name={`${id}-kind`} value="w" checked={kind === 'w'} disabled={!wAvailable || busy} onChange={() => set('kind', 'w')} className="mt-1.5 size-4 shrink-0 accent-primary" />
+                  <input type="radio" name={`${id}-kind`} value="w" checked={kind === 'w'} disabled={!wAvailable || busy} onChange={() => set('kind', 'w')} className="mt-1 size-5 shrink-0 accent-primary" />
                   <span className="min-w-0">
                     <span className="block font-semibold">弱點加強卷</span>
                     <span className="block text-sm text-muted">只放你最需要加強的題型與技能，約 20／40／60 分鐘。</span>
@@ -596,7 +597,7 @@ function Body() {
                   </span>
                 </label>
                 <label className={optionCls}>
-                  <input type="radio" name={`${id}-kind`} value="f" checked={kind === 'f'} disabled={busy} onChange={() => set('kind', 'f')} className="mt-1.5 size-4 shrink-0 accent-primary" />
+                  <input type="radio" name={`${id}-kind`} value="f" checked={kind === 'f'} disabled={busy} onChange={() => set('kind', 'f')} className="mt-1 size-5 shrink-0 accent-primary" />
                   <span className="min-w-0">
                     <span className="block font-semibold">模考格式卷</span>
                     <span className="block text-sm text-muted">
@@ -607,7 +608,7 @@ function Body() {
                   </span>
                 </label>
                 <label className={optionCls}>
-                  <input type="radio" name={`${id}-kind`} value="r" checked={kind === 'r'} disabled={busy} onChange={() => set('kind', 'r')} className="mt-1.5 size-4 shrink-0 accent-primary" />
+                  <input type="radio" name={`${id}-kind`} value="r" checked={kind === 'r'} disabled={busy} onChange={() => set('kind', 'r')} className="mt-1 size-5 shrink-0 accent-primary" />
                   <span className="min-w-0">
                     <span className="block font-semibold">隨機抽題卷</span>
                     <span className="block text-sm text-muted">自己選大題、每個大題幾組、難度與題目來源，隨機抽。</span>
@@ -642,7 +643,7 @@ function Body() {
                   <div className="flex flex-wrap gap-2">
                     {LENGTHS.map((m) => (
                       <label key={m} className={pillCls}>
-                        <input type="radio" name={`${id}-length`} checked={settings.minutes === m} onChange={() => set('minutes', m)} className="size-4 accent-primary" />約 {m} 分鐘
+                        <input type="radio" name={`${id}-length`} checked={settings.minutes === m} onChange={() => set('minutes', m)} className="size-5 shrink-0 accent-primary" />約 {m} 分鐘
                       </label>
                     ))}
                   </div>
@@ -651,11 +652,11 @@ function Body() {
                 <Field legend="大題">
                   <div className="flex flex-wrap gap-2">
                     <label className={pillCls}>
-                      <input type="radio" name={`${id}-secmode`} checked={settings.sectionsMode === 'auto'} onChange={() => set('sectionsMode', 'auto')} className="size-4 accent-primary" />
+                      <input type="radio" name={`${id}-secmode`} checked={settings.sectionsMode === 'auto'} onChange={() => set('sectionsMode', 'auto')} className="size-5 shrink-0 accent-primary" />
                       依弱點自動選
                     </label>
                     <label className={pillCls}>
-                      <input type="radio" name={`${id}-secmode`} checked={settings.sectionsMode === 'manual'} onChange={() => set('sectionsMode', 'manual')} className="size-4 accent-primary" />
+                      <input type="radio" name={`${id}-secmode`} checked={settings.sectionsMode === 'manual'} onChange={() => set('sectionsMode', 'manual')} className="size-5 shrink-0 accent-primary" />
                       自己勾
                     </label>
                   </div>
@@ -669,7 +670,7 @@ function Body() {
                               checked={settings.sections.includes(s)}
                               aria-describedby={s === 'composition' && settings.minutes < COMPOSITION_MIN_MINUTES ? `${id}-composition-hint` : undefined}
                               onChange={(e) => set('sections', e.currentTarget.checked ? ALL_SECTIONS.filter((x) => x === s || settings.sections.includes(x)) : settings.sections.filter((x) => x !== s))}
-                              className="size-4 accent-primary"
+                              className="size-5 shrink-0 accent-primary"
                             />
                             {SECTION_NAMES[s]}
                             {s === 'composition' && settings.minutes < COMPOSITION_MIN_MINUTES && <span className="text-xs text-muted">（要選 40 分鐘以上）</span>}
@@ -688,11 +689,11 @@ function Body() {
                 <Field legend="做過的題組">
                   <div className="flex flex-wrap gap-2">
                     <label className={pillCls}>
-                      <input type="radio" name={`${id}-reuse`} checked={settings.reuse !== 'retest'} onChange={() => set('reuse', 'avoid')} className="size-4 accent-primary" />
+                      <input type="radio" name={`${id}-reuse`} checked={settings.reuse !== 'retest'} onChange={() => set('reuse', 'avoid')} className="size-5 shrink-0 accent-primary" />
                       盡量不用
                     </label>
                     <label className={pillCls}>
-                      <input type="radio" name={`${id}-reuse`} checked={settings.reuse === 'retest'} onChange={() => set('reuse', 'retest')} className="size-4 accent-primary" />
+                      <input type="radio" name={`${id}-reuse`} checked={settings.reuse === 'retest'} onChange={() => set('reuse', 'retest')} className="size-5 shrink-0 accent-primary" />
                       也重做我錯過的題組（7 天以上前做的）
                     </label>
                   </div>
@@ -731,7 +732,7 @@ function Body() {
                           checked={rTiers.includes(t)}
                           disabled={rTiers.length === 1 && rTiers.includes(t)}
                           onChange={(e) => set('tiers', e.currentTarget.checked ? TIERS.filter((x) => x === t || rTiers.includes(x)) : rTiers.filter((x) => x !== t))}
-                          className="size-4 accent-primary"
+                          className="size-5 shrink-0 accent-primary"
                         />
                         {TIER_LABELS[t]}
                       </label>
@@ -742,11 +743,11 @@ function Body() {
                 <Field legend="做過的題組">
                   <div className="flex flex-wrap gap-2">
                     <label className={pillCls}>
-                      <input type="radio" name={`${id}-rreuse`} checked={settings.reuse !== 'allow'} onChange={() => set('reuse', 'avoid')} className="size-4 accent-primary" />
+                      <input type="radio" name={`${id}-rreuse`} checked={settings.reuse !== 'allow'} onChange={() => set('reuse', 'avoid')} className="size-5 shrink-0 accent-primary" />
                       不用（不夠時才用）
                     </label>
                     <label className={pillCls}>
-                      <input type="radio" name={`${id}-rreuse`} checked={settings.reuse === 'allow'} onChange={() => set('reuse', 'allow')} className="size-4 accent-primary" />
+                      <input type="radio" name={`${id}-rreuse`} checked={settings.reuse === 'allow'} onChange={() => set('reuse', 'allow')} className="size-5 shrink-0 accent-primary" />
                       可以用
                     </label>
                   </div>
@@ -815,7 +816,7 @@ function Body() {
                               aria-label={targetLabel(t)}
                               aria-describedby={last ? `${reasonId} ${id}-keep-one` : reasonId}
                               onChange={(e) => set('excluded', e.currentTarget.checked ? settings.excluded.filter((k) => k !== t.key) : [...settings.excluded, t.key])}
-                              className="mt-1 size-4 shrink-0 accent-primary"
+                              className="mt-1 size-5 shrink-0 accent-primary"
                             />
                             <span id={reasonId} className="min-w-0 break-words">
                               {targetReason(t, ctx)}

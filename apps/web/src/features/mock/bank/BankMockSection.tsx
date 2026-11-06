@@ -48,6 +48,7 @@ import { assembleNewPaper } from './resolve';
 import { getSnapshotStore } from './snapshots';
 import { loadUsedGroups } from './used';
 import { btn } from '../../../components/ui/buttons';
+import { optionCardTopCls } from '../../../components/ui/Check';
 
 export const TIER_KEY = 'gsat-bankmock:v1:tier';
 /** 「我組過的卷子」先列幾份，其他收進「更多」。 */
@@ -391,7 +392,7 @@ export default function BankMockSection() {
           {tiers.map(({ tier: t, unavailable, estimate }) => (
             <label
               key={t}
-              className={`flex cursor-pointer items-start gap-3 rounded-xl border border-line p-3 has-[:checked]:border-primary has-[:checked]:bg-primary-soft ${unavailable ? 'cursor-not-allowed opacity-60' : ''}`}
+              className={`${optionCardTopCls} ${unavailable ? 'border-dashed' : ''}`}
             >
               <input
                 type="radio"
@@ -400,7 +401,7 @@ export default function BankMockSection() {
                 checked={tier === t}
                 disabled={unavailable || busy}
                 onChange={() => choose(t)}
-                className="mt-1.5 size-4 shrink-0 accent-primary"
+                className="mt-1 size-5 shrink-0 accent-primary"
               />
               <span className="min-w-0">
                 <span className="block font-semibold">{TIER_LABELS[t]}</span>

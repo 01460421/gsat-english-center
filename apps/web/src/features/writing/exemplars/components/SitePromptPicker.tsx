@@ -8,12 +8,13 @@ import { TIERS, TIER_LABELS, type Tier } from '@gsat/shared';
 import { ChevronRight, Search } from 'lucide-react';
 import { useId, useMemo, useState } from 'react';
 import { dataErrorMessage } from '../../../../data/client';
-import { DataError, Loading, textInput } from '../../components/ui';
+import { DataError, Loading } from '../../components/ui';
 import { bankProgressOf } from '../../bank/drafts';
 import { useStaticData } from '../../lib/hooks';
 import { BANK_LOCK_TAG } from '../labels';
 import { loadSiteTasks, type SiteSource, type SiteTask } from '../lib/sitePrompts';
 import { btn } from '../../../../components/ui/buttons';
+import { fieldCls } from '../../../../components/ui/fields';
 
 type ExamFilter = 'all' | 'gsat' | 'ast' | 'reference';
 
@@ -136,7 +137,7 @@ export function SitePromptPicker({ onPick }: { onPick: (task: SiteTask) => void 
               reset();
             }}
             placeholder={source === 'exam' ? '例如 115、寵物、信' : '例如 運動、圖表'}
-            className={`${textInput} min-h-11 pl-9`}
+            className={`${fieldCls} pl-9`}
           />
         </div>
       </div>

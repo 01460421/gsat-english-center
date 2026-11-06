@@ -77,7 +77,7 @@ export function UnderstoodBar({ detail, onUpdated }: { detail: AssistCaseDetail;
                 value={o.value}
                 checked={understood === o.value}
                 onChange={() => void save({ understood: o.value }, `已記下「${o.label}」`)}
-                className="size-4 accent-primary"
+                className="size-5 shrink-0 accent-primary"
               />
               {o.label}
             </label>

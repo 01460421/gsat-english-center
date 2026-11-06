@@ -70,6 +70,7 @@ import { SubjectChips } from './subjects/SubjectChips';
 import { loadLastSubject, pickSubject, saveLastSubject, useAssistSubjects } from './subjects/useAssistSubjects';
 import { useFromCase } from './subjects/useFromCase';
 import { btn } from '../../components/ui/buttons';
+import { fieldCls } from '../../components/ui/fields';
 
 const LABEL_RE = /^[A-Za-z0-9]{1,8}$/;
 
@@ -231,7 +232,7 @@ function PasteForm({ prefill = null }: { prefill?: string | null }) {
             onChange={(e) => setLabel(e.currentTarget.value)}
             aria-describedby={`${id}-label-hint`}
             aria-invalid={labelBad || undefined}
-            className={`mt-1 min-h-11 ${inputCls}`}
+            className={`mt-1 ${fieldCls}`}
             inputMode="text"
             autoComplete="off"
           />
@@ -243,11 +244,11 @@ function PasteForm({ prefill = null }: { prefill?: string | null }) {
           <label htmlFor={`${id}-answer`} className="font-semibold">
             你的答案（選填）
           </label>
-          <input id={`${id}-answer`} value={answer} onChange={(e) => setAnswer(e.currentTarget.value)} className={`mt-1 min-h-11 ${inputCls}`} lang="en" autoComplete="off" />
+          <input id={`${id}-answer`} value={answer} onChange={(e) => setAnswer(e.currentTarget.value)} className={`mt-1 ${fieldCls}`} lang="en" autoComplete="off" />
         </div>
       </div>
       <label className="flex min-h-11 cursor-pointer items-center gap-2">
-        <input type="checkbox" checked={effectiveHint} onChange={(e) => setHintFirst(e.currentTarget.checked)} className="size-4 accent-primary" />
+        <input type="checkbox" checked={effectiveHint} onChange={(e) => setHintFirst(e.currentTarget.checked)} className="size-5 shrink-0 accent-primary" />
         先給提示就好（完整解析先收起來，按「看完整解析」才展開，不另外扣點）
       </label>
       <DoubtPicker value={doubt} onChange={setDoubt} tornOptions={[]} mine={null} showFreeNote={false} kinds={['sentence_unclear', 'unknown_word', 'faster_method', 'guessed']} />

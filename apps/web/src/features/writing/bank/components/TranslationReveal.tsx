@@ -199,7 +199,7 @@ function SentenceReveal({
                     </button>
                   </span>
                   <label className="inline-flex min-h-11 cursor-pointer items-center gap-2 text-sm">
-                    <input type="checkbox" checked={missing} onChange={(e) => onPartMissing(j, e.currentTarget.checked)} className="size-5 accent-primary" />
+                    <input type="checkbox" checked={missing} onChange={(e) => onPartMissing(j, e.currentTarget.checked)} className="size-5 shrink-0 accent-primary" />
                     這部分整個漏譯
                   </label>
                   <span className="ml-auto text-sm tabular-nums text-muted">

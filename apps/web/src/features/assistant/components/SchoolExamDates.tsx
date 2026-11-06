@@ -3,8 +3,8 @@
  */
 import { ASSIST_LIMITS } from '@gsat/shared';
 import { Plus, X } from 'lucide-react';
-import { inputCls } from './parts';
 import { btn } from '../../../components/ui/buttons';
+import { fieldCls } from '../../../components/ui/fields';
 
 export function SchoolExamDates({ value, onChange, min, max }: { value: string[]; onChange: (dates: string[]) => void; min?: string; max?: string }) {
   const limit = ASSIST_LIMITS.schoolExamDatesMax;
@@ -19,7 +19,7 @@ export function SchoolExamDates({ value, onChange, min, max }: { value: string[]
             <label className="sr-only" htmlFor={`school-exam-${i}`}>
               第 {i + 1} 個段考日期
             </label>
-            <input id={`school-exam-${i}`} type="date" value={d} min={min} max={max} onChange={(e) => set(i, e.target.value)} className={`${inputCls} w-auto`} />
+            <input id={`school-exam-${i}`} type="date" value={d} min={min} max={max} onChange={(e) => set(i, e.target.value)} className={`${fieldCls} lg:w-auto`} />
             <button
               type="button"
               onClick={() => onChange(value.filter((_, j) => j !== i))}

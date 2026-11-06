@@ -11,6 +11,8 @@ import { APP_NAME } from '../../../modules';
 import { MOCK_DURATION_MIN, SUGGESTED_MINUTES, mockPdfMeta, type MockPaper } from '../papers';
 import { canUseStorage, doneExamIds } from '../storage';
 import { btn } from '../../../components/ui/buttons';
+import { numberFieldCls } from '../../../components/ui/fields';
+import { optionCardTopCls } from '../../../components/ui/Check';
 
 export interface StartOptions {
   strict: boolean;
@@ -175,7 +177,7 @@ export function StartScreen({ paper, exam, onStart }: { paper: MockPaper; exam: 
               }}
               aria-invalid={error}
               aria-describedby={`${id}-predicted-hint${error ? ` ${id}-predicted-error` : ''}`}
-              className="mt-2 w-28 rounded-lg border border-line bg-bg px-3 py-2"
+              className={`${numberFieldCls} mt-2`}
             />
             {error && (
               <p id={`${id}-predicted-error`} className="mt-1 text-sm text-bad">
@@ -185,8 +187,8 @@ export function StartScreen({ paper, exam, onStart }: { paper: MockPaper; exam: 
           </div>
 
           {paper.bank?.strictAllowed !== false && (
-            <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-line p-3 has-[:checked]:border-primary has-[:checked]:bg-primary-soft">
-              <input type="checkbox" checked={strict} onChange={(e) => setStrict(e.currentTarget.checked)} className="mt-1.5 size-4 shrink-0 accent-primary" />
+            <label className={optionCardTopCls}>
+              <input type="checkbox" checked={strict} onChange={(e) => setStrict(e.currentTarget.checked)} className="mt-1 size-5 shrink-0 accent-primary" />
               <span>
                 <span className="block font-medium">實考模式</span>
                 <span className="block text-sm text-muted">開考後 60 分鐘內不能交卷，比照正式考試入場後 60 分鐘內不得離場。</span>

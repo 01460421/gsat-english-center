@@ -39,6 +39,8 @@ import {
 } from '../selfAssess';
 import type { CompositionSelfDetail, SelfDetail, TranslationSelfDetail } from '../storage';
 import { btn } from '../../../components/ui/buttons';
+import { numberFieldCls } from '../../../components/ui/fields';
+import { optionCardTopCls } from '../../../components/ui/Check';
 
 export type SelfChange = (label: string, score: number | null, detail?: SelfDetail) => void;
 
@@ -219,14 +221,14 @@ function MixedItem({ item, answer, onChange }: { item: OpenItemResult; answer: A
             {choices.map((c) => (
               <label
                 key={c.value}
-                className="flex min-h-11 cursor-pointer items-start gap-3 rounded-lg border border-line px-3 py-2 text-sm has-[:checked]:border-primary has-[:checked]:bg-primary-soft"
+                className={`${optionCardTopCls} text-sm`}
               >
                 <input
                   type="radio"
                   name={name}
                   checked={item.score === c.value}
                   onChange={() => onChange(item.label, c.value)}
-                  className="mt-1 accent-primary"
+                  className="mt-1 size-5 shrink-0 accent-primary"
                 />
                 <span>
                   <strong className="tabular-nums">{formatPoints(c.value)} 分</strong>　{c.text}
@@ -321,7 +323,7 @@ function TranslationItem({
                   const n = Number(v);
                   if (Number.isFinite(n)) save({ errors: n, mechanics });
                 }}
-                className="w-20 rounded-lg border border-line bg-bg px-3 py-2 text-center tabular-nums"
+                className={`${numberFieldCls} w-20 text-center`}
               />
               <button
                 type="button"
@@ -335,7 +337,7 @@ function TranslationItem({
             {errors === undefined && <p className="mt-1 text-xs text-muted">對照檢核項目數一數，沒有錯就填 0。</p>}
           </div>
           <label className="flex min-h-11 cursor-pointer items-start gap-3 text-sm">
-            <input type="checkbox" checked={mechanics} onChange={(e) => save({ errors: errors ?? 0, mechanics: e.currentTarget.checked })} className="mt-1 accent-primary" />
+            <input type="checkbox" checked={mechanics} onChange={(e) => save({ errors: errors ?? 0, mechanics: e.currentTarget.checked })} className="mt-1 size-5 shrink-0 accent-primary" />
             <span>
               句首沒有大寫，或句尾標點不妥（−0.5，只扣一次）
               <span className="block text-xs text-muted">
@@ -415,7 +417,7 @@ function CompositionItem({
             </p>
           </details>
           <label className="mt-3 flex min-h-11 cursor-pointer items-start gap-3 text-sm">
-            <input type="checkbox" checked={current.offTopic} onChange={(e) => save({ ...current, offTopic: e.currentTarget.checked })} className="mt-1 accent-primary" />
+            <input type="checkbox" checked={current.offTopic} onChange={(e) => save({ ...current, offTopic: e.currentTarget.checked })} className="mt-1 size-5 shrink-0 accent-primary" />
             <span>
               離題（沒有依提示寫）
               <span className="block text-xs text-muted">勾選後其他各項都算 0 分。</span>

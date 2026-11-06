@@ -17,6 +17,7 @@ import { MQ, useIsDesktop, useMediaQuery } from '../lib/media';
 import { setThemePreference, useThemePreference, type ThemePreference } from '../lib/theme';
 import { getPage } from '../modules';
 import { btn } from '../components/ui/buttons';
+import { optionCardTopCls } from '../components/ui/Check';
 
 const THEME_OPTIONS: { value: ThemePreference; label: string; hint: string }[] = [
   { value: 'system', label: '跟隨系統', hint: '依手機或電腦的深淺色設定自動切換' },
@@ -34,7 +35,7 @@ function ThemeSetting() {
         {THEME_OPTIONS.map((opt) => (
           <label
             key={opt.value}
-            className="flex cursor-pointer items-start gap-3 rounded-xl border border-line p-3 has-[:checked]:border-primary has-[:checked]:bg-primary-soft"
+            className={optionCardTopCls}
           >
             <input
               type="radio"
@@ -42,7 +43,7 @@ function ThemeSetting() {
               value={opt.value}
               checked={current === opt.value}
               onChange={() => setThemePreference(opt.value)}
-              className="mt-1.5 accent-primary"
+              className="mt-1 size-5 shrink-0 accent-primary"
             />
             <span>
               <span className="block font-medium">{opt.label}</span>
@@ -111,7 +112,7 @@ function AccountSetting() {
 }
 
 const optionCls =
-  'flex cursor-pointer items-start gap-3 rounded-xl border border-line p-3 has-[:checked]:border-primary has-[:checked]:bg-primary-soft [&:not(:has(:checked))]:hover:border-primary';
+  optionCardTopCls;
 
 /** 一組桌機設定的單選（側邊欄、歷屆試題列表）。 */
 function PrefRadios<T extends string>({
@@ -132,7 +133,7 @@ function PrefRadios<T extends string>({
       <div className="grid gap-2 sm:grid-cols-3">
         {options.map((opt) => (
           <label key={opt.value} className={optionCls}>
-            <input type="radio" name={name} value={opt.value} checked={value === opt.value} onChange={() => onChange(opt.value)} className="mt-1.5 accent-primary" />
+            <input type="radio" name={name} value={opt.value} checked={value === opt.value} onChange={() => onChange(opt.value)} className="mt-1 size-5 shrink-0 accent-primary" />
             <span>
               <span className="block font-medium">{opt.label}</span>
               {opt.hint && <span className="block text-sm text-muted">{opt.hint}</span>}
@@ -181,7 +182,7 @@ function DesktopSettings() {
               checked={singleKey !== 'off'}
               onChange={(e) => setSingleKey(e.target.checked ? 'on' : 'off')}
               aria-describedby={singleKeyHintId}
-              className="size-4 accent-primary"
+              className="size-5 shrink-0 accent-primary"
             />
             <label htmlFor={singleKeyId} className="font-medium">
               單鍵快捷鍵

@@ -4,12 +4,13 @@ import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { Link } from 'react-router';
 import type { ErrorView } from '../lib/errors';
 import { btn } from '../../../components/ui/buttons';
+import { textareaCls } from '../../../components/ui/fields';
 
 /** 按鈕：共用元件（components/ui/buttons.ts，設計文件 css-overhaul §4.1）。 */
 export const primaryButton = btn('primary', 'md');
 export const secondaryButton = btn('secondary', 'md');
-export const textInput =
-  'w-full rounded-lg border border-line bg-bg px-3 py-2 text-fg placeholder:text-muted focus:border-primary disabled:opacity-70';
+/** 作答框與文字框（多行為主；單行的 <input> 用 fieldCls）：共用元件（components/ui/fields.ts）。 */
+export const textInput = textareaCls;
 export const card = 'rounded-2xl border border-line bg-surface p-4 lg:p-5';
 
 /** 英文作答框：關掉拼字檢查、自動大寫、自動完成（拼字錯誤要學生自己發現，也不能讓手機偷偷改字）。 */

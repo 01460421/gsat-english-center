@@ -32,6 +32,7 @@ import { PolicyView } from './PolicyView';
 import { AI_PROCESSING_NOTICE, PRIVACY_POLICY, TERMS_OF_SERVICE, type PolicyDoc } from './policy';
 import { btnPrimary, btnSecondary, cardCls, checkboxCls, fieldCls, labelCls, pageTitleCls, sectionTitleCls } from './styles';
 import { ComingSoon, LoadingBlock, LoginPrompt, Notice, safeNext } from './ui';
+import { optionCardCls } from '../../components/ui/Check';
 
 /** 本頁處理的同意種類與它們的勾選文字。improve_grading 是選填。 */
 const CONSENT_ORDER: readonly ConsentKind[] = ['privacy', 'terms', 'ai_processing', 'guardian_ack', 'improve_grading'];
@@ -236,7 +237,7 @@ function WelcomeForm({ me, next, onDeleted }: { me: MeResponseSignedIn; next: st
                 {AGE_BANDS.map((band) => (
                   <label
                     key={band}
-                    className="flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border border-line px-3 py-2 has-[:checked]:border-primary has-[:checked]:bg-primary-soft"
+                    className={optionCardCls}
                   >
                     <input
                       type="radio"
@@ -244,7 +245,7 @@ function WelcomeForm({ me, next, onDeleted }: { me: MeResponseSignedIn; next: st
                       value={band}
                       checked={ageBand === band}
                       onChange={() => setAgeBand(band)}
-                      className="accent-primary"
+                      className="size-5 shrink-0 accent-primary"
                     />
                     <span>{AGE_BAND_LABELS[band]}</span>
                   </label>

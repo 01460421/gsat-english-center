@@ -11,6 +11,8 @@ import { useAiGradingOpen } from './AiGrading';
 import { formatPercent, formatPoints, scoreExam } from '../scoring';
 import { sectionAnchorId } from './Paper';
 import { btn } from '../../../components/ui/buttons';
+import { numberFieldCls } from '../../../components/ui/fields';
+import { optionCardTopCls } from '../../../components/ui/Check';
 
 /** 考卷的大題結構（開始畫面與列表卡片用）。 */
 export function SectionStructure({ exam }: { exam: Pick<Exam, 'sections'> }) {
@@ -68,7 +70,7 @@ export function SetupPanel({ exam, onStart }: { exam: Exam; onStart: (mode: Atte
             {options.map((opt) => (
               <label
                 key={opt.value}
-                className="flex cursor-pointer items-start gap-3 rounded-xl border border-line p-3 has-[:checked]:border-primary has-[:checked]:bg-primary-soft"
+                className={optionCardTopCls}
               >
                 <input
                   type="radio"
@@ -76,7 +78,7 @@ export function SetupPanel({ exam, onStart }: { exam: Exam; onStart: (mode: Atte
                   value={opt.value}
                   checked={mode === opt.value}
                   onChange={() => setMode(opt.value)}
-                  className="mt-1.5 accent-primary"
+                  className="mt-1 size-5 shrink-0 accent-primary"
                 />
                 <span>
                   <span className="block font-medium">{opt.label}</span>
@@ -101,7 +103,7 @@ export function SetupPanel({ exam, onStart }: { exam: Exam; onStart: (mode: Atte
               onChange={(e) => setMinutes(e.currentTarget.value)}
               aria-invalid={!validMinutes}
               aria-describedby={`${minutesId}-hint`}
-              className="mt-1 w-28 rounded-lg border border-line bg-bg px-3 py-2"
+              className={`${numberFieldCls} mt-1`}
             />
             <p id={`${minutesId}-hint`} className={`mt-1 text-xs ${validMinutes ? 'text-muted' : 'text-bad'}`}>
               {validMinutes ? `題本規定 ${exam.time_minutes ?? '—'} 分鐘。` : '請輸入 1 到 300 之間的整數。'}

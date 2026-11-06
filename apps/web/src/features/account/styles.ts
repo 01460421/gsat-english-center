@@ -4,6 +4,8 @@
  */
 
 import { btn } from '../../components/ui/buttons';
+import { checkInputCls } from '../../components/ui/Check';
+import { fieldCls as baseFieldCls } from '../../components/ui/fields';
 
 export const cardCls = 'rounded-2xl border border-line bg-surface p-4 sm:p-5 lg:p-6';
 
@@ -13,13 +15,14 @@ export const btnSecondary = btn('secondary', 'md');
 export const btnDanger = btn('danger-ghost', 'md');
 
 /** 桌機（≥ lg）限寬 28rem：窄版頁面的內容仍有 50rem 寬，暱稱這類短欄位不必拉滿（docs/design/desktop-ui.md §5.12）。 */
-export const fieldCls =
-  'min-h-11 w-full min-w-0 rounded-xl border border-line bg-surface px-3 py-2 text-fg placeholder:text-muted lg:max-w-md';
+export const fieldCls = `${baseFieldCls} lg:max-w-md`;
 
-export const labelCls = 'mb-1 block text-sm font-medium';
+/** 標籤：共用元件（components/ui/fields.ts）。 */
+export { labelCls } from '../../components/ui/fields';
 
 export const sectionTitleCls = 'text-lg font-semibold';
 
-export const checkboxCls = 'mt-1 size-4 shrink-0 accent-primary';
+/** 文字旁的 checkbox（同意條款）：共用的 20px 原生元件，和第一行字對齊。 */
+export const checkboxCls = `mt-0.5 ${checkInputCls}`;
 
 export const pageTitleCls = 'text-2xl font-bold tracking-tight lg:text-3xl';

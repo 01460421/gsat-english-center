@@ -33,6 +33,7 @@ import { readPlanChecks } from './planProgress';
 import { reportDate } from './reportFormat';
 import { ZH_COPY } from './subjects/chinese/copy';
 import { useAssistSubjects } from './subjects/useAssistSubjects';
+import { Select } from '../../components/ui/Field';
 
 /** 進度列（不是 live region：頁面常駐的 AssistLiveRegion 負責唸）。stopped：輪詢因錯誤停了，原因與「再試一次」在上方。 */
 function ReportPending({ detail, stopped }: { detail: AssistReportDetail; stopped: boolean }) {
@@ -117,13 +118,13 @@ function Toolbar({
         <label htmlFor={selectId} className="sr-only">
           版本
         </label>
-        <select id={selectId} value={detail.version} onChange={(e) => onPick(Number(e.target.value))} className="min-h-11 rounded-full border border-line bg-bg px-4">
+        <Select id={selectId} value={detail.version} onChange={(e) => onPick(Number(e.target.value))} wrapperClassName="w-auto">
           {versions.map((v) => (
             <option key={v.id} value={v.version}>
               第 {v.version} 版（{reportDate(v.created_at)}）{v.status === 'failed' ? '・沒有完成' : v.status === 'done' ? '' : '・產生中'}
             </option>
           ))}
-        </select>
+        </Select>
         {detail.status === 'done' && (
           <>
             <button type="button" onClick={() => window.print()} className={secondaryBtn}>

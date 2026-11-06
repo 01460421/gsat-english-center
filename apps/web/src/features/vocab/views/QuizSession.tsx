@@ -300,7 +300,7 @@ function SpellingInput({ q, answer, onSubmit }: { q: SpellingQuestion; answer: A
           autoCorrect="off"
           spellCheck={false}
           enterKeyHint="done"
-          className={`${fieldBaseCls} flex-1 basis-48 scroll-mt-20 scroll-mb-24 text-lg ${answer ? (answer.correct ? 'border-2 border-ok' : 'border-2 border-bad') : 'border-line'}`}
+          className={`${fieldBaseCls} flex-1 basis-48 scroll-mt-20 scroll-mb-24 text-lg ${answer ? (answer.correct ? 'border-2 border-ok' : 'border-2 border-bad') : 'border-line-strong'}`}
         />
         {!answer && (
           <div className="flex gap-2">

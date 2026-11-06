@@ -35,6 +35,7 @@ import type { CustomPromptDraft, RequirementsConfirmed } from './drafts';
 import { promptFieldSnapshot, type PromptFieldError } from './errors';
 import { pendingRequirements } from './requirements';
 import { btn } from '../../../components/ui/buttons';
+import { numberFieldCls } from '../../../components/ui/fields';
 
 /** 題目欄位 → 畫面上的輸入框 id（idPrefix 是預設的 'custom' 時；錯誤時捲過去並把焦點移過去）。 */
 export const PROMPT_FIELD_INPUT: Record<CustomPromptField, string> = {
@@ -52,7 +53,7 @@ const AFTER_BLUR: ReadonlySet<CustomPromptProblem> = new Set(['text_missing', 't
 
 /** 字數輸入框：和 textInput 同一組顏色，但寬度固定（textInput 是 w-full）。 */
 const NUMBER_INPUT =
-  'min-h-11 w-20 shrink-0 rounded-lg border border-line bg-bg px-3 py-2 text-center tabular-nums text-fg focus:border-primary aria-[invalid=true]:border-bad';
+  `${numberFieldCls} w-20 shrink-0 text-center`;
 const MARK_CLASS = 'rounded-sm bg-bad/15 px-0.5 text-fg underline decoration-bad decoration-2 underline-offset-2';
 const fmt = (n: number) => n.toLocaleString('zh-TW');
 

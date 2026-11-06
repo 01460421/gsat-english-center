@@ -6,6 +6,7 @@ import { useId } from 'react';
 import { formatPoints } from '../../exams/scoring';
 import type { FiveStandard, YearScale } from '../../../data/scoreScales';
 import type { LevelInfo } from '../report';
+import { Select } from '../../../components/ui/Field';
 
 const STANDARD_SHORT: Record<FiveStandard['name'], string> = { 頂標: '頂', 前標: '前', 均標: '均', 後標: '後', 底標: '底' };
 
@@ -76,17 +77,17 @@ export function LevelCard({
         </h2>
         <label className="inline-flex items-center gap-2 text-sm">
           對照年度
-          <select
+          <Select
             value={year}
             onChange={(e) => onYearChange(Number(e.currentTarget.value))}
-            className="min-h-11 rounded-lg border border-line bg-bg px-2"
+            compact
           >
             {years.map((y) => (
               <option key={y} value={y}>
                 {y} 學年度
               </option>
             ))}
-          </select>
+          </Select>
         </label>
       </div>
       <p className="mt-3 text-5xl font-bold tabular-nums">

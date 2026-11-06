@@ -10,7 +10,8 @@ import { letterOptions, partOptions, type HandoutSource } from '../handout/selec
 import type { LibraryFilters } from '../lib/search';
 import { formatCount } from '../lib/text';
 import { LevelPicker } from './LevelPicker';
-import { fieldCls, labelCls } from './styles';
+import { labelCls } from './styles';
+import { Select as UiSelect } from '../../../components/ui/Field';
 
 export type SourceKind = HandoutSource['kind'];
 
@@ -75,7 +76,7 @@ function Select<T extends string | number>({
       <label htmlFor={id} className={labelCls}>
         {label}
       </label>
-      <select
+      <UiSelect
         id={id}
         value={String(value)}
         disabled={disabled}
@@ -83,14 +84,13 @@ function Select<T extends string | number>({
           const next = options.find((o) => String(o.value) === e.target.value);
           if (next) onChange(next.value);
         }}
-        className={fieldCls}
       >
         {options.map((o) => (
           <option key={String(o.value)} value={String(o.value)}>
             {o.label}
           </option>
         ))}
-      </select>
+      </UiSelect>
     </div>
   );
 }

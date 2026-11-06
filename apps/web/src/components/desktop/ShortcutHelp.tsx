@@ -110,7 +110,7 @@ export default function ShortcutHelp({ onClose }: { onClose: () => void }) {
             checked={singleKey !== 'off'}
             onChange={(e) => setSingleKey(e.target.checked ? 'on' : 'off')}
             aria-describedby={hintId}
-            className="size-4 accent-primary"
+            className="size-5 shrink-0 accent-primary"
           />
           <label htmlFor={switchId} className="font-medium">
             單鍵快捷鍵

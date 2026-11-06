@@ -26,6 +26,7 @@ import { EmptyState, ErrorBlock, LevelBadge, LoadingBlock, WordLink } from '../u
 import { LevelPicker } from '../ui/LevelPicker';
 import { btnSecondary, btnText, cardCls, fieldCls, labelCls } from '../ui/styles';
 import { useLoad } from '../ui/useLoad';
+import { Select } from '../../../components/ui/Field';
 
 const PAGE_SIZE = 50;
 /**
@@ -51,7 +52,7 @@ function FilterSelect<T extends string>({
       <label htmlFor={id} className={labelCls}>
         {label}
       </label>
-      <select
+      <Select
         id={id}
         value={value}
         onChange={(e) => {
@@ -59,14 +60,14 @@ function FilterSelect<T extends string>({
           const next = options.find((o) => o.value === e.target.value);
           if (next) onChange(next.value);
         }}
-        className={fieldCls}
+        wrapperClassName="w-full"
       >
         {options.map((o) => (
           <option key={o.value} value={o.value}>
             {o.label}
           </option>
         ))}
-      </select>
+      </Select>
     </div>
   );
 }

@@ -28,6 +28,7 @@ import type { ZhFieldsValue } from './typed';
 import { zhItemTitle } from './ZhCommon';
 import { charLimitText } from './ZhShortView';
 import { btn } from '../../../../components/ui/buttons';
+import { fieldCls } from '../../../../components/ui/fields';
 
 /** 選擇題的字母格式不對（空白不算錯）。 */
 export function lettersInvalid(value: string): boolean {
@@ -118,7 +119,7 @@ export function ZhQuestionFields({
               <div className="mt-1 flex flex-wrap gap-2">
                 {ZH_FORMATS.map((f) => (
                   <label key={f} className={`inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border px-3 text-sm ${format === f ? 'border-primary bg-primary-soft font-semibold' : 'border-line'}`}>
-                    <input type="radio" name={`${id}-format`} value={f} checked={format === f} onChange={() => set({ format: f })} className="size-4 accent-primary" />
+                    <input type="radio" name={`${id}-format`} value={f} checked={format === f} onChange={() => set({ format: f })} className="size-5 shrink-0 accent-primary" />
                     {ZH_FORMAT_LABELS[f]}
                   </label>
                 ))}
@@ -130,7 +131,7 @@ export function ZhQuestionFields({
                 <div className="mt-1 flex flex-wrap gap-2">
                   {ZH_CHOICE_MODES.map((m) => (
                     <label key={m} className={`inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border px-3 text-sm ${mode === m ? 'border-primary bg-primary-soft font-semibold' : 'border-line'}`}>
-                      <input type="radio" name={`${id}-mode`} value={m} checked={mode === m} onChange={() => set({ format: 'choice', mode: m })} className="size-4 accent-primary" />
+                      <input type="radio" name={`${id}-mode`} value={m} checked={mode === m} onChange={() => set({ format: 'choice', mode: m })} className="size-5 shrink-0 accent-primary" />
                       {ZH_CHOICE_MODE_LABELS[m]}
                     </label>
                   ))}
@@ -158,7 +159,7 @@ export function ZhQuestionFields({
                   onChange={(e) => setMap('answers', k, e.currentTarget.value)}
                   aria-describedby={`${inputId}-hint`}
                   aria-invalid={bad || undefined}
-                  className={`mt-1 min-h-11 ${inputCls}`}
+                  className={`mt-1 ${fieldCls}`}
                   autoComplete="off"
                   autoCapitalize="characters"
                 />
@@ -226,7 +227,7 @@ export function ZhQuestionFields({
           </p>
           {showQ1 && (
             <label className="flex min-h-11 cursor-pointer items-center gap-2">
-              <input type="checkbox" checked={value.draftQ1} onChange={(e) => set({ draftQ1: e.currentTarget.checked })} className="size-4 accent-primary" />
+              <input type="checkbox" checked={value.draftQ1} onChange={(e) => set({ draftQ1: e.currentTarget.checked })} className="size-5 shrink-0 accent-primary" />
               {ZH_COPY.draftQ1}
             </label>
           )}
@@ -253,7 +254,7 @@ export function ZhQuestionFields({
                       onChange={(e) => setMap('knownKey', k, e.currentTarget.value)}
                       aria-invalid={bad || undefined}
                       aria-describedby={bad ? `${inputId}-bad` : undefined}
-                      className={`mt-1 min-h-11 ${inputCls}`}
+                      className={`mt-1 ${fieldCls}`}
                       autoComplete="off"
                       autoCapitalize="characters"
                     />

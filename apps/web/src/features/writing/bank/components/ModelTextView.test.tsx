@@ -93,7 +93,7 @@ function LegacyModelTextView({ model }: { model: ModelText }) {
               key={k}
               className="inline-flex min-h-9 cursor-pointer items-center gap-1.5 rounded-full border border-line px-3 text-sm has-[:checked]:border-primary has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-primary"
             >
-              <input type="checkbox" checked={kinds.has(k)} onChange={() => toggle(k)} className="size-4 accent-primary" />
+              <input type="checkbox" checked={kinds.has(k)} onChange={() => toggle(k)} className="size-5 shrink-0 accent-primary" />
               <span className={`rounded-sm px-1 ${MODEL_TEXT_NOTE_CLASSES[k]}`}>{MODEL_TEXT_NOTE_LABELS[k]}</span>
             </label>
           ))}

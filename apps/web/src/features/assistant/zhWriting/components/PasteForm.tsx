@@ -30,6 +30,7 @@ import { ZhText } from '../../subjects/chinese/components/ZhText';
 import { ZhExemplarConfirm } from '../../subjects/chinese/ZhExemplarSection';
 import { ZH_WRITING_COPY, ZH_WRITING_SECTION_SHORT } from '../labels';
 import { EMPTY_ZH_PASTE_DRAFT, checkZhPaste, zhPasteFieldOf, zhPasteFieldText, zhPasteProblemMessage, type ZhPasteDraft, type ZhPasteField, type ZhPasteProblem } from '../lib';
+import { fieldCls } from '../../../../components/ui/fields';
 
 const DRAFT_PROMPT = 'zh-writing:prompt';
 const DRAFT_MATERIAL = 'zh-writing:material';
@@ -154,7 +155,7 @@ export function ZhPasteForm({ onStarted }: { onStarted: (accepted: AssistTaskAcc
         autoComplete="off"
         aria-invalid={problemOf('limits') !== null || undefined}
         aria-describedby={`${fieldId(base, 'limits')}-hint ${fieldId(base, 'limits')}-error`}
-        className={`mt-1 min-h-11 ${inputCls}`}
+        className={`mt-1 ${fieldCls}`}
       />
     </label>
   );
@@ -188,7 +189,7 @@ export function ZhPasteForm({ onStarted }: { onStarted: (accepted: AssistTaskAcc
                   value={s}
                   checked={draft.section === s}
                   onChange={() => update({ section: s })}
-                  className="size-4 accent-primary"
+                  className="size-5 shrink-0 accent-primary"
                 />
                 {ZH_WRITING_SECTION_SHORT[s]}題
               </label>

@@ -15,6 +15,7 @@ import { attemptProgress } from './attempt';
 import { ExamTable } from './ExamTable';
 import { isNewSystem } from './labels';
 import { formatPoints } from './scoring';
+import { Select } from '../../components/ui/Field';
 
 export const KIND_FILTERS = [
   { value: 'all', label: '全部' },
@@ -177,11 +178,11 @@ export function ExamList({ indexPromise, view = 'cards' }: { indexPromise: Promi
               <label htmlFor={yearId} className="text-sm font-semibold">
                 學年度
               </label>
-              <select
+              <Select
                 id={yearId}
                 value={year === null ? '' : String(year)}
                 onChange={(e) => update({ year: e.currentTarget.value === '' ? null : Number(e.currentTarget.value) })}
-                className="rounded-lg border border-line bg-bg px-3 py-1.5 text-sm @max-ws/main:py-1 @max-ws/main:text-xs"
+                compact
               >
                 <option value="">全部學年度</option>
                 {years.map((y) => (
@@ -189,10 +190,10 @@ export function ExamList({ indexPromise, view = 'cards' }: { indexPromise: Promi
                     {y} 學年度
                   </option>
                 ))}
-              </select>
+              </Select>
             </span>
             <label className="inline-flex cursor-pointer items-center gap-2 text-sm font-semibold">
-              <input type="checkbox" checked={activeOnly} onChange={(e) => update({ activeOnly: e.currentTarget.checked })} className="size-4 accent-primary" />
+              <input type="checkbox" checked={activeOnly} onChange={(e) => update({ activeOnly: e.currentTarget.checked })} className="size-5 shrink-0 accent-primary" />
               只看作答中
             </label>
           </>
@@ -236,11 +237,11 @@ export function ExamList({ indexPromise, view = 'cards' }: { indexPromise: Promi
           <label htmlFor={yearId} className="text-sm font-semibold">
             學年度
           </label>
-          <select
+          <Select
             id={yearId}
             value={year === null ? '' : String(year)}
             onChange={(e) => update({ year: e.currentTarget.value === '' ? null : Number(e.currentTarget.value) })}
-            className="rounded-lg border border-line bg-bg px-3 py-1.5 text-sm"
+            compact
           >
             <option value="">全部學年度</option>
             {years.map((y) => (
@@ -248,7 +249,7 @@ export function ExamList({ indexPromise, view = 'cards' }: { indexPromise: Promi
                 {y} 學年度
               </option>
             ))}
-          </select>
+          </Select>
         </div>
       </div>
 

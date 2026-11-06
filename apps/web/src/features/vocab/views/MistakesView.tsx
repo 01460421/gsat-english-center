@@ -13,11 +13,12 @@ import { fetchIndex, peekIndex } from '../lib/vocabData';
 import { handoutLink } from '../navigation';
 import { getMistakeStore, useMistakes } from '../state';
 import { EmptyState, LevelBadge, StorageNotice, WordLink } from '../ui/common';
-import { btnPrimary, btnSecondary, cardCls, fieldCls, iconBtn, labelCls, sectionTitleCls } from '../ui/styles';
+import { btnPrimary, btnSecondary, cardCls, iconBtn, labelCls, sectionTitleCls } from '../ui/styles';
 import { useLoad } from '../ui/useLoad';
 import { LaunchStatus, QuizSession, useQuizLauncher } from './QuizSession';
 import { AskAssistantButton } from '../../assistant/components/AskAssistantButton';
 import { AskVocabBatch } from '../../assistant/components/AskVocabBatch';
+import { Select } from '../../../components/ui/Field';
 
 const dateFormat = new Intl.DateTimeFormat('zh-TW', { month: 'numeric', day: 'numeric' });
 
@@ -82,21 +83,21 @@ export function MistakesView({ active }: { active: boolean }) {
             <label htmlFor={modeId} className={labelCls}>
               題型
             </label>
-            <select
+            <Select
               id={modeId}
               value={mode}
               onChange={(e) => {
                 const next = QUIZ_MODES.find((m) => m.id === e.target.value);
                 if (next) setMode(next.id);
               }}
-              className={fieldCls}
+              wrapperClassName="w-full"
             >
               {QUIZ_MODES.map((m) => (
                 <option key={m.id} value={m.id}>
                   {m.label}
                 </option>
               ))}
-            </select>
+            </Select>
           </div>
           <button type="button" onClick={() => practice()} disabled={state.phase === 'loading'} className={btnPrimary}>
             開始練習

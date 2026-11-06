@@ -16,7 +16,7 @@ export function WeeklyTimeField({ value, onChange, showError = false }: { value:
       <div className="flex flex-wrap gap-2">
         {ASSIST_WEEKLY.map((w) => (
           <label key={w} className="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border border-line px-4 has-[:checked]:border-primary has-[:checked]:bg-primary-soft">
-            <input type="radio" name={`${id}-weekly`} required checked={value === w} onChange={() => onChange(w)} className="size-4 accent-primary" />
+            <input type="radio" name={`${id}-weekly`} required checked={value === w} onChange={() => onChange(w)} className="size-5 shrink-0 accent-primary" />
             {ASSIST_WEEKLY_LABELS[w]}
           </label>
         ))}

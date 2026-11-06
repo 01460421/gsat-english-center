@@ -14,14 +14,10 @@ export const btnText = btn('ghost', 'md');
 export const iconBtn = iconBtnCls;
 
 /**
- * 輸入框（不含邊框顏色）。要依狀態換邊框色（答對綠、答錯紅）時用這個再自己加顏色：同一個元素同時有
- * border-line 和 border-bad 時，Tailwind 依類別在 CSS 裡的先後決定，border-line 會蓋掉 border-bad。
+ * 輸入框、標籤：共用元件（components/ui/fields.ts，設計文件 css-overhaul §4.2）。fieldBaseCls 不含邊框顏色：要依狀態換邊框色
+ * （答對綠、答錯紅）時用它再自己加顏色（同一個元素同時有 border-line-strong 和 border-bad 時，CSS 裡排在後面的 border-line-strong 會贏）。
  */
-export const fieldBaseCls = 'min-h-11 w-full min-w-0 rounded-xl border bg-surface px-3 py-2 text-fg placeholder:text-muted';
-
-export const fieldCls = `${fieldBaseCls} border-line`;
-
-export const labelCls = 'mb-1 block text-sm font-medium text-muted';
+export { fieldBaseCls, fieldCls, labelCls } from '../../../components/ui/fields';
 
 export const sectionTitleCls = 'text-lg font-semibold';
 

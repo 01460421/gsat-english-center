@@ -54,6 +54,7 @@ import {
 } from './typed';
 import { ZhQuestionFields, zhFieldsBlocker } from './ZhQuestionFields';
 import { btn } from '../../../../components/ui/buttons';
+import { fieldCls } from '../../../../components/ui/fields';
 
 const DRAFT_KEY = 'typed:zh:text';
 
@@ -275,7 +276,7 @@ export function ZhPasteForm({
           onChange={(e) => setLabelsRaw(e.currentTarget.value)}
           aria-describedby={`${id}-label-hint`}
           aria-invalid={labelProblem !== null || undefined}
-          className={`mt-1 min-h-11 sm:max-w-xs ${inputCls}`}
+          className={`mt-1 min-h-11 ${fieldCls} sm:max-w-xs`}
           inputMode="text"
           autoComplete="off"
         />
@@ -286,7 +287,7 @@ export function ZhPasteForm({
       <ZhQuestionFields value={fields} onChange={setFields} guess={guess} format={format} mode={mode} answerKeys={answerKeys} limits={limits} showQ1={showQ1} />
       {format !== 'writing' && (
         <label className="flex min-h-11 cursor-pointer items-center gap-2">
-          <input type="checkbox" checked={effectiveHint} onChange={(e) => setHintFirst(e.currentTarget.checked)} className="size-4 accent-primary" />
+          <input type="checkbox" checked={effectiveHint} onChange={(e) => setHintFirst(e.currentTarget.checked)} className="size-5 shrink-0 accent-primary" />
           先給提示就好（完整解析先收起來，按「看完整解析」才展開，不另外扣點）
         </label>
       )}
