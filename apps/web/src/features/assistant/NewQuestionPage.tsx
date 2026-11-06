@@ -71,6 +71,7 @@ import { loadLastSubject, pickSubject, saveLastSubject, useAssistSubjects } from
 import { useFromCase } from './subjects/useFromCase';
 import { btn } from '../../components/ui/buttons';
 import { fieldCls } from '../../components/ui/fields';
+import { alertCls } from '../../components/ui/Alert';
 
 const LABEL_RE = /^[A-Za-z0-9]{1,8}$/;
 
@@ -100,7 +101,7 @@ function Highlighted({ text, ranges }: { text: string; ranges: ReadonlyArray<rea
     });
   parts.push(text.slice(pos));
   return (
-    <p lang="en" className="max-h-64 overflow-y-auto rounded-xl border border-bad-line bg-surface p-3 whitespace-pre-wrap break-words">
+    <p lang="en" className="max-h-64 overflow-y-auto rounded-control border border-bad-line bg-surface p-3 whitespace-pre-wrap break-words">
       {parts}
     </p>
   );
@@ -253,7 +254,7 @@ function PasteForm({ prefill = null }: { prefill?: string | null }) {
       </label>
       <DoubtPicker value={doubt} onChange={setDoubt} tornOptions={[]} mine={null} showFreeNote={false} kinds={['sentence_unclear', 'unknown_word', 'faster_method', 'guessed']} />
       {warnings.length > 0 && (
-        <ul className="space-y-1 rounded-xl border border-badge-line bg-badge-bg/60 px-4 py-2 text-sm">
+        <ul className={alertCls('warn', 'space-y-1')}>
           {warnings.map((w) => (
             <li key={w}>{ASSIST_INPUT_WARNING_MESSAGES[w]}</li>
           ))}

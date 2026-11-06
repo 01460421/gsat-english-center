@@ -41,6 +41,7 @@ import { okFromRatio } from '../assistant/outcomes';
 import { formatPoints, isAnswered } from '../exams/scoring';
 import { formatDateTime } from '../mock/format';
 import { btn } from '../../components/ui/buttons';
+import { cardFrameCls, resultCardCls, resultCardHeadCls } from '../../components/ui/Card';
 
 /**
  * 學習助手的入口（交卷後每題解析卡下方；docs/design/learning-assistant.md §1.4）：開關關著時 render null。
@@ -170,7 +171,7 @@ function BankHints({ file }: { file: PracticeGroupFile }) {
   const questions = file.group.questions.filter((q) => (items[q.label]?.hints?.length ?? 0) > 0);
   if (questions.length === 0) return null;
   return (
-    <details open={open} onToggle={(e) => setOpen(e.currentTarget.open)} className="rounded-2xl border border-line bg-surface p-4">
+    <details open={open} onToggle={(e) => setOpen(e.currentTarget.open)} className={`${cardFrameCls} p-4`}>
       <summary className="cursor-pointer font-semibold">
         需要提示嗎？
         <span className="ml-2 text-sm font-normal text-muted">每一題最多 3 層，由淺到深</span>
@@ -212,8 +213,8 @@ function reviewState(file: PracticeGroupFile, review: PracticeReviewInput): Atte
 function ReviewPanel({ review, score, headingRef }: { review: PracticeReviewInput; score: PracticeScore; headingRef: RefObject<HTMLHeadingElement | null> }) {
   const partial = Object.values(score.outcomes).filter((o) => o.earned > 0 && o.earned < o.max).length;
   return (
-    <section aria-labelledby="practice-review-title" className="rounded-2xl border-2 border-primary bg-surface p-5 lg:p-6">
-      <h2 id="practice-review-title" ref={headingRef} tabIndex={-1} className="text-xl font-bold">
+    <section aria-labelledby="practice-review-title" className={resultCardCls}>
+      <h2 id="practice-review-title" ref={headingRef} tabIndex={-1} className={`${resultCardHeadCls} text-xl font-bold`}>
         你之前的作答
       </h2>
       <p className="mt-2">
@@ -491,7 +492,7 @@ export function GroupSession({
             </section>
             {!submitted && isBank && <BankHints file={file} />}
             {!hasPassage && (
-              <div className="space-y-3 rounded-2xl border border-line bg-surface p-4">
+              <div className={`${cardFrameCls} p-4 space-y-3`}>
                 <GroupSourceNote file={file} items />
                 {submitted && translation && <TranslationDetails text={translation} />}
               </div>

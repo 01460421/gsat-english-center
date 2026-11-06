@@ -41,6 +41,8 @@ import type { CompositionSelfDetail, SelfDetail, TranslationSelfDetail } from '.
 import { btn } from '../../../components/ui/buttons';
 import { numberFieldCls } from '../../../components/ui/fields';
 import { optionCardTopCls } from '../../../components/ui/Check';
+import { cardCls } from '../../../components/ui/Card';
+import { badgeShapeCls } from '../../../components/ui/Badge';
 
 export type SelfChange = (label: string, score: number | null, detail?: SelfDetail) => void;
 
@@ -177,7 +179,7 @@ function ScoreBadge({ item }: { item: OpenItemResult }) {
       ? '尚未自評'
       : `${formatPoints(item.score)}／${formatPoints(item.max)} 分${item.source === 'auto' ? '（自動）' : item.source === 'suggested' ? '（建議，可改）' : '（自評）'}`;
   return (
-    <span className={`rounded-full px-2.5 py-0.5 text-sm font-semibold tabular-nums ${item.score === null ? 'bg-bad-soft text-bad' : 'bg-primary-soft text-primary'}`}>
+    <span className={`${badgeShapeCls('sm')} tabular-nums ${item.score === null ? 'bg-bad-soft text-bad' : 'bg-primary-soft text-primary'}`}>
       {text}
     </span>
   );
@@ -515,7 +517,7 @@ export function SelfAssessment({
     return d?.kind === kind ? (d as Extract<SelfDetail, { kind: K }>) : undefined;
   };
   return (
-    <section id="self-assessment" aria-labelledby={`${id}-title`} tabIndex={-1} className="scroll-mt-32 rounded-2xl border border-line bg-surface p-5 lg:p-6">
+    <section id="self-assessment" aria-labelledby={`${id}-title`} tabIndex={-1} className={`${cardCls} scroll-mt-32`}>
       <h2 id={`${id}-title`} className="text-lg font-semibold">
         非選擇題自評
       </h2>

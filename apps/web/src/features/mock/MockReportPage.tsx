@@ -38,6 +38,7 @@ import { findMockPaper, mockPdfMeta, SCALE_YEARS, type MockPaper } from './paper
 import { computeReport, historyEntryFor, levelInfo } from './report';
 import { doneExamIds, loadRecord, parseRecord, saveRecord, upsertHistory, type MockAttemptRecord } from './storage';
 import { btn } from '../../components/ui/buttons';
+import { calloutCls, cardCls, resultCardCls, resultCardHeadCls } from '../../components/ui/Card';
 
 /** 本站自組卷的成績單（原始分數、依難度的建議，不換算級分；docs/design/bank-mock.md §6.5）。 */
 const BankReport = lazy(() => import('./bank/BankReport'));
@@ -203,8 +204,8 @@ function ReportBody({ exam, paper, initial }: { exam: Exam; paper: MockPaper; in
         </p>
       )}
 
-      <section aria-label="原得總分" className="rounded-2xl border-2 border-primary bg-surface p-5 lg:p-6">
-        <p className="text-sm text-muted">原得總分</p>
+      <section aria-label="原得總分" className={resultCardCls}>
+        <p className={`${resultCardHeadCls} text-sm text-muted`}>原得總分</p>
         <p className="text-5xl font-bold tabular-nums">
           {formatPoints(report.raw)}
           <span className="text-xl font-normal text-muted">／{formatPoints(report.fullScore)}</span>
@@ -244,7 +245,7 @@ function ReportBody({ exam, paper, initial }: { exam: Exam; paper: MockPaper; in
           pendingMax={report.pendingMax}
         />
       ) : (
-        <section aria-label="級分（非官方換算）" className="rounded-2xl border border-line bg-surface p-5">
+        <section aria-label="級分（非官方換算）" className={cardCls}>
           {failed ? (
             <div role="alert">
               <p className="font-semibold">級分對照資料載入失敗</p>
@@ -260,7 +261,7 @@ function ReportBody({ exam, paper, initial }: { exam: Exam; paper: MockPaper; in
         </section>
       )}
 
-      <section aria-labelledby={`${titleId}-sections`} className="rounded-2xl border border-line bg-surface p-5 lg:p-6">
+      <section aria-labelledby={`${titleId}-sections`} className={cardCls}>
         <h2 id={`${titleId}-sections`} className="mb-3 text-lg font-semibold">
           各大題得分與用時
         </h2>
@@ -277,7 +278,7 @@ function ReportBody({ exam, paper, initial }: { exam: Exam; paper: MockPaper; in
         writingHandoff={writingHandoff}
       />
 
-      <section aria-label="聲明" className="rounded-2xl border border-line bg-surface-2 p-4 text-sm">
+      <section aria-label="聲明" className="rounded-card border border-line bg-surface-2 p-4 text-sm">
         <p className="font-semibold">模擬分數與級分僅供參考，不是官方級分；AI 批改分數不等於正式閱卷結果。</p>
         <p className="mt-1 text-muted">
           目前非選擇題為自評分數。級分依 {record.scaleYear} 學年度大考中心公布的原得總分與級分對照表換算，每年的級距不同，不代表今年的級分。
@@ -297,7 +298,7 @@ function ReportBody({ exam, paper, initial }: { exam: Exam; paper: MockPaper; in
         </Link>
       </nav>
 
-      <footer className="space-y-2 rounded-2xl border border-line bg-surface p-4 text-sm text-muted">
+      <footer className={`${calloutCls} space-y-2 text-sm text-muted`}>
         <p className="font-medium text-fg">級分資料來源</p>
         {scales && <p>{scales.note}</p>}
         {scale && scale.sources.length > 0 && (

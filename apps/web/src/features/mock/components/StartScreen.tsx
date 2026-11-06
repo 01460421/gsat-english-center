@@ -13,6 +13,7 @@ import { canUseStorage, doneExamIds } from '../storage';
 import { btn } from '../../../components/ui/buttons';
 import { numberFieldCls } from '../../../components/ui/fields';
 import { optionCardTopCls } from '../../../components/ui/Check';
+import { cardCls } from '../../../components/ui/Card';
 
 export interface StartOptions {
   strict: boolean;
@@ -40,7 +41,7 @@ function ReuseNotice({ paper, exam }: { paper: MockPaper; exam: Exam }) {
   const doneSources = sources.filter((s) => done.has(s.exam));
   const doneCount = doneSources.reduce((a, s) => a + s.count, 0);
   return (
-    <section aria-label="沿用題提醒" className="rounded-2xl border border-badge-line bg-badge-bg p-4 text-badge-fg">
+    <section aria-label="沿用題提醒" className="rounded-card border border-badge-line bg-badge-bg p-4 text-badge-fg">
       <p className="flex gap-2 font-semibold">
         <CircleAlert aria-hidden="true" className="mt-0.5 size-5 shrink-0" />
         沿用題提醒
@@ -146,7 +147,7 @@ export function StartScreen({ paper, exam, onStart }: { paper: MockPaper; exam: 
       {paper.bank?.startIntro}
       <ReuseNotice paper={paper} exam={exam} />
 
-      <section aria-labelledby={`${id}-title`} className="rounded-2xl border border-line bg-surface p-5 lg:p-6">
+      <section aria-labelledby={`${id}-title`} className={cardCls}>
         <h2 id={`${id}-title`} className="text-lg font-semibold">
           開考前
         </h2>
@@ -214,7 +215,7 @@ export function StartScreen({ paper, exam, onStart }: { paper: MockPaper; exam: 
         </form>
       </section>
 
-      <section aria-labelledby={`${id}-structure`} className="rounded-2xl border border-line bg-surface p-5">
+      <section aria-labelledby={`${id}-structure`} className={cardCls}>
         <h2 id={`${id}-structure`} className="mb-2 font-semibold">
           大題結構與建議時間
         </h2>

@@ -29,7 +29,7 @@ const DEDUCTION_TEXT: Record<EssayDeduction['code'], string> = {
 /** 身心安全旗標：先顯示關懷訊息與求助資源（ARCHITECTURE §8.5），批改照常。 */
 export function SafetyCare() {
   return (
-    <section role="note" aria-labelledby="care-heading" className="rounded-2xl border border-primary/40 bg-primary-soft p-4 lg:p-5">
+    <section role="note" aria-labelledby="care-heading" className="rounded-card border border-primary/40 bg-primary-soft p-4 lg:p-5">
       <h2 id="care-heading" className="text-lg font-semibold">
         想找人聊聊嗎？
       </h2>

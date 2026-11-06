@@ -16,6 +16,7 @@ import { ZH_EXEMPLAR_COPY } from './copy';
 import { zhExemplarTotals, zhMethodCard, zhMethodCardName } from './exemplar';
 import { zhQuoteId } from './quotes';
 import { ZhOffTopic } from './ZhCommon';
+import { alertCls } from '../../../../components/ui/Alert';
 
 /** 一篇範文的標題 id（案例頁在示範寫好時把焦點移過來）。 */
 export function zhExemplarHeadingId(turnId: string): string {
@@ -149,7 +150,7 @@ export function ZhExemplarView({
         <>
           <ProcessingNotices notices={exemplar.notices} />
           {similarCount + omittedCount > 0 && (
-            <p role="note" className="rounded-xl border border-badge-line bg-badge-bg/60 px-4 py-2 text-sm" data-testid="zh-exemplar-hidden">
+            <p role="note" className={alertCls('warn')} data-testid="zh-exemplar-hidden">
               {ZH_EXEMPLAR_COPY.hiddenNotice(similarCount, omittedCount)}
             </p>
           )}

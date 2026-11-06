@@ -8,6 +8,7 @@
  */
 import { Component, type ErrorInfo, type ReactNode } from 'react';
 import { btn } from './ui/buttons';
+import { cardCls } from './ui/Card';
 
 interface Props {
   children: ReactNode;
@@ -31,7 +32,7 @@ export class RouteErrorBoundary extends Component<Props, State> {
   override render() {
     if (!this.state.error) return this.props.children;
     return (
-      <section className="rounded-2xl border border-line bg-surface p-6">
+      <section className={cardCls}>
         <h1 className="text-xl font-bold">這個頁面載入失敗</h1>
         <p className="mt-2 text-muted">可能是網站剛更新或網路不穩。請重新整理頁面再試一次。</p>
         <button

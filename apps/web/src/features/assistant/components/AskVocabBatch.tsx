@@ -9,6 +9,7 @@ import { Link } from 'react-router';
 import type { MistakeItem } from '../../vocab/lib/mistakes';
 import { useAssistantEnabled } from '../lib/useAssistantEnabled';
 import { btn } from '../../../components/ui/buttons';
+import { cardFrameCls } from '../../../components/ui/Card';
 
 export function AskVocabBatch({ items }: { items: readonly MistakeItem[] }) {
   const enabled = useAssistantEnabled();
@@ -20,7 +21,7 @@ export function AskVocabBatch({ items }: { items: readonly MistakeItem[] }) {
   const valid = chosen.filter((c) => shown.some((i) => i.entry_id === c));
   const full = valid.length >= max;
   return (
-    <section aria-labelledby={`${id}-h`} className="space-y-3 rounded-2xl border border-line bg-surface p-4">
+    <section aria-labelledby={`${id}-h`} className={`${cardFrameCls} p-4 space-y-3`}>
       <h2 id={`${id}-h`} className="font-semibold">
         請學習助手一次解析這幾個字
       </h2>

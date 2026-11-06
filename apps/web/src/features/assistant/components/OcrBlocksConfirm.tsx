@@ -58,6 +58,7 @@ import { DoubtPicker, EMPTY_DOUBT, type DoubtValue } from './DoubtPicker';
 import { inputCls, primaryBtn } from './parts';
 import { btn } from '../../../components/ui/buttons';
 import { fieldCls } from '../../../components/ui/fields';
+import { alertCls } from '../../../components/ui/Alert';
 
 export const BLOCK_KIND_LABELS: Record<AssistBlockKind, string> = {
   instructions: '說明',
@@ -265,7 +266,7 @@ export function OcrBlocksConfirm({
       )}
 
       {zh && zhSection?.section === 'zh_form' && (
-        <div role="note" className="space-y-2 rounded-xl border border-badge-line bg-badge-bg/40 px-4 py-3" data-testid="zh-ocr-form-reminder">
+        <div role="note" className={alertCls('warn', 'space-y-2')} data-testid="zh-ocr-form-reminder">
           <p className="text-sm font-medium">{ZH_COPY.ocrFormReminder}</p>
           {zhTargetText(confirmed.question.blocks, targets).trim() !== '' && (
             <p className="text-lg leading-loose whitespace-pre-wrap break-words">
@@ -447,7 +448,7 @@ export function OcrBlocksConfirm({
         <DoubtPicker value={doubt} onChange={setDoubt} tornOptions={[]} mine={null} showFreeNote={false} kinds={['sentence_unclear', 'unknown_word', 'faster_method', 'guessed']} />
       )}
       {warnings.length > 0 && (
-        <ul className="space-y-1 rounded-xl border border-badge-line bg-badge-bg/60 px-4 py-2 text-sm">
+        <ul className={alertCls('warn', 'space-y-1')}>
           {warnings.map((w) => (
             <li key={w}>{ASSIST_INPUT_WARNING_MESSAGES[w]}</li>
           ))}

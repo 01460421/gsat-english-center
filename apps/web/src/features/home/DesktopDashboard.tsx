@@ -22,8 +22,9 @@ import { KIND_LABELS, STATUS_LABELS, formatScore, groupLabel } from '../writing/
 import { useQuota } from '../writing/lib/hooks';
 import { listSubmissions } from '../writing/lib/writingApi';
 import { collectContinueItems, continueKindLabel, type ContinueItem } from './continueItems';
+import { cardFrameCls, cardLinkCls } from '../../components/ui/Card';
 
-const railCard = 'rounded-2xl border border-line bg-surface p-4';
+const railCard = `${cardFrameCls} p-4`;
 
 function ContinueLearning({ items }: { items: readonly ContinueItem[] }) {
   const headingId = useId();
@@ -36,7 +37,7 @@ function ContinueLearning({ items }: { items: readonly ContinueItem[] }) {
       <ul className="grid grid-cols-2 gap-3 @wide/main:grid-cols-4">
         {items.map((item) => (
           <li key={item.key} className="min-w-0">
-            <Link to={item.to} className="group flex h-full flex-col rounded-2xl border border-line bg-surface p-4 hover:border-primary">
+            <Link to={item.to} className={`${cardLinkCls} group flex h-full flex-col`}>
               <span className="text-xs font-semibold text-primary">{continueKindLabel(item.kind)}</span>
               <span className="mt-1 flex items-start gap-2">
                 <span className="min-w-0 flex-1 font-semibold">{item.title}</span>

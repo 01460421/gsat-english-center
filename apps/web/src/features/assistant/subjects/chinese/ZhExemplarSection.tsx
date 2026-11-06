@@ -115,7 +115,7 @@ export function ZhExemplarConfirm({
       ref={panelRef}
       role="group"
       aria-labelledby={headingId}
-      className="scroll-mb-24 space-y-3 rounded-2xl border border-line bg-surface-2 p-4 lg:scroll-mb-4"
+      className="scroll-mb-24 space-y-3 rounded-card border border-line bg-surface-2 p-4 lg:scroll-mb-4"
       data-zh-exemplar-confirm
     >
       <h3 id={headingId} ref={headingRef} tabIndex={-1} className="font-semibold outline-none">
@@ -166,7 +166,7 @@ function ZhExemplarSection({
   const offer = subjects.exemplar('chinese') && ready && !closed && !ended && !analysis.off_topic && detail.status === 'analyzed';
   if (!zhExemplarBlockVisible(detail, offer)) return null;
   return (
-    <AnalysisSection id={ZH_EXEMPLAR_SECTION_ID} title={ZH_EXEMPLAR_COPY.title} className="rounded-2xl border border-line p-4 lg:p-5">
+    <AnalysisSection id={ZH_EXEMPLAR_SECTION_ID} title={ZH_EXEMPLAR_COPY.title} className="rounded-card border border-line p-4 lg:p-5">
       <ZhExemplarBlock
         detail={detail}
         offer={offer}

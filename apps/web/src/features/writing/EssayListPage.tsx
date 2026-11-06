@@ -19,12 +19,13 @@ import { loadEssayIndex, type EssayPrompt } from './data';
 import { ESSAY_TYPE_LABELS, essayRequirement, examRefLabel } from './lib/format';
 import { useStaticData } from './lib/hooks';
 import { useListOriginState } from './lib/listOrigin';
+import { calloutCls, cardLinkCls } from '../../components/ui/Card';
 
 function PromptCard({ prompt }: { prompt: EssayPrompt }) {
   const requirement = essayRequirement(prompt);
   const origin = useListOriginState();
   return (
-    <Link to={`/writing/essay/${encodeURIComponent(prompt.exam_id)}`} state={origin} className="group flex h-full flex-col gap-2 rounded-2xl border border-line bg-surface p-4 hover:border-primary">
+    <Link to={`/writing/essay/${encodeURIComponent(prompt.exam_id)}`} state={origin} className={`${cardLinkCls} group flex h-full flex-col gap-2`}>
       <span className="flex items-start gap-2">
         <span className="flex min-w-0 flex-1 flex-wrap items-center gap-2">
           <span className="text-lg font-semibold">{examRefLabel(prompt)}</span>
@@ -101,7 +102,7 @@ export function EssayPromptList({
       {data.status === 'loading' && <Loading>題目載入中…</Loading>}
       {data.status === 'error' && <DataError message={dataErrorMessage(data.error)} onRetry={data.retry} />}
       {data.status === 'ready' && <EssayLists prompts={data.value.prompts} kind={kind} onKind={setKind} headingLevel={headingLevel} legend={filterLegend} />}
-      <footer className="rounded-2xl border border-line bg-surface p-4 text-sm text-muted">
+      <footer className={`${calloutCls} text-sm text-muted`}>
         題目來源：大學入學考試中心歷屆試題。圖片改以文字描述（原圖請看作答頁的官方題本 PDF）；本站不轉載官方評分原則原文與範文。
       </footer>
     </div>

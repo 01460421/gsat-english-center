@@ -27,6 +27,7 @@ import { compareLabels } from '../../assistant/sources/common';
 import { useAskAllowed } from './GroupSourceLine';
 import { storedTargetLabel } from './PaperTargets';
 import type { WeakPaperEntry } from './weakPapers';
+import { cardCls } from '../../../components/ui/Card';
 
 const pct = (rate: number) => `${Math.round(rate * 100)}%`;
 
@@ -124,7 +125,7 @@ export function DrillTargetsTable({
     const covered = coveredSkills(questions).slice(0, 8);
     if (covered.length === 0) return null;
     return (
-      <section aria-labelledby={`${id}-title`} className="rounded-2xl border border-line bg-surface p-5 lg:p-6" data-testid="drill-targets">
+      <section aria-labelledby={`${id}-title`} className={cardCls} data-testid="drill-targets">
         <h2 id={`${id}-title`} className="text-lg font-semibold">
           本卷涵蓋的技能
         </h2>
@@ -141,7 +142,7 @@ export function DrillTargetsTable({
   }
   if (own.targets.length === 0) return null;
   return (
-    <section aria-labelledby={`${id}-title`} className="rounded-2xl border border-line bg-surface p-5 lg:p-6" data-testid="drill-targets">
+    <section aria-labelledby={`${id}-title`} className={cardCls} data-testid="drill-targets">
       <h2 id={`${id}-title`} className="text-lg font-semibold">
         這次的弱點表現
       </h2>

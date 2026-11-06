@@ -93,7 +93,7 @@ export function ZhWritingHistory({ history, canStart }: { history: ZhWritingHist
       )}
       {status === 'ready' && items.length === 0 && <p className="text-sm text-muted">{canStart ? ZH_WRITING_COPY.historyEmpty : ZH_WRITING_COPY.historyEmptyReadOnly}</p>}
       {items.length > 0 && (
-        <ul className="divide-y divide-line rounded-2xl border border-line bg-surface">
+        <ul className="divide-y divide-line rounded-card border border-line bg-surface">
           {items.map((item) => {
             const st = zhHistoryStatus(item);
             return (

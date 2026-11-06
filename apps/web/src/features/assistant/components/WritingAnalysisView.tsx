@@ -11,6 +11,7 @@ import { formatScore } from '../../writing/lib/format';
 import { errorLabel } from '../lib/view';
 import { SkillTags } from './AnalysisView';
 import { AnalysisSection, En, ProcessingNotices } from './parts';
+import { insetBoxCls } from '../../../components/ui/Card';
 
 function categoryLabel(category: string): string {
   return (ERROR_CATEGORY_LABELS as Record<string, string>)[category] ?? category;
@@ -48,7 +49,7 @@ export function WritingAnalysisView({ analysis, recommendations }: { analysis: A
         <AnalysisSection title="錯誤依類別歸納">
           <ul className="space-y-3">
             {analysis.by_category.map((c, i) => (
-              <li key={i} className="space-y-1 rounded-xl border border-line bg-surface p-3">
+              <li key={i} className={`${insetBoxCls} space-y-1`}>
                 <p className="font-semibold">
                   {categoryLabel(c.category)}
                   {errorLabel(c.error_code) && <span className="ml-2 text-sm font-normal text-muted">{errorLabel(c.error_code)}</span>}

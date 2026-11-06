@@ -42,6 +42,8 @@ import { customWordTargets, siteWordTargets, wordTargetLines } from '../lib/word
 import { ExemplarAccessNotice, useExemplarAccess } from './ExemplarAccess';
 import { ExemplarSiteMatchDialog } from './ExemplarSiteMatchDialog';
 import { SitePromptPreview } from './SitePromptPreview';
+import { cardCompactCls } from '../../../../components/ui/Card';
+import { alertCls } from '../../../../components/ui/Alert';
 
 export type ConfirmTarget = { kind: 'site'; groupId: string } | { kind: 'custom'; prompt: CustomEssayPromptInput & { figure_text: string | null } };
 
@@ -178,7 +180,7 @@ export function ExemplarConfirm({
   let preview: ReactNode = null;
   if (target.kind === 'custom') {
     preview = (
-      <section aria-label="題目" className="rounded-2xl border border-line bg-surface p-4 lg:p-5">
+      <section aria-label="題目" className={cardCompactCls}>
         <CustomPromptView prompt={{ ...target.prompt, paragraphs: target.prompt.paragraphs ?? null, min_words: target.prompt.min_words ?? null, max_words: target.prompt.max_words ?? null }} />
       </section>
     );
@@ -214,7 +216,7 @@ export function ExemplarConfirm({
       {heading}
       {preview}
       {bank && !lockPassed ? (
-        <div className="space-y-3 rounded-2xl border border-badge-line bg-badge-bg/60 p-4">
+        <div className={alertCls('warn', 'space-y-3 p-4')}>
           <p>{BANK_LOCK_TEXT}</p>
           <div className="flex flex-wrap gap-2">
             {attemptPath && (

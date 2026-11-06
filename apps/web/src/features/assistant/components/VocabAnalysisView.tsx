@@ -6,6 +6,7 @@ import type { AssistVocabView } from '@gsat/shared';
 import { Link } from 'react-router';
 import { vocabSearch } from '../../vocab/navigation';
 import { AnalysisSection, En, ProcessingNotices } from './parts';
+import { cardFrameCls } from '../../../components/ui/Card';
 
 export function VocabAnalysisView({ analysis }: { analysis: AssistVocabView }) {
   if (analysis.off_topic) {
@@ -33,7 +34,7 @@ export function VocabAnalysisView({ analysis }: { analysis: AssistVocabView }) {
       <AnalysisSection title="逐字解析">
         <div className="grid gap-3 lg:grid-cols-2">
           {analysis.entries.map((e) => (
-            <section key={e.entry_id} aria-labelledby={`w-${e.entry_id}`} className="space-y-2 rounded-2xl border border-line bg-surface p-4">
+            <section key={e.entry_id} aria-labelledby={`w-${e.entry_id}`} className={`${cardFrameCls} p-4 space-y-2`}>
               <h3 id={`w-${e.entry_id}`} className="text-lg font-semibold">
                 <Link to={`/words${vocabSearch('library', e.entry_id)}`} className="text-primary underline-offset-2 lg:hover:underline">
                   <En>{e.word}</En>

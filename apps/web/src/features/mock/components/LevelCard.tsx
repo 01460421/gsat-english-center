@@ -7,6 +7,7 @@ import { formatPoints } from '../../exams/scoring';
 import type { FiveStandard, YearScale } from '../../../data/scoreScales';
 import type { LevelInfo } from '../report';
 import { Select } from '../../../components/ui/Field';
+import { cardCls } from '../../../components/ui/Card';
 
 const STANDARD_SHORT: Record<FiveStandard['name'], string> = { 頂標: '頂', 前標: '前', 均標: '均', 後標: '後', 底標: '底' };
 
@@ -70,7 +71,7 @@ export function LevelCard({
   const id = useId();
   const standards = [...scale.five_standards].sort((a, b) => b.level - a.level);
   return (
-    <section aria-labelledby={`${id}-title`} className="rounded-2xl border border-line bg-surface p-5 lg:p-6">
+    <section aria-labelledby={`${id}-title`} className={cardCls}>
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <h2 id={`${id}-title`} className="text-lg font-semibold">
           級分（非官方換算）

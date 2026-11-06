@@ -5,10 +5,12 @@
 import { useId, type ReactNode } from 'react';
 import { documentTitle, isDevPage, type PageMeta } from '../modules';
 import { PageIcon } from './icons';
+import { cardCls } from './ui/Card';
+import { badgeCls } from './ui/Badge';
 
 export function DevBadge() {
   return (
-    <span className="inline-flex shrink-0 items-center rounded-full bg-badge-bg px-2.5 py-0.5 text-xs font-semibold text-badge-fg">
+    <span className={badgeCls('warn')}>
       開發中
     </span>
   );
@@ -82,7 +84,7 @@ export function PageHeader({
 export function InfoSection({ title, children }: { title: string; children: ReactNode }) {
   const titleId = useId();
   return (
-    <section aria-labelledby={titleId} className="rounded-2xl border border-line bg-surface p-5 lg:p-6">
+    <section aria-labelledby={titleId} className={cardCls}>
       <h2 id={titleId} className="text-lg font-semibold">
         {title}
       </h2>

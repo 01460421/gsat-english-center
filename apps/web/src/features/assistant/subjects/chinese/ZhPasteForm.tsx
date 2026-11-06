@@ -55,6 +55,7 @@ import {
 import { ZhQuestionFields, zhFieldsBlocker } from './ZhQuestionFields';
 import { btn } from '../../../../components/ui/buttons';
 import { fieldCls } from '../../../../components/ui/fields';
+import { alertCls } from '../../../../components/ui/Alert';
 
 const DRAFT_KEY = 'typed:zh:text';
 
@@ -70,7 +71,7 @@ export function subjectSuggestion(text: string): ReturnType<typeof detectAssistS
 function Highlighted({ text, ranges }: { text: string; ranges: ReadonlyArray<readonly [number, number]> }) {
   const marks: ZhMark[] = ranges.map(([start, end]) => ({ start, end, active: true }));
   return (
-    <p className="max-h-64 overflow-y-auto rounded-xl border border-bad-line bg-surface p-3 whitespace-pre-wrap break-words">
+    <p className="max-h-64 overflow-y-auto rounded-control border border-bad-line bg-surface p-3 whitespace-pre-wrap break-words">
       <ZhText text={text} marks={marks} />
     </p>
   );
@@ -204,7 +205,7 @@ export function ZhPasteForm({
         </Notice>
       )}
       {suggestion && (
-        <div role="status" className="flex flex-wrap items-center gap-2 rounded-xl border border-badge-line bg-badge-bg/60 px-4 py-2 text-sm" data-testid="zh-subject-suggestion">
+        <div role="status" className={alertCls('warn', 'flex flex-wrap items-center gap-2')} data-testid="zh-subject-suggestion">
           <p>{assistSubjectMismatchText(suggestion.subject, 'input', open)}</p>
           {suggestion.subject === 'english' && open.includes('english') && (
             <button type="button" onClick={() => onSwitchSubject('english')} className={btn('secondary', 'sm')}>
@@ -218,7 +219,7 @@ export function ZhPasteForm({
           題目全文（必填）
         </label>
         {section?.section === 'zh_form' && (
-          <p role="note" className="mt-1 rounded-xl border border-badge-line bg-badge-bg/60 px-3 py-2 text-sm" data-testid="zh-form-reminder">
+          <p role="note" className={alertCls('warn', 'mt-1')} data-testid="zh-form-reminder">
             {ZH_COPY.formReminder}
           </p>
         )}
@@ -302,7 +303,7 @@ export function ZhPasteForm({
         placeholder={ZH_COPY.doubtPlaceholder}
       />
       {warnings.length > 0 && (
-        <ul className="space-y-1 rounded-xl border border-badge-line bg-badge-bg/60 px-4 py-2 text-sm">
+        <ul className={alertCls('warn', 'space-y-1')}>
           {warnings.map((w) => (
             <li key={w}>{ASSIST_INPUT_WARNING_MESSAGES[w]}</li>
           ))}

@@ -7,7 +7,7 @@ import { btn } from '../../components/ui/buttons';
 import { checkInputCls } from '../../components/ui/Check';
 import { fieldCls as baseFieldCls } from '../../components/ui/fields';
 
-export const cardCls = 'rounded-2xl border border-line bg-surface p-4 sm:p-5 lg:p-6';
+export { cardCls } from '../../components/ui/Card';
 
 /** 按鈕：共用元件（components/ui/buttons.ts，設計文件 css-overhaul §4.1）。btnDanger 是觸發破壞性動作的紅字按鈕（danger-ghost）。 */
 export const btnPrimary = btn('primary', 'md');

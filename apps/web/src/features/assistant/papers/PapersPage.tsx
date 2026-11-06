@@ -57,6 +57,7 @@ import {
 import { MC_SECTIONS, computeWeakness, wrongGroupsFrom, type WeakTarget, type WeaknessProfile } from './weakness';
 import { btn } from '../../../components/ui/buttons';
 import { optionCardTopCls } from '../../../components/ui/Check';
+import { cardCls } from '../../../components/ui/Card';
 
 /** 「我的加強卷」先列幾份，其他收進「更多」。 */
 export const WEAK_PAPERS_SHOWN = 5;
@@ -82,7 +83,7 @@ const KIND_TITLES: Record<PaperKindChoice, string> = { w: '弱點加強卷', f: 
 
 const primaryBtn = btn('primary', 'md');
 const secondaryBtn = btn('secondary', 'sm');
-const cardCls = 'rounded-2xl border border-line bg-surface p-5 lg:p-6';
+
 const optionCls = optionCardTopCls;
 const pillCls = 'inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border border-line px-3 text-sm has-[:checked]:border-primary has-[:checked]:bg-primary-soft';
 
@@ -354,7 +355,7 @@ function Closed() {
     <section className="space-y-3 py-2">
       <title>{`加強卷｜${APP_NAME}`}</title>
       <h1 className="text-2xl font-bold tracking-tight lg:text-3xl">加強卷</h1>
-      <p className="rounded-2xl border border-dashed border-line bg-surface-2 p-5">這個功能還沒開放。</p>
+      <p className="rounded-card border border-dashed border-line bg-surface-2 p-5">這個功能還沒開放。</p>
       <Link to="/assistant" className="font-medium text-primary underline underline-offset-2">
         回學習助手
       </Link>

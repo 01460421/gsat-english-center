@@ -16,6 +16,7 @@ import { ZH_COPY, ZH_COVERAGE_TEXT } from './copy';
 import { zhQuoteId } from './quotes';
 import { DoubtReplies, SectionTag, TestedSection, TipsSection, TypeStepsSection, ZhHeadNotes, ZhOffTopic, fieldNotice, zhItemTitle, type ZhViewCommonProps } from './ZhCommon';
 import { btn } from '../../../../components/ui/buttons';
+import { cardFrameCls } from '../../../../components/ui/Card';
 
 /** 語譯題（題幹有「語譯」「翻譯」「譯成白話」）：翻譯寫在文言對照卡，示範留空（同 Worker 的判斷）。 */
 const TRANSLATION_TASK_RE = /語譯|翻譯|譯成白話|譯為白話/u;
@@ -58,7 +59,7 @@ function PartBlock({
   const translation = TRANSLATION_TASK_RE.test(common.targets?.[part.label]?.stem ?? '');
   const max = part.char_limit?.max ?? null;
   return (
-    <section aria-labelledby={`${bodyId}-h`} className="space-y-3 rounded-2xl border border-line bg-surface p-4" data-zh-part={part.label}>
+    <section aria-labelledby={`${bodyId}-h`} className={`${cardFrameCls} p-4 space-y-3`} data-zh-part={part.label}>
       <div className="flex flex-wrap items-center gap-2">
         <h3 id={`${bodyId}-h`} className="text-base font-semibold">
           {single ? '解析' : zhItemTitle(part.display_label)}
@@ -191,7 +192,7 @@ export function ZhShortView({ analysis, common }: { analysis: ZhShortAnalysis; c
       <DoubtReplies replies={analysis.doubt_replies} />
       {shared.length > 0 && !common.hintFirst && <div className="space-y-3">{sharedTables}</div>}
       {shared.length > 0 && common.hintFirst && (
-        <details className="rounded-2xl border border-line bg-surface px-4 py-2" data-zh-shared-cards>
+        <details className="rounded-card border border-line bg-surface px-4 py-2" data-zh-shared-cards>
           <summary className="flex min-h-11 cursor-pointer items-center font-semibold">看完整解析：整組共用的題型卡</summary>
           <div className="space-y-3 pb-2">{sharedTables}</div>
         </details>

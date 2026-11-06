@@ -93,7 +93,7 @@ export default function MockExamPage() {
 
 function Disclaimer({ className, bank = false }: { className?: string; bank?: boolean }) {
   return (
-    <footer className={className ? `space-y-1 rounded-2xl border border-line bg-surface-2 p-4 text-sm text-muted ${className}` : 'space-y-1 rounded-2xl border border-line bg-surface-2 p-4 text-sm text-muted'}>
+    <footer className={className ? `space-y-1 rounded-card border border-line bg-surface-2 p-4 text-sm text-muted ${className}` : 'space-y-1 rounded-card border border-line bg-surface-2 p-4 text-sm text-muted'}>
       <p className="font-semibold text-fg">模擬分數與級分僅供參考，不是官方級分；AI 批改分數不等於正式閱卷結果。</p>
       <p>目前非選擇題（中譯英、英文作文）為自評分數；級分依各學年度大考中心公布的原得總分與級分對照表換算。</p>
       <p>試題來源：大學入學考試中心 111–115 學年度學科能力測驗英文考科、學科能力測驗參考試卷（115 學年度起適用）英文考科。</p>

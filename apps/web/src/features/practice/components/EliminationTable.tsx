@@ -11,6 +11,7 @@ import type { OptionLetter, OptionMap, Question } from '../../../data/exams';
 import { sortedLetters } from '../../exams/components/QuestionFeedback';
 import { RichText } from '../../exams/components/RichText';
 import type { AnswerValue } from '../../exams/scoring';
+import { cardCompactCls } from '../../../components/ui/Card';
 
 type Cell = 'answer' | 'feasible' | 'out';
 
@@ -74,7 +75,7 @@ export function EliminationTable({
   const extraNote = structure ? extraSentenceNote(elimination, questions, letters) : null;
 
   return (
-    <section aria-labelledby={titleId} className="rounded-2xl border border-line bg-surface p-4 lg:p-5">
+    <section aria-labelledby={titleId} className={cardCompactCls}>
       <h2 id={titleId} className="text-lg font-semibold">
         排除法表
       </h2>

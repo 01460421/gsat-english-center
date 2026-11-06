@@ -37,6 +37,7 @@ import {
 import { isExpired, remainingSec } from './timer';
 import { useNow } from './useNow';
 import { btn } from '../../components/ui/buttons';
+import { cardCls, cardFrameCls } from '../../components/ui/Card';
 
 interface Snapshot {
   active: ReadonlyMap<string, MockAttemptRecord>;
@@ -194,7 +195,7 @@ function PaperCard({ paper, active, done, order }: { paper: MockPaper; active: M
     <li className="lg:@container">
       <article
         aria-labelledby={`${id}-title`}
-        className="flex h-full flex-col gap-3 rounded-2xl border border-line bg-surface p-4 lg:@3xl:grid lg:@3xl:grid-cols-[14rem_minmax(0,1fr)_16.5rem] lg:@3xl:items-center lg:@3xl:gap-x-6 lg:@3xl:py-3"
+        className={`${cardFrameCls} p-4 flex h-full flex-col gap-3 lg:@3xl:grid lg:@3xl:grid-cols-[14rem_minmax(0,1fr)_16.5rem] lg:@3xl:items-center lg:@3xl:gap-x-6 lg:@3xl:py-3`}
       >
         <header className="flex items-start gap-3">
           <span aria-hidden="true" className="inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-primary-soft text-sm font-semibold text-primary tabular-nums">
@@ -248,7 +249,7 @@ function HistoryList({ history }: { history: readonly MockHistoryEntry[] }) {
   // 本站自組模擬考看得到時（docs/design/bank-mock.md §2.1）：自組卷只記原始分數，說明改寫。
   const [bankVisible] = useState(bankMockVisible);
   return (
-    <section aria-labelledby={`${id}-title`} className="rounded-2xl border border-line bg-surface p-5 lg:max-w-[60rem] lg:p-6">
+    <section aria-labelledby={`${id}-title`} className={`${cardCls} lg:max-w-[60rem]`}>
       <h2 id={`${id}-title`} className="text-lg font-semibold">
         作答紀錄
       </h2>

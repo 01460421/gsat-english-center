@@ -41,6 +41,8 @@ import {
 } from './data';
 import { BANK_SECTION_TITLES, WRITING_TIER_HINTS } from './labels';
 import { progressOf } from './useBankItem';
+import { cardLinkCls } from '../../../components/ui/Card';
+import { badgeCls } from '../../../components/ui/Badge';
 
 function tierFromParam(value: string | null): Tier | null {
   return (TIERS as readonly string[]).includes(value ?? '') ? (value as Tier) : null;
@@ -61,12 +63,12 @@ function ProgressBadge({ progress }: { progress: BankProgress }) {
   // 字用本文色（綠字在淺綠底上只有約 4.4:1，不到 AA 的 4.5:1）；綠色留給底色與勾勾圖示。
   if (progress === 'done')
     return (
-      <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-ok/15 px-2 py-0.5 text-xs font-semibold text-fg">
+      <span className={badgeCls('ok')}>
         <CircleCheck aria-hidden="true" className="size-3.5 text-ok" />
         已完成
       </span>
     );
-  if (progress === 'draft') return <span className="shrink-0 rounded-full bg-surface-2 px-2 py-0.5 text-xs font-semibold">草稿</span>;
+  if (progress === 'draft') return <span className={badgeCls('neutral')}>草稿</span>;
   return null;
 }
 
@@ -75,7 +77,7 @@ function TranslationCard({ card, linkRef }: { card: BankTranslationCard; linkRef
   const progress = progressOf({ uid: card.uid, version: card.version, section_type: 'translation' });
   const origin = useListOriginState();
   return (
-    <Link ref={linkRef} to={bankAttemptPath(card.uid) ?? '#'} state={origin} className="group flex h-full flex-col gap-2 rounded-2xl border border-line bg-surface p-4 hover:border-primary">
+    <Link ref={linkRef} to={bankAttemptPath(card.uid) ?? '#'} state={origin} className={`${cardLinkCls} group flex h-full flex-col gap-2`}>
       <span className="flex items-start gap-2">
         <span className="min-w-0 flex-1 text-lg font-semibold">{topic}</span>
         <ProgressBadge progress={progress} />
@@ -97,7 +99,7 @@ function EssayCard({ card, linkRef }: { card: BankEssayCard; linkRef?: Ref<HTMLA
   const progress = progressOf({ uid: card.uid, version: card.version, section_type: 'composition' });
   const origin = useListOriginState();
   return (
-    <Link ref={linkRef} to={bankAttemptPath(card.uid) ?? '#'} state={origin} className="group flex h-full flex-col gap-2 rounded-2xl border border-line bg-surface p-4 hover:border-primary">
+    <Link ref={linkRef} to={bankAttemptPath(card.uid) ?? '#'} state={origin} className={`${cardLinkCls} group flex h-full flex-col gap-2`}>
       <span className="flex items-start gap-2">
         <span className="flex min-w-0 flex-1 flex-wrap items-center gap-2">
           <span className="text-lg font-semibold">{topic}</span>

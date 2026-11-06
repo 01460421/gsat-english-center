@@ -68,7 +68,7 @@ function DraftProgramChecks({ text, section, target }: { text: string; section: 
 function MethodCards({ section }: { section: ZhSection }) {
   const lines = zhMethodCardLines(section);
   return (
-    <details className="group rounded-2xl border border-line bg-surface px-4 py-2" data-zh-method-cards>
+    <details className="group rounded-card border border-line bg-surface px-4 py-2" data-zh-method-cards>
       {/* flex 會拿掉瀏覽器內建的展開三角形：改放一個會轉向的箭頭，看得出可以展開（Safari 的內建記號另外藏起來）。 */}
       <summary className="flex min-h-11 cursor-pointer items-center justify-between gap-2 font-semibold [&::-webkit-details-marker]:hidden">
         {ZH_COPY.methodCardsSummary}

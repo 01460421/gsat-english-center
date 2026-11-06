@@ -111,7 +111,7 @@ export function SubmitDialog({
         e.preventDefault();
         close();
       }}
-      className="m-auto max-h-[85dvh] w-[calc(100%-2rem)] max-w-xl overflow-y-auto rounded-2xl border border-line bg-surface p-5 text-fg backdrop:bg-scrim-strong lg:max-w-2xl lg:shadow-lg"
+      className="m-auto max-h-[85dvh] w-[calc(100%-2rem)] max-w-xl overflow-y-auto rounded-card border border-line bg-surface p-5 text-fg backdrop:bg-scrim-strong lg:max-w-2xl lg:shadow-lg"
     >
       {open && isDesktop && (
         <button

@@ -12,6 +12,7 @@ import { figureKindLabel } from '../labels';
 import { useQuestionExtras } from '../QuestionExtras';
 import { groupTextOffsets, type TextHighlight } from '../richText';
 import { RichText } from './RichText';
+import { insetBoxCls } from '../../../components/ui/Card';
 
 export function FigureView({ figure }: { figure: Figure }) {
   const rows = figure.rows ?? null;
@@ -147,7 +148,7 @@ function PassageParts({
   };
 
   const renderPart = (part: PassagePart, i: number) => (
-    <section key={i} aria-label={partHeading(part, i)} className="rounded-xl border border-line bg-surface p-3">
+    <section key={i} aria-label={partHeading(part, i)} className={insetBoxCls}>
       <h4 className="mb-1 text-sm font-semibold text-primary">{partHeading(part, i)}</h4>
       <RichText
         text={part.text}

@@ -30,6 +30,7 @@ import { bk2UniformTier } from './paperId';
 import { newPaperPath } from './PaperInfo';
 import { hasLocalUse, loadBankPaperStrict, resolveBankPaper, type ResolveResult, type StrictLoadResult } from './resolve';
 import { btn } from '../../../components/ui/buttons';
+import { cardFrameCls } from '../../../components/ui/Card';
 
 type LoadResult = StrictLoadResult | ResolveResult;
 
@@ -139,7 +140,7 @@ function Changed({ paperId, tier, weak }: { paperId: string; tier: Tier | null; 
         已經交卷的成績留在作答紀錄裡。
       </p>
       {active && (
-        <div className="space-y-2 rounded-xl border border-line bg-surface p-4 text-fg">
+        <div className={`${cardFrameCls} rounded-control p-4 space-y-2 text-fg`}>
           <p>這份卷子還有一筆作答中的紀錄，已經無法接著作答。</p>
           {confirming ? (
             <span role="group" aria-label="確認放棄" className="inline-flex flex-wrap items-center gap-2 text-sm">
@@ -168,7 +169,7 @@ function Changed({ paperId, tier, weak }: { paperId: string; tier: Tier | null; 
         </div>
       )}
       {abandoned && (
-        <p ref={abandonedRef} tabIndex={-1} className="rounded-xl border border-line bg-surface p-4 text-fg">
+        <p ref={abandonedRef} tabIndex={-1} className={`${cardFrameCls} rounded-control p-4 text-fg`}>
           已放棄這次作答。可以組一份新卷，或回模擬考列表。
         </p>
       )}

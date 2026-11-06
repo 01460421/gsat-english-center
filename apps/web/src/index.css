@@ -21,7 +21,7 @@
  *   line-subtle                 密集表格的列分隔（深色維持改版前較淡的 --line，表格不會太重）
  *   line-strong                 互動元件的邊界：輸入框、選單、未選中的膠囊（對 bg、surface、surface-2 ≥ 3:1，WCAG 1.4.11）
  *   primary／primary-hover／primary-soft／on-primary   主要動作、連結、選中；hover；選中的淡底；主色上的字
- *   ok／bad（＋-soft 淡底、bad-line 框線）              答對、完成／答錯、錯誤
+ *   ok／bad（＋-soft 淡底、-line 框線）                 答對、完成／答錯、錯誤
  *   badge-bg／badge-fg（＋badge-line 框線）             提醒、AI 標示
  *   scrim／scrim-strong         對話框與抽屜的遮罩（兩種主題都是黑色半透明）
  *   paper                       圖片、圖表的底：兩種主題都是白色（黑線條的插圖在深色主題也看得清楚）
@@ -68,6 +68,7 @@
    * 淡底與框線的濃度和原本的 bg-bad/10、border-bad/40… 相同（Tailwind 的透明度修飾也是 oklab 的 color-mix），換成 token 後畫面不變。
    */
   --ok-soft: color-mix(in oklab, var(--ok) 10%, transparent);
+  --ok-line: color-mix(in oklab, var(--ok) 40%, transparent);
   --bad-soft: color-mix(in oklab, var(--bad) 10%, transparent);
   --bad-line: color-mix(in oklab, var(--bad) 40%, transparent);
   --badge-line: color-mix(in oklab, var(--badge-fg) 30%, transparent);
@@ -164,6 +165,7 @@
   --color-line-strong: var(--line-strong);
   --color-primary-hover: var(--primary-hover);
   --color-ok-soft: var(--ok-soft);
+  --color-ok-line: var(--ok-line);
   --color-bad-soft: var(--bad-soft);
   --color-bad-line: var(--bad-line);
   --color-badge-line: var(--badge-line);

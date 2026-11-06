@@ -15,6 +15,7 @@ import type { LengthHint } from '../custom/lengthHints';
 import type { EssayLengthCheck } from '../lib/text';
 import { isUnlimited } from './AiAccessPanel';
 import { primaryButton, secondaryButton } from './ui';
+import { alertCls } from '../../../components/ui/Alert';
 
 /** 歷屆與本站仿真作文的提醒（和作答框下方的黃色提醒同一組條件）。 */
 export function essaySubmitWarnings(length: EssayLengthCheck): string[] {
@@ -117,7 +118,7 @@ export function SubmitConfirm({
           guard.cancel();
         }
       }}
-      className="space-y-3 rounded-xl border border-badge-line bg-badge-bg/60 px-4 py-3 text-sm"
+      className={alertCls('warn', 'space-y-3')}
     >
       <p id={leadId} className="font-semibold">
         送出 AI 批改會用 <span className="tabular-nums">{points}</span> 點

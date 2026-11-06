@@ -54,6 +54,7 @@ import { writeAttemptHandoff, writeExemplarHandoff } from './lib/handoff';
 import { isExemplarSetPending, useExemplarPoller, type ExemplarPoller } from './lib/poller';
 import { loadSitePrompt } from './lib/sitePrompts';
 import { defaultLevelFor, useYourEssay } from './lib/yourEssay';
+import { badgeCls } from '../../../components/ui/Badge';
 
 export default function ExemplarSetPage() {
   const { id = '' } = useParams();
@@ -359,7 +360,7 @@ function SetView({ detail, poller }: { detail: ExemplarSetDetail; poller: Exempl
         <p className="flex flex-wrap items-center gap-2 text-sm text-muted">
           <span className="rounded-full bg-surface-2 px-2 py-0.5 text-xs font-semibold text-fg">{SOURCE_LABELS[detail.source]}</span>
           <span>{formatUnixTime(detail.created_at)}</span>
-          {detail.cache_hit && <span className="rounded-full bg-ok/15 px-2 py-0.5 text-xs font-semibold text-fg">0 點（共用）</span>}
+          {detail.cache_hit && <span className={badgeCls('ok')}>0 點（共用）</span>}
         </p>
       </ExemplarsHeader>
     </div>

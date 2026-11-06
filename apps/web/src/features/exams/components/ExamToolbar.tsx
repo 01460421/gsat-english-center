@@ -219,7 +219,7 @@ export function ExamToolbar({ exam, modeLabel, waitForFirstAnswer = false }: { e
           onKeyDown={(e) => {
             if (e.key === 'Escape') cancel();
           }}
-          className="mt-2 flex flex-wrap items-center gap-2 rounded-xl border border-primary bg-surface p-3 text-sm"
+          className="mt-2 flex flex-wrap items-center gap-2 rounded-control border border-primary bg-surface p-3 text-sm"
         >
           {isDesktop ? (
             <DesktopConfirmText unanswered={unanswered} />

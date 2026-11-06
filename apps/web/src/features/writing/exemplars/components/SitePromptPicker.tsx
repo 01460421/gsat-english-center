@@ -155,7 +155,7 @@ export function SitePromptPicker({ onPick }: { onPick: (task: SiteTask) => void 
                 <button
                   type="button"
                   onClick={() => onPick(t)}
-                  className="group flex w-full items-start gap-3 rounded-xl border border-line bg-surface p-3 text-left lg:hover:border-primary"
+                  className="group flex w-full items-start gap-3 rounded-control border border-line bg-surface p-3 text-left shadow-(--shadow-card) hover:border-primary"
                 >
                   <span className="min-w-0 flex-1">
                     <span className="flex flex-wrap items-center gap-2">

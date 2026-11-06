@@ -6,11 +6,12 @@
 import type { AssistSectionMethod } from '@gsat/shared';
 import { useId } from 'react';
 import { AiBadge } from '../../writing/components/ui';
+import { cardCompactCls } from '../../../components/ui/Card';
 
 export function MethodCard({ method, note }: { method: AssistSectionMethod; note?: string | null }) {
   const id = useId();
   return (
-    <article aria-labelledby={id} className="report-avoid-break space-y-3 rounded-2xl border border-line bg-surface p-4 lg:p-5">
+    <article aria-labelledby={id} className={`${cardCompactCls} report-avoid-break space-y-3`}>
       <h3 id={id} className="text-base font-semibold">
         {method.title}
         <span className="ml-2 text-sm font-normal text-muted">

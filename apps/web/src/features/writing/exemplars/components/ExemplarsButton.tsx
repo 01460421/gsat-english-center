@@ -17,6 +17,7 @@ import { EXEMPLARS_BUTTON, EXEMPLARS_CARD_TEXT, EXEMPLARS_PATH, EXEMPLARS_TITLE,
 import { writeExemplarHandoff } from '../lib/handoff';
 import { useExemplarsEnabled } from '../lib/useExemplarsEnabled';
 import { btn } from '../../../../components/ui/buttons';
+import { cardLinkCls } from '../../../../components/ui/Card';
 
 const SECONDARY =
   btn('secondary', 'sm');
@@ -83,7 +84,7 @@ export function ExemplarsEntryCard() {
   const origin = useListOriginState();
   if (!enabled) return null;
   return (
-    <Link to={EXEMPLARS_PATH} state={origin} className="group flex h-full items-start gap-3 rounded-2xl border border-line bg-surface p-4 hover:border-primary lg:p-5">
+    <Link to={EXEMPLARS_PATH} state={origin} className={`${cardLinkCls} group flex h-full items-start gap-3`}>
       <span className="inline-flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary-soft text-primary">
         <Layers aria-hidden="true" className="size-6" />
       </span>

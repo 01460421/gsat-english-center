@@ -75,7 +75,7 @@ export function AssistantClosed({ title = '學習助手' }: { title?: string }) 
     <section className="space-y-3 py-2">
       <title>{`${title}｜${APP_NAME}`}</title>
       <h1 className="text-2xl font-bold tracking-tight lg:text-3xl">{title}</h1>
-      <p className="rounded-2xl border border-dashed border-line bg-surface-2 p-5">
+      <p className="rounded-card border border-dashed border-line bg-surface-2 p-5">
         學習助手暫停使用中，暫時不能送出新的題目、追問或產生學習報告。
         {signedIn && '你之前問過的題目與學習報告仍然可以看與刪除。'}
       </p>

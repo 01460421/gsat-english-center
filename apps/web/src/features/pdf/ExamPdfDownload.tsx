@@ -28,6 +28,7 @@ import {
 } from './index';
 import { canShareFile, usePdfDownload, type PdfErrorTextMap } from './usePdfDownload';
 import { btn } from '../../components/ui/buttons';
+import { cardFrameCls } from '../../components/ui/Card';
 
 export type { SitePdfVersion } from './index';
 export { isInAppBrowser } from './usePdfDownload';
@@ -101,7 +102,7 @@ export function ExamPdfDownload({ exam, mockMeta, defaultIncludeAnswerKey = fals
   const statusText = download.statusText;
 
   return (
-    <section aria-labelledby={`${id}-title`} aria-busy={busy} className={`rounded-2xl border border-line bg-surface p-4 ${className}`}>
+    <section aria-labelledby={`${id}-title`} aria-busy={busy} className={`${cardFrameCls} p-4 ${className}`}>
       <h2 id={`${id}-title`} className="font-semibold">
         下載考試格式 PDF
       </h2>

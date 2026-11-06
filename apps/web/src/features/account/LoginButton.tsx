@@ -194,7 +194,7 @@ function AccountMenu({ me, placement, collapsed }: { me: MeResponseSignedIn; pla
       )}
 
       {open && (
-        <div id={panelId} className={`absolute z-30 rounded-2xl border border-line bg-surface p-2 shadow-lg ${panelPosition}`}>
+        <div id={panelId} className={`absolute z-30 rounded-card border border-line bg-surface p-2 shadow-lg ${panelPosition}`}>
           <div className="flex items-center gap-3 px-3 py-2">
             <Avatar name={name} className="size-9 text-base" />
             <div className="min-w-0">

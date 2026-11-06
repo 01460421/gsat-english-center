@@ -32,6 +32,7 @@ import { ZH_WRITING_COPY, ZH_WRITING_SECTION_SHORT } from '../labels';
 import { EMPTY_ZH_PASTE_DRAFT, checkZhPaste, zhPasteFieldOf, zhPasteFieldText, zhPasteProblemMessage, type ZhPasteDraft, type ZhPasteField, type ZhPasteProblem } from '../lib';
 import { fieldCls } from '../../../../components/ui/fields';
 
+
 const DRAFT_PROMPT = 'zh-writing:prompt';
 const DRAFT_MATERIAL = 'zh-writing:material';
 const SECTIONS: readonly ZhExemplarSection[] = ['zh_writing_reason', 'zh_writing_emotion'];
@@ -47,7 +48,7 @@ function HitPreview({ text, ranges }: { text: string; ranges: ReadonlyArray<read
   return (
     <div className="mt-2 space-y-1">
       <p className="text-sm">{ZH_WRITING_COPY.hitTitle}</p>
-      <p className="max-h-64 overflow-y-auto rounded-xl border border-bad-line bg-surface p-3 whitespace-pre-wrap break-words">
+      <p className="max-h-64 overflow-y-auto rounded-control border border-bad-line bg-surface p-3 whitespace-pre-wrap break-words">
         <ZhText text={text} marks={ranges.map(([start, end]) => ({ start, end, active: true }))} />
       </p>
     </div>

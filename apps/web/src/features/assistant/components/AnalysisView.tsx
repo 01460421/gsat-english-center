@@ -17,6 +17,7 @@ import { errorLabel } from '../lib/view';
 import { AnalysisSection, AnswerText, En, ProcessingNotices, VerdictBadge } from './parts';
 import { StepEvidence } from './StepEvidence';
 import { btn } from '../../../components/ui/buttons';
+import { cardFrameCls } from '../../../components/ui/Card';
 
 const KNOWLEDGE_KIND_LABELS: Record<string, string> = {
   grammar: '文法',
@@ -150,7 +151,7 @@ function ItemBlock({
   const headline =
     item.verdict === 'correct' ? '為什麼對、哪裡容易猶豫' : item.verdict === 'unanswered' ? '這題卡住的地方' : item.verdict === 'unknown' ? '這題的重點' : '你的答案錯在哪';
   return (
-    <section aria-labelledby={`${bodyId}-h`} className="space-y-3 rounded-2xl border border-line bg-surface p-4">
+    <section aria-labelledby={`${bodyId}-h`} className={`${cardFrameCls} p-4 space-y-3`}>
       <div className="flex flex-wrap items-center gap-2">
         <h3 id={`${bodyId}-h`} className="text-base font-semibold">
           {single ? '解析' : title}

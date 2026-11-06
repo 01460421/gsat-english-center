@@ -11,6 +11,8 @@ import { useEffect, useId, useRef, useState, type PointerEvent as ReactPointerEv
 import { PhotoDecodeError, PhotoTooLargeError, resizePhotoFile, type ResizedPhoto } from '../../writing/lib/photo';
 import { clampInsets, cropPhotoFile, FULL_PHOTO, insetsFromDrag, isFullPhoto, type CropInsets } from '../lib/crop';
 import { primaryBtn, secondaryBtn } from './parts';
+import { cardCompactCls } from '../../../components/ui/Card';
+import { alertCls } from '../../../components/ui/Alert';
 
 const SIDES: Array<{ key: keyof CropInsets; label: string }> = [
   { key: 'top', label: '裁掉上方' },
@@ -89,7 +91,7 @@ export function PhotoCrop({
 
   const keep = { left: insets.left, top: insets.top, width: 100 - insets.left - insets.right, height: 100 - insets.top - insets.bottom };
   return (
-    <section aria-labelledby={`${id}-h`} className="space-y-3 rounded-2xl border border-line bg-surface p-4 lg:p-5">
+    <section aria-labelledby={`${id}-h`} className={`${cardCompactCls} space-y-3`}>
       <h2 id={`${id}-h`} className="text-lg font-semibold">
         框選第 {index} 張照片
       </h2>
@@ -97,7 +99,7 @@ export function PhotoCrop({
         只框<strong>要問的題目</strong>（題目、選項、你的作答與它的文章）。不要框到解答、詳解、評分說明、範文，也不要框到姓名、學號或學校。
       </p>
       {broken ? (
-        <p role="alert" className="rounded-xl border border-bad-line bg-bad/5 px-4 py-3 text-sm">
+        <p role="alert" className={alertCls('error')}>
           這台裝置無法預覽這張照片（可能是 HEIC 格式）。請改選 JPEG 或 PNG 照片，或用相機重新拍一張。
         </p>
       ) : (

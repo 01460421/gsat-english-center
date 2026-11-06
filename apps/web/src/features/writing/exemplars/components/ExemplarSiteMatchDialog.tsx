@@ -47,7 +47,7 @@ export function ExemplarSiteMatchDialog({
         e.preventDefault();
         onClose();
       }}
-      className="m-auto max-h-[85dvh] w-[calc(100%-2rem)] max-w-lg overflow-y-auto rounded-2xl border border-line bg-surface p-5 text-fg shadow-lg backdrop:bg-scrim-strong"
+      className="m-auto max-h-[85dvh] w-[calc(100%-2rem)] max-w-lg overflow-y-auto rounded-card border border-line bg-surface p-5 text-fg shadow-lg backdrop:bg-scrim-strong"
     >
       {match && (
         <div className="space-y-4">

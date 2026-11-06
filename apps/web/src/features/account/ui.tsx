@@ -2,8 +2,10 @@
  * 帳號、AI 申請與後台頁的小型共用元件：提示框、狀態徽章、條款內文、登入提示、「即將開放」、重新登入提示。
  */
 import { safePath, type AiStatus } from '@gsat/shared';
-import { CircleAlert, CircleCheck, Info, LogIn, TriangleAlert } from 'lucide-react';
+import { LogIn } from 'lucide-react';
 import type { ReactNode } from 'react';
+import { Alert } from '../../components/ui/Alert';
+import { Badge } from '../../components/ui/Badge';
 import { loginHref } from '../../lib/api';
 import { AI_STATUS_BADGE, AI_STATUS_LABELS } from './labels';
 import { btnPrimary, cardCls, sectionTitleCls } from './styles';
@@ -16,55 +18,31 @@ export const AI_NOTICE = 'AI 批改，僅供參考';
 
 type Tone = 'info' | 'warn' | 'error' | 'success';
 
-const TONE_CLS: Record<Tone, string> = {
-  info: 'border-line bg-surface-2',
-  warn: 'border-badge-fg/40 bg-badge-bg text-badge-fg',
-  error: 'border-bad/50 bg-surface text-fg',
-  success: 'border-ok/50 bg-surface text-fg',
-};
-
-const TONE_ICON: Record<Tone, ReactNode> = {
-  info: <Info aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-muted" />,
-  warn: <TriangleAlert aria-hidden="true" className="mt-0.5 size-5 shrink-0" />,
-  error: <CircleAlert aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-bad" />,
-  success: <CircleCheck aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-ok" />,
-};
-
-/** 提示框。error 用 role="alert"（立即唸出），success 用 role="status"。 */
+/** 提示框：共用的 Alert（components/ui/Alert.tsx）。error 用 role="alert"（立即唸出），success 用 role="status"。 */
 export function Notice({ tone = 'info', title, children }: { tone?: Tone; title?: string; children?: ReactNode }) {
   const role = tone === 'error' ? 'alert' : tone === 'success' ? 'status' : undefined;
   return (
-    <div role={role} className={`flex gap-3 rounded-xl border px-4 py-3 text-[0.95rem] ${TONE_CLS[tone]}`}>
-      {TONE_ICON[tone]}
-      <div className="min-w-0 flex-1 space-y-1 break-words">
-        {title && <p className="font-semibold">{title}</p>}
-        {children}
-      </div>
-    </div>
+    <Alert tone={tone} role={role} title={title} className="break-words">
+      {children}
+    </Alert>
   );
 }
 
 export function AiStatusBadge({ status }: { status: AiStatus }) {
   return (
-    <span className={`inline-flex shrink-0 items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${AI_STATUS_BADGE[status]}`}>
-      {AI_STATUS_LABELS[status]}
-    </span>
+    <Badge tone={AI_STATUS_BADGE[status]}>{AI_STATUS_LABELS[status]}</Badge>
   );
 }
 
 export function SoonBadge() {
   return (
-    <span className="inline-flex shrink-0 items-center rounded-full bg-badge-bg px-2.5 py-0.5 text-xs font-semibold text-badge-fg">
-      即將開放
-    </span>
+    <Badge tone="warn">即將開放</Badge>
   );
 }
 
 export function AiNoticeBadge() {
   return (
-    <span className="inline-flex shrink-0 items-center rounded-full bg-primary-soft px-2.5 py-0.5 text-xs font-semibold text-primary">
-      {AI_NOTICE}
-    </span>
+    <Badge tone="ai">{AI_NOTICE}</Badge>
   );
 }
 
@@ -103,7 +81,7 @@ export function LoginPrompt({ next, title = '請先登入', children }: { next: 
 /** 後端還沒部署或登入／AI 機密沒設定：不是錯誤，只是「即將開放」。 */
 export function ComingSoon({ title, children }: { title: string; children?: ReactNode }) {
   return (
-    <section className="rounded-2xl border border-dashed border-line bg-surface-2 p-5">
+    <section className="rounded-card border border-dashed border-line bg-surface-2 p-5">
       <div className="flex flex-wrap items-center gap-2">
         <h2 className={sectionTitleCls}>{title}</h2>
         <SoonBadge />

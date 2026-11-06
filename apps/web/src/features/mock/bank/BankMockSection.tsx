@@ -49,6 +49,7 @@ import { getSnapshotStore } from './snapshots';
 import { loadUsedGroups } from './used';
 import { btn } from '../../../components/ui/buttons';
 import { optionCardTopCls } from '../../../components/ui/Check';
+import { cardCls } from '../../../components/ui/Card';
 
 export const TIER_KEY = 'gsat-bankmock:v1:tier';
 /** 「我組過的卷子」先列幾份，其他收進「更多」。 */
@@ -372,7 +373,7 @@ export default function BankMockSection() {
       ref={sectionRef}
       id="bank-mock"
       aria-labelledby={`${id}-title`}
-      className="scroll-mt-20 space-y-4 rounded-2xl border border-line bg-surface p-5 lg:max-w-[60rem] lg:p-6"
+      className={`${cardCls} scroll-mt-20 space-y-4 lg:max-w-[60rem]`}
     >
       <div className="space-y-1">
         <h2 ref={headingRef} id={`${id}-title`} tabIndex={-1} className="text-lg font-semibold">

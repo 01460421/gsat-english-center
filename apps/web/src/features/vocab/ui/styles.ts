@@ -5,7 +5,8 @@
 
 import { btn, iconBtnCls } from '../../../components/ui/buttons';
 
-export const cardCls = 'rounded-2xl border border-line bg-surface p-4 sm:p-5 lg:p-6';
+/** 卡片：共用元件（components/ui/Card.tsx）。 */
+export { cardCls } from '../../../components/ui/Card';
 
 /** 按鈕：共用元件（components/ui/buttons.ts，設計文件 css-overhaul §4.1）。 */
 export const btnPrimary = btn('primary', 'md');

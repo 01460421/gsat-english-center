@@ -3,15 +3,18 @@ import { ChevronLeft, ExternalLink, Sparkles } from 'lucide-react';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { Link } from 'react-router';
 import type { ErrorView } from '../lib/errors';
+import { alertCls, type AlertTone } from '../../../components/ui/Alert';
+import { badgeCls } from '../../../components/ui/Badge';
 import { btn } from '../../../components/ui/buttons';
 import { textareaCls } from '../../../components/ui/fields';
+import { cardCompactCls } from '../../../components/ui/Card';
 
 /** 按鈕：共用元件（components/ui/buttons.ts，設計文件 css-overhaul §4.1）。 */
 export const primaryButton = btn('primary', 'md');
 export const secondaryButton = btn('secondary', 'md');
 /** 作答框與文字框（多行為主；單行的 <input> 用 fieldCls）：共用元件（components/ui/fields.ts）。 */
 export const textInput = textareaCls;
-export const card = 'rounded-2xl border border-line bg-surface p-4 lg:p-5';
+export const card = cardCompactCls;
 
 /** 英文作答框：關掉拼字檢查、自動大寫、自動完成（拼字錯誤要學生自己發現，也不能讓手機偷偷改字）。 */
 export const englishInputProps = {
@@ -38,7 +41,7 @@ export function AiBadge({ compact = false, variant }: { compact?: boolean; varia
   if (compact) {
     // 列表裡空間小：只顯示「AI」，完整說明給讀屏與滑鼠提示。
     return (
-      <span title={text} className="inline-flex shrink-0 items-center gap-0.5 rounded-full bg-badge-bg px-1.5 py-0.5 text-[0.7rem] font-semibold text-badge-fg">
+      <span title={text} className={badgeCls('ai', 'xs', 'gap-0.5 px-1.5')}>
         <Sparkles aria-hidden="true" className="size-3" />
         <span aria-hidden="true">AI</span>
         <span className="sr-only">{text}</span>
@@ -46,7 +49,7 @@ export function AiBadge({ compact = false, variant }: { compact?: boolean; varia
     );
   }
   return (
-    <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-badge-bg px-2.5 py-0.5 text-xs font-semibold text-badge-fg">
+    <span className={badgeCls('ai', 'xs', 'px-2.5')}>
       <Sparkles aria-hidden="true" className="size-3.5" />
       {text}
     </span>
@@ -108,7 +111,7 @@ export const EXEMPLAR_AI_NOTICE =
 export function AiNotice({ children, generic = false, variant }: { children?: ReactNode; generic?: boolean; variant?: AiVariant }) {
   const assistant = variant === 'assistant';
   return (
-    <p className="flex flex-wrap items-center gap-2 rounded-xl border border-badge-line bg-badge-bg/60 px-4 py-2 text-sm">
+    <p className={alertCls('ai', 'flex flex-wrap items-center gap-2 py-2')}>
       {assistant ? <AiBadge variant="assistant" /> : variant === 'exemplar' ? <AiBadge variant="exemplar" /> : <AiBadge />}
       <span>
         {assistant
@@ -126,16 +129,12 @@ export function AiNotice({ children, generic = false, variant }: { children?: Re
 
 type Tone = 'info' | 'warn' | 'error' | 'ok';
 
-const TONE_CLASS: Record<Tone, string> = {
-  info: 'border-line bg-surface-2',
-  warn: 'border-badge-line bg-badge-bg/60',
-  error: 'border-bad-line bg-bad-soft text-bad',
-  ok: 'border-ok/30 bg-ok-soft',
-};
+/** 提示框的外觀：共用的 Alert（components/ui/Alert.tsx）。 */
+const TONE: Record<Tone, AlertTone> = { info: 'info', warn: 'warn', error: 'error', ok: 'success' };
 
 export function Notice({ tone = 'info', children, role }: { tone?: Tone; children: ReactNode; role?: 'status' | 'alert' }) {
   return (
-    <div role={role} className={`rounded-xl border px-4 py-3 text-sm ${TONE_CLASS[tone]}`}>
+    <div role={role} className={alertCls(TONE[tone])}>
       {children}
     </div>
   );
@@ -144,7 +143,7 @@ export function Notice({ tone = 'info', children, role }: { tone?: Tone; childre
 /** 錯誤訊息＋下一步（登入、申請、同意）。 */
 export function ErrorMessage({ view }: { view: ErrorView }) {
   return (
-    <div role="alert" className="rounded-xl border border-bad-line bg-bad-soft px-4 py-3 text-sm">
+    <div role="alert" className={alertCls('error')}>
       <p className="text-bad">{view.message}</p>
       {view.action?.to && (
         <Link to={view.action.to} className="mt-2 inline-flex min-h-9 items-center font-medium text-primary underline underline-offset-2">

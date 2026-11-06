@@ -15,6 +15,7 @@ import { formatPoints, multiSelectFraction, type AnswerValue, type OpenOutcome }
 import { evidenceRanges } from '../evidence';
 import { BLANK_POS_LABELS, MIXED_OPTION_CODE_LABELS, transformNote } from '../labels';
 import { CardShell, EvidenceBlock, EvidenceQuote, HintList, OptionLabel, Section } from './ExplanationCard';
+import { badgeShapeCls } from '../../../components/ui/Badge';
 
 function asLetters(value: AnswerValue | undefined): string[] {
   if (value === undefined) return [];
@@ -178,7 +179,7 @@ function OutcomeBadge({ outcome }: { outcome: OpenOutcome }) {
         : outcome.earned > 0
           ? `部分給分 ${formatPoints(outcome.earned)}／${formatPoints(outcome.max)} 分`
           : '答錯，0 分';
-  return <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-sm font-semibold ${tone}`}>{icon}{text}</span>;
+  return <span className={`${badgeShapeCls('sm')} gap-1.5 ${tone}`}>{icon}{text}</span>;
 }
 
 /**

@@ -145,7 +145,7 @@ export function ExamTable({ exams, listSearch, filters, count }: { exams: readon
         <span className="ml-auto">{count}</span>
       </StickyBar>
       {rows.length === 0 ? (
-        <p className="rounded-2xl border border-dashed border-line p-6 text-center text-muted">沒有符合條件的考卷。</p>
+        <p className="rounded-card border border-dashed border-line p-6 text-center text-muted">沒有符合條件的考卷。</p>
       ) : (
         <DataTable
           caption="歷屆試題"

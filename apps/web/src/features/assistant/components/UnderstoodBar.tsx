@@ -13,6 +13,7 @@ import { ErrorMessage } from '../../writing/components/ui';
 import type { ErrorView } from '../../writing/lib/errors';
 import { patchAssistCase } from '../lib/assistApi';
 import { useAssistErrorView } from '../lib/pollers';
+import { cardFrameCls } from '../../../components/ui/Card';
 
 const OPTIONS: Array<{ value: AssistUnderstood; label: string }> = [
   { value: 'yes', label: '懂了' },
@@ -62,7 +63,7 @@ export function UnderstoodBar({ detail, onUpdated }: { detail: AssistCaseDetail;
   const rating = optimistic && optimistic.rating !== undefined ? optimistic.rating : detail.rating;
   const flagged = rating === 'wrong';
   return (
-    <div aria-busy={saving || undefined} className="space-y-3 rounded-2xl border border-line bg-surface p-4">
+    <div aria-busy={saving || undefined} className={`${cardFrameCls} p-4 space-y-3`}>
       <fieldset>
         <legend className="font-semibold">看完解析，懂了嗎？</legend>
         <div className="mt-2 flex flex-wrap gap-2">

@@ -494,7 +494,7 @@ function CaseView({ detail, poller }: { detail: AssistCaseDetail; poller: Return
       {header}
       {safety && <AssistSafetyCare />}
       {preview && (
-        <section aria-labelledby="assist-question-h" className="space-y-2 rounded-2xl border border-line bg-surface-2 p-4">
+        <section aria-labelledby="assist-question-h" className="space-y-2 rounded-card border border-line bg-surface-2 p-4">
           <h2 id="assist-question-h" className="text-lg font-semibold">
             題目
           </h2>

@@ -46,7 +46,7 @@ export interface PracticeEmbed {
 function Loading({ text, embedded }: { text: string; embedded: boolean }) {
   if (embedded) {
     return (
-      <p role="status" className="rounded-2xl border border-line bg-surface py-10 text-center text-muted">
+      <p role="status" className="rounded-card border border-line bg-surface py-10 text-center text-muted">
         {text}
       </p>
     );
@@ -76,7 +76,7 @@ function EmptyCell({ index, section, tier, embedded }: { index: BankIndex; secti
   const others = TIERS.filter((t) => t !== tier && cellEntries(index.groups, section, t).length > 0);
   const title = `${PRACTICE_SECTION_LABELS[section]}・${TIER_LABELS[tier]}`;
   const box = (
-    <div className="rounded-2xl border border-dashed border-line bg-surface-2 p-5">
+    <div className="rounded-card border border-dashed border-line bg-surface-2 p-5">
       <p className="text-lg font-semibold">出題中</p>
       <p className="mt-1 text-muted">
         {embedded ? '這個難度' : '這一格'}的 AI 題組還在出題與驗證中；通過自動驗證（兩位 AI 盲解都答對、只有唯一正解）後就會出現在這裡。

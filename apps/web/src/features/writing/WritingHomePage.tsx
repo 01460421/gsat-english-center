@@ -31,10 +31,11 @@ import { useAiAccess, useSignedIn } from './lib/access';
 import { useQuota } from './lib/hooks';
 import { ExemplarsEntryCard } from './exemplars/components/ExemplarsButton';
 import { useExemplarsEnabled } from './exemplars/lib/useExemplarsEnabled';
+import { cardLinkCls } from '../../components/ui/Card';
 
 function EntryCard({ to, icon, title, children }: { to: string; icon: ReactNode; title: string; children: ReactNode }) {
   return (
-    <Link to={to} className="group flex h-full items-start gap-3 rounded-2xl border border-line bg-surface p-4 hover:border-primary lg:p-5">
+    <Link to={to} className={`${cardLinkCls} group flex h-full items-start gap-3`}>
       <span className="inline-flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary-soft text-primary">{icon}</span>
       <span className="min-w-0 flex-1">
         <span className="block text-lg font-semibold">{title}</span>

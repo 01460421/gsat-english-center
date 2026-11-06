@@ -17,6 +17,7 @@ import { formatUnixTime, formatUnixTimeShort } from '../../lib/format';
 import { EXEMPLARS_PATH, SOURCE_LABELS } from '../labels';
 import { useExemplarErrorView } from '../lib/errors';
 import { deleteExemplarSet, listExemplarSets } from '../lib/exemplarsApi';
+import { badgeCls } from '../../../../components/ui/Badge';
 
 export const SET_STATUS_LABELS: Record<ExemplarSetStatus, string> = { queued: '產生中', running: '產生中', done: '完成', failed: '沒有完成' };
 
@@ -24,7 +25,7 @@ const pending = (s: ExemplarSetSummary) => s.status === 'queued' || s.status ===
 const setHref = (id: string) => `${EXEMPLARS_PATH}/${encodeURIComponent(id)}`;
 
 function SharedBadge() {
-  return <span className="rounded-full bg-ok/15 px-2 py-0.5 text-xs font-semibold">0 點（共用）</span>;
+  return <span className={badgeCls('ok')}>0 點（共用）</span>;
 }
 
 function DeleteButton({ set, onDelete, busy }: { set: ExemplarSetSummary; onDelete: (id: string) => void; busy: boolean }) {

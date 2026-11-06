@@ -17,6 +17,7 @@ import { useAssistErrorView } from '../lib/pollers';
 import { inputCls, primaryBtn } from './parts';
 import { btn } from '../../../components/ui/buttons';
 import { Select } from '../../../components/ui/Field';
+import { cardFrameCls } from '../../../components/ui/Card';
 
 export function FollowupComposer({
   caseId,
@@ -90,7 +91,7 @@ export function FollowupComposer({
 
   return (
     <form
-      className="space-y-3 rounded-2xl border border-line bg-surface p-4"
+      className={`${cardFrameCls} p-4 space-y-3`}
       onSubmit={(e) => {
         e.preventDefault();
         void submit();

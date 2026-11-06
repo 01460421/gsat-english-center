@@ -24,6 +24,8 @@ import { ZH_EXEMPLAR_POINTS } from '../../subjects/chinese/exemplar';
 import { ZhExemplarConfirm } from '../../subjects/chinese/ZhExemplarSection';
 import { ZH_WRITING_COPY, ZH_WRITING_SECTION_SHORT, zhWritingHref } from '../labels';
 import { loadZhWritingPrompts, zhHistoryStatus, zhPromptsByYear } from '../lib';
+import { insetBoxCls } from '../../../../components/ui/Card';
+
 
 /** 列表上的一題（按鈕；回來時焦點放回這裡）。 */
 export const promptButtonAttr = 'data-zh-prompt';
@@ -166,13 +168,13 @@ function PromptDetail({
               <p className="mt-1 whitespace-pre-wrap break-words">{b.text}</p>
             </div>
           ) : (
-            <div key={i} className="rounded-xl border border-line bg-surface p-3">
+            <div key={i} className={insetBoxCls}>
               {i === 0 && <p className="text-xs font-semibold text-muted">{ZH_WRITING_COPY.materialLabel}</p>}
               <p className="mt-1 whitespace-pre-wrap break-words leading-relaxed">{b.text}</p>
             </div>
           ),
         )}
-        <div className="rounded-xl border border-primary/40 bg-surface p-3">
+        <div className="rounded-control border border-primary/40 bg-surface p-3">
           <p className="text-xs font-semibold text-muted">{ZH_WRITING_COPY.promptLabel}</p>
           <p className="mt-1 whitespace-pre-wrap break-words leading-relaxed">{prompt.prompt}</p>
         </div>

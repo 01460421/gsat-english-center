@@ -13,13 +13,14 @@ import { questionTitle } from '../../exams/richText';
 import { isAnswered } from '../../exams/scoring';
 import { useMockMeta, useMockSession } from '../MockSessionContext';
 import type { PaperIndex } from '../paperIndex';
+import { cardFrameCls } from '../../../components/ui/Card';
 
 export function SectionNavigator({ index, onGo }: { index: PaperIndex; onGo: (sectionId: string) => void }) {
   const active = useMockMeta((m) => m.activeSectionId);
   const marked = useMockMeta((m) => m.marked);
   const answers = useAttemptSelector((s) => s.answers);
   return (
-    <nav aria-label="大題導覽" className="rounded-2xl border border-line bg-surface p-2">
+    <nav aria-label="大題導覽" className={`${cardFrameCls} p-2`}>
       {/* 手機上一列放不下八個大題：在這個區塊內左右捲動（整頁不會水平捲動）。 */}
       <ol className="flex snap-x gap-2 overflow-x-auto p-1 lg:flex-wrap lg:overflow-visible">
         {index.sections.map((s, i) => {
@@ -68,7 +69,7 @@ export function QuestionPalette({ index, onGoQuestion }: { index: PaperIndex; on
   const answeredCount = index.labels.filter((l) => isAnswered(answers[l])).length;
 
   return (
-    <section aria-labelledby={`${id}-title`} className="rounded-2xl border border-line bg-surface">
+    <section aria-labelledby={`${id}-title`} className="rounded-card border border-line bg-surface">
       <h2 id={`${id}-title`} className="m-0">
         <button
           type="button"

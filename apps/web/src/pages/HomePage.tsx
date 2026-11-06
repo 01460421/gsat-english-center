@@ -20,6 +20,7 @@ import { signedIn, useMe } from '../lib/api';
 import { useMainTier } from '../lib/media';
 import { usePageFeatureFlags } from '../features/assistant/lib/useAssistantEnabled';
 import { APP_NAME, NAV_GROUPS, documentTitle, getPage, isDevPage, navPages, pageSummary, type PageMeta } from '../modules';
+import { cardCls, cardLinkCls } from '../components/ui/Card';
 
 const home = getPage('/');
 
@@ -143,8 +144,8 @@ function DashboardPlaceholder() {
       <p role="status" className="sr-only">
         讀取學習紀錄中…
       </p>
-      <div aria-hidden="true" className="h-96 rounded-2xl bg-surface-2" />
-      <div aria-hidden="true" className="h-72 rounded-2xl bg-surface-2" />
+      <div aria-hidden="true" className="h-96 rounded-card bg-surface-2" />
+      <div aria-hidden="true" className="h-72 rounded-card bg-surface-2" />
     </div>
   );
 }
@@ -202,7 +203,7 @@ function HomeCards() {
         </div>
       </section>
 
-      <section aria-labelledby="progress-heading" className="rounded-2xl border border-line bg-surface p-5 lg:p-6">
+      <section aria-labelledby="progress-heading" className={cardCls}>
         <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
           <h2 id="progress-heading" className="text-lg font-semibold">
             學習進度
@@ -226,7 +227,7 @@ function HomeCards() {
               <li key={page.path} className="min-w-0">
                 <Link
                   to={page.path}
-                  className="group flex h-full items-start gap-3 rounded-2xl border border-line bg-surface p-4 hover:border-primary"
+                  className={`${cardLinkCls} group flex h-full items-start gap-3`}
                 >
                   <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary-soft text-primary">
                     <PageIcon icon={page.icon} className="size-5" />

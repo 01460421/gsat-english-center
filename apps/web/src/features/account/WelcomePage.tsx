@@ -312,7 +312,7 @@ function WelcomeForm({ me, next, onDeleted }: { me: MeResponseSignedIn; next: st
         )}
       </form>
       {returning && (
-        <details className="rounded-2xl border border-line bg-surface-2 px-4 py-2">
+        <details className="rounded-card border border-line bg-surface-2 px-4 py-2">
           <summary className="min-h-11 cursor-pointer content-center font-medium">不同意新版的內容？</summary>
           <div className="space-y-4 pt-1 pb-3">
             <p className="text-[0.95rem]">

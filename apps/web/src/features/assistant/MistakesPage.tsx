@@ -32,6 +32,7 @@ import { useAssistSubjects } from './subjects/useAssistSubjects';
 import type { MistakeRow, MistakeSource } from './sources/types';
 import { btn } from '../../components/ui/buttons';
 import { Select } from '../../components/ui/Field';
+import { cardFrameCls } from '../../components/ui/Card';
 
 const SOURCE_LABELS: Record<MistakeSource, string> = {
   bank: '題庫練習',
@@ -104,7 +105,7 @@ function MobileList({ ranked, asked, clusters }: { ranked: RankedRow[]; asked: (
   return (
     <ul className="space-y-3">
       {ranked.map(({ row, note }) => (
-        <li key={row.key} className="space-y-2 rounded-2xl border border-line bg-surface p-4">
+        <li key={row.key} className={`${cardFrameCls} p-4 space-y-2`}>
           <p className="font-semibold break-words">{row.title}</p>
           <p className="flex flex-wrap gap-x-3 gap-y-1 text-sm text-muted">
             <span>{SOURCE_LABELS[row.source]}</span>
@@ -295,7 +296,7 @@ function Body() {
           讀取作答紀錄中…
         </p>
       ) : rows.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-line bg-surface-2 p-5">
+        <div className="rounded-card border border-dashed border-line bg-surface-2 p-5">
           <p className="font-semibold">還沒有錯題或疑點</p>
           <p className="mt-1 text-muted">做一組題庫練習、一份歷屆試題或模擬考，交卷後答錯的題就會出現在這裡。也可以直接貼上一題問。</p>
           <Link to="/assistant/new" className="mt-3 inline-flex min-h-11 items-center font-medium text-primary underline underline-offset-2">

@@ -13,6 +13,7 @@ import { sectionAnchorId } from './Paper';
 import { btn } from '../../../components/ui/buttons';
 import { numberFieldCls } from '../../../components/ui/fields';
 import { optionCardTopCls } from '../../../components/ui/Check';
+import { calloutCls, cardCls, resultCardCls, resultCardHeadCls } from '../../../components/ui/Card';
 
 /** 考卷的大題結構（開始畫面與列表卡片用）。 */
 export function SectionStructure({ exam }: { exam: Pick<Exam, 'sections'> }) {
@@ -52,7 +53,7 @@ export function SetupPanel({ exam, onStart }: { exam: Exam; onStart: (mode: Atte
   ];
 
   return (
-    <section aria-labelledby={`${name}-title`} className="rounded-2xl border border-line bg-surface p-5 lg:p-6">
+    <section aria-labelledby={`${name}-title`} className={cardCls}>
       <h2 id={`${name}-title`} className="text-lg font-semibold">
         選擇作答方式
       </h2>
@@ -140,8 +141,8 @@ export function ResultSummary({
   const aiOpen = useAiGradingOpen();
 
   return (
-    <section aria-labelledby={titleId} className="rounded-2xl border-2 border-primary bg-surface p-5 lg:p-6">
-      <h2 id={titleId} ref={headingRef} tabIndex={-1} className="text-xl font-bold">
+    <section aria-labelledby={titleId} className={resultCardCls}>
+      <h2 id={titleId} ref={headingRef} tabIndex={-1} className={`${resultCardHeadCls} text-xl font-bold`}>
         交卷結果
       </h2>
       {reason === 'timeout' && <p className="mt-1 font-medium text-bad">時間到，已自動交卷。</p>}
@@ -283,7 +284,7 @@ function RestartControl({ onRestart }: { onRestart: () => void }) {
 /** 頁尾出處（04 文件 §4.3、§7.1：慣例上標示「試題來源：大學入學考試中心 OOO 學年度…」並連到官方 PDF）。 */
 export function ExamSourceNote({ exam }: { exam: Exam }) {
   return (
-    <footer className="space-y-2 rounded-2xl border border-line bg-surface p-4 text-sm text-muted">
+    <footer className={`${calloutCls} space-y-2 text-sm text-muted`}>
       <p className="font-medium text-fg">
         試題來源：大學入學考試中心 {exam.title}（{exam.year} 學年度）
       </p>

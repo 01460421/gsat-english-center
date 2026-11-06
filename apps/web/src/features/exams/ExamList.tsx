@@ -16,6 +16,8 @@ import { ExamTable } from './ExamTable';
 import { isNewSystem } from './labels';
 import { formatPoints } from './scoring';
 import { Select } from '../../components/ui/Field';
+import { cardFrameCls, cardLinkCls } from '../../components/ui/Card';
+import { badgeCls } from '../../components/ui/Badge';
 
 export const KIND_FILTERS = [
   { value: 'all', label: '全部' },
@@ -49,13 +51,13 @@ function ProgressBadge({ exam }: { exam: ExamSummary }) {
   if (!progress) return null;
   if (progress.status === 'submitted') {
     return (
-      <span className="rounded-full bg-ok-soft px-2 py-0.5 text-xs font-semibold text-ok">
+      <span className={badgeCls('ok')}>
         已交卷{progress.result ? `・${formatPoints(progress.result.earned)}／${formatPoints(progress.result.autoMax)}` : ''}
       </span>
     );
   }
   return (
-    <span className="rounded-full bg-primary-soft px-2 py-0.5 text-xs font-semibold text-primary">
+    <span className={badgeCls('primary')}>
       作答中・{progress.answered}／{exam.question_count}
     </span>
   );
@@ -67,13 +69,13 @@ function ExamCard({ exam, listSearch }: { exam: ExamSummary; listSearch: string 
     <Link
       to={`/exams/${exam.id}`}
       state={{ listSearch }}
-      className="group flex h-full flex-col gap-3 rounded-2xl border border-line bg-surface p-4 hover:border-primary"
+      className={`${cardLinkCls} group flex h-full flex-col gap-3`}
     >
       <span className="flex items-start gap-2">
         <span className="min-w-0 flex-1">
           <span className="flex flex-wrap items-center gap-2">
             <span className="text-lg font-semibold">{examShortName(exam)}</span>
-            {isNew && <span className="rounded-full bg-primary-soft px-2 py-0.5 text-xs font-semibold text-primary">新制</span>}
+            {isNew && <span className={badgeCls('primary')}>新制</span>}
             {exam.session === 'makeup' && (
               <span className="rounded-full bg-badge-bg px-2 py-0.5 text-xs font-semibold text-badge-fg">補考</span>
             )}
@@ -210,7 +212,7 @@ export function ExamList({ indexPromise, view = 'cards' }: { indexPromise: Promi
 
   return (
     <div className="space-y-4">
-      <div className="space-y-3 rounded-2xl border border-line bg-surface p-4">
+      <div className={`${cardFrameCls} p-4 space-y-3`}>
         <fieldset>
           <legend className="mb-2 text-sm font-semibold">考試</legend>
           <div className="flex flex-wrap gap-2">
@@ -257,7 +259,7 @@ export function ExamList({ indexPromise, view = 'cards' }: { indexPromise: Promi
         共 {shown.length} 份考卷・{shown.reduce((acc, e) => acc + e.question_count, 0).toLocaleString('zh-TW')} 題
       </p>
       {shown.length === 0 ? (
-        <p className="rounded-2xl border border-dashed border-line p-6 text-center text-muted">沒有符合條件的考卷。</p>
+        <p className="rounded-card border border-dashed border-line p-6 text-center text-muted">沒有符合條件的考卷。</p>
       ) : (
         <ul className="grid gap-3 sm:grid-cols-2">
           {shown.map((exam) => (

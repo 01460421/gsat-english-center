@@ -43,6 +43,7 @@ import type { WeakPaperEntry } from './weakPapers';
 import { labelsText, rangeText } from './rangeText';
 import { ensureSnapshot } from './snapshots';
 import { btn } from '../../../components/ui/buttons';
+import { cardCls } from '../../../components/ui/Card';
 
 /** 開考前檢查失敗時，焦點移到這一塊（bankMockPaper 的 canStart）。 */
 export const ACTIVE_LIMIT_ID = 'bank-active-limit';
@@ -221,7 +222,7 @@ function ActiveLimitNotice({ paperId }: { paperId: string }) {
     );
   }
   return (
-    <section ref={sectionRef} id={ACTIVE_LIMIT_ID} tabIndex={-1} aria-label={`作答中的${kindName}`} className="rounded-2xl border border-bad-line bg-bad-soft p-4 text-sm">
+    <section ref={sectionRef} id={ACTIVE_LIMIT_ID} tabIndex={-1} aria-label={`作答中的${kindName}`} className="rounded-card border border-bad-line bg-bad-soft p-4 text-sm">
       <p className="flex gap-2 font-semibold text-bad">
         <CircleAlert aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
         你有 {check.active.length} 份{kindName}還在作答中。
@@ -425,7 +426,7 @@ export function PaperInfo({ paper, redirectedFrom = null }: { paper: BankPaper; 
   const hasAiGroups = paper.groups.some((g) => g.source === undefined);
   const canReplace = weakEntry !== null && weakEntry.request !== null && !hasPaperUse(weakEntry) && paperListFor(paper.id).activeAttempts().every((a) => a.paperId !== paper.id);
   return (
-    <section aria-labelledby={`${id}-title`} className="space-y-4 rounded-2xl border border-line bg-surface p-5 lg:p-6" data-testid="paper-info">
+    <section aria-labelledby={`${id}-title`} className={`${cardCls} space-y-4`} data-testid="paper-info">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 id={`${id}-title`} className="text-lg font-semibold">
           本卷資訊

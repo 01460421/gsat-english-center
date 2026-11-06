@@ -77,6 +77,7 @@ import { recordOutcomesOnce } from '../../assistant/entries';
 import { bankPaperOutcomes } from '../../assistant/outcomeBuilders';
 import { bankAttemptPath } from '../../writing/bank/data';
 import { btn } from '../../../components/ui/buttons';
+import { cardCls, resultCardCls, resultCardHeadCls } from '../../../components/ui/Card';
 
 /** 交卷原因（同 MockReportPage 的 REASON_TEXT）。 */
 const REASON_TEXT: Record<NonNullable<MockAttemptRecord['submitReason']>, string> = {
@@ -191,7 +192,7 @@ function TierSectionTable({ paper, outcomes }: { paper: BankPaper; outcomes: rea
   const { tiers, rows } = useMemo(() => tierSectionRates(paper, outcomes), [paper, outcomes]);
   if (rows.length === 0) return null;
   return (
-    <section aria-labelledby={`${id}-title`} className="rounded-2xl border border-line bg-surface p-5 lg:p-6">
+    <section aria-labelledby={`${id}-title`} className={cardCls}>
       <h2 id={`${id}-title`} className="mb-3 text-lg font-semibold">
         各難度、各大題得分率
       </h2>
@@ -391,8 +392,8 @@ function ReportBody({ paper, initial }: { paper: BankPaper; initial: MockAttempt
         </p>
       )}
 
-      <section aria-label="原得總分" className="rounded-2xl border-2 border-primary bg-surface p-5 lg:p-6">
-        <p className="text-sm text-muted">原得總分</p>
+      <section aria-label="原得總分" className={resultCardCls}>
+        <p className={`${resultCardHeadCls} text-sm text-muted`}>原得總分</p>
         <p className="text-5xl font-bold tabular-nums">
           {formatPoints(report.raw)}
           <span className="text-xl font-normal text-muted">／{formatPoints(report.fullScore)}</span>
@@ -443,7 +444,7 @@ function ReportBody({ paper, initial }: { paper: BankPaper; initial: MockAttempt
       )}
 
       {showAdvice && (
-        <section aria-labelledby={`${titleId}-advice`} className="rounded-2xl border border-line bg-surface p-5 lg:p-6">
+        <section aria-labelledby={`${titleId}-advice`} className={cardCls}>
           <h2 id={`${titleId}-advice`} className="text-lg font-semibold">
             下一步建議
           </h2>
@@ -490,7 +491,7 @@ function ReportBody({ paper, initial }: { paper: BankPaper; initial: MockAttempt
 
       {kind === 'r' && <TierSectionTable paper={paper} outcomes={outcomes} />}
 
-      <section aria-labelledby={`${titleId}-sections`} className="rounded-2xl border border-line bg-surface p-5 lg:p-6">
+      <section aria-labelledby={`${titleId}-sections`} className={cardCls}>
         <h2 id={`${titleId}-sections`} className="mb-3 text-lg font-semibold">
           各大題得分與用時
         </h2>
@@ -572,8 +573,8 @@ function HistoryOnly({ record, tier }: { record: MockAttemptRecord; tier: Tier |
         這裡只顯示交卷時記下的原始分數。
       </p>
       {entry && (
-        <section aria-label="原得總分" className="rounded-2xl border-2 border-primary bg-surface p-5 text-fg">
-          <p className="text-sm text-muted">原得總分（卷號 {paperNumber(record.paperId)}・{formatDateTime(entry.submittedAt)}）</p>
+        <section aria-label="原得總分" className={`${resultCardCls} text-fg`}>
+          <p className={`${resultCardHeadCls} text-sm text-muted`}>原得總分（卷號 {paperNumber(record.paperId)}・{formatDateTime(entry.submittedAt)}）</p>
           <p className="text-5xl font-bold tabular-nums">
             {formatPoints(entry.raw)}
             <span className="text-xl font-normal text-muted">／{formatPoints(fullScore)}</span>

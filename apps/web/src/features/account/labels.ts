@@ -2,6 +2,7 @@
  * 帳號、AI 申請與後台共用的中文標籤。列舉值來自 @gsat/shared（account.ts、writing.ts），
  * 用 Record<列舉, string> 對照：共用型別新增值時 tsc 會要求這裡補上文案。
  */
+import type { BadgeTone } from '../../components/ui/Badge';
 import type { AdminUserAction, AgeBand, AiStatus, AiTask, AiTier, AuthErrorCode, StartupCheck, UserRole } from '@gsat/shared';
 
 export const AI_STATUS_LABELS: Record<AiStatus, string> = {
@@ -24,13 +25,13 @@ export const AI_STATUS_DESCRIPTIONS: Record<AiStatus, string> = {
 };
 
 /** 狀態徽章的配色（只用語意化顏色；文字本身就說明狀態，顏色不是唯一的資訊來源）。 */
-export const AI_STATUS_BADGE: Record<AiStatus, string> = {
-  none: 'bg-surface-2 text-muted',
-  pending: 'bg-badge-bg text-badge-fg',
-  waitlist: 'bg-badge-bg text-badge-fg',
-  approved: 'bg-primary-soft text-primary',
-  rejected: 'bg-surface-2 text-bad',
-  suspended: 'bg-surface-2 text-bad',
+export const AI_STATUS_BADGE: Record<AiStatus, BadgeTone> = {
+  none: 'neutral',
+  pending: 'warn',
+  waitlist: 'warn',
+  approved: 'primary',
+  rejected: 'bad',
+  suspended: 'bad',
 };
 
 export const AI_TIER_LABELS: Record<AiTier, string> = {

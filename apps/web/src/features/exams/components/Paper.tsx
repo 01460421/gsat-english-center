@@ -18,6 +18,7 @@ import { PassageView, groupHasStimulus } from './Passage';
 import { ScoreDistribution } from './QuestionFeedback';
 import { ChoiceQuestionBlock, CompositionBlock, ErratumNote, FillClusterBlock, TableAnswerBlock, TextAnswerBlock } from './Questions';
 import { btn } from '../../../components/ui/buttons';
+import { cardCompactCls, cardFrameCls } from '../../../components/ui/Card';
 
 /** 選文和題目並排的大題類型；翻譯、作文的選文（例如 gsat-85 的短文翻譯）放在題目上方就好。 */
 const SIDE_BY_SIDE_TYPES: ReadonlySet<ExamSection['type']> = new Set(['reading', 'mixed', 'short_answer', 'other']);
@@ -60,7 +61,7 @@ function StandardGroup({ group, section }: { group: QuestionGroup; section: Exam
   if (!groupHasStimulus(group)) return questions;
 
   const passage = (
-    <div className="rounded-2xl border border-line bg-surface p-4 break-words lg:p-5">
+    <div className={`${cardCompactCls} break-words`}>
       <PassageView group={group} highlights={highlights} />
       <ErratumNote text={groupErratum(exam.id, group.id)} />
     </div>
@@ -80,7 +81,7 @@ function StandardGroup({ group, section }: { group: QuestionGroup; section: Exam
         tabIndex={0}
         role="region"
         aria-label="選文"
-        className="min-w-0 rounded-2xl lg:sticky lg:top-24 lg:max-h-[calc(100dvh-7rem)] lg:self-start lg:overflow-y-auto"
+        className="min-w-0 rounded-card lg:sticky lg:top-24 lg:max-h-[calc(100dvh-7rem)] lg:self-start lg:overflow-y-auto"
       >
         {passage}
       </div>
@@ -142,7 +143,7 @@ function SectionView({ section }: { section: ExamSection }) {
 export function SectionNav() {
   const exam = useExam();
   return (
-    <nav aria-label="大題導覽" className="rounded-2xl border border-line bg-surface p-3">
+    <nav aria-label="大題導覽" className={`${cardFrameCls} p-3`}>
       <ul className="flex flex-wrap gap-2">
         {exam.sections.map((s) => {
           const count = s.groups.reduce((acc, g) => acc + g.questions.length, 0);

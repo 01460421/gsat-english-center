@@ -8,6 +8,7 @@ import { useId, useRef, useState } from 'react';
 import { PHOTO_QUALITY_MESSAGES, PhotoDecodeError, PhotoTooLargeError, formatBytes, photoQualityIssue, resizePhotoFile, type ResizedPhoto } from '../lib/photo';
 import { Notice, secondaryButton } from './ui';
 import { btn } from '../../../components/ui/buttons';
+import { alertCls } from '../../../components/ui/Alert';
 
 export interface PickedPhoto extends ResizedPhoto {
   key: string;
@@ -122,7 +123,7 @@ export function PhotoPicker({ photos, onChange, disabled }: { photos: PickedPhot
                 </button>
               </p>
               {issue && (
-                <p role="alert" className="mt-2 rounded-lg border border-badge-line bg-badge-bg/60 px-3 py-2 text-sm">
+                <p role="alert" className={alertCls('warn', 'mt-2')}>
                   {PHOTO_QUALITY_MESSAGES[issue]}。建議靠近一點、整頁入鏡重拍（手寫稿請直接拍紙本，不要用長截圖）。
                 </p>
               )}

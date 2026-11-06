@@ -629,7 +629,7 @@ function ShortcutHelpUnavailable({ onClose }: { onClose: () => void }) {
       ref={ref}
       aria-labelledby={titleId}
       aria-modal="true"
-      className="m-auto w-[min(28rem,calc(100%-2rem))] rounded-2xl border border-line bg-surface p-5 text-fg shadow-lg backdrop:bg-scrim"
+      className="m-auto w-[min(28rem,calc(100%-2rem))] rounded-card border border-line bg-surface p-5 text-fg shadow-lg backdrop:bg-scrim"
     >
       <h2 id={titleId} className="text-lg font-semibold">
         鍵盤快捷鍵

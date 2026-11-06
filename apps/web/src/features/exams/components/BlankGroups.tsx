@@ -22,12 +22,13 @@ import { ChoiceFeedback, sortedLetters } from './QuestionFeedback';
 import { ChoiceQuestionBlock, QuestionHeading, RevealButton, cardClass } from './Questions';
 import { RichText } from './RichText';
 import { btn } from '../../../components/ui/buttons';
+import { cardCompactCls, cardFrameCls } from '../../../components/ui/Card';
 
 type ChoiceQ = Extract<Question, { mode: 'single_choice' | 'bank_choice' }>;
 
 const isChoiceQ = (q: Question): q is ChoiceQ => q.mode === 'single_choice' || q.mode === 'bank_choice';
 
-const passageCardClass = 'rounded-2xl border border-line bg-surface p-4 break-words lg:p-5';
+const passageCardClass = `${cardCompactCls} break-words`;
 
 /** 空格按鈕的外觀：未作答虛線、已作答實線、目前選取加外框；看過答案後以對錯上色（另有文字說明，不只靠顏色）。 */
 function slotClass({ filled, active, verdict }: { filled: boolean; active: boolean; verdict: 'ok' | 'bad' | null }): string {
@@ -549,7 +550,7 @@ export function BankGroup({ group }: { group: QuestionGroup }) {
     <div className="space-y-4">
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,20rem)] lg:gap-6">
         <div className={passageCardClass}>{stimulus}</div>
-        <div className="rounded-2xl border border-line bg-surface p-4 lg:sticky lg:top-24 lg:max-h-[calc(100dvh-7rem)] lg:self-start lg:overflow-y-auto">
+        <div className={`${cardFrameCls} p-4 lg:sticky lg:top-24 lg:max-h-[calc(100dvh-7rem)] lg:self-start lg:overflow-y-auto`}>
           <h4 className="font-semibold">選項</h4>
           <p className="mt-1 text-xs text-muted">
             先點文中的空格，再點選項填入；也可以把選項拖到空格上。用過的選項會變灰，再點一次會改放到目前的空格。

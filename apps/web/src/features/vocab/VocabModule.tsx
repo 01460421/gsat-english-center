@@ -30,7 +30,7 @@ function TabNav({ current, wordOpen }: { current: VocabTab; wordOpen: boolean })
   // wordOpen：單字卡或講義頁蓋過了分頁內容，分頁列就不標示目前頁。
   return (
     <nav aria-label="單字功能" className="mb-5">
-      <ul className="grid grid-cols-4 gap-1 rounded-2xl border border-line bg-surface p-1">
+      <ul className="grid grid-cols-4 gap-1 rounded-card border border-line bg-surface p-1">
         {VOCAB_TABS.map((t) => {
           const selected = t.id === current;
           const Icon = t.icon;

@@ -25,6 +25,7 @@ import { ExamToolbar } from './components/ExamToolbar';
 import { ExamPaper, SectionNav } from './components/Paper';
 import { ExamSourceNote, ResultSummary, SectionStructure, SetupPanel } from './components/SessionPanels';
 import { btn } from '../../components/ui/buttons';
+import { cardCls } from '../../components/ui/Card';
 
 /** 列表頁把篩選條件（?kind=…&year=…）放在 location.state，「回到列表」時帶回去。 */
 function listSearchFrom(state: unknown): string {
@@ -237,7 +238,7 @@ function ExamSession({ exam }: { exam: Exam }) {
       <div className="space-y-6">
         <ExamHeader exam={exam} />
         <SetupPanel exam={exam} onStart={start} />
-        <section aria-label="大題結構" className="rounded-2xl border border-line bg-surface p-5">
+        <section aria-label="大題結構" className={cardCls}>
           <h2 className="mb-3 font-semibold">大題結構</h2>
           <SectionStructure exam={exam} />
         </section>

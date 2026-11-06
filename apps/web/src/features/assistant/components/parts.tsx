@@ -9,11 +9,13 @@ import { AiBadge } from '../../writing/components/ui';
 import type { ItemStatus } from '../sources/types';
 import { btn } from '../../../components/ui/buttons';
 import { textareaCls } from '../../../components/ui/fields';
+import { cardCompactCls } from '../../../components/ui/Card';
+import { badgeShapeCls } from '../../../components/ui/Badge';
 
 /** 按鈕：共用元件（components/ui/buttons.ts，設計文件 css-overhaul §4.1）。 */
 export const primaryBtn = btn('primary', 'md');
 export const secondaryBtn = btn('secondary', 'md');
-export const cardCls = 'rounded-2xl border border-line bg-surface p-4 lg:p-5';
+export const cardCls = cardCompactCls;
 /** 文字框（多行為主；單行的 <input> 用 fieldCls）：共用元件（components/ui/fields.ts）。 */
 export const inputCls = textareaCls;
 
@@ -65,7 +67,7 @@ export function VerdictBadge({ status, basis }: { status: ItemStatus | AssistVer
           : 'bg-surface-2 text-muted';
   const Icon = status === 'correct' || status === 'doubt' ? CircleCheck : status === 'wrong' ? CircleX : status === 'unknown' ? CircleHelp : CircleMinus;
   return (
-    <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-sm font-semibold ${tone}`}>
+    <span className={`${badgeShapeCls('sm')} ${tone}`}>
       <Icon aria-hidden="true" className="size-4" />
       {STATUS_TEXT[status]}
       {basis === 'client' && <span className="font-normal">（依你裝置上的判分）</span>}
@@ -123,7 +125,7 @@ export function ProcessingNotices({ notices }: { notices: readonly (AssistNotice
 export function AssistSafetyCare({ note = '下面的解析照常提供。' }: { note?: string | null } = {}) {
   const id = useId();
   return (
-    <section role="note" aria-labelledby={id} className="rounded-2xl border border-primary/40 bg-primary-soft p-4 lg:p-5">
+    <section role="note" aria-labelledby={id} className="rounded-card border border-primary/40 bg-primary-soft p-4 lg:p-5">
       <h2 id={id} className="text-lg font-semibold">
         想找人聊聊嗎？
       </h2>

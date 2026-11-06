@@ -20,13 +20,14 @@ import { ChoiceFeedback, OpenFeedback, sortedLetters } from './QuestionFeedback'
 import { RichText } from './RichText';
 import { btn } from '../../../components/ui/buttons';
 import { fieldCls, textareaCls } from '../../../components/ui/fields';
+import { cardFrameCls } from '../../../components/ui/Card';
 
 /** 題目區塊的 DOM id：綜合測驗的空格按鈕、結果頁的「檢討」連結都靠它捲動過去。 */
 export function questionAnchorId(label: string): string {
   return `q-${label}`;
 }
 
-export const cardClass = 'rounded-2xl border border-line bg-surface p-4 scroll-mt-32';
+export const cardClass = `${cardFrameCls} p-4 scroll-mt-32`;
 
 export function QuestionHeading({
   title,
