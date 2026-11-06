@@ -53,6 +53,7 @@ import {
   type ZhFieldsValue,
 } from './typed';
 import { ZhQuestionFields, zhFieldsBlocker } from './ZhQuestionFields';
+import { btn } from '../../../../components/ui/buttons';
 
 const DRAFT_KEY = 'typed:zh:text';
 
@@ -205,7 +206,7 @@ export function ZhPasteForm({
         <div role="status" className="flex flex-wrap items-center gap-2 rounded-xl border border-badge-line bg-badge-bg/60 px-4 py-2 text-sm" data-testid="zh-subject-suggestion">
           <p>{assistSubjectMismatchText(suggestion.subject, 'input', open)}</p>
           {suggestion.subject === 'english' && open.includes('english') && (
-            <button type="button" onClick={() => onSwitchSubject('english')} className="inline-flex min-h-11 items-center rounded-full border border-line bg-surface px-3 font-medium">
+            <button type="button" onClick={() => onSwitchSubject('english')} className={btn('secondary', 'sm')}>
               改選英文
             </button>
           )}

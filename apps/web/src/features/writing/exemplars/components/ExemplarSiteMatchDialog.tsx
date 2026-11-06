@@ -4,6 +4,7 @@
  * 原生 <dialog>（showModal）：焦點自動移入、Esc 關閉、背景不能操作；浮層樣式 border border-line bg-surface shadow-lg（R11）。
  */
 import { useEffect, useId, useRef } from 'react';
+import { btn } from '../../../../components/ui/buttons';
 
 export function ExemplarSiteMatchDialog({
   match,
@@ -57,10 +58,10 @@ export function ExemplarSiteMatchDialog({
             這一題和網站上的「{match.title}」相同。改用網站題目時，如果之前有同學產生過就不用點數，題目文字也比較完整。
           </p>
           <div className="flex flex-wrap gap-2">
-            <button ref={firstRef} type="button" onClick={() => onUseSite(match.group_id)} className="min-h-11 rounded-full bg-primary px-5 font-semibold text-on-primary">
+            <button ref={firstRef} type="button" onClick={() => onUseSite(match.group_id)} className={btn('primary', 'md')}>
               改用網站題目
             </button>
-            <button type="button" onClick={onKeepCustom} className="min-h-11 rounded-full border border-line px-5">
+            <button type="button" onClick={onKeepCustom} className={btn('secondary', 'md')}>
               仍用我貼的題目（{points} 點）
             </button>
             <button type="button" onClick={onClose} className="min-h-11 rounded-full px-3 text-sm text-muted underline underline-offset-2">

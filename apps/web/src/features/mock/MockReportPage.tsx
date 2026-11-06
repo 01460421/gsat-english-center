@@ -37,6 +37,7 @@ import { formatDateTime, signedPoints } from './format';
 import { findMockPaper, mockPdfMeta, SCALE_YEARS, type MockPaper } from './papers';
 import { computeReport, historyEntryFor, levelInfo } from './report';
 import { doneExamIds, loadRecord, parseRecord, saveRecord, upsertHistory, type MockAttemptRecord } from './storage';
+import { btn } from '../../components/ui/buttons';
 
 /** 本站自組卷的成績單（原始分數、依難度的建議，不換算級分；docs/design/bank-mock.md §6.5）。 */
 const BankReport = lazy(() => import('./bank/BankReport'));
@@ -94,7 +95,7 @@ function ReviewPaper({ record }: { record: MockAttemptRecord }) {
           aria-expanded={open}
           aria-controls={`${id}-paper`}
           onClick={() => setOpen((v) => !v)}
-          className="min-h-11 rounded-full border border-primary px-4 text-sm font-medium text-primary hover:bg-primary-soft"
+          className={btn('ghost', 'sm')}
         >
           {open ? '收起檢討試卷' : '展開檢討試卷（答案、全國答對率與選項分布）'}
         </button>
@@ -247,7 +248,7 @@ function ReportBody({ exam, paper, initial }: { exam: Exam; paper: MockPaper; in
           {failed ? (
             <div role="alert">
               <p className="font-semibold">級分對照資料載入失敗</p>
-              <button type="button" onClick={retry} className="mt-2 min-h-11 rounded-full bg-primary px-4 text-sm font-medium text-on-primary">
+              <button type="button" onClick={retry} className={btn('secondary', 'sm', 'mt-2')}>
                 再試一次
               </button>
             </div>
@@ -288,10 +289,10 @@ function ReportBody({ exam, paper, initial }: { exam: Exam; paper: MockPaper; in
       <ExamPdfDownload exam={exam} mockMeta={pdfMeta} defaultIncludeAnswerKey />
 
       <nav aria-label="接下來" className="flex flex-wrap gap-2">
-        <Link to={`/mock/${paper.examId}`} className="inline-flex min-h-11 items-center rounded-full bg-primary px-5 font-semibold text-on-primary">
+        <Link to={`/mock/${paper.examId}`} className={btn('primary', 'md')}>
           再做一次
         </Link>
-        <Link to="/mock" className="inline-flex min-h-11 items-center rounded-full border border-line px-5 hover:border-primary">
+        <Link to="/mock" className={btn('secondary', 'md')}>
           回模擬考列表
         </Link>
       </nav>
@@ -352,7 +353,7 @@ function ReportForRecord({ record }: { record: MockAttemptRecord }) {
     return (
       <ReportMessage title="這份模擬考還在作答中">
         <p>交卷後才會有成績單。</p>
-        <Link to={`/mock/${paper.examId}`} className="inline-flex min-h-11 items-center rounded-full bg-primary px-4 font-medium text-on-primary">
+        <Link to={`/mock/${paper.examId}`} className={btn('primary', 'md')}>
           繼續作答
         </Link>
       </ReportMessage>
@@ -422,7 +423,7 @@ export default function MockReportPage() {
       ) : (
         <ReportMessage title="找不到這份成績單">
           <p>模擬考的紀錄只存在作答的那台裝置與瀏覽器。換了裝置、清除了網站資料，或紀錄超過 30 筆時最舊的會被刪除，都會找不到。</p>
-          <Link to="/mock" className="inline-flex min-h-11 items-center rounded-full bg-primary px-4 font-medium text-on-primary">
+          <Link to="/mock" className={btn('primary', 'md')}>
             回模擬考列表
           </Link>
         </ReportMessage>

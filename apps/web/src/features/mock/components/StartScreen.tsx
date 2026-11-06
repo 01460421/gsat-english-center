@@ -10,6 +10,7 @@ import { ExamPdfDownload } from '../../pdf/ExamPdfDownload';
 import { APP_NAME } from '../../../modules';
 import { MOCK_DURATION_MIN, SUGGESTED_MINUTES, mockPdfMeta, type MockPaper } from '../papers';
 import { canUseStorage, doneExamIds } from '../storage';
+import { btn } from '../../../components/ui/buttons';
 
 export interface StartOptions {
   strict: boolean;
@@ -201,10 +202,10 @@ export function StartScreen({ paper, exam, onStart }: { paper: MockPaper; exam: 
           </ul>
 
           <div className="flex flex-wrap items-center gap-3">
-            <button type="submit" className="min-h-11 rounded-full bg-primary px-6 font-semibold text-on-primary">
+            <button type="submit" className={btn('primary', 'lg')}>
               開始作答
             </button>
-            <button type="button" onClick={() => onStart({ strict, predictedScore: null })} className="min-h-11 rounded-full border border-line px-4 text-sm hover:border-primary">
+            <button type="button" onClick={() => onStart({ strict, predictedScore: null })} className={btn('secondary', 'sm')}>
               不預估，直接開始
             </button>
           </div>

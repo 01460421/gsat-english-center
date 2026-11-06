@@ -7,11 +7,11 @@ import { CircleCheck, CircleHelp, CircleMinus, CircleX } from 'lucide-react';
 import { useId, type ReactNode } from 'react';
 import { AiBadge } from '../../writing/components/ui';
 import type { ItemStatus } from '../sources/types';
+import { btn } from '../../../components/ui/buttons';
 
-export const primaryBtn =
-  'inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-primary px-5 py-2 font-semibold text-on-primary disabled:cursor-not-allowed disabled:opacity-50';
-export const secondaryBtn =
-  'inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-line px-5 py-2 font-medium lg:hover:bg-surface-2 disabled:cursor-not-allowed disabled:opacity-50';
+/** 按鈕：共用元件（components/ui/buttons.ts，設計文件 css-overhaul §4.1）。 */
+export const primaryBtn = btn('primary', 'md');
+export const secondaryBtn = btn('secondary', 'md');
 export const cardCls = 'rounded-2xl border border-line bg-surface p-4 lg:p-5';
 export const inputCls = 'w-full rounded-lg border border-line bg-bg px-3 py-2 text-fg placeholder:text-muted focus:border-primary disabled:opacity-70';
 

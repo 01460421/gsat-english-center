@@ -33,6 +33,7 @@ import { cellEntries, cellProgress, defaultTier, pickGroup, type Pick } from './
 import { SourceGate } from './components/GroupSource';
 import { GroupSession } from './PracticeSession';
 import { practiceAttemptId, practiceAttemptIdForKey } from './practiceExam';
+import { btn } from '../../components/ui/buttons';
 
 /** 題型頁內嵌時才有：難度切換的連結，以及網址沒指定難度時把選定的預設難度寫回網址。 */
 export interface PracticeEmbed {
@@ -105,7 +106,7 @@ function EmptyCell({ index, section, tier, embedded }: { index: BankIndex; secti
               const { total, done } = cellProgress(index.groups, history, section, t);
               return (
                 <li key={t}>
-                  <Link to={practicePath(section, t)} className="inline-flex min-h-11 items-center rounded-full border border-line bg-surface px-4 hover:border-primary">
+                  <Link to={practicePath(section, t)} className={btn('secondary', 'md')}>
                     {TIER_LABELS[t]}（{total} 組，已做 {done}）
                   </Link>
                 </li>
@@ -114,7 +115,7 @@ function EmptyCell({ index, section, tier, embedded }: { index: BankIndex; secti
           </ul>
         </div>
       )}
-      <Link to="/practice" className="inline-block rounded-full bg-primary px-4 py-2 font-medium text-on-primary">
+      <Link to="/practice" className={btn('primary', 'md')}>
         回到題庫練習
       </Link>
     </section>
@@ -142,7 +143,7 @@ function GroupLoader({
     <SourceGate
       file={file}
       action={
-        <button type="button" onClick={onNext} className="inline-flex min-h-11 items-center rounded-full bg-primary px-5 font-semibold text-on-primary">
+        <button type="button" onClick={onNext} className={btn('primary', 'md')}>
           換一組
         </button>
       }

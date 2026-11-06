@@ -3,11 +3,11 @@ import { ChevronLeft, ExternalLink, Sparkles } from 'lucide-react';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { Link } from 'react-router';
 import type { ErrorView } from '../lib/errors';
+import { btn } from '../../../components/ui/buttons';
 
-export const primaryButton =
-  'inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-primary px-5 py-2 font-medium text-on-primary disabled:cursor-not-allowed disabled:opacity-50';
-export const secondaryButton =
-  'inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-line px-5 py-2 font-medium hover:bg-surface-2 disabled:cursor-not-allowed disabled:opacity-50';
+/** 按鈕：共用元件（components/ui/buttons.ts，設計文件 css-overhaul §4.1）。 */
+export const primaryButton = btn('primary', 'md');
+export const secondaryButton = btn('secondary', 'md');
 export const textInput =
   'w-full rounded-lg border border-line bg-bg px-3 py-2 text-fg placeholder:text-muted focus:border-primary disabled:opacity-70';
 export const card = 'rounded-2xl border border-line bg-surface p-4 lg:p-5';
@@ -186,7 +186,7 @@ export function Loading({ children = '載入中…' }: { children?: ReactNode })
   );
 }
 
-const linkButton = 'inline-flex min-h-11 items-center text-sm text-primary underline underline-offset-2 disabled:opacity-50';
+const linkButton = btn('link', 'sm');
 
 /**
  * 需要先在原地確認一次的動作（清除草稿、刪除紀錄、捨棄修改），避免手滑。
@@ -257,11 +257,11 @@ export function ConfirmButton({
           setDone(true);
           onConfirm();
         }}
-        className="inline-flex min-h-11 items-center rounded-full bg-bad px-4 font-semibold text-on-primary"
+        className={btn('danger', 'sm')}
       >
         {confirmLabel}
       </button>
-      <button type="button" onClick={close} className="inline-flex min-h-11 items-center rounded-full border border-line px-4">
+      <button type="button" onClick={close} className={btn('secondary', 'sm')}>
         取消
       </button>
     </span>

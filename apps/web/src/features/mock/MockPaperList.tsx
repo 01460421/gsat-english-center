@@ -36,6 +36,7 @@ import {
 } from './storage';
 import { isExpired, remainingSec } from './timer';
 import { useNow } from './useNow';
+import { btn } from '../../components/ui/buttons';
 
 interface Snapshot {
   active: ReadonlyMap<string, MockAttemptRecord>;
@@ -149,7 +150,7 @@ function PaperPdf({ paper }: { paper: MockPaper }) {
         aria-expanded={open}
         aria-controls={`${id}-panel`}
         onClick={() => setOpen((v) => !v)}
-        className="inline-flex min-h-11 items-center gap-2 rounded-full border border-primary px-4 text-sm font-medium text-primary hover:bg-primary-soft"
+        className={btn('secondary', 'sm')}
       >
         <Download aria-hidden="true" className="size-4" />
         下載 PDF（考試格式）
@@ -222,14 +223,14 @@ function PaperCard({ paper, active, done, order }: { paper: MockPaper; active: M
         <div className="mt-auto flex flex-wrap items-center gap-2 lg:@3xl:mt-0">
           <Link
             to={`/mock/${paper.examId}`}
-            className="inline-flex min-h-11 items-center gap-1 rounded-full bg-primary px-5 font-semibold text-on-primary"
+            className={btn('primary', 'md')}
           >
             {active ? '繼續作答' : latest ? '再做一次' : '開始'}
             <span className="sr-only">：{paper.label}模擬考</span>
             <ChevronRight aria-hidden="true" className="size-4" />
           </Link>
           {latest && (
-            <Link to={`/mock/report/${latest.id}`} className="inline-flex min-h-11 items-center gap-1 rounded-full border border-line px-4 text-sm hover:border-primary">
+            <Link to={`/mock/report/${latest.id}`} className={btn('secondary', 'sm')}>
               <FileText aria-hidden="true" className="size-4" />
               最近成績單
               <span className="sr-only">：{paper.label}</span>

@@ -16,9 +16,10 @@ import { useListOriginState } from '../../lib/listOrigin';
 import { EXEMPLARS_BUTTON, EXEMPLARS_CARD_TEXT, EXEMPLARS_PATH, EXEMPLARS_TITLE, WRITE_FIRST_HINT } from '../entry';
 import { writeExemplarHandoff } from '../lib/handoff';
 import { useExemplarsEnabled } from '../lib/useExemplarsEnabled';
+import { btn } from '../../../../components/ui/buttons';
 
 const SECONDARY =
-  'inline-flex min-h-11 items-center gap-1.5 rounded-full border border-line px-4 text-sm text-muted lg:hover:border-primary lg:hover:text-primary';
+  btn('secondary', 'sm');
 
 /** 範文頁的網址：網站題目 ?group=；自訂題目 ?from=custom；從批改結果頁來時加 &sub=。 */
 export function exemplarsHref(opts: { group?: string | null; custom?: boolean; sub?: string | null }): string {

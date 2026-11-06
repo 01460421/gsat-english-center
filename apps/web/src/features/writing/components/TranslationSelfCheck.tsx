@@ -9,6 +9,7 @@ import { TRANSLATION_CHECKLIST } from '../lib/checklists';
 import { formatScore } from '../lib/format';
 import { checkTranslationSentence, mechanicsMessages } from '../lib/text';
 import { card } from './ui';
+import { btn } from '../../../components/ui/buttons';
 
 /** 自評分：每句 max 分（現制 4 分）、每個錯誤扣 0.5，最低 0。 */
 export function selfScoreOf(errorCount: number, max: number = TRANSLATION_SENTENCE_MAX): number {
@@ -101,7 +102,7 @@ export function TranslationSelfCheck({
                     onClick={() => onErrorCount(i, Math.max(0, count - 1))}
                     disabled={count === 0}
                     aria-label="少一個錯誤"
-                    className="inline-flex size-9 items-center justify-center rounded-full border border-line disabled:opacity-40"
+                    className={btn('secondary', 'icon')}
                   >
                     <Minus aria-hidden="true" className="size-4" />
                   </button>
@@ -113,7 +114,7 @@ export function TranslationSelfCheck({
                     onClick={() => onErrorCount(i, Math.min(10, count + 1))}
                     disabled={count >= 10}
                     aria-label="多一個錯誤"
-                    className="inline-flex size-9 items-center justify-center rounded-full border border-line disabled:opacity-40"
+                    className={btn('secondary', 'icon')}
                   >
                     <Plus aria-hidden="true" className="size-4" />
                   </button>

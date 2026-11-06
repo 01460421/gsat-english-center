@@ -27,6 +27,7 @@ import { ZH_COPY } from './copy';
 import type { ZhFieldsValue } from './typed';
 import { zhItemTitle } from './ZhCommon';
 import { charLimitText } from './ZhShortView';
+import { btn } from '../../../../components/ui/buttons';
 
 /** 選擇題的字母格式不對（空白不算錯）。 */
 export function lettersInvalid(value: string): boolean {
@@ -103,7 +104,7 @@ export function ZhQuestionFields({
           {!open && (
             <>
               <span aria-hidden="true">・</span>
-              <button type="button" onClick={() => setEditing(true)} className="inline-flex min-h-11 items-center font-medium text-primary underline underline-offset-2">
+              <button type="button" onClick={() => setEditing(true)} className={btn('link', 'md')}>
                 修改
               </button>
             </>

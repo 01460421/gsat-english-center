@@ -4,6 +4,7 @@
 import { ASSIST_LIMITS } from '@gsat/shared';
 import { Plus, X } from 'lucide-react';
 import { inputCls } from './parts';
+import { btn } from '../../../components/ui/buttons';
 
 export function SchoolExamDates({ value, onChange, min, max }: { value: string[]; onChange: (dates: string[]) => void; min?: string; max?: string }) {
   const limit = ASSIST_LIMITS.schoolExamDatesMax;
@@ -22,7 +23,7 @@ export function SchoolExamDates({ value, onChange, min, max }: { value: string[]
             <button
               type="button"
               onClick={() => onChange(value.filter((_, j) => j !== i))}
-              className="inline-flex size-11 items-center justify-center rounded-full border border-line lg:hover:bg-surface-2"
+              className={btn('secondary', 'icon')}
               aria-label={`刪掉第 ${i + 1} 個段考日期`}
             >
               <X aria-hidden="true" className="size-4" />
@@ -31,7 +32,7 @@ export function SchoolExamDates({ value, onChange, min, max }: { value: string[]
         ))}
       </ul>
       {value.length < limit && (
-        <button type="button" onClick={() => onChange([...value, ''])} className="inline-flex min-h-11 items-center gap-1 rounded-full border border-dashed border-line px-4 text-sm lg:hover:bg-surface-2">
+        <button type="button" onClick={() => onChange([...value, ''])} className={btn('secondary', 'sm')}>
           <Plus aria-hidden="true" className="size-4" />
           加一個段考日期
         </button>

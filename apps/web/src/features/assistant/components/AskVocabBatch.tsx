@@ -8,6 +8,7 @@ import { useId, useState } from 'react';
 import { Link } from 'react-router';
 import type { MistakeItem } from '../../vocab/lib/mistakes';
 import { useAssistantEnabled } from '../lib/useAssistantEnabled';
+import { btn } from '../../../components/ui/buttons';
 
 export function AskVocabBatch({ items }: { items: readonly MistakeItem[] }) {
   const enabled = useAssistantEnabled();
@@ -52,7 +53,7 @@ export function AskVocabBatch({ items }: { items: readonly MistakeItem[] }) {
       {valid.length > 0 ? (
         <Link
           to={assistAskHref({ src: 'vocab', entries: valid })}
-          className="inline-flex min-h-11 items-center gap-1.5 rounded-full bg-primary px-4 text-sm font-semibold text-on-primary"
+          className={btn('primary', 'sm')}
         >
           <MessageCircleQuestionMark aria-hidden="true" className="size-4" />
           一次解析這 {valid.length} 個字

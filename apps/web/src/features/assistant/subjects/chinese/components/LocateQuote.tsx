@@ -3,13 +3,14 @@
  * 捲到原文並加深顏色（同英文的 StepEvidence）。國文不包 lang="en"。
  */
 import { MapPin } from 'lucide-react';
+import { btn } from '../../../../../components/ui/buttons';
 
 export function LocateQuote({ quote, locatable, onLocate }: { quote: string; locatable: boolean; onLocate?: (() => void) | undefined }) {
   return (
     <span className="inline-flex min-w-0 flex-wrap items-center gap-x-2">
       <q className="zh-quote min-w-0 break-words text-fg">{quote}</q>
       {locatable && onLocate && (
-        <button type="button" onClick={onLocate} className="inline-flex min-h-11 items-center gap-1 text-sm text-primary underline underline-offset-2">
+        <button type="button" onClick={onLocate} className={btn('link', 'sm', 'gap-1')}>
           <MapPin aria-hidden="true" className="size-4" />
           在題目中標出這句
         </button>

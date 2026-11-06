@@ -8,6 +8,7 @@ import { MessageCircleQuestionMark } from 'lucide-react';
 import { useNavigate } from 'react-router';
 import { writeWritingHandoff, type WritingHandoff } from '../lib/handoff';
 import { useAssistantEnabled } from '../lib/useAssistantEnabled';
+import { btn } from '../../../components/ui/buttons';
 
 export function MockWritingHandoff({
   kind,
@@ -40,7 +41,7 @@ export function MockWritingHandoff({
         type="button"
         onClick={go}
         aria-label={`先送 AI 批改，再問學習助手：${label}`}
-        className="inline-flex min-h-11 items-center gap-1.5 rounded-full bg-primary px-4 font-semibold text-on-primary"
+        className={btn('primary', 'md')}
       >
         <MessageCircleQuestionMark aria-hidden="true" className="size-4" />
         先送 AI 批改，再問學習助手
@@ -56,10 +57,10 @@ export function HandoffOffer({ offer, onAccept, onDismiss }: { offer: WritingHan
     <div role="alert" className="space-y-2 rounded-xl border border-primary/40 bg-primary-soft px-4 py-3 text-sm">
       <p>這一題已經有草稿，和模考的答案不同。要換成模考的答案嗎？（目前的草稿會被取代）</p>
       <div className="flex flex-wrap gap-2">
-        <button type="button" onClick={onAccept} className="inline-flex min-h-11 items-center rounded-full bg-primary px-4 font-semibold text-on-primary">
+        <button type="button" onClick={onAccept} className={btn('primary', 'md')}>
           換成模考的答案
         </button>
-        <button type="button" onClick={onDismiss} className="inline-flex min-h-11 items-center rounded-full border border-line bg-surface px-4">
+        <button type="button" onClick={onDismiss} className={btn('secondary', 'md')}>
           保留目前的草稿
         </button>
       </div>

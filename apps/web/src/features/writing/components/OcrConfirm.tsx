@@ -17,6 +17,7 @@ import { checkEssayLength } from '../lib/text';
 import { useRefreshMeOnConsentError } from '../lib/useErrorView';
 import { confirmOcr } from '../lib/writingApi';
 import { AiBadge, ConfirmButton, ErrorMessage, card, englishInputProps, primaryButton, textInput } from './ui';
+import { btn } from '../../../components/ui/buttons';
 
 interface OcrEdits {
   mode: 'lines' | 'full';
@@ -217,7 +218,7 @@ export function OcrConfirm({
                         key={c}
                         type="button"
                         onClick={() => setLine(i, replaceMarkAt(value, m.k, c))}
-                        className="inline-flex min-h-9 items-center rounded-full border border-line bg-surface px-3"
+                        className={btn('secondary', 'sm')}
                         lang="en"
                       >
                         {c}

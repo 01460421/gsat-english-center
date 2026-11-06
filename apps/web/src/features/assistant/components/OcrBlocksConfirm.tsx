@@ -56,6 +56,7 @@ import {
 import { ZhQuestionFields, zhFieldsBlocker } from '../subjects/chinese/ZhQuestionFields';
 import { DoubtPicker, EMPTY_DOUBT, type DoubtValue } from './DoubtPicker';
 import { inputCls, primaryBtn } from './parts';
+import { btn } from '../../../components/ui/buttons';
 
 export const BLOCK_KIND_LABELS: Record<AssistBlockKind, string> = {
   instructions: '說明',
@@ -331,7 +332,7 @@ export function OcrBlocksConfirm({
                           type="button"
                           lang={textLang}
                           onClick={() => setText(i, replaceMarkAt(b.text, k, c))}
-                          className="inline-flex min-h-11 items-center rounded-full border border-line px-3 lg:hover:bg-surface-2"
+                          className={btn('secondary', 'sm')}
                         >
                           {c}
                         </button>

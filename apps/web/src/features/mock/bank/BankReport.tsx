@@ -76,6 +76,7 @@ import { UpdateReportLink } from '../../assistant/components/UpdateReportLink';
 import { recordOutcomesOnce } from '../../assistant/entries';
 import { bankPaperOutcomes } from '../../assistant/outcomeBuilders';
 import { bankAttemptPath } from '../../writing/bank/data';
+import { btn } from '../../../components/ui/buttons';
 
 /** 交卷原因（同 MockReportPage 的 REASON_TEXT）。 */
 const REASON_TEXT: Record<NonNullable<MockAttemptRecord['submitReason']>, string> = {
@@ -84,8 +85,8 @@ const REASON_TEXT: Record<NonNullable<MockAttemptRecord['submitReason']>, string
   expired: '已超過作答時間，以最後存檔的作答計分',
 };
 
-const primaryLink = 'inline-flex min-h-11 items-center rounded-full bg-primary px-5 font-semibold text-on-primary';
-const secondaryLink = 'inline-flex min-h-11 items-center rounded-full border border-line px-5 hover:border-primary';
+const primaryLink = btn('primary', 'md');
+const secondaryLink = btn('secondary', 'md');
 
 const percent = (earned: number, max: number) => (max > 0 ? Math.round((earned / max) * 100) : 0);
 
@@ -255,7 +256,7 @@ function RandomAgainButton({ entry }: { entry: WeakPaperEntry }) {
   };
   return (
     <>
-      <button type="button" onClick={() => void again()} aria-disabled={busy || undefined} className={`${primaryLink} aria-disabled:opacity-60`}>
+      <button type="button" onClick={() => void again()} aria-disabled={busy || undefined} className={primaryLink}>
         {busy ? '組卷中…' : '再抽一份（同設定）'}
       </button>
       {error && (

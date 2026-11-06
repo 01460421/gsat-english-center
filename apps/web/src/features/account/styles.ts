@@ -3,16 +3,14 @@
  * 按鈕高度至少 44px（min-h-11），手機上手指點得準。
  */
 
+import { btn } from '../../components/ui/buttons';
+
 export const cardCls = 'rounded-2xl border border-line bg-surface p-4 sm:p-5 lg:p-6';
 
-export const btnPrimary =
-  'inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-primary px-5 py-2 font-medium text-on-primary hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50';
-
-export const btnSecondary =
-  'inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-line bg-surface px-4 py-2 font-medium text-fg hover:bg-surface-2 disabled:cursor-not-allowed disabled:opacity-50';
-
-export const btnDanger =
-  'inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-bad px-4 py-2 font-medium text-bad hover:bg-surface-2 disabled:cursor-not-allowed disabled:opacity-50';
+/** 按鈕：共用元件（components/ui/buttons.ts，設計文件 css-overhaul §4.1）。btnDanger 是觸發破壞性動作的紅字按鈕（danger-ghost）。 */
+export const btnPrimary = btn('primary', 'md');
+export const btnSecondary = btn('secondary', 'md');
+export const btnDanger = btn('danger-ghost', 'md');
 
 /** 桌機（≥ lg）限寬 28rem：窄版頁面的內容仍有 50rem 寬，暱稱這類短欄位不必拉滿（docs/design/desktop-ui.md §5.12）。 */
 export const fieldCls =

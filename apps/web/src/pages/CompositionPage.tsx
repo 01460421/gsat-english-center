@@ -34,6 +34,7 @@ import { ListOrigin, useListOriginState } from '../features/writing/lib/listOrig
 import { useFeatures } from '../lib/api';
 import { useIsDesktop } from '../lib/media';
 import { getPage } from '../modules';
+import { btn } from '../components/ui/buttons';
 
 const linkCls = 'font-medium text-primary underline underline-offset-2';
 
@@ -53,7 +54,7 @@ function CustomPromptEntry({ aiOpen }: { aiOpen: boolean }) {
         {aiOpen ? '；登入並通過申請後，也能送 AI 批改，評分規準和本站題目相同' : ''}。
       </p>
       <p>
-        <Link to={CUSTOM_ESSAY_PATH} state={origin} className="inline-flex min-h-11 items-center justify-center gap-1 rounded-full bg-primary px-5 py-2 font-medium text-on-primary">
+        <Link to={CUSTOM_ESSAY_PATH} state={origin} className={btn('primary', 'md')}>
           輸入題目開始寫
           <ChevronRight aria-hidden="true" className="size-4" />
         </Link>

@@ -13,6 +13,7 @@ import type { OptionLetter, OptionMap, QuestionGroup } from '../../../data/exams
 import { RichText } from '../../exams/components/RichText';
 import { evidenceRanges } from '../evidence';
 import { BLANK_POS_LABELS, CLUE_TYPE_LABELS, SENSE_LABELS } from '../labels';
+import { btn } from '../../../components/ui/buttons';
 
 export function Section({ step, title, children }: { step: number; title: string; children: ReactNode }) {
   return (
@@ -104,7 +105,7 @@ export function EvidenceBlock({
         <button
           type="button"
           onClick={() => onLocateEvidence(label)}
-          className="mt-2 inline-flex min-h-9 items-center gap-1.5 rounded-full border border-line bg-surface px-3 text-sm hover:border-primary"
+          className={btn('secondary', 'sm', 'mt-2')}
         >
           <Crosshair aria-hidden="true" className="size-4" />
           在文中標出證據句

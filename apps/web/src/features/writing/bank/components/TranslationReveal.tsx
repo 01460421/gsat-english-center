@@ -12,6 +12,7 @@ import { formatScore } from '../../lib/format';
 import type { BankTranslationAnswerItem, BankTranslationAnswersFile, BankTranslationItem } from '../data';
 import { TRAP_TYPE_LABELS } from '../labels';
 import { bankTranslationSelfScore } from '../selfScore';
+import { btn } from '../../../../components/ui/buttons';
 
 const CIRCLED = ['①', '②', '③', '④'];
 /** 每部分最多記幾個錯誤（每錯扣 0.5，兩個就扣完）。 */
@@ -182,7 +183,7 @@ function SentenceReveal({
                       onClick={() => onPartErrors(j, Math.max(0, errors - 1))}
                       disabled={missing || errors === 0}
                       aria-label={`${label}的錯誤數減一`}
-                      className="inline-flex size-11 items-center justify-center rounded-full border border-line bg-surface disabled:opacity-40"
+                      className={btn('secondary', 'icon')}
                     >
                       <Minus aria-hidden="true" className="size-4" />
                     </button>
@@ -192,7 +193,7 @@ function SentenceReveal({
                       onClick={() => onPartErrors(j, Math.min(MAX_PART_ERRORS, errors + 1))}
                       disabled={missing || errors >= MAX_PART_ERRORS}
                       aria-label={`${label}的錯誤數加一`}
-                      className="inline-flex size-11 items-center justify-center rounded-full border border-line bg-surface disabled:opacity-40"
+                      className={btn('secondary', 'icon')}
                     >
                       <Plus aria-hidden="true" className="size-4" />
                     </button>

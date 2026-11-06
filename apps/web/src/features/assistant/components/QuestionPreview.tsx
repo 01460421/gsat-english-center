@@ -15,6 +15,7 @@ import type { TextHighlight } from '../../exams/richText';
 import type { PreviewItem, PreviewModel } from '../sources/types';
 import { ZhText, type ZhMark } from '../subjects/chinese/components/ZhText';
 import { AnswerText, VerdictBadge } from './parts';
+import { btn } from '../../../components/ui/buttons';
 
 const BLOCK_KIND_LABELS: Record<string, string> = {
   instructions: '說明',
@@ -146,7 +147,7 @@ export function QuestionPreview({
           aria-expanded={open}
           aria-controls={bodyId}
           onClick={() => setOpen((v) => !v)}
-          className="inline-flex min-h-11 items-center text-sm font-medium text-primary underline underline-offset-2"
+          className={btn('link', 'sm')}
         >
           {open ? '收起題目全文' : '看完整題目'}
         </button>

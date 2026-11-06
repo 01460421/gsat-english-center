@@ -33,6 +33,7 @@ import { LocateQuote } from './components/LocateQuote';
 import { OptionVerdictTable } from './components/OptionVerdictTable';
 import { zhQuoteId } from './quotes';
 import { CertaintyNote, DoubtReplies, SectionTag, TestedSection, TipsSection, TypeStepsSection, ZhHeadNotes, ZhOffTopic, zhItemTitle, type ZhViewCommonProps } from './ZhCommon';
+import { btn } from '../../../../components/ui/buttons';
 
 /**
  * 子模式改了（單選 → 多選，0 點）之後的一題：依已存的逐選項判定與答案重算多選計分與「你」欄（純函式，測試用）。
@@ -167,7 +168,7 @@ function ChoiceItem({
           aria-expanded={open}
           aria-controls={`${bodyId}-full`}
           onClick={() => setOpen((v) => !v)}
-          className="inline-flex min-h-11 items-center rounded-full border border-primary px-4 text-sm font-medium text-primary"
+          className={btn('ghost', 'sm')}
         >
           {open ? '收起完整解析' : '看完整解析'}
         </button>

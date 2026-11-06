@@ -13,6 +13,7 @@ import { Link } from 'react-router';
 import { useDesktopPref, type SingleKeyPref } from '../../lib/desktopPrefs';
 import { useActiveHotkeys, type HotkeyDef } from '../../lib/hotkeys';
 import { Kbd, KeyCombo } from './Kbd';
+import { iconBtnCls } from '../ui/buttons';
 
 const GROUPS: ReadonlyArray<HotkeyDef['group']> = ['全站', '這一頁'];
 
@@ -58,7 +59,7 @@ export default function ShortcutHelp({ onClose }: { onClose: () => void }) {
           type="button"
           onClick={() => ref.current?.close()}
           aria-label="關閉"
-          className="inline-flex size-10 items-center justify-center rounded-full text-muted hover:bg-surface-2 hover:text-fg"
+          className={iconBtnCls}
         >
           <X aria-hidden="true" className="size-5" />
         </button>

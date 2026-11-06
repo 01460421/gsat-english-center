@@ -5,6 +5,7 @@
  */
 import { Underline } from 'lucide-react';
 import type { RefObject } from 'react';
+import { btn } from '../../../../../components/ui/buttons';
 
 export interface TextSelection {
   text: string;
@@ -65,7 +66,7 @@ export function UnderlineTools({
         type="button"
         disabled={disabled}
         onClick={() => apply(addZhUnderline)}
-        className="inline-flex min-h-11 items-center gap-1 rounded-full border border-line px-3 lg:hover:bg-surface-2 disabled:opacity-50"
+        className={btn('secondary', 'sm')}
       >
         <Underline aria-hidden="true" className="size-4" />
         標示底線
@@ -74,7 +75,7 @@ export function UnderlineTools({
         type="button"
         disabled={disabled}
         onClick={() => apply(removeZhUnderline)}
-        className="inline-flex min-h-11 items-center rounded-full border border-line px-3 lg:hover:bg-surface-2 disabled:opacity-50"
+        className={btn('secondary', 'sm')}
       >
         取消底線
       </button>

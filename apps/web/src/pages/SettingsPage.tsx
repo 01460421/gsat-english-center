@@ -16,6 +16,7 @@ import { useDesktopPref, type ListViewPref, type SidebarPref, type SingleKeyPref
 import { MQ, useIsDesktop, useMediaQuery } from '../lib/media';
 import { setThemePreference, useThemePreference, type ThemePreference } from '../lib/theme';
 import { getPage } from '../modules';
+import { btn } from '../components/ui/buttons';
 
 const THEME_OPTIONS: { value: ThemePreference; label: string; hint: string }[] = [
   { value: 'system', label: '跟隨系統', hint: '依手機或電腦的深淺色設定自動切換' },
@@ -206,7 +207,7 @@ function DesktopSettings() {
               type="button"
               onClick={openHelp}
               aria-haspopup="dialog"
-              className="inline-flex min-h-11 items-center rounded-full border border-line px-4 font-medium hover:border-primary"
+              className={btn('secondary', 'md')}
             >
               查看全部快捷鍵
             </button>

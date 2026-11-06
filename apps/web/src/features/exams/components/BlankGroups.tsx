@@ -21,6 +21,7 @@ import { PassageView } from './Passage';
 import { ChoiceFeedback, sortedLetters } from './QuestionFeedback';
 import { ChoiceQuestionBlock, QuestionHeading, RevealButton, cardClass } from './Questions';
 import { RichText } from './RichText';
+import { btn } from '../../../components/ui/buttons';
 
 type ChoiceQ = Extract<Question, { mode: 'single_choice' | 'bank_choice' }>;
 
@@ -397,7 +398,7 @@ function BankPanel({
             store.setAnswer(q.label, null);
             onClose();
           }}
-          className="mt-2 text-sm text-primary underline"
+          className={btn('link', 'sm', 'mt-2')}
         >
           清除這一格
         </button>

@@ -19,6 +19,7 @@ import { errorMessage } from '../../lib/apiErrors';
 import { clearLocalWritingData } from '../writing/lib/drafts';
 import { AI_STATUS_LABELS, ROLE_LABELS } from './labels';
 import { AiStatusBadge, GMAIL_HINT, SoonBadge } from './ui';
+import { btn } from '../../components/ui/buttons';
 
 export type LoginButtonPlacement = 'topbar' | 'sidebar';
 
@@ -70,7 +71,7 @@ export function LoginButton({ placement = 'topbar', collapsed = false }: { place
         <div>
           <a
             href={loginHref(next)}
-            className="flex min-h-9 w-full items-center justify-center gap-2 rounded-full border border-line px-4 text-[0.95rem] font-medium hover:bg-surface-2"
+            className="flex min-h-9 w-full items-center justify-center gap-2 rounded-full border border-line-strong px-4 text-control font-semibold hover:border-primary hover:text-primary"
           >
             <LogIn aria-hidden="true" className="size-4" />
             使用 Google 登入
@@ -83,7 +84,7 @@ export function LoginButton({ placement = 'topbar', collapsed = false }: { place
       <a
         href={loginHref(next)}
         title={GMAIL_HINT}
-        className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full border border-line px-3 text-sm font-medium hover:bg-surface-2"
+        className={btn('secondary', 'sm', 'shrink-0')}
       >
         <LogIn aria-hidden="true" className="size-4" />
         登入
@@ -185,7 +186,7 @@ function AccountMenu({ me, placement, collapsed }: { me: MeResponseSignedIn; pla
           aria-controls={panelId}
           aria-label={`${name}（帳號選單）`}
           onClick={() => setOpen((v) => !v)}
-          className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full border border-line py-0 pr-2.5 pl-1 text-sm font-medium hover:bg-surface-2"
+          className="inline-flex min-h-11 shrink-0 items-center gap-1.5 rounded-full border border-line-strong py-0 pr-3 pl-1.5 text-sm font-medium hover:border-primary"
         >
           <Avatar name={name} />
           <span className="max-w-[3.5rem] truncate sm:max-w-[8rem]">{name}</span>
@@ -221,7 +222,7 @@ function AccountMenu({ me, placement, collapsed }: { me: MeResponseSignedIn; pla
               </li>
             )}
             <li className="mt-1 border-t border-line pt-1">
-              <button type="button" onClick={logout} disabled={busy} className={`${menuItemCls} disabled:opacity-50`}>
+              <button type="button" onClick={logout} disabled={busy} className={`${menuItemCls} disabled:cursor-not-allowed disabled:text-muted`}>
                 <LogOut aria-hidden="true" className="size-4 text-muted" />
                 {busy ? '登出中…' : '登出'}
               </button>

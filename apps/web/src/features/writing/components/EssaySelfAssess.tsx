@@ -10,6 +10,7 @@ import { ESSAY_CHECKLIST } from '../lib/checklists';
 import { completeEssayScores, type PartialEssayScores } from '../lib/drafts';
 import { bandLabel } from '../lib/format';
 import { card } from './ui';
+import { btn } from '../../../components/ui/buttons';
 
 /** 官方四項的白話說明（本站整理，不是評分原則原文）。 */
 const CRITERION_HINTS: Record<(typeof ESSAY_CRITERIA)[number], string> = {
@@ -110,7 +111,7 @@ export function EssaySelfAssess({
             ) : (
               <span className="text-muted">還有 {missing} 項沒有評分（四項都評完才會附在批改上）</span>
             )}
-            <button type="button" onClick={() => onScores(null)} className="ml-3 text-sm text-primary underline underline-offset-2">
+            <button type="button" onClick={() => onScores(null)} className={btn('link', 'sm', 'ml-3')}>
               清除自評
             </button>
           </p>

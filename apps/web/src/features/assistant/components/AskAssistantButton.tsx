@@ -10,6 +10,7 @@ import { assistAskHref, type AskRef } from '@gsat/shared';
 import { MessageCircleQuestionMark } from 'lucide-react';
 import { Link } from 'react-router';
 import { useAssistantEnabled } from '../lib/useAssistantEnabled';
+import { btn } from '../../../components/ui/buttons';
 
 export type AskVariant = 'primary' | 'secondary';
 
@@ -35,8 +36,8 @@ export function AskAssistantButton({
   const text = label ?? ASK_LABELS[variant];
   const cls =
     variant === 'primary'
-      ? 'inline-flex min-h-11 items-center gap-1.5 rounded-full bg-primary px-4 text-sm font-semibold text-on-primary'
-      : 'inline-flex min-h-11 items-center gap-1.5 rounded-full border border-line px-4 text-sm text-muted lg:hover:border-primary lg:hover:text-primary';
+      ? btn('primary', 'sm')
+      : btn('secondary', 'sm');
   return (
     <Link to={assistAskHref(ask)} aria-label={target ? `${text}：${target}` : undefined} className={`${cls} ${className}`} data-assist-entry={variant}>
       <MessageCircleQuestionMark aria-hidden="true" className="size-4" />

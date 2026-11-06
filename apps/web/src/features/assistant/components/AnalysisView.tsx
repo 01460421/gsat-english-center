@@ -16,6 +16,7 @@ import { MIXED_OPTION_CODE_LABELS, READING_OPTION_CODE_LABELS } from '../../prac
 import { errorLabel } from '../lib/view';
 import { AnalysisSection, AnswerText, En, ProcessingNotices, VerdictBadge } from './parts';
 import { StepEvidence } from './StepEvidence';
+import { btn } from '../../../components/ui/buttons';
 
 const KNOWLEDGE_KIND_LABELS: Record<string, string> = {
   grammar: '文法',
@@ -97,7 +98,7 @@ export function HintSteps({ hints }: { hints: readonly string[] }) {
         ))}
       </ol>
       {shown < hints.length && (
-        <button type="button" onClick={() => setShown((n) => n + 1)} className="mt-2 inline-flex min-h-11 items-center rounded-full border border-line bg-surface px-3 text-sm lg:hover:border-primary">
+        <button type="button" onClick={() => setShown((n) => n + 1)} className={btn('ghost', 'sm', 'mt-2')}>
           看第 {shown + 1} 層提示
         </button>
       )}
@@ -182,7 +183,7 @@ function ItemBlock({
           aria-expanded={open}
           aria-controls={`${bodyId}-full`}
           onClick={() => setOpen((v) => !v)}
-          className="inline-flex min-h-11 items-center rounded-full border border-primary px-4 text-sm font-medium text-primary"
+          className={btn('ghost', 'sm')}
         >
           {open ? '收起完整解析' : '看完整解析'}
         </button>

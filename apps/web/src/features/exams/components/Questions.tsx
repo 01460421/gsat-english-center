@@ -18,6 +18,7 @@ import { questionRangeTitle, questionTitle, resolveBlankQuestion } from '../rich
 import { acceptedLetters, formatPoints, type AnswerValue, type AutoScoredQuestion } from '../scoring';
 import { ChoiceFeedback, OpenFeedback, sortedLetters } from './QuestionFeedback';
 import { RichText } from './RichText';
+import { btn } from '../../../components/ui/buttons';
 
 /** 題目區塊的 DOM id：綜合測驗的空格按鈕、結果頁的「檢討」連結都靠它捲動過去。 */
 export function questionAnchorId(label: string): string {
@@ -64,7 +65,7 @@ export function ErratumNote({ text }: { text: string | null }) {
 }
 
 const revealButtonClass =
-  'mt-3 inline-flex items-center rounded-full border border-primary px-4 py-1.5 text-sm font-medium text-primary hover:bg-primary-soft';
+  btn('secondary', 'sm', 'mt-3');
 
 /** 練習模式的「看答案」按鈕；考試模式或已看過時不顯示。 */
 export function RevealButton({ labels, children = '看答案' }: { labels: readonly string[]; children?: ReactNode }) {

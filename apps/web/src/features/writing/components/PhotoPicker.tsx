@@ -7,6 +7,7 @@ import { ArrowDownUp, Camera, ImagePlus, Trash2 } from 'lucide-react';
 import { useId, useRef, useState } from 'react';
 import { PHOTO_QUALITY_MESSAGES, PhotoDecodeError, PhotoTooLargeError, formatBytes, photoQualityIssue, resizePhotoFile, type ResizedPhoto } from '../lib/photo';
 import { Notice, secondaryButton } from './ui';
+import { btn } from '../../../components/ui/buttons';
 
 export interface PickedPhoto extends ResizedPhoto {
   key: string;
@@ -115,7 +116,7 @@ export function PhotoPicker({ photos, onChange, disabled }: { photos: PickedPhot
                   第 {i + 1} 張・{p.width}×{p.height}・{formatBytes(p.blob.size)}
                   {p.originalBytes > p.blob.size ? `（原檔 ${formatBytes(p.originalBytes)}）` : ''}
                 </span>
-                <button type="button" onClick={() => remove(p.key)} disabled={disabled} className="inline-flex min-h-9 items-center gap-1 text-bad disabled:opacity-50">
+                <button type="button" onClick={() => remove(p.key)} disabled={disabled} className={btn('danger-ghost', 'sm')}>
                   <Trash2 aria-hidden="true" className="size-4" />
                   移除
                 </button>

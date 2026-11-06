@@ -40,6 +40,7 @@ import { practiceOutcomes } from '../assistant/outcomeBuilders';
 import { okFromRatio } from '../assistant/outcomes';
 import { formatPoints, isAnswered } from '../exams/scoring';
 import { formatDateTime } from '../mock/format';
+import { btn } from '../../components/ui/buttons';
 
 /**
  * 學習助手的入口（交卷後每題解析卡下方；docs/design/learning-assistant.md §1.4）：開關關著時 render null。
@@ -219,7 +220,7 @@ function ReviewPanel({ review, score, headingRef }: { review: PracticeReviewInpu
         這是你 {formatDateTime(review.submittedAt)} 交卷的作答，只能看解析、不能修改：答對 {score.correct}／{score.total} 題
         {partial > 0 ? `，另有 ${partial} 題部分給分` : ''}（得分 {formatPoints(score.earned)}／{formatPoints(score.max)} 分）。
       </p>
-      <Link to={review.again} className="mt-3 inline-flex min-h-11 items-center rounded-full border border-line px-4 text-sm font-medium hover:border-primary">
+      <Link to={review.again} className={btn('secondary', 'sm', 'mt-3')}>
         再做一次這一組
       </Link>
     </section>
@@ -497,7 +498,7 @@ export function GroupSession({
             )}
             {submitted && !review && (
               <div className="flex flex-wrap items-center gap-2 border-t border-line pt-4">
-                <button type="button" onClick={onNext} className="inline-flex min-h-11 items-center rounded-full bg-primary px-5 font-semibold text-on-primary">
+                <button type="button" onClick={onNext} className={btn('primary', 'md')}>
                   再一組
                 </button>
                 {repeatNotice && <p className="text-sm text-muted">{repeatNotice}</p>}

@@ -34,6 +34,7 @@ import { Notice, textInput } from '../components/ui';
 import type { CustomPromptDraft, RequirementsConfirmed } from './drafts';
 import { promptFieldSnapshot, type PromptFieldError } from './errors';
 import { pendingRequirements } from './requirements';
+import { btn } from '../../../components/ui/buttons';
 
 /** 題目欄位 → 畫面上的輸入框 id（idPrefix 是預設的 'custom' 時；錯誤時捲過去並把焦點移過去）。 */
 export const PROMPT_FIELD_INPUT: Record<CustomPromptField, string> = {
@@ -377,7 +378,7 @@ export function CustomPromptForm({
           <Notice key={code}>
             <p>{CUSTOM_PROMPT_WARNING_MESSAGES[code]}</p>
             {code === 'personal_header' && (
-              <button type="button" onClick={() => deleteHeaders(field)} className="mt-1 inline-flex min-h-11 items-center font-medium text-primary underline underline-offset-2">
+              <button type="button" onClick={() => deleteHeaders(field)} className={btn('link', 'md', 'mt-1')}>
                 刪掉這幾行
               </button>
             )}
@@ -392,7 +393,7 @@ export function CustomPromptForm({
                 set({ [field]: undoHere.before });
                 setUndo(null);
               }}
-              className="inline-flex min-h-11 items-center font-medium text-primary underline underline-offset-2"
+              className={btn('link', 'md')}
             >
               復原
             </button>
@@ -488,7 +489,7 @@ export function CustomPromptForm({
         {pending.paragraphs !== undefined && (
           <p className="mt-2 flex flex-wrap items-center gap-x-2 text-sm">
             <span>題目文字提到要分 {pending.paragraphs} 段，要把段數要求設成 {pending.paragraphs} 段嗎？</span>
-            <button type="button" onClick={() => set({ paragraphs: pending.paragraphs ?? null })} className="inline-flex min-h-11 items-center font-medium text-primary underline underline-offset-2">
+            <button type="button" onClick={() => set({ paragraphs: pending.paragraphs ?? null })} className={btn('link', 'md')}>
               設成 {pending.paragraphs} 段
             </button>
           </p>
@@ -539,7 +540,7 @@ export function CustomPromptForm({
                 const w = pending.words;
                 if (w) set({ minWords: w.min === null ? '' : String(w.min), maxWords: w.max === null ? '' : String(w.max) });
               }}
-              className="inline-flex min-h-11 items-center font-medium text-primary underline underline-offset-2"
+              className={btn('link', 'md')}
             >
               設成{pending.words.label}
             </button>

@@ -17,6 +17,7 @@ import { useMockMeta } from '../MockSessionContext';
 import { orderedMarks, unansweredBySection, type PaperIndex } from '../paperIndex';
 import { remainingSec } from '../timer';
 import { useNow } from '../useNow';
+import { btn, iconBtnCls } from '../../../components/ui/buttons';
 
 /** 桌機的說明：未作答與標記的題數、剩餘時間（對話框開著時每秒更新）。 */
 function DesktopSummary({ id, unanswered, marked }: { id: string; unanswered: number; marked: number }) {
@@ -117,7 +118,7 @@ export function SubmitDialog({
           type="button"
           onClick={() => close()}
           aria-label="關閉"
-          className="absolute top-3 right-3 inline-flex size-9 items-center justify-center rounded-full text-muted hover:bg-surface-2 hover:text-fg"
+          className={`${iconBtnCls} absolute top-2 right-2`}
         >
           <X aria-hidden="true" className="size-5" />
         </button>
@@ -162,10 +163,10 @@ export function SubmitDialog({
             sticky 的範圍是對話框扣掉內距（p-5）的內容框：bottom 給 −1.25rem 才貼齊對話框的下緣，捲到一半時內容不會從列的下面露出來。
           */}
           <div className="flex flex-wrap gap-2 pt-1 lg:sticky lg:-bottom-5 lg:-mx-5 lg:-mb-5 lg:mt-2 lg:border-t lg:border-line lg:bg-surface lg:px-5 lg:py-3">
-            <button type="button" onClick={onConfirm} className="min-h-11 rounded-full bg-primary px-5 font-semibold text-on-primary">
+            <button type="button" onClick={onConfirm} className={btn('primary', 'md')}>
               確定交卷
             </button>
-            <button ref={cancelRef} type="button" onClick={() => close()} className="min-h-11 rounded-full border border-line px-5">
+            <button ref={cancelRef} type="button" onClick={() => close()} className={btn('secondary', 'md')}>
               繼續作答
             </button>
           </div>

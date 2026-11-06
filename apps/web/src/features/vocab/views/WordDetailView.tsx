@@ -26,6 +26,7 @@ import { EmptyState, ErrorBlock, ExternalLink, LevelBadge, LoadingBlock, SpeakBu
 import { ExampleSentence } from '../ui/ExampleSentence';
 import { btnPrimary, btnSecondary, btnText, cardCls, sectionTitleCls } from '../ui/styles';
 import { useLoad } from '../ui/useLoad';
+import { btn } from '../../../components/ui/buttons';
 
 function Section({ title, children, credit }: { title: string; children: ReactNode; credit?: string }) {
   return (
@@ -212,7 +213,7 @@ function RelatedChips({ words }: { words: RelatedWord[] }) {
           <li key={w.entry_id}>
             <WordLink
               id={w.entry_id}
-              className="inline-flex min-h-11 items-center gap-2 rounded-full border border-line px-3 hover:border-primary hover:bg-primary-soft"
+              className={btn('secondary', 'md')}
             >
               <span lang="en">{w.word}</span>
               <LevelBadge level={w.level} />

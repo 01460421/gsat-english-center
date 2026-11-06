@@ -8,6 +8,7 @@ import type { HealthResponse } from '@gsat/shared';
 import { RefreshCw } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
 import { fetchHealth } from '../lib/api';
+import { btn } from './ui/buttons';
 
 const TIMEOUT_MS = 8000;
 
@@ -79,7 +80,7 @@ export function BackendStatus({ variant = 'pill' }: { variant?: 'pill' | 'inline
           <button
             type="button"
             onClick={retry}
-            className="inline-flex items-center gap-1 rounded-full px-2 text-primary hover:bg-primary-soft"
+            className={btn('ghost', 'sm', 'gap-1')}
           >
             <RefreshCw aria-hidden="true" className="size-3.5" />
             重新檢查

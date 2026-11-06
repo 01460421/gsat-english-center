@@ -31,6 +31,7 @@ import { AGE_BAND_LABELS, AI_STATUS_DESCRIPTIONS, AI_TIER_LABELS, AUTH_ERROR_MES
 import { RequireAccount } from './RequireAccount';
 import { btnPrimary, btnSecondary, cardCls, fieldCls, labelCls, pageTitleCls, sectionTitleCls } from './styles';
 import { AiStatusBadge, GMAIL_HINT, Notice, SoonBadge } from './ui';
+import { Button } from '../../components/ui/Button';
 
 function formatUnixDate(seconds: number): string {
   if (!Number.isFinite(seconds) || seconds <= 0) return '—';
@@ -287,9 +288,11 @@ function ProfileForm({ me }: { me: MeResponseSignedIn }) {
         </div>
       </fieldset>
       {result && <Notice tone={result.ok ? 'success' : 'error'}>{result.message}</Notice>}
-      <button type="submit" disabled={!changed || busy} className={btnPrimary}>
-        {busy ? '儲存中…' : '儲存'}
-      </button>
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+        <Button type="submit" disabled={!changed || busy} disabledReason={!changed && !busy ? '還沒有修改' : undefined}>
+          {busy ? '儲存中…' : '儲存'}
+        </Button>
+      </div>
     </form>
   );
 }

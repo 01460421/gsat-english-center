@@ -55,6 +55,7 @@ import {
   type ReasonContext,
 } from './reasons';
 import { MC_SECTIONS, computeWeakness, wrongGroupsFrom, type WeakTarget, type WeaknessProfile } from './weakness';
+import { btn } from '../../../components/ui/buttons';
 
 /** 「我的加強卷」先列幾份，其他收進「更多」。 */
 export const WEAK_PAPERS_SHOWN = 5;
@@ -78,8 +79,8 @@ const BASIS_TEXT: Record<WeaknessProfile['baseTierBasis'], string> = {
 
 const KIND_TITLES: Record<PaperKindChoice, string> = { w: '弱點加強卷', f: '模考格式卷', r: '隨機抽題卷' };
 
-const primaryBtn = 'inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-primary px-5 font-semibold text-on-primary aria-disabled:opacity-60 disabled:opacity-60';
-const secondaryBtn = 'inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-line px-4 text-sm lg:hover:border-primary aria-disabled:opacity-60';
+const primaryBtn = btn('primary', 'md');
+const secondaryBtn = btn('secondary', 'sm');
 const cardCls = 'rounded-2xl border border-line bg-surface p-5 lg:p-6';
 const optionCls = 'flex cursor-pointer items-start gap-3 rounded-xl border border-line p-3 has-[:checked]:border-primary has-[:checked]:bg-primary-soft has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-60';
 const pillCls = 'inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border border-line px-3 text-sm has-[:checked]:border-primary has-[:checked]:bg-primary-soft';
@@ -256,7 +257,7 @@ function MyWeakPapers({ rows, storageOk }: { rows: readonly WeakPaperRow[]; stor
               aria-expanded={showAll}
               aria-controls={`${id}-list`}
               onClick={() => setShowAll((v) => !v)}
-              className="mt-1 inline-flex min-h-11 items-center text-sm text-primary underline underline-offset-2"
+              className={btn('link', 'sm', 'mt-1')}
             >
               {showAll ? '收起' : `更多（還有 ${rows.length - WEAK_PAPERS_SHOWN} 份）`}
             </button>
@@ -329,13 +330,13 @@ function Stepper({ section, value, max, canAdd, onChange }: { section: BankSecti
     <li className="flex items-center justify-between gap-3 py-1.5">
       <span className="min-w-0">{name}</span>
       <span className="flex items-center gap-2">
-        <button type="button" aria-label={`減少${name}`} onClick={() => onChange(value - 1)} disabled={value <= 0} className="inline-flex size-11 items-center justify-center rounded-full border border-line disabled:opacity-40">
+        <button type="button" aria-label={`減少${name}`} onClick={() => onChange(value - 1)} disabled={value <= 0} className={btn('secondary', 'icon')}>
           <Minus aria-hidden="true" className="size-4" />
         </button>
         <output aria-label={`${name}的組數`} className="w-10 text-center tabular-nums">
           {value} 組
         </output>
-        <button type="button" aria-label={`增加${name}`} onClick={() => onChange(value + 1)} disabled={value >= max || !canAdd} className="inline-flex size-11 items-center justify-center rounded-full border border-line disabled:opacity-40">
+        <button type="button" aria-label={`增加${name}`} onClick={() => onChange(value + 1)} disabled={value >= max || !canAdd} className={btn('secondary', 'icon')}>
           <Plus aria-hidden="true" className="size-4" />
         </button>
       </span>

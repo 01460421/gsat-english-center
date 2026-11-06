@@ -47,6 +47,7 @@ import { BankPaperChangedError } from './sources/bankMock';
 import { PublisherSourceError } from './sources/publisher';
 import { compareLabels } from './sources/common';
 import { resolveAsk, type ResolvedAsk } from './sources';
+import { btn } from '../../components/ui/buttons';
 
 type LoadState = { status: 'loading' } | { status: 'ready'; resolved: ResolvedAsk } | { status: 'none' } | { status: 'error'; error: unknown };
 
@@ -214,7 +215,7 @@ function AskForm({ ask, resolved }: { ask: AskRef; resolved: ResolvedAsk }) {
         <button
           type="button"
           onClick={() => setLabels([requestedItem.label])}
-          className="inline-flex min-h-11 items-center font-medium text-primary underline underline-offset-2"
+          className={btn('link', 'md')}
         >
           只問第 {resolved.displayOf(requestedItem.label)} {unit}
         </button>

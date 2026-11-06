@@ -15,6 +15,7 @@ import { LocateQuote } from './components/LocateQuote';
 import { ZH_COPY, ZH_COVERAGE_TEXT } from './copy';
 import { zhQuoteId } from './quotes';
 import { DoubtReplies, SectionTag, TestedSection, TipsSection, TypeStepsSection, ZhHeadNotes, ZhOffTopic, fieldNotice, zhItemTitle, type ZhViewCommonProps } from './ZhCommon';
+import { btn } from '../../../../components/ui/buttons';
 
 /** 語譯題（題幹有「語譯」「翻譯」「譯成白話」）：翻譯寫在文言對照卡，示範留空（同 Worker 的判斷）。 */
 const TRANSLATION_TASK_RE = /語譯|翻譯|譯成白話|譯為白話/u;
@@ -77,7 +78,7 @@ function PartBlock({
           aria-expanded={open}
           aria-controls={`${bodyId}-full`}
           onClick={() => setOpen((v) => !v)}
-          className="inline-flex min-h-11 items-center rounded-full border border-primary px-4 text-sm font-medium text-primary"
+          className={btn('ghost', 'sm')}
         >
           {open ? '收起完整解析' : '看完整解析'}
         </button>

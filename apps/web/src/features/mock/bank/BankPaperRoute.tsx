@@ -29,6 +29,7 @@ import { decodeAnyPaperId, normalizeAnyPaperId } from './code2';
 import { bk2UniformTier } from './paperId';
 import { newPaperPath } from './PaperInfo';
 import { hasLocalUse, loadBankPaperStrict, resolveBankPaper, type ResolveResult, type StrictLoadResult } from './resolve';
+import { btn } from '../../../components/ui/buttons';
 
 type LoadResult = StrictLoadResult | ResolveResult;
 
@@ -89,8 +90,8 @@ function Message({ title, children }: { title: string; children: ReactNode }) {
   );
 }
 
-const primaryLink = 'inline-flex min-h-11 items-center rounded-full bg-primary px-4 font-medium text-on-primary';
-const secondaryLink = 'inline-flex min-h-11 items-center rounded-full border border-line px-4 hover:border-primary';
+const primaryLink = btn('primary', 'md');
+const secondaryLink = btn('secondary', 'md');
 
 export function PaperNotFound() {
   return (
@@ -151,11 +152,11 @@ function Changed({ paperId, tier, weak }: { paperId: string; tier: Tier | null; 
                   setActive(null);
                   setAbandoned(true);
                 }}
-                className="min-h-9 rounded-full bg-bad px-3 font-semibold text-on-primary"
+                className={btn('danger', 'sm')}
               >
                 確定放棄
               </button>
-              <button type="button" onClick={() => setConfirming(false)} className="min-h-9 rounded-full border border-line px-3">
+              <button type="button" onClick={() => setConfirming(false)} className={btn('secondary', 'sm')}>
                 取消
               </button>
             </span>

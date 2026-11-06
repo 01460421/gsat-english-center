@@ -7,6 +7,7 @@
  */
 import { Component, type ErrorInfo, type ReactNode } from 'react';
 import { DataLoadError, dataErrorMessage } from '../../../data/client';
+import { btn } from '../../../components/ui/buttons';
 
 interface Props {
   children: ReactNode;
@@ -43,7 +44,7 @@ export class DataErrorBoundary extends Component<Props, State> {
         <button
           type="button"
           onClick={this.props.onRetry}
-          className="mt-3 rounded-full bg-primary px-4 py-2 text-sm font-medium text-on-primary"
+          className={btn('secondary', 'sm', 'mt-3')}
         >
           再試一次
         </button>

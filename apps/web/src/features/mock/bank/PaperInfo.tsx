@@ -42,6 +42,7 @@ import { rangeOf } from './resolve';
 import type { WeakPaperEntry } from './weakPapers';
 import { labelsText, rangeText } from './rangeText';
 import { ensureSnapshot } from './snapshots';
+import { btn } from '../../../components/ui/buttons';
 
 /** 開考前檢查失敗時，焦點移到這一塊（bankMockPaper 的 canStart）。 */
 export const ACTIVE_LIMIT_ID = 'bank-active-limit';
@@ -122,7 +123,7 @@ function PaperActions({ paper }: { paper: BankPaper }) {
           type="button"
           onClick={() => void share()}
           aria-describedby={hintId}
-          className="inline-flex min-h-11 items-center gap-2 rounded-full border border-primary px-4 text-sm font-medium text-primary hover:bg-primary-soft"
+          className={btn('secondary', 'sm')}
         >
           <Link2 aria-hidden="true" className="size-4" />
           複製這份卷子的連結
@@ -166,17 +167,17 @@ function ActiveRow({ attempt, onAbandon }: { attempt: ActiveBankAttempt; onAband
         </span>
       </span>
       <span className="flex flex-wrap items-center gap-2">
-        <Link to={`/mock/${attempt.paperId}`} className="inline-flex min-h-11 items-center rounded-full bg-primary px-4 text-sm font-semibold text-on-primary">
+        <Link to={`/mock/${attempt.paperId}`} className={btn('primary', 'sm')}>
           接著作答
           <span className="sr-only">：{label}</span>
         </Link>
         {confirming ? (
           <span role="group" aria-label={`確認放棄${label}`} className="inline-flex flex-wrap items-center gap-2 text-sm">
             <span>確定放棄？這次的作答會刪除。</span>
-            <button type="button" onClick={onAbandon} className="min-h-9 rounded-full bg-bad px-3 font-semibold text-on-primary">
+            <button type="button" onClick={onAbandon} className={btn('danger', 'sm')}>
               確定放棄
             </button>
-            <button type="button" onClick={() => setConfirming(false)} className="min-h-9 rounded-full border border-line px-3">
+            <button type="button" onClick={() => setConfirming(false)} className={btn('secondary', 'sm')}>
               取消
             </button>
           </span>
@@ -399,7 +400,7 @@ function ReplaceButton({ paper, entry }: { paper: BankPaper; entry: WeakPaperEnt
         type="button"
         onClick={() => void replace()}
         aria-disabled={busy || undefined}
-        className="inline-flex min-h-11 items-center gap-2 rounded-full border border-line px-4 text-sm lg:hover:border-primary aria-disabled:opacity-60"
+        className={btn('secondary', 'sm')}
       >
         <RefreshCw aria-hidden="true" className="size-4" />
         {busy ? '組卷中…' : '換一份（同設定）'}

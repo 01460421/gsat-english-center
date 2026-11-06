@@ -7,6 +7,7 @@
 import { Lightbulb } from 'lucide-react';
 import { useEffect, useId, useRef } from 'react';
 import { revealHint, updatePracticeHistory, usePracticeHistory } from '../history';
+import { btn } from '../../../components/ui/buttons';
 
 export function useHintsUsed(groupKey: string, label: string): number {
   return usePracticeHistory().value.hints[groupKey]?.[label] ?? 0;
@@ -55,7 +56,7 @@ export function HintLadder({
               focusLastHint.current = used + 1 >= hints.length;
               updatePracticeHistory((h) => revealHint(h, groupKey, label, hints.length));
             }}
-            className="inline-flex min-h-9 items-center rounded-full border border-line bg-surface px-3 text-sm hover:border-primary"
+            className={btn('ghost', 'sm')}
           >
             {used === 0 ? '看第 1 層提示' : `看第 ${used + 1} 層提示`}
           </button>

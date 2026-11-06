@@ -13,6 +13,7 @@ import { bankProgressOf } from '../../bank/drafts';
 import { useStaticData } from '../../lib/hooks';
 import { BANK_LOCK_TAG } from '../labels';
 import { loadSiteTasks, type SiteSource, type SiteTask } from '../lib/sitePrompts';
+import { btn } from '../../../../components/ui/buttons';
 
 type ExamFilter = 'all' | 'gsat' | 'ast' | 'reference';
 
@@ -171,7 +172,7 @@ export function SitePromptPicker({ onPick }: { onPick: (task: SiteTask) => void 
         </ul>
       )}
       {filtered.length > shown && (
-        <button type="button" onClick={() => setShown((n) => n + PAGE * 2)} className="inline-flex min-h-11 items-center text-sm font-medium text-primary underline underline-offset-2">
+        <button type="button" onClick={() => setShown((n) => n + PAGE * 2)} className={btn('link', 'sm')}>
           顯示更多（還有 {filtered.length - shown} 題）
         </button>
       )}

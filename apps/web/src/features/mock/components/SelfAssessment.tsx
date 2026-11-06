@@ -38,6 +38,7 @@ import {
   type CompositionCriterion,
 } from '../selfAssess';
 import type { CompositionSelfDetail, SelfDetail, TranslationSelfDetail } from '../storage';
+import { btn } from '../../../components/ui/buttons';
 
 export type SelfChange = (label: string, score: number | null, detail?: SelfDetail) => void;
 
@@ -145,7 +146,7 @@ function BankEssayKey({ answers }: { answers: BankEssayAnswersFile }) {
               aria-expanded={open}
               aria-controls={panelId}
               onClick={() => setOpen((v) => !v)}
-              className="inline-flex min-h-11 items-center rounded-full border border-line px-4 font-medium hover:border-primary"
+              className={btn('secondary', 'md')}
             >
               {open ? '收起範文' : '看範文'}
             </button>
@@ -301,7 +302,7 @@ function TranslationItem({
                 aria-label="錯誤處數減一"
                 disabled={errors === undefined || errors <= 0}
                 onClick={() => save({ errors: (errors ?? 0) - 1, mechanics })}
-                className="inline-flex size-11 items-center justify-center rounded-full border border-line disabled:opacity-40"
+                className={btn('secondary', 'icon')}
               >
                 <Minus aria-hidden="true" className="size-4" />
               </button>
@@ -326,7 +327,7 @@ function TranslationItem({
                 type="button"
                 aria-label="錯誤處數加一"
                 onClick={() => save({ errors: (errors ?? -1) + 1, mechanics })}
-                className="inline-flex size-11 items-center justify-center rounded-full border border-line"
+                className={btn('secondary', 'icon')}
               >
                 <Plus aria-hidden="true" className="size-4" />
               </button>

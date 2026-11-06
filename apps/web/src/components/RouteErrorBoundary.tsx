@@ -7,6 +7,7 @@
  * 導覽列在邊界外面，壞掉的只有內容區，使用者仍然可以切到別頁。
  */
 import { Component, type ErrorInfo, type ReactNode } from 'react';
+import { btn } from './ui/buttons';
 
 interface Props {
   children: ReactNode;
@@ -36,7 +37,7 @@ export class RouteErrorBoundary extends Component<Props, State> {
         <button
           type="button"
           onClick={() => window.location.reload()}
-          className="mt-4 rounded-full bg-primary px-4 py-2 font-medium text-on-primary"
+          className={btn('primary', 'md', 'mt-4')}
         >
           重新整理
         </button>

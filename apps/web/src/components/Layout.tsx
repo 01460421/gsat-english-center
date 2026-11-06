@@ -55,6 +55,7 @@ import { Tooltip, useTooltipTarget } from './desktop/Tooltip';
 import { PageIcon } from './icons';
 import { RouteErrorBoundary } from './RouteErrorBoundary';
 import { ThemeToggle } from './ThemeToggle';
+import { btn, iconBtnCls } from './ui/buttons';
 
 /** 鍵盤快捷鍵說明：第一次打開才下載（只在 ≥ lg 用得到）。 */
 const ShortcutHelp = lazy(() => import('./desktop/ShortcutHelp'));
@@ -463,7 +464,7 @@ function MoreMenu({ onDismiss, onNavigate }: { onDismiss: () => void; onNavigate
             type="button"
             onClick={onDismiss}
             aria-label="關閉選單"
-            className="inline-flex size-10 items-center justify-center rounded-full text-muted hover:bg-surface-2"
+            className={iconBtnCls}
           >
             <X aria-hidden="true" className="size-5" />
           </button>
@@ -637,7 +638,7 @@ function ShortcutHelpUnavailable({ onClose }: { onClose: () => void }) {
       <button
         type="button"
         onClick={() => ref.current?.close()}
-        className="mt-4 inline-flex min-h-10 items-center rounded-lg border border-line px-4 text-sm font-medium hover:bg-surface-2"
+        className={btn('secondary', 'md', 'mt-4')}
       >
         關閉
       </button>

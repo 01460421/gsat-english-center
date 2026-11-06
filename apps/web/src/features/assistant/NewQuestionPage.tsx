@@ -69,6 +69,7 @@ import { ZhPasteForm } from './subjects/chinese/ZhPasteForm';
 import { SubjectChips } from './subjects/SubjectChips';
 import { loadLastSubject, pickSubject, saveLastSubject, useAssistSubjects } from './subjects/useAssistSubjects';
 import { useFromCase } from './subjects/useFromCase';
+import { btn } from '../../components/ui/buttons';
 
 const LABEL_RE = /^[A-Za-z0-9]{1,8}$/;
 
@@ -364,7 +365,7 @@ function PhotoPicker({ photos, onChange, disabled }: { photos: PickedPhoto[]; on
                 <span className="tabular-nums text-muted">
                   第 {i + 1} 張・{p.width}×{p.height}・{formatBytes(p.blob.size)}
                 </span>
-                <button type="button" onClick={() => remove(p.key)} disabled={disabled} className="inline-flex min-h-11 items-center gap-1 text-bad disabled:opacity-50">
+                <button type="button" onClick={() => remove(p.key)} disabled={disabled} className={btn('danger-ghost', 'sm')}>
                   <Trash2 aria-hidden="true" className="size-4" />
                   移除
                 </button>
@@ -486,7 +487,7 @@ function PhotoFlow({ caseId, subject, open }: { caseId: string | null; subject: 
       return (
         <Notice tone="warn">
           <p>找不到這一題，可能已經刪除或超過保存期限。</p>
-          <button type="button" onClick={startOver} className="mt-2 font-medium text-primary underline underline-offset-2">
+          <button type="button" onClick={startOver} className={btn('link', 'md', 'mt-2')}>
             重新拍照
           </button>
         </Notice>
@@ -527,7 +528,7 @@ function PhotoFlow({ caseId, subject, open }: { caseId: string | null; subject: 
       return (
         <Notice tone="warn">
           <p>這一題的轉錄結果已經超過 24 小時，文字已經清掉（沒確認的轉錄最多保留 24 小時）。請重新拍照，或改用「貼上文字」。</p>
-          <button type="button" onClick={startOver} className="mt-2 inline-flex min-h-11 items-center font-medium text-primary underline underline-offset-2">
+          <button type="button" onClick={startOver} className={btn('link', 'md', 'mt-2')}>
             重新拍照
           </button>
         </Notice>

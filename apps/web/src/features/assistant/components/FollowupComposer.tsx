@@ -15,6 +15,7 @@ import { startAssistFollowup } from '../lib/assistApi';
 import { loadAssistDraft, saveAssistDraft } from '../lib/drafts';
 import { useAssistErrorView } from '../lib/pollers';
 import { inputCls, primaryBtn } from './parts';
+import { btn } from '../../../components/ui/buttons';
 
 export function FollowupComposer({
   caseId,
@@ -107,7 +108,7 @@ export function FollowupComposer({
                   setText(c);
                   textRef.current?.focus();
                 }}
-                className="inline-flex min-h-11 items-center rounded-full border border-line bg-surface-2 px-3 text-left text-sm lg:hover:border-primary"
+                className={btn('secondary', 'sm', 'text-left')}
               >
                 {c}
               </button>

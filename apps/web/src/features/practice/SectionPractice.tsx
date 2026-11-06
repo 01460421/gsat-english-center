@@ -29,6 +29,7 @@ import type { PracticeSectionType } from '../../data/bank';
 import type { PageMeta } from '../../modules';
 import type { PracticeEmbed } from './BankPractice';
 import { AI_GROUP_LABEL, PRACTICE_SECTION_LABELS, tierFromParam } from './labels';
+import { btn } from '../../components/ui/buttons';
 
 /** 練習程式（作答、圖表、解析卡）按需載入：題型頁的外殼（標題、考試說明）先出來，不必等這一大包。 */
 const SectionBankPractice = lazy(() => import('./BankPractice').then((m) => ({ default: m.SectionBankPractice })));
@@ -121,7 +122,7 @@ class PracticeChunkBoundary extends Component<{ children: ReactNode }, { failed:
       <div role="alert" className="rounded-2xl border border-line bg-surface p-5">
         <p className="font-semibold">題庫練習載入失敗</p>
         <p className="mt-1 text-muted">可能是網站剛更新或網路不穩。請重新整理頁面再試一次。</p>
-        <button type="button" onClick={() => window.location.reload()} className="mt-3 rounded-full bg-primary px-4 py-2 text-sm font-medium text-on-primary">
+        <button type="button" onClick={() => window.location.reload()} className={btn('primary', 'sm', 'mt-3')}>
           重新整理
         </button>
       </div>

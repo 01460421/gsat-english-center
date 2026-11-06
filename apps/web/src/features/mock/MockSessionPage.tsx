@@ -36,6 +36,7 @@ import { computeReport, historyEntryFor } from './report';
 import { MockSession } from './session';
 import { createRecord, loadActiveRecord, loadRecord, saveRecord, setActiveId, upsertHistory, type MockAttemptRecord, type MockSubmitReason } from './storage';
 import { remainingSec } from './timer';
+import { btn } from '../../components/ui/buttons';
 
 /** 本站自組卷的卷子頁（代號解析、嚴格載入、換題轉址；docs/design/bank-mock.md §2.2）：只有打開 /mock/bk1-… 時才載入。 */
 const BankPaperRoute = lazy(() => import('./bank/BankPaperRoute'));
@@ -124,7 +125,7 @@ function FinishButton({ onClick }: { onClick: () => void }) {
         onClick={onClick}
         disabled={locked}
         aria-describedby={locked ? hintId : undefined}
-        className="min-h-11 rounded-full bg-primary px-4 font-semibold text-on-primary disabled:opacity-50"
+        className={btn('primary', 'md')}
       >
         寫完了，準備交卷
       </button>
@@ -149,10 +150,10 @@ function AbandonControl({ onAbandon }: { onAbandon: () => void }) {
   return (
     <span role="group" aria-label="確認放棄" className="inline-flex flex-wrap items-center gap-2 text-sm">
       <span>確定要放棄嗎？這次的作答會刪除，不會留下成績。</span>
-      <button ref={confirmRef} type="button" onClick={onAbandon} className="min-h-9 rounded-full bg-bad px-3 font-semibold text-on-primary">
+      <button ref={confirmRef} type="button" onClick={onAbandon} className={btn('danger', 'sm')}>
         確定放棄
       </button>
-      <button type="button" onClick={() => setConfirming(false)} className="min-h-9 rounded-full border border-line px-3">
+      <button type="button" onClick={() => setConfirming(false)} className={btn('secondary', 'sm')}>
         取消
       </button>
     </span>
@@ -169,7 +170,7 @@ function ConflictBanner({ onTakeOver, onRestart }: { onTakeOver: () => void; onR
         <>
           <p className="font-semibold text-bad">這份模擬考正在另一個分頁作答。</p>
           <p className="mt-1">為了避免兩邊的答案互相覆蓋，這個分頁暫停為唯讀。時間照常倒數。</p>
-          <button type="button" onClick={onTakeOver} className="mt-2 min-h-11 rounded-full bg-primary px-4 font-semibold text-on-primary">
+          <button type="button" onClick={onTakeOver} className={btn('primary', 'md', 'mt-2')}>
             改在這個分頁作答
           </button>
         </>
@@ -177,7 +178,7 @@ function ConflictBanner({ onTakeOver, onRestart }: { onTakeOver: () => void; onR
       {conflict === 'submitted' && (
         <>
           <p className="font-semibold text-bad">這份模擬考已在另一個分頁交卷。</p>
-          <Link to={`/mock/report/${id}`} replace className="mt-2 inline-flex min-h-11 items-center rounded-full bg-primary px-4 font-semibold text-on-primary">
+          <Link to={`/mock/report/${id}`} replace className={btn('primary', 'md', 'mt-2')}>
             看成績單
           </Link>
         </>
@@ -185,7 +186,7 @@ function ConflictBanner({ onTakeOver, onRestart }: { onTakeOver: () => void; onR
       {conflict === 'removed' && (
         <>
           <p className="font-semibold text-bad">這次作答已在另一個分頁放棄。</p>
-          <button type="button" onClick={onRestart} className="mt-2 min-h-11 rounded-full border border-line bg-surface px-4">
+          <button type="button" onClick={onRestart} className={btn('secondary', 'md', 'mt-2')}>
             回到開考前
           </button>
         </>
@@ -342,7 +343,7 @@ function ActiveExamBody({ exam, paper, session, resumed, onSubmitted, onAbandon,
         </div>
         <nav aria-label="上一個與下一個大題" className="flex flex-wrap items-center justify-between gap-2 border-t border-line pt-4">
           {prev ? (
-            <button type="button" onClick={() => goSection(prev.id)} className="inline-flex min-h-11 items-center gap-1 rounded-full border border-line px-4 hover:border-primary">
+            <button type="button" onClick={() => goSection(prev.id)} className={btn('secondary', 'md')}>
               <ChevronLeft aria-hidden="true" className="size-4" />
               上一大題：{prev.label}
             </button>
@@ -350,7 +351,7 @@ function ActiveExamBody({ exam, paper, session, resumed, onSubmitted, onAbandon,
             <span />
           )}
           {next ? (
-            <button type="button" onClick={() => goSection(next.id)} className="inline-flex min-h-11 items-center gap-1 rounded-full bg-primary px-4 font-semibold text-on-primary">
+            <button type="button" onClick={() => goSection(next.id)} className={btn('primary', 'md')}>
               下一大題：{next.label}
               <ChevronRight aria-hidden="true" className="size-4" />
             </button>
@@ -498,7 +499,7 @@ function PaperNotFound() {
       <title>{`找不到這份模擬考｜${APP_NAME}`}</title>
       <h1 className="text-2xl font-bold">找不到這份模擬考</h1>
       <p className="mt-2 text-muted">網址裡的卷別代號可能打錯了。目前的模擬考是 111–115 學測與 115 參考試卷。</p>
-      <Link to="/mock" className="mt-4 inline-flex min-h-11 items-center rounded-full bg-primary px-4 font-medium text-on-primary">
+      <Link to="/mock" className={btn('primary', 'md', 'mt-4')}>
         回到模擬考列表
       </Link>
     </section>

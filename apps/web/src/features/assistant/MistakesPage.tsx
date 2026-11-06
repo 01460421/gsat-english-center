@@ -31,6 +31,7 @@ import { listMistakes } from './sources';
 import { ZH_COPY } from './subjects/chinese/copy';
 import { useAssistSubjects } from './subjects/useAssistSubjects';
 import type { MistakeRow, MistakeSource } from './sources/types';
+import { btn } from '../../components/ui/buttons';
 
 const SOURCE_LABELS: Record<MistakeSource, string> = {
   bank: '題庫練習',
@@ -84,12 +85,12 @@ function RowActions({ row, asked }: { row: MistakeRow; asked: boolean }) {
   return (
     <div className="flex flex-wrap items-center gap-2">
       {row.askHref && (
-        <Link to={row.askHref} className="inline-flex min-h-11 items-center rounded-full bg-primary px-4 text-sm font-semibold text-on-primary" aria-label={`問學習助手：${row.title}`}>
+        <Link to={row.askHref} className={btn('primary', 'sm')} aria-label={`問學習助手：${row.title}`}>
           問學習助手
         </Link>
       )}
       {row.links.map((l) => (
-        <Link key={l.to} to={l.to} className="inline-flex min-h-11 items-center rounded-full border border-line px-4 text-sm lg:hover:border-primary">
+        <Link key={l.to} to={l.to} className={btn('secondary', 'sm')}>
           {l.label}
         </Link>
       ))}

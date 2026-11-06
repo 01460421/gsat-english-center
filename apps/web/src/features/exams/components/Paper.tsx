@@ -17,6 +17,7 @@ import { BankGroup, ClozeGroup } from './BlankGroups';
 import { PassageView, groupHasStimulus } from './Passage';
 import { ScoreDistribution } from './QuestionFeedback';
 import { ChoiceQuestionBlock, CompositionBlock, ErratumNote, FillClusterBlock, TableAnswerBlock, TextAnswerBlock } from './Questions';
+import { btn } from '../../../components/ui/buttons';
 
 /** 選文和題目並排的大題類型；翻譯、作文的選文（例如 gsat-85 的短文翻譯）放在題目上方就好。 */
 const SIDE_BY_SIDE_TYPES: ReadonlySet<ExamSection['type']> = new Set(['reading', 'mixed', 'short_answer', 'other']);
@@ -154,7 +155,7 @@ export function SectionNav() {
                   el?.scrollIntoView({ block: 'start' });
                   el?.focus({ preventScroll: true });
                 }}
-                className="rounded-full border border-line px-3 py-1 text-sm hover:border-primary"
+                className={btn('secondary', 'sm')}
               >
                 {SECTION_TYPE_LABELS[s.type]}
                 <span className="ml-1 text-xs text-muted">{count} 題</span>

@@ -9,8 +9,9 @@
  */
 import { Moon, Sun } from 'lucide-react';
 import { setThemePreference, useResolvedTheme, useThemePreference } from '../lib/theme';
+import { iconBtnCls } from './ui/buttons';
 
-const DEFAULT_CLASS = 'inline-flex size-10 items-center justify-center rounded-full text-muted hover:bg-surface-2 hover:text-fg';
+const DEFAULT_CLASS = iconBtnCls;
 
 export function ThemeToggle({ className = DEFAULT_CLASS, tipSide }: { className?: string; tipSide?: 'top' | 'right' }) {
   const resolved = useResolvedTheme();

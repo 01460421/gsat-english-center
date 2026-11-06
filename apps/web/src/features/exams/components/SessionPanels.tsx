@@ -10,6 +10,7 @@ import { formatDuration } from '../labels';
 import { useAiGradingOpen } from './AiGrading';
 import { formatPercent, formatPoints, scoreExam } from '../scoring';
 import { sectionAnchorId } from './Paper';
+import { btn } from '../../../components/ui/buttons';
 
 /** 考卷的大題結構（開始畫面與列表卡片用）。 */
 export function SectionStructure({ exam }: { exam: Pick<Exam, 'sections'> }) {
@@ -107,7 +108,7 @@ export function SetupPanel({ exam, onStart }: { exam: Exam; onStart: (mode: Atte
             </p>
           </div>
         )}
-        <button type="submit" className="rounded-full bg-primary px-5 py-2 font-semibold text-on-primary">
+        <button type="submit" className={btn('primary', 'lg')}>
           開始作答
         </button>
         <p className="text-sm text-muted">
@@ -248,7 +249,7 @@ function RestartControl({ onRestart }: { onRestart: () => void }) {
           ref={triggerRef}
           type="button"
           onClick={() => setConfirming(true)}
-          className="rounded-full border border-line px-4 py-2 text-sm font-medium hover:border-primary lg:border-transparent lg:text-bad lg:hover:border-transparent lg:hover:bg-bad-soft"
+          className={btn('secondary', 'sm', 'lg:border-transparent lg:bg-transparent lg:text-bad lg:hover:border-transparent lg:hover:bg-bad-soft lg:hover:text-bad')}
         >
           清除作答，重新開始
         </button>
@@ -267,10 +268,10 @@ function RestartControl({ onRestart }: { onRestart: () => void }) {
       <p id={questionId} className="w-full font-medium lg:mr-auto lg:w-auto">
         確定要清除這份考卷的作答與成績嗎？清除後無法復原。
       </p>
-      <button ref={cancelRef} type="button" onClick={cancel} className="min-h-10 rounded-full border border-line bg-surface px-4 font-medium">
+      <button ref={cancelRef} type="button" onClick={cancel} className={btn('secondary', 'sm')}>
         取消
       </button>
-      <button type="button" onClick={onRestart} className="min-h-10 rounded-full bg-bad px-4 font-semibold text-on-primary">
+      <button type="button" onClick={onRestart} className={btn('danger', 'sm')}>
         確定清除
       </button>
     </div>

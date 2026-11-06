@@ -5,6 +5,7 @@
  */
 import { X } from 'lucide-react';
 import { useEffect, useId, useRef } from 'react';
+import { btn, iconBtnCls } from '../ui/buttons';
 
 /** 秒數 → 1:23:45／12:05（和工具列的倒數同一種寫法；不 import 考卷的 labels.ts，主程式不必多帶那一包）。 */
 function clock(totalSec: number): string {
@@ -64,7 +65,7 @@ export function LeaveSessionDialog({ prompt, onStay, onLeave }: { prompt: LeaveP
           type="button"
           onClick={onStay}
           aria-label="關閉"
-          className="-mt-1 -mr-2 inline-flex size-9 shrink-0 items-center justify-center rounded-full text-muted hover:bg-surface-2 hover:text-fg"
+          className={`${iconBtnCls} -mt-1 -mr-2`}
         >
           <X aria-hidden="true" className="size-5" />
         </button>
@@ -77,11 +78,11 @@ export function LeaveSessionDialog({ prompt, onStay, onLeave }: { prompt: LeaveP
           ref={stayRef}
           type="button"
           onClick={onStay}
-          className="inline-flex min-h-10 items-center rounded-full bg-primary px-5 font-semibold text-on-primary"
+          className={btn('primary', 'md')}
         >
           留下來作答
         </button>
-        <button type="button" onClick={onLeave} className="inline-flex min-h-10 items-center rounded-full border border-line px-5 hover:border-primary">
+        <button type="button" onClick={onLeave} className={btn('secondary', 'md')}>
           離開
         </button>
       </div>
