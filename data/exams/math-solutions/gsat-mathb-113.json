@@ -1,0 +1,507 @@
+{
+ "schema": "gsat-math-solutions/v1",
+ "paper_id": "gsat-mathb-113",
+ "note": "本站自撰詳解；選擇（填）題答案經兩位獨立解題者與官方答案比對，非選擇題經兩位獨立解題者比對最終結果。",
+ "items": [
+  {
+   "no": 1,
+   "type": "single",
+   "unit": "數據分析（百分位數）",
+   "unit_tags": [
+    "statistics"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.58,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：$n=210$，$n\\times\\dfrac{90}{100}=189$ 是整數，第 $90$ 百分位數取第 $189$ 與第 $190$ 筆（由小到大）的平均。\n\n**詳解**\n\n1. 持有 $1\\sim k$ 顆的人數累計為 $1+2+\\cdots+k=\\dfrac{k(k+1)}2$。\n2. $k=18$：$171$ 人；$k=19$：$190$ 人。所以第 $172$～$190$ 筆都是 $19$ 顆。\n3. 第 $189$、$190$ 筆都是 $19$，平均為 $19$。\n\n**答案**：(4)",
+   "answer_display": "(4)",
+   "check": {
+    "official": "4",
+    "solver_a": "4",
+    "solver_b": "4",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 2,
+   "type": "single",
+   "unit": "指數對數",
+   "unit_tags": [
+    "exp_log"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.49,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：$\\log$ 是遞增函數，$\\log1=0$、$\\log10=1$。\n\n**詳解**\n\n1. $1<a<10\\Rightarrow0<\\log a<1$，即 $0<b<1$。\n2. $0<b<1\\Rightarrow c=\\log b<0$。\n3. 所以 $c<0<b<1$。\n\n**答案**：(1)",
+   "answer_display": "(1)",
+   "check": {
+    "official": "1",
+    "solver_a": "1",
+    "solver_b": "1",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 3,
+   "type": "single",
+   "unit": "直線與坐標",
+   "unit_tags": [
+    "coordinate_line"
+   ],
+   "difficulty": {
+    "level": "穩定基礎",
+    "official_p": 0.7,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：線段 $\\overline{QP}$ 要在 $D$ 的右邊越過 $y=6$、在 $A$ 的左邊越過 $y=5$；算出 $\\overline{QP}$ 在 $y=5$ 與 $y=6$ 時的 $x$ 坐標即可判斷。\n\n**詳解**：設 $Q(x_0,y_0)$，$\\overline{QP}$ 上的點 $(x_0+(12-x_0)s,\\ y_0+(10-y_0)s)$，$0\\le s\\le1$。不被擋的條件：在 $y=6$ 時 $x>9$，在 $y=5$ 時 $x<10$（若有經過該高度）。\n\n- (1) $(6,3)$：$y=6$ 時 $s=\\frac37$，$x=6+\\frac{18}{7}\\approx8.57\\le9$，被 $\\overline{CD}$ 擋住。\n- (2) $(7,3)$：$y=5$ 時 $s=\\frac27$，$x=7+\\frac{10}{7}\\approx8.43<10$；$y=6$ 時 $s=\\frac37$，$x=7+\\frac{15}{7}\\approx9.14>9$。兩面牆都避開 ✓。\n- (3) $(8,5)$：$y=6$ 時 $s=\\frac15$，$x=8.8\\le9$，被擋。\n- (4) $(9,1)$：$y=5$ 時 $s=\\frac49$，$x=9+\\frac43\\approx10.33$，在 $\\overline{AB}$ 上，被擋。\n- (5) $(9,2)$：$y=5$ 時 $s=\\frac38$，$x=9+\\frac98=10.125$，被擋。\n\n**答案**：(2)",
+   "answer_display": "(2)",
+   "check": {
+    "official": "2",
+    "solver_a": "2",
+    "solver_b": "2",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 4,
+   "type": "single",
+   "unit": "平面向量",
+   "unit_tags": [
+    "vector_plane"
+   ],
+   "difficulty": {
+    "level": "超越頂標",
+    "official_p": 0.26,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：$\\overrightarrow{AB}=(x_B-x_A,\\ y_B-y_A)$，兩個分量都在 $[-1,1]$ 內，且可以獨立地取到端點。\n\n**詳解**\n\n1. 設 $\\overrightarrow{AB}=(p,q)$，$-1\\le p,q\\le1$。$\\vec v+\\overrightarrow{AB}=(-2+p,\\ 3+q)$。\n2. 要長度最大，讓兩個分量的絕對值都最大：$p=-1$、$q=1$，得 $(-3,4)$。（取 $A(1,0)$、$B(0,1)$ 即可。）\n3. 最大值 $\\sqrt{9+16}=5$。\n\n**答案**：(4)\n\n**常見錯誤**：用三角不等式得到 $|\\vec v|+|\\overrightarrow{AB}|\\le\\sqrt{13}+\\sqrt2$（選 (5)），但等號需要 $\\overrightarrow{AB}$ 與 $\\vec v$ 同向且長度 $\\sqrt2$，在正方形內做不到。",
+   "answer_display": "(4)",
+   "check": {
+    "official": "4",
+    "solver_a": "4",
+    "solver_b": "4",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 5,
+   "type": "single",
+   "unit": "多項式函數（二次函數）",
+   "unit_tags": [
+    "polynomial"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.45,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：$f(x-2)=f(-x-2)$ 表示圖形對稱於 $x=-2$，頂點的 $x$ 坐標為 $-2$。\n\n**詳解**\n\n1. 對稱軸 $x=-2$，$f(x)=(x+2)^2+k$。\n2. 在 $-3\\le x\\le1$ 上：最小值在 $x=-2$，為 $k$；最大值在離對稱軸最遠的 $x=1$，為 $9+k$。\n3. $9+k=4k$，$k=3$。最小值為 $3$。\n\n**答案**：(3)",
+   "answer_display": "(3)",
+   "check": {
+    "official": "3",
+    "solver_a": "3",
+    "solver_b": "3",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 6,
+   "type": "single",
+   "unit": "幾何（相似形）",
+   "unit_tags": [
+    "geometry"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.37,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：五樓地板與四樓、二樓地板平行，被三角形截出的線段長與「到頂點 $P$ 的高度」成正比（相似三角形）。\n\n**詳解**\n\n1. 設每層樓高 $h$、地板長 $w$，$P$ 在五樓地板上方 $p$ 處。\n2. $\\Delta PAB$：底 $\\overline{AB}=w$，$P$ 到 $\\overline{AB}$ 的高 $p+h$。五樓地板截出的長度 $=w\\cdot\\dfrac{p}{p+h}=\\dfrac w3$，得 $3p=p+h$，$p=\\dfrac h2$。\n3. $\\Delta PEF$：$P$ 到二樓地板的高 $=p+3h=\\dfrac{7h}{2}$，五樓地板截出長度 $=w\\cdot\\dfrac{p}{p+3h}=w\\cdot\\dfrac{h/2}{7h/2}=\\dfrac w7$。\n\n**答案**：(1)",
+   "answer_display": "(1)",
+   "check": {
+    "official": "1",
+    "solver_a": "1",
+    "solver_b": "1",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 7,
+   "type": "single",
+   "unit": "數據分析、邏輯與集合",
+   "unit_tags": [
+    "statistics",
+    "logic_set"
+   ],
+   "difficulty": {
+    "level": "超越頂標",
+    "official_p": 0.15,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：城市當天的最高溫 $=\\max(\\text{東},\\text{西})$。逐一分析每個溫度區間的天數可能是多少。\n\n**詳解**\n\n1. $36\\le t$：西區從未達到，只有東區的 $5$ 天，所以 $D=5$。\n2. $18\\le t<24$：需兩區都低於 $24$；東區沒有這種日子，所以 $A=0$。\n3. $24\\le t<30$：需兩區都低於 $30$。東區低於 $30$ 的只有 $11$ 天，所以 $B\\le11$；又 $B+C=30-A-D=25$。\n4. 選項中 $A=0$、$D=5$ 的只有 (3)$(0,9,16,5)$ 與 (5)$(0,12,13,5)$；(5) 的 $B=12>11$，不可能。\n5. (3) 可行：讓東區在 $24\\sim30$ 的 $11$ 天中有 $2$ 天西區在 $30\\sim36$，其餘 $9$ 天西區低於 $30$；剩下的西區天數安排在東區 $30$ 度以上的 $19$ 天中即可（西區 $30\\sim36$ 還剩 $13$ 天、$18\\sim30$ 還剩 $6$ 天，共 $19$ 天）。此時 $B=9$、$C=14+2=16$。\n\n**答案**：(3)",
+   "answer_display": "(3)",
+   "check": {
+    "official": "3",
+    "solver_a": "3",
+    "solver_b": "3",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 8,
+   "type": "multi",
+   "unit": "數列與級數、指數對數",
+   "unit_tags": [
+    "sequence",
+    "exp_log"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.56,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：設公比 $r>1$（遞增正數），$b=ar$、$c=ar^2$、$d=ar^3$、$e=ar^4$。\n\n**選項分析**\n\n- (1) 對：公比 $-r$。\n- (2) 對：倒過來，公比 $\\dfrac1r$。\n- (3) 錯：$\\log a,\\log a+\\log r,\\dots$ 是公差 $\\log r\\ne0$ 的等差數列；公差不為 $0$ 的等差數列不可能是等比數列。\n- (4) 錯：相鄰比值 $3^{b-a}$、$3^{c-b}$，而 $c-b=r(b-a)\\ne b-a$，比值不同。\n- (5) 對：$\\dfrac{bcd}{abc}=\\dfrac da=r^3$，$\\dfrac{cde}{bcd}=\\dfrac eb=r^3$，公比 $r^3$。\n\n**詳解**：關鍵在檢查「相鄰兩項的比是否固定」。\n\n**答案**：(1)(2)(5)",
+   "answer_display": "(1)(2)(5)",
+   "check": {
+    "official": "1,2,5",
+    "solver_a": "1,2,5",
+    "solver_b": "1,2,5",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 9,
+   "type": "multi",
+   "unit": "多項式函數（除法原理）",
+   "unit_tags": [
+    "polynomial"
+   ],
+   "difficulty": {
+    "level": "超越頂標",
+    "official_p": 0.29,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：除法原理 $f(x)=(x^2+5x+1)q(x)+r(x)$，其中 $q(x)=x^3+7x^2+x+3$，且餘式 $r(x)$ 的次數**小於 $2$**（或 $r=0$）。\n\n**詳解**：把每個選項化成「$d(x)\\cdot q(x)+$ 一次以下」的形式，記 $d(x)=x^2+5x+1$。\n\n**選項分析**\n\n- (1) 錯：$2q\\cdot d$，商是 $2q$。\n- (2) 對：$q\\cdot d-x$，餘式 $-x$。\n- (3) 錯：$x^2$ 不是合格的餘式，$x^2=d-5x-1$，所以 $f=(q+1)d-5x-1$，商是 $q+1$。\n- (4) 錯：商是 $q+1$。\n- (5) 對：$(q+1)d-x^2=q\\cdot d+(x^2+5x+1)-x^2=q\\cdot d+5x+1$，商 $q$、餘式 $5x+1$。\n\n**答案**：(2)(5)",
+   "answer_display": "(2)(5)",
+   "check": {
+    "official": "2,5",
+    "solver_a": "2,5",
+    "solver_b": "2,5",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 10,
+   "type": "multi",
+   "unit": "數學建模（週期現象）",
+   "unit_tags": [
+    "data_modeling"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.44,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：畫出（或寫出）兩光點的位置對時間的折線。設軌道為 $[0,120]$，$A$ 從 $0$ 出發、$B$ 從 $120$ 出發。\n\n**詳解**\n\n1. $A$ 來回一趟 $240\\div5=48$ 秒；$B$ 來回一趟 $240\\div10=24$ 秒。\n2. 相遇：\n   - $t=8$：相向而行 $\\frac{120}{15}=8$ 秒，$A$ 在 $40$；\n   - $B$ 在 $t=12$ 到 $0$ 後折返，追上 $A$：$10t-120=5t$，$t=24$，位置 $120$（端點）；\n   - 之後兩者都向 $0$ 走，$B$ 在 $t=36$ 到 $0$ 折返，與 $A$ 相遇：$10t-360=240-5t$，$t=40$，位置 $40$；\n   - $t=48$ 回到初始狀態，之後重複。\n\n**選項分析**\n\n- (1) 對：距 $A$ 的端點 $40$ 公分。\n- (2) 錯：週期 $48$ 秒。\n- (3) 對：$A$ 回到出發點的時刻是 $48$ 的倍數，也是 $B$ 週期 $24$ 的倍數，此時 $B$ 在出發點。\n- (4) 對：第二次相遇在端點 $120$。\n- (5) 錯：相遇位置只有 $40$ 與 $120$ 兩個。\n\n**答案**：(1)(3)(4)",
+   "answer_display": "(1)(3)(4)",
+   "check": {
+    "official": "1,3,4",
+    "solver_a": "1,3,4",
+    "solver_b": "1,3,4",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 11,
+   "type": "multi",
+   "unit": "指數對數、數學建模（成長率）",
+   "unit_tags": [
+    "exp_log",
+    "data_modeling"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.31,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：成長率 $p$ 表示「乘上 $1+p$」；多年的平均成長率要用幾何平均，不是算術平均。\n\n**詳解**：$A=(1-0.07)X$，$B=(1+p)A$，$C=(1+q)B$，$Y=(1+r)C$。\n\n**選項分析**\n\n- (1) 對：$A=0.93X$。\n- (2) 錯：$0.95^4=0.81450625>0.8$，所以 $Y>0.8X$。\n- (3) 錯：$0.93(1+p)(1+q)(1+r)=0.95^4$ 只限制乘積，四個成長率的算術平均不一定是 $-0.05$。例如 $p=q=0$ 時 $1+r=\\dfrac{0.95^4}{0.93}\\approx0.8758$，$r\\approx-0.1242$，算術平均 $\\approx\\dfrac{-0.07-0.1242}{4}\\approx-0.0485\\ne-0.05$。\n- (4) 對：$\\sqrt[4]{\\frac YX}=0.95$。\n- (5) 對：$Y=0.93(1+p)(1+q)(1+r)X=0.95^4X$。\n\n**答案**：(1)(4)(5)",
+   "answer_display": "(1)(4)(5)",
+   "check": {
+    "official": "1,4,5",
+    "solver_a": "1,4,5",
+    "solver_b": "1,4,5",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 12,
+   "type": "multi",
+   "unit": "機率（遞迴）",
+   "unit_tags": [
+    "probability"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.49,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：在 $2\\times2$ 棋盤的任一格，四個方向中恰有兩個會出界（停在原地），另兩個分別走到兩個相鄰格。所以每次：停留 $\\frac12$、往兩鄰格各 $\\frac14$；對角格一步到不了。\n\n**詳解**\n\n1. $n=1$：$a_1=\\frac12$，$b_1=c_1=\\frac14$，$d_1=0$。\n2. $n=2$：$a_2=\\frac12a_1+\\frac14b_1+\\frac14c_1=\\frac38$；$b_2=\\frac14a_1+\\frac12b_1+\\frac14d_1=\\frac14$；同理 $c_2=\\frac14$，$d_2=\\frac14b_1+\\frac14c_1+\\frac12d_1=\\frac18$。\n3. 令 $s_n=a_n+d_n$。從 $A$ 或 $D$ 出發，下一步留在 $\\{A,D\\}$ 的機率 $\\frac12$（停住）；從 $B$ 或 $C$ 出發，下一步進入 $\\{A,D\\}$ 的機率也是 $\\frac12$。所以 $s_{n+1}=\\frac12s_n+\\frac12(1-s_n)=\\frac12$。\n\n**選項分析**\n\n- (1) 對：$b_1=\\frac14$。\n- (2) 錯：$b_2=\\frac14$。\n- (3) 錯：$a_2+d_2=\\frac12$。\n- (4) 對：棋盤對 $A$–$D$ 對角線對稱，起點 $A$ 在對稱軸上，所以 $B$、$C$ 的機率永遠相同。\n- (5) 錯：$a_{100}+d_{100}=\\frac12$，不是大於。\n\n**答案**：(1)(4)",
+   "answer_display": "(1)(4)",
+   "check": {
+    "official": "1,4",
+    "solver_a": "1,4",
+    "solver_b": "1,4",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 13,
+   "type": "fill",
+   "unit": "矩陣",
+   "unit_tags": [
+    "matrix"
+   ],
+   "difficulty": {
+    "level": "穩定基礎",
+    "official_p": 0.63,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：矩陣乘法有分配律：$M\\begin{bmatrix}2a+1\\\\2b+1\\end{bmatrix}=2M\\begin{bmatrix}a\\\\b\\end{bmatrix}+M\\begin{bmatrix}1\\\\1\\end{bmatrix}$。\n\n**詳解**\n\n1. $M=\\begin{bmatrix}1&-1\\\\3&-2\\end{bmatrix}$，$M\\begin{bmatrix}1\\\\1\\end{bmatrix}=\\begin{bmatrix}0\\\\1\\end{bmatrix}$。\n2. $\\begin{bmatrix}c\\\\d\\end{bmatrix}=2\\begin{bmatrix}1\\\\0\\end{bmatrix}+\\begin{bmatrix}0\\\\1\\end{bmatrix}=\\begin{bmatrix}2\\\\1\\end{bmatrix}$。\n3. $c-3d=2-3=-1$。\n\n**答案**：$-1$（13-1 填 $-$，13-2 填 $1$）",
+   "answer_display": "$-1$",
+   "check": {
+    "official": {
+     "13-1": "-",
+     "13-2": "1"
+    },
+    "solver_a": {
+     "13-1": "-",
+     "13-2": "1"
+    },
+    "solver_b": {
+     "13-1": "-",
+     "13-2": "1"
+    },
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 14,
+   "type": "fill",
+   "unit": "機率、邏輯與集合",
+   "unit_tags": [
+    "probability",
+    "logic_set"
+   ],
+   "difficulty": {
+    "level": "超越頂標",
+    "official_p": 0.23,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：畫文氏圖：只考 A、兩科都考、只考 B 三塊，以全體為 $1$。\n\n**詳解**\n\n1. 報考數學A的學生中，$\\frac58$ 也考數學B，所以只考A占數學A考生的 $\\frac38$。\n2. $\\frac38\\times(\\text{數學A考生})=\\frac{3}{10}$，數學A考生占 $\\frac45$，兩科都考 $=\\frac45\\cdot\\frac58=\\frac12$。\n3. 只考B $=1-\\frac45=\\frac15$；數學B考生 $=\\frac12+\\frac15=\\frac{7}{10}$。\n4. 所求 $=\\dfrac{1/5}{7/10}=\\dfrac27$。\n\n**答案**：$\\dfrac27$（14-1 填 $2$，14-2 填 $7$）",
+   "answer_display": "$\\frac{2}{7}$",
+   "check": {
+    "official": {
+     "14-1": "2",
+     "14-2": "7"
+    },
+    "solver_a": {
+     "14-1": "2",
+     "14-2": "7"
+    },
+    "solver_b": {
+     "14-1": "2",
+     "14-2": "7"
+    },
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 15,
+   "type": "fill",
+   "unit": "平面向量",
+   "unit_tags": [
+    "vector_plane"
+   ],
+   "difficulty": {
+    "level": "超越頂標",
+    "official_p": 0.28,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：經過 $R$ 拆開：$\\overrightarrow{Q_1Q_2}=\\overrightarrow{Q_1R}+\\overrightarrow{RQ_2}$。\n\n**詳解**\n\n1. $\\overrightarrow{Q_1R}=\\overrightarrow{P_1R}-\\overrightarrow{P_1Q_1}=4\\overrightarrow{P_1Q_1}-\\overrightarrow{P_1Q_1}=3\\overrightarrow{P_1Q_1}$。\n2. $\\overrightarrow{RQ_2}=-\\left(\\overrightarrow{P_2R}-\\overrightarrow{P_2Q_2}\\right)=-6\\overrightarrow{P_2Q_2}$。\n3. $\\overrightarrow{Q_1Q_2}=3\\overrightarrow{P_1Q_1}-6\\overrightarrow{P_2Q_2}$。（$P_1,P_2,R$ 不共線，$\\overrightarrow{P_1Q_1}$ 與 $\\overrightarrow{P_2Q_2}$ 不平行，表示法唯一。）\n\n**答案**：15-1 填 $3$，15-2 填 $-$，15-3 填 $6$。",
+   "answer_display": "$3\\overrightarrow{P_1Q_1}-6\\overrightarrow{P_2Q_2}$",
+   "check": {
+    "official": {
+     "15-1": "3",
+     "15-2": "-",
+     "15-3": "6"
+    },
+    "solver_a": {
+     "15-1": "3",
+     "15-2": "-",
+     "15-3": "6"
+    },
+    "solver_b": {
+     "15-1": "3",
+     "15-2": "-",
+     "15-3": "6"
+    },
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 16,
+   "type": "fill",
+   "unit": "幾何（球面）、三角函數",
+   "unit_tags": [
+    "geometry",
+    "trigonometry"
+   ],
+   "difficulty": {
+    "level": "超越頂標",
+    "official_p": 0.15,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：先求 $A$ 的經緯度；赤道上離 $A$ 最遠的點在 $A$ 的「對面經度」；劣弧長 $=$ 半徑 $\\times$ 圓心角。\n\n**詳解**\n\n1. 半徑 $2$。$A$ 的 $z$ 坐標 $\\sqrt3=2\\sin60^\\circ$，北緯 $60^\\circ$；水平分量 $\\left(\\frac{\\sqrt3}{2},\\frac12\\right)=1\\cdot(\\cos30^\\circ,\\sin30^\\circ)$，經度 $30^\\circ$ 方向。\n2. 赤道上的點 $X=2(\\cos\\varphi,\\sin\\varphi,0)$，$\\overline{AX}$ 最大 $\\iff\\overrightarrow{OA}\\cdot\\overrightarrow{OX}$ 最小 $\\iff\\varphi=210^\\circ$，$P=(-\\sqrt3,-1,0)$。\n3. $\\overrightarrow{OA}\\cdot\\overrightarrow{OP}=-\\frac32-\\frac12+0=-2$，$\\cos\\angle AOP=\\dfrac{-2}{2\\cdot2}=-\\dfrac12$，$\\angle AOP=120^\\circ=\\dfrac{2\\pi}3$。\n4. 劣弧長 $=2\\cdot\\dfrac{2\\pi}{3}=\\dfrac{4\\pi}{3}$。\n\n**答案**：$\\dfrac{4\\pi}{3}$（16-1 填 $4$，16-2 填 $3$）",
+   "answer_display": "$\\frac{4\\pi}{3}$",
+   "check": {
+    "official": {
+     "16-1": "4",
+     "16-2": "3"
+    },
+    "solver_a": {
+     "16-1": "4",
+     "16-2": "3"
+    },
+    "solver_b": {
+     "16-1": "4",
+     "16-2": "3"
+    },
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 17,
+   "type": "fill",
+   "unit": "排列組合、幾何（圓周角）",
+   "unit_tags": [
+    "counting",
+    "geometry"
+   ],
+   "difficulty": {
+    "level": "超越頂標",
+    "official_p": 0.01,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：三內角成等差 $\\iff$ 中間的角是 $60^\\circ$。圓上相鄰兩等分點所對的圓周角是 $15^\\circ$，所以 $60^\\circ$ 對應「跨 $4$ 格」的弧。\n\n**詳解**\n\n1. 三角形三頂點把圓周分成三段弧，格數 $x,y,z$（正整數，和為 $12$），三內角為 $15x^\\circ,15y^\\circ,15z^\\circ$。\n2. 三內角成等差 $\\iff$ 中間角 $60^\\circ$ $\\iff$ 某一段弧是 $4$ 格（另兩段和為 $8$，一段 $\\le4$、一段 $\\ge4$，$60^\\circ$ 自然排在中間）。\n3. 弧長組合：$\\{1,4,7\\},\\{2,4,6\\},\\{3,4,5\\},\\{4,4,4\\}$。\n4. 計數：\n   - 三段相異的組合，例如 $\\{1,4,7\\}$：順時針依序 $(1,4,7)$ 或 $(1,7,4)$ 兩種排列，各可旋轉到 $12$ 個起點，共 $24$ 個三角形；三種組合共 $72$ 個。\n   - $\\{4,4,4\\}$ 是正三角形，共 $\\frac{12}{3}=4$ 個。\n5. 合計 $72+4=76$ 個。（檢查：跨 $4$ 格的弦有 $12$ 條，每條配另一側 $7$ 個點中的一點，共 $84$；正三角形含 $3$ 條這種弦被重複算了 $3$ 次，$84-4\\times2=76$。）\n\n**答案**：$76$（17-1 填 $7$，17-2 填 $6$）\n\n**常見錯誤**：忘了 $(1,4,7)$ 與 $(1,7,4)$ 是不同的三角形（鏡像），只算一半；或漏掉正三角形（公差 $0$ 也是等差數列）。",
+   "answer_display": "$76$",
+   "check": {
+    "official": {
+     "17-1": "7",
+     "17-2": "6"
+    },
+    "solver_a": {
+     "17-1": "7",
+     "17-2": "6"
+    },
+    "solver_b": {
+     "17-1": "2",
+     "17-2": "8"
+    },
+    "agree": false
+   },
+   "flags": [
+    {
+     "severity": "resolved",
+     "detail": "解題者 B 得 $28$（把每一種弧長組合的三角形數算成 $8$ 個）。複核：三邊所對的弧（以等分格數計）為 $\\{1,4,7\\}$、$\\{2,4,6\\}$、$\\{3,4,5\\}$ 時各有 $12\\times2=24$ 個（兩種繞行方向），$\\{4,4,4\\}$ 有 $4$ 個，共 $76$；以「跨 $4$ 格的弦 $12$ 條 × 第三點 $7$ 個，扣掉正三角形重複」也得 $72+4=76$。與官方答案及解題者 A 一致。"
+    }
+   ]
+  },
+  {
+   "no": 18,
+   "type": "single",
+   "unit": "幾何（多面體）",
+   "unit_tags": [
+    "geometry"
+   ],
+   "difficulty": {
+    "level": "穩定基礎",
+    "official_p": 0.64,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：截角後，原來的 $6$ 個面都還在（變小），每截一個角多出一個三角形面。\n\n**詳解**\n\n1. 長方體有 $6$ 個面、$8$ 個頂點。\n2. 每個截面通過三鄰邊中點，原來每個面剩下由四邊中點圍成的四邊形，仍是一個面；$8$ 個截角各新增 $1$ 個三角形面。\n3. 共 $6+8=14$ 個面。\n\n**答案**：(4)",
+   "answer_display": "(4)",
+   "check": {
+    "official": "4",
+    "solver_a": "4",
+    "solver_b": "4",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 19,
+   "type": "constructed",
+   "unit": "幾何",
+   "unit_tags": [
+    "geometry"
+   ],
+   "difficulty": {
+    "level": "穩定基礎",
+    "official_p": null,
+    "basis": "本站估計"
+   },
+   "solution_md": "**解題關鍵**：$\\Delta BCD$ 是等腰三角形，從頂點 $D$ 作底邊 $\\overline{BC}$ 的高。\n\n**詳解**\n\n1. $\\overline{DB}=\\overline{DC}=9$，高的垂足是 $\\overline{BC}$ 中點，$\\overline{BC}$ 的一半為 $4$。\n2. 高 $=\\sqrt{9^2-4^2}=\\sqrt{65}$。\n3. 面積 $=\\dfrac12\\cdot8\\cdot\\sqrt{65}=4\\sqrt{65}$。\n\n**答案**：$4\\sqrt{65}$。\n\n**評分重點（本站整理）**\n\n- 利用等腰三角形性質求高（或用海龍公式）。\n- 計算與化簡正確。",
+   "answer_display": "$4\\sqrt{65}$",
+   "check": {
+    "official": null,
+    "solver_a": "4√65",
+    "solver_b": "4√65",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 20,
+   "type": "constructed",
+   "unit": "幾何、空間向量",
+   "unit_tags": [
+    "geometry",
+    "vector_space"
+   ],
+   "difficulty": {
+    "level": "超越頂標",
+    "official_p": null,
+    "basis": "本站估計"
+   },
+   "solution_md": "**解題關鍵**：$B,C,D$ 是從頂點 $A$ 出發的三條稜的中點，所以 $\\overline{AB},\\overline{AC},\\overline{AD}$ 兩兩垂直；用三個畢氏定理解出三段長。\n\n**詳解**\n\n1. 設 $\\overline{AB}=p$、$\\overline{AC}=q$、$\\overline{AD}=r$，兩兩垂直：\n$$p^2+q^2=\\overline{BC}^2=64,\\quad p^2+r^2=\\overline{BD}^2=81,\\quad q^2+r^2=\\overline{CD}^2=81.$$\n2. 三式相加：$2(p^2+q^2+r^2)=226$，$p^2+q^2+r^2=113$。所以 $r^2=113-64=49$，$p^2=q^2=113-81=32$。\n3. $\\overline{AD}=r=7$，$p=q=4\\sqrt2$。\n4. 四面體 $ABCD$ 是「直角頂點」在 $A$ 的四面體，以 $\\Delta ABC$ 為底、$\\overline{AD}$ 為高：\n$$V=\\frac13\\cdot\\frac12pq\\cdot r=\\frac16\\cdot32\\cdot7=\\frac{112}{3}.$$\n5. 以 $\\Delta BCD$ 為底，高 $h$：$\\dfrac13\\cdot4\\sqrt{65}\\cdot h=\\dfrac{112}{3}$，$h=\\dfrac{28}{\\sqrt{65}}=\\dfrac{28\\sqrt{65}}{65}$。\n\n**答案**：$\\overline{AD}=7$；體積 $\\dfrac{112}{3}$；高 $\\dfrac{28\\sqrt{65}}{65}$。\n\n**評分重點（本站整理）**\n\n- 說明 $\\overline{AB},\\overline{AC},\\overline{AD}$ 兩兩垂直（長方體的稜），列出三個畢氏定理的方程式並解出 $\\overline{AD}=7$。\n- 體積用兩兩垂直三稜長的 $\\frac16$ 乘積。\n- 用「體積相同」換底求高，答案有理化。",
+   "answer_display": "$\\overline{AD}=7$；體積 $\\dfrac{112}{3}$；高 $\\dfrac{28\\sqrt{65}}{65}$",
+   "check": {
+    "official": null,
+    "solver_a": "AD = 7；體積 112/3；高 28√65/65",
+    "solver_b": "AD=7；體積 112/3；高 28/√65 = 28√65/65",
+    "agree": true
+   },
+   "flags": []
+  }
+ ]
+}
