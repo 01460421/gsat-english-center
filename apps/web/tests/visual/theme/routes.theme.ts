@@ -133,8 +133,8 @@ function measure() {
   let total = 0;
   const small: string[] = [];
   for (const raw of Array.from(document.querySelectorAll(sel))) {
-    // 視覺隱藏的 input（sr-only）由外層的 label 當點擊目標；跳到主要內容的連結只在聚焦時出現，不算。
-    const el = raw.classList.contains('sr-only') ? raw.closest('label') : raw;
+    // 包在 label 裡的 input（含視覺隱藏的 sr-only）由外層的 label 當點擊目標；跳到主要內容的連結只在聚焦時出現，不算。
+    const el = raw.tagName === 'INPUT' && raw.closest('label') ? raw.closest('label') : raw.classList.contains('sr-only') ? null : raw;
     if (!el || el.closest('.sr-only') || !visible(el)) continue;
     // 文字段落裡的行內連結不算（WCAG 2.5.8 的例外）。
     if (el.tagName === 'A' && getComputedStyle(el).display === 'inline' && el.closest('p, li')) continue;

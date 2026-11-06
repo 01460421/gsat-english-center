@@ -10,6 +10,7 @@
  *   THEME_SHOTS_DIST    要測的建置產物；預設 apps/web/dist
  *   THEME_SHOTS_PORT    vite preview 的連接埠；預設 4431
  *   THEME_SHOTS_THEMES  light、dark 或 light,dark；預設 light
+ *   THEME_SHOTS_VIEWPORTS  360、390、430、1280 的任意組合（逗號分隔）；預設 390,1280
  *   THEME_SHOTS_AXE     axe-core 的 axe.min.js 路徑；有給才跑 axe（只檢查 color-contrast）
  *
  * 用法（在 apps/web）：
@@ -37,10 +38,14 @@ const THEMES = (process.env['THEME_SHOTS_THEMES'] ?? 'light')
   .map((s) => s.trim())
   .filter((s): s is 'light' | 'dark' => s === 'light' || s === 'dark');
 
-const VIEWPORTS = [
+const ALL_VIEWPORTS = [
+  { name: '360', width: 360, height: 780, mobile: true },
   { name: '390', width: 390, height: 844, mobile: true },
+  { name: '430', width: 430, height: 932, mobile: true },
   { name: '1280', width: 1280, height: 800, mobile: false },
 ] as const;
+const wanted = (process.env['THEME_SHOTS_VIEWPORTS'] ?? '390,1280').split(',').map((s) => s.trim());
+const VIEWPORTS = ALL_VIEWPORTS.filter((v) => wanted.includes(v.name));
 
 function chromiumExecutablePath(): string | undefined {
   const override = process.env['PLAYWRIGHT_CHROMIUM_PATH'];
