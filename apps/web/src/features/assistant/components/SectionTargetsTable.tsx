@@ -5,6 +5,7 @@
  */
 import { ASSIST_SECTION_LABELS, type AssistReportFacts } from '@gsat/shared';
 import { currentText, gainText, nationalText, targetLabel, targetText } from '../reportFormat';
+import { tableCls, tableFrameCls, thCls } from '../../../components/ui/Table';
 
 export function SectionTargetsTable({ facts }: { facts: AssistReportFacts }) {
   return (
@@ -12,27 +13,27 @@ export function SectionTargetsTable({ facts }: { facts: AssistReportFacts }) {
       <p className="text-sm text-muted">
         目標：{targetLabel(facts)}，約是到考考生的前 {Math.round(facts.target.top_pct)}%。目標與可爭取分數是本站依 111–115 學測統計的估計，不是官方資料。
       </p>
-      <div className="overflow-x-auto rounded-xl border border-line">
-        <table className="w-full min-w-[36rem] text-left text-sm">
+      <div className={`overflow-x-auto ${tableFrameCls}`} tabIndex={0} role="region" aria-label="各大題的目前表現與目標">
+        <table className={`${tableCls} min-w-[36rem]`}>
           <caption className="sr-only">各大題的目前表現與目標</caption>
-          <thead className="bg-surface-2">
+          <thead>
             <tr>
-              <th scope="col" className="px-3 py-2 font-medium">
+              <th scope="col" className={thCls}>
                 大題
               </th>
-              <th scope="col" className="px-3 py-2 font-medium">
+              <th scope="col" className={thCls}>
                 配分
               </th>
-              <th scope="col" className="px-3 py-2 font-medium">
+              <th scope="col" className={thCls}>
                 目前
               </th>
-              <th scope="col" className="px-3 py-2 font-medium">
+              <th scope="col" className={thCls}>
                 目標（估計）
               </th>
-              <th scope="col" className="px-3 py-2 font-medium">
+              <th scope="col" className={thCls}>
                 可爭取
               </th>
-              <th scope="col" className="px-3 py-2 font-medium">
+              <th scope="col" className={thCls}>
                 全國平均
               </th>
             </tr>

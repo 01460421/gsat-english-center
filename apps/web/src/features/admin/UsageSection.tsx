@@ -115,7 +115,7 @@ function UsageBody({ data }: { data: AdminUsageResponse }) {
         {data.by_task.length === 0 ? (
           <p className="mt-2 text-sm text-muted">這段期間沒有 AI 任務。</p>
         ) : (
-          <div className="mt-2 overflow-x-auto">
+          <div className="mt-2 overflow-x-auto" tabIndex={0} role="region" aria-label="依任務">
             <table className="w-full min-w-[20rem] text-left text-[0.95rem]">
               <thead className="text-sm text-muted">
                 <tr>
@@ -145,7 +145,7 @@ function UsageBody({ data }: { data: AdminUsageResponse }) {
         {data.by_day.length === 0 ? (
           <p className="mt-2 text-sm text-muted">這段期間沒有 AI 任務。</p>
         ) : (
-          <div className="mt-2 overflow-x-auto">
+          <div className="mt-2 overflow-x-auto" tabIndex={0} role="region" aria-label="依日期">
             <table className="w-full min-w-[20rem] text-left text-[0.95rem]">
               <thead className="text-sm text-muted">
                 <tr>

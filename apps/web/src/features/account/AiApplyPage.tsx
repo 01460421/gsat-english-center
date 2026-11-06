@@ -228,7 +228,7 @@ function AboutAi({ quota }: { quota: AiQuotaResponse | null }) {
       </div>
 
       <h3 className="mt-4 font-semibold">點數規則</h3>
-      <div className="mt-2 overflow-x-auto">
+      <div className="mt-2 overflow-x-auto" tabIndex={0} role="region" aria-label="點數規則">
         <table className="w-full min-w-[16rem] text-left text-[0.95rem]">
           <thead className="text-sm text-muted">
             <tr>

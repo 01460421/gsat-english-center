@@ -127,7 +127,7 @@ function Rhythm({ pdfVisible, partsAsList = false }: { pdfVisible: boolean; part
             ))}
           </dl>
         ) : (
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto" tabIndex={0} role="region" aria-label="現行學測英文的配分">
             <table className="mt-2 w-full min-w-[18rem] border-collapse text-sm">
               <thead>
                 <tr className="border-b border-line text-left">

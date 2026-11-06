@@ -40,6 +40,7 @@ import { TargetPicker, type ReportTarget } from './TargetPicker';
 import { WeeklyTimeField } from './WeeklyTimeField';
 import { Select } from '../../../components/ui/Field';
 import { fieldCls } from '../../../components/ui/fields';
+import { tableFrameCls, thCls } from '../../../components/ui/Table';
 
 const POINTS = AI_TASK_POINTS.assist_report;
 const SRC_TEXT: Record<string, string> = {
@@ -82,21 +83,21 @@ function SummaryPreview({ summary }: { summary: AssistHistorySummary }) {
         統計期間：最近 {summary.range_days} 天、{summary.coverage.outcomes} 題作答。不送題目文字、逐題作答、草稿與自評文字。
       </p>
       {summary.sections.length > 0 && (
-        <div className="overflow-x-auto rounded-xl border border-line">
+        <div className={`overflow-x-auto ${tableFrameCls}`} tabIndex={0} role="region" aria-label="各大題的作答統計">
           <table className="w-full min-w-[28rem] text-left">
             <caption className="sr-only">各大題的作答統計</caption>
-            <thead className="bg-surface-2">
+            <thead>
               <tr>
-                <th scope="col" className="px-3 py-2 font-medium">
+                <th scope="col" className={thCls}>
                   大題
                 </th>
-                <th scope="col" className="px-3 py-2 font-medium">
+                <th scope="col" className={thCls}>
                   來源
                 </th>
-                <th scope="col" className="px-3 py-2 font-medium">
+                <th scope="col" className={thCls}>
                   作答
                 </th>
-                <th scope="col" className="px-3 py-2 font-medium">
+                <th scope="col" className={thCls}>
                   答對
                 </th>
               </tr>
