@@ -29,6 +29,7 @@ import { zhItemTitle } from './ZhCommon';
 import { charLimitText } from './ZhShortView';
 import { btn } from '../../../../components/ui/buttons';
 import { fieldCls } from '../../../../components/ui/fields';
+import { chipCls } from '../../../../components/ui/Tabs';
 
 /** 選擇題的字母格式不對（空白不算錯）。 */
 export function lettersInvalid(value: string): boolean {
@@ -118,7 +119,7 @@ export function ZhQuestionFields({
               <legend className="text-sm font-medium">格式</legend>
               <div className="mt-1 flex flex-wrap gap-2">
                 {ZH_FORMATS.map((f) => (
-                  <label key={f} className={`inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border px-3 text-sm ${format === f ? 'border-primary bg-primary-soft font-semibold' : 'border-line'}`}>
+                  <label key={f} className={chipCls(format === f)}>
                     <input type="radio" name={`${id}-format`} value={f} checked={format === f} onChange={() => set({ format: f })} className="size-5 shrink-0 accent-primary" />
                     {ZH_FORMAT_LABELS[f]}
                   </label>
@@ -130,7 +131,7 @@ export function ZhQuestionFields({
                 <legend className="text-sm font-medium">選擇題的種類</legend>
                 <div className="mt-1 flex flex-wrap gap-2">
                   {ZH_CHOICE_MODES.map((m) => (
-                    <label key={m} className={`inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border px-3 text-sm ${mode === m ? 'border-primary bg-primary-soft font-semibold' : 'border-line'}`}>
+                    <label key={m} className={chipCls(mode === m)}>
                       <input type="radio" name={`${id}-mode`} value={m} checked={mode === m} onChange={() => set({ format: 'choice', mode: m })} className="size-5 shrink-0 accent-primary" />
                       {ZH_CHOICE_MODE_LABELS[m]}
                     </label>

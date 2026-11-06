@@ -58,6 +58,7 @@ import { MC_SECTIONS, computeWeakness, wrongGroupsFrom, type WeakTarget, type We
 import { btn } from '../../../components/ui/buttons';
 import { optionCardTopCls } from '../../../components/ui/Check';
 import { cardCls } from '../../../components/ui/Card';
+import { chipCls } from '../../../components/ui/Tabs';
 
 /** 「我的加強卷」先列幾份，其他收進「更多」。 */
 export const WEAK_PAPERS_SHOWN = 5;
@@ -85,7 +86,7 @@ const primaryBtn = btn('primary', 'md');
 const secondaryBtn = btn('secondary', 'sm');
 
 const optionCls = optionCardTopCls;
-const pillCls = 'inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border border-line px-3 text-sm has-[:checked]:border-primary has-[:checked]:bg-primary-soft';
+const pillCls = chipCls();
 
 interface Settings {
   kind: PaperKindChoice;

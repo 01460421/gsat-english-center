@@ -15,6 +15,7 @@ import { BANK_LOCK_TAG } from '../labels';
 import { loadSiteTasks, type SiteSource, type SiteTask } from '../lib/sitePrompts';
 import { btn } from '../../../../components/ui/buttons';
 import { fieldCls } from '../../../../components/ui/fields';
+import { chipCls } from '../../../../components/ui/Tabs';
 
 type ExamFilter = 'all' | 'gsat' | 'ast' | 'reference';
 
@@ -26,7 +27,7 @@ const EXAM_FILTERS: Array<[ExamFilter, string]> = [
 ];
 
 const pill =
-  'inline-flex min-h-11 cursor-pointer items-center rounded-full border border-line px-4 text-sm has-[:checked]:border-primary has-[:checked]:bg-primary has-[:checked]:text-on-primary has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-primary';
+  chipCls();
 
 /** 選題器顯示的上限（篩選後的前 n 題；其餘按「顯示更多」）。 */
 const PAGE = 20;

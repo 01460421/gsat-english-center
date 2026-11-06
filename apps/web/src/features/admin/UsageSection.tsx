@@ -11,6 +11,7 @@ import { useApiData } from '../account/useApiData';
 import { errorMessage } from '../../lib/apiErrors';
 import { AdminSection, ReloadButton, SectionError, formatUsdMicros } from './adminUi';
 import { isAdminUsageResponse } from './guards';
+import { segmentCls, segmentedTrackCls } from '../../components/ui/Tabs';
 
 const RANGES = [7, 30] as const;
 type Range = (typeof RANGES)[number];
@@ -34,16 +35,14 @@ export function UsageSection() {
 
   return (
     <AdminSection id="admin-usage" title="AI 用量摘要" actions={<ReloadButton onClick={usage.reload} busy={usage.loading} />}>
-      <div role="group" aria-label="期間" className="flex flex-wrap gap-2">
+      <div role="group" aria-label="期間" className={segmentedTrackCls}>
         {RANGES.map((r) => (
           <button
             key={r}
             type="button"
             aria-pressed={range === r}
             onClick={() => setRange(r)}
-            className={`min-h-11 rounded-full border px-4 text-sm font-medium ${
-              range === r ? 'border-primary bg-primary-soft text-primary' : 'border-line hover:bg-surface-2'
-            }`}
+            className={segmentCls(range === r)}
           >
             近 {r} 天
           </button>

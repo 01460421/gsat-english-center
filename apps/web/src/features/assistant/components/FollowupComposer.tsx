@@ -18,6 +18,7 @@ import { inputCls, primaryBtn } from './parts';
 import { btn } from '../../../components/ui/buttons';
 import { Select } from '../../../components/ui/Field';
 import { cardFrameCls } from '../../../components/ui/Card';
+import { chipCls } from '../../../components/ui/Tabs';
 
 export function FollowupComposer({
   caseId,
@@ -143,7 +144,7 @@ export function FollowupComposer({
                 ['explain', '詳解'],
               ] as const
             ).map(([value, text]) => (
-              <label key={value} className={`inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border px-3 text-sm ${mode === value ? 'border-primary bg-primary-soft font-semibold' : 'border-line'}`}>
+              <label key={value} className={chipCls(mode === value)}>
                 <input type="radio" name={`${id}-mode`} value={value} checked={mode === value} onChange={() => setMode(value)} className="size-5 shrink-0 accent-primary" />
                 {text}
               </label>

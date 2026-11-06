@@ -14,6 +14,7 @@ import type { ErrorView } from '../../writing/lib/errors';
 import { patchAssistCase } from '../lib/assistApi';
 import { useAssistErrorView } from '../lib/pollers';
 import { cardFrameCls } from '../../../components/ui/Card';
+import { chipCls } from '../../../components/ui/Tabs';
 
 const OPTIONS: Array<{ value: AssistUnderstood; label: string }> = [
   { value: 'yes', label: '懂了' },
@@ -70,7 +71,7 @@ export function UnderstoodBar({ detail, onUpdated }: { detail: AssistCaseDetail;
           {OPTIONS.map((o) => (
             <label
               key={o.value}
-              className={`inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border px-4 ${understood === o.value ? 'border-primary bg-primary-soft font-semibold' : 'border-line'}`}
+              className={chipCls(understood === o.value)}
             >
               <input
                 type="radio"

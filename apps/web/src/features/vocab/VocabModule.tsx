@@ -22,6 +22,7 @@ import { QuizView } from './views/QuizView';
 import { StudyView } from './views/StudyView';
 import { WordDetailView } from './views/WordDetailView';
 import { LoadingBlock } from './ui/common';
+import { tabCls, tabListCls } from '../../components/ui/Tabs';
 
 /** 做成講義的頁面（docs/design/vocab-handout.md §5.2）：選項、選句與 PDF 都在這個 lazy chunk 裡，一般的單字頁不必下載。 */
 const HandoutView = lazy(() => import('./views/HandoutView'));
@@ -30,21 +31,19 @@ function TabNav({ current, wordOpen }: { current: VocabTab; wordOpen: boolean })
   // wordOpen：單字卡或講義頁蓋過了分頁內容，分頁列就不標示目前頁。
   return (
     <nav aria-label="單字功能" className="mb-5">
-      <ul className="grid grid-cols-4 gap-1 rounded-card border border-line bg-surface p-1">
+      <ul className={tabListCls}>
         {VOCAB_TABS.map((t) => {
           const selected = t.id === current;
           const Icon = t.icon;
           return (
-            <li key={t.id} className="min-w-0">
+            <li key={t.id} className="flex flex-auto">
               <Link
                 to={{ search: vocabSearch(t.id) }}
                 aria-current={selected && !wordOpen ? 'page' : undefined}
-                className={`flex min-h-12 flex-col items-center justify-center gap-0.5 rounded-xl px-1 py-1.5 text-xs sm:flex-row sm:gap-2 sm:text-sm ${
-                  selected ? 'bg-primary-soft font-semibold text-primary' : 'text-muted hover:bg-surface-2 hover:text-fg'
-                }`}
+                className={`${tabCls(selected && !wordOpen)} w-full justify-center gap-1 px-2 sm:gap-1.5 sm:px-3`}
               >
-                <Icon aria-hidden="true" className="size-5 shrink-0" />
-                <span className="max-w-full truncate">{t.label}</span>
+                <Icon aria-hidden="true" className="size-4 shrink-0" />
+                <span>{t.label}</span>
               </Link>
             </li>
           );

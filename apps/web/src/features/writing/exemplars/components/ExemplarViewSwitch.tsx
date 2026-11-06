@@ -8,13 +8,14 @@ import { Highlighter } from 'lucide-react';
 import { useId, useState } from 'react';
 import { NoteKindToggles, toggleKind } from '../../components/AnnotatedEssayText';
 import type { HighlightState } from './ExemplarEssays';
+import { chipCls } from '../../../../components/ui/Tabs';
 
 export type ExemplarViewMode = 'essay' | 'paragraph';
 
 const VIEW_LABELS: Record<ExemplarViewMode, string> = { essay: '逐篇', paragraph: '逐段對照' };
 
 const pill =
-  'inline-flex min-h-11 cursor-pointer items-center rounded-full border border-line px-4 text-sm has-[:checked]:border-primary has-[:checked]:bg-primary has-[:checked]:font-semibold has-[:checked]:text-on-primary has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-primary';
+  chipCls();
 
 export function ExemplarViewSwitch({ value, onChange }: { value: ExemplarViewMode; onChange: (mode: ExemplarViewMode) => void }) {
   const id = useId();
@@ -56,7 +57,7 @@ export function HighlightControls({ value, onChange }: { value: HighlightState; 
         type="button"
         aria-pressed={value.on}
         onClick={() => onChange({ ...value, on: !value.on })}
-        className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-line px-4 text-sm aria-pressed:border-primary aria-pressed:font-semibold aria-pressed:text-primary"
+        className={chipCls()}
       >
         <Highlighter aria-hidden="true" className="size-4" />
         標示亮點

@@ -28,6 +28,7 @@ import { useAssistSubjects } from '../useAssistSubjects';
 import { ZH_EXEMPLAR_COPY } from './copy';
 import { ZH_EXEMPLAR_POINTS, zhExemplarPointsInfo, zhExemplarState } from './exemplar';
 import { ZhExemplarView } from './ZhExemplarView';
+import { chipCls } from '../../../../components/ui/Tabs';
 
 /** 這一塊的標題 id（送出後焦點先放在這裡）。 */
 export const ZH_EXEMPLAR_SECTION_ID = 'zh-exemplar';
@@ -262,7 +263,7 @@ export function ZhExemplarBlock({
                 type="button"
                 aria-pressed={active}
                 onClick={() => setPicked(d.turn.id)}
-                className={`inline-flex min-h-11 items-center rounded-full border px-4 font-medium ${active ? 'border-primary bg-primary-soft text-primary' : 'border-line'}`}
+                className={chipCls(active)}
               >
                 {ZH_EXEMPLAR_COPY.pickItem(i + 1)}
               </button>

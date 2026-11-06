@@ -72,6 +72,7 @@ import { useFromCase } from './subjects/useFromCase';
 import { btn } from '../../components/ui/buttons';
 import { fieldCls } from '../../components/ui/fields';
 import { alertCls } from '../../components/ui/Alert';
+import { tabCls, tabListCls } from '../../components/ui/Tabs';
 
 const LABEL_RE = /^[A-Za-z0-9]{1,8}$/;
 
@@ -626,14 +627,14 @@ function ModeSwitch({ mode, subject }: { mode: 'photo' | 'paste'; subject: Assis
   ];
   return (
     <nav aria-label="題目來源">
-      <ul className="inline-flex max-w-full flex-wrap rounded-full border border-line p-1">
+      <ul className={tabListCls}>
         {tabs.map((t) => (
-          <li key={t.key}>
+          <li key={t.key} className="flex">
             <Link
               to={subject ? `/assistant/new?subject=${subject}&mode=${t.key}` : `/assistant/new?mode=${t.key}`}
               replace
               aria-current={t.key === mode ? 'page' : undefined}
-              className={`inline-flex min-h-11 items-center rounded-full px-4 text-sm font-medium ${t.key === mode ? 'bg-primary text-on-primary' : 'text-fg lg:hover:bg-surface-2'}`}
+              className={tabCls(t.key === mode)}
             >
               {t.label}
             </Link>

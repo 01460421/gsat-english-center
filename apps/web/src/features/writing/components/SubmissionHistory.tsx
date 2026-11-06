@@ -23,6 +23,7 @@ import { useErrorView } from '../lib/useErrorView';
 import { KIND_LABELS, STATUS_LABELS, bandLabel, formatScore, formatUnixTime, formatUnixTimeShort, groupLabel } from '../lib/format';
 import { listSubmissions } from '../lib/writingApi';
 import { AiBadge, ErrorMessage, card, secondaryButton } from './ui';
+import { segmentCls, segmentedTrackCls } from '../../../components/ui/Tabs';
 
 interface ListState {
   items: SubmissionSummary[];
@@ -199,14 +200,14 @@ export function SubmissionHistory() {
       <h2 id="history-heading" className="text-lg font-semibold">
         我的寫作紀錄
       </h2>
-      <div role="group" aria-label="紀錄種類" className="mt-3 flex flex-wrap gap-2">
+      <div role="group" aria-label="紀錄種類" className={`mt-3 ${segmentedTrackCls}`}>
         {SUBMISSION_KINDS.map((k) => (
           <button
             key={k}
             type="button"
             aria-pressed={kind === k}
             onClick={() => setKind(k)}
-            className={`inline-flex min-h-11 items-center rounded-full border px-4 text-sm ${kind === k ? 'border-primary bg-primary text-on-primary' : 'border-line'}`}
+            className={segmentCls(kind === k)}
           >
             {KIND_LABELS[k]}
           </button>

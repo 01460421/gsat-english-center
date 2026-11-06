@@ -14,6 +14,7 @@ import { isAnswered } from '../../exams/scoring';
 import { useMockMeta, useMockSession } from '../MockSessionContext';
 import type { PaperIndex } from '../paperIndex';
 import { cardFrameCls } from '../../../components/ui/Card';
+import { chipCls } from '../../../components/ui/Tabs';
 
 export function SectionNavigator({ index, onGo }: { index: PaperIndex; onGo: (sectionId: string) => void }) {
   const active = useMockMeta((m) => m.activeSectionId);
@@ -98,7 +99,7 @@ export function QuestionPalette({ index, onGoQuestion }: { index: PaperIndex; on
                   ['mark', '標記／取消標記'],
                 ] as const
               ).map(([value, text]) => (
-                <label key={value} className="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border border-line px-3 has-[:checked]:border-primary has-[:checked]:bg-primary-soft">
+                <label key={value} className={chipCls()}>
                   <input type="radio" name={`${id}-mode`} value={value} checked={mode === value} onChange={() => setMode(value)} className="size-5 shrink-0 accent-primary" />
                   {text}
                 </label>

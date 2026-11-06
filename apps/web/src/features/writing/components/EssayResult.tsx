@@ -20,6 +20,7 @@ import { bandLabel, formatScore } from '../lib/format';
 import { ERROR_CATEGORY_LABELS, HighlightedText, categoryClass, type MarkedError } from './HighlightedText';
 import { RATER_LABELS } from './TranslationResult';
 import { AiBadge, card } from './ui';
+import { chipCls } from '../../../components/ui/Tabs';
 
 const DEDUCTION_TEXT: Record<EssayDeduction['code'], string> = {
   too_short: `字數明顯不足（少於 ${ESSAY_SHORT_WORDS} 個單詞）`,
@@ -268,7 +269,7 @@ export function EssayResult({
                 type="button"
                 aria-pressed={filter === c}
                 onClick={() => setFilter(c)}
-                className={`rounded-full border px-3 py-1 text-sm ${filter === c ? 'border-primary bg-primary text-on-primary' : 'border-line'}`}
+                className={chipCls(filter === c)}
               >
                 {c === 'all' ? '全部' : ERROR_CATEGORY_LABELS[c]}
               </button>

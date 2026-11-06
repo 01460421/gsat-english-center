@@ -37,6 +37,7 @@ import { HandoffApplied, HandoffOffer } from '../assistant/components/MockWritin
 import { useWritingHandoff } from '../assistant/lib/handoff';
 import { deletePhotos, uploadPhoto } from './lib/writingApi';
 import { ExemplarsButton } from './exemplars/components/ExemplarsButton';
+import { segmentCls, segmentedTrackCls } from '../../components/ui/Tabs';
 
 export default function EssayAttemptPage() {
   const { examId = '' } = useParams();
@@ -208,14 +209,14 @@ function EssayAttempt({ prompt }: { prompt: EssayPrompt }) {
       <ExemplarsButton target={title} group={groupId} hint />
 
       {/* 切換按鈕（aria-pressed），和辨識確認的「逐行／整篇」同一種做法；不用 tab 角色（沒有方向鍵操作的分頁會誤導讀屏）。 */}
-      <div role="group" aria-label="作答方式" className="flex flex-wrap gap-2">
+      <div role="group" aria-label="作答方式" className={segmentedTrackCls}>
         {(['typed', 'photo'] as const).map((m) => (
           <button
             key={m}
             type="button"
             aria-pressed={draft.mode === m}
             onClick={() => update({ mode: m })}
-            className={`inline-flex min-h-11 items-center rounded-full border px-4 text-sm font-medium ${draft.mode === m ? 'border-primary bg-primary text-on-primary' : 'border-line'}`}
+            className={segmentCls(draft.mode === m)}
           >
             {m === 'typed' ? '打字作答' : '拍照上傳手寫稿'}
           </button>

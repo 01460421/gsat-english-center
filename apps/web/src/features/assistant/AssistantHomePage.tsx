@@ -42,6 +42,7 @@ import { ZhErrorStats } from './subjects/chinese/components/ZhErrorStats';
 import { useAssistSubjects } from './subjects/useAssistSubjects';
 import { ZH_WRITING_COPY, ZH_WRITING_PATH, ZH_WRITING_TITLE } from './zhWriting/labels';
 import { cardLinkCls } from '../../components/ui/Card';
+import { chipCls } from '../../components/ui/Tabs';
 
 const DATE = new Intl.DateTimeFormat('zh-TW', { timeZone: 'Asia/Taipei', month: 'numeric', day: 'numeric' });
 const UNDERSTOOD_TEXT = { yes: '懂了', partly: '還有點不懂', no: '不懂' } as const;
@@ -89,7 +90,7 @@ function SubjectFilterBar({ value, onChange }: { value: SubjectFilter; onChange:
         {FILTERS.map((f) => (
           <label
             key={f.value}
-            className={`inline-flex min-h-11 cursor-pointer items-center rounded-full border px-4 text-sm font-medium has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-primary ${value === f.value ? 'border-primary bg-primary text-on-primary' : 'border-line lg:hover:bg-surface-2'}`}
+            className={chipCls(value === f.value)}
           >
             <input type="radio" name={`${id}-subject`} value={f.value} checked={value === f.value} onChange={() => onChange(f.value)} className="sr-only" />
             {f.label}

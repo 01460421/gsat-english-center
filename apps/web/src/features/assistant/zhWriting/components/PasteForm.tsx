@@ -31,6 +31,7 @@ import { ZhExemplarConfirm } from '../../subjects/chinese/ZhExemplarSection';
 import { ZH_WRITING_COPY, ZH_WRITING_SECTION_SHORT } from '../labels';
 import { EMPTY_ZH_PASTE_DRAFT, checkZhPaste, zhPasteFieldOf, zhPasteFieldText, zhPasteProblemMessage, type ZhPasteDraft, type ZhPasteField, type ZhPasteProblem } from '../lib';
 import { fieldCls } from '../../../../components/ui/fields';
+import { chipCls } from '../../../../components/ui/Tabs';
 
 
 const DRAFT_PROMPT = 'zh-writing:prompt';
@@ -181,7 +182,7 @@ export function ZhPasteForm({ onStarted }: { onStarted: (accepted: AssistTaskAcc
             {SECTIONS.map((s, i) => (
               <label
                 key={s}
-                className={`inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border px-4 font-medium has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-primary ${draft.section === s ? 'border-primary bg-primary-soft text-primary' : 'border-line'}`}
+                className={chipCls(draft.section === s)}
               >
                 <input
                   id={i === 0 ? `${fieldId(base, 'section')}-first` : undefined}

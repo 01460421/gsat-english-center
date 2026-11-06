@@ -5,6 +5,7 @@
  * 觸控目標 ≥ 44 px（min-h-11）；沒有切換動畫（prefers-reduced-motion 不用另外處理）。
  */
 import { useId, useRef, type KeyboardEvent, type ReactNode } from 'react';
+import { tabCls, tabListCls } from '../../../../components/ui/Tabs';
 
 export interface TabItem {
   id: string;
@@ -47,7 +48,7 @@ export function Tabs({
 
   return (
     <div>
-      <div role="tablist" aria-label={label} onKeyDown={onKeyDown} className="flex flex-wrap gap-1 border-b border-line">
+      <div role="tablist" aria-label={label} onKeyDown={onKeyDown} className={tabListCls}>
         {tabs.map((tab) => {
           const selected = tab.id === value;
           return (
@@ -64,9 +65,7 @@ export function Tabs({
               aria-controls={panelId(tab.id)}
               tabIndex={selected ? 0 : -1}
               onClick={() => onChange(tab.id)}
-              className={`-mb-px inline-flex min-h-11 items-center gap-1.5 border-b-2 px-4 text-[0.95rem] ${
-                selected ? 'border-primary font-semibold text-primary' : 'border-transparent text-muted lg:hover:text-fg'
-              }`}
+              className={tabCls(selected)}
             >
               {tab.label}
             </button>

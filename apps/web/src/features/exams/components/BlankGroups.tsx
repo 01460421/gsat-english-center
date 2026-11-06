@@ -315,7 +315,7 @@ function Chip({
       aria-pressed={pressed}
       className={`${long ? 'w-full rounded-xl' : 'max-w-full rounded-full'} border px-3 py-1.5 text-left text-[0.95rem] wrap-anywhere disabled:cursor-default ${
         pressed
-          ? 'border-primary bg-primary text-on-primary'
+          ? 'border-primary bg-primary-soft font-semibold text-primary'
           : used
             ? 'border-line bg-surface-2 text-muted'
             : 'border-line bg-surface hover:border-primary'

@@ -10,6 +10,7 @@ import type { MistakeItem } from '../../vocab/lib/mistakes';
 import { useAssistantEnabled } from '../lib/useAssistantEnabled';
 import { btn } from '../../../components/ui/buttons';
 import { cardFrameCls } from '../../../components/ui/Card';
+import { chipCls } from '../../../components/ui/Tabs';
 
 export function AskVocabBatch({ items }: { items: readonly MistakeItem[] }) {
   const enabled = useAssistantEnabled();
@@ -32,7 +33,7 @@ export function AskVocabBatch({ items }: { items: readonly MistakeItem[] }) {
           return (
             <li key={item.entry_id}>
               <label
-                className={`inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border px-3 ${checked ? 'border-primary bg-primary-soft' : 'border-line'} ${!checked && full ? 'opacity-60' : ''}`}
+                className={`${chipCls(checked)} ${!checked && full ? 'opacity-60' : ''}`}
               >
                 <input
                   type="checkbox"

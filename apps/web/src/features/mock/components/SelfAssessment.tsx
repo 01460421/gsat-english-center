@@ -438,7 +438,7 @@ function CompositionItem({
                     {[0, 1, 2, 3, 4, 5].map((v) => (
                       <label
                         key={v}
-                        className="inline-flex h-11 min-w-0 cursor-pointer items-center justify-center rounded-lg border border-line text-sm tabular-nums has-[:checked]:border-primary has-[:checked]:bg-primary has-[:checked]:text-on-primary has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-primary"
+                        className="inline-flex h-11 min-w-0 cursor-pointer items-center justify-center rounded-lg border border-line-strong text-sm tabular-nums has-[:checked]:border-primary has-[:checked]:bg-primary-soft has-[:checked]:font-semibold has-[:checked]:text-primary has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-primary"
                       >
                         <input
                           type="radio"

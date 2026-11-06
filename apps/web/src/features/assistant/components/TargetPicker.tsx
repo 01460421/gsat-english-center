@@ -5,6 +5,7 @@
 import { ASSIST_STANDARD_LABELS, ASSIST_STANDARD_LEVELS, ASSIST_STANDARDS, type AssistStandard } from '@gsat/shared';
 import { useId } from 'react';
 import { Select } from '../../../components/ui/Field';
+import { chipCls } from '../../../components/ui/Tabs';
 
 export type ReportTarget = { standard: AssistStandard } | { level: number };
 
@@ -18,12 +19,12 @@ export function TargetPicker({ value, onChange }: { value: ReportTarget; onChang
       <legend className="font-medium">目標</legend>
       <div className="flex flex-wrap gap-2">
         {ASSIST_STANDARDS.map((s) => (
-          <label key={s} className="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border border-line px-4 has-[:checked]:border-primary has-[:checked]:bg-primary-soft">
+          <label key={s} className={chipCls()}>
             <input type="radio" name={`${id}-target`} checked={mode === s} onChange={() => onChange({ standard: s })} className="size-5 shrink-0 accent-primary" />
             {ASSIST_STANDARD_LABELS[s]}（{ASSIST_STANDARD_LEVELS[s]} 級分）
           </label>
         ))}
-        <label className="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border border-line px-4 has-[:checked]:border-primary has-[:checked]:bg-primary-soft">
+        <label className={chipCls()}>
           <input type="radio" name={`${id}-target`} checked={mode === 'level'} onChange={() => onChange({ level: 'level' in value ? value.level : 12 })} className="size-5 shrink-0 accent-primary" />
           自訂級分
         </label>

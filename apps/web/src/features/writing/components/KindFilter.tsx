@@ -8,6 +8,7 @@
  */
 import { useSearchParams } from 'react-router';
 import { EXAM_KIND_LABELS, type ExamKind } from '../../../data/exams';
+import { chipCls, chipRowCls } from '../../../components/ui/Tabs';
 
 export const WRITING_KINDS: readonly ExamKind[] = ['gsat', 'ast', 'reference'];
 export type WritingKindFilter = ExamKind | 'all';
@@ -43,11 +44,11 @@ export function KindFilter({
   return (
     <fieldset>
       <legend className="sr-only">{legend}</legend>
-      <div className="flex flex-wrap gap-2">
+      <div className={chipRowCls}>
         {options.map((o) => (
           <label
             key={o.value}
-            className="cursor-pointer rounded-full border border-line px-3 py-1.5 text-sm has-[:checked]:border-primary has-[:checked]:bg-primary has-[:checked]:text-on-primary has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-primary lg:has-[:focus-visible]:outline-offset-2 lg:forced-colors:has-[:checked]:border-[color:Highlight] lg:forced-colors:has-[:checked]:bg-[color:Highlight] lg:forced-colors:has-[:checked]:text-[color:HighlightText] lg:forced-colors:has-[:checked]:outline-[color:CanvasText] lg:forced-colors:has-[:checked]:forced-color-adjust-none lg:[&:not(:has(:checked))]:hover:border-primary lg:[&:not(:has(:checked))]:hover:bg-surface-2"
+            className={chipCls()}
           >
             <input type="radio" name="writing-kind" value={o.value} checked={value === o.value} onChange={() => onChange(o.value)} className="sr-only" />
             {o.label}

@@ -59,6 +59,7 @@ import { inputCls, primaryBtn } from './parts';
 import { btn } from '../../../components/ui/buttons';
 import { fieldCls } from '../../../components/ui/fields';
 import { alertCls } from '../../../components/ui/Alert';
+import { chipCls } from '../../../components/ui/Tabs';
 
 export const BLOCK_KIND_LABELS: Record<AssistBlockKind, string> = {
   instructions: '說明',
@@ -283,7 +284,7 @@ export function OcrBlocksConfirm({
             {labels.map((label) => {
               const checked = targets.includes(label);
               return (
-                <label key={label} className={`inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border px-4 ${checked ? 'border-primary bg-primary-soft' : 'border-line'}`}>
+                <label key={label} className={chipCls(checked)}>
                   <input
                     type="checkbox"
                     checked={checked}

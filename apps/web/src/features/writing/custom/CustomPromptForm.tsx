@@ -36,6 +36,7 @@ import { promptFieldSnapshot, type PromptFieldError } from './errors';
 import { pendingRequirements } from './requirements';
 import { btn } from '../../../components/ui/buttons';
 import { numberFieldCls } from '../../../components/ui/fields';
+import { chipCls } from '../../../components/ui/Tabs';
 
 /** 題目欄位 → 畫面上的輸入框 id（idPrefix 是預設的 'custom' 時；錯誤時捲過去並把焦點移過去）。 */
 export const PROMPT_FIELD_INPUT: Record<CustomPromptField, string> = {
@@ -480,7 +481,7 @@ export function CustomPromptForm({
           {([null, 1, 2, 3, 4, 5] as const).map((n) => (
             <label
               key={n ?? 'none'}
-              className="inline-flex min-h-11 cursor-pointer items-center rounded-full border border-line px-4 text-sm has-[:checked]:border-primary has-[:checked]:bg-primary has-[:checked]:text-on-primary has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-primary"
+              className={chipCls()}
             >
               <input type="radio" name={`${idPrefix}-paragraphs`} checked={value.paragraphs === n} onChange={() => set({ paragraphs: n })} className="sr-only" />
               {n === null ? '不指定' : `${n} 段`}

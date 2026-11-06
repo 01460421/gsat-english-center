@@ -34,6 +34,7 @@ import { SourceGate } from './components/GroupSource';
 import { GroupSession } from './PracticeSession';
 import { practiceAttemptId, practiceAttemptIdForKey } from './practiceExam';
 import { btn } from '../../components/ui/buttons';
+import { tierTileCls } from '../../components/ui/Tabs';
 
 /** 題型頁內嵌時才有：難度切換的連結，以及網址沒指定難度時把選定的預設難度寫回網址。 */
 export interface PracticeEmbed {
@@ -289,20 +290,15 @@ function TierSwitcher({ index, section, active, tierLink }: { index: BankIndex; 
         {TIERS.map((t) => {
           const { total, done } = cellProgress(index.groups, history, section, t);
           const current = t === active;
-          const tone = current
-            ? 'border-primary bg-primary text-on-primary'
-            : total > 0
-              ? 'border-primary/50 bg-primary-soft hover:border-primary lg:hover:bg-primary-soft/60'
-              : 'border-dashed border-line bg-surface-2 text-muted hover:border-primary lg:hover:bg-primary-soft/60';
           return (
             <li key={t} className="min-w-0">
               <Link
                 to={tierLink(t)}
                 aria-current={current ? 'page' : undefined}
                 aria-label={total > 0 ? `${TIER_LABELS[t]}：${total} 組，已做 ${done} 組` : `${TIER_LABELS[t]}：出題中`}
-                className={`flex h-full min-h-14 flex-col items-center justify-center rounded-xl border px-1.5 py-1.5 text-center ${tone}`}
+                className={`${tierTileCls(current, total > 0 ? 'ready' : 'pending')} h-full min-h-14`}
               >
-                <span className={`text-sm font-semibold ${!current && total > 0 ? 'text-primary' : ''}`}>{TIER_LABELS[t]}</span>
+                <span className="text-sm font-semibold">{TIER_LABELS[t]}</span>
                 {/* 按鈕夠寬（約 92px 以上）時「20 組・已做 3」排一行；320px 手機上排成兩行，不留一個落單的「・」。 */}
                 <span className="@container w-full text-xs tabular-nums">
                   {total > 0 ? (

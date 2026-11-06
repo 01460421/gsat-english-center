@@ -18,6 +18,7 @@ import { formatPoints } from './scoring';
 import { Select } from '../../components/ui/Field';
 import { cardFrameCls, cardLinkCls } from '../../components/ui/Card';
 import { badgeCls } from '../../components/ui/Badge';
+import { chipCls, chipRowCls } from '../../components/ui/Tabs';
 
 export const KIND_FILTERS = [
   { value: 'all', label: '全部' },
@@ -109,12 +110,11 @@ export function onlyInProgress(exams: readonly ExamSummary[]): ExamSummary[] {
 }
 
 /**
- * 考試膠囊（radio 藏在 label 裡）。≥ lg 另外：焦點框離開膠囊 2px（選中的膠囊是實心主色，貼著畫的外框看不出來，
- * Tab 進這組 radio 時焦點正好在選中的那一顆上）；高對比模式拿掉底色後，選中的改用系統的 Highlight／HighlightText（R11），
- * 並設 forced-color-adjust: none（不設的話字後面會墊一塊 Canvas 色的底，白字壓在白底上看不見；設計文件 §16.7）。
+ * 考試膠囊（radio 藏在 label 裡）：共用的篩選膠囊（components/ui/Tabs.tsx 的 chipCls）。選中是 primary-soft 底＋主色字與框
+ * （不再是實心主色）；焦點框離開膠囊 2px；高對比模式選中的改用系統的 Highlight／HighlightText 並設 forced-color-adjust: none
+ * （不設的話字後面會墊一塊 Canvas 色的底；設計文件 desktop-ui §16.7）。
  */
-const pillCls =
-  'cursor-pointer rounded-full border border-line px-3 py-1.5 text-sm has-[:checked]:border-primary has-[:checked]:bg-primary has-[:checked]:text-on-primary has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-primary lg:has-[:focus-visible]:outline-offset-2 lg:forced-colors:has-[:checked]:border-[color:Highlight] lg:forced-colors:has-[:checked]:bg-[color:Highlight] lg:forced-colors:has-[:checked]:text-[color:HighlightText] lg:forced-colors:has-[:checked]:outline-[color:CanvasText] lg:forced-colors:has-[:checked]:forced-color-adjust-none';
+const pillCls = chipCls();
 
 export function ExamList({ indexPromise, view = 'cards' }: { indexPromise: Promise<ExamIndex>; view?: 'cards' | 'table' }) {
   const index = use(indexPromise);
@@ -215,7 +215,7 @@ export function ExamList({ indexPromise, view = 'cards' }: { indexPromise: Promi
       <div className={`${cardFrameCls} p-4 space-y-3`}>
         <fieldset>
           <legend className="mb-2 text-sm font-semibold">考試</legend>
-          <div className="flex flex-wrap gap-2">
+          <div className={chipRowCls}>
             {KIND_FILTERS.map((k) => {
               const count = index.exams.filter((e) => matchesKind(e, k.value)).length;
               return (

@@ -92,7 +92,7 @@ export function EssaySelfAssess({
               {Array.from({ length: ESSAY_CRITERION_MAX[c] + 1 }, (_, v) => (
                 <label
                   key={v}
-                  className="inline-flex size-10 cursor-pointer items-center justify-center rounded-full border border-line tabular-nums has-[:checked]:border-primary has-[:checked]:bg-primary has-[:checked]:text-on-primary has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-primary"
+                  className="inline-flex size-10 cursor-pointer items-center justify-center rounded-full border border-line-strong tabular-nums has-[:checked]:border-primary has-[:checked]:bg-primary-soft has-[:checked]:font-semibold has-[:checked]:text-primary has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-primary"
                 >
                   <input type="radio" name={`${baseId}-${c}`} value={v} checked={scores?.[c] === v} onChange={() => setScore(c, v)} className="sr-only" />
                   {v}

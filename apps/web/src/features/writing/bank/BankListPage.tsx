@@ -43,6 +43,7 @@ import { BANK_SECTION_TITLES, WRITING_TIER_HINTS } from './labels';
 import { progressOf } from './useBankItem';
 import { cardLinkCls } from '../../../components/ui/Card';
 import { badgeCls } from '../../../components/ui/Badge';
+import { chipCls, tierTileCls } from '../../../components/ui/Tabs';
 
 function tierFromParam(value: string | null): Tier | null {
   return (TIERS as readonly string[]).includes(value ?? '') ? (value as Tier) : null;
@@ -198,9 +199,7 @@ function TierPicker({
               {TIERS.map((t) => (
                 <label
                   key={t}
-                  className={`inline-flex min-h-10 cursor-pointer items-center gap-1.5 rounded-full border px-3 text-sm ${
-                    counts[t] > 0 ? 'border-primary/50 bg-primary-soft' : 'border-dashed border-line bg-surface-2 text-muted'
-                  } has-[:checked]:border-primary has-[:checked]:bg-primary has-[:checked]:text-on-primary has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-primary forced-colors:has-[:checked]:border-[color:Highlight] forced-colors:has-[:checked]:bg-[color:Highlight] forced-colors:has-[:checked]:text-[color:HighlightText] forced-colors:has-[:checked]:outline-[color:CanvasText] forced-colors:has-[:checked]:forced-color-adjust-none [&:not(:has(:checked))]:hover:border-primary`}
+                  className={`${chipCls()} ${counts[t] > 0 ? '' : 'border-dashed'}`}
                 >
                   <input type="radio" name={`bank-tier-${section}`} value={t} checked={value === t} onChange={() => onChange(t)} className="sr-only" />
                   <span className="font-semibold">{TIER_LABELS[t]}</span>
@@ -223,14 +222,10 @@ function TierPicker({
       {/* 寬螢幕不撐滿整欄：三格像一組切換鈕，不像三張大卡片。 */}
       <div className="grid grid-cols-3 gap-2 sm:max-w-xl">
         {TIERS.map((t) => {
-          const tone =
-            counts[t] > 0
-              ? 'border-primary/50 bg-primary-soft text-fg hover:border-primary'
-              : 'border-dashed border-line bg-surface-2 text-muted hover:border-primary';
           return (
             <label
               key={t}
-              className={`flex min-h-14 min-w-0 cursor-pointer flex-col items-center justify-center rounded-xl border px-1.5 py-1.5 text-center ${tone} has-[:checked]:border-primary has-[:checked]:bg-primary has-[:checked]:text-on-primary has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-primary`}
+              className={`${tierTileCls(undefined, counts[t] > 0 ? 'ready' : 'pending')} min-h-14`}
             >
               <input type="radio" name={`bank-tier-${section}`} value={t} checked={value === t} onChange={() => onChange(t)} className="sr-only" />
               <span className="text-sm font-semibold">{TIER_LABELS[t]}</span>

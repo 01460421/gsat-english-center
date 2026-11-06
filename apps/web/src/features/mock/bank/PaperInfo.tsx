@@ -44,6 +44,7 @@ import { labelsText, rangeText } from './rangeText';
 import { ensureSnapshot } from './snapshots';
 import { btn } from '../../../components/ui/buttons';
 import { cardCls } from '../../../components/ui/Card';
+import { chipCls } from '../../../components/ui/Tabs';
 
 /** 開考前檢查失敗時，焦點移到這一塊（bankMockPaper 的 canStart）。 */
 export const ACTIVE_LIMIT_ID = 'bank-active-limit';
@@ -133,7 +134,7 @@ function PaperActions({ paper }: { paper: BankPaper }) {
           type="button"
           aria-pressed={done}
           onClick={toggleDone}
-          className="inline-flex min-h-11 items-center gap-2 rounded-full border border-line px-4 text-sm hover:border-primary aria-pressed:border-primary aria-pressed:bg-primary-soft"
+          className={chipCls()}
         >
           {done ? '已標記紙本做過（按一下取消）' : '我已經在紙本做過這份'}
         </button>
