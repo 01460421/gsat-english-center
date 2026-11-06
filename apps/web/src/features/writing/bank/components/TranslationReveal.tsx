@@ -12,6 +12,7 @@ import { formatScore } from '../../lib/format';
 import type { BankTranslationAnswerItem, BankTranslationAnswersFile, BankTranslationItem } from '../data';
 import { TRAP_TYPE_LABELS } from '../labels';
 import { bankTranslationSelfScore } from '../selfScore';
+import { btn } from '../../../../components/ui/buttons';
 
 const CIRCLED = ['①', '②', '③', '④'];
 /** 每部分最多記幾個錯誤（每錯扣 0.5，兩個就扣完）。 */
@@ -158,14 +159,14 @@ function SentenceReveal({
                       {part.common_errors.map((ce) => (
                         <li key={ce.wrong} className="rounded-lg bg-surface px-3 py-2">
                           <p lang="en" className="break-words">
-                            <span className="rounded-sm bg-bad/10 px-1 line-through decoration-bad/60">{ce.wrong}</span>
+                            <span className="rounded-sm bg-bad-soft px-1 line-through decoration-bad/60">{ce.wrong}</span>
                             {ce.right && (
                               <>
                                 <span aria-hidden="true" className="mx-1.5 text-muted">
                                   →
                                 </span>
                                 <span className="sr-only">應該寫成</span>
-                                <span className="rounded-sm bg-ok/10 px-1 text-ok">{ce.right}</span>
+                                <span className="rounded-sm bg-ok-soft px-1 text-ok">{ce.right}</span>
                               </>
                             )}
                           </p>
@@ -182,7 +183,7 @@ function SentenceReveal({
                       onClick={() => onPartErrors(j, Math.max(0, errors - 1))}
                       disabled={missing || errors === 0}
                       aria-label={`${label}的錯誤數減一`}
-                      className="inline-flex size-11 items-center justify-center rounded-full border border-line bg-surface disabled:opacity-40"
+                      className={btn('secondary', 'icon')}
                     >
                       <Minus aria-hidden="true" className="size-4" />
                     </button>
@@ -192,13 +193,13 @@ function SentenceReveal({
                       onClick={() => onPartErrors(j, Math.min(MAX_PART_ERRORS, errors + 1))}
                       disabled={missing || errors >= MAX_PART_ERRORS}
                       aria-label={`${label}的錯誤數加一`}
-                      className="inline-flex size-11 items-center justify-center rounded-full border border-line bg-surface disabled:opacity-40"
+                      className={btn('secondary', 'icon')}
                     >
                       <Plus aria-hidden="true" className="size-4" />
                     </button>
                   </span>
                   <label className="inline-flex min-h-11 cursor-pointer items-center gap-2 text-sm">
-                    <input type="checkbox" checked={missing} onChange={(e) => onPartMissing(j, e.currentTarget.checked)} className="size-5 accent-primary" />
+                    <input type="checkbox" checked={missing} onChange={(e) => onPartMissing(j, e.currentTarget.checked)} className="size-5 shrink-0 accent-primary" />
                     這部分整個漏譯
                   </label>
                   <span className="ml-auto text-sm tabular-nums text-muted">
@@ -230,7 +231,7 @@ function SentenceReveal({
                   </p>
                   <p lang="en" className="break-words text-sm">
                     <span className="sr-only">照字面直譯會寫成：</span>
-                    <span className="rounded-sm bg-bad/10 px-1 line-through decoration-bad/60">{t.literal_error}</span>
+                    <span className="rounded-sm bg-bad-soft px-1 line-through decoration-bad/60">{t.literal_error}</span>
                   </p>
                   <p>{t.explanation_zh}</p>
                 </li>

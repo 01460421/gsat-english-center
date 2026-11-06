@@ -17,6 +17,7 @@ import { isAdminHealthResponse } from './guards';
 import { HealthSection, PauseSection } from './HealthSection';
 import { UsageSection } from './UsageSection';
 import { UsersSection } from './UsersSection';
+import { btn } from '../../components/ui/buttons';
 
 export default function AdminPage() {
   return (
@@ -61,7 +62,7 @@ function AdminDashboard({ selfId }: { selfId: string }) {
     <>
       <nav aria-label="後台區塊" className="flex flex-wrap gap-2">
         {SECTIONS.map((s) => (
-          <a key={s.id} href={`#${s.id}`} className="rounded-full border border-line px-3 py-1.5 text-sm hover:bg-surface-2">
+          <a key={s.id} href={`#${s.id}`} className={btn('secondary', 'sm')}>
             {s.label}
           </a>
         ))}

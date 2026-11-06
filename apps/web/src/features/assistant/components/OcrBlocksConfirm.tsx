@@ -56,6 +56,10 @@ import {
 import { ZhQuestionFields, zhFieldsBlocker } from '../subjects/chinese/ZhQuestionFields';
 import { DoubtPicker, EMPTY_DOUBT, type DoubtValue } from './DoubtPicker';
 import { inputCls, primaryBtn } from './parts';
+import { btn } from '../../../components/ui/buttons';
+import { fieldCls } from '../../../components/ui/fields';
+import { alertCls } from '../../../components/ui/Alert';
+import { chipCls } from '../../../components/ui/Tabs';
 
 export const BLOCK_KIND_LABELS: Record<AssistBlockKind, string> = {
   instructions: '說明',
@@ -263,7 +267,7 @@ export function OcrBlocksConfirm({
       )}
 
       {zh && zhSection?.section === 'zh_form' && (
-        <div role="note" className="space-y-2 rounded-xl border border-badge-fg/30 bg-badge-bg/40 px-4 py-3" data-testid="zh-ocr-form-reminder">
+        <div role="note" className={alertCls('warn', 'space-y-2')} data-testid="zh-ocr-form-reminder">
           <p className="text-sm font-medium">{ZH_COPY.ocrFormReminder}</p>
           {zhTargetText(confirmed.question.blocks, targets).trim() !== '' && (
             <p className="text-lg leading-loose whitespace-pre-wrap break-words">
@@ -280,13 +284,13 @@ export function OcrBlocksConfirm({
             {labels.map((label) => {
               const checked = targets.includes(label);
               return (
-                <label key={label} className={`inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border px-4 ${checked ? 'border-primary bg-primary-soft' : 'border-line'}`}>
+                <label key={label} className={chipCls(checked)}>
                   <input
                     type="checkbox"
                     checked={checked}
                     disabled={!checked && targets.length >= maxTargets}
                     onChange={(e) => toggleTarget(label, e.currentTarget.checked)}
-                    className="size-4 accent-[var(--primary)]"
+                    className="size-5 shrink-0 accent-primary"
                   />
                   第 {label} 題
                 </label>
@@ -331,7 +335,7 @@ export function OcrBlocksConfirm({
                           type="button"
                           lang={textLang}
                           onClick={() => setText(i, replaceMarkAt(b.text, k, c))}
-                          className="inline-flex min-h-11 items-center rounded-full border border-line px-3 lg:hover:bg-surface-2"
+                          className={btn('secondary', 'sm')}
                         >
                           {c}
                         </button>
@@ -415,7 +419,7 @@ export function OcrBlocksConfirm({
             <label htmlFor={`${id}-answer`} className="font-semibold">
               你的答案（選填）
             </label>
-            <input id={`${id}-answer`} value={answer} onChange={(e) => setAnswer(e.currentTarget.value)} className={`mt-1 min-h-11 ${inputCls}`} lang="en" autoComplete="off" />
+            <input id={`${id}-answer`} value={answer} onChange={(e) => setAnswer(e.currentTarget.value)} className={`mt-1 ${fieldCls}`} lang="en" autoComplete="off" />
             {ocr.student_answer_seen !== '' && (
               <p className="mt-1 text-xs text-muted">
                 照片上看到的作答：<span lang="en">{ocr.student_answer_seen}</span>
@@ -426,7 +430,7 @@ export function OcrBlocksConfirm({
       )}
       {!(zh && format === 'writing') && (
         <label className="flex min-h-11 cursor-pointer items-center gap-2">
-          <input type="checkbox" checked={effectiveHint} onChange={(e) => setHintFirst(e.currentTarget.checked)} className="size-4 accent-[var(--primary)]" />
+          <input type="checkbox" checked={effectiveHint} onChange={(e) => setHintFirst(e.currentTarget.checked)} className="size-5 shrink-0 accent-primary" />
           先給提示就好（完整解析先收起來，按「看完整解析」才展開，不另外扣點）
         </label>
       )}
@@ -445,7 +449,7 @@ export function OcrBlocksConfirm({
         <DoubtPicker value={doubt} onChange={setDoubt} tornOptions={[]} mine={null} showFreeNote={false} kinds={['sentence_unclear', 'unknown_word', 'faster_method', 'guessed']} />
       )}
       {warnings.length > 0 && (
-        <ul className="space-y-1 rounded-xl border border-badge-fg/30 bg-badge-bg/60 px-4 py-2 text-sm">
+        <ul className={alertCls('warn', 'space-y-1')}>
           {warnings.map((w) => (
             <li key={w}>{ASSIST_INPUT_WARNING_MESSAGES[w]}</li>
           ))}

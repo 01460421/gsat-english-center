@@ -46,6 +46,7 @@ import { emptyBankEssayDraft, loadRawDraft, toBankEssayDraft, type BankEssayDraf
 import { bankErrorView } from './errors';
 import { nextEntry, useBankItem } from './useBankItem';
 import { ExemplarsButton } from '../exemplars/components/ExemplarsButton';
+import { segmentCls, segmentedTrackCls } from '../../../components/ui/Tabs';
 
 export default function BankEssayAttemptPage() {
   const { code } = useParams();
@@ -261,14 +262,14 @@ function BankEssayAttempt({ entry, index, prompt }: { entry: WritingBankEntry; i
         </section>
       )}
 
-      <div role="group" aria-label="作答方式" className="flex flex-wrap gap-2">
+      <div role="group" aria-label="作答方式" className={segmentedTrackCls}>
         {(['typed', 'photo'] as const).map((m) => (
           <button
             key={m}
             type="button"
             aria-pressed={draft.mode === m}
             onClick={() => update({ mode: m })}
-            className={`inline-flex min-h-11 items-center rounded-full border px-4 text-sm font-medium ${draft.mode === m ? 'border-primary bg-primary text-on-primary' : 'border-line'}`}
+            className={segmentCls(draft.mode === m)}
           >
             {m === 'typed' ? '打字作答' : '拍照上傳手寫稿'}
           </button>

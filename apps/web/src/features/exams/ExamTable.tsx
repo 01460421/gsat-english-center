@@ -15,6 +15,7 @@ import { SECTION_TYPE_LABELS, examShortName, type ExamSummary, type SectionType 
 import { attemptProgress, type AttemptProgress } from './attempt';
 import { isNewSystem } from './labels';
 import { formatPoints } from './scoring';
+import { badgeCls } from '../../components/ui/Badge';
 
 /** 題型結構的一字簡稱（「詞10 綜10 文10 篇4 閱12 混4 譯2 作1」）。 */
 const SECTION_SHORT: Record<SectionType, string> = {
@@ -129,8 +130,8 @@ function ExamLinkLabel({ exam }: { exam: ExamSummary }) {
   return (
     <span className="inline-flex flex-wrap items-center gap-2">
       <span>{examShortName(exam)}</span>
-      {isNewSystem(exam) && <span className="rounded-full bg-primary-soft px-2 py-0.5 text-xs font-semibold text-primary">新制</span>}
-      {exam.session === 'makeup' && <span className="rounded-full bg-badge-bg px-2 py-0.5 text-xs font-semibold text-badge-fg">補考</span>}
+      {isNewSystem(exam) && <span className={badgeCls('primary')}>新制</span>}
+      {exam.session === 'makeup' && <span className={badgeCls('warn')}>補考</span>}
     </span>
   );
 }
@@ -140,12 +141,12 @@ export function ExamTable({ exams, listSearch, filters, count }: { exams: readon
   return (
     <div className="space-y-3">
       {/* main 不到 ws（1024 寬）：膠囊與學年度改小、間距縮小、筆數只給讀屏，篩選列維持一行（約 45px）。 */}
-      <StickyBar className="flex flex-wrap items-center gap-x-6 gap-y-2 @max-ws/main:gap-x-4">
+      <StickyBar className="flex flex-wrap items-center gap-x-5 gap-y-2 @max-ws/main:gap-x-4">
         {filters}
         <span className="ml-auto">{count}</span>
       </StickyBar>
       {rows.length === 0 ? (
-        <p className="rounded-2xl border border-dashed border-line p-6 text-center text-muted">沒有符合條件的考卷。</p>
+        <p className="rounded-card border border-dashed border-line p-6 text-center text-muted">沒有符合條件的考卷。</p>
       ) : (
         <DataTable
           caption="歷屆試題"

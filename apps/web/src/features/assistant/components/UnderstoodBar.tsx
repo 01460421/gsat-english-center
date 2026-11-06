@@ -13,6 +13,8 @@ import { ErrorMessage } from '../../writing/components/ui';
 import type { ErrorView } from '../../writing/lib/errors';
 import { patchAssistCase } from '../lib/assistApi';
 import { useAssistErrorView } from '../lib/pollers';
+import { cardFrameCls } from '../../../components/ui/Card';
+import { chipCls } from '../../../components/ui/Tabs';
 
 const OPTIONS: Array<{ value: AssistUnderstood; label: string }> = [
   { value: 'yes', label: '懂了' },
@@ -62,14 +64,14 @@ export function UnderstoodBar({ detail, onUpdated }: { detail: AssistCaseDetail;
   const rating = optimistic && optimistic.rating !== undefined ? optimistic.rating : detail.rating;
   const flagged = rating === 'wrong';
   return (
-    <div aria-busy={saving || undefined} className="space-y-3 rounded-2xl border border-line bg-surface p-4">
+    <div aria-busy={saving || undefined} className={`${cardFrameCls} p-4 space-y-3`}>
       <fieldset>
         <legend className="font-semibold">看完解析，懂了嗎？</legend>
         <div className="mt-2 flex flex-wrap gap-2">
           {OPTIONS.map((o) => (
             <label
               key={o.value}
-              className={`inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border px-4 ${understood === o.value ? 'border-primary bg-primary-soft font-semibold' : 'border-line'}`}
+              className={chipCls(understood === o.value)}
             >
               <input
                 type="radio"
@@ -77,7 +79,7 @@ export function UnderstoodBar({ detail, onUpdated }: { detail: AssistCaseDetail;
                 value={o.value}
                 checked={understood === o.value}
                 onChange={() => void save({ understood: o.value }, `已記下「${o.label}」`)}
-                className="size-4 accent-[var(--primary)]"
+                className="size-5 shrink-0 accent-primary"
               />
               {o.label}
             </label>
@@ -90,7 +92,7 @@ export function UnderstoodBar({ detail, onUpdated }: { detail: AssistCaseDetail;
           type="button"
           aria-pressed={flagged}
           onClick={() => void save({ rating: flagged ? null : 'wrong' }, flagged ? '已取消「這則解析有錯」' : '已記下「這則解析有錯」，謝謝你')}
-          className={`inline-flex min-h-11 items-center gap-1.5 rounded-full border px-4 text-sm ${flagged ? 'border-bad bg-bad/10 font-semibold text-bad' : 'border-line text-muted lg:hover:border-primary'}`}
+          className={`inline-flex min-h-11 items-center gap-1.5 rounded-full border px-4 text-sm ${flagged ? 'border-bad bg-bad-soft font-semibold text-bad' : 'border-line text-muted lg:hover:border-primary'}`}
         >
           <Flag aria-hidden="true" className="size-4" />
           {flagged ? '已標記：這則解析有錯' : '這則解析有錯'}

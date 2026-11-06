@@ -67,7 +67,7 @@ function renderNodes(
                   data-active={piece.highlight.active ? 'true' : undefined}
                   tabIndex={piece.highlight.active ? -1 : undefined}
                   className={`text-fg underline decoration-ok underline-offset-4 outline-none ${
-                    piece.highlight.active ? 'bg-ok/30 decoration-4' : 'bg-ok/10 decoration-2'
+                    piece.highlight.active ? 'bg-ok/30 decoration-4' : 'bg-ok-soft decoration-2'
                   }`}
                 >
                   {piece.text}

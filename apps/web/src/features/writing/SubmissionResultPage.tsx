@@ -81,6 +81,7 @@ import { countEnglishWords, countParagraphs } from './lib/text';
 import { useDescribeContext, useErrorView, useRefreshMeOnConsentError } from './lib/useErrorView';
 import { deleteSubmission, getAiOp, updateSubmission, type AiTaskPath } from './lib/writingApi';
 import { ExemplarsButton } from './exemplars/components/ExemplarsButton';
+import { DisclosureChevron, disclosureSummaryCls } from '../../components/ui/Disclosure';
 
 export default function SubmissionResultPage() {
   const { id = '' } = useParams();
@@ -321,8 +322,11 @@ function CustomPromptSection({
     );
   }
   return (
-    <details className={card} open={open} onToggle={(e) => onToggle(e.currentTarget.open)}>
-      <summary className="min-h-11 cursor-pointer py-2 font-semibold">你提供的題目</summary>
+    <details className={`group ${card}`} open={open} onToggle={(e) => onToggle(e.currentTarget.open)}>
+      <summary className={disclosureSummaryCls}>
+        你提供的題目
+        <DisclosureChevron />
+      </summary>
       <div className="mt-2 space-y-3">
         {editing ? (
           <CustomPromptForm value={draft} onChange={onDraft} check={check} serverError={serverError} confirmed={null} idPrefix="custom">
@@ -659,8 +663,11 @@ function SubmissionView({ id }: { id: string }) {
         </Notice>
       )}
       {essayStem && (
-        <details className={card}>
-          <summary className="cursor-pointer font-semibold">題目</summary>
+        <details className={`group ${card}`}>
+          <summary className={disclosureSummaryCls}>
+            題目
+            <DisclosureChevron />
+          </summary>
           <p className="mt-2 whitespace-pre-line text-[0.95rem]">{essayStem}</p>
         </details>
       )}

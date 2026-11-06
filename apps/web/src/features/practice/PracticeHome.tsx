@@ -22,12 +22,13 @@ import { formatPercent } from '../exams/scoring';
 import { usePracticeHistory, type PracticeHistory } from './history';
 import { PRACTICE_SECTION_HINTS, PRACTICE_SECTION_LABELS, TIER_AUDIENCE, TIER_LABELS, TIERS, practicePath } from './labels';
 import { cellAccuracy, cellProgress } from './pick';
+import { cardCls, cardFrameCls } from '../../components/ui/Card';
 
 /** 右欄的精簡版「三種難度給誰」（ws 寬度）：同樣的標題與文字，一難度一行。 */
 function TierGuideCompact() {
   const titleId = useId();
   return (
-    <section aria-labelledby={titleId} className="rounded-2xl border border-line bg-surface p-4">
+    <section aria-labelledby={titleId} className={`${cardFrameCls} p-4`}>
       <h2 id={titleId} className="font-semibold">
         三種難度給誰
       </h2>
@@ -50,7 +51,7 @@ function TierGuideCompact() {
 function TierGuide() {
   const titleId = useId();
   return (
-    <section aria-labelledby={titleId} className="rounded-2xl border border-line bg-surface p-5 lg:p-6">
+    <section aria-labelledby={titleId} className={cardCls}>
       <h2 id={titleId} className="text-lg font-semibold">
         三種難度給誰
       </h2>
@@ -77,7 +78,7 @@ function TierGuide() {
 function PracticeMatrix({ index, history }: { index: BankIndex; history: PracticeHistory }) {
   const idBase = useId();
   return (
-    <table className="w-full table-fixed border-separate border-spacing-0 overflow-hidden rounded-2xl border border-line bg-surface text-[0.95rem] text-pretty">
+    <table className="w-full table-fixed border-separate border-spacing-0 overflow-hidden rounded-card border border-line bg-surface text-[0.95rem] text-pretty">
       <caption className="sr-only">題型 × 難度</caption>
       <colgroup>
         <col className="w-[28%]" />
@@ -211,7 +212,7 @@ function PracticeMenu({ indexPromise, layout = 'cards' }: { indexPromise: Promis
       ) : (
       <ul className="grid grid-cols-1 gap-3 md:grid-cols-2">
         {PRACTICE_SECTION_TYPES.map((section) => (
-          <li key={section} className="min-w-0 rounded-2xl border border-line bg-surface p-4">
+          <li key={section} className={`${cardFrameCls} p-4 min-w-0`}>
             <h3 className="font-semibold">{PRACTICE_SECTION_LABELS[section]}</h3>
             <p className="text-sm text-muted">{PRACTICE_SECTION_HINTS[section]}</p>
             <ul className="mt-3 grid grid-cols-3 gap-2">

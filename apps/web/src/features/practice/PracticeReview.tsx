@@ -17,6 +17,7 @@ import { DataErrorBoundary } from '../exams/components/DataErrorBoundary';
 import { PRACTICE_SECTION_LABELS, TIER_LABELS, practicePath } from './labels';
 import { SourceGate } from './components/GroupSource';
 import { GroupSession } from './PracticeSession';
+import { btn } from '../../components/ui/buttons';
 
 const noop = () => {};
 
@@ -26,7 +27,7 @@ function Notice({ title, text, again }: { title: string; text: string; again: st
       <title>{`${title}｜題庫練習｜${APP_NAME}`}</title>
       <h1 className="text-2xl font-bold tracking-tight">{title}</h1>
       <p className="text-muted">{text}</p>
-      <Link to={again} className="inline-flex min-h-11 items-center rounded-full bg-primary px-5 font-semibold text-on-primary">
+      <Link to={again} className={btn('primary', 'md')}>
         做這一組
       </Link>
     </section>

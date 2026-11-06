@@ -6,6 +6,7 @@
 import { ASSIST_SUBJECT_LABELS, type AssistSubject } from '@gsat/shared';
 import { useId } from 'react';
 import { ZH_COPY } from './chinese/copy';
+import { chipCls } from '../../../components/ui/Tabs';
 
 export function SubjectChips({ open, value, onChange }: { open: readonly AssistSubject[]; value: AssistSubject; onChange: (subject: AssistSubject) => void }) {
   const id = useId();
@@ -22,7 +23,7 @@ export function SubjectChips({ open, value, onChange }: { open: readonly AssistS
           return (
             <label
               key={s}
-              className={`inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border px-4 text-sm font-medium has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-primary ${checked ? 'border-primary bg-primary text-on-primary' : 'border-line lg:hover:bg-surface-2'}`}
+              className={chipCls(checked)}
             >
               <input type="radio" name={`${id}-subject`} value={s} checked={checked} onChange={() => onChange(s)} className="sr-only" />
               {ASSIST_SUBJECT_LABELS[s]}

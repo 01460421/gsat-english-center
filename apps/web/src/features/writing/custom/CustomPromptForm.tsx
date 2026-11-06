@@ -34,6 +34,9 @@ import { Notice, textInput } from '../components/ui';
 import type { CustomPromptDraft, RequirementsConfirmed } from './drafts';
 import { promptFieldSnapshot, type PromptFieldError } from './errors';
 import { pendingRequirements } from './requirements';
+import { btn } from '../../../components/ui/buttons';
+import { numberFieldCls } from '../../../components/ui/fields';
+import { chipCls } from '../../../components/ui/Tabs';
 
 /** 題目欄位 → 畫面上的輸入框 id（idPrefix 是預設的 'custom' 時；錯誤時捲過去並把焦點移過去）。 */
 export const PROMPT_FIELD_INPUT: Record<CustomPromptField, string> = {
@@ -51,7 +54,7 @@ const AFTER_BLUR: ReadonlySet<CustomPromptProblem> = new Set(['text_missing', 't
 
 /** 字數輸入框：和 textInput 同一組顏色，但寬度固定（textInput 是 w-full）。 */
 const NUMBER_INPUT =
-  'min-h-11 w-20 shrink-0 rounded-lg border border-line bg-bg px-3 py-2 text-center tabular-nums text-fg focus:border-primary aria-[invalid=true]:border-bad';
+  `${numberFieldCls} w-20 shrink-0 text-center`;
 const MARK_CLASS = 'rounded-sm bg-bad/15 px-0.5 text-fg underline decoration-bad decoration-2 underline-offset-2';
 const fmt = (n: number) => n.toLocaleString('zh-TW');
 
@@ -186,7 +189,7 @@ function IssueList({ issues, text }: { issues: FieldIssue[]; text: string }) {
   if (issues.length === 0) return null;
   const ranges = issues.flatMap((i) => i.hits.map((h) => [h.start, h.end] as const));
   return (
-    <div className="rounded-xl border border-bad/40 bg-bad/10 px-3 py-2 text-sm">
+    <div className="rounded-xl border border-bad-line bg-bad-soft px-3 py-2 text-sm">
       <ul className="space-y-1">
         {issues.map((i) => (
           <li key={i.code} className="text-bad">
@@ -377,7 +380,7 @@ export function CustomPromptForm({
           <Notice key={code}>
             <p>{CUSTOM_PROMPT_WARNING_MESSAGES[code]}</p>
             {code === 'personal_header' && (
-              <button type="button" onClick={() => deleteHeaders(field)} className="mt-1 inline-flex min-h-11 items-center font-medium text-primary underline underline-offset-2">
+              <button type="button" onClick={() => deleteHeaders(field)} className={btn('link', 'md', 'mt-1')}>
                 刪掉這幾行
               </button>
             )}
@@ -392,7 +395,7 @@ export function CustomPromptForm({
                 set({ [field]: undoHere.before });
                 setUndo(null);
               }}
-              className="inline-flex min-h-11 items-center font-medium text-primary underline underline-offset-2"
+              className={btn('link', 'md')}
             >
               復原
             </button>
@@ -478,7 +481,7 @@ export function CustomPromptForm({
           {([null, 1, 2, 3, 4, 5] as const).map((n) => (
             <label
               key={n ?? 'none'}
-              className="inline-flex min-h-11 cursor-pointer items-center rounded-full border border-line px-4 text-sm has-[:checked]:border-primary has-[:checked]:bg-primary has-[:checked]:text-on-primary has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-primary"
+              className={chipCls()}
             >
               <input type="radio" name={`${idPrefix}-paragraphs`} checked={value.paragraphs === n} onChange={() => set({ paragraphs: n })} className="sr-only" />
               {n === null ? '不指定' : `${n} 段`}
@@ -488,7 +491,7 @@ export function CustomPromptForm({
         {pending.paragraphs !== undefined && (
           <p className="mt-2 flex flex-wrap items-center gap-x-2 text-sm">
             <span>題目文字提到要分 {pending.paragraphs} 段，要把段數要求設成 {pending.paragraphs} 段嗎？</span>
-            <button type="button" onClick={() => set({ paragraphs: pending.paragraphs ?? null })} className="inline-flex min-h-11 items-center font-medium text-primary underline underline-offset-2">
+            <button type="button" onClick={() => set({ paragraphs: pending.paragraphs ?? null })} className={btn('link', 'md')}>
               設成 {pending.paragraphs} 段
             </button>
           </p>
@@ -539,7 +542,7 @@ export function CustomPromptForm({
                 const w = pending.words;
                 if (w) set({ minWords: w.min === null ? '' : String(w.min), maxWords: w.max === null ? '' : String(w.max) });
               }}
-              className="inline-flex min-h-11 items-center font-medium text-primary underline underline-offset-2"
+              className={btn('link', 'md')}
             >
               設成{pending.words.label}
             </button>

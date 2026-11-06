@@ -29,6 +29,8 @@ import type { PracticeSectionType } from '../../data/bank';
 import type { PageMeta } from '../../modules';
 import type { PracticeEmbed } from './BankPractice';
 import { AI_GROUP_LABEL, PRACTICE_SECTION_LABELS, tierFromParam } from './labels';
+import { btn } from '../../components/ui/buttons';
+import { cardCls } from '../../components/ui/Card';
 
 /** 練習程式（作答、圖表、解析卡）按需載入：題型頁的外殼（標題、考試說明）先出來，不必等這一大包。 */
 const SectionBankPractice = lazy(() => import('./BankPractice').then((m) => ({ default: m.SectionBankPractice })));
@@ -118,10 +120,10 @@ class PracticeChunkBoundary extends Component<{ children: ReactNode }, { failed:
   override render() {
     if (!this.state.failed) return this.props.children;
     return (
-      <div role="alert" className="rounded-2xl border border-line bg-surface p-5">
+      <div role="alert" className={cardCls}>
         <p className="font-semibold">題庫練習載入失敗</p>
         <p className="mt-1 text-muted">可能是網站剛更新或網路不穩。請重新整理頁面再試一次。</p>
-        <button type="button" onClick={() => window.location.reload()} className="mt-3 rounded-full bg-primary px-4 py-2 text-sm font-medium text-on-primary">
+        <button type="button" onClick={() => window.location.reload()} className={btn('primary', 'sm', 'mt-3')}>
           重新整理
         </button>
       </div>
@@ -157,7 +159,7 @@ export function SectionPractice({ section }: { section: PracticeSectionType }) {
       <PracticeChunkBoundary>
         <Suspense
           fallback={
-            <p role="status" className="rounded-2xl border border-line bg-surface py-10 text-center text-muted">
+            <p role="status" className="rounded-card border border-line bg-surface py-10 text-center text-muted">
               題庫練習載入中…
             </p>
           }
@@ -184,7 +186,7 @@ export function SectionPractice({ section }: { section: PracticeSectionType }) {
 export function PracticeOffers({ section }: { section: PracticeSectionType }) {
   const summaryId = useId();
   return (
-    <details className="rounded-2xl border border-line bg-surface">
+    <details className="rounded-card border border-line bg-surface">
       <summary id={summaryId} className="cursor-pointer px-5 py-4 text-lg font-semibold lg:px-6">
         題庫練習有什麼
       </summary>

@@ -236,6 +236,7 @@ function BankTranslationAttempt({ entry, index, prompt }: { entry: WritingBankEn
             type="button"
             className={revealed ? secondaryButton : primaryButton}
             disabled={!revealed && (!allFilled || anyTooLong)}
+            aria-describedby={!revealed && !allFilled ? 'bank-reveal-reason' : undefined}
             aria-expanded={revealed}
             aria-controls="bank-reveal"
             onClick={reveal}
@@ -255,7 +256,7 @@ function BankTranslationAttempt({ entry, index, prompt }: { entry: WritingBankEn
             </button>
           )}
         </div>
-        {!revealed && !allFilled && <p className="text-sm text-muted">兩句都寫完才能對照參考譯文（對照後作答會鎖定，不能再修改）。</p>}
+        {!revealed && !allFilled && <p id="bank-reveal-reason" className="text-sm text-muted">兩句都寫完才能對照參考譯文（對照後作答會鎖定，不能再修改）。</p>}
         {access.state === 'ready' && aiSupported ? (
           <>
             <AiNotice />

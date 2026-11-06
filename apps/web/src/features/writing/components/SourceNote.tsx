@@ -2,10 +2,11 @@
 import { Link } from 'react-router';
 import type { WritingExamRef } from '../data';
 import { ExternalA, primaryButton } from './ui';
+import { calloutCls } from '../../../components/ui/Card';
 
 export function SourceNote({ exam, extra }: { exam: WritingExamRef & { answer_sheet_url?: string | null }; extra?: string }) {
   return (
-    <footer className="space-y-2 rounded-2xl border border-line bg-surface p-4 text-sm text-muted">
+    <footer className={`${calloutCls} space-y-2 text-sm text-muted`}>
       <p className="font-medium text-fg">題目來源：大學入學考試中心 {exam.title}</p>
       <p>
         本站依官方題本整理題目文字{extra ?? ''}；不轉載官方參考答案、評分原則原文或範文。內容如有出入，以官方檔案為準。

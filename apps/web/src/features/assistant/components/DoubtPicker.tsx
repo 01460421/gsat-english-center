@@ -7,6 +7,7 @@
 import { ASSIST_DOUBT_KINDS, ASSIST_DOUBT_LABELS, ASSIST_LIMITS, type AssistDoubtKind, type OptionLetter } from '@gsat/shared';
 import { useId, type ReactNode } from 'react';
 import { inputCls } from './parts';
+import { Select } from '../../../components/ui/Field';
 
 export interface DoubtValue {
   kinds: AssistDoubtKind[];
@@ -64,7 +65,7 @@ export function DoubtPicker({
           return (
             <li key={kind} className="min-w-0">
               <label className={`flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border px-3 py-2 ${checked ? 'border-primary bg-primary-soft' : 'border-line'}`}>
-                <input type="checkbox" checked={checked} onChange={(e) => toggle(kind, e.currentTarget.checked)} className="size-4 shrink-0 accent-[var(--primary)]" />
+                <input type="checkbox" checked={checked} onChange={(e) => toggle(kind, e.currentTarget.checked)} className="size-5 shrink-0 accent-primary" />
                 <span className="min-w-0 break-words">{label}</span>
               </label>
             </li>
@@ -77,11 +78,11 @@ export function DoubtPicker({
           <label htmlFor={`${id}-torn`} className="text-sm font-medium">
             另一個讓你猶豫的選項
           </label>
-          <select
+          <Select
             id={`${id}-torn`}
             value={value.tornWith ?? ''}
             onChange={(e) => onChange({ ...value, tornWith: (e.currentTarget.value || null) as OptionLetter | null })}
-            className={`mt-1 min-h-11 sm:max-w-xs ${inputCls}`}
+            wrapperClassName="w-full mt-1 sm:max-w-xs"
           >
             <option value="">請選擇</option>
             {tornOptions.map((l) => (
@@ -89,7 +90,7 @@ export function DoubtPicker({
                 ({l})
               </option>
             ))}
-          </select>
+          </Select>
         </div>
       )}
       <div>

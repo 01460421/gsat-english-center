@@ -4,6 +4,7 @@
  */
 import { Link } from 'react-router';
 import { APP_NAME } from '../modules';
+import { btn } from '../components/ui/buttons';
 
 export default function NotFoundPage() {
   return (
@@ -11,7 +12,7 @@ export default function NotFoundPage() {
       <title>{`找不到這個頁面｜${APP_NAME}`}</title>
       <h1 className="text-2xl font-bold">找不到這個頁面</h1>
       <p className="mt-2 text-muted">網址可能打錯了，或是這個頁面已經搬家。</p>
-      <Link to="/" className="mt-4 inline-block rounded-full bg-primary px-4 py-2 font-medium text-on-primary">
+      <Link to="/" className={btn('primary', 'md', 'mt-4')}>
         回到首頁
       </Link>
     </article>

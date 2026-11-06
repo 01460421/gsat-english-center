@@ -37,8 +37,9 @@ import { getSrsStore, useSrs } from '../state';
 import { EmptyState, ErrorBlock, LevelBadge, LoadingBlock, SpeakButton, StorageNotice, WordLink } from '../ui/common';
 import { ExampleSentence } from '../ui/ExampleSentence';
 import { LevelPicker } from '../ui/LevelPicker';
-import { btnPrimary, btnText, cardCls, fieldCls, labelCls, sectionTitleCls } from '../ui/styles';
+import { btnPrimary, btnText, cardCls, labelCls, sectionTitleCls } from '../ui/styles';
 import { useLoad } from '../ui/useLoad';
+import { Select } from '../../../components/ui/Field';
 
 type Session =
   | { phase: 'loading' }
@@ -86,18 +87,18 @@ function StudySettings({ candidates }: { candidates: readonly SrsCandidate[] }) 
           <label htmlFor={dailyId} className={labelCls}>
             每日新字數
           </label>
-          <select
+          <Select
             id={dailyId}
             value={settings.daily_new}
             onChange={(e) => getSrsStore().update((s) => updateSettings(s, { daily_new: Number(e.target.value) }, Date.now()))}
-            className={fieldCls}
+            wrapperClassName="w-full"
           >
             {choices.map((n) => (
               <option key={n} value={n}>
                 {n} 個
               </option>
             ))}
-          </select>
+          </Select>
         </div>
         <LevelPicker
           legend="新字的學習範圍"

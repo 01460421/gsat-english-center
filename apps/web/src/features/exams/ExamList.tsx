@@ -15,6 +15,10 @@ import { attemptProgress } from './attempt';
 import { ExamTable } from './ExamTable';
 import { isNewSystem } from './labels';
 import { formatPoints } from './scoring';
+import { Select } from '../../components/ui/Field';
+import { cardFrameCls, cardLinkCls } from '../../components/ui/Card';
+import { badgeCls } from '../../components/ui/Badge';
+import { chipCls, chipRowCls } from '../../components/ui/Tabs';
 
 export const KIND_FILTERS = [
   { value: 'all', label: '全部' },
@@ -48,13 +52,13 @@ function ProgressBadge({ exam }: { exam: ExamSummary }) {
   if (!progress) return null;
   if (progress.status === 'submitted') {
     return (
-      <span className="rounded-full bg-ok/10 px-2 py-0.5 text-xs font-semibold text-ok">
+      <span className={badgeCls('ok')}>
         已交卷{progress.result ? `・${formatPoints(progress.result.earned)}／${formatPoints(progress.result.autoMax)}` : ''}
       </span>
     );
   }
   return (
-    <span className="rounded-full bg-primary-soft px-2 py-0.5 text-xs font-semibold text-primary">
+    <span className={badgeCls('primary')}>
       作答中・{progress.answered}／{exam.question_count}
     </span>
   );
@@ -66,13 +70,13 @@ function ExamCard({ exam, listSearch }: { exam: ExamSummary; listSearch: string 
     <Link
       to={`/exams/${exam.id}`}
       state={{ listSearch }}
-      className="group flex h-full flex-col gap-3 rounded-2xl border border-line bg-surface p-4 hover:border-primary"
+      className={`${cardLinkCls} group flex h-full flex-col gap-3`}
     >
       <span className="flex items-start gap-2">
         <span className="min-w-0 flex-1">
           <span className="flex flex-wrap items-center gap-2">
             <span className="text-lg font-semibold">{examShortName(exam)}</span>
-            {isNew && <span className="rounded-full bg-primary-soft px-2 py-0.5 text-xs font-semibold text-primary">新制</span>}
+            {isNew && <span className={badgeCls('primary')}>新制</span>}
             {exam.session === 'makeup' && (
               <span className="rounded-full bg-badge-bg px-2 py-0.5 text-xs font-semibold text-badge-fg">補考</span>
             )}
@@ -106,12 +110,11 @@ export function onlyInProgress(exams: readonly ExamSummary[]): ExamSummary[] {
 }
 
 /**
- * 考試膠囊（radio 藏在 label 裡）。≥ lg 另外：焦點框離開膠囊 2px（選中的膠囊是實心主色，貼著畫的外框看不出來，
- * Tab 進這組 radio 時焦點正好在選中的那一顆上）；高對比模式拿掉底色後，選中的改用系統的 Highlight／HighlightText（R11），
- * 並設 forced-color-adjust: none（不設的話字後面會墊一塊 Canvas 色的底，白字壓在白底上看不見；設計文件 §16.7）。
+ * 考試膠囊（radio 藏在 label 裡）：共用的篩選膠囊（components/ui/Tabs.tsx 的 chipCls）。選中是 primary-soft 底＋主色字與框
+ * （不再是實心主色）；焦點框離開膠囊 2px；高對比模式選中的改用系統的 Highlight／HighlightText 並設 forced-color-adjust: none
+ * （不設的話字後面會墊一塊 Canvas 色的底；設計文件 desktop-ui §16.7）。
  */
-const pillCls =
-  'cursor-pointer rounded-full border border-line px-3 py-1.5 text-sm has-[:checked]:border-primary has-[:checked]:bg-primary has-[:checked]:text-on-primary has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-primary lg:has-[:focus-visible]:outline-offset-2 lg:forced-colors:has-[:checked]:border-[color:Highlight] lg:forced-colors:has-[:checked]:bg-[color:Highlight] lg:forced-colors:has-[:checked]:text-[color:HighlightText] lg:forced-colors:has-[:checked]:outline-[color:CanvasText] lg:forced-colors:has-[:checked]:forced-color-adjust-none';
+const pillCls = chipCls();
 
 export function ExamList({ indexPromise, view = 'cards' }: { indexPromise: Promise<ExamIndex>; view?: 'cards' | 'table' }) {
   const index = use(indexPromise);
@@ -150,7 +153,7 @@ export function ExamList({ indexPromise, view = 'cards' }: { indexPromise: Promi
         listSearch={location.search}
         filters={
           <>
-            <fieldset className="flex flex-wrap items-center gap-2">
+            <fieldset className="flex flex-wrap items-center gap-1.5">
               <legend className="sr-only">考試</legend>
               {KIND_FILTERS.map((k) => {
                 const count = index.exams.filter((e) => matchesKind(e, k.value)).length;
@@ -168,7 +171,7 @@ export function ExamList({ indexPromise, view = 'cards' }: { indexPromise: Promi
                       className="sr-only"
                     />
                     {k.label}
-                    <span className="ml-1 tabular-nums opacity-80">{count}</span>
+                    <span className="ml-1 font-normal tabular-nums">{count}</span>
                   </label>
                 );
               })}
@@ -177,11 +180,12 @@ export function ExamList({ indexPromise, view = 'cards' }: { indexPromise: Promi
               <label htmlFor={yearId} className="text-sm font-semibold">
                 學年度
               </label>
-              <select
+              <Select
                 id={yearId}
                 value={year === null ? '' : String(year)}
                 onChange={(e) => update({ year: e.currentTarget.value === '' ? null : Number(e.currentTarget.value) })}
-                className="rounded-lg border border-line bg-bg px-3 py-1.5 text-sm @max-ws/main:py-1 @max-ws/main:text-xs"
+                compact
+                className="@max-ws/main:pr-7 @max-ws/main:pl-2 @max-ws/main:text-xs"
               >
                 <option value="">全部學年度</option>
                 {years.map((y) => (
@@ -189,10 +193,10 @@ export function ExamList({ indexPromise, view = 'cards' }: { indexPromise: Promi
                     {y} 學年度
                   </option>
                 ))}
-              </select>
+              </Select>
             </span>
             <label className="inline-flex cursor-pointer items-center gap-2 text-sm font-semibold">
-              <input type="checkbox" checked={activeOnly} onChange={(e) => update({ activeOnly: e.currentTarget.checked })} className="size-4 accent-[var(--primary)]" />
+              <input type="checkbox" checked={activeOnly} onChange={(e) => update({ activeOnly: e.currentTarget.checked })} className="size-5 shrink-0 accent-primary" />
               只看作答中
             </label>
           </>
@@ -209,10 +213,10 @@ export function ExamList({ indexPromise, view = 'cards' }: { indexPromise: Promi
 
   return (
     <div className="space-y-4">
-      <div className="space-y-3 rounded-2xl border border-line bg-surface p-4">
-        <fieldset>
+      <div className={`${cardFrameCls} p-4 space-y-3`}>
+        <fieldset className="min-w-0">
           <legend className="mb-2 text-sm font-semibold">考試</legend>
-          <div className="flex flex-wrap gap-2">
+          <div className={chipRowCls}>
             {KIND_FILTERS.map((k) => {
               const count = index.exams.filter((e) => matchesKind(e, k.value)).length;
               return (
@@ -226,7 +230,7 @@ export function ExamList({ indexPromise, view = 'cards' }: { indexPromise: Promi
                     className="sr-only"
                   />
                   {k.label}
-                  <span className="ml-1 tabular-nums opacity-80">{count}</span>
+                  <span className="ml-1 font-normal tabular-nums">{count}</span>
                 </label>
               );
             })}
@@ -236,11 +240,11 @@ export function ExamList({ indexPromise, view = 'cards' }: { indexPromise: Promi
           <label htmlFor={yearId} className="text-sm font-semibold">
             學年度
           </label>
-          <select
+          <Select
             id={yearId}
             value={year === null ? '' : String(year)}
             onChange={(e) => update({ year: e.currentTarget.value === '' ? null : Number(e.currentTarget.value) })}
-            className="rounded-lg border border-line bg-bg px-3 py-1.5 text-sm"
+            compact
           >
             <option value="">全部學年度</option>
             {years.map((y) => (
@@ -248,7 +252,7 @@ export function ExamList({ indexPromise, view = 'cards' }: { indexPromise: Promi
                 {y} 學年度
               </option>
             ))}
-          </select>
+          </Select>
         </div>
       </div>
 
@@ -256,7 +260,7 @@ export function ExamList({ indexPromise, view = 'cards' }: { indexPromise: Promi
         共 {shown.length} 份考卷・{shown.reduce((acc, e) => acc + e.question_count, 0).toLocaleString('zh-TW')} 題
       </p>
       {shown.length === 0 ? (
-        <p className="rounded-2xl border border-dashed border-line p-6 text-center text-muted">沒有符合條件的考卷。</p>
+        <p className="rounded-card border border-dashed border-line p-6 text-center text-muted">沒有符合條件的考卷。</p>
       ) : (
         <ul className="grid gap-3 sm:grid-cols-2">
           {shown.map((exam) => (

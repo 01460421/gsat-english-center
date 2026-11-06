@@ -33,6 +33,9 @@ import { LocateQuote } from './components/LocateQuote';
 import { OptionVerdictTable } from './components/OptionVerdictTable';
 import { zhQuoteId } from './quotes';
 import { CertaintyNote, DoubtReplies, SectionTag, TestedSection, TipsSection, TypeStepsSection, ZhHeadNotes, ZhOffTopic, zhItemTitle, type ZhViewCommonProps } from './ZhCommon';
+import { btn } from '../../../../components/ui/buttons';
+import { cardFrameCls } from '../../../../components/ui/Card';
+import { alertCls } from '../../../../components/ui/Alert';
 
 /**
  * 子模式改了（單選 → 多選，0 點）之後的一題：依已存的逐選項判定與答案重算多選計分與「你」欄（純函式，測試用）。
@@ -93,7 +96,7 @@ export function judgeComboLine(item: Pick<ZhChoiceItemView, 'judge_labels' | 'op
 function Warnings({ item, onSwitchToMulti, switching }: { item: ZhChoiceItemView; onSwitchToMulti?: (() => void) | undefined; switching: boolean }) {
   if (item.warnings.length === 0) return null;
   return (
-    <ul className="space-y-1 rounded-xl border border-badge-fg/30 bg-badge-bg/60 px-3 py-2 text-sm text-badge-fg">
+    <ul className={alertCls('warn', 'space-y-1 text-badge-fg')}>
       {item.warnings.map((w) => (
         <li key={w} className="space-y-1">
           <p>{ZH_ITEM_WARNING_TEXT[w]}</p>
@@ -145,7 +148,7 @@ function ChoiceItem({
     </div>
   );
   return (
-    <section aria-labelledby={`${bodyId}-h`} className="space-y-3 rounded-2xl border border-line bg-surface p-4" data-zh-item={item.label}>
+    <section aria-labelledby={`${bodyId}-h`} className={`${cardFrameCls} p-4 space-y-3`} data-zh-item={item.label}>
       <div className="flex flex-wrap items-center gap-2">
         <h3 id={`${bodyId}-h`} className="text-base font-semibold">
           {single ? '解析' : zhItemTitle(item.display_label)}
@@ -167,7 +170,7 @@ function ChoiceItem({
           aria-expanded={open}
           aria-controls={`${bodyId}-full`}
           onClick={() => setOpen((v) => !v)}
-          className="inline-flex min-h-11 items-center rounded-full border border-primary px-4 text-sm font-medium text-primary"
+          className={btn('ghost', 'sm')}
         >
           {open ? '收起完整解析' : '看完整解析'}
         </button>
@@ -288,7 +291,7 @@ export function ZhChoiceView({
       <DoubtReplies replies={analysis.doubt_replies} />
       {shared.length > 0 && !common.hintFirst && <div className="space-y-3">{sharedTables}</div>}
       {shared.length > 0 && common.hintFirst && (
-        <details className="rounded-2xl border border-line bg-surface px-4 py-2" data-zh-shared-cards>
+        <details className="rounded-card border border-line bg-surface px-4 py-2" data-zh-shared-cards>
           <summary className="flex min-h-11 cursor-pointer items-center font-semibold">看完整解析：整組共用的題型卡</summary>
           <div className="space-y-3 pb-2">{sharedTables}</div>
         </details>

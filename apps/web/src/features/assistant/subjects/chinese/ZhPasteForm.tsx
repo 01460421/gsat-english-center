@@ -53,6 +53,9 @@ import {
   type ZhFieldsValue,
 } from './typed';
 import { ZhQuestionFields, zhFieldsBlocker } from './ZhQuestionFields';
+import { btn } from '../../../../components/ui/buttons';
+import { fieldCls } from '../../../../components/ui/fields';
+import { alertCls } from '../../../../components/ui/Alert';
 
 const DRAFT_KEY = 'typed:zh:text';
 
@@ -68,7 +71,7 @@ export function subjectSuggestion(text: string): ReturnType<typeof detectAssistS
 function Highlighted({ text, ranges }: { text: string; ranges: ReadonlyArray<readonly [number, number]> }) {
   const marks: ZhMark[] = ranges.map(([start, end]) => ({ start, end, active: true }));
   return (
-    <p className="max-h-64 overflow-y-auto rounded-xl border border-bad/40 bg-surface p-3 whitespace-pre-wrap break-words">
+    <p className="max-h-64 overflow-y-auto rounded-control border border-bad-line bg-surface p-3 whitespace-pre-wrap break-words">
       <ZhText text={text} marks={marks} />
     </p>
   );
@@ -202,10 +205,10 @@ export function ZhPasteForm({
         </Notice>
       )}
       {suggestion && (
-        <div role="status" className="flex flex-wrap items-center gap-2 rounded-xl border border-badge-fg/30 bg-badge-bg/60 px-4 py-2 text-sm" data-testid="zh-subject-suggestion">
+        <div role="status" className={alertCls('warn', 'flex flex-wrap items-center gap-2')} data-testid="zh-subject-suggestion">
           <p>{assistSubjectMismatchText(suggestion.subject, 'input', open)}</p>
           {suggestion.subject === 'english' && open.includes('english') && (
-            <button type="button" onClick={() => onSwitchSubject('english')} className="inline-flex min-h-11 items-center rounded-full border border-line bg-surface px-3 font-medium">
+            <button type="button" onClick={() => onSwitchSubject('english')} className={btn('secondary', 'sm')}>
               改選英文
             </button>
           )}
@@ -216,7 +219,7 @@ export function ZhPasteForm({
           題目全文（必填）
         </label>
         {section?.section === 'zh_form' && (
-          <p role="note" className="mt-1 rounded-xl border border-badge-fg/30 bg-badge-bg/60 px-3 py-2 text-sm" data-testid="zh-form-reminder">
+          <p role="note" className={alertCls('warn', 'mt-1')} data-testid="zh-form-reminder">
             {ZH_COPY.formReminder}
           </p>
         )}
@@ -274,7 +277,7 @@ export function ZhPasteForm({
           onChange={(e) => setLabelsRaw(e.currentTarget.value)}
           aria-describedby={`${id}-label-hint`}
           aria-invalid={labelProblem !== null || undefined}
-          className={`mt-1 min-h-11 sm:max-w-xs ${inputCls}`}
+          className={`mt-1 min-h-11 ${fieldCls} sm:max-w-xs`}
           inputMode="text"
           autoComplete="off"
         />
@@ -285,7 +288,7 @@ export function ZhPasteForm({
       <ZhQuestionFields value={fields} onChange={setFields} guess={guess} format={format} mode={mode} answerKeys={answerKeys} limits={limits} showQ1={showQ1} />
       {format !== 'writing' && (
         <label className="flex min-h-11 cursor-pointer items-center gap-2">
-          <input type="checkbox" checked={effectiveHint} onChange={(e) => setHintFirst(e.currentTarget.checked)} className="size-4 accent-[var(--primary)]" />
+          <input type="checkbox" checked={effectiveHint} onChange={(e) => setHintFirst(e.currentTarget.checked)} className="size-5 shrink-0 accent-primary" />
           先給提示就好（完整解析先收起來，按「看完整解析」才展開，不另外扣點）
         </label>
       )}
@@ -300,7 +303,7 @@ export function ZhPasteForm({
         placeholder={ZH_COPY.doubtPlaceholder}
       />
       {warnings.length > 0 && (
-        <ul className="space-y-1 rounded-xl border border-badge-fg/30 bg-badge-bg/60 px-4 py-2 text-sm">
+        <ul className={alertCls('warn', 'space-y-1')}>
           {warnings.map((w) => (
             <li key={w}>{ASSIST_INPUT_WARNING_MESSAGES[w]}</li>
           ))}

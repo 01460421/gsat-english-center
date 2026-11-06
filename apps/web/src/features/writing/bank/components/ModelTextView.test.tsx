@@ -2,6 +2,7 @@
  * ModelTextView 抽出 AnnotatedEssayText 前後輸出相同（docs/design/model-essays.md §8.2、§9.3）。
  * 下面的 LegacyModelTextView 是抽出之前的 ModelTextView 原文（只改了名字），兩者 render 同一份範文，
  * 比對 HTML（useId 的值不同，先換成固定字串）；切換一種標示之後再比一次。
+ * CSS 改版 PR B 起標示的勾選膠囊改用共用的 chipCls()、checkbox 20px：舊版副本跟著改（刻意的改動，不是抽出造成的差異）。
  */
 import { ESSAY_CRITERIA, ESSAY_CRITERION_LABELS, MODEL_TEXT_NOTE_KINDS, type ModelText, type ModelTextNote, type ModelTextNoteKind } from '@gsat/shared';
 import { render, screen, within } from '@testing-library/react';
@@ -11,6 +12,7 @@ import { describe, expect, it } from 'vitest';
 import { BANK_CP_ANSWERS } from '../../testing/fixtures';
 import { MODEL_TEXT_LABELS, MODEL_TEXT_NOTE_CLASSES, MODEL_TEXT_NOTE_LABELS, MODEL_TEXT_NOTICE } from '../labels';
 import { ModelTextView } from './ModelTextView';
+import { chipCls } from '../../../../components/ui/Tabs';
 
 // ───────────── 抽出之前的 ModelTextView（原文） ─────────────
 
@@ -91,9 +93,9 @@ function LegacyModelTextView({ model }: { model: ModelText }) {
           {MODEL_TEXT_NOTE_KINDS.map((k) => (
             <label
               key={k}
-              className="inline-flex min-h-9 cursor-pointer items-center gap-1.5 rounded-full border border-line px-3 text-sm has-[:checked]:border-primary has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-primary"
+              className={chipCls()}
             >
-              <input type="checkbox" checked={kinds.has(k)} onChange={() => toggle(k)} className="size-4 accent-primary" />
+              <input type="checkbox" checked={kinds.has(k)} onChange={() => toggle(k)} className="size-5 shrink-0 accent-primary" />
               <span className={`rounded-sm px-1 ${MODEL_TEXT_NOTE_CLASSES[k]}`}>{MODEL_TEXT_NOTE_LABELS[k]}</span>
             </label>
           ))}

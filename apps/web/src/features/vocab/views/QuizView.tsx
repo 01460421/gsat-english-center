@@ -10,6 +10,7 @@ import { SPELLING_MAX_LEVEL } from '../lib/spelling';
 import { LevelPicker } from '../ui/LevelPicker';
 import { btnPrimary, cardCls, labelCls, sectionTitleCls } from '../ui/styles';
 import { LaunchStatus, QuizSession, useQuizLauncher, type QuizConfig } from './QuizSession';
+import { optionCardTopCls } from '../../../components/ui/Check';
 
 const SPELLING_DISABLED: readonly VocabLevel[] = VOCAB_LEVELS.filter((l) => l > SPELLING_MAX_LEVEL);
 
@@ -48,7 +49,7 @@ export function QuizView({ active }: { active: boolean }) {
           {QUIZ_MODES.map((m) => (
             <label
               key={m.id}
-              className="flex cursor-pointer items-start gap-3 rounded-xl border border-line p-3 has-[:checked]:border-primary has-[:checked]:bg-primary-soft"
+              className={optionCardTopCls}
             >
               <input
                 type="radio"
@@ -56,7 +57,7 @@ export function QuizView({ active }: { active: boolean }) {
                 value={m.id}
                 checked={mode === m.id}
                 onChange={() => setMode(m.id)}
-                className="mt-1.5 accent-[var(--primary)]"
+                className="mt-1 size-5 shrink-0 accent-primary"
               />
               <span className="min-w-0">
                 <span className="block font-medium">{m.label}</span>

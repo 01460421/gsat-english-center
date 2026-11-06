@@ -47,6 +47,8 @@ import { BankPaperChangedError } from './sources/bankMock';
 import { PublisherSourceError } from './sources/publisher';
 import { compareLabels } from './sources/common';
 import { resolveAsk, type ResolvedAsk } from './sources';
+import { btn } from '../../components/ui/buttons';
+import { cardCls, cardFrameCls } from '../../components/ui/Card';
 
 type LoadState = { status: 'loading' } | { status: 'ready'; resolved: ResolvedAsk } | { status: 'none' } | { status: 'error'; error: unknown };
 
@@ -95,7 +97,7 @@ function unitOf(resolved: ResolvedAsk): string {
 
 function NoRecord() {
   return (
-    <div className="space-y-3 rounded-2xl border border-dashed border-line bg-surface-2 p-5">
+    <div className="space-y-3 rounded-card border border-dashed border-line bg-surface-2 p-5">
       <p className="font-semibold">這台裝置沒有這一題的作答紀錄</p>
       <p className="text-muted">作答紀錄只存在作答的那台裝置與瀏覽器。可以改用「貼上題目」，把題目與你的答案貼上來問。</p>
       <Link to="/assistant/new" className={primaryBtn}>
@@ -111,7 +113,7 @@ function LoadError({ error, ask, onRetry }: { error: unknown; ask: AskRef; onRet
   if (error instanceof PublisherSourceError || publisherGone) {
     const ended = !(error instanceof PublisherSourceError) || error.reason === 'ended';
     return (
-      <div role="alert" className="space-y-2 rounded-2xl border border-line bg-surface p-5" data-testid="publisher-blocked">
+      <div role="alert" className={`${cardCls} space-y-2`} data-testid="publisher-blocked">
         <p className="font-semibold">{ended ? PUBLISHER_ASSIST_ENDED_TEXT : PUBLISHER_ASSIST_NO_SCOPE_TEXT}</p>
         <p className="text-muted">{ended ? '你的作答紀錄還在，錯題清單照樣列出這一組。' : '可以在檢討試卷或題庫練習看這一組的答案與解析。'}（沒有扣點）</p>
       </div>
@@ -119,7 +121,7 @@ function LoadError({ error, ask, onRetry }: { error: unknown; ask: AskRef; onRet
   }
   if (error instanceof BankPaperChangedError) {
     return (
-      <div role="alert" className="space-y-2 rounded-2xl border border-line bg-surface p-5">
+      <div role="alert" className={`${cardCls} space-y-2`}>
         <p className="font-semibold">這份卷子的題目已經更新</p>
         <p className="text-muted">這個瀏覽器沒有保存原本的題目，為了不拿新題目對舊答案，這份卷子的題目不能送出解析。</p>
       </div>
@@ -130,7 +132,7 @@ function LoadError({ error, ask, onRetry }: { error: unknown; ask: AskRef; onRet
     const m = ask.src === 'bank' ? PRACTICE_ITEM_UID_PATTERN.exec(ask.ref.split('@')[0] ?? '') : null;
     const section = m ? ({ vo: 'vocabulary', cz: 'cloze', wb: 'word_bank', st: 'structure', rd: 'reading', mx: 'mixed' } as const)[m[2] as 'vo'] : null;
     return (
-      <div role="alert" className="space-y-2 rounded-2xl border border-line bg-surface p-5">
+      <div role="alert" className={`${cardCls} space-y-2`}>
         <p className="font-semibold">這一題已經改版，舊版無法解析</p>
         <p className="text-muted">可以做一次新版本（同一組的新版本）再來問。</p>
         {section && isPracticeSectionType(section) && ask.src === 'bank' && (
@@ -145,7 +147,7 @@ function LoadError({ error, ask, onRetry }: { error: unknown; ask: AskRef; onRet
     );
   }
   return (
-    <div role="alert" className="space-y-2 rounded-2xl border border-line bg-surface p-5">
+    <div role="alert" className={`${cardCls} space-y-2`}>
       <p className="font-semibold">暫時讀不到題目，請稍後再試</p>
       <p className="text-muted">{error instanceof DataLoadError ? error.message : '題目資料載入失敗。'}（沒有扣點）</p>
       <button type="button" onClick={onRetry} className={primaryBtn}>
@@ -214,7 +216,7 @@ function AskForm({ ask, resolved }: { ask: AskRef; resolved: ResolvedAsk }) {
         <button
           type="button"
           onClick={() => setLabels([requestedItem.label])}
-          className="inline-flex min-h-11 items-center font-medium text-primary underline underline-offset-2"
+          className={btn('link', 'md')}
         >
           只問第 {resolved.displayOf(requestedItem.label)} {unit}
         </button>
@@ -335,7 +337,7 @@ function Body() {
       <BackLink to="/assistant/mistakes">錯題與疑點</BackLink>
       <AssistHeader title="請學習助手解析" docTitle="請學習助手解析｜學習助手" />
       {!ask ? (
-        <p role="alert" className="rounded-xl border border-line bg-surface p-4">
+        <p role="alert" className={`${cardFrameCls} rounded-control p-4`}>
           網址的格式不對，找不到要問的題目。請從題目旁的「問學習助手」按鈕再進來一次。
         </p>
       ) : state.status === 'loading' ? (

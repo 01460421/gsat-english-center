@@ -15,6 +15,7 @@ import { loadExamIndex } from '../data/exams';
 import { useDesktopPref, type ListViewPref } from '../lib/desktopPrefs';
 import { useIsDesktop } from '../lib/media';
 import { getPage } from '../modules';
+import { calloutCls } from '../components/ui/Card';
 
 export default function ExamsPage() {
   const page = getPage('/exams');
@@ -50,7 +51,7 @@ export default function ExamsPage() {
             點選考卷開始作答：<strong>練習模式</strong>每題寫完就能看答案（有公布統計的試卷另附全國答對率）；<strong>考試模式</strong>依考卷時間倒數計時，交卷後計分。進度會自動存在這台裝置。
           </p>
           {list}
-          <footer className="max-w-3xl rounded-2xl border border-line bg-surface p-4 text-sm text-muted">
+          <footer className={`${calloutCls} max-w-3xl text-sm text-muted`}>
             試題來源：大學入學考試中心 83–115 學年度學科能力測驗、91–110 學年度指定科目考試英文考科，以及各學年度參考試卷。
             題目、選項與答案依官方公告的試題與答案整理；每份考卷頁都附有官方 PDF 連結，內容如有出入以官方檔案為準。
           </footer>
@@ -67,7 +68,7 @@ export default function ExamsPage() {
           點選考卷開始作答：<strong>練習模式</strong>每題寫完就能看答案（有公布統計的試卷另附全國答對率）；<strong>考試模式</strong>依考卷時間倒數計時，交卷後計分。進度會自動存在這台裝置。
         </p>
         {list}
-        <footer className="rounded-2xl border border-line bg-surface p-4 text-sm text-muted">
+        <footer className={`${calloutCls} text-sm text-muted`}>
           試題來源：大學入學考試中心 83–115 學年度學科能力測驗、91–110 學年度指定科目考試英文考科，以及各學年度參考試卷。
           題目、選項與答案依官方公告的試題與答案整理；每份考卷頁都附有官方 PDF 連結，內容如有出入以官方檔案為準。
         </footer>

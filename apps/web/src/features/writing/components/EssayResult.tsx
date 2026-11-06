@@ -20,6 +20,8 @@ import { bandLabel, formatScore } from '../lib/format';
 import { ERROR_CATEGORY_LABELS, HighlightedText, categoryClass, type MarkedError } from './HighlightedText';
 import { RATER_LABELS } from './TranslationResult';
 import { AiBadge, card } from './ui';
+import { chipCls } from '../../../components/ui/Tabs';
+import { DisclosureChevron, disclosureSummaryCls } from '../../../components/ui/Disclosure';
 
 const DEDUCTION_TEXT: Record<EssayDeduction['code'], string> = {
   too_short: `字數明顯不足（少於 ${ESSAY_SHORT_WORDS} 個單詞）`,
@@ -29,7 +31,7 @@ const DEDUCTION_TEXT: Record<EssayDeduction['code'], string> = {
 /** 身心安全旗標：先顯示關懷訊息與求助資源（ARCHITECTURE §8.5），批改照常。 */
 export function SafetyCare() {
   return (
-    <section role="note" aria-labelledby="care-heading" className="rounded-2xl border border-primary/40 bg-primary-soft p-4 lg:p-5">
+    <section role="note" aria-labelledby="care-heading" className="rounded-card border border-primary/40 bg-primary-soft p-4 lg:p-5">
       <h2 id="care-heading" className="text-lg font-semibold">
         想找人聊聊嗎？
       </h2>
@@ -105,7 +107,7 @@ export function EssayResult({
         </p>
         {selfTotal !== null && <p className="mt-1 text-sm text-muted">你的自評：{selfTotal} 分</p>}
         {grading.off_topic && (
-          <p className="mt-2 rounded-lg bg-bad/10 px-3 py-2 text-sm text-bad">AI 判斷這篇作文離題（沒有回應題目的要求），依計分規則其他各項以 0 分計。</p>
+          <p className="mt-2 rounded-lg bg-bad-soft px-3 py-2 text-sm text-bad">AI 判斷這篇作文離題（沒有回應題目的要求），依計分規則其他各項以 0 分計。</p>
         )}
         <dl className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
           {ESSAY_CRITERIA.map((c) => (
@@ -239,9 +241,10 @@ export function EssayResult({
       </section>
 
       {grading.paragraph_advice.length > 0 && (
-        <details className={card}>
-          <summary className="cursor-pointer text-lg font-semibold">
-            <span>逐段建議（{grading.paragraph_advice.length}）</span> <AiBadge />
+        <details className={`group ${card}`}>
+          <summary className={`${disclosureSummaryCls} text-lg`}>
+            <span className="flex flex-wrap items-center gap-2"><span>逐段建議（{grading.paragraph_advice.length}）</span> <AiBadge /></span>
+            <DisclosureChevron />
           </summary>
           <ol className="mt-2 space-y-2">
             {[...grading.paragraph_advice]
@@ -256,9 +259,10 @@ export function EssayResult({
         </details>
       )}
 
-      <details className={card}>
-        <summary className="cursor-pointer text-lg font-semibold">
-          <span>標出的錯誤（{grading.errors.length}）</span> <AiBadge />
+      <details className={`group ${card}`}>
+        <summary className={`${disclosureSummaryCls} text-lg`}>
+          <span className="flex flex-wrap items-center gap-2"><span>標出的錯誤（{grading.errors.length}）</span> <AiBadge /></span>
+          <DisclosureChevron />
         </summary>
         {categories.length > 1 && (
           <div role="group" aria-label="依類型篩選" className="mt-3 flex flex-wrap gap-2">
@@ -268,7 +272,7 @@ export function EssayResult({
                 type="button"
                 aria-pressed={filter === c}
                 onClick={() => setFilter(c)}
-                className={`rounded-full border px-3 py-1 text-sm ${filter === c ? 'border-primary bg-primary text-on-primary' : 'border-line'}`}
+                className={chipCls(filter === c)}
               >
                 {c === 'all' ? '全部' : ERROR_CATEGORY_LABELS[c]}
               </button>
@@ -290,14 +294,14 @@ export function EssayResult({
                     <span className="text-xs text-muted">第 {err.paragraph_index + 1} 段</span>
                   </p>
                   <p className="mt-1 break-words" lang="en">
-                    <span className="rounded-sm bg-bad/10 px-1 line-through decoration-bad/60">{err.excerpt}</span>
+                    <span className="rounded-sm bg-bad-soft px-1 line-through decoration-bad/60">{err.excerpt}</span>
                     {err.suggestion && (
                       <>
                         <span aria-hidden="true" className="mx-1.5 text-muted">
                           →
                         </span>
                         <span className="sr-only">建議改成</span>
-                        <span className="rounded-sm bg-ok/10 px-1 text-ok">{err.suggestion}</span>
+                        <span className="rounded-sm bg-ok-soft px-1 text-ok">{err.suggestion}</span>
                       </>
                     )}
                   </p>
@@ -310,9 +314,10 @@ export function EssayResult({
       </details>
 
       {grading.rewrite && (
-        <details className={card}>
-          <summary className="cursor-pointer text-lg font-semibold">
-            保留原意的參考改寫 <AiBadge />
+        <details className={`group ${card}`}>
+          <summary className={`${disclosureSummaryCls} text-lg`}>
+            <span className="flex flex-wrap items-center gap-2">保留原意的參考改寫 <AiBadge /></span>
+            <DisclosureChevron />
           </summary>
           <p lang="en" className="mt-2 whitespace-pre-wrap break-words">
             {grading.rewrite}

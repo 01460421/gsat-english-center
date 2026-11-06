@@ -6,6 +6,8 @@ import { useId } from 'react';
 import { formatPoints } from '../../exams/scoring';
 import type { FiveStandard, YearScale } from '../../../data/scoreScales';
 import type { LevelInfo } from '../report';
+import { Select } from '../../../components/ui/Field';
+import { cardCls } from '../../../components/ui/Card';
 
 const STANDARD_SHORT: Record<FiveStandard['name'], string> = { 頂標: '頂', 前標: '前', 均標: '均', 後標: '後', 底標: '底' };
 
@@ -69,24 +71,24 @@ export function LevelCard({
   const id = useId();
   const standards = [...scale.five_standards].sort((a, b) => b.level - a.level);
   return (
-    <section aria-labelledby={`${id}-title`} className="rounded-2xl border border-line bg-surface p-5 lg:p-6">
+    <section aria-labelledby={`${id}-title`} className={cardCls}>
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <h2 id={`${id}-title`} className="text-lg font-semibold">
           級分（非官方換算）
         </h2>
         <label className="inline-flex items-center gap-2 text-sm">
           對照年度
-          <select
+          <Select
             value={year}
             onChange={(e) => onYearChange(Number(e.currentTarget.value))}
-            className="min-h-11 rounded-lg border border-line bg-bg px-2"
+            compact
           >
             {years.map((y) => (
               <option key={y} value={y}>
                 {y} 學年度
               </option>
             ))}
-          </select>
+          </Select>
         </label>
       </div>
       <p className="mt-3 text-5xl font-bold tabular-nums">
@@ -111,7 +113,7 @@ export function LevelCard({
       <StandardsScale level={info.level} scale={scale} />
       <ul className="mt-3 grid grid-cols-1 gap-1 text-sm sm:grid-cols-2">
         {standards.map((s) => (
-          <li key={s.name} className={`flex justify-between gap-2 rounded-lg px-3 py-1.5 ${info.level >= s.level ? 'bg-ok/10' : 'bg-surface-2'}`}>
+          <li key={s.name} className={`flex justify-between gap-2 rounded-lg px-3 py-1.5 ${info.level >= s.level ? 'bg-ok-soft' : 'bg-surface-2'}`}>
             <span>
               {s.name}
               <span className="ml-1 text-xs text-muted">（前 {formatPoints(s.pct_at_or_above)}%）</span>

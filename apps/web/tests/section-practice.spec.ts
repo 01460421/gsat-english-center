@@ -206,7 +206,7 @@ test('深色模式：難度切換（目前的難度）與題組用深色主題�
     const s = getComputedStyle(el);
     return { bg: s.backgroundColor, fg: s.color, body: getComputedStyle(document.body).backgroundColor };
   });
-  // 深色主題：頁面背景是深色，目前的難度是主題色底（淺藍）配深色字，對比清楚。
+  // 深色主題：頁面背景是深色；目前的難度是淡主色底（深藍）配主色字（淺藍）、2px 主色框（CSS 改版 PR B：實心主色只給主要按鈕），對比清楚。
   /** 'rgb(r, g, b)' 或 'color(srgb …)' 的亮度（0–1）。 */
   const lum = (css: string) => {
     const nums = (css.match(/[\d.]+/g) ?? []).map(Number);
@@ -214,7 +214,8 @@ test('深色模式：難度切換（目前的難度）與題組用深色主題�
     return (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
   };
   expect(lum(colors.body)).toBeLessThan(0.2);
-  expect(lum(colors.bg) - lum(colors.fg)).toBeGreaterThan(0.4);
+  expect(lum(colors.fg) - lum(colors.bg)).toBeGreaterThan(0.4);
+  expect(lum(colors.bg)).toBeLessThan(0.3);
   expect(errors).toEqual([]);
 });
 

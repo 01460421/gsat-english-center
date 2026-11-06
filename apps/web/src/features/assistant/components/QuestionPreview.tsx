@@ -15,6 +15,8 @@ import type { TextHighlight } from '../../exams/richText';
 import type { PreviewItem, PreviewModel } from '../sources/types';
 import { ZhText, type ZhMark } from '../subjects/chinese/components/ZhText';
 import { AnswerText, VerdictBadge } from './parts';
+import { btn } from '../../../components/ui/buttons';
+import { insetBoxCls } from '../../../components/ui/Card';
 
 const BLOCK_KIND_LABELS: Record<string, string> = {
   instructions: '說明',
@@ -58,7 +60,7 @@ function ItemCard({ item, model, headingLevel }: { item: PreviewItem; model: Pre
   const lang = textLangOf(model);
   const reasons = [item.marked ? '作答時標記過' : null, item.hints ? `用了 ${item.hints} 層提示` : null, item.revealed ? '先看了答案' : null].filter(Boolean);
   return (
-    <li className="rounded-xl border border-line bg-surface p-3">
+    <li className={insetBoxCls}>
       <div className="flex flex-wrap items-center gap-2">
         <H className="font-semibold">{itemTitle(item, model)}</H>
         {item.status !== 'unknown' && <VerdictBadge status={item.status} basis={item.clientJudged ? 'client' : undefined} />}
@@ -146,7 +148,7 @@ export function QuestionPreview({
           aria-expanded={open}
           aria-controls={bodyId}
           onClick={() => setOpen((v) => !v)}
-          className="inline-flex min-h-11 items-center text-sm font-medium text-primary underline underline-offset-2"
+          className={btn('link', 'sm')}
         >
           {open ? '收起題目全文' : '看完整題目'}
         </button>
@@ -156,11 +158,11 @@ export function QuestionPreview({
           {model.instructions && <p className="text-sm text-muted">{model.instructions}</p>}
           {model.passage &&
             (model.trust === 'site' ? (
-              <div lang="en" className="space-y-2 rounded-xl border border-line bg-surface p-3 leading-relaxed break-words" data-assist-passage="">
+              <div lang="en" className={`${insetBoxCls} space-y-2 leading-relaxed break-words`} data-assist-passage="">
                 <RichText text={model.passage} highlights={highlights ?? []} />
               </div>
             ) : (
-              <p lang={lang} className="rounded-xl border border-line bg-surface p-3 whitespace-pre-wrap break-words">
+              <p lang={lang} className={`${insetBoxCls} whitespace-pre-wrap break-words`}>
                 {model.passage}
               </p>
             ))}
@@ -171,7 +173,7 @@ export function QuestionPreview({
             </div>
           )}
           {model.sharedOptions && (
-            <div className="rounded-xl border border-line bg-surface p-3">
+            <div className={insetBoxCls}>
               <p className="mb-1 text-sm font-semibold">選項</p>
               <OptionsList options={model.sharedOptions} rich={model.trust === 'site'} lang={lang} />
             </div>
@@ -179,7 +181,7 @@ export function QuestionPreview({
           {model.blocks && model.blocks.length > 0 && !zh && (
             <ol className="space-y-2">
               {model.blocks.map((b, i) => (
-                <li key={i} className="rounded-xl border border-line bg-surface p-3" data-block-index={i}>
+                <li key={i} className={insetBoxCls} data-block-index={i}>
                   <p className="text-xs font-semibold text-muted">
                     {BLOCK_KIND_LABELS[b.kind] ?? b.kind}
                     {b.label ? `・${b.label}` : ''}

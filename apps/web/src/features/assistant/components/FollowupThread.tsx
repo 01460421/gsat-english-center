@@ -8,6 +8,7 @@ import { AiBadge, ASSISTANT_AI_NOTICE, ReportAiContent } from '../../writing/com
 import { assistRefundMessage } from '../lib/errors';
 import { ZH_COPY } from '../subjects/chinese/copy';
 import { AssistSafetyCare, En, ProcessingNotices } from './parts';
+import { cardFrameCls } from '../../../components/ui/Card';
 
 /** 每一輪的標題 id（回覆出來時案例頁把焦點移過去）。 */
 export function followupHeadingId(turnId: string): string {
@@ -22,7 +23,7 @@ export function FollowupThread({ turns, displayOf }: { turns: readonly AssistTur
         const reply = t.reply;
         const zh = reply !== undefined && 'kind' in reply && reply.kind === 'zh_followup';
         return (
-          <li key={t.id} className="space-y-2 rounded-2xl border border-line bg-surface p-4">
+          <li key={t.id} className={`${cardFrameCls} p-4 space-y-2`}>
             <h3 id={followupHeadingId(t.id)} tabIndex={-1} className="flex flex-wrap items-center gap-2 font-semibold">
               第 {i + 1} 輪追問
               {t.label ? <span className="text-sm font-normal text-muted">（問第 {displayOf(t.label)} 題）</span> : null}

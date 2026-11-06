@@ -75,7 +75,7 @@ export function SourceGate({ file, action, children }: { file: Pick<PracticeGrou
   }
   if (status !== 'ended') return <>{children}</>;
   return (
-    <div className="space-y-3 rounded-2xl border border-line bg-surface-2 p-5" data-testid="source-ended">
+    <div className="space-y-3 rounded-card border border-line bg-surface-2 p-5" data-testid="source-ended">
       <p>{PUBLISHER_SOURCE_ENDED}</p>
       {action}
     </div>

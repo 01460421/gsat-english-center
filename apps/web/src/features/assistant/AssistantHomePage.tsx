@@ -41,6 +41,8 @@ import { ZH_COPY } from './subjects/chinese/copy';
 import { ZhErrorStats } from './subjects/chinese/components/ZhErrorStats';
 import { useAssistSubjects } from './subjects/useAssistSubjects';
 import { ZH_WRITING_COPY, ZH_WRITING_PATH, ZH_WRITING_TITLE } from './zhWriting/labels';
+import { cardLinkCls } from '../../components/ui/Card';
+import { chipCls } from '../../components/ui/Tabs';
 
 const DATE = new Intl.DateTimeFormat('zh-TW', { timeZone: 'Asia/Taipei', month: 'numeric', day: 'numeric' });
 const UNDERSTOOD_TEXT = { yes: '懂了', partly: '還有點不懂', no: '不懂' } as const;
@@ -88,7 +90,7 @@ function SubjectFilterBar({ value, onChange }: { value: SubjectFilter; onChange:
         {FILTERS.map((f) => (
           <label
             key={f.value}
-            className={`inline-flex min-h-11 cursor-pointer items-center rounded-full border px-4 text-sm font-medium has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-primary ${value === f.value ? 'border-primary bg-primary text-on-primary' : 'border-line lg:hover:bg-surface-2'}`}
+            className={chipCls(value === f.value)}
           >
             <input type="radio" name={`${id}-subject`} value={f.value} checked={value === f.value} onChange={() => onChange(f.value)} className="sr-only" />
             {f.label}
@@ -172,7 +174,7 @@ function RecentCases({ readOnly }: { readOnly: boolean }) {
         </p>
       )}
       {cases && cases.length > 0 && (
-        <ul className="divide-y divide-line rounded-2xl border border-line bg-surface">
+        <ul className="divide-y divide-line rounded-card border border-line bg-surface">
           {cases.map((c) => (
             <li key={c.id}>
               <Link to={`/assistant/case/${encodeURIComponent(c.id)}`} className="flex min-h-14 items-center gap-3 px-4 py-3 lg:hover:bg-surface-2">
@@ -216,7 +218,7 @@ function SubjectTag({ subject }: { subject: AssistSubject }) {
 
 function ActionCard({ to, icon, title, children }: { to: string; icon: ReactNode; title: string; children: ReactNode }) {
   return (
-    <Link to={to} className="flex h-full items-start gap-3 rounded-2xl border border-line bg-surface p-4 lg:hover:border-primary">
+    <Link to={to} className={`${cardLinkCls} flex h-full items-start gap-3`}>
       <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary-soft text-primary">{icon}</span>
       <span className="min-w-0 flex-1">
         <span className="flex flex-wrap items-center gap-2 font-semibold">{title}</span>

@@ -41,6 +41,9 @@ import {
 } from './data';
 import { BANK_SECTION_TITLES, WRITING_TIER_HINTS } from './labels';
 import { progressOf } from './useBankItem';
+import { cardLinkCls } from '../../../components/ui/Card';
+import { badgeCls } from '../../../components/ui/Badge';
+import { chipCls, tierTileCls } from '../../../components/ui/Tabs';
 
 function tierFromParam(value: string | null): Tier | null {
   return (TIERS as readonly string[]).includes(value ?? '') ? (value as Tier) : null;
@@ -61,12 +64,12 @@ function ProgressBadge({ progress }: { progress: BankProgress }) {
   // 字用本文色（綠字在淺綠底上只有約 4.4:1，不到 AA 的 4.5:1）；綠色留給底色與勾勾圖示。
   if (progress === 'done')
     return (
-      <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-ok/15 px-2 py-0.5 text-xs font-semibold text-fg">
+      <span className={badgeCls('ok')}>
         <CircleCheck aria-hidden="true" className="size-3.5 text-ok" />
         已完成
       </span>
     );
-  if (progress === 'draft') return <span className="shrink-0 rounded-full bg-surface-2 px-2 py-0.5 text-xs font-semibold">草稿</span>;
+  if (progress === 'draft') return <span className={badgeCls('neutral')}>草稿</span>;
   return null;
 }
 
@@ -75,7 +78,7 @@ function TranslationCard({ card, linkRef }: { card: BankTranslationCard; linkRef
   const progress = progressOf({ uid: card.uid, version: card.version, section_type: 'translation' });
   const origin = useListOriginState();
   return (
-    <Link ref={linkRef} to={bankAttemptPath(card.uid) ?? '#'} state={origin} className="group flex h-full flex-col gap-2 rounded-2xl border border-line bg-surface p-4 hover:border-primary">
+    <Link ref={linkRef} to={bankAttemptPath(card.uid) ?? '#'} state={origin} className={`${cardLinkCls} group flex h-full flex-col gap-2`}>
       <span className="flex items-start gap-2">
         <span className="min-w-0 flex-1 text-lg font-semibold">{topic}</span>
         <ProgressBadge progress={progress} />
@@ -97,7 +100,7 @@ function EssayCard({ card, linkRef }: { card: BankEssayCard; linkRef?: Ref<HTMLA
   const progress = progressOf({ uid: card.uid, version: card.version, section_type: 'composition' });
   const origin = useListOriginState();
   return (
-    <Link ref={linkRef} to={bankAttemptPath(card.uid) ?? '#'} state={origin} className="group flex h-full flex-col gap-2 rounded-2xl border border-line bg-surface p-4 hover:border-primary">
+    <Link ref={linkRef} to={bankAttemptPath(card.uid) ?? '#'} state={origin} className={`${cardLinkCls} group flex h-full flex-col gap-2`}>
       <span className="flex items-start gap-2">
         <span className="flex min-w-0 flex-1 flex-wrap items-center gap-2">
           <span className="text-lg font-semibold">{topic}</span>
@@ -196,9 +199,7 @@ function TierPicker({
               {TIERS.map((t) => (
                 <label
                   key={t}
-                  className={`inline-flex min-h-10 cursor-pointer items-center gap-1.5 rounded-full border px-3 text-sm ${
-                    counts[t] > 0 ? 'border-primary/50 bg-primary-soft' : 'border-dashed border-line bg-surface-2 text-muted'
-                  } has-[:checked]:border-primary has-[:checked]:bg-primary has-[:checked]:text-on-primary has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-primary forced-colors:has-[:checked]:border-[color:Highlight] forced-colors:has-[:checked]:bg-[color:Highlight] forced-colors:has-[:checked]:text-[color:HighlightText] forced-colors:has-[:checked]:outline-[color:CanvasText] forced-colors:has-[:checked]:forced-color-adjust-none [&:not(:has(:checked))]:hover:border-primary`}
+                  className={`${chipCls()} ${counts[t] > 0 ? '' : 'border-dashed'}`}
                 >
                   <input type="radio" name={`bank-tier-${section}`} value={t} checked={value === t} onChange={() => onChange(t)} className="sr-only" />
                   <span className="font-semibold">{TIER_LABELS[t]}</span>
@@ -221,14 +222,10 @@ function TierPicker({
       {/* 寬螢幕不撐滿整欄：三格像一組切換鈕，不像三張大卡片。 */}
       <div className="grid grid-cols-3 gap-2 sm:max-w-xl">
         {TIERS.map((t) => {
-          const tone =
-            counts[t] > 0
-              ? 'border-primary/50 bg-primary-soft text-fg hover:border-primary'
-              : 'border-dashed border-line bg-surface-2 text-muted hover:border-primary';
           return (
             <label
               key={t}
-              className={`flex min-h-14 min-w-0 cursor-pointer flex-col items-center justify-center rounded-xl border px-1.5 py-1.5 text-center ${tone} has-[:checked]:border-primary has-[:checked]:bg-primary has-[:checked]:text-on-primary has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-primary`}
+              className={`${tierTileCls(undefined, counts[t] > 0 ? 'ready' : 'pending')} min-h-14`}
             >
               <input type="radio" name={`bank-tier-${section}`} value={t} checked={value === t} onChange={() => onChange(t)} className="sr-only" />
               <span className="text-sm font-semibold">{TIER_LABELS[t]}</span>

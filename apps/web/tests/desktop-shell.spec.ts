@@ -2,7 +2,8 @@
  * 桌機殼層（docs/design/desktop-ui.md §3、§11.3）：在建置後的產物上跑，project 是 desktop-ui（1366×640）與 desktop-lg（1024×600）。
  * 頁面各自的桌機版面（首頁儀表板、/exams 表格、/practice 矩陣…）的斷言跟著 PR A2 加。
  *
- *   1. 側邊欄的高度：1366×640 已登入與未登入都不用捲；1280×600 已登入不用捲，未登入可以捲但一定有淡出遮罩、捲到底後遮罩消失。
+ *   1. 側邊欄的高度：1366×640 已登入與未登入都不用捲（含「數學」群組，desktop-polish.md §8.2）；1280×600 已登入不用捲；
+ *      溢出的視窗可以捲但一定有淡出遮罩、捲到底後遮罩消失。
  *   2. 頁尾貼底（短頁）；工作區路由的內距與寬度模式。
  *   3. 收合：[ 鍵與按鈕、重新整理後仍是收合、收合時鍵盤聚焦看得到提示泡泡；觸控為主的裝置沒有收合。
  *   4. 工作區路由的自動收合（寬度不夠、沒設定過）；自己按過展開之後不再自動收合。
@@ -16,7 +17,7 @@
  */
 import { expect, test, type Locator, type Page } from '@playwright/test';
 import { PAGES } from '../src/modules';
-import { collectErrors, fakeBackend, ok, signedInMe } from './support/backend';
+import { collectErrors, fakeBackend, FEATURES_ZH_EXEMPLAR_ON, ok, signedInMe } from './support/backend';
 
 const sidebar = (page: Page) => page.locator('aside[data-sidebar]');
 const sidebarList = (page: Page) => page.locator('[data-sidebar-list]');
@@ -77,13 +78,14 @@ async function inkPixels(page: Page, el: Locator): Promise<number> {
 
 test.describe('側邊欄', () => {
   /**
-   * 加入「數學」群組（docs/design/math.md P2）之後清單內容約 539px（原本 489px＋群組標題 22＋一項 28）：
-   * 1366×640 已登入可用 535（只差 4px，哨兵仍在可見範圍，不出現遮罩）、未登入 489；1280×600 已登入 495、未登入 449。
-   * 差得多的三種情況出現淡出遮罩；不論哪一種，捲到底後最後一項（數學）都看得到、沒有遮罩。
+   * 加入「數學」群組（docs/design/math.md P2）之後，CSS 改版 PR B 的密清單（desktop-polish.md §8.2）實測：
+   * 1366×640 未登入內容 501／可用 501、已登入 545／545（學習助手、國寫範文都開也一樣），都不用捲；
+   * 1280×600 已登入不用捲，未登入 485／461、功能全開 537／505 溢出，出現淡出遮罩；1280×520（瀏覽器放大）一定溢出。
+   * 溢出時捲到底，最後一項（數學）看得到、遮罩消失。
    */
   async function expectLastItemReachable(page: Page, masked: boolean) {
     if (masked) {
-      expect((await listOverflow(page)).overflowing).toBe(true);
+      await expect.poll(async () => (await listOverflow(page)).overflowing).toBe(true);
       await expect(sidebarList(page)).toHaveAttribute('data-overflow', '');
     }
     await sidebarList(page).evaluate((el) => el.scrollTo({ top: el.scrollHeight }));
@@ -91,33 +93,42 @@ test.describe('側邊欄', () => {
     await expect(sidebarList(page).getByRole('link', { name: '數學' })).toBeInViewport();
   }
 
-  test('1366×640：未登入有淡出遮罩、已登入只差幾 px 不出現遮罩；捲到底後數學都看得到', async ({ page }) => {
+  test('1366×640：未登入、已登入、學習助手與國寫範文都開，清單都不用捲，數學看得到', async ({ page }) => {
     onlyDesktopUi();
     const errors = collectErrors(page);
     await page.setViewportSize({ width: 1366, height: 640 });
     const backend = await fakeBackend(page, { me: { user: null } });
     await page.goto('/');
     await expect(page.getByRole('link', { name: '使用 Google 登入', exact: true })).toBeVisible();
-    await expectLastItemReachable(page, true);
+    expect(await listOverflow(page), '未登入').toEqual({ overflowing: false, masked: false });
+    await expect(sidebarList(page).getByRole('link', { name: '數學' })).toBeInViewport();
 
     backend.me = signedInMe({ ai_status: 'approved' });
+    backend.features = FEATURES_ZH_EXEMPLAR_ON;
     await page.reload();
     await expect(page.getByRole('button', { name: '小明（帳號選單）' })).toBeVisible();
-    await expectLastItemReachable(page, false);
+    await expect(sidebarList(page).getByRole('link', { name: '學習助手' })).toBeVisible();
+    expect(await listOverflow(page), '已登入、功能全開').toEqual({ overflowing: false, masked: false });
+    await expect(sidebarList(page).getByRole('link', { name: '數學' })).toBeInViewport();
     expect(errors).toEqual([]);
   });
 
-  test('1280×600：已登入與未登入都有淡出遮罩，捲到底後最後一項看得到、遮罩消失', async ({ page }) => {
+  test('1280×600：已登入不用捲；未登入有淡出遮罩，捲到底後數學看得到、遮罩消失；更矮的 1280×520 一定有遮罩', async ({ page }) => {
     onlyDesktopUi();
     await page.setViewportSize({ width: 1280, height: 600 });
     const backend = await fakeBackend(page, { me: signedInMe() });
     await page.goto('/');
     await expect(page.getByRole('button', { name: '小明（帳號選單）' })).toBeVisible();
-    await expectLastItemReachable(page, true);
+    expect(await listOverflow(page)).toEqual({ overflowing: false, masked: false });
 
     backend.me = { user: null };
     await page.reload();
     await expect(page.getByRole('link', { name: '使用 Google 登入', exact: true })).toBeVisible();
+    await expectLastItemReachable(page, true);
+
+    // 可用 381px 一定溢出：不溢出表示版面或量法變了，遮罩的檢查就沒有意義，要先修這個測試。
+    await page.setViewportSize({ width: 1280, height: 520 });
+    await sidebarList(page).evaluate((el) => el.scrollTo({ top: 0 }));
     await expectLastItemReachable(page, true);
   });
 

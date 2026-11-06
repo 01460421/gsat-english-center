@@ -32,6 +32,7 @@ import { AiBadge } from '../../components/ui';
 import { CRITERIA_TITLE, HIDDEN_TEXT, NEXT_TITLES, levelLabel, levelTitle } from '../labels';
 import { ExemplarTypicalErrors } from './ExemplarTypicalErrors';
 import { Tabs } from './Tabs';
+import { btn } from '../../../../components/ui/buttons';
 
 /** 亮點標示：on＝要不要標；kinds＝標哪幾種。 */
 export interface HighlightState {
@@ -42,7 +43,7 @@ export interface HighlightState {
 const NO_KINDS: ReadonlySet<ModelTextNoteKind> = new Set();
 const shownKinds = (h: HighlightState) => (h.on ? h.kinds : NO_KINDS);
 
-const btn = 'inline-flex min-h-11 items-center justify-center gap-1.5 rounded-full border border-line px-4 text-sm font-medium lg:hover:bg-surface-2 disabled:cursor-not-allowed disabled:opacity-50';
+const copyBtn = btn('secondary', 'sm');
 
 /** 被隱藏的一篇的固定說明。 */
 export function hiddenText(e: ExemplarEssayView): string {
@@ -157,7 +158,7 @@ function Next({ essay, headingLevel }: { essay: ExemplarEssayView; headingLevel:
 
 function CopyEssayButton({ essay, onCopy }: { essay: ExemplarEssayView; onCopy: (level: ExemplarLevel) => void }) {
   return (
-    <button type="button" className={btn} disabled={essay.text === null} onClick={() => onCopy(essay.level)} aria-label={`複製這一篇：${levelLabel(essay.level)}`}>
+    <button type="button" className={copyBtn} disabled={essay.text === null} onClick={() => onCopy(essay.level)} aria-label={`複製這一篇：${levelLabel(essay.level)}`}>
       <Copy aria-hidden="true" className="size-4" />
       複製這一篇
     </button>

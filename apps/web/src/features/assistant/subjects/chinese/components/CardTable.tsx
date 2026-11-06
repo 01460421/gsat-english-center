@@ -11,6 +11,7 @@ import { useId } from 'react';
 import { useIsDesktop } from '../../../../../lib/media';
 import { ZH_COPY } from '../copy';
 import { LocateQuote } from './LocateQuote';
+import { insetBoxCls } from '../../../../../components/ui/Card';
 
 /** 這一題（或小題）下面放哪幾張卡：for_label 和題號相同，或卡片寫的是題號、題目是它的小題。 */
 export function cardsFor(cards: readonly ZhCardView[], label: string): ZhCardView[] {
@@ -88,7 +89,7 @@ export function CardTable({
   if (isDesktop && card.kind === 'translation') {
     // 文言對照卡：左原文（襯線）、右白話；關鍵字詞與句式在下方小字。
     return (
-      <section aria-labelledby={`${id}-h`} className="space-y-2 rounded-xl border border-line bg-surface p-3" data-card-kind={card.kind}>
+      <section aria-labelledby={`${id}-h`} className={`${insetBoxCls} space-y-2`} data-card-kind={card.kind}>
         {heading}
         <table className="w-full table-fixed border-collapse text-left">
           <caption className="sr-only">{title}</caption>
@@ -137,7 +138,7 @@ export function CardTable({
 
   if (isDesktop) {
     return (
-      <section aria-labelledby={`${id}-h`} className="space-y-2 rounded-xl border border-line bg-surface p-3" data-card-kind={card.kind}>
+      <section aria-labelledby={`${id}-h`} className={`${insetBoxCls} space-y-2`} data-card-kind={card.kind}>
         {heading}
         <table className="w-full table-fixed border-collapse text-left text-sm">
           <caption className="sr-only">{title}</caption>
@@ -186,7 +187,7 @@ export function CardTable({
   }
 
   return (
-    <section aria-labelledby={`${id}-h`} className="space-y-2 rounded-xl border border-line bg-surface p-3" data-card-kind={card.kind}>
+    <section aria-labelledby={`${id}-h`} className={`${insetBoxCls} space-y-2`} data-card-kind={card.kind}>
       {heading}
       <ul role="list" aria-label={title} className="space-y-2">
         {card.rows.map((row, i) => (

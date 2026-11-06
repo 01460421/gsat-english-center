@@ -24,6 +24,8 @@ import { DataErrorBoundary } from './components/DataErrorBoundary';
 import { ExamToolbar } from './components/ExamToolbar';
 import { ExamPaper, SectionNav } from './components/Paper';
 import { ExamSourceNote, ResultSummary, SectionStructure, SetupPanel } from './components/SessionPanels';
+import { btn } from '../../components/ui/buttons';
+import { cardCls } from '../../components/ui/Card';
 
 /** 列表頁把篩選條件（?kind=…&year=…）放在 location.state，「回到列表」時帶回去。 */
 function listSearchFrom(state: unknown): string {
@@ -79,7 +81,7 @@ function ClearControl({ onClear, label = '清除作答紀錄' }: { onClear: () =
         ref={triggerRef}
         type="button"
         onClick={() => setConfirming(true)}
-        className="inline-flex min-h-11 items-center text-sm text-primary underline underline-offset-2"
+        className={btn('link', 'sm')}
       >
         {label}
       </button>
@@ -98,7 +100,7 @@ function ClearControl({ onClear, label = '清除作答紀錄' }: { onClear: () =
       className="inline-flex flex-wrap items-center gap-2 text-sm"
     >
       <span>確定要清除這份考卷的作答與計時嗎？</span>
-      <button ref={confirmRef} type="button" onClick={onClear} className="rounded-full bg-bad px-3 py-1 font-semibold text-on-primary">
+      <button ref={confirmRef} type="button" onClick={onClear} className={btn('danger', 'sm')}>
         確定清除
       </button>
       <button
@@ -108,7 +110,7 @@ function ClearControl({ onClear, label = '清除作答紀錄' }: { onClear: () =
           restoreFocus.current = isDesktop;
           setConfirming(false);
         }}
-        className="rounded-full border border-line px-3 py-1"
+        className={btn('secondary', 'sm')}
       >
         取消
       </button>
@@ -199,7 +201,7 @@ function ActiveSession({ exam, store, resumed, onClear }: { exam: Exam; store: A
         </p>
       )}
       {!persisted && (
-        <p role="status" className="rounded-xl border border-bad/40 bg-bad/10 px-4 py-2 text-sm text-bad">
+        <p role="status" className="rounded-xl border border-bad-line bg-bad-soft px-4 py-2 text-sm text-bad">
           這個瀏覽器無法儲存作答進度（可能是無痕模式或停用了網站資料），重新整理後答案會遺失。
         </p>
       )}
@@ -236,7 +238,7 @@ function ExamSession({ exam }: { exam: Exam }) {
       <div className="space-y-6">
         <ExamHeader exam={exam} />
         <SetupPanel exam={exam} onStart={start} />
-        <section aria-label="大題結構" className="rounded-2xl border border-line bg-surface p-5">
+        <section aria-label="大題結構" className={cardCls}>
           <h2 className="mb-3 font-semibold">大題結構</h2>
           <SectionStructure exam={exam} />
         </section>
@@ -270,7 +272,7 @@ function ExamNotFound() {
       <title>{`找不到這份考卷｜${APP_NAME}`}</title>
       <h1 className="text-2xl font-bold">找不到這份考卷</h1>
       <p className="mt-2 text-muted">網址裡的考卷代號可能打錯了，或是這份考卷已經改名。</p>
-      <Link to="/exams" className="mt-4 inline-block rounded-full bg-primary px-4 py-2 font-medium text-on-primary">
+      <Link to="/exams" className={btn('primary', 'md', 'mt-4')}>
         回到歷屆試題列表
       </Link>
     </section>

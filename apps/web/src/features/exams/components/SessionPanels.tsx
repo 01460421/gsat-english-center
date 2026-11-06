@@ -10,6 +10,10 @@ import { formatDuration } from '../labels';
 import { useAiGradingOpen } from './AiGrading';
 import { formatPercent, formatPoints, scoreExam } from '../scoring';
 import { sectionAnchorId } from './Paper';
+import { btn } from '../../../components/ui/buttons';
+import { numberFieldCls } from '../../../components/ui/fields';
+import { optionCardTopCls } from '../../../components/ui/Check';
+import { calloutCls, cardCls, resultCardCls, resultCardHeadCls } from '../../../components/ui/Card';
 
 /** 考卷的大題結構（開始畫面與列表卡片用）。 */
 export function SectionStructure({ exam }: { exam: Pick<Exam, 'sections'> }) {
@@ -49,7 +53,7 @@ export function SetupPanel({ exam, onStart }: { exam: Exam; onStart: (mode: Atte
   ];
 
   return (
-    <section aria-labelledby={`${name}-title`} className="rounded-2xl border border-line bg-surface p-5 lg:p-6">
+    <section aria-labelledby={`${name}-title`} className={cardCls}>
       <h2 id={`${name}-title`} className="text-lg font-semibold">
         選擇作答方式
       </h2>
@@ -67,7 +71,7 @@ export function SetupPanel({ exam, onStart }: { exam: Exam; onStart: (mode: Atte
             {options.map((opt) => (
               <label
                 key={opt.value}
-                className="flex cursor-pointer items-start gap-3 rounded-xl border border-line p-3 has-[:checked]:border-primary has-[:checked]:bg-primary-soft"
+                className={optionCardTopCls}
               >
                 <input
                   type="radio"
@@ -75,7 +79,7 @@ export function SetupPanel({ exam, onStart }: { exam: Exam; onStart: (mode: Atte
                   value={opt.value}
                   checked={mode === opt.value}
                   onChange={() => setMode(opt.value)}
-                  className="mt-1.5 accent-[var(--primary)]"
+                  className="mt-1 size-5 shrink-0 accent-primary"
                 />
                 <span>
                   <span className="block font-medium">{opt.label}</span>
@@ -100,14 +104,14 @@ export function SetupPanel({ exam, onStart }: { exam: Exam; onStart: (mode: Atte
               onChange={(e) => setMinutes(e.currentTarget.value)}
               aria-invalid={!validMinutes}
               aria-describedby={`${minutesId}-hint`}
-              className="mt-1 w-28 rounded-lg border border-line bg-bg px-3 py-2"
+              className={`${numberFieldCls} mt-1`}
             />
             <p id={`${minutesId}-hint`} className={`mt-1 text-xs ${validMinutes ? 'text-muted' : 'text-bad'}`}>
               {validMinutes ? `題本規定 ${exam.time_minutes ?? '—'} 分鐘。` : '請輸入 1 到 300 之間的整數。'}
             </p>
           </div>
         )}
-        <button type="submit" className="rounded-full bg-primary px-5 py-2 font-semibold text-on-primary">
+        <button type="submit" className={btn('primary', 'lg')}>
           開始作答
         </button>
         <p className="text-sm text-muted">
@@ -137,8 +141,8 @@ export function ResultSummary({
   const aiOpen = useAiGradingOpen();
 
   return (
-    <section aria-labelledby={titleId} className="rounded-2xl border-2 border-primary bg-surface p-5 lg:p-6">
-      <h2 id={titleId} ref={headingRef} tabIndex={-1} className="text-xl font-bold">
+    <section aria-labelledby={titleId} className={resultCardCls}>
+      <h2 id={titleId} ref={headingRef} tabIndex={-1} className={`${resultCardHeadCls} text-xl font-bold`}>
         交卷結果
       </h2>
       {reason === 'timeout' && <p className="mt-1 font-medium text-bad">時間到，已自動交卷。</p>}
@@ -248,7 +252,7 @@ function RestartControl({ onRestart }: { onRestart: () => void }) {
           ref={triggerRef}
           type="button"
           onClick={() => setConfirming(true)}
-          className="rounded-full border border-line px-4 py-2 text-sm font-medium hover:border-primary lg:border-transparent lg:text-bad lg:hover:border-transparent lg:hover:bg-bad/10"
+          className={btn('secondary', 'sm', 'lg:border-transparent lg:bg-transparent lg:text-bad lg:hover:border-transparent lg:hover:bg-bad-soft lg:hover:text-bad')}
         >
           清除作答，重新開始
         </button>
@@ -262,15 +266,15 @@ function RestartControl({ onRestart }: { onRestart: () => void }) {
       onKeyDown={(e) => {
         if (e.key === 'Escape') cancel();
       }}
-      className="mt-4 flex flex-wrap items-center gap-2 rounded-xl border border-bad/40 bg-bad/10 p-3 text-sm lg:justify-end"
+      className="mt-4 flex flex-wrap items-center gap-2 rounded-xl border border-bad-line bg-bad-soft p-3 text-sm lg:justify-end"
     >
       <p id={questionId} className="w-full font-medium lg:mr-auto lg:w-auto">
         確定要清除這份考卷的作答與成績嗎？清除後無法復原。
       </p>
-      <button ref={cancelRef} type="button" onClick={cancel} className="min-h-10 rounded-full border border-line bg-surface px-4 font-medium">
+      <button ref={cancelRef} type="button" onClick={cancel} className={btn('secondary', 'sm')}>
         取消
       </button>
-      <button type="button" onClick={onRestart} className="min-h-10 rounded-full bg-bad px-4 font-semibold text-on-primary">
+      <button type="button" onClick={onRestart} className={btn('danger', 'sm')}>
         確定清除
       </button>
     </div>
@@ -280,7 +284,7 @@ function RestartControl({ onRestart }: { onRestart: () => void }) {
 /** 頁尾出處（04 文件 §4.3、§7.1：慣例上標示「試題來源：大學入學考試中心 OOO 學年度…」並連到官方 PDF）。 */
 export function ExamSourceNote({ exam }: { exam: Exam }) {
   return (
-    <footer className="space-y-2 rounded-2xl border border-line bg-surface p-4 text-sm text-muted">
+    <footer className={`${calloutCls} space-y-2 text-sm text-muted`}>
       <p className="font-medium text-fg">
         試題來源：大學入學考試中心 {exam.title}（{exam.year} 學年度）
       </p>
@@ -291,7 +295,7 @@ export function ExamSourceNote({ exam }: { exam: Exam }) {
         <ul className="flex flex-wrap gap-x-4 gap-y-1">
           {exam.official_files.map((f) => (
             <li key={f.url}>
-              <a href={f.url} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-8 items-center gap-1 text-primary underline-offset-2 hover:underline">
+              <a href={f.url} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-1 text-primary lg:min-h-8 underline-offset-2 hover:underline">
                 {f.label}
                 <span className="text-xs uppercase">（{f.format}）</span>
                 <ExternalLink aria-hidden="true" className="size-3" />

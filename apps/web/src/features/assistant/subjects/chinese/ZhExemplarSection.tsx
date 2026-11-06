@@ -28,6 +28,7 @@ import { useAssistSubjects } from '../useAssistSubjects';
 import { ZH_EXEMPLAR_COPY } from './copy';
 import { ZH_EXEMPLAR_POINTS, zhExemplarPointsInfo, zhExemplarState } from './exemplar';
 import { ZhExemplarView } from './ZhExemplarView';
+import { chipCls } from '../../../../components/ui/Tabs';
 
 /** 這一塊的標題 id（送出後焦點先放在這裡）。 */
 export const ZH_EXEMPLAR_SECTION_ID = 'zh-exemplar';
@@ -115,7 +116,7 @@ export function ZhExemplarConfirm({
       ref={panelRef}
       role="group"
       aria-labelledby={headingId}
-      className="scroll-mb-24 space-y-3 rounded-2xl border border-line bg-surface-2 p-4 lg:scroll-mb-4"
+      className="scroll-mb-24 space-y-3 rounded-card border border-line bg-surface-2 p-4 lg:scroll-mb-4"
       data-zh-exemplar-confirm
     >
       <h3 id={headingId} ref={headingRef} tabIndex={-1} className="font-semibold outline-none">
@@ -130,7 +131,7 @@ export function ZhExemplarConfirm({
       </ul>
       {standalone && (
         <p>
-          <span className="inline-flex rounded-full border border-badge-fg/30 bg-badge-bg px-3 py-1 text-sm font-semibold text-badge-fg" data-testid="zh-exemplar-confirm-label">
+          <span className="inline-flex rounded-full border border-badge-line bg-badge-bg px-3 py-1 text-sm font-semibold text-badge-fg" data-testid="zh-exemplar-confirm-label">
             {ZH_EXEMPLAR_LABEL}
           </span>
         </p>
@@ -166,7 +167,7 @@ function ZhExemplarSection({
   const offer = subjects.exemplar('chinese') && ready && !closed && !ended && !analysis.off_topic && detail.status === 'analyzed';
   if (!zhExemplarBlockVisible(detail, offer)) return null;
   return (
-    <AnalysisSection id={ZH_EXEMPLAR_SECTION_ID} title={ZH_EXEMPLAR_COPY.title} className="rounded-2xl border border-line p-4 lg:p-5">
+    <AnalysisSection id={ZH_EXEMPLAR_SECTION_ID} title={ZH_EXEMPLAR_COPY.title} className="rounded-card border border-line p-4 lg:p-5">
       <ZhExemplarBlock
         detail={detail}
         offer={offer}
@@ -262,7 +263,7 @@ export function ZhExemplarBlock({
                 type="button"
                 aria-pressed={active}
                 onClick={() => setPicked(d.turn.id)}
-                className={`inline-flex min-h-11 items-center rounded-full border px-4 font-medium ${active ? 'border-primary bg-primary-soft text-primary' : 'border-line'}`}
+                className={chipCls(active)}
               >
                 {ZH_EXEMPLAR_COPY.pickItem(i + 1)}
               </button>
@@ -282,7 +283,7 @@ export function ZhExemplarBlock({
         />
       )}
       {state.lastFailed && (
-        <div role="alert" className="rounded-xl border border-bad/40 bg-bad/10 px-4 py-3" data-testid="zh-exemplar-failed">
+        <div role="alert" className="rounded-xl border border-bad-line bg-bad-soft px-4 py-3" data-testid="zh-exemplar-failed">
           <p className="text-bad">
             {assistRefundMessage(state.lastFailed.failure)}，{ZH_EXEMPLAR_COPY.failed}
           </p>

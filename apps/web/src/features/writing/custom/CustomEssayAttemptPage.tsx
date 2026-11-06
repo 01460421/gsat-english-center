@@ -79,6 +79,8 @@ import { customLengthHints } from './lengthHints';
 import { takeAttemptHandoff } from '../exemplars/lib/handoff';
 import { ExemplarsButton } from '../exemplars/components/ExemplarsButton';
 import { hasPending, pendingRequirements, type PendingRequirements, type WordsSuggestion } from './requirements';
+import { alertCls } from '../../../components/ui/Alert';
+import { segmentCls, segmentedTrackCls } from '../../../components/ui/Tabs';
 
 export const CUSTOM_INTRO = '把作文題目貼在下面（老師、補習班或其他考卷的題目都可以），寫完可以自我檢核，或送 AI 依本站的學測作文評分規準批改。';
 /** 自訂題目的 AI 批改沒開（features.customEssay 不是 true）時的開頭說明：不提送 AI。 */
@@ -156,7 +158,7 @@ function RequirementsConfirm({
   const p = pending.paragraphs;
   const w = pending.words;
   return (
-    <div role="group" aria-labelledby={REQ_CONFIRM_HEADING} className="space-y-3 rounded-xl border border-badge-fg/30 bg-badge-bg/60 px-4 py-3 text-sm">
+    <div role="group" aria-labelledby={REQ_CONFIRM_HEADING} className={alertCls('warn', 'space-y-3')}>
       <p id={REQ_CONFIRM_HEADING} tabIndex={-1} className="font-semibold focus:outline-none">
         送出前確認題目的要求
       </p>
@@ -716,7 +718,7 @@ function CustomEssayAttempt() {
         </div>
       )}
       {fromState.status === 'ask' && (
-        <div role="group" aria-labelledby="custom-from-h" className="space-y-2 rounded-xl border border-badge-fg/30 bg-badge-bg/60 px-4 py-3 text-sm">
+        <div role="group" aria-labelledby="custom-from-h" className={alertCls('warn', 'space-y-2')}>
           <p id="custom-from-h" className="font-semibold">
             {fromState.plan.hidden
               ? '要載入之前作答的作文嗎？'
@@ -796,14 +798,14 @@ function CustomEssayAttempt() {
       {check.ok && <ExemplarsButton target="自訂題目" customPrompt={check.value} hint />}
 
       {/* 切換按鈕（aria-pressed），和歷屆作答頁同一種做法；不用 tab 角色。 */}
-      <div role="group" aria-label="作答方式" className="flex flex-wrap gap-2">
+      <div role="group" aria-label="作答方式" className={segmentedTrackCls}>
         {(['typed', 'photo'] as const).map((m) => (
           <button
             key={m}
             type="button"
             aria-pressed={draft.mode === m}
             onClick={() => update({ mode: m })}
-            className={`inline-flex min-h-11 items-center rounded-full border px-4 text-sm font-medium ${draft.mode === m ? 'border-primary bg-primary text-on-primary' : 'border-line'}`}
+            className={segmentCls(draft.mode === m)}
           >
             {m === 'typed' ? '打字作答' : '拍照上傳手寫稿'}
           </button>
@@ -834,7 +836,7 @@ function CustomEssayAttempt() {
             {length.chars > 3000 && <span className={length.overChars ? 'font-semibold text-bad' : ''}>・{length.chars.toLocaleString('zh-TW')}／4,000 字元</span>}
           </p>
           {essayError && (
-            <p id="custom-essay-error" role="alert" className="rounded-xl border border-bad/40 bg-bad/10 px-4 py-3 text-sm text-bad">
+            <p id="custom-essay-error" role="alert" className="rounded-xl border border-bad-line bg-bad-soft px-4 py-3 text-sm text-bad">
               {essayError}
             </p>
           )}

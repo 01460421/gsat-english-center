@@ -52,7 +52,7 @@ export function studentCell(option: ZhOptionView, labels: ZhJudgeLabels | null, 
 }
 
 function StudentBadge({ cell }: { cell: { text: string; ok: boolean | null } }) {
-  const tone = cell.ok === true ? 'bg-ok/10 text-ok' : cell.ok === false ? 'bg-bad/10 text-bad' : 'bg-surface-2 text-muted';
+  const tone = cell.ok === true ? 'bg-ok-soft text-ok' : cell.ok === false ? 'bg-bad-soft text-bad' : 'bg-surface-2 text-muted';
   return (
     <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-semibold whitespace-nowrap ${tone}`}>
       {cell.ok === true ? <CircleCheck aria-hidden="true" className="size-3.5" /> : cell.ok === false ? <CircleX aria-hidden="true" className="size-3.5" /> : null}
@@ -155,7 +155,7 @@ export function OptionVerdictTable({
       {options.map((o, i) => {
         const cell = studentCell(o, labels, multi);
         return (
-          <li key={`${o.option}-${i}`} className={`space-y-1 rounded-xl border px-3 py-2 ${differs(o) ? 'border-bad/40 bg-bad/5' : 'border-line bg-surface'}`}>
+          <li key={`${o.option}-${i}`} className={`space-y-1 rounded-xl border px-3 py-2 ${differs(o) ? 'border-bad-line bg-bad/5' : 'border-line bg-surface'}`}>
             <p className="flex flex-wrap items-center gap-x-2 gap-y-1">
               <span className="font-semibold">{optionName(o.option)}</span>
               <VerdictText verdict={o.verdict} labels={labels} />

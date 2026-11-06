@@ -38,7 +38,7 @@ function Intro({ className, bank = false }: { className?: string; bank?: boolean
       {bank && (
         <>
           級分與五標只適用於歷屆卷。
-          <a href="#bank-mock" className="mt-1 block font-medium text-primary underline underline-offset-2">
+          <a href="#bank-mock" className="mt-1 flex min-h-11 items-center font-medium text-primary underline underline-offset-2">
             也可以從本站題庫依難度組一份新卷 ↓
           </a>
         </>
@@ -93,7 +93,7 @@ export default function MockExamPage() {
 
 function Disclaimer({ className, bank = false }: { className?: string; bank?: boolean }) {
   return (
-    <footer className={className ? `space-y-1 rounded-2xl border border-line bg-surface-2 p-4 text-sm text-muted ${className}` : 'space-y-1 rounded-2xl border border-line bg-surface-2 p-4 text-sm text-muted'}>
+    <footer className={className ? `space-y-1 rounded-card border border-line bg-surface-2 p-4 text-sm text-muted ${className}` : 'space-y-1 rounded-card border border-line bg-surface-2 p-4 text-sm text-muted'}>
       <p className="font-semibold text-fg">模擬分數與級分僅供參考，不是官方級分；AI 批改分數不等於正式閱卷結果。</p>
       <p>目前非選擇題（中譯英、英文作文）為自評分數；級分依各學年度大考中心公布的原得總分與級分對照表換算。</p>
       <p>試題來源：大學入學考試中心 111–115 學年度學科能力測驗英文考科、學科能力測驗參考試卷（115 學年度起適用）英文考科。</p>
@@ -127,7 +127,7 @@ function Rhythm({ pdfVisible, partsAsList = false }: { pdfVisible: boolean; part
             ))}
           </dl>
         ) : (
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto" tabIndex={0} role="region" aria-label="現行學測英文的配分">
             <table className="mt-2 w-full min-w-[18rem] border-collapse text-sm">
               <thead>
                 <tr className="border-b border-line text-left">

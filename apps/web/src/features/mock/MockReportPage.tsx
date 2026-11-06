@@ -37,6 +37,8 @@ import { formatDateTime, signedPoints } from './format';
 import { findMockPaper, mockPdfMeta, SCALE_YEARS, type MockPaper } from './papers';
 import { computeReport, historyEntryFor, levelInfo } from './report';
 import { doneExamIds, loadRecord, parseRecord, saveRecord, upsertHistory, type MockAttemptRecord } from './storage';
+import { btn } from '../../components/ui/buttons';
+import { calloutCls, cardCls, resultCardCls, resultCardHeadCls } from '../../components/ui/Card';
 
 /** 本站自組卷的成績單（原始分數、依難度的建議，不換算級分；docs/design/bank-mock.md §6.5）。 */
 const BankReport = lazy(() => import('./bank/BankReport'));
@@ -94,7 +96,7 @@ function ReviewPaper({ record }: { record: MockAttemptRecord }) {
           aria-expanded={open}
           aria-controls={`${id}-paper`}
           onClick={() => setOpen((v) => !v)}
-          className="min-h-11 rounded-full border border-primary px-4 text-sm font-medium text-primary hover:bg-primary-soft"
+          className={btn('ghost', 'sm')}
         >
           {open ? '收起檢討試卷' : '展開檢討試卷（答案、全國答對率與選項分布）'}
         </button>
@@ -194,7 +196,7 @@ function ReportBody({ exam, paper, initial }: { exam: Exam; paper: MockPaper; in
       </header>
 
       {report.pendingMax > 0 && (
-        <p role="status" className="rounded-xl border border-bad/40 bg-bad/10 px-4 py-2 text-sm">
+        <p role="status" className="rounded-xl border border-bad-line bg-bad-soft px-4 py-2 text-sm">
           非選擇題尚未自評，總分與級分暫不含 {formatPoints(report.pendingMax)} 分。
           <a href="#self-assessment" className="ml-1 font-semibold text-primary underline">
             前往自評
@@ -202,8 +204,8 @@ function ReportBody({ exam, paper, initial }: { exam: Exam; paper: MockPaper; in
         </p>
       )}
 
-      <section aria-label="原得總分" className="rounded-2xl border-2 border-primary bg-surface p-5 lg:p-6">
-        <p className="text-sm text-muted">原得總分</p>
+      <section aria-label="原得總分" className={resultCardCls}>
+        <p className={`${resultCardHeadCls} text-sm text-muted`}>原得總分</p>
         <p className="text-5xl font-bold tabular-nums">
           {formatPoints(report.raw)}
           <span className="text-xl font-normal text-muted">／{formatPoints(report.fullScore)}</span>
@@ -243,11 +245,11 @@ function ReportBody({ exam, paper, initial }: { exam: Exam; paper: MockPaper; in
           pendingMax={report.pendingMax}
         />
       ) : (
-        <section aria-label="級分（非官方換算）" className="rounded-2xl border border-line bg-surface p-5">
+        <section aria-label="級分（非官方換算）" className={cardCls}>
           {failed ? (
             <div role="alert">
               <p className="font-semibold">級分對照資料載入失敗</p>
-              <button type="button" onClick={retry} className="mt-2 min-h-11 rounded-full bg-primary px-4 text-sm font-medium text-on-primary">
+              <button type="button" onClick={retry} className={btn('secondary', 'sm', 'mt-2')}>
                 再試一次
               </button>
             </div>
@@ -259,7 +261,7 @@ function ReportBody({ exam, paper, initial }: { exam: Exam; paper: MockPaper; in
         </section>
       )}
 
-      <section aria-labelledby={`${titleId}-sections`} className="rounded-2xl border border-line bg-surface p-5 lg:p-6">
+      <section aria-labelledby={`${titleId}-sections`} className={cardCls}>
         <h2 id={`${titleId}-sections`} className="mb-3 text-lg font-semibold">
           各大題得分與用時
         </h2>
@@ -276,7 +278,7 @@ function ReportBody({ exam, paper, initial }: { exam: Exam; paper: MockPaper; in
         writingHandoff={writingHandoff}
       />
 
-      <section aria-label="聲明" className="rounded-2xl border border-line bg-surface-2 p-4 text-sm">
+      <section aria-label="聲明" className="rounded-card border border-line bg-surface-2 p-4 text-sm">
         <p className="font-semibold">模擬分數與級分僅供參考，不是官方級分；AI 批改分數不等於正式閱卷結果。</p>
         <p className="mt-1 text-muted">
           目前非選擇題為自評分數。級分依 {record.scaleYear} 學年度大考中心公布的原得總分與級分對照表換算，每年的級距不同，不代表今年的級分。
@@ -288,22 +290,22 @@ function ReportBody({ exam, paper, initial }: { exam: Exam; paper: MockPaper; in
       <ExamPdfDownload exam={exam} mockMeta={pdfMeta} defaultIncludeAnswerKey />
 
       <nav aria-label="接下來" className="flex flex-wrap gap-2">
-        <Link to={`/mock/${paper.examId}`} className="inline-flex min-h-11 items-center rounded-full bg-primary px-5 font-semibold text-on-primary">
+        <Link to={`/mock/${paper.examId}`} className={btn('primary', 'md')}>
           再做一次
         </Link>
-        <Link to="/mock" className="inline-flex min-h-11 items-center rounded-full border border-line px-5 hover:border-primary">
+        <Link to="/mock" className={btn('secondary', 'md')}>
           回模擬考列表
         </Link>
       </nav>
 
-      <footer className="space-y-2 rounded-2xl border border-line bg-surface p-4 text-sm text-muted">
+      <footer className={`${calloutCls} space-y-2 text-sm text-muted`}>
         <p className="font-medium text-fg">級分資料來源</p>
         {scales && <p>{scales.note}</p>}
         {scale && scale.sources.length > 0 && (
           <ul className="flex flex-wrap gap-x-4 gap-y-1">
             {scale.sources.map((s) => (
               <li key={s.url}>
-                <a href={s.url} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-8 items-center gap-1 text-primary underline-offset-2 hover:underline">
+                <a href={s.url} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-1 text-primary lg:min-h-8 underline-offset-2 hover:underline">
                   {s.label}
                   <ExternalLink aria-hidden="true" className="size-3" />
                   <span className="sr-only">（另開新分頁）</span>
@@ -352,7 +354,7 @@ function ReportForRecord({ record }: { record: MockAttemptRecord }) {
     return (
       <ReportMessage title="這份模擬考還在作答中">
         <p>交卷後才會有成績單。</p>
-        <Link to={`/mock/${paper.examId}`} className="inline-flex min-h-11 items-center rounded-full bg-primary px-4 font-medium text-on-primary">
+        <Link to={`/mock/${paper.examId}`} className={btn('primary', 'md')}>
           繼續作答
         </Link>
       </ReportMessage>
@@ -409,7 +411,7 @@ export default function MockReportPage() {
         模擬考列表
       </Link>
       {unsaved && (
-        <p role="status" className="mb-4 rounded-xl border border-bad/40 bg-bad/10 px-4 py-2 text-sm text-bad">
+        <p role="status" className="mb-4 rounded-xl border border-bad-line bg-bad-soft px-4 py-2 text-sm text-bad">
           這個瀏覽器無法儲存成績單（可能是無痕模式、停用了網站資料或空間已滿），離開這一頁之後就找不到了。可以先下載含答案的 PDF，或把這一頁截圖保存。
         </p>
       )}
@@ -422,7 +424,7 @@ export default function MockReportPage() {
       ) : (
         <ReportMessage title="找不到這份成績單">
           <p>模擬考的紀錄只存在作答的那台裝置與瀏覽器。換了裝置、清除了網站資料，或紀錄超過 30 筆時最舊的會被刪除，都會找不到。</p>
-          <Link to="/mock" className="inline-flex min-h-11 items-center rounded-full bg-primary px-4 font-medium text-on-primary">
+          <Link to="/mock" className={btn('primary', 'md')}>
             回模擬考列表
           </Link>
         </ReportMessage>

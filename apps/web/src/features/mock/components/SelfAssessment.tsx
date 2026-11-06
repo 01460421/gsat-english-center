@@ -38,6 +38,11 @@ import {
   type CompositionCriterion,
 } from '../selfAssess';
 import type { CompositionSelfDetail, SelfDetail, TranslationSelfDetail } from '../storage';
+import { btn } from '../../../components/ui/buttons';
+import { numberFieldCls } from '../../../components/ui/fields';
+import { optionCardTopCls } from '../../../components/ui/Check';
+import { cardCls } from '../../../components/ui/Card';
+import { badgeShapeCls } from '../../../components/ui/Badge';
 
 export type SelfChange = (label: string, score: number | null, detail?: SelfDetail) => void;
 
@@ -145,7 +150,7 @@ function BankEssayKey({ answers }: { answers: BankEssayAnswersFile }) {
               aria-expanded={open}
               aria-controls={panelId}
               onClick={() => setOpen((v) => !v)}
-              className="inline-flex min-h-11 items-center rounded-full border border-line px-4 font-medium hover:border-primary"
+              className={btn('secondary', 'md')}
             >
               {open ? '收起範文' : '看範文'}
             </button>
@@ -174,7 +179,7 @@ function ScoreBadge({ item }: { item: OpenItemResult }) {
       ? '尚未自評'
       : `${formatPoints(item.score)}／${formatPoints(item.max)} 分${item.source === 'auto' ? '（自動）' : item.source === 'suggested' ? '（建議，可改）' : '（自評）'}`;
   return (
-    <span className={`rounded-full px-2.5 py-0.5 text-sm font-semibold tabular-nums ${item.score === null ? 'bg-bad/10 text-bad' : 'bg-primary-soft text-primary'}`}>
+    <span className={`${badgeShapeCls('sm')} tabular-nums ${item.score === null ? 'bg-bad-soft text-bad' : 'bg-primary-soft text-primary'}`}>
       {text}
     </span>
   );
@@ -218,14 +223,14 @@ function MixedItem({ item, answer, onChange }: { item: OpenItemResult; answer: A
             {choices.map((c) => (
               <label
                 key={c.value}
-                className="flex min-h-11 cursor-pointer items-start gap-3 rounded-lg border border-line px-3 py-2 text-sm has-[:checked]:border-primary has-[:checked]:bg-primary-soft"
+                className={`${optionCardTopCls} text-sm`}
               >
                 <input
                   type="radio"
                   name={name}
                   checked={item.score === c.value}
                   onChange={() => onChange(item.label, c.value)}
-                  className="mt-1 accent-[var(--primary)]"
+                  className="mt-1 size-5 shrink-0 accent-primary"
                 />
                 <span>
                   <strong className="tabular-nums">{formatPoints(c.value)} 分</strong>　{c.text}
@@ -301,7 +306,7 @@ function TranslationItem({
                 aria-label="錯誤處數減一"
                 disabled={errors === undefined || errors <= 0}
                 onClick={() => save({ errors: (errors ?? 0) - 1, mechanics })}
-                className="inline-flex size-11 items-center justify-center rounded-full border border-line disabled:opacity-40"
+                className={btn('secondary', 'icon')}
               >
                 <Minus aria-hidden="true" className="size-4" />
               </button>
@@ -320,13 +325,13 @@ function TranslationItem({
                   const n = Number(v);
                   if (Number.isFinite(n)) save({ errors: n, mechanics });
                 }}
-                className="w-20 rounded-lg border border-line bg-bg px-3 py-2 text-center tabular-nums"
+                className={`${numberFieldCls} w-20 text-center`}
               />
               <button
                 type="button"
                 aria-label="錯誤處數加一"
                 onClick={() => save({ errors: (errors ?? -1) + 1, mechanics })}
-                className="inline-flex size-11 items-center justify-center rounded-full border border-line"
+                className={btn('secondary', 'icon')}
               >
                 <Plus aria-hidden="true" className="size-4" />
               </button>
@@ -334,7 +339,7 @@ function TranslationItem({
             {errors === undefined && <p className="mt-1 text-xs text-muted">對照檢核項目數一數，沒有錯就填 0。</p>}
           </div>
           <label className="flex min-h-11 cursor-pointer items-start gap-3 text-sm">
-            <input type="checkbox" checked={mechanics} onChange={(e) => save({ errors: errors ?? 0, mechanics: e.currentTarget.checked })} className="mt-1 accent-[var(--primary)]" />
+            <input type="checkbox" checked={mechanics} onChange={(e) => save({ errors: errors ?? 0, mechanics: e.currentTarget.checked })} className="mt-1 size-5 shrink-0 accent-primary" />
             <span>
               句首沒有大寫，或句尾標點不妥（−0.5，只扣一次）
               <span className="block text-xs text-muted">
@@ -414,7 +419,7 @@ function CompositionItem({
             </p>
           </details>
           <label className="mt-3 flex min-h-11 cursor-pointer items-start gap-3 text-sm">
-            <input type="checkbox" checked={current.offTopic} onChange={(e) => save({ ...current, offTopic: e.currentTarget.checked })} className="mt-1 accent-[var(--primary)]" />
+            <input type="checkbox" checked={current.offTopic} onChange={(e) => save({ ...current, offTopic: e.currentTarget.checked })} className="mt-1 size-5 shrink-0 accent-primary" />
             <span>
               離題（沒有依提示寫）
               <span className="block text-xs text-muted">勾選後其他各項都算 0 分。</span>
@@ -433,7 +438,7 @@ function CompositionItem({
                     {[0, 1, 2, 3, 4, 5].map((v) => (
                       <label
                         key={v}
-                        className="inline-flex h-11 min-w-0 cursor-pointer items-center justify-center rounded-lg border border-line text-sm tabular-nums has-[:checked]:border-primary has-[:checked]:bg-primary has-[:checked]:text-on-primary has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-primary"
+                        className="inline-flex h-11 min-w-0 cursor-pointer items-center justify-center rounded-lg border border-line-strong text-sm tabular-nums has-[:checked]:border-primary has-[:checked]:bg-primary-soft has-[:checked]:font-semibold has-[:checked]:text-primary has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-primary"
                       >
                         <input
                           type="radio"
@@ -512,7 +517,7 @@ export function SelfAssessment({
     return d?.kind === kind ? (d as Extract<SelfDetail, { kind: K }>) : undefined;
   };
   return (
-    <section id="self-assessment" aria-labelledby={`${id}-title`} tabIndex={-1} className="scroll-mt-32 rounded-2xl border border-line bg-surface p-5 lg:p-6">
+    <section id="self-assessment" aria-labelledby={`${id}-title`} tabIndex={-1} className={`${cardCls} scroll-mt-32`}>
       <h2 id={`${id}-title`} className="text-lg font-semibold">
         非選擇題自評
       </h2>

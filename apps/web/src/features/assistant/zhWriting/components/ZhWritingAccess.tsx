@@ -69,7 +69,7 @@ export function ZhWritingClosed() {
     <section className="space-y-3 py-2">
       <title>{`${ZH_WRITING_TITLE}｜${APP_NAME}`}</title>
       <h1 className="text-2xl font-bold tracking-tight lg:text-3xl">{ZH_WRITING_TITLE}</h1>
-      <p className="rounded-2xl border border-dashed border-line bg-surface-2 p-5">{ZH_WRITING_COPY.closedSignedOut}</p>
+      <p className="rounded-card border border-dashed border-line bg-surface-2 p-5">{ZH_WRITING_COPY.closedSignedOut}</p>
       <Link to="/" className={linkCls}>
         回到首頁
       </Link>

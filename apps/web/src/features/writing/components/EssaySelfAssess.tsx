@@ -10,6 +10,7 @@ import { ESSAY_CHECKLIST } from '../lib/checklists';
 import { completeEssayScores, type PartialEssayScores } from '../lib/drafts';
 import { bandLabel } from '../lib/format';
 import { card } from './ui';
+import { btn } from '../../../components/ui/buttons';
 
 /** 官方四項的白話說明（本站整理，不是評分原則原文）。 */
 const CRITERION_HINTS: Record<(typeof ESSAY_CRITERIA)[number], string> = {
@@ -91,7 +92,7 @@ export function EssaySelfAssess({
               {Array.from({ length: ESSAY_CRITERION_MAX[c] + 1 }, (_, v) => (
                 <label
                   key={v}
-                  className="inline-flex size-10 cursor-pointer items-center justify-center rounded-full border border-line tabular-nums has-[:checked]:border-primary has-[:checked]:bg-primary has-[:checked]:text-on-primary has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-primary"
+                  className="inline-flex size-10 cursor-pointer items-center justify-center rounded-full border border-line-strong tabular-nums has-[:checked]:border-primary has-[:checked]:bg-primary-soft has-[:checked]:font-semibold has-[:checked]:text-primary has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-primary"
                 >
                   <input type="radio" name={`${baseId}-${c}`} value={v} checked={scores?.[c] === v} onChange={() => setScore(c, v)} className="sr-only" />
                   {v}
@@ -110,7 +111,7 @@ export function EssaySelfAssess({
             ) : (
               <span className="text-muted">還有 {missing} 項沒有評分（四項都評完才會附在批改上）</span>
             )}
-            <button type="button" onClick={() => onScores(null)} className="ml-3 text-sm text-primary underline underline-offset-2">
+            <button type="button" onClick={() => onScores(null)} className={btn('link', 'sm', 'ml-3')}>
               清除自評
             </button>
           </p>

@@ -6,6 +6,7 @@
 import { useId, useState } from 'react';
 import type { SectionEntry } from '../../mock/paperIndex';
 import { questionTitle } from '../richText';
+import { btn } from '../../../components/ui/buttons';
 
 /** section.labels 裡連續沒答的題號併成「3–10」；不連續的用「、」隔開。 */
 export function unansweredRanges(all: readonly string[], unanswered: readonly string[]): string {
@@ -62,7 +63,7 @@ function SectionRow({
               aria-expanded={expanded}
               aria-controls={listId}
               onClick={() => setExpanded((v) => !v)}
-              className="ml-2 inline-flex min-h-8 items-center text-sm text-primary underline underline-offset-2"
+              className={btn('link', 'sm', 'ml-2')}
             >
               {expanded ? '收起題號' : '列出題號'}
             </button>

@@ -7,6 +7,8 @@
  */
 import { Component, type ErrorInfo, type ReactNode } from 'react';
 import { DataLoadError, dataErrorMessage } from '../../../data/client';
+import { btn } from '../../../components/ui/buttons';
+import { cardCls } from '../../../components/ui/Card';
 
 interface Props {
   children: ReactNode;
@@ -37,13 +39,13 @@ export class DataErrorBoundary extends Component<Props, State> {
     const custom = this.props.renderError?.(this.state.error);
     if (custom) return custom;
     return (
-      <div role="alert" className="rounded-2xl border border-line bg-surface p-5">
+      <div role="alert" className={cardCls}>
         <p className="font-semibold">資料載入失敗</p>
         <p className="mt-1 text-muted">{dataErrorMessage(this.state.error)}</p>
         <button
           type="button"
           onClick={this.props.onRetry}
-          className="mt-3 rounded-full bg-primary px-4 py-2 text-sm font-medium text-on-primary"
+          className={btn('secondary', 'sm', 'mt-3')}
         >
           再試一次
         </button>

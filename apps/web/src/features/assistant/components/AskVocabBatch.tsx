@@ -8,6 +8,9 @@ import { useId, useState } from 'react';
 import { Link } from 'react-router';
 import type { MistakeItem } from '../../vocab/lib/mistakes';
 import { useAssistantEnabled } from '../lib/useAssistantEnabled';
+import { btn } from '../../../components/ui/buttons';
+import { cardFrameCls } from '../../../components/ui/Card';
+import { chipCls } from '../../../components/ui/Tabs';
 
 export function AskVocabBatch({ items }: { items: readonly MistakeItem[] }) {
   const enabled = useAssistantEnabled();
@@ -19,7 +22,7 @@ export function AskVocabBatch({ items }: { items: readonly MistakeItem[] }) {
   const valid = chosen.filter((c) => shown.some((i) => i.entry_id === c));
   const full = valid.length >= max;
   return (
-    <section aria-labelledby={`${id}-h`} className="space-y-3 rounded-2xl border border-line bg-surface p-4">
+    <section aria-labelledby={`${id}-h`} className={`${cardFrameCls} p-4 space-y-3`}>
       <h2 id={`${id}-h`} className="font-semibold">
         請學習助手一次解析這幾個字
       </h2>
@@ -30,7 +33,7 @@ export function AskVocabBatch({ items }: { items: readonly MistakeItem[] }) {
           return (
             <li key={item.entry_id}>
               <label
-                className={`inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border px-3 ${checked ? 'border-primary bg-primary-soft' : 'border-line'} ${!checked && full ? 'opacity-60' : ''}`}
+                className={`${chipCls(checked)} ${!checked && full ? 'opacity-60' : ''}`}
               >
                 <input
                   type="checkbox"
@@ -40,7 +43,7 @@ export function AskVocabBatch({ items }: { items: readonly MistakeItem[] }) {
                     const on = e.currentTarget.checked;
                     setChosen((cur) => (on ? [...cur, item.entry_id] : cur.filter((c) => c !== item.entry_id)));
                   }}
-                  className="size-4 accent-[var(--primary)]"
+                  className="size-5 shrink-0 accent-primary"
                 />
                 <span lang="en">{item.word}</span>
                 <span className="text-xs text-muted">錯 {item.wrong_count} 次</span>
@@ -52,7 +55,7 @@ export function AskVocabBatch({ items }: { items: readonly MistakeItem[] }) {
       {valid.length > 0 ? (
         <Link
           to={assistAskHref({ src: 'vocab', entries: valid })}
-          className="inline-flex min-h-11 items-center gap-1.5 rounded-full bg-primary px-4 text-sm font-semibold text-on-primary"
+          className={btn('primary', 'sm')}
         >
           <MessageCircleQuestionMark aria-hidden="true" className="size-4" />
           一次解析這 {valid.length} 個字

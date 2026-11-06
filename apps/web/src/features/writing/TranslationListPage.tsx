@@ -19,12 +19,13 @@ import { isAiGradableTranslation, loadTranslationIndex, type TranslationSet } fr
 import { examRefLabel } from './lib/format';
 import { useStaticData } from './lib/hooks';
 import { useListOriginState } from './lib/listOrigin';
+import { calloutCls, cardLinkCls } from '../../components/ui/Card';
 
 function SetCard({ set }: { set: TranslationSet }) {
   const aiReady = isAiGradableTranslation(set);
   const origin = useListOriginState();
   return (
-    <Link to={`/writing/translation/${encodeURIComponent(set.exam_id)}`} state={origin} className="group flex h-full flex-col gap-2 rounded-2xl border border-line bg-surface p-4 hover:border-primary">
+    <Link to={`/writing/translation/${encodeURIComponent(set.exam_id)}`} state={origin} className={`${cardLinkCls} group flex h-full flex-col gap-2`}>
       <span className="flex items-start gap-2">
         <span className="flex min-w-0 flex-1 flex-wrap items-center gap-2">
           <span className="text-lg font-semibold">{examRefLabel(set)}</span>
@@ -108,7 +109,7 @@ export function TranslationPromptList({
       {data.status === 'loading' && <Loading>題目載入中…</Loading>}
       {data.status === 'error' && <DataError message={dataErrorMessage(data.error)} onRetry={data.retry} />}
       {data.status === 'ready' && <TranslationLists sets={data.value.sets} kind={kind} onKind={setKind} headingLevel={headingLevel} legend={filterLegend} />}
-      <footer className="rounded-2xl border border-line bg-surface p-4 text-sm text-muted">
+      <footer className={`${calloutCls} text-sm text-muted`}>
         題目來源：大學入學考試中心歷屆試題。本站只整理中文題目，不轉載官方參考譯文；各題作答頁附有官方題本與評分原則的連結。
       </footer>
     </div>

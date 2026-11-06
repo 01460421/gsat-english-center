@@ -16,6 +16,8 @@ import { MIXED_OPTION_CODE_LABELS, READING_OPTION_CODE_LABELS } from '../../prac
 import { errorLabel } from '../lib/view';
 import { AnalysisSection, AnswerText, En, ProcessingNotices, VerdictBadge } from './parts';
 import { StepEvidence } from './StepEvidence';
+import { btn } from '../../../components/ui/buttons';
+import { cardFrameCls } from '../../../components/ui/Card';
 
 const KNOWLEDGE_KIND_LABELS: Record<string, string> = {
   grammar: '文法',
@@ -97,7 +99,7 @@ export function HintSteps({ hints }: { hints: readonly string[] }) {
         ))}
       </ol>
       {shown < hints.length && (
-        <button type="button" onClick={() => setShown((n) => n + 1)} className="mt-2 inline-flex min-h-11 items-center rounded-full border border-line bg-surface px-3 text-sm lg:hover:border-primary">
+        <button type="button" onClick={() => setShown((n) => n + 1)} className={btn('ghost', 'sm', 'mt-2')}>
           看第 {shown + 1} 層提示
         </button>
       )}
@@ -149,7 +151,7 @@ function ItemBlock({
   const headline =
     item.verdict === 'correct' ? '為什麼對、哪裡容易猶豫' : item.verdict === 'unanswered' ? '這題卡住的地方' : item.verdict === 'unknown' ? '這題的重點' : '你的答案錯在哪';
   return (
-    <section aria-labelledby={`${bodyId}-h`} className="space-y-3 rounded-2xl border border-line bg-surface p-4">
+    <section aria-labelledby={`${bodyId}-h`} className={`${cardFrameCls} p-4 space-y-3`}>
       <div className="flex flex-wrap items-center gap-2">
         <h3 id={`${bodyId}-h`} className="text-base font-semibold">
           {single ? '解析' : title}
@@ -182,7 +184,7 @@ function ItemBlock({
           aria-expanded={open}
           aria-controls={`${bodyId}-full`}
           onClick={() => setOpen((v) => !v)}
-          className="inline-flex min-h-11 items-center rounded-full border border-primary px-4 text-sm font-medium text-primary"
+          className={btn('ghost', 'sm')}
         >
           {open ? '收起完整解析' : '看完整解析'}
         </button>
@@ -247,10 +249,10 @@ export function AnalysisView({
   const single = analysis.items.length === 1;
   return (
     <div className="space-y-6">
-      {analysis.cache_hit && <p className="rounded-xl bg-ok/10 px-4 py-2 text-sm">這份解析之前已經有同學問過，免費提供（0 點）。</p>}
+      {analysis.cache_hit && <p className="rounded-xl bg-ok-soft px-4 py-2 text-sm">這份解析之前已經有同學問過，免費提供（0 點）。</p>}
       {sourceNote && <p className="text-sm text-muted">{sourceNote}</p>}
       {analysis.key_concern_zh && (
-        <p role="note" className="rounded-xl border border-badge-fg/30 bg-badge-bg px-4 py-2 text-sm text-badge-fg">
+        <p role="note" className="rounded-xl border border-badge-line bg-badge-bg px-4 py-2 text-sm text-badge-fg">
           AI 對這題的答案有疑問，已通知站主確認；答案以題目頁為準。
         </p>
       )}

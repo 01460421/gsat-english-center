@@ -13,6 +13,7 @@ import type { OptionLetter, OptionMap, QuestionGroup } from '../../../data/exams
 import { RichText } from '../../exams/components/RichText';
 import { evidenceRanges } from '../evidence';
 import { BLANK_POS_LABELS, CLUE_TYPE_LABELS, SENSE_LABELS } from '../labels';
+import { btn } from '../../../components/ui/buttons';
 
 export function Section({ step, title, children }: { step: number; title: string; children: ReactNode }) {
   return (
@@ -67,7 +68,7 @@ export function CardShell({ label, hintsUsed, byline, children }: { label: strin
 /** 一句逐字證據（英文原句）。from：證據出自圖表或表格時的小標籤。 */
 export function EvidenceQuote({ text, from, tone = 'ok' }: { text: string; from?: string | null; tone?: 'ok' | 'muted' }) {
   return (
-    <li lang="en" className={`border-l-4 px-2 py-1 break-words ${tone === 'ok' ? 'border-ok bg-ok/10' : 'border-line bg-surface'}`}>
+    <li lang="en" className={`border-l-4 px-2 py-1 break-words ${tone === 'ok' ? 'border-ok bg-ok-soft' : 'border-line bg-surface'}`}>
       {from && (
         <span lang="zh-Hant" className="mr-1.5 rounded-full bg-surface px-1.5 py-0.5 text-xs text-muted">
           {from}
@@ -104,7 +105,7 @@ export function EvidenceBlock({
         <button
           type="button"
           onClick={() => onLocateEvidence(label)}
-          className="mt-2 inline-flex min-h-9 items-center gap-1.5 rounded-full border border-line bg-surface px-3 text-sm hover:border-primary"
+          className={btn('secondary', 'sm', 'mt-2')}
         >
           <Crosshair aria-hidden="true" className="size-4" />
           在文中標出證據句
@@ -218,7 +219,7 @@ export function ExplanationCard({
       {(wrongChosen !== null || otherNotes.length > 0) && (
         <Section step={2} title={wrongChosen !== null ? '你選的為什麼錯' : '其他選項為什麼錯'}>
           {wrongChosen !== null && (
-            <div className="rounded-lg border border-bad/40 bg-bad/10 px-2 py-1 break-words">
+            <div className="rounded-lg border border-bad-line bg-bad-soft px-2 py-1 break-words">
               <span className="text-sm font-semibold text-bad">你選的 </span>
               <OptionLabel letter={wrongChosen} options={options} />：{notes[wrongChosen as OptionLetter] ?? '這個選項放進空格，語意或文法不通。'}
               {optionDetail(wrongChosen)}

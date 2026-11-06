@@ -12,6 +12,7 @@
 import type { ReactNode } from 'react';
 import { InfoSection, PageHeader } from '../components/ModulePage';
 import { APP_NAME, getPage } from '../modules';
+import { cardCls } from '../components/ui/Card';
 
 function ExternalLink({ href, children }: { href: string; children: ReactNode }) {
   return (
@@ -146,7 +147,7 @@ export default function AboutPage() {
           </ul>
         </InfoSection>
 
-        <section className="rounded-2xl border border-line bg-surface p-5 lg:p-6">
+        <section className={cardCls}>
           <h2 className="text-lg font-semibold">資料來源與授權致謝</h2>
           <p className="mt-2 text-[0.95rem] text-muted">
             以下是本站使用的資料來源，用到的頁面也會標示出處；標「規劃使用」的還沒用在網站上。

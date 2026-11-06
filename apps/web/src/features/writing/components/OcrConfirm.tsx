@@ -17,6 +17,8 @@ import { checkEssayLength } from '../lib/text';
 import { useRefreshMeOnConsentError } from '../lib/useErrorView';
 import { confirmOcr } from '../lib/writingApi';
 import { AiBadge, ConfirmButton, ErrorMessage, card, englishInputProps, primaryButton, textInput } from './ui';
+import { btn } from '../../../components/ui/buttons';
+import { segmentCls, segmentedTrackCls } from '../../../components/ui/Tabs';
 
 interface OcrEdits {
   mode: 'lines' | 'full';
@@ -166,14 +168,14 @@ export function OcrConfirm({
         <li>照片已在辨識完成後刪除；確認後這份文字會拿去批改。</li>
       </ul>
 
-      <div role="group" aria-label="編輯方式" className="flex flex-wrap gap-2">
+      <div role="group" aria-label="編輯方式" className={segmentedTrackCls}>
         {(['lines', 'full'] as const).map((m) => (
           <button
             key={m}
             type="button"
             aria-pressed={edits.mode === m}
             onClick={() => switchMode(m)}
-            className={`inline-flex min-h-11 items-center rounded-full border px-4 text-sm ${edits.mode === m ? 'border-primary bg-primary text-on-primary' : 'border-line'}`}
+            className={segmentCls(edits.mode === m)}
           >
             {m === 'lines' ? '逐行確認' : '整篇一起編輯'}
           </button>
@@ -217,7 +219,7 @@ export function OcrConfirm({
                         key={c}
                         type="button"
                         onClick={() => setLine(i, replaceMarkAt(value, m.k, c))}
-                        className="inline-flex min-h-9 items-center rounded-full border border-line bg-surface px-3"
+                        className={btn('secondary', 'sm')}
                         lang="en"
                       >
                         {c}

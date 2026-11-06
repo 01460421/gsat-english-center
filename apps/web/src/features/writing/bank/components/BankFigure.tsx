@@ -28,7 +28,7 @@ export function BankFigure({ figure, index }: { figure: BankFigureData; index: n
     <figure className="space-y-2 rounded-xl bg-surface-2 p-3">
       {figure.svg && (
         <div className="space-y-1">
-          <div id={frameId} className="max-w-[32rem] overflow-x-auto rounded-xl border border-line bg-white p-2" tabIndex={zoomed ? 0 : undefined}>
+          <div id={frameId} className="max-w-[32rem] overflow-x-auto rounded-xl border border-line bg-paper p-2" tabIndex={zoomed ? 0 : undefined}>
             <img
               src={svgDataUrl(figure.svg)}
               alt=""

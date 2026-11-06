@@ -36,6 +36,8 @@ import {
 } from './storage';
 import { isExpired, remainingSec } from './timer';
 import { useNow } from './useNow';
+import { btn } from '../../components/ui/buttons';
+import { cardCls, cardFrameCls } from '../../components/ui/Card';
 
 interface Snapshot {
   active: ReadonlyMap<string, MockAttemptRecord>;
@@ -149,7 +151,7 @@ function PaperPdf({ paper }: { paper: MockPaper }) {
         aria-expanded={open}
         aria-controls={`${id}-panel`}
         onClick={() => setOpen((v) => !v)}
-        className="inline-flex min-h-11 items-center gap-2 rounded-full border border-primary px-4 text-sm font-medium text-primary hover:bg-primary-soft"
+        className={btn('secondary', 'sm')}
       >
         <Download aria-hidden="true" className="size-4" />
         下載 PDF（考試格式）
@@ -193,7 +195,7 @@ function PaperCard({ paper, active, done, order }: { paper: MockPaper; active: M
     <li className="lg:@container">
       <article
         aria-labelledby={`${id}-title`}
-        className="flex h-full flex-col gap-3 rounded-2xl border border-line bg-surface p-4 lg:@3xl:grid lg:@3xl:grid-cols-[14rem_minmax(0,1fr)_16.5rem] lg:@3xl:items-center lg:@3xl:gap-x-6 lg:@3xl:py-3"
+        className={`${cardFrameCls} p-4 flex h-full flex-col gap-3 lg:@3xl:grid lg:@3xl:grid-cols-[14rem_minmax(0,1fr)_16.5rem] lg:@3xl:items-center lg:@3xl:gap-x-6 lg:@3xl:py-3`}
       >
         <header className="flex items-start gap-3">
           <span aria-hidden="true" className="inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-primary-soft text-sm font-semibold text-primary tabular-nums">
@@ -222,14 +224,14 @@ function PaperCard({ paper, active, done, order }: { paper: MockPaper; active: M
         <div className="mt-auto flex flex-wrap items-center gap-2 lg:@3xl:mt-0">
           <Link
             to={`/mock/${paper.examId}`}
-            className="inline-flex min-h-11 items-center gap-1 rounded-full bg-primary px-5 font-semibold text-on-primary"
+            className={btn('primary', 'md')}
           >
             {active ? '繼續作答' : latest ? '再做一次' : '開始'}
             <span className="sr-only">：{paper.label}模擬考</span>
             <ChevronRight aria-hidden="true" className="size-4" />
           </Link>
           {latest && (
-            <Link to={`/mock/report/${latest.id}`} className="inline-flex min-h-11 items-center gap-1 rounded-full border border-line px-4 text-sm hover:border-primary">
+            <Link to={`/mock/report/${latest.id}`} className={btn('secondary', 'sm')}>
               <FileText aria-hidden="true" className="size-4" />
               最近成績單
               <span className="sr-only">：{paper.label}</span>
@@ -247,7 +249,7 @@ function HistoryList({ history }: { history: readonly MockHistoryEntry[] }) {
   // 本站自組模擬考看得到時（docs/design/bank-mock.md §2.1）：自組卷只記原始分數，說明改寫。
   const [bankVisible] = useState(bankMockVisible);
   return (
-    <section aria-labelledby={`${id}-title`} className="rounded-2xl border border-line bg-surface p-5 lg:max-w-[60rem] lg:p-6">
+    <section aria-labelledby={`${id}-title`} className={`${cardCls} lg:max-w-[60rem]`}>
       <h2 id={`${id}-title`} className="text-lg font-semibold">
         作答紀錄
       </h2>

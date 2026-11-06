@@ -21,6 +21,7 @@ import { questionTitle } from '../richText';
 import { isAnswered, scoreExam } from '../scoring';
 import { questionAnchorId } from './Questions';
 import { UnansweredList } from './UnansweredList';
+import { btn } from '../../../components/ui/buttons';
 
 const WARN_AT_SEC = [600, 300, 60];
 
@@ -204,7 +205,7 @@ export function ExamToolbar({ exam, modeLabel, waitForFirstAnswer = false }: { e
               type="button"
               onClick={() => setConfirming(true)}
               aria-expanded={confirming}
-              className="rounded-full bg-primary px-4 py-1.5 text-sm font-semibold text-on-primary"
+              className={btn('primary', 'sm')}
             >
               交卷
             </button>
@@ -218,7 +219,7 @@ export function ExamToolbar({ exam, modeLabel, waitForFirstAnswer = false }: { e
           onKeyDown={(e) => {
             if (e.key === 'Escape') cancel();
           }}
-          className="mt-2 flex flex-wrap items-center gap-2 rounded-xl border border-primary bg-surface p-3 text-sm"
+          className="mt-2 flex flex-wrap items-center gap-2 rounded-control border border-primary bg-surface p-3 text-sm"
         >
           {isDesktop ? (
             <DesktopConfirmText unanswered={unanswered} />
@@ -233,11 +234,11 @@ export function ExamToolbar({ exam, modeLabel, waitForFirstAnswer = false }: { e
               setConfirming(false);
               submitAttempt(store, exam, 'manual');
             }}
-            className="rounded-full bg-primary px-4 py-1.5 font-semibold text-on-primary"
+            className={btn('primary', 'sm')}
           >
             確定交卷
           </button>
-          <button ref={continueRef} type="button" onClick={cancel} className="rounded-full border border-line px-4 py-1.5">
+          <button ref={continueRef} type="button" onClick={cancel} className={btn('secondary', 'sm')}>
             繼續作答
           </button>
           {isDesktop && unanswered > 0 && (

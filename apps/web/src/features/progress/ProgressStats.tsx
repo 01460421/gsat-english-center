@@ -14,6 +14,7 @@ import { usePracticeHistory } from '../practice/history';
 import { vocabSearch } from '../vocab/navigation';
 import { useMistakes, useSrs } from '../vocab/state';
 import { computeLocalStats, isEmptyStats, vocabHint, type LocalStats } from './localStats';
+import { btn } from '../../components/ui/buttons';
 
 const STUDY_PATH = `/words${vocabSearch('study')}`;
 const MISTAKES_PATH = `/words${vocabSearch('mistakes')}`;
@@ -61,8 +62,8 @@ function practiceHint({ groups, correct, total }: LocalStats['practice']): strin
   return total > 0 ? `已完成的題組・答對率 ${formatPercent(correct / total)}（${correct}／${total} 題）` : '已完成的題組';
 }
 
-const btnPrimary = 'inline-flex min-h-11 items-center rounded-full bg-primary px-4 font-medium text-on-primary';
-const btnSecondary = 'inline-flex min-h-11 items-center rounded-full border border-line bg-surface px-4 font-medium hover:border-primary';
+const btnPrimary = btn('primary', 'md');
+const btnSecondary = btn('secondary', 'md');
 
 export default function ProgressStats({ variant = 'grid' }: { variant?: ProgressVariant }) {
   const srs = useSrs();

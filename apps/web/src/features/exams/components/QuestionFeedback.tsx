@@ -30,6 +30,8 @@ import {
   type AutoScoredQuestion,
 } from '../scoring';
 import { RichText } from './RichText';
+import { cardFrameCls } from '../../../components/ui/Card';
+import { badgeShapeCls } from '../../../components/ui/Badge';
 
 export function sortedLetters(map: Partial<Record<OptionLetter, unknown>> | null | undefined): OptionLetter[] {
   return (Object.keys(map ?? {}) as OptionLetter[]).sort();
@@ -58,13 +60,13 @@ function joinNodes(nodes: ReactNode[]): ReactNode[] {
 
 function StatusBadge({ tone, icon, children }: { tone: 'ok' | 'bad' | 'muted' | 'primary'; icon: ReactNode; children: ReactNode }) {
   const toneClass = {
-    ok: 'bg-ok/10 text-ok',
-    bad: 'bg-bad/10 text-bad',
+    ok: 'bg-ok-soft text-ok',
+    bad: 'bg-bad-soft text-bad',
     muted: 'bg-surface-2 text-muted',
     primary: 'bg-primary-soft text-primary',
   }[tone];
   return (
-    <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-sm font-semibold ${toneClass}`}>
+    <span className={`${badgeShapeCls('sm')} gap-1.5 ${toneClass}`}>
       {icon}
       {children}
     </span>
@@ -157,7 +159,7 @@ function ScoringExceptionNote({ q }: { q: Question }) {
   if (!ex) return null;
   const title = { all_credit: '送分：本題所有考生都給分', multiple_correct: '官方公告多個答案皆給分', other: '計分例外' }[ex.type];
   return (
-    <p className="rounded-lg border border-badge-fg/30 bg-badge-bg px-3 py-2 text-sm text-badge-fg">
+    <p className="rounded-lg border border-badge-line bg-badge-bg px-3 py-2 text-sm text-badge-fg">
       <strong>{title}</strong>
       {ex.note ? `：${ex.note}` : ''}
     </p>
@@ -461,7 +463,7 @@ export function ScoreDistribution({ section }: { section: Pick<ExamSection, 'sta
   const rateOf = (count: number) => count / total;
   const maxRate = Math.max(...bins.map((b) => rateOf(b.count)));
   return (
-    <details className="rounded-2xl border border-line bg-surface p-4">
+    <details className={`${cardFrameCls} p-4`}>
       <summary className="cursor-pointer font-medium">全國得分分布（{section.title}）</summary>
       <p className="mt-2 text-xs text-muted">
         大學入學考試中心統計，以到考人數計算比例{stats.examinees != null ? `（到考 ${stats.examinees.toLocaleString('zh-TW')} 人）` : ''}；只公布到大題，拆不到小題。

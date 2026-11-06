@@ -8,11 +8,14 @@ import { TIERS, TIER_LABELS, type Tier } from '@gsat/shared';
 import { ChevronRight, Search } from 'lucide-react';
 import { useId, useMemo, useState } from 'react';
 import { dataErrorMessage } from '../../../../data/client';
-import { DataError, Loading, textInput } from '../../components/ui';
+import { DataError, Loading } from '../../components/ui';
 import { bankProgressOf } from '../../bank/drafts';
 import { useStaticData } from '../../lib/hooks';
 import { BANK_LOCK_TAG } from '../labels';
 import { loadSiteTasks, type SiteSource, type SiteTask } from '../lib/sitePrompts';
+import { btn } from '../../../../components/ui/buttons';
+import { fieldCls } from '../../../../components/ui/fields';
+import { chipCls } from '../../../../components/ui/Tabs';
 
 type ExamFilter = 'all' | 'gsat' | 'ast' | 'reference';
 
@@ -24,7 +27,7 @@ const EXAM_FILTERS: Array<[ExamFilter, string]> = [
 ];
 
 const pill =
-  'inline-flex min-h-11 cursor-pointer items-center rounded-full border border-line px-4 text-sm has-[:checked]:border-primary has-[:checked]:bg-primary has-[:checked]:text-on-primary has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-primary';
+  chipCls();
 
 /** 選題器顯示的上限（篩選後的前 n 題；其餘按「顯示更多」）。 */
 const PAGE = 20;
@@ -135,7 +138,7 @@ export function SitePromptPicker({ onPick }: { onPick: (task: SiteTask) => void 
               reset();
             }}
             placeholder={source === 'exam' ? '例如 115、寵物、信' : '例如 運動、圖表'}
-            className={`${textInput} min-h-11 pl-9`}
+            className={`${fieldCls} pl-9`}
           />
         </div>
       </div>
@@ -153,7 +156,7 @@ export function SitePromptPicker({ onPick }: { onPick: (task: SiteTask) => void 
                 <button
                   type="button"
                   onClick={() => onPick(t)}
-                  className="group flex w-full items-start gap-3 rounded-xl border border-line bg-surface p-3 text-left lg:hover:border-primary"
+                  className="group flex w-full items-start gap-3 rounded-control border border-line bg-surface p-3 text-left shadow-(--shadow-card) hover:border-primary"
                 >
                   <span className="min-w-0 flex-1">
                     <span className="flex flex-wrap items-center gap-2">
@@ -171,7 +174,7 @@ export function SitePromptPicker({ onPick }: { onPick: (task: SiteTask) => void 
         </ul>
       )}
       {filtered.length > shown && (
-        <button type="button" onClick={() => setShown((n) => n + PAGE * 2)} className="inline-flex min-h-11 items-center text-sm font-medium text-primary underline underline-offset-2">
+        <button type="button" onClick={() => setShown((n) => n + PAGE * 2)} className={btn('link', 'sm')}>
           顯示更多（還有 {filtered.length - shown} 題）
         </button>
       )}

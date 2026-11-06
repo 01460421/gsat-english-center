@@ -126,7 +126,7 @@ describe('防誤觸（docs/design/desktop-polish.md §3.7、§4.7）', () => {
     return user;
   }
 
-  it('桌機的交卷對話框：右上角關閉、說明有標記題數與剩餘時間、動作列黏在底部；焦點在「繼續作答」', async () => {
+  it('桌機的交卷對話框：右上角關閉、說明有標記題數與剩餘時間、動作列固定在底部；焦點在「繼續作答」', async () => {
     setDesktopViewport();
     const user = await startMock();
     await user.click(screen.getByRole('button', { name: '交卷' }));
@@ -134,7 +134,9 @@ describe('防誤觸（docs/design/desktop-polish.md §3.7、§4.7）', () => {
     expect(dialog).toHaveAccessibleDescription(/^還有 12 題沒有作答、標記 1 題；剩餘時間 1:40:00\s?。交卷後就不能再修改答案/);
     const stay = within(dialog).getByRole('button', { name: '繼續作答' });
     expect(stay).toHaveFocus();
-    expect(stay.parentElement?.className).toMatch(/lg:sticky lg:-bottom-5/);
+    // 動作列固定在對話框底部（共用 Dialog 的 actions，在可捲動的內容區外面），一打開就看得到焦點所在的「繼續作答」。
+    expect(stay.parentElement?.className).toContain('border-t');
+    expect(stay.closest('.overflow-y-auto')).toBeNull();
     expect(within(dialog).getByRole('region', { name: '未作答（點題號回去作答）' })).toBeInTheDocument();
     await user.click(within(dialog).getByRole('button', { name: '關閉' }));
     expect(screen.queryByRole('dialog', { name: '確定要交卷嗎？' })).not.toBeInTheDocument();

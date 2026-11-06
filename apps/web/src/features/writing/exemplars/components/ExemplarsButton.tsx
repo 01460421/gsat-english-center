@@ -16,9 +16,11 @@ import { useListOriginState } from '../../lib/listOrigin';
 import { EXEMPLARS_BUTTON, EXEMPLARS_CARD_TEXT, EXEMPLARS_PATH, EXEMPLARS_TITLE, WRITE_FIRST_HINT } from '../entry';
 import { writeExemplarHandoff } from '../lib/handoff';
 import { useExemplarsEnabled } from '../lib/useExemplarsEnabled';
+import { btn } from '../../../../components/ui/buttons';
+import { cardLinkCls } from '../../../../components/ui/Card';
 
 const SECONDARY =
-  'inline-flex min-h-11 items-center gap-1.5 rounded-full border border-line px-4 text-sm text-muted lg:hover:border-primary lg:hover:text-primary';
+  btn('secondary', 'sm');
 
 /** 範文頁的網址：網站題目 ?group=；自訂題目 ?from=custom；從批改結果頁來時加 &sub=。 */
 export function exemplarsHref(opts: { group?: string | null; custom?: boolean; sub?: string | null }): string {
@@ -82,7 +84,7 @@ export function ExemplarsEntryCard() {
   const origin = useListOriginState();
   if (!enabled) return null;
   return (
-    <Link to={EXEMPLARS_PATH} state={origin} className="group flex h-full items-start gap-3 rounded-2xl border border-line bg-surface p-4 hover:border-primary lg:p-5">
+    <Link to={EXEMPLARS_PATH} state={origin} className={`${cardLinkCls} group flex h-full items-start gap-3`}>
       <span className="inline-flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary-soft text-primary">
         <Layers aria-hidden="true" className="size-6" />
       </span>

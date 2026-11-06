@@ -15,6 +15,10 @@ import { startAssistFollowup } from '../lib/assistApi';
 import { loadAssistDraft, saveAssistDraft } from '../lib/drafts';
 import { useAssistErrorView } from '../lib/pollers';
 import { inputCls, primaryBtn } from './parts';
+import { btn } from '../../../components/ui/buttons';
+import { Select } from '../../../components/ui/Field';
+import { cardFrameCls } from '../../../components/ui/Card';
+import { chipCls } from '../../../components/ui/Tabs';
 
 export function FollowupComposer({
   caseId,
@@ -88,7 +92,7 @@ export function FollowupComposer({
 
   return (
     <form
-      className="space-y-3 rounded-2xl border border-line bg-surface p-4"
+      className={`${cardFrameCls} p-4 space-y-3`}
       onSubmit={(e) => {
         e.preventDefault();
         void submit();
@@ -107,7 +111,7 @@ export function FollowupComposer({
                   setText(c);
                   textRef.current?.focus();
                 }}
-                className="inline-flex min-h-11 items-center rounded-full border border-line bg-surface-2 px-3 text-left text-sm lg:hover:border-primary"
+                className={btn('secondary', 'sm', 'text-left')}
               >
                 {c}
               </button>
@@ -140,8 +144,8 @@ export function FollowupComposer({
                 ['explain', '詳解'],
               ] as const
             ).map(([value, text]) => (
-              <label key={value} className={`inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border px-3 text-sm ${mode === value ? 'border-primary bg-primary-soft font-semibold' : 'border-line'}`}>
-                <input type="radio" name={`${id}-mode`} value={value} checked={mode === value} onChange={() => setMode(value)} className="size-4 accent-[var(--primary)]" />
+              <label key={value} className={chipCls(mode === value)}>
+                <input type="radio" name={`${id}-mode`} value={value} checked={mode === value} onChange={() => setMode(value)} className="size-5 shrink-0 accent-primary" />
                 {text}
               </label>
             ))}
@@ -152,14 +156,14 @@ export function FollowupComposer({
             <label htmlFor={`${id}-label`} className="text-sm font-medium">
               問的是第幾題
             </label>
-            <select id={`${id}-label`} value={label} onChange={(e) => setLabel(e.currentTarget.value)} className={`mt-1 min-h-11 ${inputCls}`}>
+            <Select id={`${id}-label`} value={label} onChange={(e) => setLabel(e.currentTarget.value)} wrapperClassName="w-full mt-1">
               <option value="">整組</option>
               {labels.map((l) => (
                 <option key={l} value={l}>
                   第 {displayOf(l)} 題
                 </option>
               ))}
-            </select>
+            </Select>
           </div>
         )}
       </div>

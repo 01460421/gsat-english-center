@@ -3,28 +3,22 @@
  * 深淺色主題自動跟著換。按鈕高度至少 44px（min-h-11）：手機上手指點得準（WCAG 2.5.8 的建議尺寸）。
  */
 
-export const cardCls = 'rounded-2xl border border-line bg-surface p-4 sm:p-5 lg:p-6';
+import { btn, iconBtnCls } from '../../../components/ui/buttons';
 
-export const btnPrimary =
-  'inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-primary px-5 py-2 font-medium text-on-primary hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50';
+/** 卡片：共用元件（components/ui/Card.tsx）。 */
+export { cardCls } from '../../../components/ui/Card';
 
-export const btnSecondary =
-  'inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-line bg-surface px-4 py-2 font-medium text-fg hover:bg-surface-2 disabled:cursor-not-allowed disabled:opacity-50';
-
-export const btnText = 'inline-flex min-h-11 items-center gap-1.5 rounded-full px-3 font-medium text-primary hover:bg-primary-soft';
-
-export const iconBtn =
-  'inline-flex size-11 shrink-0 items-center justify-center rounded-full text-muted hover:bg-surface-2 hover:text-fg';
+/** 按鈕：共用元件（components/ui/buttons.ts，設計文件 css-overhaul §4.1）。 */
+export const btnPrimary = btn('primary', 'md');
+export const btnSecondary = btn('secondary', 'md');
+export const btnText = btn('ghost', 'md');
+export const iconBtn = iconBtnCls;
 
 /**
- * 輸入框（不含邊框顏色）。要依狀態換邊框色（答對綠、答錯紅）時用這個再自己加顏色：同一個元素同時有
- * border-line 和 border-bad 時，Tailwind 依類別在 CSS 裡的先後決定，border-line 會蓋掉 border-bad。
+ * 輸入框、標籤：共用元件（components/ui/fields.ts，設計文件 css-overhaul §4.2）。fieldBaseCls 不含邊框顏色：要依狀態換邊框色
+ * （答對綠、答錯紅）時用它再自己加顏色（同一個元素同時有 border-line-strong 和 border-bad 時，CSS 裡排在後面的 border-line-strong 會贏）。
  */
-export const fieldBaseCls = 'min-h-11 w-full min-w-0 rounded-xl border bg-surface px-3 py-2 text-fg placeholder:text-muted';
-
-export const fieldCls = `${fieldBaseCls} border-line`;
-
-export const labelCls = 'mb-1 block text-sm font-medium text-muted';
+export { fieldBaseCls, fieldCls, labelCls } from '../../../components/ui/fields';
 
 export const sectionTitleCls = 'text-lg font-semibold';
 

@@ -10,6 +10,7 @@ import { speak, speechSupported } from '../lib/speech';
 import type { StoreMode } from '../lib/storage';
 import { INTERNAL_NAV_STATE, useVocabLocation, vocabSearch } from '../navigation';
 import { btnSecondary, cardCls, iconBtn, NEW_TAB_HINT } from './styles';
+import { badgeShapeCls } from '../../../components/ui/Badge';
 
 export function LoadingBlock({ label = '載入中…' }: { label?: string }) {
   return (
@@ -35,7 +36,7 @@ export function ErrorBlock({ error, onRetry, title = '資料載入失敗' }: { e
 /** 空狀態：沒有結果、沒有錯題、今天沒有要學的字。 */
 export function EmptyState({ title, children }: { title: string; children?: ReactNode }) {
   return (
-    <div className="rounded-2xl border border-dashed border-line bg-surface-2 px-5 py-8 text-center">
+    <div className="rounded-card border border-dashed border-line bg-surface-2 px-5 py-8 text-center">
       <p className="font-semibold">{title}</p>
       {children && <div className="mt-2 space-y-3 text-sm text-muted">{children}</div>}
     </div>
@@ -52,7 +53,7 @@ const TIER_BADGE: Record<'basic' | 'core' | 'challenge', string> = {
 export function LevelBadge({ level, withTier = false }: { level: VocabLevel; withTier?: boolean }) {
   const tier = vocabTierOf(level);
   return (
-    <span className={`inline-flex shrink-0 items-center rounded-full px-2 py-0.5 text-xs font-semibold ${TIER_BADGE[tier.id]}`}>
+    <span className={`${badgeShapeCls('xs')} ${TIER_BADGE[tier.id]}`}>
       <span aria-hidden="true">
         L{level}
         {withTier && ` · ${tier.label}`}

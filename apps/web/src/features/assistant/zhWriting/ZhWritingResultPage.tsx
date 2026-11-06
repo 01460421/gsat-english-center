@@ -213,7 +213,7 @@ function ResultView({ detail, poller }: { detail: AssistCaseDetail; poller: Retu
       </section>
 
       {isWriting ? (
-        <AnalysisSection id={ZH_EXEMPLAR_SECTION_ID} title={ZH_EXEMPLAR_COPY.title} className="rounded-2xl border border-line p-4 lg:p-5">
+        <AnalysisSection id={ZH_EXEMPLAR_SECTION_ID} title={ZH_EXEMPLAR_COPY.title} className="rounded-card border border-line p-4 lg:p-5">
           {zhExemplarBlockVisible(detail, offer) ? (
             <ZhExemplarBlock
               detail={detail}

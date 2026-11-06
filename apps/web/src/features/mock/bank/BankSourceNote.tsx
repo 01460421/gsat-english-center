@@ -16,6 +16,7 @@ import { AI_GROUP_LABEL } from '../../practice/labels';
 import type { BankPaperGroup } from './buildExam';
 import { PUBLISHER_LICENSE_NOTICE, paperSourceRanges } from './paperSources';
 import { rangeText } from './rangeText';
+import { calloutCls } from '../../../components/ui/Card';
 
 export const BANK_SOURCE_NOTICE = '本卷文章由 AI 參考下列資料撰寫，非原文轉載；AI 撰寫的事實陳述可能有誤。';
 
@@ -35,7 +36,7 @@ export function BankSourceNote({ groups, extra }: { groups: readonly BankPaperGr
   const publisher = (paperSourceRanges(groups) ?? []).filter((r) => r.sourceId !== null);
   const hasAi = groups.some((g) => g.source === undefined);
   return (
-    <footer aria-labelledby={`${id}-title`} className="space-y-2 rounded-2xl border border-line bg-surface p-4 text-sm text-muted" data-testid="bank-source-note">
+    <footer aria-labelledby={`${id}-title`} className={`${calloutCls} space-y-2 text-sm text-muted`} data-testid="bank-source-note">
       {hasAi ? (
         <>
           <p id={`${id}-title`} className="flex items-start gap-1.5 font-medium text-fg">

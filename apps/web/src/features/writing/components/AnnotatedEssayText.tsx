@@ -11,6 +11,7 @@
 import { MODEL_TEXT_NOTE_KINDS, type ModelTextNote, type ModelTextNoteKind } from '@gsat/shared';
 import type { ReactNode } from 'react';
 import { MODEL_TEXT_NOTE_CLASSES, MODEL_TEXT_NOTE_LABELS } from '../bank/labels';
+import { chipCls } from '../../../components/ui/Tabs';
 
 function escapeRegExp(s: string): string {
   return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -83,9 +84,9 @@ export function NoteKindToggles({
         {MODEL_TEXT_NOTE_KINDS.map((k) => (
           <label
             key={k}
-            className="inline-flex min-h-9 cursor-pointer items-center gap-1.5 rounded-full border border-line px-3 text-sm has-[:checked]:border-primary has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-primary"
+            className={chipCls()}
           >
-            <input type="checkbox" checked={kinds.has(k)} onChange={() => onToggle(k)} className="size-4 accent-primary" />
+            <input type="checkbox" checked={kinds.has(k)} onChange={() => onToggle(k)} className="size-5 shrink-0 accent-primary" />
             <span className={`rounded-sm px-1 ${MODEL_TEXT_NOTE_CLASSES[k]}`}>{MODEL_TEXT_NOTE_LABELS[k]}</span>
           </label>
         ))}

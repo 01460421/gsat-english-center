@@ -42,7 +42,7 @@ export function ZhHeadNotes({ sourceNote, keyConcern, notices }: { sourceNote: s
     <>
       {sourceNote && <p className="text-sm text-muted">{sourceNote}</p>}
       {keyConcern && (
-        <p role="note" className="rounded-xl border border-badge-fg/30 bg-badge-bg px-4 py-2 text-sm break-words text-badge-fg">
+        <p role="note" className="rounded-xl border border-badge-line bg-badge-bg px-4 py-2 text-sm break-words text-badge-fg">
           AI 對答案有疑問：{keyConcern}
         </p>
       )}

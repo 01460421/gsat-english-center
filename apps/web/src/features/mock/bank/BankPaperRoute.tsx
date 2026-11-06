@@ -29,6 +29,8 @@ import { decodeAnyPaperId, normalizeAnyPaperId } from './code2';
 import { bk2UniformTier } from './paperId';
 import { newPaperPath } from './PaperInfo';
 import { hasLocalUse, loadBankPaperStrict, resolveBankPaper, type ResolveResult, type StrictLoadResult } from './resolve';
+import { btn } from '../../../components/ui/buttons';
+import { cardFrameCls } from '../../../components/ui/Card';
 
 type LoadResult = StrictLoadResult | ResolveResult;
 
@@ -89,8 +91,8 @@ function Message({ title, children }: { title: string; children: ReactNode }) {
   );
 }
 
-const primaryLink = 'inline-flex min-h-11 items-center rounded-full bg-primary px-4 font-medium text-on-primary';
-const secondaryLink = 'inline-flex min-h-11 items-center rounded-full border border-line px-4 hover:border-primary';
+const primaryLink = btn('primary', 'md');
+const secondaryLink = btn('secondary', 'md');
 
 export function PaperNotFound() {
   return (
@@ -138,7 +140,7 @@ function Changed({ paperId, tier, weak }: { paperId: string; tier: Tier | null; 
         已經交卷的成績留在作答紀錄裡。
       </p>
       {active && (
-        <div className="space-y-2 rounded-xl border border-line bg-surface p-4 text-fg">
+        <div className={`${cardFrameCls} rounded-control p-4 space-y-2 text-fg`}>
           <p>這份卷子還有一筆作答中的紀錄，已經無法接著作答。</p>
           {confirming ? (
             <span role="group" aria-label="確認放棄" className="inline-flex flex-wrap items-center gap-2 text-sm">
@@ -151,11 +153,11 @@ function Changed({ paperId, tier, weak }: { paperId: string; tier: Tier | null; 
                   setActive(null);
                   setAbandoned(true);
                 }}
-                className="min-h-9 rounded-full bg-bad px-3 font-semibold text-on-primary"
+                className={btn('danger', 'sm')}
               >
                 確定放棄
               </button>
-              <button type="button" onClick={() => setConfirming(false)} className="min-h-9 rounded-full border border-line px-3">
+              <button type="button" onClick={() => setConfirming(false)} className={btn('secondary', 'sm')}>
                 取消
               </button>
             </span>
@@ -167,7 +169,7 @@ function Changed({ paperId, tier, weak }: { paperId: string; tier: Tier | null; 
         </div>
       )}
       {abandoned && (
-        <p ref={abandonedRef} tabIndex={-1} className="rounded-xl border border-line bg-surface p-4 text-fg">
+        <p ref={abandonedRef} tabIndex={-1} className={`${cardFrameCls} rounded-control p-4 text-fg`}>
           已放棄這次作答。可以組一份新卷，或回模擬考列表。
         </p>
       )}

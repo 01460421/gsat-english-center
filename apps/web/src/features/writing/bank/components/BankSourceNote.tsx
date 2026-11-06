@@ -3,10 +3,11 @@
  * 本站題不使用 SourceNote（那是「題目來源：大學入學考試中心」）。
  */
 import { BANK_SOURCE_NOTE } from '../labels';
+import { calloutCls } from '../../../../components/ui/Card';
 
 export function BankSourceNote() {
   return (
-    <footer className="rounded-2xl border border-line bg-surface p-4 text-sm text-muted">
+    <footer className={`${calloutCls} text-sm text-muted`}>
       <p>{BANK_SOURCE_NOTE}</p>
     </footer>
   );

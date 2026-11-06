@@ -301,12 +301,12 @@ function CaseView({ detail, poller }: { detail: AssistCaseDetail; poller: Return
         </Notice>
       )}
       {!analysis && !pending && lastAnalyze?.status === 'failed' && mismatch === null && (
-        <div role="alert" className="space-y-2 rounded-xl border border-bad/40 bg-bad/10 px-4 py-3">
+        <div role="alert" className="space-y-2 rounded-xl border border-bad-line bg-bad-soft px-4 py-3">
           <p className="text-bad">{assistRefundMessage(lastAnalyze.failure)}，這次的點數已經退還。</p>
         </div>
       )}
       {!analysis && !pending && lastAnalyze?.status === 'failed' && mismatch !== null && (
-        <div role="alert" className="space-y-2 rounded-xl border border-bad/40 bg-bad/10 px-4 py-3" data-testid="assist-subject-mismatch">
+        <div role="alert" className="space-y-2 rounded-xl border border-bad-line bg-bad-soft px-4 py-3" data-testid="assist-subject-mismatch">
           <p className="text-bad">{assistSubjectMismatchText(mismatch, 'analyze', subjects.open)}</p>
           {mismatch === 'english' && subjects.isOpen('english') && (
             <Link
@@ -494,7 +494,7 @@ function CaseView({ detail, poller }: { detail: AssistCaseDetail; poller: Return
       {header}
       {safety && <AssistSafetyCare />}
       {preview && (
-        <section aria-labelledby="assist-question-h" className="space-y-2 rounded-2xl border border-line bg-surface-2 p-4">
+        <section aria-labelledby="assist-question-h" className="space-y-2 rounded-card border border-line bg-surface-2 p-4">
           <h2 id="assist-question-h" className="text-lg font-semibold">
             題目
           </h2>

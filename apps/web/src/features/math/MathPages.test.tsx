@@ -37,6 +37,12 @@ function card(label: string): HTMLElement {
 
 let solutionsRequested = 0;
 
+/**
+ * 等詳解出現的逾時：詳解區用 Suspense，資料到了之後 React 至少隔 300ms（FALLBACK_THROTTLE_MS）才換掉「詳解載入中…」，
+ * happy-dom 在 CI 或整套測試一起跑時常拖到 1 秒以上，超過 findBy 預設的 1 秒（建置後的 Chromium 實測：請求 +80ms 完成、+400ms 顯示）。
+ */
+const SOLUTION_WAIT = { timeout: 5000 };
+
 beforeAll(prepareMathDom);
 
 beforeEach(() => {
@@ -91,7 +97,7 @@ describe('作答頁', () => {
     await user.click(within(q1).getByRole('button', { name: '看答案與詳解' }));
     expect(within(q1).getByText('答錯')).toBeInTheDocument();
     expect(within(q1).getByText('全國答對率 81%（官方統計）')).toBeInTheDocument();
-    expect(await within(q1).findByText('關鍵')).toBeInTheDocument();
+    expect(await within(q1).findByText('關鍵', {}, SOLUTION_WAIT)).toBeInTheDocument();
     expect(within(q1).getByText('AI 撰寫・已獨立驗算')).toBeInTheDocument();
     expect(solutionsRequested).toBe(1);
     for (const r of within(q1).getAllByRole('radio')) expect(r).toBeDisabled();
@@ -105,7 +111,7 @@ describe('作答頁', () => {
     await user.click(within(q2).getByRole('button', { name: '看答案與詳解' }));
     expect(within(q2).getByText('部分得分')).toBeInTheDocument();
     expect(within(q2).getByText('得分 3／5')).toBeInTheDocument();
-    expect(await within(q2).findByText('詳解準備中')).toBeInTheDocument();
+    expect(await within(q2).findByText('詳解準備中', {}, SOLUTION_WAIT)).toBeInTheDocument();
 
     const q3 = card('3');
     expect(within(q3).getByRole('table')).toBeInTheDocument();
@@ -138,7 +144,7 @@ describe('作答頁', () => {
     expect(within(rows[1]!).getByText('答對')).toBeInTheDocument();
     expect(within(rows[1]!).getByText('81%')).toBeInTheDocument();
     expect(within(rows[3]!).getByText('未答')).toBeInTheDocument();
-    expect(await within(card('1')).findByText('關鍵')).toBeInTheDocument();
+    expect(await within(card('1')).findByText('關鍵', {}, SOLUTION_WAIT)).toBeInTheDocument();
     await user.selectOptions(within(card('5')).getByRole('combobox', { name: '自評分數' }), '6');
     expect(within(summary).getByText(/合計（含自評）/)).toHaveTextContent('合計（含自評）：14／26 分');
     expect(JSON.parse(window.localStorage.getItem('gsat-math-self:v1:gsat-matha-115') ?? '{}')).toEqual({ '5': 6 });

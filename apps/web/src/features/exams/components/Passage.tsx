@@ -12,6 +12,8 @@ import { figureKindLabel } from '../labels';
 import { useQuestionExtras } from '../QuestionExtras';
 import { groupTextOffsets, type TextHighlight } from '../richText';
 import { RichText } from './RichText';
+import { insetBoxCls } from '../../../components/ui/Card';
+import { chipCls } from '../../../components/ui/Tabs';
 
 export function FigureView({ figure }: { figure: Figure }) {
   const rows = figure.rows ?? null;
@@ -147,7 +149,7 @@ function PassageParts({
   };
 
   const renderPart = (part: PassagePart, i: number) => (
-    <section key={i} aria-label={partHeading(part, i)} className="rounded-xl border border-line bg-surface p-3">
+    <section key={i} aria-label={partHeading(part, i)} className={insetBoxCls}>
       <h4 className="mb-1 text-sm font-semibold text-primary">{partHeading(part, i)}</h4>
       <RichText
         text={part.text}
@@ -178,9 +180,7 @@ function PassageParts({
               aria-controls={`${baseId}-panel`}
               tabIndex={active ? 0 : -1}
               onClick={() => setSelected(tab.key)}
-              className={`min-w-10 rounded-full border px-3 py-1 text-sm ${
-                active ? 'border-primary bg-primary text-on-primary' : 'border-line bg-surface hover:border-primary'
-              }`}
+              className={`${chipCls(active)} min-w-10`}
             >
               {tab.label}
             </button>

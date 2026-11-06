@@ -69,6 +69,10 @@ import { ZhPasteForm } from './subjects/chinese/ZhPasteForm';
 import { SubjectChips } from './subjects/SubjectChips';
 import { loadLastSubject, pickSubject, saveLastSubject, useAssistSubjects } from './subjects/useAssistSubjects';
 import { useFromCase } from './subjects/useFromCase';
+import { btn } from '../../components/ui/buttons';
+import { fieldCls } from '../../components/ui/fields';
+import { alertCls } from '../../components/ui/Alert';
+import { tabCls, tabListCls } from '../../components/ui/Tabs';
 
 const LABEL_RE = /^[A-Za-z0-9]{1,8}$/;
 
@@ -98,7 +102,7 @@ function Highlighted({ text, ranges }: { text: string; ranges: ReadonlyArray<rea
     });
   parts.push(text.slice(pos));
   return (
-    <p lang="en" className="max-h-64 overflow-y-auto rounded-xl border border-bad/40 bg-surface p-3 whitespace-pre-wrap break-words">
+    <p lang="en" className="max-h-64 overflow-y-auto rounded-control border border-bad-line bg-surface p-3 whitespace-pre-wrap break-words">
       {parts}
     </p>
   );
@@ -230,7 +234,7 @@ function PasteForm({ prefill = null }: { prefill?: string | null }) {
             onChange={(e) => setLabel(e.currentTarget.value)}
             aria-describedby={`${id}-label-hint`}
             aria-invalid={labelBad || undefined}
-            className={`mt-1 min-h-11 ${inputCls}`}
+            className={`mt-1 ${fieldCls}`}
             inputMode="text"
             autoComplete="off"
           />
@@ -242,16 +246,16 @@ function PasteForm({ prefill = null }: { prefill?: string | null }) {
           <label htmlFor={`${id}-answer`} className="font-semibold">
             你的答案（選填）
           </label>
-          <input id={`${id}-answer`} value={answer} onChange={(e) => setAnswer(e.currentTarget.value)} className={`mt-1 min-h-11 ${inputCls}`} lang="en" autoComplete="off" />
+          <input id={`${id}-answer`} value={answer} onChange={(e) => setAnswer(e.currentTarget.value)} className={`mt-1 ${fieldCls}`} lang="en" autoComplete="off" />
         </div>
       </div>
       <label className="flex min-h-11 cursor-pointer items-center gap-2">
-        <input type="checkbox" checked={effectiveHint} onChange={(e) => setHintFirst(e.currentTarget.checked)} className="size-4 accent-[var(--primary)]" />
+        <input type="checkbox" checked={effectiveHint} onChange={(e) => setHintFirst(e.currentTarget.checked)} className="size-5 shrink-0 accent-primary" />
         先給提示就好（完整解析先收起來，按「看完整解析」才展開，不另外扣點）
       </label>
       <DoubtPicker value={doubt} onChange={setDoubt} tornOptions={[]} mine={null} showFreeNote={false} kinds={['sentence_unclear', 'unknown_word', 'faster_method', 'guessed']} />
       {warnings.length > 0 && (
-        <ul className="space-y-1 rounded-xl border border-badge-fg/30 bg-badge-bg/60 px-4 py-2 text-sm">
+        <ul className={alertCls('warn', 'space-y-1')}>
           {warnings.map((w) => (
             <li key={w}>{ASSIST_INPUT_WARNING_MESSAGES[w]}</li>
           ))}
@@ -364,7 +368,7 @@ function PhotoPicker({ photos, onChange, disabled }: { photos: PickedPhoto[]; on
                 <span className="tabular-nums text-muted">
                   第 {i + 1} 張・{p.width}×{p.height}・{formatBytes(p.blob.size)}
                 </span>
-                <button type="button" onClick={() => remove(p.key)} disabled={disabled} className="inline-flex min-h-11 items-center gap-1 text-bad disabled:opacity-50">
+                <button type="button" onClick={() => remove(p.key)} disabled={disabled} className={btn('danger-ghost', 'sm')}>
                   <Trash2 aria-hidden="true" className="size-4" />
                   移除
                 </button>
@@ -486,7 +490,7 @@ function PhotoFlow({ caseId, subject, open }: { caseId: string | null; subject: 
       return (
         <Notice tone="warn">
           <p>找不到這一題，可能已經刪除或超過保存期限。</p>
-          <button type="button" onClick={startOver} className="mt-2 font-medium text-primary underline underline-offset-2">
+          <button type="button" onClick={startOver} className={btn('link', 'md', 'mt-2')}>
             重新拍照
           </button>
         </Notice>
@@ -527,7 +531,7 @@ function PhotoFlow({ caseId, subject, open }: { caseId: string | null; subject: 
       return (
         <Notice tone="warn">
           <p>這一題的轉錄結果已經超過 24 小時，文字已經清掉（沒確認的轉錄最多保留 24 小時）。請重新拍照，或改用「貼上文字」。</p>
-          <button type="button" onClick={startOver} className="mt-2 inline-flex min-h-11 items-center font-medium text-primary underline underline-offset-2">
+          <button type="button" onClick={startOver} className={btn('link', 'md', 'mt-2')}>
             重新拍照
           </button>
         </Notice>
@@ -576,7 +580,7 @@ function PhotoFlow({ caseId, subject, open }: { caseId: string | null; subject: 
   return (
     <section className="space-y-4" aria-label="拍照">
       {failure !== null && (
-        <div role="alert" className="space-y-2 rounded-xl border border-bad/40 bg-bad/10 px-4 py-3 text-sm">
+        <div role="alert" className="space-y-2 rounded-xl border border-bad-line bg-bad-soft px-4 py-3 text-sm">
           <p className="text-bad">
             {otherSubject !== null
               ? `${assistSubjectMismatchText(otherSubject, 'ocr', open)}點數已經退還，照片也已經刪除。`
@@ -623,14 +627,14 @@ function ModeSwitch({ mode, subject }: { mode: 'photo' | 'paste'; subject: Assis
   ];
   return (
     <nav aria-label="題目來源">
-      <ul className="inline-flex max-w-full flex-wrap rounded-full border border-line p-1">
+      <ul className={tabListCls}>
         {tabs.map((t) => (
-          <li key={t.key}>
+          <li key={t.key} className="flex">
             <Link
               to={subject ? `/assistant/new?subject=${subject}&mode=${t.key}` : `/assistant/new?mode=${t.key}`}
               replace
               aria-current={t.key === mode ? 'page' : undefined}
-              className={`inline-flex min-h-11 items-center rounded-full px-4 text-sm font-medium ${t.key === mode ? 'bg-primary text-on-primary' : 'text-fg lg:hover:bg-surface-2'}`}
+              className={tabCls(t.key === mode)}
             >
               {t.label}
             </Link>

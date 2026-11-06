@@ -6,8 +6,7 @@
  * 焦點所在的「繼續作答」不會在捲動區下面）、右上角關閉鈕、說明寫出標記題數與剩餘時間、一個大題沒答的超過 10 題時先收成一行。
  * 手機與平板的畫面不變（只加 lg: 的 class，其他放在 useIsDesktop() 的分支）。
  */
-import { X } from 'lucide-react';
-import { useEffect, useId, useRef, type RefObject } from 'react';
+import { useId, useRef, type RefObject } from 'react';
 import { useIsDesktop } from '../../../lib/media';
 import { useAttemptSelector } from '../../exams/AttemptContext';
 import { UnansweredList } from '../../exams/components/UnansweredList';
@@ -17,6 +16,8 @@ import { useMockMeta } from '../MockSessionContext';
 import { orderedMarks, unansweredBySection, type PaperIndex } from '../paperIndex';
 import { remainingSec } from '../timer';
 import { useNow } from '../useNow';
+import { btn } from '../../../components/ui/buttons';
+import { Dialog } from '../../../components/ui/Dialog';
 
 /** 桌機的說明：未作答與標記的題數、剩餘時間（對話框開著時每秒更新）。 */
 function DesktopSummary({ id, unanswered, marked }: { id: string; unanswered: number; marked: number }) {
@@ -47,28 +48,12 @@ export function SubmitDialog({
   onGoQuestion: (label: string) => void;
   returnFocusRef: RefObject<HTMLElement | null>;
 }) {
-  const ref = useRef<HTMLDialogElement>(null);
   // 開啟時焦點放在「繼續作答」：誤按 Enter 不會直接交卷。
   const cancelRef = useRef<HTMLButtonElement>(null);
   const id = useId();
   const isDesktop = useIsDesktop();
   const answers = useAttemptSelector((s) => s.answers);
   const marked = useMockMeta((m) => m.marked);
-
-  useEffect(() => {
-    const dialog = ref.current;
-    if (!dialog) return;
-    if (open && !dialog.open) {
-      if (typeof dialog.showModal === 'function') dialog.showModal();
-      else dialog.setAttribute('open', '');
-      // 焦點放在「繼續作答」但不捲動：手機上未作答題號很多，捲到底就看不到標題與「還有 N 題沒有作答」。
-      cancelRef.current?.focus({ preventScroll: true });
-      dialog.scrollTop = 0;
-    } else if (!open && dialog.open) {
-      if (typeof dialog.close === 'function') dialog.close();
-      else dialog.removeAttribute('open');
-    }
-  }, [open]);
 
   const close = (refocus = true) => {
     onClose();
@@ -100,33 +85,29 @@ export function SubmitDialog({
   );
 
   return (
-    <dialog
-      ref={ref}
-      aria-labelledby={`${id}-title`}
-      aria-describedby={`${id}-desc`}
-      // 桌機鎖住捲動時，保留的捲軸槽用同樣濃度的遮罩色（index.css 的 html:has(dialog:modal)）。
-      data-backdrop-dim="50"
-      onCancel={(e) => {
-        e.preventDefault();
-        close();
-      }}
-      className="m-auto max-h-[85dvh] w-[calc(100%-2rem)] max-w-xl overflow-y-auto rounded-2xl border border-line bg-surface p-5 text-fg backdrop:bg-black/50 lg:max-w-2xl lg:shadow-lg"
+    <Dialog
+      open={open}
+      title="確定要交卷嗎？"
+      onClose={() => close()}
+      describedBy={`${id}-desc`}
+      initialFocusRef={cancelRef}
+      restoreFocus={false}
+      dim="strong"
+      size="lg"
+      closeButton={isDesktop}
+      actions={
+        <>
+          <button type="button" onClick={onConfirm} className={btn('primary', 'md')}>
+            確定交卷
+          </button>
+          <button ref={cancelRef} type="button" onClick={() => close()} className={btn('secondary', 'md')}>
+            繼續作答
+          </button>
+        </>
+      }
     >
-      {open && isDesktop && (
-        <button
-          type="button"
-          onClick={() => close()}
-          aria-label="關閉"
-          className="absolute top-3 right-3 inline-flex size-9 items-center justify-center rounded-full text-muted hover:bg-surface-2 hover:text-fg"
-        >
-          <X aria-hidden="true" className="size-5" />
-        </button>
-      )}
       {open && (
-        <div className="space-y-4">
-          <h2 id={`${id}-title`} className="text-lg font-bold lg:pr-10">
-            確定要交卷嗎？
-          </h2>
+        <>
           {isDesktop ? (
             <DesktopSummary id={`${id}-desc`} unanswered={unansweredCount} marked={marks.length} />
           ) : (
@@ -157,20 +138,8 @@ export function SubmitDialog({
               <ul className="mt-1 flex flex-wrap gap-1.5">{marks.map(chip)}</ul>
             </div>
           )}
-          {/*
-            桌機：動作列黏在對話框底部（對話框自己捲動），一打開就看得到焦點所在的「繼續作答」。
-            sticky 的範圍是對話框扣掉內距（p-5）的內容框：bottom 給 −1.25rem 才貼齊對話框的下緣，捲到一半時內容不會從列的下面露出來。
-          */}
-          <div className="flex flex-wrap gap-2 pt-1 lg:sticky lg:-bottom-5 lg:-mx-5 lg:-mb-5 lg:mt-2 lg:border-t lg:border-line lg:bg-surface lg:px-5 lg:py-3">
-            <button type="button" onClick={onConfirm} className="min-h-11 rounded-full bg-primary px-5 font-semibold text-on-primary">
-              確定交卷
-            </button>
-            <button ref={cancelRef} type="button" onClick={() => close()} className="min-h-11 rounded-full border border-line px-5">
-              繼續作答
-            </button>
-          </div>
-        </div>
+        </>
       )}
-    </dialog>
+    </Dialog>
   );
 }

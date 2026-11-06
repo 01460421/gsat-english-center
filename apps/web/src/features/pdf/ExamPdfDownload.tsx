@@ -27,6 +27,8 @@ import {
   type SitePdfVersion,
 } from './index';
 import { canShareFile, usePdfDownload, type PdfErrorTextMap } from './usePdfDownload';
+import { btn } from '../../components/ui/buttons';
+import { cardFrameCls } from '../../components/ui/Card';
 
 export type { SitePdfVersion } from './index';
 export { isInAppBrowser } from './usePdfDownload';
@@ -100,7 +102,7 @@ export function ExamPdfDownload({ exam, mockMeta, defaultIncludeAnswerKey = fals
   const statusText = download.statusText;
 
   return (
-    <section aria-labelledby={`${id}-title`} aria-busy={busy} className={`rounded-2xl border border-line bg-surface p-4 ${className}`}>
+    <section aria-labelledby={`${id}-title`} aria-busy={busy} className={`${cardFrameCls} p-4 ${className}`}>
       <h2 id={`${id}-title`} className="font-semibold">
         下載考試格式 PDF
       </h2>
@@ -155,18 +157,18 @@ export function ExamPdfDownload({ exam, mockMeta, defaultIncludeAnswerKey = fals
           onClick={() => void start()}
           disabled={busy}
           aria-describedby={hintId}
-          className="inline-flex min-h-11 items-center gap-2 rounded-full bg-primary px-5 text-sm font-semibold text-on-primary disabled:opacity-60"
+          className={btn('secondary', 'md')}
         >
           <Download aria-hidden="true" className="size-4" />
           {busy ? '產生中…' : '下載 PDF'}
         </button>
         {busy && (
-          <button type="button" onClick={cancel} className="inline-flex min-h-11 items-center rounded-full px-3 text-sm text-primary underline">
+          <button type="button" onClick={cancel} className={btn('link', 'sm')}>
             取消
           </button>
         )}
         {status.kind === 'error' && (
-          <button type="button" onClick={() => void start()} className="inline-flex min-h-11 items-center rounded-full border border-line px-4 text-sm font-medium hover:border-primary">
+          <button type="button" onClick={() => void start()} className={btn('secondary', 'sm')}>
             再試一次
           </button>
         )}
@@ -180,7 +182,7 @@ export function ExamPdfDownload({ exam, mockMeta, defaultIncludeAnswerKey = fals
             <button
               type="button"
               onClick={() => void share(status.file, status.info)}
-              className="inline-flex min-h-11 items-center gap-2 rounded-full border border-line px-4 font-medium hover:border-primary"
+              className={btn('secondary', 'md')}
             >
               <Share2 aria-hidden="true" className="size-4" />
               分享／儲存到檔案

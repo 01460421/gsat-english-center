@@ -5,6 +5,7 @@
  */
 import { Link } from 'react-router';
 import { CUSTOM_ESSAY_PATH } from '../lib/format';
+import { tabCls, tabListCls } from '../../../components/ui/Tabs';
 
 /** className：取代外框的 mt-3（桌機的 sticky 篩選列把它和標題排在同一列，docs/design/desktop-ui.md §5.6）。 */
 export function SourceTabs({ kind, current, className = 'mt-3' }: { kind: 'translation' | 'essay'; current: 'exam' | 'bank' | 'custom'; className?: string }) {
@@ -16,15 +17,15 @@ export function SourceTabs({ kind, current, className = 'mt-3' }: { kind: 'trans
   ];
   return (
     <nav aria-label="題目來源" className={className}>
-      <ul className="inline-flex max-w-full flex-wrap rounded-full border border-line p-1">
+      <ul className={tabListCls}>
         {tabs.map((t) => {
           const active = t.key === current;
           return (
-            <li key={t.key}>
+            <li key={t.key} className="flex">
               <Link
                 to={t.to}
                 aria-current={active ? 'page' : undefined}
-                className={`inline-flex min-h-11 items-center rounded-full px-4 text-sm font-medium ${active ? 'bg-primary text-on-primary' : 'text-fg hover:bg-surface-2'}`}
+                className={tabCls(active)}
               >
                 {t.label}
               </Link>

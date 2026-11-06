@@ -149,9 +149,9 @@ function ChoiceList({ q, answer, onChoose }: { q: ChoiceQuestion; answer: Answer
         const tone = !answer
           ? 'border-line hover:border-primary hover:bg-primary-soft'
           : isAnswer
-            ? 'border-ok bg-ok/10'
+            ? 'border-ok bg-ok-soft'
             : isChosen
-              ? 'border-bad bg-bad/10'
+              ? 'border-bad bg-bad-soft'
               : 'border-line text-muted';
         return (
           <li key={`${o.entryId}:${i}`} className="min-w-0">
@@ -300,7 +300,7 @@ function SpellingInput({ q, answer, onSubmit }: { q: SpellingQuestion; answer: A
           autoCorrect="off"
           spellCheck={false}
           enterKeyHint="done"
-          className={`${fieldBaseCls} flex-1 basis-48 scroll-mt-20 scroll-mb-24 text-lg ${answer ? (answer.correct ? 'border-2 border-ok' : 'border-2 border-bad') : 'border-line'}`}
+          className={`${fieldBaseCls} flex-1 basis-48 scroll-mt-20 scroll-mb-24 text-lg ${answer ? (answer.correct ? 'border-2 border-ok' : 'border-2 border-bad') : 'border-line-strong'}`}
         />
         {!answer && (
           <div className="flex gap-2">

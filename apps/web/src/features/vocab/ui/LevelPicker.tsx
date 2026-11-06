@@ -4,6 +4,7 @@
  */
 import { VOCAB_TIERS, type VocabLevel } from '../../../data/vocab';
 import { labelCls } from './styles';
+import { chipCls } from '../../../components/ui/Tabs';
 
 export function LevelPicker({
   legend,
@@ -39,9 +40,7 @@ export function LevelPicker({
               return (
                 <label
                   key={level}
-                  className={`inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border px-3 text-sm font-medium has-[:checked]:border-primary has-[:checked]:bg-primary-soft has-[:checked]:text-primary has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-primary ${
-                    disabled ? 'cursor-not-allowed border-line opacity-50' : 'cursor-pointer border-line hover:bg-surface-2'
-                  }`}
+                  className={`${chipCls()} min-w-11`}
                 >
                   <input
                     type="checkbox"

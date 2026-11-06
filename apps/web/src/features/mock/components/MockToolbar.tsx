@@ -12,6 +12,7 @@ import { isAnswered } from '../../exams/scoring';
 import { useMockMeta } from '../MockSessionContext';
 import { crossedWarning, remainingSec, strictLockRemainingSec } from '../timer';
 import { useNow } from '../useNow';
+import { btn } from '../../../components/ui/buttons';
 
 /** active 為 false（唯讀：別的分頁在作答）時照樣倒數，只是時間到不在這個分頁交卷。 */
 function MockClock({ onTimeout, active }: { onTimeout: () => void; active: boolean }) {
@@ -91,7 +92,7 @@ function SubmitControl({ onSubmit, disabled, buttonRef }: { onSubmit: () => void
         onClick={onSubmit}
         disabled={disabled || locked}
         aria-describedby={locked ? 'mock-submit-lock' : undefined}
-        className="min-h-9 rounded-full bg-primary px-4 py-1.5 text-sm font-semibold text-on-primary disabled:opacity-50"
+        className={btn('primary', 'sm')}
       >
         交卷
       </button>

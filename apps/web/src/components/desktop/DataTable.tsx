@@ -20,6 +20,7 @@ import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState, type MouseEvent, type ReactNode } from 'react';
 import { Link, type To } from 'react-router';
 import { useStickyHeightVar } from './scroll';
+import { groupRowCls, thCls } from '../ui/Table';
 
 export interface Column<T> {
   id: string;
@@ -148,7 +149,7 @@ export function DataTable<T>({
   const alignCls = (c: Column<T>) => (c.align === 'end' ? 'text-right tabular-nums' : 'text-left');
 
   return (
-    <table className={`w-full border-separate border-spacing-0 text-[0.95rem] ${className}`}>
+    <table className={`w-full border-separate border-spacing-0 text-body leading-6 ${className}`}>
       <caption className={captionSrOnly ? 'sr-only' : 'pb-2 text-left font-semibold'}>{caption}</caption>
       <thead ref={headRef}>
         <tr>
@@ -162,7 +163,7 @@ export function DataTable<T>({
                 key={c.id}
                 scope="col"
                 aria-sort={ariaSort}
-                className={`${thSticky} border-b border-line bg-surface px-3 py-2.5 text-sm font-semibold text-muted ${alignCls(c)} ${c.className ?? ''}`}
+                className={`${thSticky} ${thCls} ${alignCls(c)} ${c.className ?? ''}`}
               >
                 {c.sortValue ? (
                   <button
@@ -171,7 +172,7 @@ export function DataTable<T>({
                     className={`inline-flex items-center gap-1 rounded hover:text-fg ${c.srOnlyHeader ? 'sr-only' : ''}`}
                   >
                     {c.header}
-                    <SortIcon aria-hidden="true" className={`size-3.5 ${sorting ? 'text-fg' : 'opacity-50'}`} />
+                    <SortIcon aria-hidden="true" className={`size-3.5 ${sorting ? 'text-fg' : 'text-muted'}`} />
                   </button>
                 ) : (
                   <span className={c.srOnlyHeader ? 'sr-only' : ''}>{c.header}</span>
@@ -194,7 +195,7 @@ export function DataTable<T>({
           <tbody key={group.key || 'all'}>
             {groupBy && (
               <tr>
-                <th scope="rowgroup" colSpan={columns.length} className="border-b border-line bg-surface-2 px-3 py-1.5 text-left text-sm font-semibold">
+                <th scope="rowgroup" colSpan={columns.length} className={`border-b border-line px-3 py-1.5 text-left ${groupRowCls}`}>
                   {groupLabel ? groupLabel(group.key) : group.key}
                 </th>
               </tr>
@@ -204,7 +205,7 @@ export function DataTable<T>({
               return (
                 <tr key={rowKey(row)} onClick={link ? onRowClick : undefined} className={link ? 'cursor-pointer hover:bg-surface-2' : ''}>
                   {columns.map((c, i) => (
-                    <td key={c.id} className={`border-b border-line px-3 py-2 align-middle ${alignCls(c)} ${c.className ?? ''}`}>
+                    <td key={c.id} className={`border-b border-line-subtle px-3 py-2 align-middle ${alignCls(c)} ${c.className ?? ''}`}>
                       {i === 0 && link ? (
                         <>
                           <Link

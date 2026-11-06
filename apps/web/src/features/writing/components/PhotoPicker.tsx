@@ -7,6 +7,8 @@ import { ArrowDownUp, Camera, ImagePlus, Trash2 } from 'lucide-react';
 import { useId, useRef, useState } from 'react';
 import { PHOTO_QUALITY_MESSAGES, PhotoDecodeError, PhotoTooLargeError, formatBytes, photoQualityIssue, resizePhotoFile, type ResizedPhoto } from '../lib/photo';
 import { Notice, secondaryButton } from './ui';
+import { btn } from '../../../components/ui/buttons';
+import { alertCls } from '../../../components/ui/Alert';
 
 export interface PickedPhoto extends ResizedPhoto {
   key: string;
@@ -115,13 +117,13 @@ export function PhotoPicker({ photos, onChange, disabled }: { photos: PickedPhot
                   第 {i + 1} 張・{p.width}×{p.height}・{formatBytes(p.blob.size)}
                   {p.originalBytes > p.blob.size ? `（原檔 ${formatBytes(p.originalBytes)}）` : ''}
                 </span>
-                <button type="button" onClick={() => remove(p.key)} disabled={disabled} className="inline-flex min-h-9 items-center gap-1 text-bad disabled:opacity-50">
+                <button type="button" onClick={() => remove(p.key)} disabled={disabled} className={btn('danger-ghost', 'sm')}>
                   <Trash2 aria-hidden="true" className="size-4" />
                   移除
                 </button>
               </p>
               {issue && (
-                <p role="alert" className="mt-2 rounded-lg border border-badge-fg/30 bg-badge-bg/60 px-3 py-2 text-sm">
+                <p role="alert" className={alertCls('warn', 'mt-2')}>
                   {PHOTO_QUALITY_MESSAGES[issue]}。建議靠近一點、整頁入鏡重拍（手寫稿請直接拍紙本，不要用長截圖）。
                 </p>
               )}

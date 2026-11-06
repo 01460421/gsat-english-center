@@ -67,7 +67,7 @@ function Week({ week, done, toggle, tier, open, current }: { week: AssistPlanWee
   const weekName = week.week === 0 ? '每週菜單' : `第 ${week.week} 週`;
   return (
     <li className="report-avoid-break">
-      <details open={open} className="report-expand rounded-2xl border border-line bg-surface">
+      <details open={open} className="report-expand rounded-card border border-line bg-surface">
         <summary className="flex min-h-11 cursor-pointer flex-wrap items-center gap-x-3 gap-y-1 px-4 py-3">
           <span className="font-semibold">{weekTitle(week)}</span>
           {current && <span className="rounded-full bg-primary-soft px-2 py-0.5 text-xs font-semibold text-primary">這週</span>}

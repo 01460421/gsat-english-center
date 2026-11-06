@@ -1,8 +1,15 @@
 @import 'tailwindcss';
 
 /*
- * 主題：所有顏色都是 CSS 變數，元件只用語意化的 Tailwind 類別（bg-surface、text-muted…），
- * 不直接寫 bg-white／text-gray-500。這樣切換主題只要換變數，不必在每個元件加 dark: 變體。
+ * 視窗內高 ≥ 800px（50rem）：桌機側邊欄在高的視窗用寬鬆一點的間距（docs/design/desktop-polish.md §3.1、§8 的高度預算）。
+ * 寫成 tall:py-1 這類 class；矮的視窗（1366×640、1280×600）維持精簡的密度。
+ */
+@custom-variant tall (@media (min-height: 50rem));
+
+/*
+ * 設計 token（docs/design/css-overhaul.md §3）：所有顏色都是 CSS 變數，元件只用語意化的 Tailwind 類別（bg-surface、text-muted…），
+ * 不直接寫 bg-white／text-gray-500／bg-black/40。這樣切換主題只要換變數，不必在每個元件加 dark: 變體
+ * （也不能用 dark:：它只看系統設定，不看本站手動切換的 data-theme）。
  *
  * 三種狀態：
  *   - 跟隨系統：<html> 沒有 data-theme，由 prefers-color-scheme 決定。不需要 JavaScript，首次繪製就正確。
@@ -11,7 +18,21 @@
  *
  * 深色變數寫了兩次（媒體查詢與 data-theme="dark"），是因為 CSS 沒辦法讓兩個選擇器共用一個區塊又各自有條件。
  * 曾考慮用 light-dark() 只寫一次，但它要 Safari 17.5 以上，學生的舊 iPhone 不一定支援，所以不用。
- * 修改深色配色時兩處要一起改。
+ * 修改深色配色時兩處要一起改；lib/tokens.test.ts 會檢查兩個深色區塊相同、每個 token 兩種主題都有值，以及文字與控制項的對比。
+ *
+ * 角色（新增的 token 在 PR B 起由共用元件使用，見設計文件 §4）：
+ *   bg／surface／surface-2      頁面底色／卡片、輸入框、對話框／表頭、說明框、軌道
+ *   fg／muted                   主要文字／次要文字（兩種主題對 bg、surface、surface-2 都 ≥ 4.5:1）
+ *   line                        裝飾性的分隔與卡片框線（不要求 3:1）
+ *   line-subtle                 密集表格的列分隔（深色維持改版前較淡的 --line，表格不會太重）
+ *   line-strong                 互動元件的邊界：輸入框、選單、未選中的膠囊（對 bg、surface、surface-2 ≥ 3:1，WCAG 1.4.11）
+ *   primary／primary-hover／primary-soft／on-primary   主要動作、連結、選中；hover；選中的淡底；主色上的字
+ *   ok／bad（＋-soft 淡底、-line 框線）                 答對、完成／答錯、錯誤
+ *   badge-bg／badge-fg（＋badge-line 框線）             提醒、AI 標示
+ *   scrim／scrim-strong         對話框與抽屜的遮罩（兩種主題都是黑色半透明）
+ *   paper                       圖片、圖表的底：兩種主題都是白色（黑線條的插圖在深色主題也看得清楚）
+ *   focus-ring                  鍵盤焦點框的顏色
+ *   shadow-card／shadow-card-hover／shadow-pop          可點卡片、hover、浮層（深色主題靠框線，卡片陰影是 none）
  */
 :root {
   color-scheme: light;
@@ -21,13 +42,19 @@
   --fg: #1a1f26;
   --muted: #566170;
   --line: #dde2e8;
+  --line-subtle: #dde2e8;
+  --line-strong: #7d8794;
   --primary: #3149a8;
+  --primary-hover: #283d8f;
   --primary-soft: #e6ebfb;
   --on-primary: #ffffff;
   --badge-bg: #fdf0c8;
   --badge-fg: #7a4508;
   --ok: #1b7a3d;
   --bad: #b42318;
+  --shadow-card: 0 1px 2px rgb(16 24 40 / 0.05), 0 1px 3px rgb(16 24 40 / 0.04);
+  --shadow-card-hover: 0 4px 12px rgb(16 24 40 / 0.08);
+  --shadow-pop: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   /*
    * 圖表的類別色（練習頁的 SVG 圖表，依數列順序固定取用，不循環到第 9 色）。
    * 淺色、深色各自對應背景挑過明度，用 dataviz 的 validate_palette.js 檢查過（相鄰兩色色盲模擬 ΔE ≥ 8.4、
@@ -41,24 +68,48 @@
   --chart-6: #008300;
   --chart-7: #4a3aa7;
   --chart-8: #e34948;
+
+  /*
+   * 由上面的值推出來的 token：兩種主題共用同一個寫法，跟著 --bad、--ok… 自動換色（同一個元素上定義，var() 拿到的是當下主題的值）。
+   * 淡底與框線的濃度和原本的 bg-bad/10、border-bad/40… 相同（Tailwind 的透明度修飾也是 oklab 的 color-mix），換成 token 後畫面不變。
+   */
+  --ok-soft: color-mix(in oklab, var(--ok) 10%, transparent);
+  --ok-line: color-mix(in oklab, var(--ok) 40%, transparent);
+  --bad-soft: color-mix(in oklab, var(--bad) 10%, transparent);
+  --bad-line: color-mix(in oklab, var(--bad) 40%, transparent);
+  --badge-line: color-mix(in oklab, var(--badge-fg) 30%, transparent);
+  --focus-ring: var(--primary);
+  --scrim: rgb(0 0 0 / 0.4);
+  --scrim-strong: rgb(0 0 0 / 0.5);
+  --paper: #ffffff;
 }
 
+/*
+ * 深色主題。和改版前不同的兩個值（設計文件 §3.1 的「深色修正」）：--line #2b3440 → #343e4b（卡片邊界對 surface 1.36 → 1.58）、
+ * --surface-2 #202731 → #232b36（說明框、表頭對 surface 1.14 → 1.20）：深色時卡片和底色幾乎分不出來。
+ */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
     color-scheme: dark;
     --bg: #0f1318;
     --surface: #171c23;
-    --surface-2: #202731;
+    --surface-2: #232b36;
     --fg: #e5e9ef;
     --muted: #9ba6b4;
-    --line: #2b3440;
+    --line: #343e4b;
+    --line-subtle: #2b3440;
+    --line-strong: #6b7686;
     --primary: #9db0ff;
+    --primary-hover: #b8c6ff;
     --primary-soft: #232c4a;
     --on-primary: #0f1318;
     --badge-bg: #3a2c0c;
     --badge-fg: #f6d270;
     --ok: #5ad48a;
     --bad: #ff8a80;
+    --shadow-card: none;
+    --shadow-card-hover: none;
+    --shadow-pop: 0 10px 30px rgb(0 0 0 / 0.5);
     --chart-1: #3987e5;
     --chart-2: #d95926;
     --chart-3: #199e70;
@@ -74,17 +125,23 @@
   color-scheme: dark;
   --bg: #0f1318;
   --surface: #171c23;
-  --surface-2: #202731;
+  --surface-2: #232b36;
   --fg: #e5e9ef;
   --muted: #9ba6b4;
-  --line: #2b3440;
+  --line: #343e4b;
+  --line-subtle: #2b3440;
+  --line-strong: #6b7686;
   --primary: #9db0ff;
+  --primary-hover: #b8c6ff;
   --primary-soft: #232c4a;
   --on-primary: #0f1318;
   --badge-bg: #3a2c0c;
   --badge-fg: #f6d270;
   --ok: #5ad48a;
   --bad: #ff8a80;
+  --shadow-card: none;
+  --shadow-card-hover: none;
+  --shadow-pop: 0 10px 30px rgb(0 0 0 / 0.5);
   --chart-1: #3987e5;
   --chart-2: #d95926;
   --chart-3: #199e70;
@@ -110,6 +167,17 @@
   --color-badge-fg: var(--badge-fg);
   --color-ok: var(--ok);
   --color-bad: var(--bad);
+  --color-line-subtle: var(--line-subtle);
+  --color-line-strong: var(--line-strong);
+  --color-primary-hover: var(--primary-hover);
+  --color-ok-soft: var(--ok-soft);
+  --color-ok-line: var(--ok-line);
+  --color-bad-soft: var(--bad-soft);
+  --color-bad-line: var(--bad-line);
+  --color-badge-line: var(--badge-line);
+  --color-scrim: var(--scrim);
+  --color-scrim-strong: var(--scrim-strong);
+  --color-paper: var(--paper);
 }
 
 @theme {
@@ -132,6 +200,35 @@
    */
   --container-ws: 58.5rem;
   --container-wide: 80rem;
+
+  /*
+   * 字級的角色（設計文件 §3.2）：text-title 等工具類別自帶行高與字重，PR B 起由共用元件使用。
+   * 下限：內文 16px（text-body）、介面文字 14px（text-meta）、標章與時間戳 12px（text-xs），不再用 0.65–0.7rem。
+   */
+  --text-title: 1.75rem;
+  --text-title--line-height: 1.3;
+  --text-title--font-weight: 700;
+  --text-title-ws: 1.5rem;
+  --text-title-ws--line-height: 1.35;
+  --text-title-ws--font-weight: 700;
+  --text-section: 1.25rem;
+  --text-section--line-height: 1.45;
+  --text-section--font-weight: 600;
+  --text-card: 1.0625rem;
+  --text-card--line-height: 1.5;
+  --text-card--font-weight: 600;
+  --text-body: 1rem;
+  --text-body--line-height: 1.75;
+  --text-meta: 0.875rem;
+  --text-meta--line-height: 1.6;
+  /* 桌機 md 按鈕的字（15px，desktop-polish §2.6）：只給 components/ui/buttons.ts 用。 */
+  --text-control: 0.9375rem;
+  --text-control--line-height: 1.5;
+
+  /* 圓角的角色：卡片 16、控制項與選項卡 10、側邊欄項目 8；按鈕與膠囊沿用 rounded-full。 */
+  --radius-card: 1rem;
+  --radius-control: 0.625rem;
+  --radius-nav: 0.5rem;
 }
 
 /*
@@ -161,7 +258,7 @@
 
   /* 鍵盤操作時的焦點框要看得到（Tailwind 的 preflight 會清掉部分預設樣式）。 */
   :focus-visible {
-    outline: 2px solid var(--primary);
+    outline: 2px solid var(--focus-ring);
     outline-offset: 2px;
   }
 
@@ -172,7 +269,7 @@
    *   - scrollbar-gutter: stable：一律保留捲軸的位置，頁面長短不同、對話框鎖住捲動時版面都不會左右跳。
    *   - 對話框（ShortcutHelp 等原生 <dialog> 的 showModal）開著時鎖住背景捲動。保留的捲軸槽不在 ::backdrop 的範圍裡，
    *     所以 html 的底色（畫在整個視窗，含捲軸槽）調成和遮罩疊在 --bg 上一樣的顏色，右緣不會留一條沒變暗的亮條；
-   *     遮罩的濃度和對話框的 backdrop:bg-black/40 一致（模擬考的交卷對話框是 /50，另標 data-backdrop-dim）。
+   *     遮罩的濃度和對話框的 backdrop:bg-scrim（--scrim，40%）一致（模擬考的交卷對話框是 bg-scrim-strong 50%，另標 data-backdrop-dim）。
    * 手機與平板（< lg）完全不受影響（docs/design/desktop-ui.md §2.1）。
    */
   @media (width >= 64rem) {

@@ -30,6 +30,9 @@ import { ZhText } from '../../subjects/chinese/components/ZhText';
 import { ZhExemplarConfirm } from '../../subjects/chinese/ZhExemplarSection';
 import { ZH_WRITING_COPY, ZH_WRITING_SECTION_SHORT } from '../labels';
 import { EMPTY_ZH_PASTE_DRAFT, checkZhPaste, zhPasteFieldOf, zhPasteFieldText, zhPasteProblemMessage, type ZhPasteDraft, type ZhPasteField, type ZhPasteProblem } from '../lib';
+import { fieldCls } from '../../../../components/ui/fields';
+import { chipCls } from '../../../../components/ui/Tabs';
+
 
 const DRAFT_PROMPT = 'zh-writing:prompt';
 const DRAFT_MATERIAL = 'zh-writing:material';
@@ -46,7 +49,7 @@ function HitPreview({ text, ranges }: { text: string; ranges: ReadonlyArray<read
   return (
     <div className="mt-2 space-y-1">
       <p className="text-sm">{ZH_WRITING_COPY.hitTitle}</p>
-      <p className="max-h-64 overflow-y-auto rounded-xl border border-bad/40 bg-surface p-3 whitespace-pre-wrap break-words">
+      <p className="max-h-64 overflow-y-auto rounded-control border border-bad-line bg-surface p-3 whitespace-pre-wrap break-words">
         <ZhText text={text} marks={ranges.map(([start, end]) => ({ start, end, active: true }))} />
       </p>
     </div>
@@ -154,7 +157,7 @@ export function ZhPasteForm({ onStarted }: { onStarted: (accepted: AssistTaskAcc
         autoComplete="off"
         aria-invalid={problemOf('limits') !== null || undefined}
         aria-describedby={`${fieldId(base, 'limits')}-hint ${fieldId(base, 'limits')}-error`}
-        className={`mt-1 min-h-11 ${inputCls}`}
+        className={`mt-1 ${fieldCls}`}
       />
     </label>
   );
@@ -179,7 +182,7 @@ export function ZhPasteForm({ onStarted }: { onStarted: (accepted: AssistTaskAcc
             {SECTIONS.map((s, i) => (
               <label
                 key={s}
-                className={`inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border px-4 font-medium has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-primary ${draft.section === s ? 'border-primary bg-primary-soft text-primary' : 'border-line'}`}
+                className={chipCls(draft.section === s)}
               >
                 <input
                   id={i === 0 ? `${fieldId(base, 'section')}-first` : undefined}
@@ -188,7 +191,7 @@ export function ZhPasteForm({ onStarted }: { onStarted: (accepted: AssistTaskAcc
                   value={s}
                   checked={draft.section === s}
                   onChange={() => update({ section: s })}
-                  className="size-4 accent-[var(--primary)]"
+                  className="size-5 shrink-0 accent-primary"
                 />
                 {ZH_WRITING_SECTION_SHORT[s]}題
               </label>

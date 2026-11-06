@@ -5,6 +5,7 @@
  */
 import { Flag } from 'lucide-react';
 import { useMockMeta, useMockSession } from '../MockSessionContext';
+import { badgeCls } from '../../../components/ui/Badge';
 
 export function MarkToggle({ labels }: { labels: readonly string[] }) {
   const session = useMockSession();
@@ -24,7 +25,7 @@ export function MarkToggle({ labels }: { labels: readonly string[] }) {
         session.toggleMarks(labels);
       }}
       className={`-my-1.5 inline-flex min-h-9 items-center gap-1 rounded-full border px-2.5 text-xs font-medium ${
-        pressed ? 'border-badge-fg/40 bg-badge-bg text-badge-fg' : 'border-line text-muted hover:border-primary hover:text-primary'
+        pressed ? 'border-badge-line bg-badge-bg text-badge-fg' : 'border-line text-muted hover:border-primary hover:text-primary'
       }`}
     >
       <Flag aria-hidden="true" className={`size-3.5 ${pressed ? 'fill-current' : ''}`} />
@@ -36,7 +37,7 @@ export function MarkToggle({ labels }: { labels: readonly string[] }) {
 export function MarkedBadge({ labels, marked }: { labels: readonly string[]; marked: ReadonlySet<string> }) {
   if (!labels.some((l) => marked.has(l))) return null;
   return (
-    <span className="inline-flex items-center gap-1 rounded-full bg-badge-bg px-2 py-0.5 text-xs font-medium text-badge-fg">
+    <span className={badgeCls('warn')}>
       <Flag aria-hidden="true" className="size-3 fill-current" />
       作答時標記過
     </span>

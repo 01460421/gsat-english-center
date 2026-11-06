@@ -31,6 +31,7 @@ import { HandoutSourcePicker, type SourceKind } from '../ui/HandoutSourcePicker'
 import { HandoutSummary } from '../ui/HandoutSummary';
 import { btnText, cardCls } from '../ui/styles';
 import { useLoad } from '../ui/useLoad';
+import { optionCardTopCls } from '../../../components/ui/Check';
 
 const ERROR_TEXT: PdfErrorTextMap = {
   unsupported: '這個瀏覽器無法產生 PDF。請更新到最新版的 Safari、Chrome、Edge 或 Firefox 後再試。',
@@ -301,7 +302,7 @@ function TypePicker({ kind, onChange, disabled }: { kind: VocabHandoutKind; onCh
         {HANDOUT_KINDS.map((k) => (
           <label
             key={k}
-            className="flex min-h-11 cursor-pointer items-start gap-3 rounded-xl border border-line px-3 py-2.5 has-[:checked]:border-primary has-[:checked]:bg-primary-soft has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-primary"
+            className={`${optionCardTopCls} has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-primary`}
           >
             <input type="radio" className="mt-1 size-4 shrink-0" name={name} value={k} checked={kind === k} onChange={() => onChange(k)} />
             <span className="min-w-0 break-words">

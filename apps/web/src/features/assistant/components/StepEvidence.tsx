@@ -6,6 +6,7 @@
 import { MapPin } from 'lucide-react';
 import type { AssistItemAnalysis } from '@gsat/shared';
 import { En } from './parts';
+import { btn } from '../../../components/ui/buttons';
 
 export function StepEvidence({
   steps,
@@ -35,7 +36,7 @@ export function StepEvidence({
               <button
                 type="button"
                 onClick={() => onLocate(i)}
-                className="inline-flex min-h-11 items-center gap-1 text-sm text-primary underline underline-offset-2"
+                className={btn('link', 'sm', 'gap-1')}
               >
                 <MapPin aria-hidden="true" className="size-4" />
                 在題目中標出這句

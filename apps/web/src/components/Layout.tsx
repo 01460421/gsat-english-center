@@ -55,6 +55,9 @@ import { Tooltip, useTooltipTarget } from './desktop/Tooltip';
 import { PageIcon } from './icons';
 import { RouteErrorBoundary } from './RouteErrorBoundary';
 import { ThemeToggle } from './ThemeToggle';
+import { Dialog } from './ui/Dialog';
+import { ToastProvider } from './ui/Toast';
+import { iconBtnCls } from './ui/buttons';
 
 /** 鍵盤快捷鍵說明：第一次打開才下載（只在 ≥ lg 用得到）。 */
 const ShortcutHelp = lazy(() => import('./desktop/ShortcutHelp'));
@@ -71,7 +74,8 @@ function Brand() {
 // ───────────────────────── 桌機側邊欄（只在 ≥ lg 顯示） ─────────────────────────
 
 /**
- * 導覽清單的一項：28px 高（仍 ≥ 24px，WCAG 2.5.8）。目前頁除了底色，左側另有 3px 的色條（框線，§4.11）。
+ * 導覽清單的一項：26px 高（視窗內高 ≥ 800px 時 32px；收合時 24px，都 ≥ 24px，WCAG 2.5.8）。高度預算見 docs/design/desktop-polish.md
+ * §8.2：1366×640 放得下 6 個清單群組（加上「數學」）而不用捲。目前頁除了底色，左側另有 3px 的色條（框線，§4.11）。
  * 高對比模式（forced-colors）會拿掉底色，而且把透明的框線換成系統色，每一項都會出現同樣的色條：所以非目前頁的色條
  * 指定成 Canvas（和背景同色、看不見），目前頁指定成 Highlight（作者指定的系統色不會被換掉），收合時也看得出目前頁。
  * 收合時文字改成 sr-only（可存取名稱不變），滑鼠移入或鍵盤聚焦時由提示泡泡顯示（data-tip）。
@@ -83,8 +87,8 @@ function SidebarLink({ page, active, collapsed }: { page: PageMeta; active: bool
       to={page.path}
       aria-current={active ? 'page' : undefined}
       data-tip={collapsed ? page.navLabel : undefined}
-      className={`flex items-center gap-3 rounded-md border-l-[3px] py-0.5 text-[0.95rem] leading-6 ${
-        collapsed ? 'justify-center px-0' : 'pr-3 pl-[0.5625rem]'
+      className={`flex items-center gap-3 rounded-nav border-l-[3px] text-[0.95rem] leading-6 ${
+        collapsed ? 'justify-center px-0 py-0.5' : 'py-px pr-3 pl-[0.5625rem] tall:py-1'
       } ${
         active
           ? 'border-primary bg-primary-soft font-semibold text-primary forced-colors:border-[color:Highlight]'
@@ -154,7 +158,7 @@ function SidebarList({ collapsed, activePath, onScroll }: { collapsed: boolean; 
       data-sidebar-list=""
       data-overflow={overflow ? '' : undefined}
       onScroll={onScroll}
-      className="min-h-0 flex-1 overflow-y-auto px-1.5 py-1 lg:data-overflow:[mask-image:linear-gradient(to_bottom,black_calc(100%-2rem),transparent)]"
+      className="min-h-0 flex-1 overflow-y-auto px-1.5 py-0.5 lg:data-overflow:[mask-image:linear-gradient(to_bottom,black_calc(100%-2rem),transparent)]"
     >
       {NAV_GROUPS.filter((group) => group.id !== 'system').map((group) => {
         const pages = PAGES.filter((p) => p.group === group.id && isPageEnabled(p, flags));
@@ -172,7 +176,7 @@ function SidebarList({ collapsed, activePath, onScroll }: { collapsed: boolean; 
                   <div aria-hidden="true" className="mx-3 my-1 border-t border-line" />
                 </>
               ) : (
-                <p id={labelId} className="px-3 pt-1 pb-0.5 text-xs leading-4 font-semibold tracking-wide text-muted">
+                <p id={labelId} className="px-3 pt-1 text-xs leading-3.5 font-semibold tracking-wide text-muted tall:pt-2.5 tall:pb-0.5 tall:leading-4">
                   {group.label}
                 </p>
               ))}
@@ -250,7 +254,7 @@ function SidebarTools({
     );
   }
   return (
-    <div className="shrink-0 border-t border-line p-1.5">
+    <div className="shrink-0 border-t border-line px-1.5 pt-1.5 pb-1">
       {account === 'signed-in' ? (
         <div className="flex items-center gap-0.5">
           <div className="min-w-0 flex-1">
@@ -261,7 +265,7 @@ function SidebarTools({
       ) : (
         <>
           {account === 'signed-out' && (
-            <div className="px-1 pb-1">
+            <div className="px-1 pb-0.5">
               <LoginButton placement="sidebar" />
             </div>
           )}
@@ -305,7 +309,7 @@ function Sidebar({
       onClickCapture={onLinkClickCapture}
       {...tip.handlers}
     >
-      <div className={`flex h-12 shrink-0 items-center ${collapsed ? 'justify-center' : 'justify-between gap-2 pr-1.5 pl-4'}`}>
+      <div className={`flex h-11 shrink-0 items-center ${collapsed ? 'justify-center' : 'justify-between gap-2 pr-1.5 pl-4'}`}>
         {/* 收合時品牌只剩收合鈕的位置；首頁仍是清單的第一項。 */}
         {!collapsed && <Brand />}
         {canCollapse && (
@@ -447,7 +451,7 @@ function MoreMenu({ onDismiss, onNavigate }: { onDismiss: () => void; onNavigate
 
   return (
     <div className="fixed inset-0 z-30 lg:hidden">
-      <div aria-hidden="true" className="absolute inset-0 bg-black/40" onClick={onDismiss} />
+      <div aria-hidden="true" className="absolute inset-0 bg-scrim" onClick={onDismiss} />
       <div
         role="dialog"
         aria-modal="true"
@@ -463,7 +467,7 @@ function MoreMenu({ onDismiss, onNavigate }: { onDismiss: () => void; onNavigate
             type="button"
             onClick={onDismiss}
             aria-label="關閉選單"
-            className="inline-flex size-10 items-center justify-center rounded-full text-muted hover:bg-surface-2"
+            className={iconBtnCls}
           >
             <X aria-hidden="true" className="size-5" />
           </button>
@@ -606,42 +610,13 @@ class ShortcutHelpBoundary extends Component<{ onClose: () => void; children: Re
 }
 
 function ShortcutHelpUnavailable({ onClose }: { onClose: () => void }) {
-  const ref = useRef<HTMLDialogElement>(null);
-  const titleId = useId();
-  useEffect(() => {
-    const dialog = ref.current;
-    if (!dialog) return;
-    const opener = document.activeElement instanceof HTMLElement && document.activeElement !== document.body ? document.activeElement : null;
-    if (!dialog.open) dialog.showModal();
-    const onDialogClose = () => {
-      if (!dialog.open) onClose();
-    };
-    dialog.addEventListener('close', onDialogClose);
-    return () => {
-      dialog.removeEventListener('close', onDialogClose);
-      if (dialog.open) dialog.close();
-      if (opener?.isConnected) opener.focus({ preventScroll: true });
-    };
-  }, [onClose]);
   return (
-    <dialog
-      ref={ref}
-      aria-labelledby={titleId}
-      aria-modal="true"
-      className="m-auto w-[min(28rem,calc(100%-2rem))] rounded-2xl border border-line bg-surface p-5 text-fg shadow-lg backdrop:bg-black/40"
-    >
-      <h2 id={titleId} className="text-lg font-semibold">
-        鍵盤快捷鍵
-      </h2>
-      <p className="mt-2 text-[0.95rem]">說明暫時載入不了，可能是網站剛更新。請重新整理頁面後再試一次。</p>
-      <button
-        type="button"
-        onClick={() => ref.current?.close()}
-        className="mt-4 inline-flex min-h-10 items-center rounded-lg border border-line px-4 text-sm font-medium hover:bg-surface-2"
-      >
-        關閉
-      </button>
-    </dialog>
+    <Dialog
+      title="鍵盤快捷鍵"
+      onClose={onClose}
+      size="sm"
+      description="說明暫時載入不了，可能是網站剛更新。請重新整理頁面後再試一次。"
+    />
   );
 }
 
@@ -729,60 +704,62 @@ export function Layout() {
   const closeMenuAfterNavigate = useCallback(() => setMenuOpen(false), []);
 
   return (
-    <div className="min-h-dvh bg-bg text-fg">
-      <a
-        href="#main"
-        className="sr-only z-50 rounded-lg bg-primary px-4 py-2 text-on-primary focus:not-sr-only focus:fixed focus:top-2 focus:left-2"
-      >
-        跳到主要內容
-      </a>
-      {/* 登入後還沒同意條款或沒填年齡區間：導到 /account/welcome（features/account/RequireAccount.tsx）。 */}
-      <OnboardingRedirect />
-      <Sidebar
-        sidebar={sidebar.state}
-        canCollapse={canCollapse}
-        onToggle={toggleSidebar}
-        activePath={sidebarActivePath(location.pathname)}
-        onOpenHelp={openHelp}
-        onLinkClickCapture={interceptLeave}
-      />
-      <TopBar />
-      {/*
-        ≥ lg：main 是 container（@container/main，分欄看它的內容寬，§2.2）、直排 flex 讓頁尾貼底；
-        內容容器一定要 lg:w-full：flex 直排容器裡左右 margin: auto 的子元素不會被拉伸，會縮成內容寬度。
-      */}
-      <main
-        id="main"
-        ref={mainRef}
-        className={`pb-[calc(4.5rem+env(safe-area-inset-bottom))] lg:pb-0 ${sidebar.state === 'collapsed' ? 'lg:pl-16' : 'lg:pl-64'} lg:flex lg:min-h-dvh lg:flex-col lg:@container/main`}
-      >
-        <MainWidthProvider mainRef={mainRef} sidebar={sidebar.state}>
-          <div className={`mx-auto max-w-5xl px-4 py-6 lg:w-full lg:flex-1 lg:px-(--page-px) ${MODE_CLASSES[mode]}`}>
-            {/* key：換頁時重設錯誤邊界，上一頁的錯誤不會卡在下一頁。 */}
-            <RouteErrorBoundary key={location.pathname}>
-              <Suspense fallback={<PageLoading />}>
-                <OpenShortcutHelpContext.Provider value={openHelp}>
-                  <TimedSessionContext value={timedSessions}>
-                    <Outlet />
-                  </TimedSessionContext>
-                </OpenShortcutHelpContext.Provider>
-              </Suspense>
-            </RouteErrorBoundary>
-          </div>
-          <SiteFooter mode={mode} onOpenHelp={openHelp} onLinkClickCapture={interceptLeave} />
-        </MainWidthProvider>
-      </main>
-      <BottomNav menuOpen={menuOpen} onOpenMenu={() => setMenuOpen(true)} moreButtonRef={moreButtonRef} />
-      {menuOpen && <MoreMenu onDismiss={dismissMenu} onNavigate={closeMenuAfterNavigate} />}
-      {isDesktop && <BackToTop />}
-      {isDesktop && leavePrompt && <LeaveSessionDialog prompt={leavePrompt} onStay={stay} onLeave={leave} />}
-      {isDesktop && helpOpen && (
-        <ShortcutHelpBoundary onClose={closeHelp}>
-          <Suspense fallback={null}>
-            <ShortcutHelp onClose={closeHelp} />
-          </Suspense>
-        </ShortcutHelpBoundary>
-      )}
-    </div>
+    <ToastProvider>
+      <div className="min-h-dvh bg-bg text-fg">
+        <a
+          href="#main"
+          className="sr-only z-50 rounded-lg bg-primary px-4 py-2 text-on-primary focus:not-sr-only focus:fixed focus:top-2 focus:left-2"
+        >
+          跳到主要內容
+        </a>
+        {/* 登入後還沒同意條款或沒填年齡區間：導到 /account/welcome（features/account/RequireAccount.tsx）。 */}
+        <OnboardingRedirect />
+        <Sidebar
+          sidebar={sidebar.state}
+          canCollapse={canCollapse}
+          onToggle={toggleSidebar}
+          activePath={sidebarActivePath(location.pathname)}
+          onOpenHelp={openHelp}
+          onLinkClickCapture={interceptLeave}
+        />
+        <TopBar />
+        {/*
+          ≥ lg：main 是 container（@container/main，分欄看它的內容寬，§2.2）、直排 flex 讓頁尾貼底；
+          內容容器一定要 lg:w-full：flex 直排容器裡左右 margin: auto 的子元素不會被拉伸，會縮成內容寬度。
+        */}
+        <main
+          id="main"
+          ref={mainRef}
+          className={`pb-[calc(4.5rem+env(safe-area-inset-bottom))] lg:pb-0 ${sidebar.state === 'collapsed' ? 'lg:pl-16' : 'lg:pl-64'} lg:flex lg:min-h-dvh lg:flex-col lg:@container/main`}
+        >
+          <MainWidthProvider mainRef={mainRef} sidebar={sidebar.state}>
+            <div className={`mx-auto max-w-5xl px-4 py-6 lg:w-full lg:flex-1 lg:px-(--page-px) ${MODE_CLASSES[mode]}`}>
+              {/* key：換頁時重設錯誤邊界，上一頁的錯誤不會卡在下一頁。 */}
+              <RouteErrorBoundary key={location.pathname}>
+                <Suspense fallback={<PageLoading />}>
+                  <OpenShortcutHelpContext.Provider value={openHelp}>
+                    <TimedSessionContext value={timedSessions}>
+                      <Outlet />
+                    </TimedSessionContext>
+                  </OpenShortcutHelpContext.Provider>
+                </Suspense>
+              </RouteErrorBoundary>
+            </div>
+            <SiteFooter mode={mode} onOpenHelp={openHelp} onLinkClickCapture={interceptLeave} />
+          </MainWidthProvider>
+        </main>
+        <BottomNav menuOpen={menuOpen} onOpenMenu={() => setMenuOpen(true)} moreButtonRef={moreButtonRef} />
+        {menuOpen && <MoreMenu onDismiss={dismissMenu} onNavigate={closeMenuAfterNavigate} />}
+        {isDesktop && <BackToTop />}
+        {isDesktop && leavePrompt && <LeaveSessionDialog prompt={leavePrompt} onStay={stay} onLeave={leave} />}
+        {isDesktop && helpOpen && (
+          <ShortcutHelpBoundary onClose={closeHelp}>
+            <Suspense fallback={null}>
+              <ShortcutHelp onClose={closeHelp} />
+            </Suspense>
+          </ShortcutHelpBoundary>
+        )}
+      </div>
+    </ToastProvider>
   );
 }

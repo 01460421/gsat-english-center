@@ -40,6 +40,8 @@ import { practiceOutcomes } from '../assistant/outcomeBuilders';
 import { okFromRatio } from '../assistant/outcomes';
 import { formatPoints, isAnswered } from '../exams/scoring';
 import { formatDateTime } from '../mock/format';
+import { btn } from '../../components/ui/buttons';
+import { cardFrameCls, resultCardCls, resultCardHeadCls } from '../../components/ui/Card';
 
 /**
  * 學習助手的入口（交卷後每題解析卡下方；docs/design/learning-assistant.md §1.4）：開關關著時 render null。
@@ -169,7 +171,7 @@ function BankHints({ file }: { file: PracticeGroupFile }) {
   const questions = file.group.questions.filter((q) => (items[q.label]?.hints?.length ?? 0) > 0);
   if (questions.length === 0) return null;
   return (
-    <details open={open} onToggle={(e) => setOpen(e.currentTarget.open)} className="rounded-2xl border border-line bg-surface p-4">
+    <details open={open} onToggle={(e) => setOpen(e.currentTarget.open)} className={`${cardFrameCls} p-4`}>
       <summary className="cursor-pointer font-semibold">
         需要提示嗎？
         <span className="ml-2 text-sm font-normal text-muted">每一題最多 3 層，由淺到深</span>
@@ -211,15 +213,15 @@ function reviewState(file: PracticeGroupFile, review: PracticeReviewInput): Atte
 function ReviewPanel({ review, score, headingRef }: { review: PracticeReviewInput; score: PracticeScore; headingRef: RefObject<HTMLHeadingElement | null> }) {
   const partial = Object.values(score.outcomes).filter((o) => o.earned > 0 && o.earned < o.max).length;
   return (
-    <section aria-labelledby="practice-review-title" className="rounded-2xl border-2 border-primary bg-surface p-5 lg:p-6">
-      <h2 id="practice-review-title" ref={headingRef} tabIndex={-1} className="text-xl font-bold">
+    <section aria-labelledby="practice-review-title" className={resultCardCls}>
+      <h2 id="practice-review-title" ref={headingRef} tabIndex={-1} className={`${resultCardHeadCls} text-xl font-bold`}>
         你之前的作答
       </h2>
       <p className="mt-2">
         這是你 {formatDateTime(review.submittedAt)} 交卷的作答，只能看解析、不能修改：答對 {score.correct}／{score.total} 題
         {partial > 0 ? `，另有 ${partial} 題部分給分` : ''}（得分 {formatPoints(score.earned)}／{formatPoints(score.max)} 分）。
       </p>
-      <Link to={review.again} className="mt-3 inline-flex min-h-11 items-center rounded-full border border-line px-4 text-sm font-medium hover:border-primary">
+      <Link to={review.again} className={btn('secondary', 'sm', 'mt-3')}>
         再做一次這一組
       </Link>
     </section>
@@ -448,7 +450,7 @@ export function GroupSession({
               {notice && <p className="rounded-xl bg-primary-soft px-4 py-2 text-sm">{notice}</p>}
             </header>
             {!persisted && (
-              <p role="status" className="rounded-xl border border-bad/40 bg-bad/10 px-4 py-2 text-sm text-bad">
+              <p role="status" className="rounded-xl border border-bad-line bg-bad-soft px-4 py-2 text-sm text-bad">
                 這個瀏覽器無法儲存作答進度（可能是無痕模式或停用了網站資料），重新整理後答案會遺失。
               </p>
             )}
@@ -490,14 +492,14 @@ export function GroupSession({
             </section>
             {!submitted && isBank && <BankHints file={file} />}
             {!hasPassage && (
-              <div className="space-y-3 rounded-2xl border border-line bg-surface p-4">
+              <div className={`${cardFrameCls} p-4 space-y-3`}>
                 <GroupSourceNote file={file} items />
                 {submitted && translation && <TranslationDetails text={translation} />}
               </div>
             )}
             {submitted && !review && (
               <div className="flex flex-wrap items-center gap-2 border-t border-line pt-4">
-                <button type="button" onClick={onNext} className="inline-flex min-h-11 items-center rounded-full bg-primary px-5 font-semibold text-on-primary">
+                <button type="button" onClick={onNext} className={btn('primary', 'md')}>
                   再一組
                 </button>
                 {repeatNotice && <p className="text-sm text-muted">{repeatNotice}</p>}

@@ -12,6 +12,7 @@
  * 只在桌機的樹裡用。
  */
 import { useId, useImperativeHandle, useLayoutEffect, useRef, type KeyboardEvent, type ReactNode, type Ref } from 'react';
+import { tabCls } from '../ui/Tabs';
 
 export interface PaneTab {
   id: string;
@@ -119,9 +120,7 @@ export function PaneTabs({ tabs, value, onChange, label, scrollPanels = false, p
               aria-controls={panelDomId(tab.id)}
               tabIndex={selected ? 0 : -1}
               onClick={() => change(tab.id)}
-              className={`-mb-px inline-flex min-h-10 items-center gap-1.5 border-b-2 px-3 text-[0.95rem] ${
-                selected ? 'border-primary font-semibold text-primary' : 'border-transparent text-muted hover:text-fg'
-              }`}
+              className={tabCls(selected)}
             >
               {tab.label}
               {tab.badge}

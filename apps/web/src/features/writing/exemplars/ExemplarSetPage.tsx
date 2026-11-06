@@ -54,6 +54,8 @@ import { writeAttemptHandoff, writeExemplarHandoff } from './lib/handoff';
 import { isExemplarSetPending, useExemplarPoller, type ExemplarPoller } from './lib/poller';
 import { loadSitePrompt } from './lib/sitePrompts';
 import { defaultLevelFor, useYourEssay } from './lib/yourEssay';
+import { badgeCls } from '../../../components/ui/Badge';
+import { DisclosureChevron, disclosureSummaryCls } from '../../../components/ui/Disclosure';
 
 export default function ExemplarSetPage() {
   const { id = '' } = useParams();
@@ -359,7 +361,7 @@ function SetView({ detail, poller }: { detail: ExemplarSetDetail; poller: Exempl
         <p className="flex flex-wrap items-center gap-2 text-sm text-muted">
           <span className="rounded-full bg-surface-2 px-2 py-0.5 text-xs font-semibold text-fg">{SOURCE_LABELS[detail.source]}</span>
           <span>{formatUnixTime(detail.created_at)}</span>
-          {detail.cache_hit && <span className="rounded-full bg-ok/15 px-2 py-0.5 text-xs font-semibold text-fg">0 點（共用）</span>}
+          {detail.cache_hit && <span className={badgeCls('ok')}>0 點（共用）</span>}
         </p>
       </ExemplarsHeader>
     </div>
@@ -432,9 +434,10 @@ function SetView({ detail, poller }: { detail: ExemplarSetDetail; poller: Exempl
       {view && (
         <>
           {(view.safety_flag ?? detail.safety_flag) && <AssistSafetyCare note="下面的範文照常提供。" />}
-          <details ref={promptRef} className={`${card} exemplar-expand`}>
-            <summary className="min-h-11 cursor-pointer py-2 font-semibold">
+          <details ref={promptRef} className={`group ${card} exemplar-expand`}>
+            <summary className={disclosureSummaryCls}>
               <h2 className="inline text-lg">題目</h2>
+              <DisclosureChevron />
             </summary>
             <div className="mt-2">{promptBlock}</div>
           </details>

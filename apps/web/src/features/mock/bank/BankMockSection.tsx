@@ -47,6 +47,9 @@ import { rangeText } from './rangeText';
 import { assembleNewPaper } from './resolve';
 import { getSnapshotStore } from './snapshots';
 import { loadUsedGroups } from './used';
+import { btn } from '../../../components/ui/buttons';
+import { optionCardTopCls } from '../../../components/ui/Check';
+import { cardCls } from '../../../components/ui/Card';
 
 export const TIER_KEY = 'gsat-bankmock:v1:tier';
 /** 「我組過的卷子」先列幾份，其他收進「更多」。 */
@@ -169,13 +172,13 @@ function PaperRow({ row }: { row: MyPaperRow }) {
         {reused.length > 0 && <span className="block text-xs text-muted">用到你做過的題組：{rangeText(reused)}</span>}
       </span>
       <span className="flex flex-wrap items-center gap-2">
-        <Link to={`/mock/${entry.id}`} className="inline-flex min-h-11 items-center gap-1 rounded-full border border-line px-4 text-sm hover:border-primary">
+        <Link to={`/mock/${entry.id}`} className={btn('secondary', 'sm')}>
           {active ? '繼續作答' : '打開'}
           <span className="sr-only">：{name}</span>
           <ChevronRight aria-hidden="true" className="size-4" />
         </Link>
         {latest && (
-          <Link to={`/mock/report/${latest.id}`} className="inline-flex min-h-11 items-center gap-1 rounded-full border border-line px-4 text-sm hover:border-primary">
+          <Link to={`/mock/report/${latest.id}`} className={btn('secondary', 'sm')}>
             <FileText aria-hidden="true" className="size-4" />
             成績單
             <span className="sr-only">：{name}</span>
@@ -212,7 +215,7 @@ function MyPapers({ rows, persistent, storageOk }: { rows: readonly MyPaperRow[]
           aria-expanded={showAll}
           aria-controls={`${id}-list`}
           onClick={() => setShowAll((v) => !v)}
-          className="mt-1 inline-flex min-h-11 items-center text-sm text-primary underline underline-offset-2"
+          className={btn('link', 'sm', 'mt-1')}
         >
           {showAll ? '收起' : `更多（還有 ${more} 份）`}
         </button>
@@ -370,7 +373,7 @@ export default function BankMockSection() {
       ref={sectionRef}
       id="bank-mock"
       aria-labelledby={`${id}-title`}
-      className="scroll-mt-20 space-y-4 rounded-2xl border border-line bg-surface p-5 lg:max-w-[60rem] lg:p-6"
+      className={`${cardCls} scroll-mt-20 space-y-4 lg:max-w-[60rem]`}
     >
       <div className="space-y-1">
         <h2 ref={headingRef} id={`${id}-title`} tabIndex={-1} className="text-lg font-semibold">
@@ -390,7 +393,7 @@ export default function BankMockSection() {
           {tiers.map(({ tier: t, unavailable, estimate }) => (
             <label
               key={t}
-              className={`flex cursor-pointer items-start gap-3 rounded-xl border border-line p-3 has-[:checked]:border-primary has-[:checked]:bg-primary-soft ${unavailable ? 'cursor-not-allowed opacity-60' : ''}`}
+              className={`${optionCardTopCls} ${unavailable ? 'border-dashed' : ''}`}
             >
               <input
                 type="radio"
@@ -399,7 +402,7 @@ export default function BankMockSection() {
                 checked={tier === t}
                 disabled={unavailable || busy}
                 onChange={() => choose(t)}
-                className="mt-1.5 size-4 shrink-0 accent-[var(--primary)]"
+                className="mt-1 size-5 shrink-0 accent-primary"
               />
               <span className="min-w-0">
                 <span className="block font-semibold">{TIER_LABELS[t]}</span>
@@ -438,7 +441,7 @@ export default function BankMockSection() {
           disabled={Boolean(current?.unavailable)}
           aria-disabled={busy || undefined}
           aria-describedby={`${id}-hint`}
-          className="inline-flex min-h-11 items-center gap-2 rounded-full bg-primary px-5 font-semibold text-on-primary disabled:opacity-60 aria-disabled:opacity-60"
+          className={btn('primary', 'md')}
         >
           <Shuffle aria-hidden="true" className="size-4" />
           {busy ? '組卷中…' : `組一份新卷：${TIER_LABELS[tier]}`}

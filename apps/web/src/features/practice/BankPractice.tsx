@@ -33,6 +33,8 @@ import { cellEntries, cellProgress, defaultTier, pickGroup, type Pick } from './
 import { SourceGate } from './components/GroupSource';
 import { GroupSession } from './PracticeSession';
 import { practiceAttemptId, practiceAttemptIdForKey } from './practiceExam';
+import { btn } from '../../components/ui/buttons';
+import { tierTileCls } from '../../components/ui/Tabs';
 
 /** 題型頁內嵌時才有：難度切換的連結，以及網址沒指定難度時把選定的預設難度寫回網址。 */
 export interface PracticeEmbed {
@@ -45,7 +47,7 @@ export interface PracticeEmbed {
 function Loading({ text, embedded }: { text: string; embedded: boolean }) {
   if (embedded) {
     return (
-      <p role="status" className="rounded-2xl border border-line bg-surface py-10 text-center text-muted">
+      <p role="status" className="rounded-card border border-line bg-surface py-10 text-center text-muted">
         {text}
       </p>
     );
@@ -75,7 +77,7 @@ function EmptyCell({ index, section, tier, embedded }: { index: BankIndex; secti
   const others = TIERS.filter((t) => t !== tier && cellEntries(index.groups, section, t).length > 0);
   const title = `${PRACTICE_SECTION_LABELS[section]}・${TIER_LABELS[tier]}`;
   const box = (
-    <div className="rounded-2xl border border-dashed border-line bg-surface-2 p-5">
+    <div className="rounded-card border border-dashed border-line bg-surface-2 p-5">
       <p className="text-lg font-semibold">出題中</p>
       <p className="mt-1 text-muted">
         {embedded ? '這個難度' : '這一格'}的 AI 題組還在出題與驗證中；通過自動驗證（兩位 AI 盲解都答對、只有唯一正解）後就會出現在這裡。
@@ -105,7 +107,7 @@ function EmptyCell({ index, section, tier, embedded }: { index: BankIndex; secti
               const { total, done } = cellProgress(index.groups, history, section, t);
               return (
                 <li key={t}>
-                  <Link to={practicePath(section, t)} className="inline-flex min-h-11 items-center rounded-full border border-line bg-surface px-4 hover:border-primary">
+                  <Link to={practicePath(section, t)} className={btn('secondary', 'md')}>
                     {TIER_LABELS[t]}（{total} 組，已做 {done}）
                   </Link>
                 </li>
@@ -114,7 +116,7 @@ function EmptyCell({ index, section, tier, embedded }: { index: BankIndex; secti
           </ul>
         </div>
       )}
-      <Link to="/practice" className="inline-block rounded-full bg-primary px-4 py-2 font-medium text-on-primary">
+      <Link to="/practice" className={btn('primary', 'md')}>
         回到題庫練習
       </Link>
     </section>
@@ -142,7 +144,7 @@ function GroupLoader({
     <SourceGate
       file={file}
       action={
-        <button type="button" onClick={onNext} className="inline-flex min-h-11 items-center rounded-full bg-primary px-5 font-semibold text-on-primary">
+        <button type="button" onClick={onNext} className={btn('primary', 'md')}>
           換一組
         </button>
       }
@@ -288,20 +290,15 @@ function TierSwitcher({ index, section, active, tierLink }: { index: BankIndex; 
         {TIERS.map((t) => {
           const { total, done } = cellProgress(index.groups, history, section, t);
           const current = t === active;
-          const tone = current
-            ? 'border-primary bg-primary text-on-primary'
-            : total > 0
-              ? 'border-primary/50 bg-primary-soft hover:border-primary lg:hover:bg-primary-soft/60'
-              : 'border-dashed border-line bg-surface-2 text-muted hover:border-primary lg:hover:bg-primary-soft/60';
           return (
             <li key={t} className="min-w-0">
               <Link
                 to={tierLink(t)}
                 aria-current={current ? 'page' : undefined}
                 aria-label={total > 0 ? `${TIER_LABELS[t]}：${total} 組，已做 ${done} 組` : `${TIER_LABELS[t]}：出題中`}
-                className={`flex h-full min-h-14 flex-col items-center justify-center rounded-xl border px-1.5 py-1.5 text-center ${tone}`}
+                className={`${tierTileCls(current, total > 0 ? 'ready' : 'pending')} h-full min-h-14`}
               >
-                <span className={`text-sm font-semibold ${!current && total > 0 ? 'text-primary' : ''}`}>{TIER_LABELS[t]}</span>
+                <span className="text-sm font-semibold">{TIER_LABELS[t]}</span>
                 {/* 按鈕夠寬（約 92px 以上）時「20 組・已做 3」排一行；320px 手機上排成兩行，不留一個落單的「・」。 */}
                 <span className="@container w-full text-xs tabular-nums">
                   {total > 0 ? (

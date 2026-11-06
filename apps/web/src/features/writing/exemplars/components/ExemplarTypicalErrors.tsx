@@ -9,6 +9,7 @@
 import type { ExemplarSetView } from '@gsat/shared';
 import { useId } from 'react';
 import { RIGHT_LABEL, RULE_LABEL, TYPICAL_ERRORS_TITLE, WRONG_LABEL, WRONG_SR } from '../labels';
+import { badgeCls } from '../../../../components/ui/Badge';
 
 export function ExemplarTypicalErrors({ errors, headingLevel = 4 }: { errors: ExemplarSetView['typical_errors']; headingLevel?: 3 | 4 }) {
   const id = useId();
@@ -23,15 +24,15 @@ export function ExemplarTypicalErrors({ errors, headingLevel = 4 }: { errors: Ex
         {errors.map((t, i) => (
           <li key={i} className="space-y-1 rounded-xl border border-line p-3 text-[0.95rem]">
             <p className="flex flex-wrap items-baseline gap-x-2">
-              <span className="shrink-0 rounded-full bg-bad/15 px-2 py-0.5 text-sm font-semibold text-bad">{WRONG_LABEL}</span>
+              <span className={badgeCls('bad', 'sm')}>{WRONG_LABEL}</span>
               <span className="sr-only">{WRONG_SR}</span>
-              <del lang="en" className="rounded-sm bg-bad/10 px-1 break-words decoration-bad/60">
+              <del lang="en" className="rounded-sm bg-bad-soft px-1 break-words decoration-bad/60">
                 {t.wrong}
               </del>
             </p>
             <p className="flex flex-wrap items-baseline gap-x-2">
-              <span className="shrink-0 rounded-full bg-ok/15 px-2 py-0.5 text-sm font-semibold">{RIGHT_LABEL}</span>
-              <span lang="en" className="rounded-sm bg-ok/10 px-1 break-words">
+              <span className={badgeCls('ok', 'sm')}>{RIGHT_LABEL}</span>
+              <span lang="en" className="rounded-sm bg-ok-soft px-1 break-words">
                 {t.right}
               </span>
             </p>

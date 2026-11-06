@@ -67,7 +67,7 @@ export function ExemplarsClosed() {
     <section className="space-y-3 py-2">
       <title>{`${EXEMPLARS_TITLE}｜寫作練習｜${APP_NAME}`}</title>
       <h1 className="text-2xl font-bold tracking-tight lg:text-3xl">{EXEMPLARS_TITLE}</h1>
-      <p className="rounded-2xl border border-dashed border-line bg-surface-2 p-5">{CLOSED_SIGNED_OUT_TEXT}</p>
+      <p className="rounded-card border border-dashed border-line bg-surface-2 p-5">{CLOSED_SIGNED_OUT_TEXT}</p>
       <Link to="/writing" className={linkCls}>
         回到寫作練習
       </Link>

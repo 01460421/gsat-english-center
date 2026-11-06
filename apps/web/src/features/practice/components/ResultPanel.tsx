@@ -15,6 +15,8 @@ import { evidencePoints, evidenceRows } from '../chart';
 import { evidenceRanges } from '../evidence';
 import type { PracticeMistakeResult } from '../mistakes';
 import type { PracticeScore } from '../scoring';
+import { btn } from '../../../components/ui/buttons';
+import { resultCardCls, resultCardHeadCls } from '../../../components/ui/Card';
 
 /** 錯一格常連帶錯兩格：找出「第 i 格填了第 j 格的答案、第 j 格填了第 i 格的答案」的配對（SPEC §6.4 互換偵測）。 */
 export function swappedPairs(questions: readonly Question[], answers: Readonly<Record<string, AnswerValue>>): [string, string][] {
@@ -118,8 +120,8 @@ export function ResultPanel({
   const guide = useMemo(() => evidenceGuide(file), [file]);
 
   return (
-    <section aria-labelledby={titleId} className="rounded-2xl border-2 border-primary bg-surface p-5 lg:p-6">
-      <h2 id={titleId} ref={headingRef} tabIndex={-1} className="text-xl font-bold">
+    <section aria-labelledby={titleId} className={resultCardCls}>
+      <h2 id={titleId} ref={headingRef} tabIndex={-1} className={`${resultCardHeadCls} text-xl font-bold`}>
         交卷結果
       </h2>
       <div className="mt-3 flex flex-wrap gap-x-10 gap-y-3">
@@ -162,13 +164,13 @@ export function ResultPanel({
         <button
           type="button"
           onClick={onNext}
-          className="inline-flex min-h-11 items-center gap-1.5 rounded-full bg-primary px-5 font-semibold text-on-primary"
+          className={btn('primary', 'md')}
         >
           <RotateCcw aria-hidden="true" className="size-4" />
           再一組
         </button>
         {!embedded && (
-          <Link to="/practice" className="inline-flex min-h-11 items-center rounded-full border border-line px-4 text-sm font-medium hover:border-primary">
+          <Link to="/practice" className={btn('secondary', 'sm')}>
             回到題庫練習
           </Link>
         )}
@@ -185,8 +187,8 @@ export function ResultPanel({
 export function GradingPanel({ headingRef }: { headingRef: RefObject<HTMLHeadingElement | null> }) {
   const titleId = useId();
   return (
-    <section aria-labelledby={titleId} aria-busy="true" className="rounded-2xl border-2 border-primary bg-surface p-5 lg:p-6" data-testid="grading-panel">
-      <h2 id={titleId} ref={headingRef} tabIndex={-1} className="text-xl font-bold">
+    <section aria-labelledby={titleId} aria-busy="true" className={resultCardCls} data-testid="grading-panel">
+      <h2 id={titleId} ref={headingRef} tabIndex={-1} className={`${resultCardHeadCls} text-xl font-bold`}>
         交卷結果
       </h2>
       <p role="status" className="mt-2 text-sm text-muted">

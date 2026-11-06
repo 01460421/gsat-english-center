@@ -19,10 +19,11 @@ import {
   AI_TIER_LABELS,
   ROLE_LABELS,
 } from '../account/labels';
-import { btnPrimary, btnSecondary, fieldCls, labelCls } from '../account/styles';
+import { btnPrimary, btnSecondary, labelCls } from '../account/styles';
 import { AiStatusBadge, LoadingBlock, Notice } from '../account/ui';
 import { AdminSection, ReloadButton, SectionError, formatUnixTime } from './adminUi';
 import { isAdminUserActionResponse, isAdminUsersResponse } from './guards';
+import { Select } from '../../components/ui/Field';
 
 type Filter = AiStatus | 'all';
 
@@ -150,13 +151,13 @@ export function UsersSection({
           <label htmlFor={filterId} className={labelCls}>
             依 AI 狀態篩選
           </label>
-          <select id={filterId} value={filter} onChange={(e) => setFilter(e.target.value as Filter)} className={fieldCls}>
+          <Select id={filterId} value={filter} onChange={(e) => setFilter(e.target.value as Filter)} wrapperClassName="w-full">
             {FILTER_OPTIONS.map((f) => (
               <option key={f} value={f}>
                 {filterLabel(f)}
               </option>
             ))}
-          </select>
+          </Select>
         </div>
         {list.approval && (
           <p className="pb-2 text-[0.95rem]">

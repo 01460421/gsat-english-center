@@ -10,6 +10,7 @@ import { APP_NAME } from '../../modules';
 import { SectionBankPractice } from './BankPractice';
 import { sectionFromSlug, tierFromParam } from './labels';
 import { PracticeReview } from './PracticeReview';
+import { btn } from '../../components/ui/buttons';
 
 function BackLink() {
   return (
@@ -26,7 +27,7 @@ function NotFound() {
       <title>{`找不到這個練習｜${APP_NAME}`}</title>
       <h1 className="text-2xl font-bold">找不到這個練習</h1>
       <p className="mt-2 text-muted">網址裡的題型或難度可能打錯了。</p>
-      <Link to="/practice" className="mt-4 inline-block rounded-full bg-primary px-4 py-2 font-medium text-on-primary">
+      <Link to="/practice" className={btn('primary', 'md', 'mt-4')}>
         回到題庫練習
       </Link>
     </section>

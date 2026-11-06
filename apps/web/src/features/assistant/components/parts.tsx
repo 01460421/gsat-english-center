@@ -7,13 +7,17 @@ import { CircleCheck, CircleHelp, CircleMinus, CircleX } from 'lucide-react';
 import { useId, type ReactNode } from 'react';
 import { AiBadge } from '../../writing/components/ui';
 import type { ItemStatus } from '../sources/types';
+import { btn } from '../../../components/ui/buttons';
+import { textareaCls } from '../../../components/ui/fields';
+import { cardCompactCls } from '../../../components/ui/Card';
+import { badgeShapeCls } from '../../../components/ui/Badge';
 
-export const primaryBtn =
-  'inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-primary px-5 py-2 font-semibold text-on-primary disabled:cursor-not-allowed disabled:opacity-50';
-export const secondaryBtn =
-  'inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-line px-5 py-2 font-medium lg:hover:bg-surface-2 disabled:cursor-not-allowed disabled:opacity-50';
-export const cardCls = 'rounded-2xl border border-line bg-surface p-4 lg:p-5';
-export const inputCls = 'w-full rounded-lg border border-line bg-bg px-3 py-2 text-fg placeholder:text-muted focus:border-primary disabled:opacity-70';
+/** 按鈕：共用元件（components/ui/buttons.ts，設計文件 css-overhaul §4.1）。 */
+export const primaryBtn = btn('primary', 'md');
+export const secondaryBtn = btn('secondary', 'md');
+export const cardCls = cardCompactCls;
+/** 文字框（多行為主；單行的 <input> 用 fieldCls）：共用元件（components/ui/fields.ts）。 */
+export const inputCls = textareaCls;
 
 /** 解析或報告的一個區塊：<section>＋h2（＋AI 標章）。 */
 export function AnalysisSection({
@@ -55,15 +59,15 @@ const STATUS_TEXT: Record<ItemStatus | AssistVerdict, string> = {
 export function VerdictBadge({ status, basis }: { status: ItemStatus | AssistVerdict; basis?: 'program' | 'client' | 'none' }) {
   const tone =
     status === 'correct' || status === 'doubt'
-      ? 'bg-ok/10 text-ok'
+      ? 'bg-ok-soft text-ok'
       : status === 'wrong'
-        ? 'bg-bad/10 text-bad'
+        ? 'bg-bad-soft text-bad'
         : status === 'partial'
           ? 'bg-primary-soft text-primary'
           : 'bg-surface-2 text-muted';
   const Icon = status === 'correct' || status === 'doubt' ? CircleCheck : status === 'wrong' ? CircleX : status === 'unknown' ? CircleHelp : CircleMinus;
   return (
-    <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-sm font-semibold ${tone}`}>
+    <span className={`${badgeShapeCls('sm')} ${tone}`}>
       <Icon aria-hidden="true" className="size-4" />
       {STATUS_TEXT[status]}
       {basis === 'client' && <span className="font-normal">（依你裝置上的判分）</span>}
@@ -121,7 +125,7 @@ export function ProcessingNotices({ notices }: { notices: readonly (AssistNotice
 export function AssistSafetyCare({ note = '下面的解析照常提供。' }: { note?: string | null } = {}) {
   const id = useId();
   return (
-    <section role="note" aria-labelledby={id} className="rounded-2xl border border-primary/40 bg-primary-soft p-4 lg:p-5">
+    <section role="note" aria-labelledby={id} className="rounded-card border border-primary/40 bg-primary-soft p-4 lg:p-5">
       <h2 id={id} className="text-lg font-semibold">
         想找人聊聊嗎？
       </h2>

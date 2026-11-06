@@ -55,6 +55,10 @@ import {
   type ReasonContext,
 } from './reasons';
 import { MC_SECTIONS, computeWeakness, wrongGroupsFrom, type WeakTarget, type WeaknessProfile } from './weakness';
+import { btn } from '../../../components/ui/buttons';
+import { optionCardTopCls } from '../../../components/ui/Check';
+import { cardCls } from '../../../components/ui/Card';
+import { chipCls } from '../../../components/ui/Tabs';
 
 /** 「我的加強卷」先列幾份，其他收進「更多」。 */
 export const WEAK_PAPERS_SHOWN = 5;
@@ -78,11 +82,11 @@ const BASIS_TEXT: Record<WeaknessProfile['baseTierBasis'], string> = {
 
 const KIND_TITLES: Record<PaperKindChoice, string> = { w: '弱點加強卷', f: '模考格式卷', r: '隨機抽題卷' };
 
-const primaryBtn = 'inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-primary px-5 font-semibold text-on-primary aria-disabled:opacity-60 disabled:opacity-60';
-const secondaryBtn = 'inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-line px-4 text-sm lg:hover:border-primary aria-disabled:opacity-60';
-const cardCls = 'rounded-2xl border border-line bg-surface p-5 lg:p-6';
-const optionCls = 'flex cursor-pointer items-start gap-3 rounded-xl border border-line p-3 has-[:checked]:border-primary has-[:checked]:bg-primary-soft has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-60';
-const pillCls = 'inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border border-line px-3 text-sm has-[:checked]:border-primary has-[:checked]:bg-primary-soft';
+const primaryBtn = btn('primary', 'md');
+const secondaryBtn = btn('secondary', 'sm');
+
+const optionCls = optionCardTopCls;
+const pillCls = chipCls();
 
 interface Settings {
   kind: PaperKindChoice;
@@ -256,7 +260,7 @@ function MyWeakPapers({ rows, storageOk }: { rows: readonly WeakPaperRow[]; stor
               aria-expanded={showAll}
               aria-controls={`${id}-list`}
               onClick={() => setShowAll((v) => !v)}
-              className="mt-1 inline-flex min-h-11 items-center text-sm text-primary underline underline-offset-2"
+              className={btn('link', 'sm', 'mt-1')}
             >
               {showAll ? '收起' : `更多（還有 ${rows.length - WEAK_PAPERS_SHOWN} 份）`}
             </button>
@@ -286,12 +290,12 @@ function TierField({ name, value, onChange, profile }: { name: string; value: Ti
     <Field legend="難度">
       <div className="flex flex-wrap gap-2">
         <label className={pillCls}>
-          <input type="radio" name={name} checked={value === 'auto'} onChange={() => onChange('auto')} className="size-4 accent-[var(--primary)]" />
+          <input type="radio" name={name} checked={value === 'auto'} onChange={() => onChange('auto')} className="size-5 shrink-0 accent-primary" />
           自動{value === 'auto' ? `：${TIER_LABELS[profile.baseTier]}（${BASIS_TEXT[profile.baseTierBasis]}）` : ''}
         </label>
         {TIERS.map((t) => (
           <label key={t} className={pillCls}>
-            <input type="radio" name={name} checked={value === t} onChange={() => onChange(t)} className="size-4 accent-[var(--primary)]" />
+            <input type="radio" name={name} checked={value === t} onChange={() => onChange(t)} className="size-5 shrink-0 accent-primary" />
             {TIER_LABELS[t]}
           </label>
         ))}
@@ -313,7 +317,7 @@ function SourcesField({ name, sources, selected, onChange }: { name: string; sou
               checked={selected.includes(s.id)}
               disabled={selected.length === 1 && selected.includes(s.id)}
               onChange={(e) => onChange(e.currentTarget.checked ? [...selected, s.id] : selected.filter((x) => x !== s.id))}
-              className="size-4 accent-[var(--primary)]"
+              className="size-5 shrink-0 accent-primary"
             />
             <span className="min-w-0 break-words">{s.label}</span>
           </label>
@@ -329,13 +333,13 @@ function Stepper({ section, value, max, canAdd, onChange }: { section: BankSecti
     <li className="flex items-center justify-between gap-3 py-1.5">
       <span className="min-w-0">{name}</span>
       <span className="flex items-center gap-2">
-        <button type="button" aria-label={`減少${name}`} onClick={() => onChange(value - 1)} disabled={value <= 0} className="inline-flex size-11 items-center justify-center rounded-full border border-line disabled:opacity-40">
+        <button type="button" aria-label={`減少${name}`} onClick={() => onChange(value - 1)} disabled={value <= 0} className={btn('secondary', 'icon')}>
           <Minus aria-hidden="true" className="size-4" />
         </button>
         <output aria-label={`${name}的組數`} className="w-10 text-center tabular-nums">
           {value} 組
         </output>
-        <button type="button" aria-label={`增加${name}`} onClick={() => onChange(value + 1)} disabled={value >= max || !canAdd} className="inline-flex size-11 items-center justify-center rounded-full border border-line disabled:opacity-40">
+        <button type="button" aria-label={`增加${name}`} onClick={() => onChange(value + 1)} disabled={value >= max || !canAdd} className={btn('secondary', 'icon')}>
           <Plus aria-hidden="true" className="size-4" />
         </button>
       </span>
@@ -352,7 +356,7 @@ function Closed() {
     <section className="space-y-3 py-2">
       <title>{`加強卷｜${APP_NAME}`}</title>
       <h1 className="text-2xl font-bold tracking-tight lg:text-3xl">加強卷</h1>
-      <p className="rounded-2xl border border-dashed border-line bg-surface-2 p-5">這個功能還沒開放。</p>
+      <p className="rounded-card border border-dashed border-line bg-surface-2 p-5">這個功能還沒開放。</p>
       <Link to="/assistant" className="font-medium text-primary underline underline-offset-2">
         回學習助手
       </Link>
@@ -587,7 +591,7 @@ function Body() {
               <legend className="sr-only">卷別</legend>
               <div className="grid grid-cols-1 gap-2">
                 <label className={optionCls}>
-                  <input type="radio" name={`${id}-kind`} value="w" checked={kind === 'w'} disabled={!wAvailable || busy} onChange={() => set('kind', 'w')} className="mt-1.5 size-4 shrink-0 accent-[var(--primary)]" />
+                  <input type="radio" name={`${id}-kind`} value="w" checked={kind === 'w'} disabled={!wAvailable || busy} onChange={() => set('kind', 'w')} className="mt-1 size-5 shrink-0 accent-primary" />
                   <span className="min-w-0">
                     <span className="block font-semibold">弱點加強卷</span>
                     <span className="block text-sm text-muted">只放你最需要加強的題型與技能，約 20／40／60 分鐘。</span>
@@ -595,7 +599,7 @@ function Body() {
                   </span>
                 </label>
                 <label className={optionCls}>
-                  <input type="radio" name={`${id}-kind`} value="f" checked={kind === 'f'} disabled={busy} onChange={() => set('kind', 'f')} className="mt-1.5 size-4 shrink-0 accent-[var(--primary)]" />
+                  <input type="radio" name={`${id}-kind`} value="f" checked={kind === 'f'} disabled={busy} onChange={() => set('kind', 'f')} className="mt-1 size-5 shrink-0 accent-primary" />
                   <span className="min-w-0">
                     <span className="block font-semibold">模考格式卷</span>
                     <span className="block text-sm text-muted">
@@ -606,7 +610,7 @@ function Body() {
                   </span>
                 </label>
                 <label className={optionCls}>
-                  <input type="radio" name={`${id}-kind`} value="r" checked={kind === 'r'} disabled={busy} onChange={() => set('kind', 'r')} className="mt-1.5 size-4 shrink-0 accent-[var(--primary)]" />
+                  <input type="radio" name={`${id}-kind`} value="r" checked={kind === 'r'} disabled={busy} onChange={() => set('kind', 'r')} className="mt-1 size-5 shrink-0 accent-primary" />
                   <span className="min-w-0">
                     <span className="block font-semibold">隨機抽題卷</span>
                     <span className="block text-sm text-muted">自己選大題、每個大題幾組、難度與題目來源，隨機抽。</span>
@@ -641,7 +645,7 @@ function Body() {
                   <div className="flex flex-wrap gap-2">
                     {LENGTHS.map((m) => (
                       <label key={m} className={pillCls}>
-                        <input type="radio" name={`${id}-length`} checked={settings.minutes === m} onChange={() => set('minutes', m)} className="size-4 accent-[var(--primary)]" />約 {m} 分鐘
+                        <input type="radio" name={`${id}-length`} checked={settings.minutes === m} onChange={() => set('minutes', m)} className="size-5 shrink-0 accent-primary" />約 {m} 分鐘
                       </label>
                     ))}
                   </div>
@@ -650,11 +654,11 @@ function Body() {
                 <Field legend="大題">
                   <div className="flex flex-wrap gap-2">
                     <label className={pillCls}>
-                      <input type="radio" name={`${id}-secmode`} checked={settings.sectionsMode === 'auto'} onChange={() => set('sectionsMode', 'auto')} className="size-4 accent-[var(--primary)]" />
+                      <input type="radio" name={`${id}-secmode`} checked={settings.sectionsMode === 'auto'} onChange={() => set('sectionsMode', 'auto')} className="size-5 shrink-0 accent-primary" />
                       依弱點自動選
                     </label>
                     <label className={pillCls}>
-                      <input type="radio" name={`${id}-secmode`} checked={settings.sectionsMode === 'manual'} onChange={() => set('sectionsMode', 'manual')} className="size-4 accent-[var(--primary)]" />
+                      <input type="radio" name={`${id}-secmode`} checked={settings.sectionsMode === 'manual'} onChange={() => set('sectionsMode', 'manual')} className="size-5 shrink-0 accent-primary" />
                       自己勾
                     </label>
                   </div>
@@ -668,7 +672,7 @@ function Body() {
                               checked={settings.sections.includes(s)}
                               aria-describedby={s === 'composition' && settings.minutes < COMPOSITION_MIN_MINUTES ? `${id}-composition-hint` : undefined}
                               onChange={(e) => set('sections', e.currentTarget.checked ? ALL_SECTIONS.filter((x) => x === s || settings.sections.includes(x)) : settings.sections.filter((x) => x !== s))}
-                              className="size-4 accent-[var(--primary)]"
+                              className="size-5 shrink-0 accent-primary"
                             />
                             {SECTION_NAMES[s]}
                             {s === 'composition' && settings.minutes < COMPOSITION_MIN_MINUTES && <span className="text-xs text-muted">（要選 40 分鐘以上）</span>}
@@ -687,11 +691,11 @@ function Body() {
                 <Field legend="做過的題組">
                   <div className="flex flex-wrap gap-2">
                     <label className={pillCls}>
-                      <input type="radio" name={`${id}-reuse`} checked={settings.reuse !== 'retest'} onChange={() => set('reuse', 'avoid')} className="size-4 accent-[var(--primary)]" />
+                      <input type="radio" name={`${id}-reuse`} checked={settings.reuse !== 'retest'} onChange={() => set('reuse', 'avoid')} className="size-5 shrink-0 accent-primary" />
                       盡量不用
                     </label>
                     <label className={pillCls}>
-                      <input type="radio" name={`${id}-reuse`} checked={settings.reuse === 'retest'} onChange={() => set('reuse', 'retest')} className="size-4 accent-[var(--primary)]" />
+                      <input type="radio" name={`${id}-reuse`} checked={settings.reuse === 'retest'} onChange={() => set('reuse', 'retest')} className="size-5 shrink-0 accent-primary" />
                       也重做我錯過的題組（7 天以上前做的）
                     </label>
                   </div>
@@ -730,7 +734,7 @@ function Body() {
                           checked={rTiers.includes(t)}
                           disabled={rTiers.length === 1 && rTiers.includes(t)}
                           onChange={(e) => set('tiers', e.currentTarget.checked ? TIERS.filter((x) => x === t || rTiers.includes(x)) : rTiers.filter((x) => x !== t))}
-                          className="size-4 accent-[var(--primary)]"
+                          className="size-5 shrink-0 accent-primary"
                         />
                         {TIER_LABELS[t]}
                       </label>
@@ -741,11 +745,11 @@ function Body() {
                 <Field legend="做過的題組">
                   <div className="flex flex-wrap gap-2">
                     <label className={pillCls}>
-                      <input type="radio" name={`${id}-rreuse`} checked={settings.reuse !== 'allow'} onChange={() => set('reuse', 'avoid')} className="size-4 accent-[var(--primary)]" />
+                      <input type="radio" name={`${id}-rreuse`} checked={settings.reuse !== 'allow'} onChange={() => set('reuse', 'avoid')} className="size-5 shrink-0 accent-primary" />
                       不用（不夠時才用）
                     </label>
                     <label className={pillCls}>
-                      <input type="radio" name={`${id}-rreuse`} checked={settings.reuse === 'allow'} onChange={() => set('reuse', 'allow')} className="size-4 accent-[var(--primary)]" />
+                      <input type="radio" name={`${id}-rreuse`} checked={settings.reuse === 'allow'} onChange={() => set('reuse', 'allow')} className="size-5 shrink-0 accent-primary" />
                       可以用
                     </label>
                   </div>
@@ -765,7 +769,7 @@ function Body() {
               {focusInfo && <p className="font-medium">{focusText(focusInfo.count, focusLabels)}</p>}
               <p className="text-muted">{coverage}</p>
               {tooHard && (
-                <div className="space-y-2 rounded-xl border border-badge-fg/30 bg-badge-bg px-4 py-3 text-badge-fg">
+                <div className="space-y-2 rounded-xl border border-badge-line bg-badge-bg px-4 py-3 text-badge-fg">
                   <p className="flex gap-2">
                     <CircleAlert aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
                     <span>{tooHard}</span>
@@ -814,7 +818,7 @@ function Body() {
                               aria-label={targetLabel(t)}
                               aria-describedby={last ? `${reasonId} ${id}-keep-one` : reasonId}
                               onChange={(e) => set('excluded', e.currentTarget.checked ? settings.excluded.filter((k) => k !== t.key) : [...settings.excluded, t.key])}
-                              className="mt-1 size-4 shrink-0 accent-[var(--primary)]"
+                              className="mt-1 size-5 shrink-0 accent-primary"
                             />
                             <span id={reasonId} className="min-w-0 break-words">
                               {targetReason(t, ctx)}

@@ -38,6 +38,9 @@ import { inputCls, primaryBtn } from './parts';
 import { SchoolExamDates } from './SchoolExamDates';
 import { TargetPicker, type ReportTarget } from './TargetPicker';
 import { WeeklyTimeField } from './WeeklyTimeField';
+import { Select } from '../../../components/ui/Field';
+import { fieldCls } from '../../../components/ui/fields';
+import { tableFrameCls, thCls } from '../../../components/ui/Table';
 
 const POINTS = AI_TASK_POINTS.assist_report;
 const SRC_TEXT: Record<string, string> = {
@@ -80,21 +83,21 @@ function SummaryPreview({ summary }: { summary: AssistHistorySummary }) {
         統計期間：最近 {summary.range_days} 天、{summary.coverage.outcomes} 題作答。不送題目文字、逐題作答、草稿與自評文字。
       </p>
       {summary.sections.length > 0 && (
-        <div className="overflow-x-auto rounded-xl border border-line">
+        <div className={`overflow-x-auto ${tableFrameCls}`} tabIndex={0} role="region" aria-label="各大題的作答統計">
           <table className="w-full min-w-[28rem] text-left">
             <caption className="sr-only">各大題的作答統計</caption>
-            <thead className="bg-surface-2">
+            <thead>
               <tr>
-                <th scope="col" className="px-3 py-2 font-medium">
+                <th scope="col" className={thCls}>
                   大題
                 </th>
-                <th scope="col" className="px-3 py-2 font-medium">
+                <th scope="col" className={thCls}>
                   來源
                 </th>
-                <th scope="col" className="px-3 py-2 font-medium">
+                <th scope="col" className={thCls}>
                   作答
                 </th>
-                <th scope="col" className="px-3 py-2 font-medium">
+                <th scope="col" className={thCls}>
                   答對
                 </th>
               </tr>
@@ -254,20 +257,20 @@ export function ReportGeneratePanel({
 
       <label className="block space-y-1">
         <span className="font-medium">練習難度（選填）</span>
-        <select value={form.tier ?? ''} onChange={(e) => set('tier', e.target.value === '' ? null : (e.target.value as Tier))} className={`${inputCls} sm:w-64`}>
+        <Select value={form.tier ?? ''} onChange={(e) => set('tier', e.target.value === '' ? null : (e.target.value as Tier))} wrapperClassName="w-full sm:w-64">
           <option value="">依目標（{TIER_LABELS[assistDefaultTier(level)]}）</option>
           {TIERS.map((t) => (
             <option key={t} value={t}>
               {TIER_LABELS[t]}
             </option>
           ))}
-        </select>
+        </Select>
         <span className="block text-sm text-muted">只影響推薦練習的難度。</span>
       </label>
 
       <label className="block space-y-1">
         <span className="font-medium">考試日</span>
-        <input type="date" value={form.examDate} min={addDays(todayTw, 1)} onChange={(e) => set('examDate', e.target.value)} className={`${inputCls} w-auto`} required />
+        <input type="date" value={form.examDate} min={addDays(todayTw, 1)} onChange={(e) => set('examDate', e.target.value)} className={`${fieldCls} lg:w-auto`} required />
         {!examOk && <span className="block text-sm text-bad">考試日要在今天之後。</span>}
       </label>
 

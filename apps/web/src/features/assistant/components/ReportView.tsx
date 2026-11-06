@@ -33,6 +33,7 @@ import { AnalysisSection, AssistSafetyCare, ProcessingNotices } from './parts';
 import { ReportWeakPaperEntry } from '../papers/EntryLinks';
 import { PlanWeeks } from './PlanWeeks';
 import { SectionTargetsTable } from './SectionTargetsTable';
+import { DisclosureChevron, disclosureInlineSummaryCls } from '../../../components/ui/Disclosure';
 
 const GAIN_LEVEL_TEXT = { high: '高', medium: '中', low: '低' } as const;
 const linkCls = 'font-medium text-primary underline underline-offset-2';
@@ -243,8 +244,11 @@ export function ReportView({
               <MethodCard key={s} method={ASSIST_SECTION_METHODS[s]} note={notes.get(s) ?? null} />
             ))}
           </div>
-          <details className="report-expand">
-            <summary className="min-h-11 cursor-pointer py-2 text-sm font-medium text-primary">其他大題的方法</summary>
+          <details className="group report-expand">
+            <summary className={`${disclosureInlineSummaryCls} text-sm font-medium`}>
+              <DisclosureChevron inline />
+              其他大題的方法
+            </summary>
             <div className="space-y-3 pt-2">
               {otherMethods.map((s) => (
                 <MethodCard key={s} method={ASSIST_SECTION_METHODS[s]} />

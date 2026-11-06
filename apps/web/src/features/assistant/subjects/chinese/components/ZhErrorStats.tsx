@@ -5,6 +5,7 @@
  */
 import { ZH_ERROR_FAMILIES, ZH_ERROR_FAMILY_LABELS, ZH_ERROR_INFO, isZhErrorCode, type ZhErrorFamily } from '@gsat/shared';
 import { useId } from 'react';
+import { cardFrameCls } from '../../../../../components/ui/Card';
 
 export interface ZhErrorSummary {
   families: Array<{ family: ZhErrorFamily; label: string; count: number }>;
@@ -30,7 +31,7 @@ export function ZhErrorStats({ counts }: { counts: Readonly<Record<string, numbe
   if (!counts) return null;
   const summary = zhErrorSummary(counts);
   return (
-    <section aria-labelledby={id} className="space-y-2 rounded-2xl border border-line bg-surface p-4" data-testid="zh-error-stats">
+    <section aria-labelledby={id} className={`${cardFrameCls} p-4 space-y-2`} data-testid="zh-error-stats">
       <h3 id={id} className="font-semibold">
         國文錯因統計<span className="ml-1 text-sm font-normal text-muted">（本站計算）</span>
       </h3>

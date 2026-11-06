@@ -3,25 +3,26 @@
  * 按鈕高度至少 44px（min-h-11），手機上手指點得準。
  */
 
-export const cardCls = 'rounded-2xl border border-line bg-surface p-4 sm:p-5 lg:p-6';
+import { btn } from '../../components/ui/buttons';
+import { checkInputCls } from '../../components/ui/Check';
+import { fieldCls as baseFieldCls } from '../../components/ui/fields';
 
-export const btnPrimary =
-  'inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-primary px-5 py-2 font-medium text-on-primary hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50';
+export { cardCls } from '../../components/ui/Card';
 
-export const btnSecondary =
-  'inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-line bg-surface px-4 py-2 font-medium text-fg hover:bg-surface-2 disabled:cursor-not-allowed disabled:opacity-50';
-
-export const btnDanger =
-  'inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-bad px-4 py-2 font-medium text-bad hover:bg-surface-2 disabled:cursor-not-allowed disabled:opacity-50';
+/** 按鈕：共用元件（components/ui/buttons.ts，設計文件 css-overhaul §4.1）。btnDanger 是觸發破壞性動作的紅字按鈕（danger-ghost）。 */
+export const btnPrimary = btn('primary', 'md');
+export const btnSecondary = btn('secondary', 'md');
+export const btnDanger = btn('danger-ghost', 'md');
 
 /** 桌機（≥ lg）限寬 28rem：窄版頁面的內容仍有 50rem 寬，暱稱這類短欄位不必拉滿（docs/design/desktop-ui.md §5.12）。 */
-export const fieldCls =
-  'min-h-11 w-full min-w-0 rounded-xl border border-line bg-surface px-3 py-2 text-fg placeholder:text-muted lg:max-w-md';
+export const fieldCls = `${baseFieldCls} lg:max-w-md`;
 
-export const labelCls = 'mb-1 block text-sm font-medium';
+/** 標籤：共用元件（components/ui/fields.ts）。 */
+export { labelCls } from '../../components/ui/fields';
 
 export const sectionTitleCls = 'text-lg font-semibold';
 
-export const checkboxCls = 'mt-1 size-4 shrink-0 accent-[var(--primary)]';
+/** 文字旁的 checkbox（同意條款）：共用的 20px 原生元件，和第一行字對齊。 */
+export const checkboxCls = `mt-0.5 ${checkInputCls}`;
 
 export const pageTitleCls = 'text-2xl font-bold tracking-tight lg:text-3xl';

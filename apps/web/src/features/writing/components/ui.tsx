@@ -3,14 +3,19 @@ import { ChevronLeft, ExternalLink, Sparkles } from 'lucide-react';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { Link } from 'react-router';
 import type { ErrorView } from '../lib/errors';
+import { alertCls, type AlertTone } from '../../../components/ui/Alert';
+import { badgeCls } from '../../../components/ui/Badge';
+import { btn } from '../../../components/ui/buttons';
+import { textareaCls } from '../../../components/ui/fields';
+import { cardCompactCls } from '../../../components/ui/Card';
+import { DisclosureChevron } from '../../../components/ui/Disclosure';
 
-export const primaryButton =
-  'inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-primary px-5 py-2 font-medium text-on-primary disabled:cursor-not-allowed disabled:opacity-50';
-export const secondaryButton =
-  'inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-line px-5 py-2 font-medium hover:bg-surface-2 disabled:cursor-not-allowed disabled:opacity-50';
-export const textInput =
-  'w-full rounded-lg border border-line bg-bg px-3 py-2 text-fg placeholder:text-muted focus:border-primary disabled:opacity-70';
-export const card = 'rounded-2xl border border-line bg-surface p-4 lg:p-5';
+/** 按鈕：共用元件（components/ui/buttons.ts，設計文件 css-overhaul §4.1）。 */
+export const primaryButton = btn('primary', 'md');
+export const secondaryButton = btn('secondary', 'md');
+/** 作答框與文字框（多行為主；單行的 <input> 用 fieldCls）：共用元件（components/ui/fields.ts）。 */
+export const textInput = textareaCls;
+export const card = cardCompactCls;
 
 /** 英文作答框：關掉拼字檢查、自動大寫、自動完成（拼字錯誤要學生自己發現，也不能讓手機偷偷改字）。 */
 export const englishInputProps = {
@@ -37,7 +42,7 @@ export function AiBadge({ compact = false, variant }: { compact?: boolean; varia
   if (compact) {
     // 列表裡空間小：只顯示「AI」，完整說明給讀屏與滑鼠提示。
     return (
-      <span title={text} className="inline-flex shrink-0 items-center gap-0.5 rounded-full bg-badge-bg px-1.5 py-0.5 text-[0.7rem] font-semibold text-badge-fg">
+      <span title={text} className={badgeCls('ai', 'xs', 'gap-0.5 px-1.5')}>
         <Sparkles aria-hidden="true" className="size-3" />
         <span aria-hidden="true">AI</span>
         <span className="sr-only">{text}</span>
@@ -45,7 +50,7 @@ export function AiBadge({ compact = false, variant }: { compact?: boolean; varia
     );
   }
   return (
-    <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-badge-bg px-2.5 py-0.5 text-xs font-semibold text-badge-fg">
+    <span className={badgeCls('ai', 'xs', 'px-2.5')}>
       <Sparkles aria-hidden="true" className="size-3.5" />
       {text}
     </span>
@@ -62,8 +67,9 @@ export function ReportAiContent({ variant }: { variant?: AiVariant }) {
   const assistant = variant === 'assistant';
   const exemplar = variant === 'exemplar';
   return (
-    <details className="text-sm">
-      <summary className="cursor-pointer py-3 text-muted hover:text-primary">
+    <details className="group text-sm">
+      <summary className="inline-flex min-h-11 cursor-pointer list-none items-center gap-1 text-muted hover:text-primary [&::-webkit-details-marker]:hidden">
+        <DisclosureChevron inline />
         回報不當內容
         <span className="ml-2 rounded-full bg-surface-2 px-2 py-0.5 text-xs">即將開放</span>
       </summary>
@@ -107,7 +113,7 @@ export const EXEMPLAR_AI_NOTICE =
 export function AiNotice({ children, generic = false, variant }: { children?: ReactNode; generic?: boolean; variant?: AiVariant }) {
   const assistant = variant === 'assistant';
   return (
-    <p className="flex flex-wrap items-center gap-2 rounded-xl border border-badge-fg/30 bg-badge-bg/60 px-4 py-2 text-sm">
+    <p className={alertCls('ai', 'flex flex-wrap items-center gap-2 py-2')}>
       {assistant ? <AiBadge variant="assistant" /> : variant === 'exemplar' ? <AiBadge variant="exemplar" /> : <AiBadge />}
       <span>
         {assistant
@@ -125,16 +131,12 @@ export function AiNotice({ children, generic = false, variant }: { children?: Re
 
 type Tone = 'info' | 'warn' | 'error' | 'ok';
 
-const TONE_CLASS: Record<Tone, string> = {
-  info: 'border-line bg-surface-2',
-  warn: 'border-badge-fg/30 bg-badge-bg/60',
-  error: 'border-bad/40 bg-bad/10 text-bad',
-  ok: 'border-ok/30 bg-ok/10',
-};
+/** 提示框的外觀：共用的 Alert（components/ui/Alert.tsx）。 */
+const TONE: Record<Tone, AlertTone> = { info: 'info', warn: 'warn', error: 'error', ok: 'success' };
 
 export function Notice({ tone = 'info', children, role }: { tone?: Tone; children: ReactNode; role?: 'status' | 'alert' }) {
   return (
-    <div role={role} className={`rounded-xl border px-4 py-3 text-sm ${TONE_CLASS[tone]}`}>
+    <div role={role} className={alertCls(TONE[tone])}>
       {children}
     </div>
   );
@@ -143,7 +145,7 @@ export function Notice({ tone = 'info', children, role }: { tone?: Tone; childre
 /** 錯誤訊息＋下一步（登入、申請、同意）。 */
 export function ErrorMessage({ view }: { view: ErrorView }) {
   return (
-    <div role="alert" className="rounded-xl border border-bad/40 bg-bad/10 px-4 py-3 text-sm">
+    <div role="alert" className={alertCls('error')}>
       <p className="text-bad">{view.message}</p>
       {view.action?.to && (
         <Link to={view.action.to} className="mt-2 inline-flex min-h-9 items-center font-medium text-primary underline underline-offset-2">
@@ -168,11 +170,12 @@ export function BackLink({ to, children }: { to: string; children: ReactNode }) 
   );
 }
 
+/** 另開新分頁的連結：行內（句子裡的連結不撐高，WCAG 2.5.8 的行內例外；放在清單裡時由清單的 li 給高度）。 */
 export function ExternalA({ href, children }: { href: string; children: ReactNode }) {
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-8 items-center gap-1 text-primary underline-offset-2 hover:underline">
+    <a href={href} target="_blank" rel="noopener noreferrer" className="text-primary underline-offset-2 hover:underline">
       {children}
-      <ExternalLink aria-hidden="true" className="size-3" />
+      <ExternalLink aria-hidden="true" className="ml-0.5 inline size-3 align-baseline" />
       <span className="sr-only">（另開新分頁）</span>
     </a>
   );
@@ -186,7 +189,7 @@ export function Loading({ children = '載入中…' }: { children?: ReactNode })
   );
 }
 
-const linkButton = 'inline-flex min-h-11 items-center text-sm text-primary underline underline-offset-2 disabled:opacity-50';
+const linkButton = btn('link', 'sm');
 
 /**
  * 需要先在原地確認一次的動作（清除草稿、刪除紀錄、捨棄修改），避免手滑。
@@ -257,11 +260,11 @@ export function ConfirmButton({
           setDone(true);
           onConfirm();
         }}
-        className="inline-flex min-h-11 items-center rounded-full bg-bad px-4 font-semibold text-on-primary"
+        className={btn('danger', 'sm')}
       >
         {confirmLabel}
       </button>
-      <button type="button" onClick={close} className="inline-flex min-h-11 items-center rounded-full border border-line px-4">
+      <button type="button" onClick={close} className={btn('secondary', 'sm')}>
         取消
       </button>
     </span>

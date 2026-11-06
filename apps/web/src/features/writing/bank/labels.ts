@@ -59,7 +59,7 @@ export const MODEL_TEXT_NOTE_CLASSES: Record<ModelTextNoteKind, string> = {
   connective: 'bg-primary-soft text-fg',
   detail: 'bg-ok/15 text-fg',
   experience: 'bg-badge-bg text-fg',
-  pattern: 'bg-bad/10 text-fg',
+  pattern: 'bg-bad-soft text-fg',
   phrase: 'bg-surface-2 text-fg underline decoration-dotted underline-offset-4',
 };
 

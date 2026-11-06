@@ -36,6 +36,7 @@ import type { BankOpenScores } from './bankScore';
 import type { BankPaper, BankPaperGroup } from './buildExam';
 import { OBJECTIVE_SECTION_TYPES } from './deduction';
 import { groupSourceRenderer, useAskAllowed } from './GroupSourceLine';
+import { btn } from '../../../components/ui/buttons';
 
 interface Located {
   group: QuestionGroup;
@@ -236,7 +237,7 @@ export function BankReview({ paper, record, scores }: { paper: BankPaper; record
           aria-expanded={open}
           aria-controls={`${id}-paper`}
           onClick={() => setOpen((v) => !v)}
-          className="min-h-11 rounded-full border border-primary px-4 text-sm font-medium text-primary hover:bg-primary-soft"
+          className={btn('ghost', 'sm')}
         >
           {open ? '收起檢討試卷' : '展開檢討試卷（本站答案與解析）'}
         </button>

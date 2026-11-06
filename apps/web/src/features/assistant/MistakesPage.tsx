@@ -18,7 +18,6 @@ import { BackLink } from '../writing/components/ui';
 import { useSignedIn } from '../writing/lib/access';
 import { backfillOutcomes } from './backfill';
 import { AssistGate, AssistHeader } from './components/AssistAccess';
-import { inputCls } from './components/parts';
 import { isAskedHref, readAsked } from './lib/asked';
 import { readPrefs } from './lib/prefs';
 import { getOutcomes } from './outcomes';
@@ -31,6 +30,9 @@ import { listMistakes } from './sources';
 import { ZH_COPY } from './subjects/chinese/copy';
 import { useAssistSubjects } from './subjects/useAssistSubjects';
 import type { MistakeRow, MistakeSource } from './sources/types';
+import { btn } from '../../components/ui/buttons';
+import { Select } from '../../components/ui/Field';
+import { cardFrameCls } from '../../components/ui/Card';
 
 const SOURCE_LABELS: Record<MistakeSource, string> = {
   bank: '題庫練習',
@@ -84,12 +86,12 @@ function RowActions({ row, asked }: { row: MistakeRow; asked: boolean }) {
   return (
     <div className="flex flex-wrap items-center gap-2">
       {row.askHref && (
-        <Link to={row.askHref} className="inline-flex min-h-11 items-center rounded-full bg-primary px-4 text-sm font-semibold text-on-primary" aria-label={`問學習助手：${row.title}`}>
+        <Link to={row.askHref} className={btn('primary', 'sm')} aria-label={`問學習助手：${row.title}`}>
           問學習助手
         </Link>
       )}
       {row.links.map((l) => (
-        <Link key={l.to} to={l.to} className="inline-flex min-h-11 items-center rounded-full border border-line px-4 text-sm lg:hover:border-primary">
+        <Link key={l.to} to={l.to} className={btn('secondary', 'sm')}>
           {l.label}
         </Link>
       ))}
@@ -103,7 +105,7 @@ function MobileList({ ranked, asked, clusters }: { ranked: RankedRow[]; asked: (
   return (
     <ul className="space-y-3">
       {ranked.map(({ row, note }) => (
-        <li key={row.key} className="space-y-2 rounded-2xl border border-line bg-surface p-4">
+        <li key={row.key} className={`${cardFrameCls} p-4 space-y-2`}>
           <p className="font-semibold break-words">{row.title}</p>
           <p className="flex flex-wrap gap-x-3 gap-y-1 text-sm text-muted">
             <span>{SOURCE_LABELS[row.source]}</span>
@@ -213,59 +215,59 @@ function Body() {
         <label htmlFor={`${id}-source`} className="block text-sm font-medium">
           來源
         </label>
-        <select id={`${id}-source`} value={filters.source} onChange={(e) => set('source', e.currentTarget.value as Filters['source'])} className={`mt-1 min-h-11 ${inputCls}`}>
+        <Select id={`${id}-source`} value={filters.source} onChange={(e) => set('source', e.currentTarget.value as Filters['source'])} wrapperClassName="w-full mt-1">
           <option value="all">全部</option>
           {(Object.keys(SOURCE_LABELS) as MistakeSource[]).map((s) => (
             <option key={s} value={s}>
               {SOURCE_LABELS[s]}
             </option>
           ))}
-        </select>
+        </Select>
       </div>
       <div>
         <label htmlFor={`${id}-section`} className="block text-sm font-medium">
           大題
         </label>
-        <select id={`${id}-section`} value={filters.section} onChange={(e) => set('section', e.currentTarget.value as Filters['section'])} className={`mt-1 min-h-11 ${inputCls}`}>
+        <Select id={`${id}-section`} value={filters.section} onChange={(e) => set('section', e.currentTarget.value as Filters['section'])} wrapperClassName="w-full mt-1">
           <option value="all">全部</option>
           {sections.map((s) => (
             <option key={s} value={s}>
               {ASSIST_SECTION_LABELS[s]}
             </option>
           ))}
-        </select>
+        </Select>
       </div>
       <div>
         <label htmlFor={`${id}-days`} className="block text-sm font-medium">
           日期
         </label>
-        <select id={`${id}-days`} value={filters.days} onChange={(e) => set('days', Number(e.currentTarget.value) as Filters['days'])} className={`mt-1 min-h-11 ${inputCls}`}>
+        <Select id={`${id}-days`} value={filters.days} onChange={(e) => set('days', Number(e.currentTarget.value) as Filters['days'])} wrapperClassName="w-full mt-1">
           <option value={0}>全部</option>
           <option value={7}>最近 7 天</option>
           <option value={30}>最近 30 天</option>
-        </select>
+        </Select>
       </div>
       <div>
         <label htmlFor={`${id}-kind`} className="block text-sm font-medium">
           種類
         </label>
-        <select id={`${id}-kind`} value={filters.kind} onChange={(e) => set('kind', e.currentTarget.value as Filters['kind'])} className={`mt-1 min-h-11 ${inputCls}`}>
+        <Select id={`${id}-kind`} value={filters.kind} onChange={(e) => set('kind', e.currentTarget.value as Filters['kind'])} wrapperClassName="w-full mt-1">
           <option value="all">錯題與疑點</option>
           <option value="mistake">只看錯題</option>
           <option value="doubt">只看答對的疑點</option>
-        </select>
+        </Select>
       </div>
       <div>
         <label htmlFor={`${id}-sort`} className="block text-sm font-medium">
           排序
         </label>
-        <select id={`${id}-sort`} value={filters.sort} onChange={(e) => set('sort', e.currentTarget.value as Filters['sort'])} className={`mt-1 min-h-11 ${inputCls}`}>
+        <Select id={`${id}-sort`} value={filters.sort} onChange={(e) => set('sort', e.currentTarget.value as Filters['sort'])} wrapperClassName="w-full mt-1">
           <option value="suggested">建議先問</option>
           <option value="recent">新到舊</option>
-        </select>
+        </Select>
       </div>
       <label className="inline-flex min-h-11 cursor-pointer items-center gap-2">
-        <input type="checkbox" checked={filters.notAsked} onChange={(e) => set('notAsked', e.currentTarget.checked)} className="size-4 accent-[var(--primary)]" />
+        <input type="checkbox" checked={filters.notAsked} onChange={(e) => set('notAsked', e.currentTarget.checked)} className="size-5 shrink-0 accent-primary" />
         只看沒問過的
       </label>
     </div>
@@ -294,7 +296,7 @@ function Body() {
           讀取作答紀錄中…
         </p>
       ) : rows.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-line bg-surface-2 p-5">
+        <div className="rounded-card border border-dashed border-line bg-surface-2 p-5">
           <p className="font-semibold">還沒有錯題或疑點</p>
           <p className="mt-1 text-muted">做一組題庫練習、一份歷屆試題或模擬考，交卷後答錯的題就會出現在這裡。也可以直接貼上一題問。</p>
           <Link to="/assistant/new" className="mt-3 inline-flex min-h-11 items-center font-medium text-primary underline underline-offset-2">
