@@ -1,0 +1,798 @@
+{
+ "schema": "gsat-math-exam/v1",
+ "id": "gsat-matha-113",
+ "exam": "gsat",
+ "subject": "math_a",
+ "year": 113,
+ "session": "regular",
+ "title": "113學年度學科能力測驗數學A考科",
+ "time_minutes": 100,
+ "full_score": 100,
+ "sources": {
+  "paper": "data/raw/ceec/gsat-matha/113/paper-1.pdf",
+  "paper_word": [
+   "data/raw/ceec/gsat-matha/113/paper-2.docx"
+  ],
+  "answer": [
+   "data/raw/ceec/gsat-matha/113/answer.pdf"
+  ],
+  "answer_sheet": [
+   "data/raw/ceec/gsat-matha/113/other.pdf"
+  ],
+  "stats": [
+   "data/raw/ceec/gsat-matha/113/stats-1.xls",
+   "data/raw/ceec/gsat-matha/113/stats-2.xls"
+  ],
+  "scoring_not_stored": [
+   "data/raw/ceec/gsat-matha/113/scoring.pdf"
+  ]
+ },
+ "scoring_rules": {
+  "single": "每題有$n$個選項，其中只有一個是正確或最適當的選項。各題答對者，得該題的分數；答錯、未作答或劃記多於一個選項者，該題以零分計算。",
+  "multi": "每題有$n$個選項，其中至少有一個是正確的選項。各題之選項獨立判定，所有選項均答對者，得該題全部的分數；答錯$k$個選項者，得該題$\\frac{n-2k}{n}$的分數；但得分低於零分或所有選項均未作答者，該題以零分計算。",
+  "fill": "每題有$n$個空格，須全部答對才給分，答錯不倒扣。"
+ },
+ "parts": [
+  {
+   "title": "第壹部分、選擇（填）題（占85分）",
+   "points": 85,
+   "instructions": null,
+   "sections": [
+    "s1",
+    "s2",
+    "s3"
+   ]
+  },
+  {
+   "title": "第貳部分、混合題或非選擇題（占15分）",
+   "points": 15,
+   "instructions": "說明︰本部分共有1 題組，單選題每題3分，非選擇題配分標於題末。限在答題卷標示題號的作答區內作答。選擇（填）題與「非選擇題作圖部分」使用 2B 鉛筆作答，更正時以橡皮擦擦拭，切勿使用修正帶（液）。非選擇題請由左而右橫式書寫，作答時必須寫出計算過程或理由，否則將酌予扣分。",
+   "sections": [
+    "s4"
+   ]
+  }
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "type": "single",
+   "title": "一、單選題（占30分）",
+   "instructions": "說明：第1題至第6題，每題5分。",
+   "points_total": 30,
+   "groups": [
+    {
+     "id": "s1g1",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 1,
+       "label": "1",
+       "type": "single",
+       "stem": "研究顯示：服用某藥物後，在使用者體內的藥物殘留量隨時間呈指數型衰退。已知在服用某藥物2小時後，體內仍殘留有該藥物的一半劑量，試問下列哪一選項正確？",
+       "options": {
+        "1": "服用3小時後，體內仍殘留有該藥物的$\\frac{1}{3}$劑量",
+        "2": "服用4小時後，體內仍殘留有該藥物的$\\frac{1}{4}$劑量",
+        "3": "服用6小時後，體內仍殘留有該藥物的$\\frac{1}{6}$劑量",
+        "4": "服用8小時後，體內仍殘留有該藥物的$\\frac{1}{8}$劑量",
+        "5": "服用10小時後，體內仍殘留有該藥物的$\\frac{1}{10}$劑量"
+       },
+       "answer": "2",
+       "points": 5,
+       "tags": {
+        "units": [
+         "exp_log"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g2",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 2,
+       "label": "2",
+       "type": "single",
+       "stem": "如圖，$OABC-DEFG$為一正方體，試問向量外積$\\overrightarrow{AD}\\times \\overrightarrow{AG}$與下列哪一個向量平行？",
+       "options": {
+        "1": "$\\overrightarrow{AE}$",
+        "2": "$\\overrightarrow{BE}$",
+        "3": "$\\overrightarrow{CE}$",
+        "4": "$\\overrightarrow{DE}$",
+        "5": "$\\overrightarrow{OE}$"
+       },
+       "answer": "5",
+       "points": 5,
+       "figures": [
+        {
+         "id": "f2",
+         "kind": "diagram",
+         "alt": "正方體 OABC−DEFG 示意圖：底面 ABCO（A 在左前、B 在右前、C 在右後、O 在左後），頂面 EFGD（E 在 A 正上方、F 在 B 正上方、G 在 C 正上方、D 在 O 正上方）；看不見的稜 OA、OC、OD 以虛線表示。",
+         "source": {
+          "page": 2,
+          "bbox_pt": [
+           395,
+           415,
+           512,
+           525
+          ]
+         },
+         "file": "data/exams/figures-math/gsat-matha-113/f2.png",
+         "width": 293,
+         "height": 287
+        }
+       ],
+       "tags": {
+        "units": [
+         "vector_space"
+        ]
+       },
+       "tables": []
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g3",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 3,
+       "label": "3",
+       "type": "single",
+       "stem": "設$a\\in \\{-6,-4,-2,2,4,6\\}$，已知$a$為實係數三次多項式$f(x)$的最高次項係數，若函數$y=f(x)$的圖形與$x$軸交於三點，且其$x$坐標成首項為$-7$、公差為$a$的等差數列。試問共有幾個$a$使得$f(0)>0$？",
+       "options": {
+        "1": "1個",
+        "2": "2個",
+        "3": "3個",
+        "4": "4個",
+        "5": "5個"
+       },
+       "answer": "1",
+       "points": 5,
+       "tags": {
+        "units": [
+         "polynomial",
+         "sequence"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g4",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 4,
+       "label": "4",
+       "type": "single",
+       "stem": "試問有多少個實數$x$滿足$\\sin (x+\\frac{\\pi}{6})=\\sin x+\\sin \\frac{\\pi}{6}$且$0\\le x<2\\pi$？",
+       "options": {
+        "1": "1個",
+        "2": "2個",
+        "3": "3個",
+        "4": "4個",
+        "5": "5個（含）以上"
+       },
+       "answer": "2",
+       "points": 5,
+       "tags": {
+        "units": [
+         "trigonometry"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g5",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 5,
+       "label": "5",
+       "type": "single",
+       "stem": "將1到50這50個正整數平分成甲乙兩組，每組各25個數，使得甲組的中位數比乙組的中位數小1。試問共有幾種分法？",
+       "options": {
+        "1": "$C_{25}^{50}$",
+        "2": "$C_{24}^{48}$",
+        "3": "$C_{12}^{24}$",
+        "4": "$(C_{12}^{24})^{2}$",
+        "5": "$C_{24}^{48}\\cdot C_{12}^{24}$"
+       },
+       "answer": "4",
+       "points": 5,
+       "tags": {
+        "units": [
+         "counting",
+         "statistics"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s1g6",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 6,
+       "label": "6",
+       "type": "single",
+       "stem": "在同一平面上，相距7公里的$A,B$兩砲台，$A$在$B$的正東方。某次演習時，$A$向西偏北$\\theta$方向發射砲彈，$B$則向東偏北$\\theta$方向發射砲彈，其中$\\theta$為銳角，觀測回報兩砲彈皆命中9公里外的同一目標$P$。接著$A$改向西偏北$\\frac{\\theta}{2}$方向發射砲彈，彈著點為9公里外的點$Q$。試問砲台$B$與彈著點$Q$的距離$\\overline{BQ}$為何？",
+       "options": {
+        "1": "4公里",
+        "2": "4.5公里",
+        "3": "5公里",
+        "4": "5.5公里",
+        "5": "6公里"
+       },
+       "answer": "3",
+       "points": 5,
+       "tags": {
+        "units": [
+         "trigonometry",
+         "geometry"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "type": "multi",
+   "title": "二、多選題（占30分）",
+   "instructions": "說明：第7題至第12題，每題5分。",
+   "points_total": 30,
+   "groups": [
+    {
+     "id": "s2g1",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 7,
+       "label": "7",
+       "type": "multi",
+       "stem": "令坐標平面上滿足$y=\\log x$的點$(x,y)$所成圖形為$\\Gamma$，試問滿足下列哪些關係式的$(x,y)$所成圖形與$\\Gamma$完全相同？",
+       "options": {
+        "1": "$y+\\frac{1}{2}=\\log (5x)$",
+        "2": "$2y=\\log (x^{2})$",
+        "3": "$3y=\\log (x^{3})$",
+        "4": "$x=10^{y}$",
+        "5": "$x^{3}=10^{(y^{3})}$"
+       },
+       "answer": [
+        "3",
+        "4"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "exp_log",
+         "functions"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g2",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 8,
+       "label": "8",
+       "type": "multi",
+       "stem": "對任一正整數$n\\ge 2$，令$T_{n}$表示邊長為$n,n+1,n+2$的三角形。試選出正確的選項。 （註：若三角形的三邊長分別為$a,b,c$，令$s=\\frac{a+b+c}{2}$， 則三角形面積為$\\sqrt{s(s-a)(s-b)(s-c)}$）",
+       "options": {
+        "1": "$T_{n}$皆為銳角三角形",
+        "2": "$T_{2},T_{3},T_{4},\\cdots,T_{10}$的周長形成等差數列",
+        "3": "$T_{n}$的面積隨$n$增大而增大",
+        "4": "$T_{5}$的三高依序形成等差數列",
+        "5": "$T_{3}$的最大角大於$T_{2}$的最大角"
+       },
+       "answer": [
+        "2",
+        "3"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "geometry",
+         "trigonometry",
+         "sequence"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g3",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 9,
+       "label": "9",
+       "type": "multi",
+       "stem": "某實驗室蒐集了大量的$A$、$B$兩相似物種，記錄其身長為$x$（單位：公分）與體重$y$（單位：公克），得$A$、$B$兩物種的平均身長分別為$\\overline{x_{A}}=5.2$、$\\overline{x_{B}}=6$，標準差分別為0.3、0.1。令$A$、$B$兩物種的平均體重分別為$\\overline{y_{A}}$、$\\overline{y_{B}}$。若$A$、$B$兩物種其體重$y$對身長$x$的迴歸直線分別為$L_{A}:y=2x-0.6$、$L_{B}:y=1.5x+0.4$，相關係數分別為0.6、0.3。今發現一隻身長5.6公分、體重8.6公克的個體$P$，試選出正確的選項。",
+       "options": {
+        "1": "$\\overline{y_{A}}<\\overline{y_{B}}$",
+        "2": "$A$物種的體重標準差小於$B$物種的體重標準差",
+        "3": "就$A$物種而言，個體$P$的體重與平均體重$\\overline{y_{A}}$之差的絕對值大於一個標準差",
+        "4": "點$(5.6,8.6)$到直線$L_{A}$的距離小於其到直線$L_{B}$的距離",
+        "5": "點$(5.6,8.6)$與點$(\\overline{x_{A}},\\overline{y_{A}})$的距離小於其與點$(\\overline{x_{B}},\\overline{y_{B}})$的距離"
+       },
+       "answer": [
+        "3"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "statistics"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g4",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 10,
+       "label": "10",
+       "type": "multi",
+       "stem": "坐標平面上有一正方形與一正六邊形，正方形在正六邊形的右邊。已知兩正多邊形都有一邊在$x$軸上，且正方形中心$A$與正六邊形中心$B$都在$x$軸的上方，且兩多邊形恰有一個交點$P$，又知正方形的邊長為6，而點$P$到$x$軸的距離為$2\\sqrt{3}$。試選出正確的選項。",
+       "options": {
+        "1": "點$A$到$x$軸的距離大於點$B$到$x$軸的距離",
+        "2": "正六邊形的邊長為6",
+        "3": "$\\overrightarrow{BA}=(7,3-2\\sqrt{3})$",
+        "4": "$\\overline{AP}>\\sqrt{10}$",
+        "5": "直線$AP$斜率大於$-\\frac{1}{\\sqrt{3}}$"
+       },
+       "answer": [
+        "3",
+        "5"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "vector_plane",
+         "coordinate_line",
+         "geometry"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g5",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 11,
+       "label": "11",
+       "type": "multi",
+       "stem": "考慮二元一次方程組$\\left\\{\\begin{matrix}ax+6y=6 \\\\ x+by=1\\end{matrix} \\right.$，其係數$a,b$之值分別由投擲一顆公正骰子與一枚均勻硬幣來決定。令$a$值為骰子出現之點數；若硬幣出現正面時$b$值為1，若硬幣出現反面時$b$值為2。試選出正確的選項。",
+       "options": {
+        "1": "擲出$a=b$的機率為$\\frac{1}{3}$",
+        "2": "此方程組無解的機率為$\\frac{1}{12}$",
+        "3": "此方程組有唯一解的機率為$\\frac{5}{6}$",
+        "4": "硬幣出現反面且此方程組有解的機率為$\\frac{1}{2}$",
+        "5": "在硬幣出現反面且此方程組有解的條件下，$x$值為正的機率為$\\frac{2}{5}$"
+       },
+       "answer": [
+        "2",
+        "3"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "linear_system",
+         "probability"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s2g6",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 12,
+       "label": "12",
+       "type": "multi",
+       "stem": "在坐標平面上給定三點$A(1,0)$、$B(0,1)$、$C(-1,0)$，令$\\Gamma$為$\\Delta ABC$經矩陣$T=\\begin{bmatrix}3 & 0 \\\\ a & 1\\end{bmatrix}$變換後的圖形，其中$a$為實數。試選出正確的選項。",
+       "options": {
+        "1": "若$a=0$，則$\\Gamma$為等腰直角三角形",
+        "2": "$\\Delta ABC$的邊上至少有兩點經$T$變換後坐標不變",
+        "3": "$\\Gamma$必有部分落在第四象限",
+        "4": "平面上找得到一個圖形$\\Omega$經$T$變換後為$\\Delta ABC$",
+        "5": "$\\Gamma$的面積為定值"
+       },
+       "answer": [
+        "2",
+        "4",
+        "5"
+       ],
+       "points": 5,
+       "tags": {
+        "units": [
+         "matrix"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "type": "fill",
+   "title": "三、選填題（占25分）",
+   "instructions": "說明：第13題至第17題，每題5分。",
+   "points_total": 25,
+   "groups": [
+    {
+     "id": "s3g1",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 13,
+       "label": "13",
+       "type": "fill",
+       "stem": "某銷售站銷售甲、乙、丙三型手機，甲手機每支利潤100元，乙手機每支利潤400元，丙手機每支利潤240元。上年度甲、乙、丙手機各賣出$A,B,C$支，平均每支利潤為260元；且知銷售甲、乙兩型手機共$A+B$支的平均每支利潤為280元。則該站上年度售出的三型手機數量比為$A$：$B$：$C$=[[FILL]]。（化為最簡整數比）",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "13-1",
+         "13-2",
+         "13-3"
+        ],
+        "template": "[[13-1]]:[[13-2]]:[[13-3]]",
+        "answer_cells": {
+         "13-1": "2",
+         "13-2": "3",
+         "13-3": "5"
+        },
+        "answer_latex": "2:3:5"
+       },
+       "tags": {
+        "units": [
+         "linear_system"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g2",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 14,
+       "label": "14",
+       "type": "fill",
+       "stem": "已知$f(x)$、$g(x)$、$h(x)$皆為實係數三次多項式，且除以$x^{2}-2x+3$的餘式分別為$x+1$、$x-3$、$-2$。若$xf(x)+ag(x)+bh(x)$可以被$x^{2}-2x+3$整除，其中$a,b$為實數， 則[[FILL]]。",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "14-1",
+         "14-2",
+         "14-3"
+        ],
+        "template": "a=[[14-1]][[14-2]],\\ b=[[14-3]]",
+        "answer_cells": {
+         "14-1": "-",
+         "14-2": "3",
+         "14-3": "3"
+        },
+        "answer_latex": "a=-3,\\ b=3"
+       },
+       "tags": {
+        "units": [
+         "polynomial"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g3",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 15,
+       "label": "15",
+       "type": "fill",
+       "stem": "某商場舉辦現場報名的摸彩箱抽獎活動，報名截止後，主持人依報名人數置入同數量的摸彩球，其中有10顆被標示為幸運獎，其獎項為5000元禮券及8000元禮券各5顆，每顆球被抽中的機率皆相同，抽後不放回。抽獎前，主辦單位依獎項個數與報名人數，主持人公告中獎機率為0.4%。開始抽獎後，每人依序抽球，每個人只有一次抽獎機會。若前100位參加抽獎者，恰有1人抽中5000元禮券且沒有人抽中8000元禮券，則抽獎順序為第101號者可獲禮券金額的期望值為[[FILL]]元。",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "15-1",
+         "15-2"
+        ],
+        "template": "[[15-1]][[15-2]]",
+        "answer_cells": {
+         "15-1": "2",
+         "15-2": "5"
+        },
+        "answer_latex": "25"
+       },
+       "tags": {
+        "units": [
+         "probability"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g4",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 16,
+       "label": "16",
+       "type": "fill",
+       "stem": "坐標平面上，已知向量$\\overrightarrow{v}$在向量$(2,-3)$方向的正射影長比原長少1，而在向量$(3,2)$方向的正射影長比原長少2。若$\\overrightarrow{v}$與兩向量$(2,-3),(3,2)$的夾角皆為銳角，則$\\overrightarrow{v}$在向量$(4,7)$方向的正射影長為[[FILL]]。（化為最簡根式）",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "16-1",
+         "16-2",
+         "16-3"
+        ],
+        "template": "\\frac{[[16-1]]\\sqrt{[[16-2]]}}{[[16-3]]}",
+        "answer_cells": {
+         "16-1": "2",
+         "16-2": "5",
+         "16-3": "5"
+        },
+        "answer_latex": "\\frac{2\\sqrt{5}}{5}"
+       },
+       "tags": {
+        "units": [
+         "vector_plane"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    },
+    {
+     "id": "s3g5",
+     "group_label": null,
+     "stem": null,
+     "figures": [],
+     "items": [
+      {
+       "no": 17,
+       "label": "17",
+       "type": "fill",
+       "stem": "坐標平面上，在以$O(0,0),A(0,1),B(1,1),C(1,0)$為頂點的正方形（含邊界）內，令$R$為滿足下述條件的點$P(x,y)$所成區域：與點$P(x,y)$的距離為$|x-y|$之所有點所成圖形完全落在正方形$OABC$（含邊界）內。則區域$R$的面積為[[FILL]]。（化為最簡分數）",
+       "options": null,
+       "answer": null,
+       "points": 5,
+       "fill": {
+        "cells": [
+         "17-1",
+         "17-2"
+        ],
+        "template": "\\frac{[[17-1]]}{[[17-2]]}",
+        "answer_cells": {
+         "17-1": "1",
+         "17-2": "3"
+        },
+        "answer_latex": "\\frac{1}{3}"
+       },
+       "tags": {
+        "units": [
+         "circle",
+         "coordinate_line"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "type": "mixed",
+   "title": "第貳部分、混合題或非選擇題（占15分）",
+   "instructions": "說明︰本部分共有1 題組，單選題每題3分，非選擇題配分標於題末。限在答題卷標示題號的作答區內作答。選擇（填）題與「非選擇題作圖部分」使用 2B 鉛筆作答，更正時以橡皮擦擦拭，切勿使用修正帶（液）。非選擇題請由左而右橫式書寫，作答時必須寫出計算過程或理由，否則將酌予扣分。",
+   "points_total": 15,
+   "groups": [
+    {
+     "id": "s4g1",
+     "group_label": "18-20題為題組",
+     "stem": "坐標空間中，設$O$為原點，$E$為平面$x-z=4$。試回答下列問題。",
+     "figures": [],
+     "items": [
+      {
+       "no": 18,
+       "label": "18",
+       "type": "single",
+       "stem": "若原點$O$在平面$E$上的投影點為$Q$，且向量$\\overrightarrow{OQ}$與向量$(1,0,0)$的夾角為$\\alpha$，則$\\cos \\alpha$之值為下列哪一選項？（單選題，3分）",
+       "options": {
+        "1": "$-\\frac{\\sqrt{2}}{2}$",
+        "2": "$-\\frac{1}{2}$",
+        "3": "$\\frac{1}{2}$",
+        "4": "$\\frac{\\sqrt{2}}{2}$",
+        "5": "$\\frac{\\sqrt{3}}{2}$"
+       },
+       "answer": "4",
+       "points": 3,
+       "tags": {
+        "units": [
+         "space_line_plane",
+         "vector_space"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      },
+      {
+       "no": 19,
+       "label": "19",
+       "type": "constructed",
+       "stem": "已知空間中有一點$P(a,b,c)$滿足向量$\\overrightarrow{OP}$與向量$(1,0,0)$的夾角$\\theta \\le \\frac{\\pi}{6}$。試說明實數$a,b,c$滿足不等式$a^{2}\\ge 3(b^{2}+c^{2})$。（非選擇題，4分）",
+       "options": null,
+       "answer": null,
+       "points": 4,
+       "constructed": {
+        "official_answer_stored": false,
+        "has_drawing": false
+       },
+       "tags": {
+        "units": [
+         "vector_space"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      },
+      {
+       "no": 20,
+       "label": "20",
+       "type": "constructed",
+       "stem": "承19題，已知點$P$在平面$E$上且$b=0$。試求$c$的最大可能範圍，並求線段$\\overline{OP}$的最小可能長度。（非選擇題，8分）",
+       "options": null,
+       "answer": null,
+       "points": 8,
+       "constructed": {
+        "official_answer_stored": false,
+        "has_drawing": false
+       },
+       "tags": {
+        "units": [
+         "space_line_plane",
+         "vector_space"
+        ]
+       },
+       "figures": [],
+       "tables": []
+      }
+     ],
+     "tables": []
+    }
+   ]
+  }
+ ],
+ "reference_formulas": [
+  "1. 首項為$a$，公差為$d$的等差數列前$n$項之和為$S=\\frac{n(2a+(n-1)d)}{2}$",
+  "首項為$a$，公比為$r\\quad (r\\ne 1)$的等比數列前$n$項之和為$S=\\frac{\\quad a(1-r^{n})\\quad}{1-r}$",
+  "2. 三角函數的和角公式：$\\sin (A+B)=\\sin A\\cos B+\\cos A\\sin B$",
+  "$\\cos (A+B)=\\cos A\\cos B-\\sin A\\sin B$",
+  "$\\tan (A+B)=\\frac{\\tan A+\\tan B}{1-\\tan A\\tan B}$",
+  "3. $\\Delta ABC$的正弦定理：$\\frac{a}{\\sin A}=\\frac{b}{\\sin B}=\\frac{c}{\\sin C}=2R$ （$R$為$\\Delta ABC$外接圓半徑）",
+  "$\\Delta ABC$的餘弦定理：$c^{2}=a^{2}+b^{2}-2ab\\cos C\\quad$",
+  "4. 一維數據$X:x_{1},x_{2},\\cdots,x_{n}$，",
+  "算術平均數$\\mu_{X}=\\frac{1}{n}(x_{1}+x_{2}+\\cdots+x_{n})$",
+  "標準差$\\sigma_{X}=\\sqrt{\\frac{1}{n}[(x_{1}-\\mu_{X})^{2}+(x_{2}-\\mu_{X})^{2}+\\cdots+(x_{n}-\\mu_{X})^{2}]}=\\sqrt{\\frac{1}{n}[(x_{1}^{2}+x_{2}^{2}+\\cdots+x_{n}^{2})-n\\mu_{X}^{2}]}$",
+  "5. 二維數據$(X,Y):(x_{1},y_{1}),(x_{2},y_{2}),\\cdots,(x_{n},y_{n})$，",
+  "相關係數$r_{X,Y}=\\frac{(x_{1}-\\mu_{X})(y_{1}-\\mu_{Y})+(x_{2}-\\mu_{X})(y_{2}-\\mu_{Y})+\\cdots+(x_{n}-\\mu_{X})(y_{n}-\\mu_{Y})}{n\\sigma_{X}\\sigma_{Y}}$",
+  "迴歸直線（最適合直線）方程式$y-\\mu_{Y}=r_{X,Y}\\frac{\\sigma_{Y}}{\\sigma_{X}}(x-\\mu_{X})$",
+  "6. 參考數值：$\\sqrt{2}\\approx 1.414\\quad,\\quad \\sqrt{3}\\approx 1.732\\quad,\\quad \\sqrt{5}\\approx 2.236\\quad,\\quad \\sqrt{6}\\approx 2.449\\quad,\\quad \\pi \\approx 3.142$",
+  "7. 對數值：$\\log 2\\approx 0.3010,\\quad \\quad \\log 3\\approx 0.4771,\\ \\log 5\\approx 0.6990,\\ \\log 7\\approx 0.8451\\quad \\quad \\quad$"
+ ],
+ "extraction": {
+  "method": "tools/docx_math_draft.py（Word 版題本，MathType→LaTeX）產生骨架，答案取自 answer.pdf（pdftotext）；逐題以 pdftoppm 頁面影像人工校對",
+  "issues": [],
+  "verified_by": "visual-check",
+  "corrections": []
+ }
+}

@@ -673,6 +673,13 @@ def tidy(s: str) -> str:
         if t == s:
             break
         s = t
+    s = re.sub(r"\\cdot ?\\cdot ?\\cdot ?", r"\\cdots ", s)
+    s = re.sub(r"\\,\s*(\\times|\\cdot|=|\+)", r"\1", s)   # 運算子前多餘的細空白
+    s = re.sub(r"-\\,\s*", "-", s)                               # 負號後的細空白
+    s = re.sub(r"(\\quad\s*)+(\\times)", r"\2", s)
+    s = re.sub(r"\{\s*(\\quad\s*)+", "{", s)          # 分子、分母前後的排版空白
+    s = re.sub(r"(\s*\\quad)+\s*\}", "}", s)
+    s = re.sub(r"(\s*\\quad)+\s*$", "", s)
     s = re.sub(r" {2,}", " ", s)
     s = re.sub(r" +([}\)\],=+\-<>^_])", r"\1", s)
     s = re.sub(r"([{(\[]) +", r"\1", s)
