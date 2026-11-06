@@ -1,0 +1,25 @@
+/*
+ * 數學頁面的公式樣式（只在數學頁面的 chunk 裡，跟著頁面載入）。
+ * KaTeX 預設字級是周圍文字的 1.21 倍，和中文題幹並排時偏大；調成 1.1 倍。
+ * 公式用 currentColor，深色模式不必另外處理（docs/design/math.md §3.1）。
+ */
+.math-inline .katex,
+.math-long .katex,
+.math-display .katex {
+  font-size: 1.1em;
+}
+/* 行高：分數、矩陣上下才不會和上一行重疊。 */
+.math-display .katex-display {
+  margin: 0.25em 0;
+}
+/* 可以橫向捲動的長公式：預留一點上下空間，根號、上標不會被裁掉。 */
+.math-long {
+  padding-block: 0.15em;
+}
+/* 列印時不要截斷長公式。 */
+@media print {
+  .math-long,
+  .math-display {
+    overflow: visible;
+  }
+}

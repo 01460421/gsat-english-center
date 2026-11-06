@@ -40,8 +40,8 @@ const WITHHOLD_FLAGS = new Set(['withhold', 'hide', 'hidden', 'do_not_publish', 
 const BANNED_SOLUTION_WORDS = ['大考中心', '大學入學考試中心', 'CEEC', '評分原則'];
 /** 官方檔案連結的名稱（manifest 的 subkind → 畫面文字）。 */
 const FILE_LABELS = {
-  paper: '試題（PDF）',
-  paper_word: '試題（Word）',
+  paper: '試題',
+  paper_word: '試題',
   answer: '選擇（填）題答案',
   answer_sheet: '答題卷',
   pd_table: '答對率及鑑別度',
@@ -290,6 +290,7 @@ export function normalizeSolutions(raw, itemNos, at) {
  */
 export function mathPaperSummary(d, solutionCount) {
   let questionCount = 0;
+  let constructedCount = 0;
   let autoMax = 0;
   let manualMax = 0;
   let hasStats = false;
@@ -299,8 +300,10 @@ export function mathPaperSummary(d, solutionCount) {
     const items = /** @type {JsonObject[]} */ (s.groups).flatMap((g) => /** @type {JsonObject[]} */ (g.items));
     for (const it of items) {
       questionCount += 1;
-      if (it.type === 'constructed') manualMax += Number(it.points);
-      else autoMax += Number(it.points);
+      if (it.type === 'constructed') {
+        manualMax += Number(it.points);
+        constructedCount += 1;
+      } else autoMax += Number(it.points);
       if (isObject(it.stats) && typeof it.stats.correct_rate === 'number') hasStats = true;
       const tags = isObject(it.tags) && Array.isArray(it.tags.units) ? it.tags.units : [];
       for (const u of tags) units[String(u)] = (units[String(u)] ?? 0) + 1;
@@ -317,6 +320,7 @@ export function mathPaperSummary(d, solutionCount) {
     time_minutes: d.time_minutes,
     full_score: d.full_score,
     question_count: questionCount,
+    constructed_count: constructedCount,
     auto_max: autoMax,
     manual_max: manualMax,
     has_stats: hasStats,

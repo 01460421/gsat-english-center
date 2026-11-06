@@ -219,7 +219,7 @@ export interface MathPaperBase {
   time_minutes: number;
   full_score: number;
   era?: MathEra;
-  scoring_rules?: Record<string, string>;
+  scoring_rules?: Record<string, string> | null;
   parts: MathPart[];
   sections: MathSection[];
   reference_formulas?: string[];

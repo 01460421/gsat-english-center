@@ -123,7 +123,7 @@ describe('buildMathData', () => {
   it('摘要：自動批改滿分、非選擇題配分、單元統計；沒有詳解檔時詳解 0 題', () => {
     write('data/exams/parsed-math/gsat-matha-115.json', paper());
     const out = build();
-    expect(out.summaries[0]).toMatchObject({ id: 'gsat-matha-115', era: '108課綱', question_count: 2, auto_max: 5, manual_max: 6, solution_count: 0, units: { functions: 1 } });
+    expect(out.summaries[0]).toMatchObject({ id: 'gsat-matha-115', era: '108課綱', question_count: 2, constructed_count: 1, auto_max: 5, manual_max: 6, solution_count: 0, units: { functions: 1 } });
     expect(out.solutions).toEqual([{ id: 'gsat-matha-115', count: 0, items: {} }]);
   });
 

@@ -94,6 +94,11 @@ export const ROUTE_MODES: ReadonlyArray<readonly [pattern: string, mode: WidthMo
   // （結果頁一欄：題目收合在上面、示範在下面，不必自動收合側邊欄）。
   ['/zh-writing', 'default'],
   ['/zh-writing/:id', 'default'],
+  // 學測數學（docs/design/math.md P2）：入口是放寬的列表頁；作答頁與成績頁預設寬度（作答頁在 ≥ lg 自己排右側的題號一覽，
+  // 不必收合側邊欄）。成績頁的靜態段 results 在 :paperId 後面，matchPath 要求整段相符，順序不影響。
+  ['/math', 'list'],
+  ['/math/:paperId', 'default'],
+  ['/math/:paperId/results', 'default'],
 ];
 
 /**

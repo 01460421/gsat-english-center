@@ -27,6 +27,7 @@ export type IconKey =
   | 'mock'
   | 'assistant'
   | 'zh-writing'
+  | 'math'
   | 'settings'
   | 'about';
 
@@ -37,6 +38,7 @@ export const NAV_GROUPS = [
   { id: 'choice', label: '選擇題型' },
   { id: 'open', label: '混合題與非選擇題' },
   { id: 'exam', label: '實戰' },
+  { id: 'math', label: '數學' },
   { id: 'system', label: '其他' },
 ] as const;
 export type NavGroupId = (typeof NAV_GROUPS)[number]['id'];
@@ -251,6 +253,18 @@ export const PAGES = [
     status: 'ready',
     isStudyModule: true,
     feature: 'assistant',
+  },
+  {
+    // 學測數學（docs/design/math.md P2）：數A／數B 歷屆卷子。子頁 /math/:paperId（作答）與 /math/:paperId/results（成績與詳解）
+    // 不在這份清單裡，路由在 App.tsx。說明不能含其他學習模組的標題（modules.test.ts；例如「歷屆試題」「混合題」「模擬考」）。
+    path: '/math',
+    title: '學測數學',
+    navLabel: '數學',
+    summary: '數學A、數學B 111–115 學年度學測整份作答：單選、多選與仿答題卷的選填格，依官方計分方式自動批改，交卷後看逐題對錯與本站詳解。',
+    group: 'math',
+    icon: 'math',
+    status: 'ready',
+    isStudyModule: true,
   },
   {
     path: '/settings',
