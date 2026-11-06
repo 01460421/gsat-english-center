@@ -1,0 +1,510 @@
+{
+ "schema": "gsat-math-solutions/v1",
+ "paper_id": "gsat-mathb-115",
+ "note": "本站自撰詳解；選擇（填）題答案經兩位獨立解題者與官方答案比對，非選擇題經兩位獨立解題者比對最終結果。",
+ "items": [
+  {
+   "no": 1,
+   "type": "single",
+   "unit": "實數（誤差、絕對值不等式）",
+   "unit_tags": [
+    "real_numbers"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.52,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：把百分比不等式化成絕對值不等式 $|N-95|<95\\times5\\%$。\n\n**詳解**\n\n1. $\\dfrac{|N-95|}{95}<0.05\\iff|N-95|<4.75$。\n2. $90.25<N<99.75$，整數 $N=91,92,\\dots,99$，共 $9$ 個。\n\n**答案**：(4)",
+   "answer_display": "(4)",
+   "check": {
+    "official": "4",
+    "solver_a": "4",
+    "solver_b": "4",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 2,
+   "type": "single",
+   "unit": "指數對數（自然對數）",
+   "unit_tags": [
+    "exp_log"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.46,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：兩邊除以 $100$ 再取自然對數。\n\n**詳解**\n\n1. $e^{\\frac{3n}{100}}=\\dfrac{135}{100}$。\n2. 取 $\\ln$：$\\dfrac{3n}{100}=\\ln\\dfrac{135}{100}$，$n=\\dfrac{100}{3}\\ln\\dfrac{135}{100}$。\n\n**答案**：(5)\n\n**常見錯誤**：把 $100e^{\\cdots}=135$ 誤寫成 $e^{\\cdots}=135-100$，選 (2)。",
+   "answer_display": "(5)",
+   "check": {
+    "official": "5",
+    "solver_a": "5",
+    "solver_b": "5",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 3,
+   "type": "single",
+   "unit": "矩陣（反方陣）",
+   "unit_tags": [
+    "matrix"
+   ],
+   "difficulty": {
+    "level": "穩定基礎",
+    "official_p": 0.62,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：$A\\vec u=\\vec w\\iff A^{-1}\\vec w=\\vec u$；題目直接告訴我們 $A^{-1}$ 把 $(0,1)$、$(1,0)$ 送到哪裡，也就是 $A^{-1}$ 的兩行。\n\n**詳解**\n\n1. $A^{-1}\\begin{bmatrix}1\\\\0\\end{bmatrix}=\\begin{bmatrix}1\\\\-1\\end{bmatrix}$（$A^{-1}$ 的第一行），$A^{-1}\\begin{bmatrix}0\\\\1\\end{bmatrix}=\\begin{bmatrix}1\\\\1\\end{bmatrix}$（第二行）。\n2. $A^{-1}=\\begin{bmatrix}1&1\\\\-1&1\\end{bmatrix}$。\n3. 驗算：$A^{-1}\\begin{bmatrix}0\\\\1\\end{bmatrix}=\\begin{bmatrix}1\\\\1\\end{bmatrix}$ ✓，$A^{-1}\\begin{bmatrix}1\\\\0\\end{bmatrix}=\\begin{bmatrix}1\\\\-1\\end{bmatrix}$ ✓。\n\n**答案**：(2)",
+   "answer_display": "(2)",
+   "check": {
+    "official": "2",
+    "solver_a": "2",
+    "solver_b": "2",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 4,
+   "type": "single",
+   "unit": "幾何（球面、緯線）、三角函數",
+   "unit_tags": [
+    "geometry",
+    "trigonometry"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.44,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：北緯 $60^\\circ$ 緯線的半徑是赤道半徑的 $\\cos60^\\circ=\\dfrac12$；同樣的航行距離，在北緯 $60^\\circ$ 走過的經度是赤道上的 $2$ 倍。\n\n**詳解**\n\n1. 甲由西經 $169^\\circ$ 向西到東經 $171^\\circ$：先走 $11^\\circ$ 到經度 $180^\\circ$，再走 $9^\\circ$，共 $20^\\circ$ 經度。\n2. 甲的航行距離 $=R\\cos60^\\circ\\cdot20^\\circ$（換成弧度）$=R\\cdot10^\\circ$。\n3. 乙等速，在赤道上走相同距離，經度變化 $10^\\circ$，由東經 $140^\\circ$ 向東到東經 $150^\\circ$。\n\n**答案**：(3)",
+   "answer_display": "(3)",
+   "check": {
+    "official": "3",
+    "solver_a": "3",
+    "solver_b": "3",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 5,
+   "type": "single",
+   "unit": "數列與級數（遞迴）",
+   "unit_tags": [
+    "sequence"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.58,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：照規則一步一步推：預定 $=\\frac32\\times$ 前次投注；若預定 $>2N$ 就投注預定的一半。\n\n**詳解**（以 $N$ 為單位）\n\n1. 第四次投注 $\\dfrac{27}{16}\\approx1.69$。\n2. 第五次預定 $\\dfrac{81}{32}\\approx2.53>2$，投注 $\\dfrac{81}{64}\\approx1.27$。\n3. 第六次預定 $\\dfrac{243}{128}\\approx1.90\\le2$，投注 $\\dfrac{243}{128}$。\n4. 第七次預定 $\\dfrac{729}{256}\\approx2.85>2$，投注 $\\dfrac{729}{512}=\\dfrac{3^6}{2^9}$。\n\n**答案**：(3)",
+   "answer_display": "(3)",
+   "check": {
+    "official": "3",
+    "solver_a": "3",
+    "solver_b": "3",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 6,
+   "type": "single",
+   "unit": "直線與坐標（平行線距離）",
+   "unit_tags": [
+    "coordinate_line"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.38,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：與 $L$ 平行且距離 $12$ 的直線為 $4x+3y+c=0$，$\\dfrac{|c+12|}{5}=12$；再依「領海在基線外側」選一條。\n\n**詳解**\n\n1. $|c+12|=60$，$c=48$ 或 $c=-72$。\n2. 代入 $(5,5)$：$4\\cdot5+3\\cdot5-12=23>0$，內側是 $4x+3y-12>0$ 的一側，領海在 $4x+3y-12<0$ 的一側。\n3. $4x+3y+48=0$ 上的點滿足 $4x+3y=-48<12$，在外側；$4x+3y-72=0$ 在內側。\n4. 領海介於 $L$ 與 $4x+3y+48=0$ 之間。\n\n**答案**：(1)",
+   "answer_display": "(1)",
+   "check": {
+    "official": "1",
+    "solver_a": "1",
+    "solver_b": "1",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 7,
+   "type": "single",
+   "unit": "機率（條件機率、獨立事件）",
+   "unit_tags": [
+    "probability"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.37,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：分別用條件機率定義計算 $p$、$q$；兩者的分子相同，都是 $P(A\\text{ 中獎且至少兩個中獎})$。\n\n**詳解**\n\n1. $p=P(\\text{至少兩個}\\mid A)$：$A$ 已中，只要 $B$、$C$ 至少一個中：$1-\\frac13\\cdot\\frac12=\\dfrac56$。\n2. $P(\\text{至少兩個})$：\n   - 三個都中：$\\frac34\\cdot\\frac23\\cdot\\frac12=\\frac14$；\n   - 恰兩個：$AB\\overline C=\\frac14$，$A\\overline BC=\\frac18$，$\\overline ABC=\\frac1{12}$，和 $\\frac{11}{24}$。\n\n   共 $\\dfrac{17}{24}$。\n3. $P(A\\text{ 且至少兩個})=\\frac34\\cdot\\frac56=\\frac58$，$q=\\dfrac{5/8}{17/24}=\\dfrac{15}{17}$。\n4. $\\dfrac pq=\\dfrac{5/6}{15/17}=\\dfrac{17}{18}$。\n\n**答案**：(2)\n\n**另解**：$\\dfrac pq=\\dfrac{P(\\cdots\\cap A)/P(A)}{P(\\cdots\\cap A)/P(\\text{至少兩個})}=\\dfrac{P(\\text{至少兩個})}{P(A)}=\\dfrac{17/24}{3/4}=\\dfrac{17}{18}$。",
+   "answer_display": "(2)",
+   "check": {
+    "official": "2",
+    "solver_a": "2",
+    "solver_b": "2",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 8,
+   "type": "multi",
+   "unit": "三角函數（圖形）、函數",
+   "unit_tags": [
+    "trigonometry",
+    "functions"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.32,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：$\\sin(\\theta+\\pi)=-\\sin\\theta$，所以原函數 $=-3\\sin\\dfrac{\\pi x}{5}+3$。\n\n**選項分析**\n\n- (1) 錯：振幅變成 $6$，例如 $x=\\frac52$ 時為 $9$，原函數為 $0$。\n- (2) 錯：$x$ 的係數改變，週期不同。例如 $x=\\frac12$ 時 $\\sin\\left(\\frac{\\pi}{10}+\\pi+\\pi\\right)=\\sin\\frac{\\pi}{10}$，原函數則是 $\\sin\\left(\\frac{\\pi}{10}+\\pi\\right)=-\\sin\\frac{\\pi}{10}$，函數值不同。\n- (3) 對：$\\sin(\\theta-\\pi)=-\\sin\\theta=\\sin(\\theta+\\pi)$。\n- (4) 錯：常數項應為 $+3$。\n- (5) 對：就是化簡後的形式。\n\n**詳解**：注意「函數值皆相同」要對**每一個** $x$ 成立，只要找到一個 $x$ 不同就不是。\n\n**答案**：(3)(5)",
+   "answer_display": "(3)(5)",
+   "check": {
+    "official": "3,5",
+    "solver_a": "3,5",
+    "solver_b": "3,5",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 9,
+   "type": "multi",
+   "unit": "多項式函數（除法、不等式）",
+   "unit_tags": [
+    "polynomial"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.35,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：令 $u=x-2$ 改寫：$f=u^2(-1-u)(6+u)=-u^2(u+1)(u+6)$，比較係數與符號都容易。\n\n**詳解**\n\n1. $1-x=-1-u$、$(2-x)^2=u^2$、$4+x=6+u$，所以 $f=-u^2(u+1)(u+6)=-u^4-7u^3-6u^2$。\n\n**選項分析**\n\n- (1) 錯：$f(x)=\\big[(1-x)(2-x)(4+x)\\big](2-x)$，整除，餘式為 $0$。\n- (2) 對：$c=-6$。\n- (3) 錯：$(2-x)^2\\ge0$（$x=2$ 時為 $0$），所以 $f>0\\iff(1-x)(4+x)>0$ 且 $x\\ne2$ $\\iff-4<x<1$。\n- (4) 對：$x=2026$ 時 $u=2024$；$x=-2022$ 時 $u=-2024$。\n$$\\frac{f(2026)}{f(-2022)}=\\frac{-2024^2\\cdot2025\\cdot2030}{-2024^2\\cdot(-2023)(-2018)}=\\frac{2025\\cdot2030}{2023\\cdot2018}>1.$$\n- (5) 錯：兩值都是負數，且 $|f(2026)|>|f(-2022)|$，所以 $f(2026)<f(-2022)$。\n\n**答案**：(2)(4)\n\n**常見錯誤**：(4) 對但 (5) 錯——比值大於 $1$ 不代表分子比較大，要注意兩數都是負的。",
+   "answer_display": "(2)(4)",
+   "check": {
+    "official": "2,4",
+    "solver_a": "2,4",
+    "solver_b": "2,4",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 10,
+   "type": "multi",
+   "unit": "數據分析（線性變換、迴歸）",
+   "unit_tags": [
+    "statistics"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.35,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：$B=0.5A$ 是線性變換：$\\sigma_B=0.5\\sigma_A$，與任何變數的相關係數不變（係數為正），迴歸斜率 $=r\\dfrac{\\sigma_Y}{\\sigma_X}$。\n\n**詳解**：$\\sigma_X=10$（身長）、$\\sigma_A=15$、$\\sigma_B=7.5$、$r_{X,A}=r_{X,B}=0.75$。\n\n**選項分析**\n\n- (1) 對：$0.5\\times15=7.5=\\dfrac{15}{2}$。\n- (2) 錯：B 濃度的中位數是 A 濃度中位數的一半，但題目沒有 A 濃度的中位數；身長的中位數與 B 濃度無關。\n- (3) 錯：$B$ 是 $A$ 的正倍數，兩者完全正相關，相關係數為 $1$。\n- (4) 對：迴歸直線通過 $(\\mu_X,\\mu_A)=(65,50)$，身長 $65$ 時預測值為 $50$。\n- (5) 錯：斜率 $=0.75\\times\\dfrac{7.5}{10}=0.5625\\ne\\dfrac12$。\n\n**答案**：(1)(4)",
+   "answer_display": "(1)(4)",
+   "check": {
+    "official": "1,4",
+    "solver_a": "1,4",
+    "solver_b": "1,4",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 11,
+   "type": "multi",
+   "unit": "圓錐曲線（圓錐截痕）",
+   "unit_tags": [
+    "conics"
+   ],
+   "difficulty": {
+    "level": "超越頂標",
+    "official_p": 0.26,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：兩燈罩軸線相同，所以地面與軸線的夾角 $\\varphi$ 相同；大燈罩的半頂角 $\\beta$ 大於小燈罩的 $\\alpha$。截痕：$\\varphi>$ 半頂角為橢圓、$=$ 為拋物線、$<$ 為雙曲線。\n\n**詳解**：$\\alpha<\\beta$，比較 $\\varphi$ 與 $\\alpha$、$\\beta$。\n\n**選項分析**\n\n- (1) 錯：$\\Gamma$ 為橢圓 $\\Rightarrow\\varphi>\\beta>\\alpha$，$\\gamma$ 也是橢圓。\n- (2) 對：$\\Gamma$ 為拋物線 $\\Rightarrow\\varphi=\\beta>\\alpha$，$\\gamma$ 是橢圓。\n- (3) 錯：$\\Gamma$ 為雙曲線 $\\Rightarrow\\varphi<\\beta$，$\\varphi$ 與 $\\alpha$ 的大小不確定，$\\gamma$ 可能是橢圓、拋物線或雙曲線。\n- (4) 錯：$\\gamma$ 為拋物線 $\\Rightarrow\\varphi=\\alpha<\\beta$，$\\Gamma$ 是雙曲線。\n- (5) 對：$\\gamma$ 為雙曲線 $\\Rightarrow\\varphi<\\alpha<\\beta$，$\\Gamma$ 也是雙曲線。\n\n**答案**：(2)(5)",
+   "answer_display": "(2)(5)",
+   "check": {
+    "official": "2,5",
+    "solver_a": "2,5",
+    "solver_b": "2,5",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 12,
+   "type": "multi",
+   "unit": "數列與級數（遞迴、極限）",
+   "unit_tags": [
+    "sequence"
+   ],
+   "difficulty": {
+    "level": "超越頂標",
+    "official_p": 0.27,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：糖的總量永遠是 $100$ 公克；每次稀釋後 A 瓶 $1000$ 毫升、B 瓶 $500$ 毫升。\n\n**詳解**\n\n1. 第 $n$ 次稀釋完，B 瓶含糖 $100-a_n$。\n2. 下一次：A 倒一半（含糖 $\\frac12a_n$）到 B，B 瓶變成 $1000$ 毫升、含糖 $100-a_n+\\frac12a_n=100-\\frac12a_n$；再倒一半回 A：\n$$a_{n+1}=\\frac12a_n+\\frac12\\left(100-\\frac12a_n\\right)=\\frac14a_n+50.$$\n3. 不動點 $c=\\frac14c+50$，$c=\\dfrac{200}{3}$；$a_{n+1}-c=\\dfrac14(a_n-c)$。\n\n**選項分析**\n\n- (1) 對：$a_0=100$，$a_1=50+25=75$。\n- (2) 錯：B 瓶含糖 $100-a_n$。\n- (3) 對：見步驟 2。\n- (4) 對：$c=\\dfrac{200}3$。\n- (5) 錯：$a_n=\\dfrac{200}{3}+\\dfrac{100}{3}\\left(\\dfrac14\\right)^n>\\dfrac{200}3\\approx66.7>60$。\n\n**答案**：(1)(3)(4)",
+   "answer_display": "(1)(3)(4)",
+   "check": {
+    "official": "1,3,4",
+    "solver_a": "1,3,4",
+    "solver_b": "1,3,4",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 13,
+   "type": "fill",
+   "unit": "三角函數（正弦定理）、直線與坐標",
+   "unit_tags": [
+    "trigonometry",
+    "coordinate_line"
+   ],
+   "difficulty": {
+    "level": "超越頂標",
+    "official_p": 0.29,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：$O$、$(-20,0)$ 與交點構成三角形，由斜角求出三內角，用正弦定理。\n\n**詳解**\n\n1. 設 $M(-20,0)$、交點 $X$。$\\angle XMO=30^\\circ$；$\\angle MOX=180^\\circ-75^\\circ=105^\\circ$；$\\angle MXO=180^\\circ-30^\\circ-105^\\circ=45^\\circ$。\n2. 正弦定理：$\\dfrac{\\overline{OX}}{\\sin30^\\circ}=\\dfrac{\\overline{MO}}{\\sin45^\\circ}$，$\\overline{OX}=\\dfrac{20\\cdot\\frac12}{\\frac{\\sqrt2}{2}}=10\\sqrt2\\approx14.14$。\n3. 四捨五入為 $14$。\n\n**答案**：$14$（13-1 填 $1$，13-2 填 $4$）",
+   "answer_display": "$14$",
+   "check": {
+    "official": {
+     "13-1": "1",
+     "13-2": "4"
+    },
+    "solver_a": {
+     "13-1": "1",
+     "13-2": "4"
+    },
+    "solver_b": {
+     "13-1": "1",
+     "13-2": "4"
+    },
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 14,
+   "type": "fill",
+   "unit": "排列組合",
+   "unit_tags": [
+    "counting"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.36,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：$5,6$ 相鄰且 $6,7$ 相鄰，表示 $5,6,7$ 連在一起且 $6$ 在中間。\n\n**詳解**\n\n1. 「$34$」綁成一塊：內部 $2$ 種（$34$ 或 $43$）。\n2. 「$567$」綁成一塊，$6$ 在中間：$567$ 或 $765$，$2$ 種。\n3. 兩塊加上 $1,2$，共 $4$ 個單位排列：$4!=24$。\n4. 總數 $24\\times2\\times2=96$。\n\n**答案**：$96$（14-1 填 $9$，14-2 填 $6$）",
+   "answer_display": "$96$",
+   "check": {
+    "official": {
+     "14-1": "9",
+     "14-2": "6"
+    },
+    "solver_a": {
+     "14-1": "9",
+     "14-2": "6"
+    },
+    "solver_b": {
+     "14-1": "9",
+     "14-2": "6"
+    },
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 15,
+   "type": "fill",
+   "unit": "機率、邏輯與集合（列聯表）",
+   "unit_tags": [
+    "probability"
+   ],
+   "difficulty": {
+    "level": "超越頂標",
+    "official_p": 0.24,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：設「有近視且有蛀牙」占 $x$，把列聯表其他格與兩個「少數／多數」條件都用 $x$ 表示。\n\n**詳解**\n\n1. 有近視且有蛀牙 $x$；無近視且有蛀牙 $\\frac13-x$；有近視且無蛀牙 $\\frac12-x$；無近視且無蛀牙 $p=\\frac23-\\left(\\frac12-x\\right)=\\frac16+x$。\n2. 有近視的人中蛀牙占少數：$\\dfrac{x}{1/2}<\\dfrac12$，$x<\\dfrac14$。\n3. 有蛀牙的人中近視占多數：$\\dfrac{x}{1/3}>\\dfrac12$，$x>\\dfrac16$。\n4. $p=\\frac16+x$：$\\dfrac13<p<\\dfrac{5}{12}$。\n\n**答案**：$\\dfrac13<p<\\dfrac5{12}$（15-1 填 $1$，15-2 填 $3$，15-3 填 $5$，15-4 填 $1$，15-5 填 $2$）",
+   "answer_display": "$\\dfrac13<p<\\dfrac{5}{12}$",
+   "check": {
+    "official": {
+     "15-1": "1",
+     "15-2": "3",
+     "15-3": "5",
+     "15-4": "1",
+     "15-5": "2"
+    },
+    "solver_a": {
+     "15-1": "1",
+     "15-2": "3",
+     "15-3": "5",
+     "15-4": "1",
+     "15-5": "2"
+    },
+    "solver_b": {
+     "15-1": "1",
+     "15-2": "3",
+     "15-3": "5",
+     "15-4": "1",
+     "15-5": "2"
+    },
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 16,
+   "type": "fill",
+   "unit": "多項式函數（二次函數）",
+   "unit_tags": [
+    "polynomial"
+   ],
+   "difficulty": {
+    "level": "超越頂標",
+    "official_p": 0.22,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：$g(x)-f(x)$ 是二次函數，且在 $x=1,5$ 為 $0$，所以 $g(x)-f(x)=k(x-1)(x-5)$。\n\n**詳解**\n\n1. $L$ 過 $(1,0)$、$(5,4)$：$f(x)=x-1$。\n2. $x=2$：$g(2)-f(2)=2-1=1=k(1)(-3)$，$k=-\\dfrac13$。\n3. $g(x)-f(x)=-\\dfrac13(x-1)(x-5)$，開口向下，最大值在 $x=3$：$-\\dfrac13(2)(-2)=\\dfrac43$。\n\n**答案**：$\\dfrac43$（16-1 填 $4$，16-2 填 $3$）",
+   "answer_display": "$\\frac{4}{3}$",
+   "check": {
+    "official": {
+     "16-1": "4",
+     "16-2": "3"
+    },
+    "solver_a": {
+     "16-1": "4",
+     "16-2": "3"
+    },
+    "solver_b": {
+     "16-1": "4",
+     "16-2": "3"
+    },
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 17,
+   "type": "fill",
+   "unit": "數學建模（單點透視）、直線與坐標",
+   "unit_tags": [
+    "data_modeling",
+    "coordinate_line"
+   ],
+   "difficulty": {
+    "level": "超越頂標",
+    "official_p": 0.03,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：在單點透視中，同一個深度（空間 $y$ 坐標相同）的點，都以消失點為中心等比例縮放。由 $(3,4,0)$ 的畫面位置求出深度 $y=4$ 的縮放比例。\n\n**詳解**\n\n1. $(0,0,0)\\to(0,0)$、$(3,0,3)\\to(3,3)$：深度 $y=0$ 的點直接畫成 $(x,z)$，所以 $(3,0,0)\\to(3,0)$。\n2. 與 $y$ 軸平行的直線指向消失點 $V(0,15)$。$(3,0,0)$ 沿 $y$ 方向到 $(3,4,0)$，畫面上從 $(3,0)$ 往 $V$ 移動：$(3,0)+s\\big((0,15)-(3,0)\\big)=(3-3s,15s)=\\left(\\frac{13}{5},2\\right)$，得 $s=\\dfrac{2}{15}$。\n3. 深度 $y=4$ 的點都滿足「畫面位置 $=V+\\dfrac{13}{15}(\\text{深度 }0\\text{ 的位置}-V)$」。\n4. $(3,4,3)$ 對應深度 $0$ 的 $(3,0,3)\\to(3,3)$，所以畫面位置 $=(0,15)+\\dfrac{13}{15}(3,-12)=\\left(\\dfrac{13}{5},\\dfrac{23}{5}\\right)$。\n5. 驗算：與 $(3,4,0)$ 的畫面點 $x$ 坐標相同（與 $z$ 軸平行的直線畫成鉛直線）✓。\n\n**答案**：$\\dfrac{23}{5}$（17-1 填 $2$，17-2 填 $3$，17-3 填 $5$）",
+   "answer_display": "$\\frac{23}{5}$",
+   "check": {
+    "official": {
+     "17-1": "2",
+     "17-2": "3",
+     "17-3": "5"
+    },
+    "solver_a": {
+     "17-1": "2",
+     "17-2": "3",
+     "17-3": "5"
+    },
+    "solver_b": {
+     "17-1": "2",
+     "17-2": "3",
+     "17-3": "5"
+    },
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 18,
+   "type": "single",
+   "unit": "直線與坐標",
+   "unit_tags": [
+    "coordinate_line"
+   ],
+   "difficulty": {
+    "level": "穩定基礎",
+    "official_p": 0.68,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：$(8,0)$ 與 $(0,0)$ 都在 $x$ 軸上，中點 $(4,0)$，中垂線是鉛直線。\n\n**詳解**：中垂線過 $(4,0)$ 且垂直 $x$ 軸：$x=4$。\n\n**答案**：(1)",
+   "answer_display": "(1)",
+   "check": {
+    "official": "1",
+    "solver_a": "1",
+    "solver_b": "1",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 19,
+   "type": "constructed",
+   "unit": "直線與坐標、圓",
+   "unit_tags": [
+    "coordinate_line",
+    "circle"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": null,
+    "basis": "本站估計"
+   },
+   "solution_md": "**解題關鍵**：圓心 $P$ 到起點、終點等距，所以在中垂線 $x=4$ 上；又旋轉 $90^\\circ$，$\\angle SPT=90^\\circ$，$\\Delta SPT$ 是等腰直角三角形。\n\n**詳解**\n\n1. 令 $S(8,0)$、$T(0,0)$。$\\overline{PS}=\\overline{PT}$ 且 $\\angle SPT=90^\\circ$，所以 $\\Delta PST$ 是等腰直角三角形，$\\angle PST=45^\\circ$。\n2. $P$ 在 $x=4$ 上，設 $P(4,k)$；$\\overrightarrow{PS}=(4,-k)$ 逆時針轉 $90^\\circ$ 得 $(k,4)$，應等於 $\\overrightarrow{PT}=(-4,-k)$，所以 $k=-4$，$P(4,-4)$。\n3. $L$：過 $(8,0)$ 斜率 $1$，$y=x-8$；$P(4,-4)$ 代入 $-4=4-8$ ✓，$P$ 在 $L$ 上。（幾何上：$\\angle PST=45^\\circ$ 且 $P$ 在 $x$ 軸下方，所以 $\\overline{SP}$ 的斜率為 $1$。）\n4. 半徑 $\\overline{PS}=\\sqrt{16+16}=4\\sqrt2$，圓方程式 $(x-4)^2+(y+4)^2=32$。\n\n**答案**：$P(4,-4)$ 在 $L$ 上；圓方程式 $(x-4)^2+(y+4)^2=32$。\n\n**評分重點（本站整理）**\n\n- 說明 $P$ 在中垂線上、$\\angle SPT=90^\\circ$，並判斷 $P$ 在 $x$ 軸下方（逆時針由 $S$ 轉到 $T$）。\n- 驗證 $P$ 滿足 $L$ 的方程式。\n- 圓方程式正確。",
+   "answer_display": "$P(4,-4)$ 在 $L:y=x-8$ 上；圓方程式 $(x-4)^2+(y+4)^2=32$",
+   "check": {
+    "official": null,
+    "solver_a": "P(4,−4) 在 L 上；圓 (x−4)²+(y+4)²=32",
+    "solver_b": "P(4,−4)；(x−4)²+(y+4)²=32",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 20,
+   "type": "constructed",
+   "unit": "平面向量、矩陣",
+   "unit_tags": [
+    "vector_plane",
+    "matrix"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": null,
+    "basis": "本站估計"
+   },
+   "solution_md": "**解題關鍵**：所有星星都繞 $P$ 逆時針轉 $90^\\circ$：$\\overrightarrow{PR}$ 是 $\\overrightarrow{PQ}$ 逆時針旋轉 $90^\\circ$，$(a,b)\\mapsto(-b,a)$。\n\n**詳解**\n\n1. $\\overrightarrow{PQ}=(2-4,\\ 8-(-4))=(-2,12)$。\n2. 逆時針旋轉 $90^\\circ$：$\\begin{bmatrix}0&-1\\\\1&0\\end{bmatrix}\\begin{bmatrix}-2\\\\12\\end{bmatrix}=\\begin{bmatrix}-12\\\\-2\\end{bmatrix}$，$\\overrightarrow{PR}=(-12,-2)$。\n3. $R=P+\\overrightarrow{PR}=(4-12,\\ -4-2)=(-8,-6)$。\n4. 驗算：$|\\overrightarrow{PQ}|=|\\overrightarrow{PR}|=\\sqrt{148}$，$\\overrightarrow{PQ}\\cdot\\overrightarrow{PR}=24-24=0$ ✓。\n\n**答案**：$\\overrightarrow{PR}=(-12,-2)$，$R(-8,-6)$。\n\n**評分重點（本站整理）**\n\n- 用旋轉矩陣（或「長度相等且垂直、方向為逆時針」）求 $\\overrightarrow{PR}$。\n- $R$ 的坐標正確，並可用長度、內積驗算。",
+   "answer_display": "$\\overrightarrow{PR}=(-12,-2)$，$R(-8,-6)$",
+   "check": {
+    "official": null,
+    "solver_a": "PR=(−12,−2)，R(−8,−6)",
+    "solver_b": "PR=(−12,−2)，R=(−8,−6)",
+    "agree": true
+   },
+   "flags": []
+  }
+ ]
+}
