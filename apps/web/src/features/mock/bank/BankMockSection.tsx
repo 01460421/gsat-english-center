@@ -399,7 +399,7 @@ export default function BankMockSection() {
                 checked={tier === t}
                 disabled={unavailable || busy}
                 onChange={() => choose(t)}
-                className="mt-1.5 size-4 shrink-0 accent-[var(--primary)]"
+                className="mt-1.5 size-4 shrink-0 accent-primary"
               />
               <span className="min-w-0">
                 <span className="block font-semibold">{TIER_LABELS[t]}</span>

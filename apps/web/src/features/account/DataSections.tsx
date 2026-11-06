@@ -108,7 +108,7 @@ export function DeleteSection({ onDeleted, reauthNext = '/account' }: { onDelete
   }
 
   return (
-    <section className="rounded-2xl border border-bad/40 bg-surface p-4 sm:p-5 lg:p-6">
+    <section className="rounded-2xl border border-bad-line bg-surface p-4 sm:p-5 lg:p-6">
       <h2 className={sectionTitleCls}>刪除帳號</h2>
       <p className="mt-2 text-[0.95rem]">
         刪除後，你的帳號、寫作與批改紀錄、學習助手的題目與報告都會刪除，而且無法復原；所有裝置會立即登出，這台裝置上的寫作草稿也會清除。需要的話，請先匯出資料。

@@ -141,7 +141,7 @@ export function FollowupComposer({
               ] as const
             ).map(([value, text]) => (
               <label key={value} className={`inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border px-3 text-sm ${mode === value ? 'border-primary bg-primary-soft font-semibold' : 'border-line'}`}>
-                <input type="radio" name={`${id}-mode`} value={value} checked={mode === value} onChange={() => setMode(value)} className="size-4 accent-[var(--primary)]" />
+                <input type="radio" name={`${id}-mode`} value={value} checked={mode === value} onChange={() => setMode(value)} className="size-4 accent-primary" />
                 {text}
               </label>
             ))}

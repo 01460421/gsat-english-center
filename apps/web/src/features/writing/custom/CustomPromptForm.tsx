@@ -186,7 +186,7 @@ function IssueList({ issues, text }: { issues: FieldIssue[]; text: string }) {
   if (issues.length === 0) return null;
   const ranges = issues.flatMap((i) => i.hits.map((h) => [h.start, h.end] as const));
   return (
-    <div className="rounded-xl border border-bad/40 bg-bad/10 px-3 py-2 text-sm">
+    <div className="rounded-xl border border-bad-line bg-bad-soft px-3 py-2 text-sm">
       <ul className="space-y-1">
         {issues.map((i) => (
           <li key={i.code} className="text-bad">

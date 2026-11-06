@@ -220,7 +220,7 @@ function ActiveLimitNotice({ paperId }: { paperId: string }) {
     );
   }
   return (
-    <section ref={sectionRef} id={ACTIVE_LIMIT_ID} tabIndex={-1} aria-label={`作答中的${kindName}`} className="rounded-2xl border border-bad/40 bg-bad/10 p-4 text-sm">
+    <section ref={sectionRef} id={ACTIVE_LIMIT_ID} tabIndex={-1} aria-label={`作答中的${kindName}`} className="rounded-2xl border border-bad-line bg-bad-soft p-4 text-sm">
       <p className="flex gap-2 font-semibold text-bad">
         <CircleAlert aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
         你有 {check.active.length} 份{kindName}還在作答中。
@@ -268,7 +268,7 @@ function ChangeNotices({ paper, redirectedFrom, printed }: { paper: BankPaper; r
   if (textChanged.length > 0) items.push(`${rangeText(textChanged)}的文章文字有修改，答案不變；紙本作答照常計分。`);
   if (items.length === 0) return null;
   return (
-    <ul className="space-y-1 rounded-xl border border-badge-fg/30 bg-badge-bg px-4 py-3 text-sm text-badge-fg" aria-label="本卷提醒">
+    <ul className="space-y-1 rounded-xl border border-badge-line bg-badge-bg px-4 py-3 text-sm text-badge-fg" aria-label="本卷提醒">
       {items.map((t) => (
         <li key={t} className="flex gap-2">
           <CircleAlert aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
@@ -461,7 +461,7 @@ export function PaperInfo({ paper, redirectedFrom = null }: { paper: BankPaper; 
       {weak && !weakEntry?.request && <p className="text-xs text-muted">這份卷子不是在這台裝置組的：題目、題號與答案位置都相同，但「本卷針對」只在組卷的裝置顯示。</p>}
       <PaperSources paper={paper} />
       {ended.length > 0 && (
-        <p className="flex gap-2 rounded-xl border border-badge-fg/30 bg-badge-bg px-4 py-3 text-sm text-badge-fg">
+        <p className="flex gap-2 rounded-xl border border-badge-line bg-badge-bg px-4 py-3 text-sm text-badge-fg">
           <CircleAlert aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
           <span>{rangeText(ended)}的出版社授權已經結束，題目不再顯示，這幾題不計分。</span>
         </p>

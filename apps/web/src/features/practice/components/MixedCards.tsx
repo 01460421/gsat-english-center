@@ -93,7 +93,7 @@ export function MultiSelectCard({
             return (
               <li
                 key={letter}
-                className={`rounded-lg border px-2.5 py-2 break-words ${v.tone === 'ok' ? 'border-line bg-surface' : 'border-bad/40 bg-bad/10'}`}
+                className={`rounded-lg border px-2.5 py-2 break-words ${v.tone === 'ok' ? 'border-line bg-surface' : 'border-bad-line bg-bad-soft'}`}
                 data-testid={`option-verdict-${letter}`}
               >
                 {/* 選項文字至少留 12rem：手機寬度放不下時判斷換到下一行，不把選項擠成一字一行。 */}
@@ -167,7 +167,7 @@ export function openOutcomeReason(outcome: OpenOutcome, q: Pick<Question, 'mode'
 
 function OutcomeBadge({ outcome }: { outcome: OpenOutcome }) {
   const tone =
-    outcome.status === 'correct' ? 'bg-ok/10 text-ok' : outcome.earned > 0 ? 'bg-primary-soft text-primary' : outcome.status === 'unanswered' ? 'bg-surface-2 text-muted' : 'bg-bad/10 text-bad';
+    outcome.status === 'correct' ? 'bg-ok-soft text-ok' : outcome.earned > 0 ? 'bg-primary-soft text-primary' : outcome.status === 'unanswered' ? 'bg-surface-2 text-muted' : 'bg-bad-soft text-bad';
   const icon =
     outcome.status === 'correct' ? <CircleCheck aria-hidden="true" className="size-4" /> : outcome.earned > 0 || outcome.status === 'unanswered' ? <CircleMinus aria-hidden="true" className="size-4" /> : <CircleX aria-hidden="true" className="size-4" />;
   const text =

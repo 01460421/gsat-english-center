@@ -46,7 +46,7 @@ function HitPreview({ text, ranges }: { text: string; ranges: ReadonlyArray<read
   return (
     <div className="mt-2 space-y-1">
       <p className="text-sm">{ZH_WRITING_COPY.hitTitle}</p>
-      <p className="max-h-64 overflow-y-auto rounded-xl border border-bad/40 bg-surface p-3 whitespace-pre-wrap break-words">
+      <p className="max-h-64 overflow-y-auto rounded-xl border border-bad-line bg-surface p-3 whitespace-pre-wrap break-words">
         <ZhText text={text} marks={ranges.map(([start, end]) => ({ start, end, active: true }))} />
       </p>
     </div>
@@ -188,7 +188,7 @@ export function ZhPasteForm({ onStarted }: { onStarted: (accepted: AssistTaskAcc
                   value={s}
                   checked={draft.section === s}
                   onChange={() => update({ section: s })}
-                  className="size-4 accent-[var(--primary)]"
+                  className="size-4 accent-primary"
                 />
                 {ZH_WRITING_SECTION_SHORT[s]}題
               </label>

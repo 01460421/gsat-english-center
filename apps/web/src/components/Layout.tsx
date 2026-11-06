@@ -447,7 +447,7 @@ function MoreMenu({ onDismiss, onNavigate }: { onDismiss: () => void; onNavigate
 
   return (
     <div className="fixed inset-0 z-30 lg:hidden">
-      <div aria-hidden="true" className="absolute inset-0 bg-black/40" onClick={onDismiss} />
+      <div aria-hidden="true" className="absolute inset-0 bg-scrim" onClick={onDismiss} />
       <div
         role="dialog"
         aria-modal="true"
@@ -628,7 +628,7 @@ function ShortcutHelpUnavailable({ onClose }: { onClose: () => void }) {
       ref={ref}
       aria-labelledby={titleId}
       aria-modal="true"
-      className="m-auto w-[min(28rem,calc(100%-2rem))] rounded-2xl border border-line bg-surface p-5 text-fg shadow-lg backdrop:bg-black/40"
+      className="m-auto w-[min(28rem,calc(100%-2rem))] rounded-2xl border border-line bg-surface p-5 text-fg shadow-lg backdrop:bg-scrim"
     >
       <h2 id={titleId} className="text-lg font-semibold">
         鍵盤快捷鍵

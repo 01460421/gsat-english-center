@@ -45,14 +45,14 @@ function ErrorItem({ e, idPrefix }: { e: NumberedError; idPrefix: string }) {
         </span>
       </p>
       <p className="mt-1 break-words" lang="en">
-        <span className="rounded-sm bg-bad/10 px-1 line-through decoration-bad/60">{error.excerpt}</span>
+        <span className="rounded-sm bg-bad-soft px-1 line-through decoration-bad/60">{error.excerpt}</span>
         {error.suggestion && (
           <>
             <span aria-hidden="true" className="mx-1.5 text-muted">
               →
             </span>
             <span className="sr-only">建議改成</span>
-            <span className="rounded-sm bg-ok/10 px-1 text-ok">{error.suggestion}</span>
+            <span className="rounded-sm bg-ok-soft px-1 text-ok">{error.suggestion}</span>
           </>
         )}
       </p>
@@ -186,7 +186,7 @@ export function TranslationResult({
                 <h3 className="mt-3 flex flex-wrap items-center gap-2 text-sm font-semibold text-muted">
                   保留你原意的修正版 <AiBadge />
                 </h3>
-                <p lang="en" className="mt-1 break-words rounded-lg bg-ok/10 px-3 py-2">
+                <p lang="en" className="mt-1 break-words rounded-lg bg-ok-soft px-3 py-2">
                   {grading.corrected[i]}
                 </p>
               </>

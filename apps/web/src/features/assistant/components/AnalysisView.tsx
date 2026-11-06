@@ -247,10 +247,10 @@ export function AnalysisView({
   const single = analysis.items.length === 1;
   return (
     <div className="space-y-6">
-      {analysis.cache_hit && <p className="rounded-xl bg-ok/10 px-4 py-2 text-sm">這份解析之前已經有同學問過，免費提供（0 點）。</p>}
+      {analysis.cache_hit && <p className="rounded-xl bg-ok-soft px-4 py-2 text-sm">這份解析之前已經有同學問過，免費提供（0 點）。</p>}
       {sourceNote && <p className="text-sm text-muted">{sourceNote}</p>}
       {analysis.key_concern_zh && (
-        <p role="note" className="rounded-xl border border-badge-fg/30 bg-badge-bg px-4 py-2 text-sm text-badge-fg">
+        <p role="note" className="rounded-xl border border-badge-line bg-badge-bg px-4 py-2 text-sm text-badge-fg">
           AI 對這題的答案有疑問，已通知站主確認；答案以題目頁為準。
         </p>
       )}

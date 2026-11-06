@@ -145,8 +145,8 @@ export function ChoiceQuestionBlock({
             const checked = chosen.includes(letter);
             const isCorrect = correct.includes(letter);
             let state = 'border-line has-[:checked]:border-primary has-[:checked]:bg-primary-soft';
-            if (showFeedback && isCorrect) state = 'border-ok bg-ok/10';
-            else if (showFeedback && checked) state = 'border-bad bg-bad/10';
+            if (showFeedback && isCorrect) state = 'border-ok bg-ok-soft';
+            else if (showFeedback && checked) state = 'border-bad bg-bad-soft';
             return (
               <label
                 key={letter}
@@ -159,7 +159,7 @@ export function ChoiceQuestionBlock({
                   checked={checked}
                   disabled={locked}
                   onChange={(e) => onChange(letter, e.currentTarget.checked)}
-                  className="mt-1.5 size-4 shrink-0 accent-[var(--primary)]"
+                  className="mt-1.5 size-4 shrink-0 accent-primary"
                 />
                 <span className="min-w-0 flex-1 wrap-anywhere">
                   <span className="font-semibold">({letter})</span>{' '}

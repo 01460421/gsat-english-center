@@ -98,7 +98,7 @@ function Highlighted({ text, ranges }: { text: string; ranges: ReadonlyArray<rea
     });
   parts.push(text.slice(pos));
   return (
-    <p lang="en" className="max-h-64 overflow-y-auto rounded-xl border border-bad/40 bg-surface p-3 whitespace-pre-wrap break-words">
+    <p lang="en" className="max-h-64 overflow-y-auto rounded-xl border border-bad-line bg-surface p-3 whitespace-pre-wrap break-words">
       {parts}
     </p>
   );
@@ -246,12 +246,12 @@ function PasteForm({ prefill = null }: { prefill?: string | null }) {
         </div>
       </div>
       <label className="flex min-h-11 cursor-pointer items-center gap-2">
-        <input type="checkbox" checked={effectiveHint} onChange={(e) => setHintFirst(e.currentTarget.checked)} className="size-4 accent-[var(--primary)]" />
+        <input type="checkbox" checked={effectiveHint} onChange={(e) => setHintFirst(e.currentTarget.checked)} className="size-4 accent-primary" />
         先給提示就好（完整解析先收起來，按「看完整解析」才展開，不另外扣點）
       </label>
       <DoubtPicker value={doubt} onChange={setDoubt} tornOptions={[]} mine={null} showFreeNote={false} kinds={['sentence_unclear', 'unknown_word', 'faster_method', 'guessed']} />
       {warnings.length > 0 && (
-        <ul className="space-y-1 rounded-xl border border-badge-fg/30 bg-badge-bg/60 px-4 py-2 text-sm">
+        <ul className="space-y-1 rounded-xl border border-badge-line bg-badge-bg/60 px-4 py-2 text-sm">
           {warnings.map((w) => (
             <li key={w}>{ASSIST_INPUT_WARNING_MESSAGES[w]}</li>
           ))}
@@ -576,7 +576,7 @@ function PhotoFlow({ caseId, subject, open }: { caseId: string | null; subject: 
   return (
     <section className="space-y-4" aria-label="拍照">
       {failure !== null && (
-        <div role="alert" className="space-y-2 rounded-xl border border-bad/40 bg-bad/10 px-4 py-3 text-sm">
+        <div role="alert" className="space-y-2 rounded-xl border border-bad-line bg-bad-soft px-4 py-3 text-sm">
           <p className="text-bad">
             {otherSubject !== null
               ? `${assistSubjectMismatchText(otherSubject, 'ocr', open)}點數已經退還，照片也已經刪除。`

@@ -34,9 +34,9 @@ function slotClass({ filled, active, verdict }: { filled: boolean; active: boole
     'mx-0.5 inline rounded-md border px-1.5 py-0.5 text-left align-baseline leading-relaxed box-decoration-clone hover:border-primary';
   const tone =
     verdict === 'ok'
-      ? 'border-ok bg-ok/10'
+      ? 'border-ok bg-ok-soft'
       : verdict === 'bad'
-        ? 'border-bad bg-bad/10'
+        ? 'border-bad bg-bad-soft'
         : filled
           ? 'border-primary bg-primary-soft'
           : 'border-dashed border-muted bg-surface-2';

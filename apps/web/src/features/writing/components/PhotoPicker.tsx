@@ -121,7 +121,7 @@ export function PhotoPicker({ photos, onChange, disabled }: { photos: PickedPhot
                 </button>
               </p>
               {issue && (
-                <p role="alert" className="mt-2 rounded-lg border border-badge-fg/30 bg-badge-bg/60 px-3 py-2 text-sm">
+                <p role="alert" className="mt-2 rounded-lg border border-badge-line bg-badge-bg/60 px-3 py-2 text-sm">
                   {PHOTO_QUALITY_MESSAGES[issue]}。建議靠近一點、整頁入鏡重拍（手寫稿請直接拍紙本，不要用長截圖）。
                 </p>
               )}

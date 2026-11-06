@@ -158,14 +158,14 @@ function SentenceReveal({
                       {part.common_errors.map((ce) => (
                         <li key={ce.wrong} className="rounded-lg bg-surface px-3 py-2">
                           <p lang="en" className="break-words">
-                            <span className="rounded-sm bg-bad/10 px-1 line-through decoration-bad/60">{ce.wrong}</span>
+                            <span className="rounded-sm bg-bad-soft px-1 line-through decoration-bad/60">{ce.wrong}</span>
                             {ce.right && (
                               <>
                                 <span aria-hidden="true" className="mx-1.5 text-muted">
                                   →
                                 </span>
                                 <span className="sr-only">應該寫成</span>
-                                <span className="rounded-sm bg-ok/10 px-1 text-ok">{ce.right}</span>
+                                <span className="rounded-sm bg-ok-soft px-1 text-ok">{ce.right}</span>
                               </>
                             )}
                           </p>
@@ -230,7 +230,7 @@ function SentenceReveal({
                   </p>
                   <p lang="en" className="break-words text-sm">
                     <span className="sr-only">照字面直譯會寫成：</span>
-                    <span className="rounded-sm bg-bad/10 px-1 line-through decoration-bad/60">{t.literal_error}</span>
+                    <span className="rounded-sm bg-bad-soft px-1 line-through decoration-bad/60">{t.literal_error}</span>
                   </p>
                   <p>{t.explanation_zh}</p>
                 </li>

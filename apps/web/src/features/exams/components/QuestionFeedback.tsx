@@ -58,8 +58,8 @@ function joinNodes(nodes: ReactNode[]): ReactNode[] {
 
 function StatusBadge({ tone, icon, children }: { tone: 'ok' | 'bad' | 'muted' | 'primary'; icon: ReactNode; children: ReactNode }) {
   const toneClass = {
-    ok: 'bg-ok/10 text-ok',
-    bad: 'bg-bad/10 text-bad',
+    ok: 'bg-ok-soft text-ok',
+    bad: 'bg-bad-soft text-bad',
     muted: 'bg-surface-2 text-muted',
     primary: 'bg-primary-soft text-primary',
   }[tone];
@@ -157,7 +157,7 @@ function ScoringExceptionNote({ q }: { q: Question }) {
   if (!ex) return null;
   const title = { all_credit: '送分：本題所有考生都給分', multiple_correct: '官方公告多個答案皆給分', other: '計分例外' }[ex.type];
   return (
-    <p className="rounded-lg border border-badge-fg/30 bg-badge-bg px-3 py-2 text-sm text-badge-fg">
+    <p className="rounded-lg border border-badge-line bg-badge-bg px-3 py-2 text-sm text-badge-fg">
       <strong>{title}</strong>
       {ex.note ? `：${ex.note}` : ''}
     </p>

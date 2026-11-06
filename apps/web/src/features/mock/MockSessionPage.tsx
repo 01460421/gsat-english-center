@@ -164,7 +164,7 @@ function ConflictBanner({ onTakeOver, onRestart }: { onTakeOver: () => void; onR
   const id = useMockMeta((m) => m.id);
   if (!conflict) return null;
   return (
-    <div role="alert" className="rounded-xl border border-bad/40 bg-bad/10 px-4 py-3 text-sm">
+    <div role="alert" className="rounded-xl border border-bad-line bg-bad-soft px-4 py-3 text-sm">
       {conflict === 'other_tab' && (
         <>
           <p className="font-semibold text-bad">這份模擬考正在另一個分頁作答。</p>
@@ -323,7 +323,7 @@ function ActiveExamBody({ exam, paper, session, resumed, onSubmitted, onAbandon,
           <p className="rounded-xl bg-primary-soft px-4 py-2 text-sm">已接續上次的作答進度。離開期間時間照常計算，目前剩下 {formatDuration(resumedAt)}。</p>
         )}
         {!persisted && !readOnly && (
-          <p role="status" className="rounded-xl border border-bad/40 bg-bad/10 px-4 py-2 text-sm text-bad">
+          <p role="status" className="rounded-xl border border-bad-line bg-bad-soft px-4 py-2 text-sm text-bad">
             這個瀏覽器無法儲存作答進度（可能是無痕模式或停用了網站資料），重新整理或關掉分頁後答案會遺失。
           </p>
         )}

@@ -263,7 +263,7 @@ export function OcrBlocksConfirm({
       )}
 
       {zh && zhSection?.section === 'zh_form' && (
-        <div role="note" className="space-y-2 rounded-xl border border-badge-fg/30 bg-badge-bg/40 px-4 py-3" data-testid="zh-ocr-form-reminder">
+        <div role="note" className="space-y-2 rounded-xl border border-badge-line bg-badge-bg/40 px-4 py-3" data-testid="zh-ocr-form-reminder">
           <p className="text-sm font-medium">{ZH_COPY.ocrFormReminder}</p>
           {zhTargetText(confirmed.question.blocks, targets).trim() !== '' && (
             <p className="text-lg leading-loose whitespace-pre-wrap break-words">
@@ -286,7 +286,7 @@ export function OcrBlocksConfirm({
                     checked={checked}
                     disabled={!checked && targets.length >= maxTargets}
                     onChange={(e) => toggleTarget(label, e.currentTarget.checked)}
-                    className="size-4 accent-[var(--primary)]"
+                    className="size-4 accent-primary"
                   />
                   第 {label} 題
                 </label>
@@ -426,7 +426,7 @@ export function OcrBlocksConfirm({
       )}
       {!(zh && format === 'writing') && (
         <label className="flex min-h-11 cursor-pointer items-center gap-2">
-          <input type="checkbox" checked={effectiveHint} onChange={(e) => setHintFirst(e.currentTarget.checked)} className="size-4 accent-[var(--primary)]" />
+          <input type="checkbox" checked={effectiveHint} onChange={(e) => setHintFirst(e.currentTarget.checked)} className="size-4 accent-primary" />
           先給提示就好（完整解析先收起來，按「看完整解析」才展開，不另外扣點）
         </label>
       )}
@@ -445,7 +445,7 @@ export function OcrBlocksConfirm({
         <DoubtPicker value={doubt} onChange={setDoubt} tornOptions={[]} mine={null} showFreeNote={false} kinds={['sentence_unclear', 'unknown_word', 'faster_method', 'guessed']} />
       )}
       {warnings.length > 0 && (
-        <ul className="space-y-1 rounded-xl border border-badge-fg/30 bg-badge-bg/60 px-4 py-2 text-sm">
+        <ul className="space-y-1 rounded-xl border border-badge-line bg-badge-bg/60 px-4 py-2 text-sm">
           {warnings.map((w) => (
             <li key={w}>{ASSIST_INPUT_WARNING_MESSAGES[w]}</li>
           ))}

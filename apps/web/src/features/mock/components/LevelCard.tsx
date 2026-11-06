@@ -111,7 +111,7 @@ export function LevelCard({
       <StandardsScale level={info.level} scale={scale} />
       <ul className="mt-3 grid grid-cols-1 gap-1 text-sm sm:grid-cols-2">
         {standards.map((s) => (
-          <li key={s.name} className={`flex justify-between gap-2 rounded-lg px-3 py-1.5 ${info.level >= s.level ? 'bg-ok/10' : 'bg-surface-2'}`}>
+          <li key={s.name} className={`flex justify-between gap-2 rounded-lg px-3 py-1.5 ${info.level >= s.level ? 'bg-ok-soft' : 'bg-surface-2'}`}>
             <span>
               {s.name}
               <span className="ml-1 text-xs text-muted">（前 {formatPoints(s.pct_at_or_above)}%）</span>

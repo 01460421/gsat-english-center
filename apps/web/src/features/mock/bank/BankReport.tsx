@@ -154,7 +154,7 @@ function StatusNotes({ statuses, slots }: { statuses: readonly SlotStatus[]; slo
   const items = statusNoteItems(statuses, slots);
   if (items.length === 0) return null;
   return (
-    <ul aria-label="題組狀態" className="space-y-1 rounded-xl border border-badge-fg/30 bg-badge-bg px-4 py-3 text-sm text-badge-fg">
+    <ul aria-label="題組狀態" className="space-y-1 rounded-xl border border-badge-line bg-badge-bg px-4 py-3 text-sm text-badge-fg">
       {items.map((t) => (
         <li key={t} className="flex gap-2">
           <CircleAlert aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
@@ -382,7 +382,7 @@ function ReportBody({ paper, initial }: { paper: BankPaper; initial: MockAttempt
       </header>
 
       {report.pendingMax > 0 && (
-        <p role="status" className="rounded-xl border border-bad/40 bg-bad/10 px-4 py-2 text-sm">
+        <p role="status" className="rounded-xl border border-bad-line bg-bad-soft px-4 py-2 text-sm">
           中譯英與作文尚未自評，總分暫不含 {formatPoints(report.pendingMax)} 分{showAdvice ? '（不影響下面的難度建議）' : ''}。
           <a href="#self-assessment" className="ml-1 font-semibold text-primary underline">
             前往自評

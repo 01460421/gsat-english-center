@@ -214,7 +214,7 @@ export function ExemplarConfirm({
       {heading}
       {preview}
       {bank && !lockPassed ? (
-        <div className="space-y-3 rounded-2xl border border-badge-fg/30 bg-badge-bg/60 p-4">
+        <div className="space-y-3 rounded-2xl border border-badge-line bg-badge-bg/60 p-4">
           <p>{BANK_LOCK_TEXT}</p>
           <div className="flex flex-wrap gap-2">
             {attemptPath && (

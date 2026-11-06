@@ -93,7 +93,7 @@ export function PastPrompts({
                         {p.number === 1 ? '第一大題' : '第二大題'}
                         {st && (
                           <span
-                            className={`ml-2 inline-block rounded-full px-2 py-0.5 text-xs font-semibold ${st.tone === 'failed' ? 'bg-bad/10 text-bad' : 'bg-primary-soft text-primary'}`}
+                            className={`ml-2 inline-block rounded-full px-2 py-0.5 text-xs font-semibold ${st.tone === 'failed' ? 'bg-bad-soft text-bad' : 'bg-primary-soft text-primary'}`}
                             data-testid="zh-prompt-status"
                           >
                             {st.text}

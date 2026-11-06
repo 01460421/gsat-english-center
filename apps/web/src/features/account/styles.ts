@@ -22,6 +22,6 @@ export const labelCls = 'mb-1 block text-sm font-medium';
 
 export const sectionTitleCls = 'text-lg font-semibold';
 
-export const checkboxCls = 'mt-1 size-4 shrink-0 accent-[var(--primary)]';
+export const checkboxCls = 'mt-1 size-4 shrink-0 accent-primary';
 
 export const pageTitleCls = 'text-2xl font-bold tracking-tight lg:text-3xl';

@@ -25,13 +25,13 @@ export function ExemplarTypicalErrors({ errors, headingLevel = 4 }: { errors: Ex
             <p className="flex flex-wrap items-baseline gap-x-2">
               <span className="shrink-0 rounded-full bg-bad/15 px-2 py-0.5 text-sm font-semibold text-bad">{WRONG_LABEL}</span>
               <span className="sr-only">{WRONG_SR}</span>
-              <del lang="en" className="rounded-sm bg-bad/10 px-1 break-words decoration-bad/60">
+              <del lang="en" className="rounded-sm bg-bad-soft px-1 break-words decoration-bad/60">
                 {t.wrong}
               </del>
             </p>
             <p className="flex flex-wrap items-baseline gap-x-2">
               <span className="shrink-0 rounded-full bg-ok/15 px-2 py-0.5 text-sm font-semibold">{RIGHT_LABEL}</span>
-              <span lang="en" className="rounded-sm bg-ok/10 px-1 break-words">
+              <span lang="en" className="rounded-sm bg-ok-soft px-1 break-words">
                 {t.right}
               </span>
             </p>

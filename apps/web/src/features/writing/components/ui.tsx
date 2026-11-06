@@ -107,7 +107,7 @@ export const EXEMPLAR_AI_NOTICE =
 export function AiNotice({ children, generic = false, variant }: { children?: ReactNode; generic?: boolean; variant?: AiVariant }) {
   const assistant = variant === 'assistant';
   return (
-    <p className="flex flex-wrap items-center gap-2 rounded-xl border border-badge-fg/30 bg-badge-bg/60 px-4 py-2 text-sm">
+    <p className="flex flex-wrap items-center gap-2 rounded-xl border border-badge-line bg-badge-bg/60 px-4 py-2 text-sm">
       {assistant ? <AiBadge variant="assistant" /> : variant === 'exemplar' ? <AiBadge variant="exemplar" /> : <AiBadge />}
       <span>
         {assistant
@@ -127,9 +127,9 @@ type Tone = 'info' | 'warn' | 'error' | 'ok';
 
 const TONE_CLASS: Record<Tone, string> = {
   info: 'border-line bg-surface-2',
-  warn: 'border-badge-fg/30 bg-badge-bg/60',
-  error: 'border-bad/40 bg-bad/10 text-bad',
-  ok: 'border-ok/30 bg-ok/10',
+  warn: 'border-badge-line bg-badge-bg/60',
+  error: 'border-bad-line bg-bad-soft text-bad',
+  ok: 'border-ok/30 bg-ok-soft',
 };
 
 export function Notice({ tone = 'info', children, role }: { tone?: Tone; children: ReactNode; role?: 'status' | 'alert' }) {
@@ -143,7 +143,7 @@ export function Notice({ tone = 'info', children, role }: { tone?: Tone; childre
 /** 錯誤訊息＋下一步（登入、申請、同意）。 */
 export function ErrorMessage({ view }: { view: ErrorView }) {
   return (
-    <div role="alert" className="rounded-xl border border-bad/40 bg-bad/10 px-4 py-3 text-sm">
+    <div role="alert" className="rounded-xl border border-bad-line bg-bad-soft px-4 py-3 text-sm">
       <p className="text-bad">{view.message}</p>
       {view.action?.to && (
         <Link to={view.action.to} className="mt-2 inline-flex min-h-9 items-center font-medium text-primary underline underline-offset-2">

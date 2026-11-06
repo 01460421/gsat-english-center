@@ -56,7 +56,7 @@ export function QuizView({ active }: { active: boolean }) {
                 value={m.id}
                 checked={mode === m.id}
                 onChange={() => setMode(m.id)}
-                className="mt-1.5 accent-[var(--primary)]"
+                className="mt-1.5 accent-primary"
               />
               <span className="min-w-0">
                 <span className="block font-medium">{m.label}</span>

@@ -117,7 +117,7 @@ export function SubmitConfirm({
           guard.cancel();
         }
       }}
-      className="space-y-3 rounded-xl border border-badge-fg/30 bg-badge-bg/60 px-4 py-3 text-sm"
+      className="space-y-3 rounded-xl border border-badge-line bg-badge-bg/60 px-4 py-3 text-sm"
     >
       <p id={leadId} className="font-semibold">
         送出 AI 批改會用 <span className="tabular-nums">{points}</span> 點

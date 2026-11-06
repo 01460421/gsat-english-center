@@ -149,9 +149,9 @@ function ChoiceList({ q, answer, onChoose }: { q: ChoiceQuestion; answer: Answer
         const tone = !answer
           ? 'border-line hover:border-primary hover:bg-primary-soft'
           : isAnswer
-            ? 'border-ok bg-ok/10'
+            ? 'border-ok bg-ok-soft'
             : isChosen
-              ? 'border-bad bg-bad/10'
+              ? 'border-bad bg-bad-soft'
               : 'border-line text-muted';
         return (
           <li key={`${o.entryId}:${i}`} className="min-w-0">

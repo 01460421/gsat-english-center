@@ -244,7 +244,7 @@ function WelcomeForm({ me, next, onDeleted }: { me: MeResponseSignedIn; next: st
                       value={band}
                       checked={ageBand === band}
                       onChange={() => setAgeBand(band)}
-                      className="accent-[var(--primary)]"
+                      className="accent-primary"
                     />
                     <span>{AGE_BAND_LABELS[band]}</span>
                   </label>

@@ -130,7 +130,7 @@ export function ZhExemplarConfirm({
       </ul>
       {standalone && (
         <p>
-          <span className="inline-flex rounded-full border border-badge-fg/30 bg-badge-bg px-3 py-1 text-sm font-semibold text-badge-fg" data-testid="zh-exemplar-confirm-label">
+          <span className="inline-flex rounded-full border border-badge-line bg-badge-bg px-3 py-1 text-sm font-semibold text-badge-fg" data-testid="zh-exemplar-confirm-label">
             {ZH_EXEMPLAR_LABEL}
           </span>
         </p>
@@ -282,7 +282,7 @@ export function ZhExemplarBlock({
         />
       )}
       {state.lastFailed && (
-        <div role="alert" className="rounded-xl border border-bad/40 bg-bad/10 px-4 py-3" data-testid="zh-exemplar-failed">
+        <div role="alert" className="rounded-xl border border-bad-line bg-bad-soft px-4 py-3" data-testid="zh-exemplar-failed">
           <p className="text-bad">
             {assistRefundMessage(state.lastFailed.failure)}，{ZH_EXEMPLAR_COPY.failed}
           </p>

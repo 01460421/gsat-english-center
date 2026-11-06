@@ -117,7 +117,7 @@ export function ZhQuestionFields({
               <div className="mt-1 flex flex-wrap gap-2">
                 {ZH_FORMATS.map((f) => (
                   <label key={f} className={`inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border px-3 text-sm ${format === f ? 'border-primary bg-primary-soft font-semibold' : 'border-line'}`}>
-                    <input type="radio" name={`${id}-format`} value={f} checked={format === f} onChange={() => set({ format: f })} className="size-4 accent-[var(--primary)]" />
+                    <input type="radio" name={`${id}-format`} value={f} checked={format === f} onChange={() => set({ format: f })} className="size-4 accent-primary" />
                     {ZH_FORMAT_LABELS[f]}
                   </label>
                 ))}
@@ -129,7 +129,7 @@ export function ZhQuestionFields({
                 <div className="mt-1 flex flex-wrap gap-2">
                   {ZH_CHOICE_MODES.map((m) => (
                     <label key={m} className={`inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border px-3 text-sm ${mode === m ? 'border-primary bg-primary-soft font-semibold' : 'border-line'}`}>
-                      <input type="radio" name={`${id}-mode`} value={m} checked={mode === m} onChange={() => set({ format: 'choice', mode: m })} className="size-4 accent-[var(--primary)]" />
+                      <input type="radio" name={`${id}-mode`} value={m} checked={mode === m} onChange={() => set({ format: 'choice', mode: m })} className="size-4 accent-primary" />
                       {ZH_CHOICE_MODE_LABELS[m]}
                     </label>
                   ))}
@@ -225,7 +225,7 @@ export function ZhQuestionFields({
           </p>
           {showQ1 && (
             <label className="flex min-h-11 cursor-pointer items-center gap-2">
-              <input type="checkbox" checked={value.draftQ1} onChange={(e) => set({ draftQ1: e.currentTarget.checked })} className="size-4 accent-[var(--primary)]" />
+              <input type="checkbox" checked={value.draftQ1} onChange={(e) => set({ draftQ1: e.currentTarget.checked })} className="size-4 accent-primary" />
               {ZH_COPY.draftQ1}
             </label>
           )}

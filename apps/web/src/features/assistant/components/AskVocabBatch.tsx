@@ -40,7 +40,7 @@ export function AskVocabBatch({ items }: { items: readonly MistakeItem[] }) {
                     const on = e.currentTarget.checked;
                     setChosen((cur) => (on ? [...cur, item.entry_id] : cur.filter((c) => c !== item.entry_id)));
                   }}
-                  className="size-4 accent-[var(--primary)]"
+                  className="size-4 accent-primary"
                 />
                 <span lang="en">{item.word}</span>
                 <span className="text-xs text-muted">錯 {item.wrong_count} 次</span>

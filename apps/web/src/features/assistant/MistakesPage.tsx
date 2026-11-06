@@ -265,7 +265,7 @@ function Body() {
         </select>
       </div>
       <label className="inline-flex min-h-11 cursor-pointer items-center gap-2">
-        <input type="checkbox" checked={filters.notAsked} onChange={(e) => set('notAsked', e.currentTarget.checked)} className="size-4 accent-[var(--primary)]" />
+        <input type="checkbox" checked={filters.notAsked} onChange={(e) => set('notAsked', e.currentTarget.checked)} className="size-4 accent-primary" />
         只看沒問過的
       </label>
     </div>

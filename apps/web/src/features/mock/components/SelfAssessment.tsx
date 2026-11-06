@@ -174,7 +174,7 @@ function ScoreBadge({ item }: { item: OpenItemResult }) {
       ? '尚未自評'
       : `${formatPoints(item.score)}／${formatPoints(item.max)} 分${item.source === 'auto' ? '（自動）' : item.source === 'suggested' ? '（建議，可改）' : '（自評）'}`;
   return (
-    <span className={`rounded-full px-2.5 py-0.5 text-sm font-semibold tabular-nums ${item.score === null ? 'bg-bad/10 text-bad' : 'bg-primary-soft text-primary'}`}>
+    <span className={`rounded-full px-2.5 py-0.5 text-sm font-semibold tabular-nums ${item.score === null ? 'bg-bad-soft text-bad' : 'bg-primary-soft text-primary'}`}>
       {text}
     </span>
   );
@@ -225,7 +225,7 @@ function MixedItem({ item, answer, onChange }: { item: OpenItemResult; answer: A
                   name={name}
                   checked={item.score === c.value}
                   onChange={() => onChange(item.label, c.value)}
-                  className="mt-1 accent-[var(--primary)]"
+                  className="mt-1 accent-primary"
                 />
                 <span>
                   <strong className="tabular-nums">{formatPoints(c.value)} 分</strong>　{c.text}
@@ -334,7 +334,7 @@ function TranslationItem({
             {errors === undefined && <p className="mt-1 text-xs text-muted">對照檢核項目數一數，沒有錯就填 0。</p>}
           </div>
           <label className="flex min-h-11 cursor-pointer items-start gap-3 text-sm">
-            <input type="checkbox" checked={mechanics} onChange={(e) => save({ errors: errors ?? 0, mechanics: e.currentTarget.checked })} className="mt-1 accent-[var(--primary)]" />
+            <input type="checkbox" checked={mechanics} onChange={(e) => save({ errors: errors ?? 0, mechanics: e.currentTarget.checked })} className="mt-1 accent-primary" />
             <span>
               句首沒有大寫，或句尾標點不妥（−0.5，只扣一次）
               <span className="block text-xs text-muted">
@@ -414,7 +414,7 @@ function CompositionItem({
             </p>
           </details>
           <label className="mt-3 flex min-h-11 cursor-pointer items-start gap-3 text-sm">
-            <input type="checkbox" checked={current.offTopic} onChange={(e) => save({ ...current, offTopic: e.currentTarget.checked })} className="mt-1 accent-[var(--primary)]" />
+            <input type="checkbox" checked={current.offTopic} onChange={(e) => save({ ...current, offTopic: e.currentTarget.checked })} className="mt-1 accent-primary" />
             <span>
               離題（沒有依提示寫）
               <span className="block text-xs text-muted">勾選後其他各項都算 0 分。</span>

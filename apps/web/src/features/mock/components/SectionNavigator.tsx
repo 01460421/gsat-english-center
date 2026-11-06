@@ -98,7 +98,7 @@ export function QuestionPalette({ index, onGoQuestion }: { index: PaperIndex; on
                 ] as const
               ).map(([value, text]) => (
                 <label key={value} className="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border border-line px-3 has-[:checked]:border-primary has-[:checked]:bg-primary-soft">
-                  <input type="radio" name={`${id}-mode`} value={value} checked={mode === value} onChange={() => setMode(value)} className="accent-[var(--primary)]" />
+                  <input type="radio" name={`${id}-mode`} value={value} checked={mode === value} onChange={() => setMode(value)} className="accent-primary" />
                   {text}
                 </label>
               ))}

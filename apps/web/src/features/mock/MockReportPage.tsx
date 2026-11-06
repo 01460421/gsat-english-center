@@ -194,7 +194,7 @@ function ReportBody({ exam, paper, initial }: { exam: Exam; paper: MockPaper; in
       </header>
 
       {report.pendingMax > 0 && (
-        <p role="status" className="rounded-xl border border-bad/40 bg-bad/10 px-4 py-2 text-sm">
+        <p role="status" className="rounded-xl border border-bad-line bg-bad-soft px-4 py-2 text-sm">
           非選擇題尚未自評，總分與級分暫不含 {formatPoints(report.pendingMax)} 分。
           <a href="#self-assessment" className="ml-1 font-semibold text-primary underline">
             前往自評
@@ -409,7 +409,7 @@ export default function MockReportPage() {
         模擬考列表
       </Link>
       {unsaved && (
-        <p role="status" className="mb-4 rounded-xl border border-bad/40 bg-bad/10 px-4 py-2 text-sm text-bad">
+        <p role="status" className="mb-4 rounded-xl border border-bad-line bg-bad-soft px-4 py-2 text-sm text-bad">
           這個瀏覽器無法儲存成績單（可能是無痕模式、停用了網站資料或空間已滿），離開這一頁之後就找不到了。可以先下載含答案的 PDF，或把這一頁截圖保存。
         </p>
       )}

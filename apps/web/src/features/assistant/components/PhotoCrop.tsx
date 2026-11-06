@@ -97,7 +97,7 @@ export function PhotoCrop({
         只框<strong>要問的題目</strong>（題目、選項、你的作答與它的文章）。不要框到解答、詳解、評分說明、範文，也不要框到姓名、學號或學校。
       </p>
       {broken ? (
-        <p role="alert" className="rounded-xl border border-bad/40 bg-bad/5 px-4 py-3 text-sm">
+        <p role="alert" className="rounded-xl border border-bad-line bg-bad/5 px-4 py-3 text-sm">
           這台裝置無法預覽這張照片（可能是 HEIC 格式）。請改選 JPEG 或 PNG 照片，或用相機重新拍一張。
         </p>
       ) : (
@@ -147,7 +147,7 @@ export function PhotoCrop({
                 const value = Number(e.currentTarget.value);
                 setInsets((c) => clampInsets({ ...c, [key]: value }, key));
               }}
-              className="min-h-11 w-full accent-[var(--primary)]"
+              className="min-h-11 w-full accent-primary"
             />
           </div>
         ))}

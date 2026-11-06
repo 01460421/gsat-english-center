@@ -199,7 +199,7 @@ function ActiveSession({ exam, store, resumed, onClear }: { exam: Exam; store: A
         </p>
       )}
       {!persisted && (
-        <p role="status" className="rounded-xl border border-bad/40 bg-bad/10 px-4 py-2 text-sm text-bad">
+        <p role="status" className="rounded-xl border border-bad-line bg-bad-soft px-4 py-2 text-sm text-bad">
           這個瀏覽器無法儲存作答進度（可能是無痕模式或停用了網站資料），重新整理後答案會遺失。
         </p>
       )}

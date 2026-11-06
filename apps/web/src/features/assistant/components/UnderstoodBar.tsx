@@ -77,7 +77,7 @@ export function UnderstoodBar({ detail, onUpdated }: { detail: AssistCaseDetail;
                 value={o.value}
                 checked={understood === o.value}
                 onChange={() => void save({ understood: o.value }, `已記下「${o.label}」`)}
-                className="size-4 accent-[var(--primary)]"
+                className="size-4 accent-primary"
               />
               {o.label}
             </label>
@@ -90,7 +90,7 @@ export function UnderstoodBar({ detail, onUpdated }: { detail: AssistCaseDetail;
           type="button"
           aria-pressed={flagged}
           onClick={() => void save({ rating: flagged ? null : 'wrong' }, flagged ? '已取消「這則解析有錯」' : '已記下「這則解析有錯」，謝謝你')}
-          className={`inline-flex min-h-11 items-center gap-1.5 rounded-full border px-4 text-sm ${flagged ? 'border-bad bg-bad/10 font-semibold text-bad' : 'border-line text-muted lg:hover:border-primary'}`}
+          className={`inline-flex min-h-11 items-center gap-1.5 rounded-full border px-4 text-sm ${flagged ? 'border-bad bg-bad-soft font-semibold text-bad' : 'border-line text-muted lg:hover:border-primary'}`}
         >
           <Flag aria-hidden="true" className="size-4" />
           {flagged ? '已標記：這則解析有錯' : '這則解析有錯'}

@@ -54,7 +54,7 @@ export function LeaveSessionDialog({ prompt, onStay, onLeave }: { prompt: LeaveP
         e.preventDefault();
         onStay();
       }}
-      className="m-auto w-[min(30rem,calc(100%-2rem))] rounded-2xl border border-line bg-surface p-0 text-fg shadow-lg backdrop:bg-black/40"
+      className="m-auto w-[min(30rem,calc(100%-2rem))] rounded-2xl border border-line bg-surface p-0 text-fg shadow-lg backdrop:bg-scrim"
     >
       <div className="flex items-start justify-between gap-3 px-5 pt-4">
         <h2 id={`${id}-title`} className="text-lg font-semibold">

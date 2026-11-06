@@ -105,7 +105,7 @@ export function EssayResult({
         </p>
         {selfTotal !== null && <p className="mt-1 text-sm text-muted">你的自評：{selfTotal} 分</p>}
         {grading.off_topic && (
-          <p className="mt-2 rounded-lg bg-bad/10 px-3 py-2 text-sm text-bad">AI 判斷這篇作文離題（沒有回應題目的要求），依計分規則其他各項以 0 分計。</p>
+          <p className="mt-2 rounded-lg bg-bad-soft px-3 py-2 text-sm text-bad">AI 判斷這篇作文離題（沒有回應題目的要求），依計分規則其他各項以 0 分計。</p>
         )}
         <dl className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
           {ESSAY_CRITERIA.map((c) => (
@@ -290,14 +290,14 @@ export function EssayResult({
                     <span className="text-xs text-muted">第 {err.paragraph_index + 1} 段</span>
                   </p>
                   <p className="mt-1 break-words" lang="en">
-                    <span className="rounded-sm bg-bad/10 px-1 line-through decoration-bad/60">{err.excerpt}</span>
+                    <span className="rounded-sm bg-bad-soft px-1 line-through decoration-bad/60">{err.excerpt}</span>
                     {err.suggestion && (
                       <>
                         <span aria-hidden="true" className="mx-1.5 text-muted">
                           →
                         </span>
                         <span className="sr-only">建議改成</span>
-                        <span className="rounded-sm bg-ok/10 px-1 text-ok">{err.suggestion}</span>
+                        <span className="rounded-sm bg-ok-soft px-1 text-ok">{err.suggestion}</span>
                       </>
                     )}
                   </p>

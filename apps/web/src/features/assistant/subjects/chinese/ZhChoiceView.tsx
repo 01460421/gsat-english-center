@@ -93,7 +93,7 @@ export function judgeComboLine(item: Pick<ZhChoiceItemView, 'judge_labels' | 'op
 function Warnings({ item, onSwitchToMulti, switching }: { item: ZhChoiceItemView; onSwitchToMulti?: (() => void) | undefined; switching: boolean }) {
   if (item.warnings.length === 0) return null;
   return (
-    <ul className="space-y-1 rounded-xl border border-badge-fg/30 bg-badge-bg/60 px-3 py-2 text-sm text-badge-fg">
+    <ul className="space-y-1 rounded-xl border border-badge-line bg-badge-bg/60 px-3 py-2 text-sm text-badge-fg">
       {item.warnings.map((w) => (
         <li key={w} className="space-y-1">
           <p>{ZH_ITEM_WARNING_TEXT[w]}</p>

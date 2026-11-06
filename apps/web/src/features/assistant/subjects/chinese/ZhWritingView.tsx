@@ -227,7 +227,7 @@ export function ZhWritingView({ analysis, common, draftText = null }: { analysis
                 <li key={i} className="space-y-0.5 rounded-xl border border-line px-3 py-2">
                   <p className="flex flex-wrap items-center gap-2">
                     <span className="font-medium break-words">{c.point_zh}</span>
-                    <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${c.status === 'met' ? 'bg-ok/10 text-ok' : c.status === 'missing' ? 'bg-bad/10 text-bad' : 'bg-primary-soft text-primary'}`}>
+                    <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${c.status === 'met' ? 'bg-ok-soft text-ok' : c.status === 'missing' ? 'bg-bad-soft text-bad' : 'bg-primary-soft text-primary'}`}>
                       {ZH_DRAFT_STATUS_TEXT[c.status]}
                     </span>
                   </p>

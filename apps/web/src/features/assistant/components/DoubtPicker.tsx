@@ -64,7 +64,7 @@ export function DoubtPicker({
           return (
             <li key={kind} className="min-w-0">
               <label className={`flex min-h-11 cursor-pointer items-center gap-3 rounded-xl border px-3 py-2 ${checked ? 'border-primary bg-primary-soft' : 'border-line'}`}>
-                <input type="checkbox" checked={checked} onChange={(e) => toggle(kind, e.currentTarget.checked)} className="size-4 shrink-0 accent-[var(--primary)]" />
+                <input type="checkbox" checked={checked} onChange={(e) => toggle(kind, e.currentTarget.checked)} className="size-4 shrink-0 accent-primary" />
                 <span className="min-w-0 break-words">{label}</span>
               </label>
             </li>

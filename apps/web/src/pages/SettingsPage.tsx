@@ -41,7 +41,7 @@ function ThemeSetting() {
               value={opt.value}
               checked={current === opt.value}
               onChange={() => setThemePreference(opt.value)}
-              className="mt-1.5 accent-[var(--primary)]"
+              className="mt-1.5 accent-primary"
             />
             <span>
               <span className="block font-medium">{opt.label}</span>
@@ -131,7 +131,7 @@ function PrefRadios<T extends string>({
       <div className="grid gap-2 sm:grid-cols-3">
         {options.map((opt) => (
           <label key={opt.value} className={optionCls}>
-            <input type="radio" name={name} value={opt.value} checked={value === opt.value} onChange={() => onChange(opt.value)} className="mt-1.5 accent-[var(--primary)]" />
+            <input type="radio" name={name} value={opt.value} checked={value === opt.value} onChange={() => onChange(opt.value)} className="mt-1.5 accent-primary" />
             <span>
               <span className="block font-medium">{opt.label}</span>
               {opt.hint && <span className="block text-sm text-muted">{opt.hint}</span>}
@@ -180,7 +180,7 @@ function DesktopSettings() {
               checked={singleKey !== 'off'}
               onChange={(e) => setSingleKey(e.target.checked ? 'on' : 'off')}
               aria-describedby={singleKeyHintId}
-              className="size-4 accent-[var(--primary)]"
+              className="size-4 accent-primary"
             />
             <label htmlFor={singleKeyId} className="font-medium">
               單鍵快捷鍵

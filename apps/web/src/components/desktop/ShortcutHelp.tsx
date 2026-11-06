@@ -48,7 +48,7 @@ export default function ShortcutHelp({ onClose }: { onClose: () => void }) {
       ref={ref}
       aria-labelledby={titleId}
       aria-modal="true"
-      className="m-auto w-[min(34rem,calc(100%-2rem))] rounded-2xl border border-line bg-surface p-0 text-fg shadow-lg backdrop:bg-black/40"
+      className="m-auto w-[min(34rem,calc(100%-2rem))] rounded-2xl border border-line bg-surface p-0 text-fg shadow-lg backdrop:bg-scrim"
     >
       <div className="flex items-center justify-between gap-3 border-b border-line py-2 pr-2 pl-5">
         <h2 id={titleId} className="text-lg font-semibold">
@@ -109,7 +109,7 @@ export default function ShortcutHelp({ onClose }: { onClose: () => void }) {
             checked={singleKey !== 'off'}
             onChange={(e) => setSingleKey(e.target.checked ? 'on' : 'off')}
             aria-describedby={hintId}
-            className="size-4 accent-[var(--primary)]"
+            className="size-4 accent-primary"
           />
           <label htmlFor={switchId} className="font-medium">
             單鍵快捷鍵

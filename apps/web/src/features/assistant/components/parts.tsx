@@ -55,9 +55,9 @@ const STATUS_TEXT: Record<ItemStatus | AssistVerdict, string> = {
 export function VerdictBadge({ status, basis }: { status: ItemStatus | AssistVerdict; basis?: 'program' | 'client' | 'none' }) {
   const tone =
     status === 'correct' || status === 'doubt'
-      ? 'bg-ok/10 text-ok'
+      ? 'bg-ok-soft text-ok'
       : status === 'wrong'
-        ? 'bg-bad/10 text-bad'
+        ? 'bg-bad-soft text-bad'
         : status === 'partial'
           ? 'bg-primary-soft text-primary'
           : 'bg-surface-2 text-muted';

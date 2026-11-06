@@ -66,7 +66,7 @@ export function LabelPicker({
                   checked={checked}
                   disabled={disabled}
                   onChange={(e) => toggle(item.label, e.currentTarget.checked)}
-                  className="size-4 shrink-0 accent-[var(--primary)]"
+                  className="size-4 shrink-0 accent-primary"
                 />
                 <span className="min-w-0 flex-1">
                   <span className="font-medium break-words">{/^\d/.test(item.display) ? `第 ${item.display} ${unit}` : item.display}</span>

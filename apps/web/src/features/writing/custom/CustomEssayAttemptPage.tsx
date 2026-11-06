@@ -156,7 +156,7 @@ function RequirementsConfirm({
   const p = pending.paragraphs;
   const w = pending.words;
   return (
-    <div role="group" aria-labelledby={REQ_CONFIRM_HEADING} className="space-y-3 rounded-xl border border-badge-fg/30 bg-badge-bg/60 px-4 py-3 text-sm">
+    <div role="group" aria-labelledby={REQ_CONFIRM_HEADING} className="space-y-3 rounded-xl border border-badge-line bg-badge-bg/60 px-4 py-3 text-sm">
       <p id={REQ_CONFIRM_HEADING} tabIndex={-1} className="font-semibold focus:outline-none">
         送出前確認題目的要求
       </p>
@@ -716,7 +716,7 @@ function CustomEssayAttempt() {
         </div>
       )}
       {fromState.status === 'ask' && (
-        <div role="group" aria-labelledby="custom-from-h" className="space-y-2 rounded-xl border border-badge-fg/30 bg-badge-bg/60 px-4 py-3 text-sm">
+        <div role="group" aria-labelledby="custom-from-h" className="space-y-2 rounded-xl border border-badge-line bg-badge-bg/60 px-4 py-3 text-sm">
           <p id="custom-from-h" className="font-semibold">
             {fromState.plan.hidden
               ? '要載入之前作答的作文嗎？'
@@ -834,7 +834,7 @@ function CustomEssayAttempt() {
             {length.chars > 3000 && <span className={length.overChars ? 'font-semibold text-bad' : ''}>・{length.chars.toLocaleString('zh-TW')}／4,000 字元</span>}
           </p>
           {essayError && (
-            <p id="custom-essay-error" role="alert" className="rounded-xl border border-bad/40 bg-bad/10 px-4 py-3 text-sm text-bad">
+            <p id="custom-essay-error" role="alert" className="rounded-xl border border-bad-line bg-bad-soft px-4 py-3 text-sm text-bad">
               {essayError}
             </p>
           )}

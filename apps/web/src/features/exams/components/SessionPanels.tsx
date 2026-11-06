@@ -75,7 +75,7 @@ export function SetupPanel({ exam, onStart }: { exam: Exam; onStart: (mode: Atte
                   value={opt.value}
                   checked={mode === opt.value}
                   onChange={() => setMode(opt.value)}
-                  className="mt-1.5 accent-[var(--primary)]"
+                  className="mt-1.5 accent-primary"
                 />
                 <span>
                   <span className="block font-medium">{opt.label}</span>
@@ -248,7 +248,7 @@ function RestartControl({ onRestart }: { onRestart: () => void }) {
           ref={triggerRef}
           type="button"
           onClick={() => setConfirming(true)}
-          className="rounded-full border border-line px-4 py-2 text-sm font-medium hover:border-primary lg:border-transparent lg:text-bad lg:hover:border-transparent lg:hover:bg-bad/10"
+          className="rounded-full border border-line px-4 py-2 text-sm font-medium hover:border-primary lg:border-transparent lg:text-bad lg:hover:border-transparent lg:hover:bg-bad-soft"
         >
           清除作答，重新開始
         </button>
@@ -262,7 +262,7 @@ function RestartControl({ onRestart }: { onRestart: () => void }) {
       onKeyDown={(e) => {
         if (e.key === 'Escape') cancel();
       }}
-      className="mt-4 flex flex-wrap items-center gap-2 rounded-xl border border-bad/40 bg-bad/10 p-3 text-sm lg:justify-end"
+      className="mt-4 flex flex-wrap items-center gap-2 rounded-xl border border-bad-line bg-bad-soft p-3 text-sm lg:justify-end"
     >
       <p id={questionId} className="w-full font-medium lg:mr-auto lg:w-auto">
         確定要清除這份考卷的作答與成績嗎？清除後無法復原。

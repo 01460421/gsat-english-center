@@ -14,7 +14,7 @@ export function VocabAnalysisView({ analysis }: { analysis: AssistVocabView }) {
   const wordOf = (id: string) => analysis.entries.find((e) => e.entry_id === id)?.word ?? id.split('|')[0] ?? id;
   return (
     <div className="space-y-6">
-      {analysis.cache_hit && <p className="rounded-xl bg-ok/10 px-4 py-2 text-sm">這份解析之前已經有同學問過，免費提供（0 點）。</p>}
+      {analysis.cache_hit && <p className="rounded-xl bg-ok-soft px-4 py-2 text-sm">這份解析之前已經有同學問過，免費提供（0 點）。</p>}
       <ProcessingNotices notices={analysis.notices} />
       {analysis.groups.length > 0 && (
         <AnalysisSection title="怎麼分辨">

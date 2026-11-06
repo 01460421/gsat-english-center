@@ -48,7 +48,7 @@ function ProgressBadge({ exam }: { exam: ExamSummary }) {
   if (!progress) return null;
   if (progress.status === 'submitted') {
     return (
-      <span className="rounded-full bg-ok/10 px-2 py-0.5 text-xs font-semibold text-ok">
+      <span className="rounded-full bg-ok-soft px-2 py-0.5 text-xs font-semibold text-ok">
         已交卷{progress.result ? `・${formatPoints(progress.result.earned)}／${formatPoints(progress.result.autoMax)}` : ''}
       </span>
     );
@@ -192,7 +192,7 @@ export function ExamList({ indexPromise, view = 'cards' }: { indexPromise: Promi
               </select>
             </span>
             <label className="inline-flex cursor-pointer items-center gap-2 text-sm font-semibold">
-              <input type="checkbox" checked={activeOnly} onChange={(e) => update({ activeOnly: e.currentTarget.checked })} className="size-4 accent-[var(--primary)]" />
+              <input type="checkbox" checked={activeOnly} onChange={(e) => update({ activeOnly: e.currentTarget.checked })} className="size-4 accent-primary" />
               只看作答中
             </label>
           </>
