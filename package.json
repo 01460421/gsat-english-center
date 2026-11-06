@@ -24,6 +24,7 @@
     "lint": "npm run typecheck",
     "validate:exams": "python3 tools/validate_exam.py --all",
     "validate:bank": "python3 tools/validate_bank.py --all",
+    "validate:math": "python3 tools/validate_math_exam.py --all",
     "gen:tiers": "node packages/shared/scripts/dump-tiers.ts"
   },
   "devDependencies": {
