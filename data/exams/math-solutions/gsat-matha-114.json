@@ -1,0 +1,514 @@
+{
+ "schema": "gsat-math-solutions/v1",
+ "paper_id": "gsat-matha-114",
+ "note": "本站自撰詳解；選擇（填）題答案經兩位獨立解題者與官方答案比對，非選擇題經兩位獨立解題者比對最終結果。",
+ "items": [
+  {
+   "no": 1,
+   "type": "single",
+   "unit": "機率（獨立事件）",
+   "unit_tags": [
+    "probability"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.57,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：事件 $E,F$ 獨立 $\\iff P(E\\cap F)=P(E)P(F)$。\n\n**詳解**\n\n1. 球的總數 $9+k$；藍球 $5$ 顆、$1$ 號球 $6$ 顆、藍色 $1$ 號 $2$ 顆。\n2. 獨立：$\\dfrac{2}{9+k}=\\dfrac{5}{9+k}\\cdot\\dfrac{6}{9+k}$，兩邊乘 $(9+k)^2$：$2(9+k)=30$，$k=6$。\n3. 檢查：總數 $15$，$P(\\text{藍})=\\frac13$、$P(1\\text{號})=\\frac25$、$P(\\text{藍且}1\\text{號})=\\frac{2}{15}=\\frac13\\cdot\\frac25$ ✓。\n\n**答案**：(5)",
+   "answer_display": "(5)",
+   "check": {
+    "official": "5",
+    "solver_a": "5",
+    "solver_b": "5",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 2,
+   "type": "single",
+   "unit": "直線與坐標",
+   "unit_tags": [
+    "coordinate_line"
+   ],
+   "difficulty": {
+    "level": "穩定基礎",
+    "official_p": 0.62,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：過 $(a,0)$、斜率 $m<0$ 的直線，$y$ 截距為 $-ma$，與兩軸圍成的直角三角形面積為 $\\dfrac12\\cdot a\\cdot(-ma)$。\n\n**詳解**\n\n1. $L_1$：$y$ 截距 $\\dfrac43a$，面積 $\\dfrac12\\cdot a\\cdot\\dfrac43a=\\dfrac23a^2$。\n2. $L_2$：$y$ 截距 $\\dfrac32a$，面積 $\\dfrac12\\cdot a\\cdot\\dfrac32a=\\dfrac34a^2$。\n3. 面積差 $\\dfrac34a^2-\\dfrac23a^2=\\dfrac{a^2}{12}=3$，$a^2=36$，$a=6$。\n\n**答案**：(2)",
+   "answer_display": "(2)",
+   "check": {
+    "official": "2",
+    "solver_a": "2",
+    "solver_b": "2",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 3,
+   "type": "single",
+   "unit": "排列組合",
+   "unit_tags": [
+    "counting"
+   ],
+   "difficulty": {
+    "level": "穩定基礎",
+    "official_p": 0.6,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：同類「綁在一起」成三大塊，先排大塊的順序，再排塊內曲目。\n\n**詳解**\n\n1. 三大塊（鋼琴、小提琴、歌唱）排列有 $3!=6$ 種順序。\n2. 「歌唱排在鋼琴之後或小提琴之後」不成立，只有歌唱排第一個的情形：歌、鋼、小與歌、小、鋼，共 $2$ 種。所以合乎條件的順序有 $6-2=4$ 種。（若理解為「緊接在後」，合乎的順序是鋼歌小、小歌鋼、鋼小歌、小鋼歌，也是 $4$ 種。）\n3. 塊內排列：$5!\\times4!\\times3!$。\n4. 共 $4\\times5!\\times4!\\times3!$ 種。\n\n**答案**：(4)",
+   "answer_display": "(4)",
+   "check": {
+    "official": "4",
+    "solver_a": "4",
+    "solver_b": "4",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 4,
+   "type": "single",
+   "unit": "指數對數、函數",
+   "unit_tags": [
+    "exp_log",
+    "functions"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.44,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：內部格子點的 $x$ 坐標為 $2\\sim30$，對每個 $x$ 數出滿足 $0<y<\\log_2x$ 的整數 $y$；$x$ 是 $2$ 的次方時要扣掉邊界上的點。\n\n**詳解**\n\n1. 內部要求 $1\\le x\\le30$（$x<30.5$），$y\\ge1$ 且 $y<\\log_2x$。$x=1$ 時 $\\log_21=0$，沒有點。\n2. 逐段計算（每個 $x$ 的點數）：\n   - $x=2$：$\\log_22=1$，$y<1$，$0$ 個；\n   - $x=3$：$1$ 個；$x=4$：$y<2$，$1$ 個；\n   - $x=5\\sim7$：每個 $2$ 個，共 $6$；$x=8$：$y<3$，$2$ 個；\n   - $x=9\\sim15$：每個 $3$ 個，共 $21$；$x=16$：$y<4$，$3$ 個；\n   - $x=17\\sim30$：每個 $4$ 個（$\\log_230\\approx4.9$），共 $56$。\n3. 總和 $0+1+1+6+2+21+3+56=90$。\n\n**答案**：(3)\n\n**常見錯誤**：$x=4,8,16$ 時曲線恰好通過格子點 $(4,2),(8,3),(16,4)$，這些點在邊界上，不算內部。",
+   "answer_display": "(3)",
+   "check": {
+    "official": "3",
+    "solver_a": "3",
+    "solver_b": "3",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 5,
+   "type": "single",
+   "unit": "三角函數（二倍角）",
+   "unit_tags": [
+    "trigonometry"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.3,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：用二倍角公式把兩個不等式分別因式分解。\n\n**詳解**\n\n1. $\\sin2\\theta>\\sin\\theta\\iff\\sin\\theta(2\\cos\\theta-1)>0$。\n2. $\\cos2\\theta>\\cos\\theta\\iff2\\cos^2\\theta-\\cos\\theta-1>0\\iff(2\\cos\\theta+1)(\\cos\\theta-1)>0$。因 $\\cos\\theta-1\\le0$，需 $\\cos\\theta\\ne1$ 且 $2\\cos\\theta+1<0$，即 $\\cos\\theta<-\\dfrac12$，$\\dfrac{2\\pi}{3}<\\theta<\\dfrac{4\\pi}{3}$。\n3. 此時 $2\\cos\\theta-1<0$，由步驟 1 需 $\\sin\\theta<0$，即 $\\pi<\\theta<2\\pi$。\n4. 交集：$\\pi<\\theta<\\dfrac{4\\pi}{3}$，$a=1$、$b=\\dfrac43$，$b-a=\\dfrac13$。\n\n**答案**：(1)",
+   "answer_display": "(1)",
+   "check": {
+    "official": "1",
+    "solver_a": "1",
+    "solver_b": "1",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 6,
+   "type": "single",
+   "unit": "空間向量",
+   "unit_tags": [
+    "vector_space"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.35,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：三向量兩兩垂直，所以 $|\\vec u-\\vec v|^2=|\\vec u|^2+|\\vec v|^2$ 等，可解出三向量長度；體積就是三長度的乘積（長方體）。\n\n**詳解**\n\n1. $|\\vec u-\\vec v|^2=|\\vec u|^2+|\\vec v|^2=4+1=5$。\n2. $|\\vec v-\\vec w|^2=|\\vec v|^2+|\\vec w|^2=1+4+9=14$。\n3. $\\vec u-\\vec w=(\\vec u-\\vec v)+(\\vec v-\\vec w)=(1,1,3)$，$|\\vec u|^2+|\\vec w|^2=11$。\n4. 三式相加除以 $2$：$|\\vec u|^2+|\\vec v|^2+|\\vec w|^2=15$，所以 $|\\vec u|^2=1$、$|\\vec v|^2=4$、$|\\vec w|^2=10$。\n5. 兩兩垂直的三向量張出長方體，體積 $=1\\times2\\times\\sqrt{10}=2\\sqrt{10}$。\n\n**答案**：(3)",
+   "answer_display": "(3)",
+   "check": {
+    "official": "3",
+    "solver_a": "3",
+    "solver_b": "3",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 7,
+   "type": "multi",
+   "unit": "數列與級數（遞迴）",
+   "unit_tags": [
+    "sequence"
+   ],
+   "difficulty": {
+    "level": "穩定基礎",
+    "official_p": 0.66,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：把 $a_n=b_n+\\dfrac n2-\\dfrac34$ 代入遞迴式，可得 $b_n$ 的遞迴關係。\n\n**詳解**\n\n1. $a_2=\\dfrac{a_1+1}{3}=1$。\n2. 代入：$3\\left(b_{n+1}+\\dfrac{n+1}{2}-\\dfrac34\\right)=b_n+\\dfrac n2-\\dfrac34+n$，整理得 $3b_{n+1}=b_n$，即 $b_{n+1}=\\dfrac13b_n$。\n3. $b_1=2-\\dfrac12+\\dfrac34=\\dfrac94$，所以 $b_n=\\dfrac94\\left(\\dfrac13\\right)^{n-1}$。\n\n**選項分析**\n\n- (1) 錯：$a_2=1$。\n- (2) 對：$b_2=a_2-1+\\dfrac34=\\dfrac34$（或 $\\frac94\\cdot\\frac13$）。\n- (3) 錯：公比是 $\\dfrac13$。\n- (4) 對：遞迴式乘 $3^n$：$3^{n+1}a_{n+1}=3^na_n+n\\cdot3^n$。$3a_1=6$ 是正整數，之後每次加上正整數 $n\\cdot3^n$，由數學歸納法，$3^na_n$ 皆為正整數。\n- (5) 錯：$b_{10}=\\dfrac94\\cdot3^{-9}=\\dfrac{1}{4\\cdot3^7}=\\dfrac{1}{8748}>\\dfrac{1}{10000}$。\n\n**答案**：(2)(4)",
+   "answer_display": "(2)(4)",
+   "check": {
+    "official": "2,4",
+    "solver_a": "2,4",
+    "solver_b": "2,4",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 8,
+   "type": "multi",
+   "unit": "指數對數、圓",
+   "unit_tags": [
+    "exp_log",
+    "circle"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.48,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：兩邊都化成以 $2$ 為底的指數，比較指數得到圓的方程式。\n\n**詳解**\n\n1. $2^{x^2-3}=2^{2x-y^2}$，所以 $x^2-3=2x-y^2$，即 $(x-1)^2+y^2=4$：圓心 $(1,0)$、半徑 $2$ 的圓。\n\n**選項分析**\n\n- (1) 錯：$x=3$ 時 $4+y^2=4$，只有 $y=0$ 一個解。\n- (2) 錯：圓心不是原點，不對原點對稱。例如 $(3,0)$ 在圖形上，$(-3,0)$ 不在。\n- (3) 對。\n- (4) 錯：圓心到 $x+y=4$ 的距離 $\\dfrac{|1-4|}{\\sqrt2}=\\dfrac{3}{\\sqrt2}>2$，直線與圓不相交。\n- (5) 對：設 $x=1+2\\cos t$、$y=2\\sin t$，$x-y=1+2(\\cos t-\\sin t)$，最大值 $1+2\\sqrt2$。\n\n**答案**：(3)(5)",
+   "answer_display": "(3)(5)",
+   "check": {
+    "official": "3,5",
+    "solver_a": "3,5",
+    "solver_b": "3,5",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 9,
+   "type": "multi",
+   "unit": "多項式函數（二次方程式判別式）",
+   "unit_tags": [
+    "polynomial"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.44,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：由兩個判別式條件得 $(b+2)^2<4c\\le b^2$，進而推出 $b<-1$、$c>0$。\n\n**詳解**\n\n1. 有實根：$b^2-4c\\ge0$；沒有實根：$(b+2)^2-4c<0$。所以 $(b+2)^2<4c\\le b^2$。\n2. 由 $(b+2)^2<b^2$ 得 $4b+4<0$，$b<-1$；由 $4c>(b+2)^2\\ge0$ 得 $c>0$。\n\n**選項分析**\n\n- (1) 錯：$c>0$。\n- (2) 對：$b<-1<0$。\n- (3) 錯：不一定。取 $b=-3$，條件為 $\\frac14<c\\le\\frac94$：$c=\\frac12$ 時 $(b+1)^2-4c=2>0$ 有實根，$c=2$ 時 $4-8<0$ 沒有實根。\n- (4) 對：判別式 $(b+2)^2+4c>0$。\n- (5) 對：$b<-1$ 時 $|b-2|=2-b>|b|$，所以 $(b-2)^2>b^2\\ge4c$，判別式為正。\n\n**答案**：(2)(4)(5)",
+   "answer_display": "(2)(4)(5)",
+   "check": {
+    "official": "2,4,5",
+    "solver_a": "2,4,5",
+    "solver_b": "2,4,5",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 10,
+   "type": "multi",
+   "unit": "三角函數（圖形）、函數",
+   "unit_tags": [
+    "trigonometry",
+    "functions"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.38,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：$y=\\sin\\pi x$ 週期 $2$；在 $[0,1]$ 為正的拱形，對稱軸 $x=\\dfrac12$；在 $[2,3]$ 是同樣的拱形（平移 $2$）。\n\n**詳解**\n\n1. 有兩交點 $x_1<x_2<1$，必在第一個拱形內且 $0<k<1$（$k=0$ 時交點為 $0,1,2,3$，$x_2$ 不小於 $1$）。\n2. 於是 $x_1=t$、$x_2=1-t$（$0<t<\\frac12$，$\\sin\\pi t=k$），在 $[2,3]$ 還有 $2+t$ 與 $3-t$ 兩交點；在 $[1,2]$ 函數值 $\\le0$，沒有交點。\n\n**選項分析**\n\n- (1) 對：見步驟 1。\n- (2) 錯：共有 $4$ 個交點：$t,\\ 1-t,\\ 2+t,\\ 3-t$。\n- (3) 錯：$x_1+x_2=1$。\n- (4) 對：$\\overline{PQ}=1-2t$。若 $x_3=2+t$，$\\overline{QR}=1+2t$，由 $2(1-2t)=1+2t$ 得 $t=\\frac16$，$k=\\sin\\frac\\pi6=\\frac12$；若 $x_3=3-t$，$\\overline{QR}=2$，得 $t=0$，不合。所以 $k=\\dfrac12$。\n- (5) 對：四個交點的 $x$ 坐標和 $=t+(1-t)+(2+t)+(3-t)=6>5$。\n\n**答案**：(1)(4)(5)",
+   "answer_display": "(1)(4)(5)",
+   "check": {
+    "official": "1,4,5",
+    "solver_a": "1,4,5",
+    "solver_b": "1,4,5",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 11,
+   "type": "multi",
+   "unit": "平面向量、三角函數、幾何",
+   "unit_tags": [
+    "vector_plane",
+    "trigonometry",
+    "geometry"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.38,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：$P$ 在 $\\Delta BCD$ 中是角平分線 $BP$ 與對邊 $CD$ 的交點，用角平分線定理：$\\overline{CP}:\\overline{PD}=\\overline{BC}:\\overline{BD}$。\n\n**詳解**\n\n1. $\\overline{BD}=3$，$BP$ 平分 $\\angle CBD$，所以 $\\overline{CP}:\\overline{PD}=4:3$，$\\overline{CP}=\\dfrac47\\overline{CD}$。\n2. $\\overrightarrow{AP}=\\dfrac37\\overrightarrow{AC}+\\dfrac47\\overrightarrow{AD}=\\dfrac37\\overrightarrow{AC}+\\dfrac27\\overrightarrow{AB}$。\n3. $\\cos\\angle BAC=\\dfrac{36+25-16}{2\\cdot6\\cdot5}=\\dfrac34$，$\\sin\\angle BAC=\\dfrac{\\sqrt7}{4}$，$\\Delta ABC$ 面積 $=\\dfrac12\\cdot6\\cdot5\\cdot\\dfrac{\\sqrt7}{4}=\\dfrac{15\\sqrt7}{4}$。\n\n**選項分析**\n\n- (1) 錯：$\\overline{CP}=\\dfrac47\\overline{CD}$。\n- (2) 錯：係數對調了，正確是 $\\dfrac27\\overrightarrow{AB}+\\dfrac37\\overrightarrow{AC}$。\n- (3) 對。\n- (4) 對：$\\Delta ACP$ 面積 $=(\\overrightarrow{AB}\\text{ 的係數})\\times\\Delta ABC=\\dfrac27\\cdot\\dfrac{15\\sqrt7}{4}=\\dfrac{15\\sqrt7}{14}$。\n- (5) 對：$\\overrightarrow{AB}\\cdot\\overrightarrow{AC}=6\\cdot5\\cdot\\dfrac34=\\dfrac{45}{2}$，$\\overrightarrow{AP}\\cdot\\overrightarrow{AC}=\\dfrac27\\cdot\\dfrac{45}2+\\dfrac37\\cdot25=\\dfrac{45}{7}+\\dfrac{75}{7}=\\dfrac{120}{7}$。\n\n**答案**：(3)(4)(5)",
+   "answer_display": "(3)(4)(5)",
+   "check": {
+    "official": "3,4,5",
+    "solver_a": "3,4,5",
+    "solver_b": "3,4,5",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 12,
+   "type": "multi",
+   "unit": "數據分析（迴歸直線、數據變換）",
+   "unit_tags": [
+    "statistics"
+   ],
+   "difficulty": {
+    "level": "超越頂標",
+    "official_p": 0.22,
+    "basis": "官方得分率（多選）"
+   },
+   "solution_md": "**解題關鍵**：$u=100-x$（乙占比）、$v=\\dfrac{y}{1000}$（奈米換成微米）；代入原迴歸直線即得新迴歸直線。\n\n**詳解**\n\n1. 甲占 $x\\%$ 時乙占 $(100-x)\\%$，所以 $u_k=100-x_k$。\n2. $1$ 微米 $=1000$ 奈米，$y$ 奈米 $=\\dfrac{y}{1000}$ 微米，所以 $v_k=\\dfrac{y_k}{1000}$。\n3. 線性變換下迴歸直線跟著變換：$v=\\dfrac{21.3(100-u)-40}{1000}=2.09-0.0213u$。\n\n**選項分析**\n\n- (1) 對。\n- (2) 錯：應為 $v_k=\\dfrac{y_k}{1000}$。\n- (3) 對：$u=-x+100$，平移不改變標準差，乘 $-1$ 只改變正負，標準差不變。\n- (4) 對：$b=2.09$。\n- (5) 對：最小平方法中，原直線對新增點的殘差為 $0$，所以新的殘差平方和 $=$ 原來 $20$ 點的最小值 $+0$；任何其他直線在原 $20$ 點的殘差平方和已經比較大，再加上第 $21$ 點的殘差平方也不會更小。所以迴歸直線不變。\n\n**答案**：(1)(3)(4)(5)\n\n**常見錯誤**：(2) 單位換算方向弄反——微米比奈米大，數值要變小。",
+   "answer_display": "(1)(3)(4)(5)",
+   "check": {
+    "official": "1,3,4,5",
+    "solver_a": "1,3,4,5",
+    "solver_b": "1,3,4,5",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 13,
+   "type": "fill",
+   "unit": "多項式函數（三次函數的對稱中心）",
+   "unit_tags": [
+    "polynomial"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.48,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：二次式 $q(x)$ 在 $x=-6$ 有最大值 $8$，可寫成 $q(x)=-k(x+6)^2+8$（$k>0$）。\n\n**詳解**\n\n1. $f(x)=(x+6)q(x)+3=-k(x+6)^3+8(x+6)+3$。\n2. 令 $X=x+6$，$f=-kX^3+8X+3$，而 $-kX^3+8X$ 是奇函數，圖形對 $X=0$ 點對稱。\n3. 所以對稱中心為 $x=-6$、$y=3$，即 $(-6,3)$。\n\n**答案**：$(-6,3)$（13-1 填 $-$，13-2 填 $6$，13-3 填 $3$）",
+   "answer_display": "$(-6,3)$",
+   "check": {
+    "official": {
+     "13-1": "-",
+     "13-2": "6",
+     "13-3": "3"
+    },
+    "solver_a": {
+     "13-1": "-",
+     "13-2": "6",
+     "13-3": "3"
+    },
+    "solver_b": {
+     "13-1": "-",
+     "13-2": "6",
+     "13-3": "3"
+    },
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 14,
+   "type": "fill",
+   "unit": "空間中的平面與直線（點到平面距離）",
+   "unit_tags": [
+    "space_line_plane"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.33,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：$a,b,c$ 皆為負，可以先決定絕對值內的正負號。\n\n**詳解**\n\n1. 到 $E_1$：$\\dfrac{|4b+3c-2|}{5}=6$。$b,c<0$ 使 $4b+3c-2<0$，所以 $4b+3c-2=-30$，$4b+3c=-28$。\n2. 到 $E_2$：$|3b+4c+5|=30$。$3b+4c=25$ 不可能（左邊為負），所以 $3b+4c=-35$。\n3. 兩式相加：$7(b+c)=-63$；相減：$b-c=7$。得 $b=-1$、$c=-8$。\n4. 到 $E_3$：$\\dfrac{|a+2b+2c+2|}{3}=6$，$|a-16|=18$，$a=34$ 或 $-2$；$a<0$，取 $a=-2$。\n5. $a+b+c=-11$。\n\n**答案**：$-11$（14-1 填 $-$，14-2 填 $1$，14-3 填 $1$）",
+   "answer_display": "$-11$",
+   "check": {
+    "official": {
+     "14-1": "-",
+     "14-2": "1",
+     "14-3": "1"
+    },
+    "solver_a": {
+     "14-1": "-",
+     "14-2": "1",
+     "14-3": "1"
+    },
+    "solver_b": {
+     "14-1": "-",
+     "14-2": "1",
+     "14-3": "1"
+    },
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 15,
+   "type": "fill",
+   "unit": "機率（期望值）",
+   "unit_tags": [
+    "probability"
+   ],
+   "difficulty": {
+    "level": "超越頂標",
+    "official_p": 0.16,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：「第 $k$ 次才累積 $3$ 個正面」＝前 $k-1$ 次恰 $2$ 個正面且第 $k$ 次正面。\n\n**詳解**\n\n1. 前 $3$ 次都正面：$\\dfrac18$，付 $240$ 元。\n2. 第 $4$ 次才累積 $3$ 正：$C^3_2\\left(\\frac12\\right)^3\\cdot\\frac12=\\dfrac{3}{16}$，付 $320$ 元。\n3. 第 $5$ 次才累積 $3$ 正：$C^4_2\\left(\\frac12\\right)^4\\cdot\\frac12=\\dfrac{6}{32}=\\dfrac{3}{16}$，付 $400$ 元。\n4. 其餘：$1-\\dfrac18-\\dfrac3{16}-\\dfrac3{16}=\\dfrac12$，付 $480$ 元。\n5. 期望值 $=240\\cdot\\frac18+320\\cdot\\frac3{16}+400\\cdot\\frac3{16}+480\\cdot\\frac12=30+60+75+240=405$ 元。\n\n**答案**：$405$ 元（15-1 填 $4$，15-2 填 $0$，15-3 填 $5$）",
+   "answer_display": "$405$",
+   "check": {
+    "official": {
+     "15-1": "4",
+     "15-2": "0",
+     "15-3": "5"
+    },
+    "solver_a": {
+     "15-1": "4",
+     "15-2": "0",
+     "15-3": "5"
+    },
+    "solver_b": {
+     "15-1": "4",
+     "15-2": "0",
+     "15-3": "5"
+    },
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 16,
+   "type": "fill",
+   "unit": "圓、直線與坐標",
+   "unit_tags": [
+    "circle",
+    "coordinate_line"
+   ],
+   "difficulty": {
+    "level": "超越頂標",
+    "official_p": 0.18,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：由圓心到 $L_1$ 的距離為 $1$ 求 $m$；圓與 $L_2$ 相切，半徑就是圓心到 $L_2$ 的距離；弦長 $=2\\sqrt{r^2-d^2}$。\n\n**詳解**\n\n1. $L_1:mx-y+1-3m=0$，$\\dfrac{|1-3m|}{\\sqrt{m^2+1}}=1$，平方得 $8m^2-6m=0$，$m=0$ 或 $\\dfrac34$。\n2. $m=0$ 時 $L_1,L_2$ 都是 $y=1$：$\\Gamma$ 與它相切，就不會交於相異兩點，不合。所以 $m=\\dfrac34$。\n3. $L_2:y-1=-\\dfrac34(x-3)$，即 $3x+4y-13=0$，半徑 $r=\\dfrac{13}{5}$。\n4. $\\overline{AB}=2\\sqrt{r^2-1^2}=2\\sqrt{\\dfrac{169}{25}-1}=2\\cdot\\dfrac{12}{5}=\\dfrac{24}{5}$。\n\n**答案**：$\\dfrac{24}{5}$（16-1 填 $2$，16-2 填 $4$，16-3 填 $5$）",
+   "answer_display": "$\\frac{24}{5}$",
+   "check": {
+    "official": {
+     "16-1": "2",
+     "16-2": "4",
+     "16-3": "5"
+    },
+    "solver_a": {
+     "16-1": "2",
+     "16-2": "4",
+     "16-3": "5"
+    },
+    "solver_b": {
+     "16-1": "2",
+     "16-2": "4",
+     "16-3": "5"
+    },
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 17,
+   "type": "fill",
+   "unit": "三角函數（圓內接四邊形）、幾何",
+   "unit_tags": [
+    "trigonometry",
+    "geometry"
+   ],
+   "difficulty": {
+    "level": "超越頂標",
+    "official_p": 0.14,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：$D$ 與 $B$ 在弦 $\\overline{AC}$ 的兩側，$ABCD$ 是圓內接四邊形：用托勒密定理與餘弦定理（$\\angle ADC=180^\\circ-\\angle ABC$）。\n\n**詳解**\n\n1. $\\overline{AC}^2=9+9-2\\cdot9\\cdot\\left(-\\frac18\\right)=\\dfrac{81}{4}$，$\\overline{AC}=\\dfrac92$。\n2. $\\angle B$ 為鈍角，$B$ 在劣弧 $\\overset{\\frown}{AC}$ 上；劣弧上的點到 $B$ 的距離都不超過 $3$，而 $\\overline{BD}=4$，所以 $D$ 在優弧上，$A,B,C,D$ 依序在圓上。\n3. 托勒密定理：$\\overline{AC}\\cdot\\overline{BD}=\\overline{AB}\\cdot\\overline{CD}+\\overline{BC}\\cdot\\overline{AD}$，即 $18=3(\\overline{CD}+\\overline{AD})$，$\\overline{AD}+\\overline{CD}=6$。\n4. $\\cos\\angle ADC=-\\cos\\angle ABC=\\dfrac18$，餘弦定理：\n$$\\frac{81}{4}=\\overline{AD}^2+\\overline{CD}^2-\\frac14\\overline{AD}\\cdot\\overline{CD}=36-\\frac94\\overline{AD}\\cdot\\overline{CD},$$\n得 $\\overline{AD}\\cdot\\overline{CD}=7$。\n5. $\\overline{AD},\\overline{CD}$ 是 $t^2-6t+7=0$ 的兩根，$t=3\\pm\\sqrt2$。因 $\\overline{AD}\\le\\overline{CD}$，$\\overline{CD}=3+\\sqrt2$。\n\n**答案**：$3+\\sqrt2$（17-1 填 $3$，17-2 填 $2$）",
+   "answer_display": "$3+\\sqrt2$",
+   "check": {
+    "official": {
+     "17-1": "3",
+     "17-2": "2"
+    },
+    "solver_a": {
+     "17-1": "3",
+     "17-2": "2"
+    },
+    "solver_b": {
+     "17-1": "3",
+     "17-2": "2"
+    },
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 18,
+   "type": "single",
+   "unit": "矩陣、三角函數",
+   "unit_tags": [
+    "matrix",
+    "trigonometry"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": 0.58,
+    "basis": "官方答對率"
+   },
+   "solution_md": "**解題關鍵**：旋轉 $\\theta$ 的矩陣為 $\\begin{bmatrix}\\cos\\theta&-\\sin\\theta\\\\ \\sin\\theta&\\cos\\theta\\end{bmatrix}$，旋轉兩次就是旋轉 $2\\theta$。\n\n**詳解**\n\n1. 設 $A$ 旋轉 $\\alpha$（銳角），$A^2$ 旋轉 $2\\alpha$：$\\begin{bmatrix}\\cos2\\alpha&-\\sin2\\alpha\\\\ \\sin2\\alpha&\\cos2\\alpha\\end{bmatrix}=\\begin{bmatrix}0&c\\\\1&d\\end{bmatrix}$。\n2. $\\sin2\\alpha=1$、$\\cos2\\alpha=0$，所以 $2\\alpha=90^\\circ$，$\\alpha=45^\\circ$；$c=-\\sin2\\alpha=-1$，$d=0$。\n3. 同理 $B^3$ 旋轉 $90^\\circ$，$B$ 為旋轉 $30^\\circ$（銳角）。\n\n**答案**：(2)",
+   "answer_display": "(2)",
+   "check": {
+    "official": "2",
+    "solver_a": "2",
+    "solver_b": "2",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 19,
+   "type": "constructed",
+   "unit": "矩陣、平面向量",
+   "unit_tags": [
+    "matrix",
+    "vector_plane"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": null,
+    "basis": "本站估計"
+   },
+   "solution_md": "**解題關鍵**：$A^3$ 是旋轉 $135^\\circ$，$B^4$ 是旋轉 $120^\\circ$；用極坐標追蹤點的位置最快。\n\n**詳解**\n\n1. 由第 18 題，$A$ 為旋轉 $45^\\circ$、$B$ 為旋轉 $30^\\circ$，所以 $A^3$ 旋轉 $135^\\circ$、$B^4$ 旋轉 $120^\\circ$。\n2. $P(1,1)$ 的極坐標為 $[\\sqrt2,45^\\circ]$。經 $A^3$：$[\\sqrt2,180^\\circ]$，即 $Q(-\\sqrt2,0)$。\n3. 再經 $B^4$：$[\\sqrt2,300^\\circ]$，即 $R\\left(\\dfrac{\\sqrt2}{2},-\\dfrac{\\sqrt6}{2}\\right)$。\n4. $\\overrightarrow{OR}$ 的方向角為 $300^\\circ$（$-60^\\circ$），與 $(1,0)$ 的夾角為 $60^\\circ$。（驗算：$\\cos=\\dfrac{\\sqrt2/2}{\\sqrt2}=\\dfrac12$。）\n\n**答案**：$Q(-\\sqrt2,0)$；夾角 $60^\\circ$。\n\n**評分重點（本站整理）**\n\n- 由 $A^2,B^3$ 定出旋轉角 $45^\\circ$、$30^\\circ$。\n- $Q$ 的坐標正確；$R$ 的位置或方向角正確，夾角取 $0^\\circ\\sim180^\\circ$ 的值 $60^\\circ$（不是 $300^\\circ$）。",
+   "answer_display": "$Q(-\\sqrt2,0)$；$\\overrightarrow{OR}$ 與 $(1,0)$ 的夾角為 $60^\\circ$",
+   "check": {
+    "official": null,
+    "solver_a": "Q(−√2, 0)；OR 與 (1,0) 夾角 60°",
+    "solver_b": "Q=(−√2,0)；夾角 60°",
+    "agree": true
+   },
+   "flags": []
+  },
+  {
+   "no": 20,
+   "type": "constructed",
+   "unit": "矩陣、直線與坐標",
+   "unit_tags": [
+    "matrix",
+    "coordinate_line"
+   ],
+   "difficulty": {
+    "level": "進階練習",
+    "official_p": null,
+    "basis": "本站估計"
+   },
+   "solution_md": "**解題關鍵**：$OQ$ 是 $x$ 軸，所以 $L$ 是水平線 $y=1$；直線 $OR$ 的斜率為 $\\tan300^\\circ=-\\sqrt3$。\n\n**詳解**\n\n1. $L$ 過 $P(1,1)$ 且平行 $x$ 軸：$y=1$。\n2. 直線 $OR$：$y=-\\sqrt3x$。\n3. 交點 $S$：$1=-\\sqrt3x$，$x=-\\dfrac{1}{\\sqrt3}=-\\dfrac{\\sqrt3}{3}$，$S\\left(-\\dfrac{\\sqrt3}3,1\\right)$。\n4. $\\overrightarrow{SP}=\\left(1+\\dfrac{\\sqrt3}3,0\\right)$ 指向 $x$ 軸正向；$\\overrightarrow{SO}=\\left(\\dfrac{\\sqrt3}3,-1\\right)$，$|\\overrightarrow{SO}|=\\dfrac{2}{\\sqrt3}$。\n5. $\\cos\\angle OSP=\\dfrac{\\overrightarrow{SO}\\cdot\\overrightarrow{SP}}{|\\overrightarrow{SO}||\\overrightarrow{SP}|}=\\dfrac{\\frac{\\sqrt3}{3}}{\\frac{2}{\\sqrt3}}=\\dfrac12$，$\\angle OSP=60^\\circ$。（也可用平行線同位角：$L\\parallel x$ 軸，直線 $OR$ 與 $x$ 軸夾 $60^\\circ$。）\n\n**答案**：$\\angle OSP=60^\\circ$；$S\\left(-\\dfrac{\\sqrt3}{3},1\\right)$。\n\n**評分重點（本站整理）**\n\n- 正確寫出 $L:y=1$ 與直線 $OR:y=-\\sqrt3x$。\n- 交點坐標與角度正確，角度要有理由（內積或平行線性質）。",
+   "answer_display": "$\\angle OSP=60^\\circ$；$S\\left(-\\dfrac{\\sqrt3}{3},1\\right)$",
+   "check": {
+    "official": null,
+    "solver_a": "∠OSP = 60°；S(−√3/3, 1)",
+    "solver_b": "∠OSP=60°；S=(−√3/3,1)",
+    "agree": true
+   },
+   "flags": []
+  }
+ ]
+}
