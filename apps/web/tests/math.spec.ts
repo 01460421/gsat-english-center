@@ -22,7 +22,7 @@ interface RawItem {
   type: 'single' | 'multi' | 'fill' | 'constructed';
   answer: string | string[] | null;
   points: number;
-  fill?: { cells: string[]; answer_cells: Record<string, string> };
+  fill?: { cells: string[]; answer_cells: Record<string, string>; official_cells?: string[] };
 }
 interface RawPaper {
   title: string;
@@ -218,9 +218,7 @@ test('考試模式：整份作答、交卷、成績頁的分數與逐題結果',
 });
 
 const OLD_ID = 'gsat-math-110';
-const oldPaper = JSON.parse(readFileSync(path.join(ROOT, 'data', 'exams', 'parsed-math', `${OLD_ID}.json`), 'utf8')) as RawPaper & {
-  sections: { groups: { items: (RawItem & { fill?: { official_cells?: string[] } })[] }[] }[];
-};
+const oldPaper = JSON.parse(readFileSync(path.join(ROOT, 'data', 'exams', 'parsed-math', `${OLD_ID}.json`), 'utf8')) as RawPaper;
 const oldItems = oldPaper.sections.flatMap((s) => s.groups.flatMap((g) => g.items));
 
 test('舊課綱：分頁、選填格標題本列號、整份作答交卷滿分、詳解準備中', async ({ page }, testInfo) => {

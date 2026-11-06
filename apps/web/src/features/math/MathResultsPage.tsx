@@ -119,8 +119,8 @@ function Summary({ paper, selfScores, headingRef }: { paper: MathPaper; selfScor
           <thead>
             <tr className="border-b border-line text-left text-muted">
               <th scope="col" className="py-2 pr-3 font-medium">大題</th>
-              <th scope="col" className="py-2 pr-3 font-medium">答對</th>
-              <th scope="col" className="py-2 font-medium">得分</th>
+              <th scope="col" className="py-2 pr-3 font-medium whitespace-nowrap">答對</th>
+              <th scope="col" className="py-2 font-medium whitespace-nowrap">得分</th>
             </tr>
           </thead>
           <tbody>
@@ -139,10 +139,13 @@ function Summary({ paper, selfScores, headingRef }: { paper: MathPaper; selfScor
                     {s.title.replace(/（.*?）/, '')}
                   </button>
                 </th>
-                <td className="py-2 pr-3 tabular-nums">{s.autoCount > 0 ? `${s.correctCount}／${s.autoCount}` : '—'}</td>
+                <td className="py-2 pr-3 whitespace-nowrap tabular-nums">{s.autoCount > 0 ? `${s.correctCount}／${s.autoCount}` : '—'}</td>
                 <td className="py-2 tabular-nums">
-                  {fmt(s.earned)}／{fmt(s.autoMax)}
-                  {s.manualMax > 0 && <span className="text-muted">（另 {fmt(s.manualMax)} 分非選擇題自評）</span>}
+                  <span className="whitespace-nowrap">
+                    {fmt(s.earned)}／{fmt(s.autoMax)}
+                  </span>
+                  {/* 手機上這句另起一行，數字欄才不會被擠成一個字一行。 */}
+                  {s.manualMax > 0 && <span className="block text-xs text-muted sm:inline sm:text-sm">（另 {fmt(s.manualMax)} 分非選擇題自評）</span>}
                 </td>
               </tr>
             ))}
