@@ -40,8 +40,8 @@ function systemPrefersDark(): boolean {
   return typeof window.matchMedia === 'function' && window.matchMedia(DARK_QUERY).matches;
 }
 
-/** 手機瀏覽器網址列的顏色，與 index.css 的 --surface、index.html 的 theme-color 相同。 */
-const THEME_COLORS: Record<ResolvedTheme, string> = { light: '#ffffff', dark: '#171c23' };
+/** 手機瀏覽器網址列的顏色，與 index.css 的 --surface、index.html 的 theme-color 相同（lib/tokens.test.ts 檢查）。 */
+export const THEME_COLORS: Record<ResolvedTheme, string> = { light: '#ffffff', dark: '#171c23' };
 
 /** 把偏好套用到 <html>：跟隨系統時移除 data-theme，讓 CSS 的媒體查詢接手。 */
 function applyThemePreference(pref: ThemePreference) {
