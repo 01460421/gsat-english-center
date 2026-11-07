@@ -225,19 +225,41 @@ describe('系統提示與請求', () => {
       'do not resolve it in one neat clause',
       'with a criterion (when holding back is a fair limit, when it is an excuse)',
       "The close answers the prompt's last question concretely",
-      'Fix the real properties of the carried image',
-      'The turn has a cause inside the scene',
-      'never a coincidence (恰好)',
+      'the carried image must stay consistent',
+      'no coincidence (恰好)',
       'Show before you claim',
       'If the prompt asks you to imagine, give the imagined world concrete images of its own',
-      'End on a concrete image or action that carries the insight',
+      'End with resonance (餘韻)',
       'Do not explain the image (…大概也是這樣), add a vow (往後我會…), end on a maxim (與其…不如…)',
       'one image per idea, never mixed',
       'Do not announce the structure with transitions',
       'Avoid stock moves such as 那一瞬間…彷彿回到, 我愣住了',
-      'Before you output, reread the answer as a strict marker and fix what fails',
+      'Before you output, reread the answer twice. First as a strict marker, and fix what fails',
     ]) {
       expect(system, want).toContain(want);
+    }
+    // 2026-11-06 去 AI 味（站主：「國文作文還有很厚重的 AI 味」）：只對情意（知性套用後盲評降一級，維持原本的 Language）。AI 慣用句型的上限、不靠機關（藏物揭密、課堂知識解碼、偵探推理、
+    // 意象一對一對應道理）、感情可以明說、結尾要有餘韻而不是把線索收齊；輸出前再以「熟悉 AI 文字的讀者」重讀一次。
+    for (const want of [
+      '情意 voice (情意 only; 知性 follows the Language rule above): the essay must read as if a gifted senior-high student wrote it by hand',
+      'Machine-sounding patterns the website counts in every 情意 sample',
+      'Contrastive reframing (不是A，而是B; 並非…而是…; 不是A，是B; 不只是…更是…): at most once',
+      'Epiphany formulas (那一刻, 那一瞬間, 剎那, 我才明白, 終於懂得, 這才發現, 我意識到, 原來…): none',
+      'Summing-up lines (這就是…, 這便是…, 這正是…, 或許，這就是…; 教會了我, 讓我明白, 我學會了): none',
+      'Crafted epigrams',
+      'Never build the essay on a device',
+      'no detective reasoning',
+      'no symbol whose literal property maps point by point onto the lesson',
+      'not every detail has to be a clue',
+      'Feeling is part of the essay, not something to hide',
+      'end on a clever closing detail that ties every thread',
+      'Then, for 情意, as a reader who knows how AI writing sounds',
+    ]) {
+      expect(system, want).toContain(want);
+    }
+    // 舊的寫法逼出「機關式轉折」：固定意象的真實屬性、轉折一定要有場景裡的原因、結尾一定是承載道理的具體畫面。
+    for (const old of ['Fix the real properties of the carried image', 'The turn has a cause inside the scene', 'End on a concrete image or action that carries the insight', 'what in the scene causes the turn']) {
+      expect(system, old).not.toContain(old);
     }
     // 檢核不是模板：段落仍然沒有固定的步驟或段數規定以外的格式。
     expect(system).not.toMatch(/\(1\) the first sentence is the claim|first sentence (?:is|must be) the claim/u);

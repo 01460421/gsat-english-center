@@ -205,7 +205,7 @@ describe('§3.7 國文的系統提示與 schema 的雜湊（fixtures/assist-prom
       for (const part of CONFIG_DEFAULTS.AI_MODEL_DEFAULT.split('-').filter((p) => p.length >= 4)) expect(system.toLowerCase()).not.toContain(part);
       const han = system.match(/\p{Script=Han}/gu)?.length ?? 0;
       const estimate = Math.ceil((system.length - han) / 4 + han * 1.3);
-      const budget = { zh_choice: 5_500, zh_short: 5_000, zh_writing: 5_000, zh_followup: 2_000, zh_ocr: 2_500, zh_exemplar: 4_000 }[kind];
+      const budget = { zh_choice: 5_500, zh_short: 5_000, zh_writing: 5_000, zh_followup: 2_000, zh_ocr: 2_500, zh_exemplar: 5_000 }[kind];
       expect(estimate, `${kind} 的系統提示約 ${estimate} tokens`).toBeLessThanOrEqual(budget);
     }
     expect(OUTPUTS.zh_writing.system).toContain('never give a grade or a score');
