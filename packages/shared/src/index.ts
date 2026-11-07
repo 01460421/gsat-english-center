@@ -35,6 +35,7 @@ export * from './assist-methods-zh';
 export * from './assist-zh-exemplar';
 // 國寫範文的獨立頁：歷屆國寫題目檔的型別與守衛、貼上題目的組裝、API 型別（同上「國寫範文」的「獨立頁」小節）。
 export * from './zh-writing-prompts';
+export * from './zh-static-exemplars';
 // 作文範文：三個層級的規格、字數目標、對照數字與 API 型別（同樣直接轉匯出、不經 writing.ts；docs/design/model-essays.md §7.2）。
 export * from './connectives';
 export * from './exemplars';

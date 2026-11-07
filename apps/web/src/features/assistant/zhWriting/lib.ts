@@ -2,7 +2,7 @@
  * 國寫範文獨立頁的資料與純函式（docs/design/assistant-subjects.md「國寫範文」的「獨立頁」）：
  *
  *   歷屆題目   /data/zh-writing/prompts.json（shared 的 ZH_WRITING_PROMPTS_PATH；build-data.mjs 原樣輸出）：載入、依學年度分組。
- *              送給 Worker 的只有代號（題目文字由 Worker 用打包的同一份）。
+ *   固定範文   /data/zh-writing/exemplars.json（shared 的 ZH_STATIC_EXEMPLARS_PATH）：歷屆十題每題三篇，選了一題才載入。
  *   貼上題目   表單的草稿 → 送出的本體：題型、題目、素材與選填的字數規定。送出前在瀏覽器跑國文貼上的同一套檢查（shared 的
  *              zhPasteQuestion＋checkAssistQuestion(…, 'chinese', { writingPaste: true })，和 Worker 同一支：本站寫的字數規定區塊不算進
  *              長度、科目與任務字樣；D8 的官方文字指紋與比賽語料指紋只有 Worker 會查），擋下的問題依區塊放回對應的欄位（字數規定、
@@ -13,8 +13,10 @@ import {
   ASSIST_INPUT_PROBLEM_MESSAGES,
   ZH_EXEMPLAR_PASTE_LIMITS,
   ZH_PASTE_PROBLEM_MESSAGES,
+  ZH_STATIC_EXEMPLARS_PATH,
   ZH_WRITING_PROMPTS_PATH,
   checkAssistQuestion,
+  isZhStaticExemplarFile,
   isZhWritingPromptFile,
   normalizeZhText,
   zhPasteLimitsProblem,
@@ -24,6 +26,7 @@ import {
   type ZhExemplarPasteInput,
   type ZhExemplarPasteLimits,
   type ZhExemplarSection,
+  type ZhStaticExemplarFile,
   type ZhWritingPrompt,
   type ZhWritingPromptFile,
 } from '@gsat/shared';
@@ -37,6 +40,13 @@ const promptsLoader = memoizeAsync((_key: 'zh-writing') => fetchDataFile<ZhWriti
 /** 載入歷屆國寫題目（同一頁面內只下載一次；失敗要等 forgetFailedLoads() 才重抓，理由見 data/client.ts）。 */
 export function loadZhWritingPrompts(): Promise<ZhWritingPromptFile> {
   return promptsLoader('zh-writing');
+}
+
+const staticLoader = memoizeAsync((_key: 'zh-static') => fetchDataFile<ZhStaticExemplarFile>(ZH_STATIC_EXEMPLARS_PATH, isZhStaticExemplarFile));
+
+/** 載入歷屆國寫的固定範文（/data/zh-writing/exemplars.json；選了一題才下載，同一頁面內只下載一次）。 */
+export function loadZhStaticExemplars(): Promise<ZhStaticExemplarFile> {
+  return staticLoader('zh-static');
 }
 
 /** 依學年度分組（新到舊；每年第一大題在前）。 */

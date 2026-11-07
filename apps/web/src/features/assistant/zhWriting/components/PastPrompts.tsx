@@ -1,30 +1,23 @@
 /**
  * 「選歷屆題目」分頁：111–115 學測國寫的十題（/data/zh-writing/prompts.json），依學年度分組；按一題 → 這一題的完整題目
- * （素材、圖的文字描述、引導問題、題本印的字數規定）→「看這一題的 AI 示範（10 點）」→ 行內確認 → POST
- * /api/assist/zh-exemplars {source:'past', prompt_id} → 結果頁。選了哪一題記在網址 ?prompt=（由頁面持有）。
+ * （素材、圖的文字描述、引導問題、題本印的字數規定）→ 本站的三篇固定範文（StaticExemplars；不呼叫 AI、不扣點）。
+ * 選了哪一題記在網址 ?prompt=（由頁面持有）。站主 2026-11-07：即時產生的範文品質不夠，歷屆題目改成固定範文。
  *
- * 這一題已經有案例（GET /api/assist/zh-exemplars?via=past 裡有同一個代號；不受「我的國寫範文」第一頁 20 筆的限制）時：連到結果頁；
- * 已經 2 篇（完成＋進行中）就不再給按鈕；正在產生時只給連結（Worker 對同一題會在同一個案例上加一篇，正在產生時回那一篇）。
- * 列表上的標記用「我的國寫範文」同一句狀態（zhHistoryStatus：產生中、N 篇示範、上一篇沒有完成）。
- * 送出成功時先收起確認面板再交給頁面換頁：換頁沒有卸載這個元件時（例如結果頁的程式還在下載時按「上一頁」，而外框沒有在換頁時
- * 重設；目前 Layout 的錯誤邊界以路徑為 key，會先顯示「載入中…」），面板也不會卡在「送出中」。
- * 題目文字一律是純文字節點（題本原文，不解析任何標記）。
+ * 之前用 AI 看過這一題的人（GET /api/assist/zh-exemplars?via=past 裡有同一個代號）：列表上照舊標出狀態（zhHistoryStatus），
+ * 題目下面多一個連到那些示範的連結；不再提供用 AI 產生新的一篇（自己貼的題目照舊可以，在「貼上題目」分頁）。
+ * 題目與範文文字一律是純文字節點（不解析任何標記）。
  */
-import { ASSIST_LIMITS, ZH_WRITING_PROMPT_ID_RE, zhWritingPromptLabel, type AssistTaskAccepted, type ZhExemplarListItem, type ZhWritingPrompt } from '@gsat/shared';
+import { ZH_WRITING_PROMPT_ID_RE, zhWritingPromptLabel, type ZhExemplarListItem, type ZhWritingPrompt } from '@gsat/shared';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { useEffect, useId, useRef, useState } from 'react';
+import { useEffect, useId, useRef } from 'react';
 import { Link } from 'react-router';
 import { dataErrorMessage } from '../../../../data/client';
 import { DataError, Loading } from '../../../writing/components/ui';
 import { useStaticData } from '../../../writing/lib/hooks';
-import { primaryBtn } from '../../components/parts';
-import { createZhExemplar } from '../../lib/assistApi';
-import { ZH_EXEMPLAR_COPY } from '../../subjects/chinese/copy';
-import { ZH_EXEMPLAR_POINTS } from '../../subjects/chinese/exemplar';
-import { ZhExemplarConfirm } from '../../subjects/chinese/ZhExemplarSection';
 import { ZH_WRITING_COPY, ZH_WRITING_SECTION_SHORT, zhWritingHref } from '../labels';
 import { loadZhWritingPrompts, zhHistoryStatus, zhPromptsByYear } from '../lib';
 import { insetBoxCls } from '../../../../components/ui/Card';
+import { StaticExemplars } from './StaticExemplars';
 
 
 /** 列表上的一題（按鈕；回來時焦點放回這裡）。 */
@@ -38,14 +31,12 @@ export function PastPrompts({
   selected,
   onSelect,
   history,
-  onStarted,
 }: {
   /** 網址的 ?prompt=（null＝列表）。 */
   selected: string | null;
   onSelect: (id: string | null) => void;
   /** 歷屆題目建立的案例（?via=past；標出看過的題目；還沒讀到是空陣列）。 */
   history: readonly ZhExemplarListItem[];
-  onStarted: (accepted: AssistTaskAccepted) => void;
 }) {
   const data = useStaticData(loadZhWritingPrompts);
   const lastSelected = useRef<string | null>(null);
@@ -67,7 +58,7 @@ export function PastPrompts({
   const prompts = data.value.prompts;
   const byId = new Map(history.filter((h) => h.prompt_id !== null).map((h) => [h.prompt_id as string, h]));
   const current = selected ? prompts.find((p) => p.id === selected) : undefined;
-  if (current) return <PromptDetail key={current.id} prompt={current} item={byId.get(current.id)} onBack={() => onSelect(null)} onStarted={onStarted} />;
+  if (current) return <PromptDetail key={current.id} prompt={current} item={byId.get(current.id)} onBack={() => onSelect(null)} />;
 
   return (
     <div className="space-y-4">
@@ -115,35 +106,11 @@ export function PastPrompts({
   );
 }
 
-/** 一題的完整題目＋動作。 */
-function PromptDetail({
-  prompt,
-  item,
-  onBack,
-  onStarted,
-}: {
-  prompt: ZhWritingPrompt;
-  item: ZhExemplarListItem | undefined;
-  onBack: () => void;
-  onStarted: (accepted: AssistTaskAccepted) => void;
-}) {
+/** 一題的完整題目＋本站的三篇固定範文（之前用 AI 看過這一題的人，另外有連到那些示範的連結）。 */
+function PromptDetail({ prompt, item, onBack }: { prompt: ZhWritingPrompt; item: ZhExemplarListItem | undefined; onBack: () => void }) {
   const headingRef = useRef<HTMLHeadingElement>(null);
-  const triggerRef = useRef<HTMLButtonElement>(null);
-  const restoreFocus = useRef(false);
-  const [confirming, setConfirming] = useState(false);
   const promptId = useId();
   useEffect(() => headingRef.current?.focus({ preventScroll: false }), []);
-  useEffect(() => {
-    if (confirming || !restoreFocus.current) return;
-    restoreFocus.current = false;
-    triggerRef.current?.focus();
-  }, [confirming]);
-  const points = ZH_EXEMPLAR_POINTS;
-  const pending = pendingOf(item);
-  const done = item?.exemplars ?? 0;
-  const full = item !== undefined && !pending && item.remaining <= 0;
-  const lastFailed = item?.latest?.status === 'failed';
-  const triggerLabel = lastFailed ? ZH_EXEMPLAR_COPY.retry(points) : done > 0 ? ZH_EXEMPLAR_COPY.again(points) : ZH_EXEMPLAR_COPY.button(points);
 
   return (
     <article aria-labelledby={`${promptId}-h`} className="space-y-4" data-zh-prompt-detail={prompt.id}>
@@ -191,39 +158,14 @@ function PromptDetail({
           <p className="mt-1 text-muted">{ZH_WRITING_COPY.pastNoLimits}</p>
         )}
       </div>
-      <div className="space-y-2" data-testid="zh-prompt-actions">
-        {item && (
-          <p>
-            <Link to={zhWritingHref(item.case_id)} className="inline-flex min-h-11 items-center font-medium text-primary underline underline-offset-2">
-              {ZH_WRITING_COPY.pastOpen(done, pending)}
-            </Link>
-          </p>
-        )}
-        {full ? (
-          <p className="text-sm text-muted">{ZH_EXEMPLAR_COPY.perCaseFull(ASSIST_LIMITS.zhExemplarsPerCase)}</p>
-        ) : pending ? null : confirming ? (
-          <ZhExemplarConfirm
-            standalone
-            submit={() => createZhExemplar({ source: 'past', prompt_id: prompt.id })}
-            onCancel={() => {
-              restoreFocus.current = true;
-              setConfirming(false);
-            }}
-            onStarted={(accepted) => {
-              // 先收起面板再換頁（見檔頭：換頁沒有卸載這個元件時，不能卡在「送出中」）。
-              setConfirming(false);
-              onStarted(accepted);
-            }}
-          />
-        ) : (
-          <div className="space-y-2">
-            {done === 0 && <p className="text-sm">{ZH_WRITING_COPY.writeFirst}</p>}
-            <button ref={triggerRef} type="button" onClick={() => setConfirming(true)} className={primaryBtn}>
-              {triggerLabel}
-            </button>
-          </div>
-        )}
-      </div>
+      <StaticExemplars prompt={prompt} />
+      {item && (
+        <p data-testid="zh-prompt-actions">
+          <Link to={zhWritingHref(item.case_id)} className="inline-flex min-h-11 items-center font-medium text-primary underline underline-offset-2">
+            {ZH_WRITING_COPY.pastOpen(item.exemplars, pendingOf(item))}
+          </Link>
+        </p>
+      )}
     </article>
   );
 }

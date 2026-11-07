@@ -18,6 +18,7 @@
  *   data/sources.json                      題目來源登記（本站題庫與出版社的出處句、授權範圍、到期日；可以不存在＝只有本站題庫）
  *   data/publisher/{來源}/v1/…             出版社模考的正規化檔（gsat-pub/v1；可以不存在，docs/design/weak-paper.md §8.4）
  *   data/zh-writing/prompts.json           國寫範文獨立頁的歷屆國寫題目（111–115 每年知性、情意各一；gsat-zh-writing-prompts/v1）
+ *   data/zh-writing/exemplars.json         歷屆國寫的固定範文（每題三篇，本站撰寫；gsat-zh-static-exemplars/v1）
  *   data/exams/parsed-math/*.json          學測數學A／數學B 歷屆試題（gsat-math-exam/v1，docs/math-exam-json-schema.md）；圖在 data/exams/figures-math/
  *   data/exams/math-solutions/{id}.json    數學本站詳解（另一條流程產生；可以不存在＝該卷顯示「詳解準備中」）
  *   data/exams/math-manifest.json          數學官方檔案清單（試題、答案、答題卷的官方網址）
@@ -152,6 +153,8 @@ const PUBLISHER_DIR = process.env.GSAT_PUBLISHER_DIR ? path.resolve(process.env.
 /** 國寫範文獨立頁的歷屆國寫題目（docs/design/assistant-subjects.md「國寫範文」的「獨立頁」）：必須存在、格式要對。 */
 const ZH_WRITING_PROMPTS_FILE = path.join(DATA_DIR, 'zh-writing', 'prompts.json');
 const ZH_WRITING_PROMPTS_FORMAT = 'gsat-zh-writing-prompts/v1';
+const ZH_STATIC_EXEMPLARS_FILE = path.join(DATA_DIR, 'zh-writing', 'exemplars.json');
+const ZH_STATIC_EXEMPLARS_FORMAT = 'gsat-zh-static-exemplars/v1';
 /**
  * 學測數學歷屆試題（docs/design/math.md P2）。試題目錄必須存在；詳解目錄由另一條流程陸續寫入，可以不存在。
  */
@@ -1057,6 +1060,24 @@ function buildZhWritingPrompts() {
   return raw;
 }
 
+/**
+ * 歷屆國寫的固定範文（packages/shared/src/zh-static-exemplars.ts）：這裡只擋形狀與代號（每題三篇、題目要存在），字數與格數由
+ * shared 的 zh-static-exemplars.data.test.ts 用 zhStaticExemplarProblems 檢查。原樣輸出。
+ */
+function buildZhStaticExemplars(promptIds) {
+  const raw = readJson(ZH_STATIC_EXEMPLARS_FILE);
+  const label = relative(ZH_STATIC_EXEMPLARS_FILE);
+  check(isObject(raw) && raw.format === ZH_STATIC_EXEMPLARS_FORMAT && isObject(raw.prompts), `${label} 的格式不對`);
+  for (const [id, list] of Object.entries(raw.prompts)) {
+    check(promptIds.has(id), `${label} 有一題的代號不在歷屆題目裡：${id}`);
+    check(Array.isArray(list) && list.length === 3, `${label} 的 ${id} 要剛好三篇`);
+    for (const e of list) {
+      check(isObject(e) && typeof e.title_zh === 'string' && typeof e.angle_zh === 'string' && typeof e.q1 === 'string' && Array.isArray(e.paragraphs) && e.paragraphs.length > 0 && e.paragraphs.every((x) => typeof x === 'string' && x.trim() !== ''), `${label} 的 ${id} 有一篇格式不對`);
+    }
+  }
+  return raw;
+}
+
 function main() {
   const started = Date.now();
   assertInputsExist();
@@ -1155,7 +1176,10 @@ function main() {
   // 公開的來源登記（scripts/lib/item-sources.mjs，docs/design/weak-paper.md §8.3）：前端與 Worker 自己比對 ends_on。
   emit(SOURCES_PATH, publicSourceRegistry(sources.effective, version));
   // 國寫範文獨立頁的歷屆國寫題目（packages/shared/src/zh-writing-prompts.ts 的 ZH_WRITING_PROMPTS_PATH）。
-  emit('zh-writing/prompts.json', { ...buildZhWritingPrompts(), version });
+  const zhPrompts = buildZhWritingPrompts();
+  emit('zh-writing/prompts.json', { ...zhPrompts, version });
+  // 歷屆國寫的固定範文（shared 的 ZH_STATIC_EXEMPLARS_PATH）：選歷屆題目時直接顯示，不呼叫 AI。
+  emit('zh-writing/exemplars.json', { ...buildZhStaticExemplars(new Set(zhPrompts.prompts.map((p) => p.id))), version });
   // 學測數學歷屆試題（scripts/lib/math-data.mjs）：摘要、每卷內容、本站詳解（沒有詳解檔時 items 是空的）、圖檔。
   emit('math/index.json', { version, count: math.summaries.length, papers: math.summaries });
   for (const d of math.papers) emit(`math/${String(d.id)}.json`, d);
