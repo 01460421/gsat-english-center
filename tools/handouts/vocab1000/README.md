@@ -3,7 +3,10 @@
 紙本講義「熟字僻義 1000」的資料與排版程式。這裡只是備份，網站不會讀這個資料夾。
 
 - `data/unit-XX.json`：25 個單元，每單元 40 張字卡（`entries`）與 10 題仿學測詞彙題（`quiz`）。
-- `build.mjs`：把 `data/` 排成 PDF（封面、使用說明、目錄、25 單元、解答、索引）。
+- `data-by-level/unit-XX.json`：依級別由低到高重新分的 25 個單元（正式版用這份），每個字多一個 `kk` 欄位。由 `regroup.py` 從 `data/` 產生。
+- `build2.mjs`：正式版的排版程式（橫式字卡：標題列＋左欄搭配、右欄例句），讀 `data-by-level/`。
+- `kk/`、`kkcheck.py`：KK 音標與交叉核對程式（對照 CMUdict）。
+- `build.mjs`：第一版的雙欄排版，把 `data/` 排成 PDF（封面、使用說明、目錄、25 單元、解答、索引）。
   - 需要 Playwright Chromium、`pdfunite`、`pdftotext`，以及 Fontsource 的 Noto Sans TC、Noto Serif TC、Source Serif 4、Inter。
   - 程式裡的路徑寫的是當時的暫存目錄，重建前要改成實際位置。
   - 用法：`node build.mjs <輸出目錄> <data 目錄>`。
