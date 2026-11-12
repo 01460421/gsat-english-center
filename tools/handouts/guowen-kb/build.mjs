@@ -184,7 +184,8 @@ function sourcesHtml(ids) {
     if (!existsSync(f)) continue;
     let src; try { src = JSON.parse(readFileSync(f, 'utf8')); } catch { continue; }
     const c = new Map();
-    for (const x of src) { let d = ''; try { d = new URL(x.url).hostname.replace(/^www\./, ''); } catch { /* 非網址 */ } if (d) c.set(d, (c.get(d) ?? 0) + 1); }
+    const skip = /(^|\.)(ptt\.cc|dcard\.tw|facebook\.com|pixnet\.net|blogspot\.com|medium\.com|zhihu\.com|kknews\.cc|sohu\.com|163\.com|fx361\.com|epochtimes\.com|douban\.com|wikipedia\.com)$/;
+    for (const x of src) { let d = ''; try { d = new URL(x.url).hostname.replace(/^www\./, ''); } catch { /* 非網址 */ } if (d && !skip.test(d)) c.set(d, (c.get(d) ?? 0) + 1); }
     const top = [...c.entries()].sort((a, b) => b[1] - a[1]).slice(0, 14).map(([d]) => d);
     h.push(`<h4>${id}　${TITLES[id] ?? ''}（查證 ${src.length} 筆）</h4><p class="src">${top.join('、')}</p>`);
   }
