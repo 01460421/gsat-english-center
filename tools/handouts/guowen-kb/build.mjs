@@ -57,6 +57,7 @@ const VOLS = {
       { color: 'green', label: '第二部', title: '詞語', sub: '替代詞・成語', ids: ['N4', 'N5', 'N6'] },
       { color: 'orange', label: '第三部', title: '引用', sub: '名言・典故・人物・詩詞', ids: ['N7', 'N8', 'N9', 'N10', 'N11'] },
       { color: 'purple', label: '第四部', title: '基本功', sub: '易錯字・標點・語病', ids: ['N12'] },
+      { color: 'rose', label: '第五部', title: '進階', sub: '詞藻・典故語・意象・名家筆法・論證・敘事・句式', ids: ['N13', 'N14', 'N15', 'N16', 'N17', 'N18', 'N19'] },
     ],
   },
 };
