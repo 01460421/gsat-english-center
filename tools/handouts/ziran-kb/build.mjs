@@ -32,7 +32,7 @@ const COL = {
   rose: { c: '#c2476b', d: '#93304e', s: '#fceef2', h: '#f6d3dd' },
 };
 const R = (p, a, b) => Array.from({ length: b - a + 1 }, (_, i) => `${p}${a + i}`);
-const KPARTS = existsSync(`${ROOT}/kparts.json`) ? JSON.parse(readFileSync(`${ROOT}/kparts.json`, 'utf8')) : [];
+const KVOLS = existsSync(`${ROOT}/kvols.json`) ? JSON.parse(readFileSync(`${ROOT}/kvols.json`, 'utf8')) : {};
 const VOLS = {
   1: {
     no: '第一冊', title: '物理', lines: ['物理'], tag: '物理',
@@ -81,15 +81,11 @@ const VOLS = {
       { color: 'blue', label: '第三部', title: '模擬試題', sub: '全真模擬兩回・詳解', ids: ['X6', 'X7'] },
     ],
   },
-  6: {
-    no: '第六冊', title: '科學班入學考試題詳解', lines: ['科學班', '入學考'], tag: '科學班',
-    blurb: '各校科學班甄選入學・科學能力檢定<br>自然科試題與詳解，附單元對照',
-    parts: KPARTS,
-  },
 };
+Object.assign(VOLS, KVOLS);
 const DESC = JSON.parse(readFileSync(`${ROOT}/desc.json`, 'utf8'));
 
-const VOLARG = process.argv[2] && /^[1-6]$/.test(process.argv[2]) ? [Number(process.argv[2])] : [1, 2, 3, 4, 5, 6];
+const VOLARG = process.argv[2] && /^[1-8]$/.test(process.argv[2]) ? [Number(process.argv[2])] : [1, 2, 3, 4, 5, 6, 7, 8];
 const ONLY = process.argv[3] ? new Set(process.argv[3].split(',')) : null;
 const read = (f) => (existsSync(f) ? readFileSync(f, 'utf8') : null);
 
@@ -112,6 +108,7 @@ function math(html) {
   return html.replace(/<span class="m">([\s\S]*?)<\/span>/g, (_, s) => tex(s, false));
 }
 function lines(html) {
+  html = html.replace(/<div class="example">(\s*)<p><strong>(例題\s*[0-9０-９]+)[：:　\s]*([^<]*)<\/strong>[：:　\s]*/g, (m, sp, n, ttl) => `<div class="example">${sp}<p class="exh"><span class="exn">${n}</span>${ttl ? `<strong>${ttl}</strong>　` : ''}`);
   html = math(optCols(html)).replace(/<img class="scan" src="img\/([A-Za-z0-9_\/.-]+)"/g, (m, p) => `<img class="scan" src="file://${ROOT}/img/${p}"`);
   for (const [a, b] of [['污染', '汙染'], ['佔', '占'], ['裏', '裡'], ['台灣', '臺灣'], ['溼', '濕']]) html = html.split(a).join(b);
   html = html.replace(/<tr>\s*<td>((?:<strong>)?[^<]{1,7}(?:<\/strong>)?)<\/td>/g, '<tr><td class="nw">$1</td>');
@@ -164,7 +161,7 @@ function frontHtml(V, vol) {
   const volRows = Object.entries(VOLS).map(([k, v]) => `<tr><td>${v.no}　${v.title}</td><td>${v.parts.map((p) => p.title).join('、')}</td></tr>`).join('');
   return `<section class="front" style="${varsOf('intro')}">
 <h2 class="fh">編輯說明</h2>
-<p>《${BOOK}》供準備學測自然考科的高中生查閱與自修，程度定位為頂標與滿級分。全套六冊：</p>
+<p>《${BOOK}》供準備學測自然考科的高中生查閱與自修，程度定位為頂標與滿級分。全套八冊：</p>
 <table class="t"><thead><tr><th style="width:38%">冊別</th><th>內容</th></tr></thead><tbody>${volRows}</tbody></table>
 <h3>範圍</h3>
 <ul>
@@ -176,7 +173,7 @@ function frontHtml(V, vol) {
 <li><strong>物理常數與數據</strong>：依國際單位制（SI）與國際科學數據委員會（CODATA）公布值；書中計算多取有效數字三位。</li>
 <li><strong>名詞</strong>：依國家教育研究院「樂詞網」學術名詞與臺灣高中教科書通行譯名；元素名稱依該院公布之中文名稱。</li>
 <li><strong>科學史與統計資料</strong>：年代、人物、事件、臺灣在地資料（地震、颱風、能源）逐條查核；各說不一者採高中課本通行之說，必要時註「一說」。</li>
-<li><strong>科學班入學考試題</strong>：第六冊與各單元「科學班入學考題精選」收錄各校公告之科學班甄選入學科學能力檢定試題，逐題註明學校、學年度與科目；答案依學校公告，未公告者為本書解。詳解、試卷分析與單元對照為本書撰寫。依著作權法第九條，依法令舉行之各類考試試題不得為著作權之標的。</li>
+<li><strong>科學班入學考試題</strong>：第六至八冊與各單元「科學班入學考題精選」收錄各校公告之科學班甄選入學科學能力檢定試題，逐題註明學校、學年度與科目；答案依學校公告，未公告者為本書解。詳解、試卷分析與單元對照為本書撰寫。依著作權法第九條，依法令舉行之各類考試試題不得為著作權之標的。</li>
 <li>各單元查證所用的主要網站列於書末〈資料來源〉。</li>
 </ul>
 <h3>未收錄的內容</h3>

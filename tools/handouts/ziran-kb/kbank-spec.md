@@ -34,7 +34,7 @@
 
 - 用 `pdftotext -layout` 取文字，再用 `pdftoppm -r 110 -f 頁 -l 頁 -png 檔 /tmp/claude-0/zhw/sci/tmp/K代號/p` 轉成圖，用 Read **逐頁看圖**對照，確保文字、數字、單位、上下標、選項完全正確。
 - 原題文字一字不改（明顯錯字可加註「原題如此」）；公式改用 `<span class="m">`，化學式用 `\ce{}`。
-- **圖**：原題的圖用裁切的圖片：`pdftoppm -r 220 -f 頁 -l 頁 -x X -y Y -W 寬 -H 高 -png -singlefile 檔 /tmp/claude-0/zhw/sci/kbank/img/K代號/q07`（座標以 220 dpi 計），裁切後用 Read 看是否完整、沒有切到題號或其他題的文字；在 HTML 用 `<img class="scan" src="img/K代號/q07.png" alt="">`。表格能打字的就打成 `table.t`。
+- **圖**：原題的圖用裁切的圖片：`pdftoppm -r 220 -f 頁 -l 頁 -x X -y Y -W 寬 -H 高 -png -singlefile 檔 /tmp/claude-0/zhw/sci/kbank/img/K代號/q07`（座標以 220 dpi 計），裁切後用 Read 看是否完整、沒有切到題號或其他題的文字；在 HTML 用 `<img class="scan" src="img/K代號/q07.png" alt="">`（不要加 width，排版程式會自動依 220 dpi 換算成原卷大小）。表格能打字的就打成 `table.t`。
 - 題號照原卷（K07-01 對應原卷第 1 題）。題組照原卷順序。非選擇題照原卷，加 `<div class="lines" data-n="2"></div>`。
 - 若一份試卷題數太多（超過 50 題），仍全收。
 
@@ -73,7 +73,7 @@
 
 - `/tmp/claude-0/zhw/sci/parts/K代號.body.html`、`K代號.ans.html`、來源 `/tmp/claude-0/zhw/sci/work/K代號.sources.json`（至少記試卷與答案的網址，以及詳解查證用的網頁）。
 - `PARTS` 不用設定；執行 `python3 -I /tmp/claude-0/zhw/sci/check_sci.py K代號` 到 OK。
-- 排樣張：`cd /tmp/claude-0/zhw/pkg/ziran && flock /tmp/claude-0/zhw/sci/build.lock node build.mjs 6 K代號`，看 `dist/sample_K代號.pdf` 的題目、圖片、公式。
+- 排樣張：`cd /tmp/claude-0/zhw/pkg/ziran && flock /tmp/claude-0/zhw/sci/build.lock node build.mjs 冊號 K代號（第六冊：建中、北一女、武陵；第七冊：臺中一中、彰化、嘉義；第八冊：臺南一中、雄中）`，看 `dist/sample_K代號.pdf` 的題目、圖片、公式。
 - 回覆（八行以內）：K 代號與試卷、題數、圖片數、與公告答案不同或公告有誤的題目、未能確定答案的題目、各題對應單元的統計。
 
 ## 網路查證工具額度

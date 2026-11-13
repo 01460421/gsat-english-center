@@ -230,3 +230,15 @@ figure.fig > svg { max-height:92mm; width:auto; max-width:100%; }
 figure.fig.half > svg { max-height:70mm; }
 /* 框的標籤不可單獨留在頁底：短框不分頁 */
 .key, .tip, .warn, div.exam, div.formula, div.mnem { break-inside:avoid; }
+/* 例題與「解」標籤不可單獨留在頁底：改成貼在第一行 */
+div.example::before { display:none; content:none; }
+div.example > p:first-of-type::before { content:'例題'; display:inline-block; font-size:.78rem; letter-spacing:.16em; color:#fff; background:var(--c); border-radius:3px; padding:0 .6rem; margin-right:.55rem; vertical-align:.08rem; line-height:1.55; }
+div.sol::before { float:left; margin-top:.15rem; }
+div.sol > ol.steps { margin-top:0; }
+/* 原卷圖以 220 dpi 裁切：換算成實際尺寸 */
+img.scan:not([width]) { zoom:.436; max-width:229%; max-height:275mm; }
+/* 題組標題（只有粗體的一行）不與後文分頁 */
+p:has(> strong:only-child) { break-after:avoid; }
+h4.exset, h3, h4 { break-after:avoid; }
+div.example > p.exh::before { display:none; content:none; }
+div.example .exn { display:inline-block; font-size:.78rem; letter-spacing:.12em; color:#fff; background:var(--c); border-radius:3px; padding:0 .6rem; margin-right:.55rem; vertical-align:.08rem; line-height:1.55; }

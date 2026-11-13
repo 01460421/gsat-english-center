@@ -86,7 +86,7 @@
 <li><strong>電功率</strong>：見公式卡。後兩式只適用於電能全部轉為熱能的電阻性元件；馬達的 <span class="m">IV</span> 包含輸出的力學功率。<span class="hand">馬達不能用 V²/R</span></li>
 <li><strong>電能</strong>：<span class="m">E = Pt</span>。電費以「度」計，<span class="box">1 度 = 1 kWh = 3.6×10⁶ J</span>。</li>
 <li><strong>額定值</strong>：「110 V，1100 W」指在 110 V 下工作時消耗 1100 W；由此可求電阻 <span class="m">R = V^2/P = 11\ \Omega</span>（電阻視為定值時）。實際電壓不同時，功率依 <span class="m">V^2/R</span> 改變。</li>
-<li>臺灣住宅一般以單相 110 V 供電，冷氣、烘衣機等大功率電器另設 220 V 迴路；兩者頻率皆為 60 Hz。</li>
+<li>臺灣住宅多以單相三線 110 V／220 V 供電：一般插座為 110 V，冷氣、烘衣機等大功率電器使用 220 V 迴路；頻率皆為 60 Hz。</li>
 </ul>
 
 <figure class="fig"><svg viewBox="0 0 460 260" width="460">
@@ -97,7 +97,7 @@
 <line x1="60" y1="220" x2="380" y2="60" stroke="#2f6fb5" stroke-width="2.5"/>
 <text x="385" y="58" font-size="14">定值電阻（直線）</text>
 <path d="M60,220 Q160,110 400,95" stroke="#d9772b" stroke-width="2.5" fill="none"/>
-<text x="300" y="120" font-size="14">鎢絲燈泡</text>
+<text x="345" y="128" font-size="14">鎢絲燈泡</text>
 <path d="M60,220 L230,218 Q265,214 280,150 L300,40" stroke="#2e8b57" stroke-width="2.5" fill="none"/>
 <text x="305" y="40" font-size="14">二極體（正向）</text>
 <text x="70" y="250" font-size="13">0</text>
@@ -381,7 +381,7 @@
 <text x="360" y="243" font-size="12" text-anchor="middle">線圈上方為 S，吸引磁鐵</text>
 </svg><figcaption>圖 P6-10　冷次定律：N 極朝下的磁鐵靠近（左）與遠離（右）水平線圈（示意圖，未依比例）。紅色箭頭標示線圈前緣（靠讀者一側）的電流方向。</figcaption></figure>
 <div class="tip"><p><strong>深究　冷次定律是能量守恆的要求</strong></p>
-<p>假設感應電流的磁場「助長」磁通量變化：磁鐵靠近線圈時被線圈吸引而加速，磁通量變化更快，感應電流更大，吸引力更大……磁鐵的動能與線圈的焦耳熱將無中生有地持續增加，違反能量守恆。實際上感應電流必然反抗變化，推動磁鐵者須持續作功，此功轉為電能，再轉為電阻的熱能。因此法拉第定律中的負號並非人為規定，而是能量守恆的結果。</p></div>
+<p>假設感應電流的磁場「助長」磁通量變化：磁鐵靠近線圈時被線圈吸引而加速，磁通量變化更快，感應電流更大，吸引力更大……磁鐵的動能與線圈的焦耳熱將無中生有地持續增加，違反能量守恆。實際上感應電流必然反抗變化，推動磁鐵者須持續作功，此功轉為電能，再轉為電阻的熱能。因此法拉第定律中的負號由能量守恆決定。</p></div>
 
 <h4>5. 動生電動勢與能量轉換（進階）</h4>
 <p>長度 L 的導體棒在均勻磁場 B 中，以速度 v 垂直切割磁力線（棒、速度、磁場三者互相垂直）：</p>
@@ -414,7 +414,7 @@
 <h4>6. 渦電流與電磁阻尼</h4>
 <ul>
 <li><strong>渦電流</strong>：塊狀導體處於變動的磁場中，或在磁場中運動時，導體內部產生的環狀感應電流。依冷次定律，渦電流反抗磁通量變化，產生阻尼力與焦耳熱。</li>
-<li>利用：<strong>電磁爐</strong>（線圈通以約 25–50 kHz 的交流電，在鐵質鍋底產生渦電流而發熱；鐵磁性鍋具效果佳，陶瓷、玻璃不導電無法加熱，鋁、銅鍋在一般機型效果差）、高鐵與捷運的渦電流煞車、磁鐵在銅管中緩慢下落、金屬探測器、電磁感應式煞車的體能訓練器材。</li>
+<li>利用：<strong>電磁爐</strong>（線圈通以約 25–50 kHz 的交流電，在鐵質鍋底產生渦電流而發熱；鐵磁性鍋具效果佳，陶瓷、玻璃不導電無法加熱，鋁、銅鍋在一般機型效果差）、部分高速列車（如德國 ICE 3）的線性渦電流煞車、自由落體遊樂設施的磁煞車、磁鐵在銅管中緩慢下落、金屬探測器、電磁感應式煞車的體能訓練器材。</li>
 <li>防止：變壓器與馬達的鐵心以彼此絕緣的<span class="ul">薄矽鋼片疊合</span>，截斷渦電流的路徑，降低熱損失。</li>
 </ul>
 <div class="warn"><ul>
@@ -463,7 +463,7 @@
 <ellipse cx="135" cy="195" rx="10" ry="4" fill="#e2e8f0" stroke="#1f2a44"/>
 <ellipse cx="165" cy="205" rx="10" ry="4" fill="#e2e8f0" stroke="#1f2a44"/>
 <text x="230" y="210" font-size="12">滑環</text>
-<text x="150" y="105" font-size="12" text-anchor="middle">線圈</text>
+<text x="146" y="105" font-size="12" text-anchor="end">線圈</text>
 </svg><figcaption>圖 P6-12　交流發電機（示意圖，未依比例）</figcaption></figure><figure class="fig half"><svg viewBox="0 0 300 220" width="300">
 <line x1="30" y1="110" x2="290" y2="110" stroke="#1f2a44" stroke-width="1.5" marker-end="url(#P6-ak)"/>
 <line x1="30" y1="200" x2="30" y2="15" stroke="#1f2a44" stroke-width="1.5" marker-end="url(#P6-ak)"/>
@@ -472,12 +472,12 @@
 <path d="M30,110 C55,30 80,30 90,40 C100,30 105,60 110,70" fill="none" stroke="none"/>
 <polyline fill="none" stroke="#c2410c" stroke-width="2.2" points="30,110 40,79 50,52 60,34 70,28 80,34 90,52 100,79 110,110 120,141 130,168 140,186 150,192 160,186 170,168 180,141 190,110 200,79 210,52 220,34 230,28 240,34 250,52 260,79 270,110"/>
 <polyline fill="none" stroke="#2f6fb5" stroke-width="1.8" stroke-dasharray="5,3" points="30,28 40,34 50,52 60,79 70,110 80,141 90,168 100,186 110,192 120,186 130,168 140,141 150,110 160,79 170,52 180,34 190,28 200,34 210,52 220,79 230,110 240,141 250,168 260,186 270,192"/>
-<text x="200" y="210" font-size="12">虛線：Φ（相差 1/4 週期）</text>
-<text x="76" y="22" font-size="12">ε<tspan baseline-shift="sub" font-size="9">max</tspan></text>
+<text x="290" y="212" font-size="12" text-anchor="end">虛線：Φ（差 1/4 週期）</text>
+<text x="86" y="20" font-size="12">ε<tspan baseline-shift="sub" font-size="9">max</tspan></text>
 </svg><figcaption>圖 P6-13　ε 與 Φ 隨時間變化。Φ 最大時 ε 為零。</figcaption></figure>
 
 <h4>2. 直流與交流：電流之戰</h4>
-<p>1880 年代，愛迪生（Thomas Edison，1847–1931）推廣低壓直流供電，輸電距離短；西屋公司（George Westinghouse）採用變壓器的交流系統，並於 1888 年取得特士拉（Nikola Tesla，1856–1943）的感應電動機專利。交流系統可用變壓器升壓輸送、降壓使用，由大型電廠供應廣大區域，19 世紀末逐漸成為主流。變壓器的發展：法拉第鐵環（1831）；高拉德與吉布斯的開放鐵心變壓器（1882）；匈牙利甘茨公司的閉合鐵心設計（1884–1885）；史坦利為西屋公司改良的商用變壓器（1886）。</p>
+<p>1880 年代，愛迪生（Thomas Edison，1847–1931）推廣低壓直流供電，輸電距離短；西屋公司（George Westinghouse）採用變壓器的交流系統，並於 1888 年取得特士拉（Nikola Tesla，1856–1943）多相感應電動機專利的授權。交流系統可用變壓器升壓輸送、降壓使用，由大型電廠供應廣大區域，19 世紀末逐漸成為主流。變壓器的發展：法拉第鐵環（1831）；高拉德與吉布斯的開放鐵心變壓器（1882）；匈牙利甘茨公司的閉合鐵心設計（1884–1885）；史坦利為西屋公司改良的商用變壓器（1886）。</p>
 <p>現代的高壓直流輸電（HVDC）以電力電子元件轉換交直流，適用於長距離與海底電纜，與一百多年前的「直流」技術條件不同。</p>
 
 <h4>3. 變壓器</h4>
@@ -563,7 +563,7 @@
 <h3>五、馬克士威方程式與電磁波</h3>
 <div class="note"><p>電生磁：奧斯特（電流）＋馬克士威（變動電場）。</p><p>磁生電：法拉第（變動磁場）。</p></div>
 <h4>1. 馬克士威的統整</h4>
-<p>馬克士威（James Clerk Maxwell，1831–1879）以法拉第的「力線」與「場」的觀念為基礎，將電磁學數學化。約 1862 年，他由理論算出電磁擾動的傳播速率與當時測得的光速相近，推論光是電磁現象；1865 年發表〈電磁場的動力學理論〉，1873 年出版《電磁通論》。現今通用的四條向量形式方程式，由黑維塞（Oliver Heaviside）等人在 1880 年代整理而成。</p>
+<p>馬克士威（James Clerk Maxwell，1831–1879）以法拉第的「力線」與「場」的觀念為基礎，將電磁學數學化。約 1862 年，他由理論算出電磁擾動的傳播速率與當時測得的光速相近，推論光是電磁現象；1865 年發表〈電磁場的動力學理論〉，1873 年出版《電磁通論》。現今通用的四條向量形式方程式，由黑維塞（Oliver Heaviside，1850–1925）於 1884 年起整理而成，赫茲亦有類似的整理。</p>
 <table class="t"><thead><tr><th>方程式</th><th>內容（定性）</th><th>對應的實驗事實</th></tr></thead><tbody>
 <tr><td>電場的高斯定律</td><td>電荷產生電場；穿出封閉曲面的電通量與面內淨電荷成正比</td><td>庫侖定律；電力線起於正電荷、止於負電荷</td></tr>
 <tr><td>磁場的高斯定律</td><td>穿出任何封閉曲面的淨磁通量為零</td><td>磁力線封閉；無磁單極</td></tr>
@@ -597,7 +597,7 @@
 <div class="tip"><p><strong>深究　由兩個常數算出光速</strong></p>
 <p>以 2022 年 CODATA 值 <span class="m">\mu_0 = 1.25663706127\times10^{-6}\ \mathrm{N/A^2}</span>、<span class="m">\varepsilon_0 = 8.8541878188\times10^{-12}\ \mathrm{F/m}</span>：</p>
 <div class="mb">\mu_0\varepsilon_0 \approx 1.1127\times10^{-17}\ \mathrm{s^2/m^2},\qquad \frac{1}{\sqrt{\mu_0\varepsilon_0}} \approx 2.998\times10^{8}\ \mathrm{m/s}</div>
-<p>μ<sub>0</sub> 可由電流間的磁力測得，ε<sub>0</sub> 可由電荷間的靜電力測得，兩者都來自與光無關的桌上實驗。馬克士威時代以韋伯與柯爾勞施（1856）測得的電磁單位比值計算，所得數值與斐左、傅科的光速量測值相近，此一「巧合」成為「光是電磁波」的關鍵論據。現行國際單位制中光速為定義值，公尺由光速與秒定義。</p></div>
+<p>μ<sub>0</sub> 可由電流間的磁力測得，ε<sub>0</sub> 可由電荷間的靜電力測得，兩者都來自與光無關的桌上實驗。馬克士威時代以韋伯與柯爾勞施（1856 年發表）測得的電磁單位與靜電單位比值計算，所得數值與斐左、傅科的光速量測值相近，此一「巧合」成為「光是電磁波」的關鍵論據。現行國際單位制中光速為定義值，公尺由光速與秒定義。</p></div>
 
 <div class="exam"><p>學測常見考法：馬克士威方程式各條的定性意義；電磁波的產生條件與橫波性質；由 μ<sub>0</sub>、ε<sub>0</sub> 算光速；赫茲實驗與馬克士威預測的關係。陷阱：<em>預測者為馬克士威，實驗證實者為赫茲</em>；靜止或等速電荷不輻射電磁波。</p></div>
 <h4>3. 赫茲的實驗驗證</h4>
@@ -613,7 +613,7 @@
 <li>電磁波傳播時，能量隨波以光速傳遞；照射到物體時可被吸收（轉為熱能、使電子振盪），也帶有動量（輻射壓，太陽帆即利用此原理）。</li>
 <li><strong>手機通訊的能量鏈</strong>：電池的化學能 → 電路中的電能 → 天線內振盪電流 → 變動的電場與磁場互相感生，以電磁波向外傳遞能量與訊息 → 基地台天線中的電子受電場作用而振盪，產生微弱的交流電訊號 → 放大、解調得到訊息。下行方向（基地台到手機）同理。</li>
 <li>天線長度常與波長同一數量級（例如四分之一波長）。頻率愈高，波長愈短，天線可愈小，但繞射能力較差、穿透建築物的衰減較大，基地台須更密。</li>
-<li>臺灣 2019 年底至 2020 年初完成第一波 5G 頻譜競標，釋出 3.5 GHz（270 MHz 頻寬）、28 GHz（2500 MHz 頻寬）與 1800 MHz 頻段。3.5 GHz 的波長 <span class="m">\lambda = c/f \approx 8.6\ \mathrm{cm}</span>，28 GHz 約 1.1 cm（毫米波）。</li>
+<li>臺灣於 2019 年 12 月至 2020 年 2 月進行第一波 5G 頻譜競標，標的為 3.5 GHz（270 MHz 頻寬）、28 GHz（2500 MHz 頻寬）與 1800 MHz 頻段（1800 MHz 無業者得標）；3.5 GHz 為主要使用頻段。3.5 GHz 的波長 <span class="m">\lambda = c/f \approx 8.6\ \mathrm{cm}</span>，28 GHz 約 1.1 cm（毫米波）。</li>
 </ul>
 <figure class="fig"><svg viewBox="0 0 560 200" width="560">
 <ellipse cx="140" cy="100" rx="70" ry="45" fill="none" stroke="#2f6fb5" stroke-width="2.2"/>
@@ -661,14 +661,14 @@
 <text x="340" y="122" font-size="11" text-anchor="start">380 nm</text>
 <text x="416" y="122" font-size="11" text-anchor="start">10 nm</text>
 <text x="500" y="122" font-size="11" text-anchor="middle">0.01 nm</text>
-<text x="440" y="30" font-size="13" fill="#d64545" transform="rotate(-3 440 30)">紫外線高頻段起具游離能力</text>
+<text x="372" y="28" font-size="13" text-anchor="middle" fill="#d64545" transform="rotate(-3 372 28)">紫外線高頻段起具游離能力</text><line x1="380" y1="34" x2="392" y2="57" stroke="#d64545" stroke-width="1.5" marker-end="url(#P6-ar)"/>
 </svg><figcaption>圖 P6-18　電磁波譜（示意圖，未依比例；各波段界線為慣用的約略值，並無嚴格分界）。</figcaption></figure>
 <table class="t"><thead><tr><th>波段</th><th>波長約略範圍</th><th>主要產生方式</th><th>應用</th><th>注意</th></tr></thead><tbody>
 <tr><td>無線電波</td><td>大於約 1 m（含調幅、調頻廣播、電視）</td><td>天線中的振盪電流</td><td>廣播、電視、無線通訊、天文電波觀測</td><td>長波可沿地表繞射，部分波段受電離層反射</td></tr>
 <tr><td>微波</td><td>約 1 mm–1 m</td><td>磁控管、電子振盪電路</td><td>行動通訊（4G、5G）、Wi-Fi、雷達、微波爐（約 2.45 GHz）、衛星通訊</td><td>可穿透雲層；宇宙微波背景輻射屬此波段</td></tr>
 <tr><td>紅外線</td><td>約 700 nm–1 mm</td><td>物體熱輻射、分子振動與轉動</td><td>紅外線熱像儀、遙控器、夜視、耳溫槍、光纖通訊（近紅外光）</td><td>常溫物體輻射以紅外線為主；溫室效應與紅外線吸收有關</td></tr>
 <tr><td>可見光</td><td>約 380–700 nm</td><td>高溫物體、原子中電子躍遷</td><td>照明、視覺、光學儀器</td><td>紅光波長最長、紫光最短</td></tr>
-<tr><td>紫外線</td><td>約 10–380 nm</td><td>太陽、汞燈、原子躍遷</td><td>殺菌、螢光檢測、促進皮膚合成維生素 D</td><td>過量造成曬傷、皮膚癌；臭氧層吸收大部分 UVB、UVC</td></tr>
+<tr><td>紫外線</td><td>約 10–380 nm</td><td>太陽、汞燈、原子躍遷</td><td>殺菌、螢光檢測、促進皮膚合成維生素 D</td><td>過量造成曬傷、皮膚癌；臭氧層吸收大部分 UVB 與幾乎全部 UVC</td></tr>
 <tr><td>X 射線</td><td>約 0.01–10 nm</td><td>高速電子撞擊金屬靶（制動輻射）、內層電子躍遷</td><td>醫療影像、電腦斷層、安檢、晶體結構分析</td><td>游離輻射；大氣吸收，X 射線天文須在太空觀測</td></tr>
 <tr><td>γ 射線</td><td>小於約 0.01 nm</td><td>原子核衰變、核反應、宇宙高能現象</td><td>放射治療（如加馬刀）、醫療器材滅菌</td><td>游離輻射，穿透力強</td></tr>
 </tbody></table>
@@ -686,13 +686,13 @@
 </ul></div>
 
 <h3>七、用電安全</h3>
-<div class="note"><p>致命的是「流經心臟的電流」，電壓只是推手。</p><p>I = V／R：同樣 110 V，濕手 R 小，電流大。</p></div>
+<div class="note"><p>危害看流經人體（心臟）的電流。</p><p>I = V／R：同樣 110 V，濕手 R 小，電流大。</p></div>
 <h4>1. 電流對人體的效應</h4>
 <p>人體受電擊的危害取決於<span class="circle">電流大小</span>、通電時間、電流路徑（是否經過心臟）與頻率。電壓需透過人體電阻才決定電流：<span class="m">I = V/R_{\text{人體}}</span>。<span class="hand">濕手觸電特別危險</span></p>
 <table class="t"><thead><tr><th>電流（50/60 Hz 交流，約略值）</th><th>效應</th></tr></thead><tbody>
 <tr><td>約 1 mA</td><td>開始有感覺（感知閾值）</td></tr>
 <tr><td>約 10 mA</td><td>肌肉收縮無法自行放手（擺脫閾值，因人而異）</td></tr>
-<tr><td>大於約 30 mA，持續約 1 s</td><td>經胸部時可能引起心室顫動，危及生命</td></tr>
+<tr><td>數十 mA 以上，持續約 1 s</td><td>經胸部時可能引起心室顫動，危及生命；漏電斷路器取 30 mA 即以此為依據</td></tr>
 </tbody></table>
 <ul>
 <li>人體電阻：皮膚乾燥時可達 10<sup>5</sup> Ω 數量級；潮濕或破損時可降至約 1000 Ω。例：110 V、<span class="m">R = 1000\ \Omega</span> 時，<span class="m">I = 0.11\ \mathrm{A} = 110\ \mathrm{mA}</span>，已達致命範圍。</li>
@@ -710,7 +710,7 @@
 <ul>
 <li><strong>保險絲</strong>：低熔點合金，<span class="ul">串聯在火線上</span>；電流過大時因焦耳熱熔斷。熔斷後須更換同規格者，不可以銅絲代替。</li>
 <li><strong>斷路器（無熔絲開關）</strong>：電流過大時，以雙金屬片受熱彎曲（過載，延時跳脫）或電磁鐵吸引（短路，瞬時跳脫）使開關斷開；排除故障後可復歸重複使用。</li>
-<li><strong>漏電斷路器</strong>：比較流出（火線）與流回（中性線）的電流，兩者差值超過設定值即跳脫。高感度型額定感度電流在 30 mA 以下，高速型動作時間在 0.1 s 以下。浴室插座、電熱水器、靠近水槽的插座等潮濕場所的迴路依法須裝設。</li>
+<li><strong>漏電斷路器</strong>：比較流出（火線）與流回（中性線）的電流，兩者差值超過設定值即跳脫。以防範感電為目的者須採<strong>高靈敏度高速型</strong>：額定靈敏度電流 30 mA 以下、動作時間 0.1 s 以內。依用戶用電設備裝置規則，住宅的電熱水器分路、浴室插座分路、陽台插座分路及距廚房水槽外緣 1.8 m 範圍內的插座分路等須裝設漏電斷路器（插座本身已附漏電啟斷裝置者除外）。</li>
 <li><strong>接地</strong>：電器金屬外殼經三孔插座的接地腳以導線連到大地。外殼漏電時，電流經低電阻的接地線入地，外殼電位維持近於零，同時使漏電斷路器偵測到電流差而跳脫。正常使用時接地線<em>沒有</em>電流。</li>
 </ul>
 <figure class="fig"><svg viewBox="0 0 560 270" width="560">
@@ -794,7 +794,7 @@
 <li><span class="m">\varepsilon = BLv = (0.50)(0.40)(3.0) = 0.60\ \mathrm{V}</span>，<span class="m">I = \dfrac{0.60}{0.60} = 1.0\ \mathrm{A}</span>。</li>
 <li>磁力 <span class="m">F = ILB = (1.0)(0.40)(0.50) = 0.20\ \mathrm{N}</span>，向左；等速時外力 0.20 N 向右。</li>
 <li>外力功率 <span class="m">Fv = 0.60\ \mathrm{W}</span>；焦耳熱功率 <span class="m">I^2R = 0.60\ \mathrm{W}</span>，兩者相等。</li>
-</ol><p>陷阱：等速運動合力為零，但仍須施力；外力抵消的是感應電流造成的磁阻力，不是「維持速度需要力」。</p></div></div>
+</ol><p>陷阱：等速運動合力為零，但仍須施力；外力用以抵消感應電流造成的磁阻力，若迴路斷開則棒不受磁力，等速運動無須施力。</p></div></div>
 
 <div class="example"><p><strong>例題 7　交流發電機（進階）</strong>　100 匝矩形線圈面積 0.020 m²，在 0.50 T 的均勻磁場中以每秒 60 轉繞垂直磁場的軸轉動。求感應電動勢的最大值與頻率；若轉速減半，兩者各變為多少？</p><div class="sol"><ol class="steps">
 <li><span class="m">\omega = 2\pi f = 2\pi(60) \approx 377\ \mathrm{rad/s}</span>。</li>
@@ -922,13 +922,13 @@
 <div class="opts"><span>(A) 1/25</span><span>(B) 1/5</span><span>(C) 不變</span><span>(D) 5</span><span>(E) 25</span></div></div>
 
 <div class="ex" id="P6-17"><span class="exid">P6-17</span>關於馬克士威的電磁理論與其驗證，下列敘述哪些正確？（多選）
-<div class="opts"><span>(A) 變動的電場會產生磁場</span><span>(B) 馬克士威以實驗量測電磁波速率，發現與光速相同</span><span>(C) 赫茲以實驗產生並偵測電磁波，證實其可反射、折射與偏振</span><span>(D) 靜止的點電荷周圍有電場，因此會持續輻射電磁波</span><span>(E) 由真空磁導率 μ<sub>0</sub> 與真空電容率 ε<sub>0</sub> 可算出電磁波在真空中的速率</span></div></div>
+<div class="opts"><span>(A) 馬克士威以實驗量測電磁波速率，發現與光速相同</span><span>(B) 變動的電場會產生磁場</span><span>(C) 赫茲以實驗產生並偵測電磁波，證實其可反射、折射與偏振</span><span>(D) 靜止的點電荷周圍有電場，因此會持續輻射電磁波</span><span>(E) 由真空磁導率 μ<sub>0</sub> 與真空電容率 ε<sub>0</sub> 可算出電磁波在真空中的速率</span></div></div>
 
 <div class="ex" id="P6-18"><span class="exid">P6-18</span>臺灣 5G 網路使用的 3.5 GHz 電磁波，在空氣中的波長約為何？（<span class="m">c = 3.00\times10^{8}\ \mathrm{m/s}</span>）
 <div class="opts"><span>(A) 0.857 mm</span><span>(B) 8.57 mm</span><span>(C) 8.57 cm</span><span>(D) 85.7 cm</span><span>(E) 1.05 m</span></div></div>
 
 <div class="ex" id="P6-19"><span class="exid">P6-19</span>關於家庭用電的保護裝置，下列敘述哪些正確？（多選）
-<div class="opts"><span>(A) 保險絲或斷路器應串聯在火線上</span><span>(B) 漏電斷路器偵測的是火線與中性線電流的差值</span><span>(C) 正常使用時，接地線中有與火線相同的電流</span><span>(D) 金屬外殼接地後，外殼漏電時電流經接地線入地，可降低觸電危險並使漏電斷路器跳脫</span><span>(E) 手潮濕時人體電阻變大，觸電較不危險</span></div></div>
+<div class="opts"><span>(A) 正常使用時，接地線中有與火線相同的電流</span><span>(B) 保險絲或斷路器應串聯在火線上</span><span>(C) 漏電斷路器偵測的是火線與中性線電流的差值</span><span>(D) 金屬外殼接地後，外殼漏電時電流經接地線入地，可降低觸電危險並使漏電斷路器跳脫</span><span>(E) 手潮濕時人體電阻變大，觸電較不危險</span></div></div>
 
 <div class="ex" id="P6-20"><span class="exid">P6-20</span>20 匝線圈中，通過每匝的磁通量 Φ 隨時間 t 的變化如圖。下列敘述何者正確？
 <figure class="fig"><svg viewBox="0 0 440 200" width="400">
@@ -948,13 +948,13 @@
 <div class="opts"><span>(A) 1–4 s 期間感應電動勢最大</span><span>(B) 0–1 s 期間感應電動勢量值為 0.030 V</span><span>(C) t = 5.5 s 時磁通量為零，感應電動勢也為零</span><span>(D) 4–7 s 期間，感應電流方向在 t = 5.5 s 時反轉</span><span>(E) 0–1 s 與 4–7 s 的感應電流方向相反，量值比為 3：2</span></div></div>
 
 <div class="ex" id="P6-21"><span class="exid">P6-21</span>關於電磁波的應用與性質，下列敘述哪些正確？（多選）
-<div class="opts"><span>(A) X 射線能穿透軟組織而較難穿透骨骼，可用於醫療影像</span><span>(B) 紅外線熱像儀偵測的是物體本身發出的紅外線</span><span>(C) 微波爐以微波使食物中的水分子在交變電場中反覆轉向而生熱</span><span>(D) 可見光中，紅光的光子能量大於紫光</span><span>(E) 手機通訊所用的微波屬於游離輻射</span></div></div>
+<div class="opts"><span>(A) X 射線能穿透軟組織而較難穿透骨骼，可用於醫療影像</span><span>(B) 手機通訊所用的微波屬於游離輻射</span><span>(C) 紅外線熱像儀偵測的是物體本身發出的紅外線</span><span>(D) 可見光中，紅光的光子能量大於紫光</span><span>(E) 微波爐以微波使食物中的水分子在交變電場中反覆轉向而生熱</span></div></div>
 
 <div class="ex" id="P6-22"><span class="exid">P6-22</span>一段鎳鉻合金線接在固定電壓的電源上，消耗功率為 P。將此線均勻拉長為原長的 2 倍（體積不變、電阻率不變），再接回同一電源，消耗功率變為 P 的幾倍？
 <div class="opts"><span>(A) 4 倍</span><span>(B) 2 倍</span><span>(C) 1/4 倍</span><span>(D) 1/2 倍</span><span>(E) 不變</span></div></div>
 
 <div class="ex" id="P6-23"><span class="exid">P6-23</span>交流發電機的線圈在均勻磁場中以固定角速度轉動，轉軸垂直磁場。下列敘述哪些正確？（多選）
-<div class="opts"><span>(A) 線圈平面與磁場垂直時，磁通量最大而感應電動勢為零</span><span>(B) 線圈平面與磁場平行時，感應電動勢量值最大</span><span>(C) 轉速加倍時，感應電動勢的最大值與頻率都加倍</span><span>(D) 發電機將電能轉換為力學能</span><span>(E) 接上負載後，維持相同轉速所需的外力矩比未接負載時小</span></div></div>
+<div class="opts"><span>(A) 發電機將電能轉換為力學能</span><span>(B) 線圈平面與磁場垂直時，磁通量最大而感應電動勢為零</span><span>(C) 接上負載後，維持相同轉速所需的外力矩比未接負載時小</span><span>(D) 線圈平面與磁場平行時，感應電動勢量值最大</span><span>(E) 轉速加倍時，感應電動勢的最大值與頻率都加倍</span></div></div>
 
 <div class="ex" id="P6-24"><span class="exid">P6-24</span>長 0.50 m 的導體棒在兩平行光滑導軌上，以 5.0 m/s 等速垂直切割 0.40 T 的均勻磁場，導軌一端接 2.0 Ω 的電阻，其他電阻不計，棒、速度與磁場三者互相垂直。維持此等速運動所需的外力量值為何？
 <div class="opts"><span>(A) 0.050 N</span><span>(B) 0.10 N</span><span>(C) 0.20 N</span><span>(D) 0.50 N</span><span>(E) 1.0 N</span></div></div>
@@ -978,7 +978,7 @@
 <div class="opts"><span>(A) 人體電阻很大，電流太小而無法偵測</span><span>(B) 電流由火線流經人體再回到中性線，兩線電流仍相等，鐵心中淨磁通量不變</span><span>(C) 漏電斷路器只能偵測直流電</span><span>(D) 人體為絕緣體，不會有電流</span><span>(E) 中性線電位為零，因此中性線中沒有電流</span></div></div>
 
 <div class="ex" id="P6-27"><span class="exid">P6-27</span>已知 <span class="m">\mu_0 \approx 1.26\times10^{-6}\ \mathrm{N/A^2}</span>、<span class="m">\varepsilon_0 \approx 8.85\times10^{-12}\ \mathrm{C^2/(N\cdot m^2)}</span>。下列敘述哪些正確？（多選）
-<div class="opts"><span>(A) <span class="m">1/\sqrt{\mu_0\varepsilon_0}</span> 約為 <span class="m">3.0\times10^{8}\ \mathrm{m/s}</span></span><span>(B) 此結果顯示真空中電磁波速率與頻率無關</span><span>(C) 真空中平面電磁波的電場量值與磁場量值之比 E/B 等於 c</span><span>(D) 電磁波傳播時，電場能量全部轉為磁場能量後電場消失，兩者交替出現</span><span>(E) 馬克士威方程式只預測可見光為電磁波</span></div></div>
+<div class="opts"><span>(A) 電磁波傳播時，電場能量全部轉為磁場能量後電場消失，兩者交替出現</span><span>(B) <span class="m">1/\sqrt{\mu_0\varepsilon_0}</span> 約為 <span class="m">3.0\times10^{8}\ \mathrm{m/s}</span></span><span>(C) 由 <span class="m">c = 1/\sqrt{\mu_0\varepsilon_0}</span> 一式可知，真空中電磁波速率與頻率無關</span><span>(D) 真空中平面電磁波的電場量值與磁場量值之比 E/B 等於 c</span><span>(E) 馬克士威方程式只預測可見光為電磁波</span></div></div>
 
 <div class="ex" id="P6-28"><span class="exid">P6-28</span>小型電廠以 11 kV 輸出 2.2 MW 的電功率，輸電線總電阻 5.0 Ω。若先以理想變壓器升壓至 110 kV 再輸送（輸出功率不變），輸電線上損耗的功率為何？
 <div class="opts"><span>(A) <span class="m">2.0\times10^{3}\ \mathrm{W}</span></span><span>(B) <span class="m">2.0\times10^{4}\ \mathrm{W}</span></span><span>(C) <span class="m">2.0\times10^{5}\ \mathrm{W}</span></span><span>(D) <span class="m">2.0\times10^{1}\ \mathrm{W}</span></span><span>(E) <span class="m">2.4\times10^{9}\ \mathrm{W}</span></span></div></div>
@@ -1011,7 +1011,7 @@
 <div class="ex" id="P6-30"><span class="exid">P6-30</span>電磁爐使鍋子發熱的主要機制為何？
 <div class="opts"><span>(A) 線圈本身的電阻發熱，經面板傳導至鍋子</span><span>(B) 線圈發出微波，使食物中的水分子轉動生熱</span><span>(C) 交變磁場在鍋底產生渦電流，經鍋底電阻將電能轉為熱能</span><span>(D) 面板吸收紅外線後發熱</span><span>(E) 鍋子受磁力反覆振動，摩擦生熱</span></div></div>
 <div class="ex" id="P6-31"><span class="exid">P6-31</span>依文中原理，下列敘述哪些正確？（多選）
-<div class="opts"><span>(A) 陶瓷鍋不導電，無法形成渦電流，因此不能加熱</span><span>(B) 若線圈改通穩定直流電，加熱效果更好</span><span>(C) 其他條件不變而提高交流電頻率，鍋底的感應電動勢變大</span><span>(D) 面板玻璃也產生渦電流，是面板變熱的主要原因</span><span>(E) 電磁爐與變壓器都是依據電磁感應原理運作</span></div></div>
+<div class="opts"><span>(A) 若線圈改通穩定直流電，加熱效果更好</span><span>(B) 陶瓷鍋不導電，無法形成渦電流，因此不能加熱</span><span>(C) 面板玻璃也產生渦電流，是面板變熱的主要原因</span><span>(D) 其他條件不變而提高交流電頻率，鍋底的感應電動勢變大</span><span>(E) 電磁爐與變壓器都是依據電磁感應原理運作</span></div></div>
 <div class="ex" id="P6-32"><span class="exid">P6-32</span>某電磁爐輸入功率 1500 W，其中 84% 的能量被鍋內的水吸收。以此加熱 1.0 kg、25 °C 的水至 100 °C，約需多少時間？（水的比熱取 4200 J/(kg·°C)）
 <div class="opts"><span>(A) 210 s</span><span>(B) 250 s</span><span>(C) 300 s</span><span>(D) 357 s</span><span>(E) 420 s</span></div></div>
 
