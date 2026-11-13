@@ -1,0 +1,232 @@
+
+/* ════ 筆記版：全書芫荽、彩色螢光筆與手寫筆記 ════ */
+@page { size:A4; margin:15mm 15mm 17mm 15mm; }
+:root { --hand:'Iansui','LXGW WenKai TC','Noto Sans TC','DejaVu Sans',sans-serif; --ink:#1d2433; --body:#27303f; --mute:#64748b; --faint:#a3afc0; --line:#dbe2ea; --red:#d64545; --blue:#2456a6; --green:#22864f; --hl:#ffe566; --c:#475569; --cd:#334155; --cs:#eef2f6; --ch:#dbe3ec; }
+html { font-size:10.4pt; }
+body, body *:not(.katex):not(.katex *), body *:not(.katex *)::before, body *:not(.katex *)::after { font-family:var(--hand) !important; font-weight:400 !important; font-synthesis:none; }
+body { color:var(--body); line-height:1.78; letter-spacing:.015em; text-align:left; }
+a { color:inherit; text-decoration:none; }
+p { margin:.4rem 0; }
+li::marker { color:var(--c); }
+
+/* 螢光筆、波浪線 */
+strong { color:var(--ink); background:linear-gradient(transparent 52%, var(--hl) 52%, var(--hl) 92%, transparent 92%); padding:0 .1em; -webkit-box-decoration-break:clone; box-decoration-break:clone; }
+em { font-style:normal; text-decoration:underline wavy var(--red); text-underline-offset:.26em; text-decoration-thickness:.55pt; }
+.key strong { background:linear-gradient(transparent 52%, #c8f0c0 52%, #c8f0c0 92%, transparent 92%); }
+.warn strong { background:linear-gradient(transparent 52%, #ffd3dc 52%, #ffd3dc 92%, transparent 92%); }
+.tip strong { background:linear-gradient(transparent 52%, #ffd08a 52%, #ffd08a 92%, transparent 92%); }
+table.t th strong, h2 strong, h3 strong, h4 strong, .ans strong { background:none; padding:0; }
+.ans > strong { color:var(--red); }
+
+/* 單元題頭 */
+.unit > h2.opener, .unit > h2:not(.opener) { display:flex; align-items:center; gap:.75rem; margin:0 0 1.2rem; padding:0 0 .75rem; border:none; border-bottom:2.2px solid var(--c); position:relative; }
+.opener::after { display:none; }
+.opener .code { flex:none; font-size:1.35rem; line-height:1; color:#fff; background:var(--c); border-radius:.6rem; padding:.55rem .7rem .45rem; margin:0; letter-spacing:.02em; box-shadow:.12rem .14rem 0 var(--ch); }
+.opener .ttl { flex:1; font-size:1.95rem; line-height:1.25; color:var(--ink); letter-spacing:.04em; }
+.opener .chip { flex:none; font-size:.82rem; color:var(--cd); background:var(--cs); border:1px solid var(--ch); border-radius:999px; padding:.12rem .8rem; letter-spacing:.08em; }
+
+/* 節、小節 */
+h3 { display:table; font-size:1.34rem; color:var(--cd); border:none; padding:0 .5rem 0 .15rem; margin:1.7rem 0 .65rem; line-height:1.45; letter-spacing:.03em; background:linear-gradient(transparent 60%, var(--ch) 60%, var(--ch) 94%, transparent 94%); }
+body h3::before { content:'✎'; font-family:'DejaVu Sans',sans-serif !important; display:inline; width:auto; height:auto; background:none; transform:none; margin:0 .4em 0 0; color:var(--c); font-size:.85em; }
+h4 { font-size:1.08rem; color:var(--cd); margin:1.1rem 0 .4rem; }
+h4::before { content:''; display:inline-block; width:.48em; height:.48em; border-radius:50%; background:var(--c); margin-right:.5em; vertical-align:.12em; }
+h4.exset { display:block; color:var(--cd); background:var(--cs); border-left:5px solid var(--c); border-radius:0 8px 8px 0; padding:.45rem .9rem; margin:1.4rem 0 .7rem; font-size:1.05rem; letter-spacing:.04em; }
+h4.exset::before { display:none; }
+
+/* 示範句 */
+p.eg { margin:.55rem 0 .55rem .15rem; padding:.12rem 0 .12rem .95rem; border-left:3px solid var(--c); }
+p.eg .en { display:block; font-size:1.1rem; line-height:1.75; color:var(--ink); }
+p.eg .zh { display:block; font-size:.88rem; line-height:1.6; color:var(--blue); margin-top:.1rem; }
+body p.eg .zh::before { content:'↳ '; font-family:'DejaVu Sans',sans-serif !important; color:var(--blue); }
+p.eg .zh .en, td .en, li .en { display:inline; font-size:inherit; }
+
+/* 三種筆記框 */
+.key,.tip,.warn { position:relative; border-radius:10px; padding:.6rem 1.05rem .65rem; margin:.95rem 0 .95rem; break-inside:avoid; }
+.key::before,.tip::before,.warn::before { position:static; display:table; margin:0 0 .4rem -.25rem; font-size:.8rem; letter-spacing:.14em; padding:.06rem .7rem .02rem; border-radius:999px; line-height:1.55; color:#fff; }
+.key { background:#fff; border:1.5px solid var(--c); box-shadow:.16rem .18rem 0 var(--cs); }
+.key::before { content:'重點整理'; background:var(--c); }
+.tip { background:#fff6b8; border:none; border-radius:2px; box-shadow:.14rem .18rem 0 rgba(0,0,0,.1); color:#3b3415; }
+.tip::before { content:'延伸補充'; background:#d08a12; border-radius:3px; }
+.warn { background:#fff5f5; border:1.5px dashed var(--red); }
+.warn::before { content:'易錯提醒'; background:var(--red); }
+
+/* 誤／正 */
+p.bad,p.good { margin:.28rem 0 .28rem .1rem; padding:.2rem .65rem; border-radius:6px; }
+p.bad { background:#fff1f1; color:#a12a2a; }
+p.good { background:#edf8f1; color:#17603a; }
+.mark { width:1.4rem; height:1.4rem; line-height:1.34rem; font-size:.8rem; background:#fff !important; border:1.4px solid; border-radius:50%; margin-right:.5rem; vertical-align:.05rem; }
+p.bad .mark, .lg-bad { color:var(--red); border-color:var(--red); }
+p.good .mark, .lg-good { color:var(--green); border-color:var(--green); }
+
+/* 表格 */
+table.t { width:100%; border:1.3px solid var(--c); border-radius:9px; font-size:.93rem; line-height:1.62; margin:.85rem 0 1.05rem; }
+table.t th { background:var(--c); color:#fff; font-size:.9rem; letter-spacing:.08em; padding:.42rem .62rem; border-bottom:none; vertical-align:middle; }
+table.t td { padding:.4rem .62rem; border-bottom:1px solid var(--line); }
+table.t tbody tr:nth-child(even) td { background:var(--cs); }
+table.t td:first-child { color:var(--cd); font-size:1.02em; min-width:5.3em; }
+table.t td .en, table.t td span.en { font-size:1em; }
+
+/* 練習題 */
+.ex { margin:.75rem 0 1rem; }
+.exid { font-size:.76rem; color:var(--cd); background:#fff; border:1.3px solid var(--c); border-radius:999px; padding:.02rem .55rem 0; margin-right:.55rem; vertical-align:.1rem; letter-spacing:.02em; }
+.opts { font-size:1rem; }
+.lines { background:repeating-linear-gradient(to bottom, transparent 0, transparent calc(8mm - 0.6px), #c6d0dc calc(8mm - 0.6px), #c6d0dc 8mm); }
+.paper { color:var(--mute); border:1px dashed var(--faint); border-radius:6px; }
+ul.check { background:#f2f9f4; border:1.3px solid #bfe3cb; border-radius:10px; padding:.7rem 1rem; }
+ul.check li { padding-left:0; }
+ul.check li::before { content:''; position:static; display:inline-block; width:.8em; height:.8em; border:1.4px solid var(--green) !important; border-radius:3px !important; margin-right:.55em; vertical-align:-.06em; background:#fff; }
+
+/* 分部頁（總覽） */
+.divider { break-before:page; writing-mode:horizontal-tb; display:block; height:auto; min-height:230mm; padding:26mm 4mm 0 4mm; position:relative; overflow:visible; }
+.divider::before { display:none; } .divider svg { display:none; }
+.divider .k { display:inline-block; font-size:1.2rem; color:#fff; background:var(--c); letter-spacing:.35em; padding:.3rem .7rem .22rem 1.05rem; border-radius:.5rem; margin:0; box-shadow:.14rem .16rem 0 var(--ch); }
+.divider .t { display:table; font-size:4.6rem; line-height:1.2; color:var(--ink); letter-spacing:.1em; margin:1.1rem 0 .3rem; padding:0 .3rem; border:none; background:linear-gradient(transparent 62%, var(--ch) 62%, var(--ch) 93%, transparent 93%); }
+.divider .e { font-size:1.2rem; color:var(--cd); letter-spacing:.2em; font-style:normal; margin:.8rem 0 0 .3rem; }
+.ovs { margin-top:20mm; border-top:2.2px solid var(--c); }
+.ov { display:flex; align-items:center; gap:1rem; padding:.85rem .3rem; border-bottom:1px dashed var(--ch); }
+.ov .oc { flex:none; width:3.3rem; text-align:center; font-size:1.05rem; color:#fff; background:var(--c); border-radius:.5rem; padding:.3rem 0 .22rem; }
+.ov .ot { flex:1; font-size:1.25rem; color:var(--ink); line-height:1.4; }
+.ov .ot i { display:block; font-style:normal; font-size:.86rem; color:var(--blue); margin-top:.12rem; }
+.ov .op { flex:none; font-size:1.2rem; color:var(--cd); width:3rem; text-align:right; }
+
+/* 前言、目錄 */
+.front h2.fh, .toc h2 { font-size:2.1rem; color:var(--ink); letter-spacing:.2em; text-align:left; margin:0 0 1.2rem; padding:0 0 .6rem; border:none; border-bottom:2.2px solid var(--ink); display:block; }
+.toc h2::after { display:none; }
+.front { font-size:1.02rem; }
+.front ul li, .front ol li { margin:.32rem 0; }
+.chips { display:flex; flex-wrap:wrap; gap:.5rem; margin:.5rem 0 .3rem; }
+.chips span { color:#fff; border-radius:999px; padding:.14rem .9rem .08rem; font-size:.92rem; letter-spacing:.08em; }
+.lg-eg { border-left:3px solid var(--c); padding-left:.6rem; color:var(--ink); }
+.toc { column-count:1; }
+.toc .row { display:flex; align-items:baseline; margin:0; padding:.3rem .2rem; font-size:1.08rem; border-bottom:1px dotted transparent; }
+.toc .row.part { margin-top:.85rem; padding:.3rem .7rem .22rem; background:var(--cs); border-left:5px solid var(--c); border-radius:0 8px 8px 0; color:var(--cd); font-size:1.12rem; letter-spacing:.08em; }
+.toc .row.part .name { color:var(--cd); }
+.toc .row .code { width:3.6rem; color:var(--c); padding-left:.9rem; }
+.toc .row .name { color:var(--ink); }
+.toc .row .dots, .ir .dots { flex:1; border-bottom:1.2px dotted var(--faint); margin:0 .5rem; transform:translateY(-.3rem); }
+.toc .row .pg { width:2.4rem; text-align:right; color:var(--cd); }
+
+/* 解答篇 */
+.answers { font-size:.88rem; line-height:1.62; column-count:2; column-gap:7mm; column-rule:1px dashed var(--line); }
+.ans-unit h3 { display:block; column-span:all; font-size:1.2rem; background:none; border-bottom:2px solid var(--c); padding-bottom:.25rem; margin:1.3rem 0 .7rem; }
+.ans-unit h4 { color:var(--cd); }
+.ans .why { color:#445066; }
+.ans .exid { font-size:.7rem; }
+
+/* 書末附錄 */
+.qk { display:flex; flex-wrap:wrap; align-items:center; gap:.28rem .34rem; padding:.55rem .2rem; border-bottom:1px dashed var(--line); break-inside:avoid; }
+.qk b { flex:none; width:3.1rem; text-align:center; color:#fff; background:var(--c); border-radius:.45rem; padding:.16rem 0 .08rem; margin-right:.3rem; }
+.qk span { display:inline-flex; align-items:baseline; gap:.22rem; border:1px solid var(--ch); background:var(--cs); border-radius:5px; padding:.02rem .42rem 0; font-size:.98rem; color:var(--ink); }
+.qk span i { font-style:normal; font-size:.72rem; color:var(--mute); }
+.idx { column-count:2; column-gap:9mm; }
+.ig { break-inside:avoid; margin:0 0 1rem; }
+.ih { color:var(--cd); font-size:1.05rem; border-bottom:2px solid var(--c); padding-bottom:.15rem; margin-bottom:.25rem; }
+.ih span { display:inline-block; color:#fff; background:var(--c); border-radius:.4rem; padding:.05rem .45rem 0; margin-right:.5rem; font-size:.88rem; }
+.ir { display:flex; align-items:baseline; font-size:.92rem; padding:.08rem 0; }
+.ir .name { color:var(--body); } .ir .pg { color:var(--cd); width:2rem; text-align:right; }
+p.src { font-size:.84rem; color:var(--mute); line-height:1.7; word-break:break-all; }
+.mk { position:absolute; letter-spacing:0 !important; font-size:1pt; color:#fff; line-height:1; background:none !important; }
+table.t td.nw { white-space:nowrap; }
+
+/* 古文：原文、注釋、語譯 */
+.orig { background:#fffdf2; border-left:4px solid var(--c); border-radius:0 9px 9px 0; padding:.65rem 1.15rem .6rem; margin:1rem 0 .45rem; font-size:1.2rem; line-height:2.2; letter-spacing:.05em; color:var(--ink); }
+.orig p { margin:.15rem 0; text-indent:2em; }
+.orig sup { font-size:.52em; color:var(--red); margin:0 .12em 0 .05em; line-height:0; vertical-align:super; letter-spacing:0; }
+ol.notes { column-count:2; column-gap:8mm; font-size:.88rem; line-height:1.62; margin:.35rem 0 .55rem; padding-left:1.7rem; }
+ol.notes li { break-inside:avoid; margin:.08rem 0; }
+ol.notes li::marker { color:var(--red); font-size:.86em; }
+ol.notes strong { background:none; padding:0; color:var(--cd); }
+.trans { position:relative; background:#f3f7fd; border:1.2px dashed #9db7df; border-radius:9px; padding:.5rem 1.05rem .5rem; margin:.4rem 0 1.25rem; font-size:.96rem; line-height:1.8; color:#1f3a6b; }
+.trans::before { content:'語譯'; display:table; margin:0 0 .3rem -.25rem; font-size:.78rem; letter-spacing:.2em; padding:.04rem .55rem 0 .7rem; border-radius:999px; line-height:1.55; color:#fff; background:var(--blue); }
+.trans p { margin:.2rem 0; text-indent:2em; }
+.trans strong { background:none; padding:0; color:#1f3a6b; }
+/* 五個選項、密集的總覽頁、兩欄目錄 */
+.opts.h5 { grid-template-columns:repeat(5,1fr); }
+.divider.dense { padding-top:14mm; } .divider.dense .t { font-size:3.6rem; } .divider.dense .ovs { margin-top:9mm; }
+.divider.dense .ov { padding:.42rem .3rem; } .divider.dense .ov .ot { font-size:1.08rem; } .divider.dense .ov .ot i { font-size:.8rem; margin-top:.02rem; } .divider.dense .ov .oc { font-size:.95rem; width:3.6rem; }
+.ov .oc { width:3.6rem; }
+.toc.two { column-count:2; column-gap:10mm; } .toc.two h2 { column-span:all; } .toc.two .row { font-size:.98rem; padding:.2rem .2rem; break-inside:avoid; } .toc.two .row.part { margin-top:.6rem; }
+
+/* ════ 自然科：公式、圖、題組 ════ */
+.katex { font-size:1.08em; }
+.mb { margin:.55rem 0 .7rem; text-align:center; overflow:visible; }
+.mb .katex-display { margin:0; }
+.key .mb, .tip .mb, .warn .mb { text-align:left; padding-left:.6rem; }
+.texerr { color:#b91c1c; background:#fee2e2; }
+figure.fig { margin:.9rem auto 1rem; text-align:center; break-inside:avoid; }
+figure.fig svg { max-width:100%; height:auto; display:inline-block; overflow:visible; }
+figure.fig svg text { font-family:var(--hand) !important; }
+figure.fig svg text:not([fill]) { fill:#1d2433; }
+figure.fig figcaption { font-size:.86rem; color:var(--blue); margin-top:.35rem; line-height:1.5; }
+figure.fig.half { width:47%; display:inline-block; vertical-align:top; margin:.6rem 1%; }
+table.prog td:nth-child(n+3) { text-align:center; color:var(--mute); }
+table.prog td:last-child { min-width:7em; }
+.ex .fig { margin:.5rem auto .6rem; }
+
+/* ════ 手寫筆記元素（參考書風） ════ */
+html { background:#fff; }
+figure.fig { width:auto; }
+figure.fig svg { border:none; border-radius:0; width:auto; }
+figure.fig > svg { background:#fff; padding:2.5mm 3mm; border:1px solid #e3e8ef; border-radius:3px; box-shadow:.6mm .8mm 0 rgba(31,42,68,.06); }
+figure.fig::before { content:''; display:block; width:16mm; height:4.2mm; margin:0 auto -2.3mm; background:rgba(255,229,102,.75); transform:rotate(-2deg); position:relative; z-index:2; }
+figure.fig.half::before { width:12mm; }
+/* 紅筆、藍筆旁註 */
+.hand { color:#d64545; font-size:.98em; display:inline-block; transform:rotate(-1.2deg); margin:0 .2em; line-height:1.4; }
+.hand.blue { color:#2456a6; transform:rotate(.8deg); }
+.hand::before { content:'← '; font-family:'DejaVu Sans',sans-serif !important; font-size:.85em; }
+.hand.up::before { content:'↑ '; }
+.hand.no::before { content:''; }
+/* 手繪圈選、框選、藍筆底線 */
+.circle { border:1.6px solid #d64545; border-radius:48% 52% 46% 54% / 58% 44% 56% 42%; padding:.02em .32em; margin:0 .08em; }
+.box { border:1.8px solid #d64545; border-radius:3px 7px 4px 8px; padding:.08em .4em; margin:0 .12em; box-shadow:.5mm .5mm 0 rgba(214,69,69,.15); }
+.ul { background:linear-gradient(transparent 86%, #2456a6 86%, #2456a6 96%, transparent 96%); padding-bottom:.05em; }
+/* 旁註筆記（靠右浮動，藍筆） */
+div.note { float:right; clear:right; width:38%; margin:.2rem 0 .6rem 1.1rem; padding:.45rem .75rem .5rem; color:#2456a6; font-size:.9rem; line-height:1.62; border-left:2.5px solid #2456a6; background:repeating-linear-gradient(to bottom, #f5f8fd 0, #f5f8fd calc(1.62em - 1px), #dbe6f5 calc(1.62em - 1px), #dbe6f5 1.62em); transform:rotate(.7deg); break-inside:avoid; }
+div.note::before { content:'筆記'; display:table; font-size:.74rem; letter-spacing:.2em; color:#fff; background:#2456a6; border-radius:2px; padding:0 .5rem; margin:0 0 .25rem -.2rem; }
+div.note p { margin:.1rem 0; }
+/* 公式卡 */
+div.formula { position:relative; margin:1.05rem auto 1rem; padding:.7rem 1.1rem .55rem; border:2px solid #2456a6; border-radius:4px; outline:1px solid #2456a6; outline-offset:2.5px; background:#fff; background-image:linear-gradient(#eef3fb .3mm, transparent .3mm), linear-gradient(90deg, #eef3fb .3mm, transparent .3mm); background-size:4mm 4mm; break-inside:avoid; }
+div.formula::before { content:attr(data-t); position:absolute; top:-.85rem; left:.9rem; background:#2456a6; color:#fff; font-size:.8rem; letter-spacing:.16em; padding:.05rem .75rem; border-radius:3px; }
+div.formula:not([data-t])::before { content:'公式'; }
+div.formula .mb { margin:.35rem 0; }
+div.formula p { margin:.2rem 0; font-size:.92rem; }
+/* 口訣便利貼 */
+div.mnem { display:block; width:fit-content; max-width:78%; margin:.9rem 0 .9rem 1.2rem; padding:.55rem 1rem .6rem; background:#ffd9e2; color:#6b2238; font-size:1.06rem; line-height:1.65; transform:rotate(-1.3deg); box-shadow:.9mm 1.1mm 0 rgba(0,0,0,.1); break-inside:avoid; }
+div.mnem::before { content:'口訣'; display:table; font-size:.74rem; letter-spacing:.2em; color:#fff; background:#c2476b; padding:0 .5rem; margin:0 0 .2rem; }
+/* 學測考點印章 */
+div.exam { position:relative; margin:.95rem 0; padding:.55rem 1rem .6rem 4.4rem; border:1.5px dashed #c2410c; border-radius:8px; background:#fff8f1; break-inside:avoid; min-height:3.6rem; }
+div.exam::before { content:'考點'; position:absolute; left:.7rem; top:.55rem; width:2.7rem; height:2.7rem; border:2.2px solid #c2410c; border-radius:50%; color:#c2410c; font-size:.86rem; letter-spacing:.06em; display:flex; align-items:center; justify-content:center; transform:rotate(-12deg); background:#fff; }
+div.exam p { margin:.15rem 0; }
+/* 解題步驟 */
+ol.steps { counter-reset:st; list-style:none; padding-left:0; margin:.4rem 0 .6rem; }
+ol.steps > li { counter-increment:st; position:relative; padding-left:2.1rem; margin:.25rem 0; }
+ol.steps > li::before { content:counter(st); position:absolute; left:.2rem; top:.12rem; width:1.35rem; height:1.35rem; border:1.5px solid var(--c); border-radius:50%; color:var(--c); font-size:.8rem; line-height:1.25rem; text-align:center; background:#fff; }
+/* 例題 */
+div.example { margin:1rem 0 1.1rem; padding:.6rem 1rem .7rem; border-left:4px solid var(--c); background:linear-gradient(90deg, var(--cs), #fff 70%); border-radius:0 8px 8px 0; break-inside:avoid-page; }
+div.example::before { content:'例題'; display:inline-block; font-size:.78rem; letter-spacing:.16em; color:#fff; background:var(--c); border-radius:3px; padding:0 .6rem; margin-bottom:.25rem; }
+div.example .sol { margin-top:.4rem; padding-top:.35rem; border-top:1px dashed var(--ch); }
+div.example .sol::before { content:'解'; display:inline-block; width:1.3rem; height:1.3rem; line-height:1.25rem; text-align:center; border:1.4px solid #d64545; color:#d64545; border-radius:50%; font-size:.78rem; margin-right:.45rem; }
+/* 螢光筆加粗、波浪線加深、區塊避開旁註 */
+strong { background:linear-gradient(transparent 40%, var(--hl) 40%, var(--hl) 97%, transparent 97%); }
+.key strong { background:linear-gradient(transparent 40%, #c8f0c0 40%, #c8f0c0 97%, transparent 97%); }
+.warn strong { background:linear-gradient(transparent 40%, #ffd3dc 40%, #ffd3dc 97%, transparent 97%); }
+.tip strong { background:linear-gradient(transparent 40%, #ffd08a 40%, #ffd08a 97%, transparent 97%); }
+div.note strong { background:linear-gradient(transparent 40%, #fff1a0 40%, #fff1a0 97%, transparent 97%); }
+em { text-decoration-color:#d64545; text-decoration-thickness:.8pt; text-underline-offset:.3em; }
+div.formula, div.exam, div.example, figure.fig:not(.half), table.t, .key, .tip, .warn, h3, h4.exset, .ex { clear:both; }
+
+img.scan { display:block; max-width:100%; max-height:120mm; margin:.5rem auto .6rem; border:1px solid #e3e8ef; border-radius:2px; break-inside:avoid; }
+.ex img.scan { max-width:92%; }
+p.src { font-size:.82rem; color:var(--mute); margin:.1rem 0 .4rem; }
+/* 科學班試題詳解 */
+div.xsol { margin:.35rem 0 1.25rem .4rem; padding:.55rem .95rem .6rem 1rem; border:1.4px solid #d64545; border-radius:4px 10px 6px 12px; background:#fffafa; position:relative; break-inside:auto; }
+div.xsol::before { content:'詳解'; position:absolute; top:-.72rem; left:.8rem; font-size:.78rem; letter-spacing:.18em; color:#fff; background:#d64545; padding:0 .6rem; border-radius:2px; transform:rotate(-2deg); }
+div.xsol p.xa { margin:.1rem 0 .35rem; font-size:1.05rem; color:#d64545; }
+div.xsol p.xa::first-letter { }
+/* 減少浮動筆記造成的半頁空白：大型框允許跨頁 */
+.key, .tip, .warn, div.exam, div.example { break-inside:auto; }
+div.note { max-height:none; }
+figure.fig > svg { max-height:92mm; width:auto; max-width:100%; }
+figure.fig.half > svg { max-height:70mm; }
+/* 框的標籤不可單獨留在頁底：短框不分頁 */
+.key, .tip, .warn, div.exam, div.formula, div.mnem { break-inside:avoid; }

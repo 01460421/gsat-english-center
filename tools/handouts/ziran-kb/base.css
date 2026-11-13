@@ -1,0 +1,178 @@
+/* 基礎樣式（各種框、表格、練習題的結構）；配色與字體在 theme.css 覆寫 */
+
+@page { size: A4; margin: 16mm 16mm 18mm 16mm; }
+:root {
+  --ink:#1a1f2b; --body:#262c38; --mute:#667085; --faint:#98a2b3;
+  --pri:#173f6b; --pri2:#2b5f94; --pri-soft:#eef3f9; --pri-line:#c9d6e6;
+  --acc:#c08a2e; --acc-soft:#fbf5ea; --teal:#25706c; --teal-soft:#ecf5f4;
+  --bad:#b4372f; --bad-soft:#fdf1f0; --good:#1e7350; --good-soft:#edf7f2;
+  --line:#d5dbe3; --zebra:#f7f9fb;
+}
+* { box-sizing:border-box; }
+html { font-size:10pt; }
+body { margin:0; color:var(--body); font-family:'Source Serif 4','Noto Serif TC','DejaVu Serif',serif; font-weight:400; line-height:1.7; letter-spacing:.01em; text-align:justify; -webkit-print-color-adjust:exact; print-color-adjust:exact; font-kerning:normal; font-variant-numeric:lining-nums; }
+strong { font-weight:700; color:var(--ink); }
+em { font-style:italic; }
+h1,h2,h3,h4,th,.exid,.mark,.divider,.toc,.boxlabel { font-family:'Inter','Noto Sans TC','DejaVu Sans',sans-serif; text-align:left; }
+p { margin:.38rem 0; orphans:3; widows:3; }
+ul,ol { margin:.3rem 0 .55rem; padding-left:1.35rem; }
+li { margin:.14rem 0; }
+li::marker { color:var(--pri2); }
+ol > li::marker { font-family:'Inter','Noto Sans TC','DejaVu Sans',sans-serif; font-weight:600; font-size:.9em; }
+.en { font-family:'Source Serif 4','Noto Serif TC','DejaVu Serif',serif; }
+
+/* ── 單元開頭 ── */
+.unit { break-before:page; }
+.unit > h2.opener { display:block; margin:0 0 1.2rem; padding:0 0 .9rem; border:none; position:relative; }
+.opener .code { display:inline-block; font-family:'Inter','Noto Sans TC','DejaVu Sans',sans-serif; font-weight:800; font-size:2.6rem; line-height:1; color:var(--acc); letter-spacing:-.02em; margin-right:.55rem; vertical-align:baseline; }
+.opener .ttl { font-family:'Noto Sans TC','DejaVu Sans',sans-serif; font-weight:900; font-size:1.75rem; color:var(--pri); letter-spacing:.02em; vertical-align:baseline; }
+.opener::after { content:''; position:absolute; left:0; right:0; bottom:0; height:3px; background:linear-gradient(90deg,var(--pri) 0 22%,var(--acc) 22% 30%,var(--pri-line) 30% 100%); border-radius:2px; }
+.unit > h2:not(.opener) { font-family:'Noto Sans TC','DejaVu Sans',sans-serif; font-weight:900; font-size:1.75rem; color:var(--pri); margin:0 0 1.2rem; padding-bottom:.6rem; border-bottom:3px solid var(--pri-line); }
+
+/* ── 節與小節 ── */
+h3 { font-family:'Noto Sans TC','DejaVu Sans',sans-serif; font-weight:700; font-size:1.22rem; color:var(--pri); margin:1.6rem 0 .55rem; padding:.18rem 0 .18rem .7rem; border-left:4px solid var(--acc); line-height:1.4; break-after:avoid; }
+h4 { font-family:'Noto Sans TC','DejaVu Sans',sans-serif; font-weight:700; font-size:1.0rem; color:var(--ink); margin:1.05rem 0 .35rem; break-after:avoid; }
+h4.exset { display:block; margin:1.3rem 0 .6rem; padding:.42rem .8rem; color:#fff; font-weight:700; font-size:.98rem; letter-spacing:.03em; background:linear-gradient(90deg,var(--pri),var(--pri2)); border-radius:6px; }
+
+/* ── 例句 ── */
+p.eg { margin:.45rem 0 .45rem .2rem; padding:.15rem 0 .15rem .85rem; border-left:2.5px solid var(--pri-line); text-align:left; }
+p.eg .en { display:block; font-family:'Noto Serif TC','Source Serif 4','DejaVu Serif',serif; font-weight:600; font-size:1.02rem; color:var(--ink); line-height:1.65; }
+p.eg .zh .en, td .en, li .en { display:inline; font-size:inherit; }
+p.eg .zh { display:block; font-family:'Noto Sans TC','DejaVu Sans',sans-serif; color:var(--mute); font-size:.86rem; line-height:1.55; margin-top:.1rem; }
+
+/* ── 三種框：加標籤 ── */
+.key,.tip,.warn { position:relative; border-radius:8px; padding:.6rem 1rem .6rem; margin:.8rem 0 .8rem; break-inside:avoid; text-align:left; }
+.key::before,.tip::before,.warn::before { display:table; margin:0 0 .35rem -.2rem; font-family:'Noto Sans TC','DejaVu Sans',sans-serif; font-weight:700; font-size:.74rem; letter-spacing:.12em; color:#fff; padding:.08rem .55rem; border-radius:999px; line-height:1.5; }
+.key { background:var(--pri-soft); border:1px solid var(--pri-line); }
+.key::before { content:'重點'; background:var(--pri); }
+.tip { background:var(--acc-soft); border:1px solid #ecd9b3; }
+.tip::before { content:'高分技巧'; background:var(--acc); }
+.warn { background:var(--bad-soft); border:1px solid #f1cdc9; }
+.warn::before { content:'注意'; background:var(--bad); }
+.key > :first-child,.tip > :first-child,.warn > :first-child { margin-top:0; }
+.key > :last-child,.tip > :last-child,.warn > :last-child { margin-bottom:0; }
+
+/* ── 誤／正 ── */
+p.bad,p.good { margin:.24rem 0 .24rem .1rem; padding:.18rem .6rem; border-radius:5px; text-align:left; }
+p.bad { background:var(--bad-soft); color:#7c2620; }
+p.good { background:var(--good-soft); color:#164e37; }
+.mark { display:inline-block; width:1.25rem; height:1.25rem; line-height:1.25rem; text-align:center; font-family:'Noto Sans TC','DejaVu Sans',sans-serif; font-size:.72rem; font-weight:700; color:#fff; border-radius:50%; margin-right:.5rem; vertical-align:.08rem; }
+p.bad .mark { background:var(--bad); } p.good .mark { background:var(--good); }
+
+/* ── 表格 ── */
+table.t { width:100%; border-collapse:separate; border-spacing:0; margin:.8rem 0 1rem; font-size:.9rem; line-height:1.6; text-align:left; border:1px solid var(--line); border-radius:8px; overflow:hidden; }
+table.t th { background:var(--pri-soft); color:var(--pri); font-weight:700; font-size:.84rem; letter-spacing:.03em; padding:.45rem .6rem; border-bottom:1.5px solid var(--pri-line); vertical-align:bottom; }
+table.t td { padding:.38rem .6rem; border-bottom:1px solid #e8ecf1; vertical-align:top; }
+table.t tbody tr:nth-child(even) td { background:var(--zebra); }
+table.t tbody tr:last-child td { border-bottom:none; }
+table.t tr { break-inside:avoid; }
+table.t td .en, table.t td span.en { font-size:1.02em; }
+
+/* ── 練習題 ── */
+.ex { margin:.7rem 0 .95rem; break-inside:avoid; text-align:left; }
+.exid { display:inline-block; font-family:'Inter','Noto Sans TC','DejaVu Sans',sans-serif; font-size:.74rem; font-weight:700; letter-spacing:.02em; color:#fff; background:var(--pri); border-radius:4px; padding:.05rem .42rem; margin-right:.55rem; vertical-align:.1rem; }
+.lines { margin-top:.35rem; background:repeating-linear-gradient(to bottom, transparent 0, transparent calc(8mm - 0.7px), #c3cad4 calc(8mm - 0.7px), #c3cad4 8mm); }
+
+/* ── 自我檢核 ── */
+ul.check { list-style:none; padding:.6rem .9rem; margin:.8rem 0; background:var(--teal-soft); border-radius:8px; border:1px solid #cfe5e2; break-inside:avoid; }
+ul.check li { padding-left:1.6rem; position:relative; margin:.28rem 0; }
+ul.check li::before { content:''; position:absolute; left:0; top:.32rem; width:.85rem; height:.85rem; border:1.5px solid var(--teal); border-radius:3px; background:#fff; }
+
+/* ── 解答篇：兩欄 ── */
+.answers { font-size:.84rem; line-height:1.56; column-count:2; column-gap:7mm; column-rule:1px solid var(--line); }
+.ans-unit { margin:0 0 1rem; }
+.ans-unit h3 { column-span:all; margin:1.2rem 0 .6rem; font-size:1.15rem; }
+.ans-unit h4 { font-size:.92rem; margin:.7rem 0 .3rem; color:var(--pri); }
+.ans-unit > p { font-size:.86rem; color:var(--mute); }
+.ans { margin:.35rem 0 .55rem; break-inside:avoid; text-align:left; }
+.ans .exid { font-size:.68rem; }
+.ans .why { display:block; color:#4a5263; font-size:.92em; margin:.15rem 0 0 .1rem; }
+.answers table.t { font-size:.82rem; }
+
+/* ── 分部頁 ── */
+.divider { break-before:page; height:250mm; display:flex; flex-direction:column; justify-content:center; align-items:flex-start; padding-left:6mm; position:relative; overflow:hidden; }
+.divider::before { content:''; position:absolute; left:0; top:38%; width:46mm; height:3px; background:var(--acc); }
+.divider .k { font-family:'Noto Sans TC','DejaVu Sans',sans-serif; font-weight:700; font-size:1.15rem; color:var(--acc); letter-spacing:.4em; margin-top:2rem; }
+.divider .t { font-family:'Noto Sans TC','DejaVu Sans',sans-serif; font-weight:900; font-size:3.4rem; color:var(--pri); margin:.4rem 0 .2rem; letter-spacing:.06em; }
+.divider .e { font-family:'Source Serif 4','Noto Serif TC','DejaVu Serif',serif; font-style:italic; font-size:1.35rem; color:var(--mute); }
+.divider svg { position:absolute; right:-62mm; top:52mm; opacity:.85; }
+
+/* ── 目錄 ── */
+.toc h2 { font-family:'Noto Sans TC','DejaVu Sans',sans-serif; font-weight:900; font-size:1.9rem; color:var(--pri); margin:0 0 1.4rem; padding-bottom:.6rem; border-bottom:3px solid var(--pri-line); }
+.toc .row { display:flex; align-items:baseline; margin:.42rem 0; font-size:1.02rem; }
+.toc .row.part { margin-top:1.2rem; font-family:'Noto Sans TC','DejaVu Sans',sans-serif; font-weight:900; color:var(--acc); font-size:1.08rem; letter-spacing:.06em; }
+.toc .row .code { width:3.4rem; font-family:'Inter','Noto Sans TC','DejaVu Sans',sans-serif; color:var(--pri); font-weight:800; }
+.toc .row .name { flex:0 1 auto; font-family:'Noto Sans TC','DejaVu Sans',sans-serif; color:var(--ink); }
+.toc .row .dots { flex:1; border-bottom:1.2px dotted var(--faint); margin:0 .5rem; transform:translateY(-.28rem); }
+.toc .row .pg { width:2.4rem; text-align:right; font-family:'Inter','Noto Sans TC','DejaVu Sans',sans-serif; font-weight:600; color:var(--pri); }
+
+#AppA { font-size:.92rem; } #V3 .vl { column-count:3; column-gap:5mm; } #V3 .ve .v1 b { font-size:.9rem; } #V3 .ve .v1 .z { font-size:.82rem; } #V3 .ve .v2 { font-size:.72rem; }
+/* ── 接排的單元、附錄 B 兩欄 ── */
+.unit.flow { break-before:auto; margin-top:2.2rem; }
+#AppB { font-size:.9rem; } #AppB .t { font-size:.86rem; }
+#AppB .cols2 { column-count:2; column-gap:7mm; } #AppB .cols2 table { break-inside:auto; width:100%; } #AppB .cols2 tr { break-inside:avoid; }
+/* ── 字彙表（V3、V4） ── */
+.vl { column-count:2; column-gap:7mm; column-rule:1px solid var(--line); margin-top:.6rem; }
+.vL { font-family:'Inter','Noto Sans TC','DejaVu Sans',sans-serif; font-weight:800; font-size:1.3rem; color:var(--acc); margin:.5rem 0 .15rem; break-after:avoid; }
+.ve { break-inside:avoid; padding:.16rem 0 .2rem; border-bottom:1px solid #eceff3; text-align:left; line-height:1.38; }
+.ve .v1 b { font-family:'Inter','Noto Sans TC','DejaVu Sans',sans-serif; font-weight:700; font-size:.98rem; color:var(--ink); margin-right:.35rem; }
+.ve.a .v1 b { color:var(--pri); }
+.ve .v1 em { font-family:'Source Serif 4','Noto Serif TC','DejaVu Serif',serif; font-size:.82rem; color:var(--teal); margin-right:.35rem; }
+.ve .v1 .z { font-family:'Noto Sans TC','DejaVu Sans',sans-serif; font-weight:500; font-size:.88rem; color:var(--ink); }
+.ve .lv { font-style:normal; font-family:'Inter','Noto Sans TC','DejaVu Sans',sans-serif; font-size:.62rem; font-weight:600; color:var(--faint); margin-left:.4rem; }
+.ve .y { font-style:normal; font-family:'Inter','Noto Sans TC','DejaVu Sans',sans-serif; font-size:.62rem; font-weight:700; color:#fff; background:var(--acc); border-radius:2px; padding:0 .22rem; margin-left:.25rem; vertical-align:.08em; }
+.ve .v2 { font-family:'Inter','Noto Sans TC','DejaVu Sans',sans-serif; font-weight:500; font-size:.78rem; color:var(--teal); }
+.ve .v2 span { font-family:'Noto Sans TC','DejaVu Sans',sans-serif; font-weight:400; color:var(--mute); margin-left:.5rem; }
+.ve .kk { font-family:'DejaVu Sans','Noto Sans TC','DejaVu Sans',sans-serif; font-size:.7rem; color:var(--mute); margin-right:.5rem; }
+.ve .fam { font-family:'Noto Sans TC','DejaVu Sans',sans-serif; font-size:.76rem; color:var(--mute); }
+.ve .v1.s .z { font-weight:700; color:var(--pri); }
+.ve .v3 { font-size:.86rem; color:#3a4150; } .ve .v3 b { color:var(--bad); font-weight:700; }
+/* ── 四選一選項、題庫題組 ── */
+.opts { display:grid; grid-template-columns:repeat(4,1fr); gap:.1rem .8rem; margin:.25rem 0 .1rem; font-family:'Source Serif 4','Noto Serif TC','DejaVu Serif',serif; text-align:left; }
+.opts.v { grid-template-columns:1fr; gap:.12rem; }
+.opts.h2 { grid-template-columns:1fr 1fr; }
+.opts span { break-inside:avoid; }
+.paper { font-family:'Noto Sans TC','DejaVu Sans',sans-serif; font-size:.8rem; color:var(--mute); border:1px dashed var(--line); border-radius:4px; padding:.35rem .7rem; margin-top:.4rem; }
+.mk { position:absolute; font-size:1pt; color:#fff; line-height:1; }
+.bank .intro { font-family:'Noto Sans TC','DejaVu Sans',sans-serif; font-size:.9rem; color:#3a4150; background:var(--pri-soft); border-radius:5px; padding:.5rem .8rem; }
+.set { margin:1.1rem 0 1.5rem; }
+.set .sh { display:flex; align-items:center; gap:.55rem; border-bottom:2px solid var(--pri); padding-bottom:.25rem; margin-bottom:.55rem; break-after:avoid; }
+.set .sid { font-family:'Inter','Noto Sans TC','DejaVu Sans',sans-serif; font-weight:800; font-size:1rem; color:var(--pri); }
+.tier { font-family:'Noto Sans TC','DejaVu Sans',sans-serif; font-weight:700; font-size:.68rem; color:#fff; border-radius:999px; padding:.02rem .55rem; }
+.t-basic { background:var(--teal); } .t-advanced { background:var(--pri2); } .t-top { background:var(--acc); }
+.set .sn { font-family:'Noto Sans TC','DejaVu Sans',sans-serif; font-weight:700; font-size:.85rem; color:var(--ink); }
+.set .sc { margin-left:auto; font-family:'Noto Sans TC','DejaVu Sans',sans-serif; font-size:.78rem; color:var(--mute); }
+.set .sc i { display:inline-block; width:12mm; border-bottom:1px solid var(--faint); }
+.passage { text-align:justify; font-size:.98rem; line-height:1.62; margin:.2rem 0 .6rem; }
+.passage p { margin:.28rem 0; text-indent:1.4em; }
+.passage.lead p { text-indent:0; font-style:italic; color:#3a4150; }
+.passage .pt { font-family:'Inter','Noto Sans TC','DejaVu Sans',sans-serif; font-weight:700; color:var(--pri); margin:.5rem 0 .1rem; }
+.passage .pt b { display:inline-block; background:var(--pri); color:#fff; border-radius:3px; padding:0 .4rem; margin-right:.5rem; font-size:.85rem; }
+.bl { display:inline-block; min-width:3.1em; text-align:center; border-bottom:1.2px solid var(--ink); font-family:'Inter','Noto Sans TC','DejaVu Sans',sans-serif; font-weight:700; font-size:.78rem; color:var(--pri); line-height:1.25; margin:0 .15em; text-indent:0; }
+.bl.w { min-width:5em; }
+.ub { display:inline-block; width:3.4em; border-bottom:1.2px solid var(--ink); }
+.q { display:flex; gap:.45rem; margin:.5rem 0; break-inside:avoid; text-align:left; }
+.q .qn { flex:none; min-width:1.9em; font-family:'Inter','Noto Sans TC','DejaVu Sans',sans-serif; font-weight:700; color:var(--pri); }
+.q .qb { flex:1; min-width:0; }
+.q .ins { font-family:'Noto Serif TC','DejaVu Serif',serif; font-size:.86rem; color:#4a5263; }
+.q .zhq { font-family:'Noto Serif TC','DejaVu Serif',serif; font-size:1rem; }
+.wl { height:8mm; border-bottom:1px solid #c3cad4; margin-bottom:.3rem; } .wl2 { height:15mm; background:repeating-linear-gradient(to bottom, transparent 0, transparent calc(7.5mm - 0.7px), #c3cad4 calc(7.5mm - 0.7px), #c3cad4 7.5mm); }
+.bankbox { display:grid; grid-template-columns:repeat(5,1fr); gap:.2rem .6rem; border:1.5px solid var(--pri-line); border-radius:6px; padding:.5rem .8rem; margin:.4rem 0 .8rem; font-size:.95rem; break-inside:avoid; text-align:left; }
+.bankbox.v { grid-template-columns:1fr; }
+.fig { margin:.5rem auto; width:108mm; text-align:center; break-inside:avoid; } .fig svg { width:100%; height:auto; border:1px solid var(--line); border-radius:4px; } .fig .cap { font-family:'Noto Sans TC','DejaVu Sans',sans-serif; font-size:.78rem; color:var(--mute); margin-top:.2rem; }
+.mock .mockhead { font-family:'Noto Sans TC','DejaVu Sans',sans-serif; font-size:.88rem; background:var(--acc-soft); border:1px solid #ead9b5; border-radius:5px; padding:.5rem .8rem; margin-bottom:.6rem; }
+.mock h3.sec { margin-top:1.4rem; } .mock .secnote, .mock .rng { font-family:'Noto Serif TC','DejaVu Serif',serif; font-size:.86rem; color:#4a5263; margin:.2rem 0 .5rem; } .mock .rng { font-weight:700; color:var(--ink); margin-top:.9rem; }
+/* 題庫解答 */
+.aset { margin:.3rem 0 .9rem; }
+.aset .at { font-family:'Inter','Noto Sans TC','DejaVu Sans',sans-serif; font-weight:800; font-size:.92rem; color:var(--pri); break-after:avoid; }
+.aset .akey { font-family:'Inter','Noto Sans TC','DejaVu Sans',sans-serif; font-weight:700; font-size:.8rem; background:var(--pri-soft); border-radius:3px; padding:.15rem .5rem; margin:.2rem 0 .35rem; line-height:1.7; break-inside:avoid; }
+.aset .akey i { font-style:normal; font-weight:500; color:var(--mute); font-size:.7rem; margin-right:.12rem; }
+.aset .ar { margin:.25rem 0 .4rem; text-align:left; }
+.aset .an { font-family:'Inter','Noto Sans TC','DejaVu Sans',sans-serif; color:var(--pri); }
+.aset .ax { font-weight:600; color:var(--ink); }
+.aset .ref { font-weight:600; } .aset .alt { font-weight:400; color:#4a5263; }
+.aset .why { display:block; color:#4a5263; font-size:.94em; }
+.aset .ol ul { margin:.2rem 0; padding-left:1rem; } .aset .ol li { margin:.15rem 0; }
+.aset p.model { margin:.3rem 0; text-indent:1.4em; text-align:justify; }
+ul.check { list-style:none; padding-left:0; } ul.check li::before { content:''; display:inline-block; width:.72em; height:.72em; border:1.2px solid var(--pri2); border-radius:2px; margin-right:.5em; vertical-align:-.05em; }
+

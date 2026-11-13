@@ -1,0 +1,959 @@
+<section class="unit" id="P3">
+<h2>P3　牛頓運動定律與常見的力</h2>
+<p>本單元範圍：牛頓三大運動定律、慣性參考座標、重力、正向力、摩擦力、張力、彈力與虎克定律、自由體圖，以及斜面、電梯視重、連體運動、動量與衝量（後兩者為進階）。運動學的位移、速度、加速度與圖形判讀見 P2；萬有引力與圓周運動見 P4。</p>
+
+<h3>課綱對照與考點</h3>
+<table class="t"><thead><tr><th>課綱代碼</th><th>學習內容</th><th>本單元小節</th><th>學測常見考法</th></tr></thead><tbody>
+<tr><td>PEb-Ⅴc-4</td><td>牛頓三大運動定律</td><td>二、三、四、八、九</td><td>慣性現象的解釋；淨力方向與加速度方向（而非速度方向）一致；作用力與反作用力和平衡力的辨析；由受力判斷運動或由運動反推受力</td></tr>
+<tr><td>PEb-Ⅴc-5</td><td>摩擦力、正向力、彈力等常見的作用力</td><td>五、六、七、九</td><td>靜摩擦力隨外力改變、最大靜摩擦力與動摩擦力的圖形；正向力不必等於重量（斜面、斜拉、電梯）；彈力與形變量圖形的斜率；彈簧秤讀數</td></tr>
+<tr><td>PEb-Ⅴc-1、2（銜接，見 P2）</td><td>伽利略之前的運動觀與伽利略的研究</td><td>二</td><td>亞里斯多德、伽利略、笛卡兒、牛頓觀點的對照與史料判讀</td></tr>
+<tr><td>PKb-Ⅴc-2（銜接，見 P4）</td><td>物體在重力場中運動的定性描述</td><td>五</td><td>重量與質量的區別；自由落體與太空站中的失重</td></tr>
+<tr><td>（進階）</td><td>連體運動、動量與衝量</td><td>九</td><td>以系統法與隔離法求加速度與內力；延長作用時間以降低平均力的生活實例</td></tr>
+</tbody></table>
+
+<h3>一、力的概念與表示</h3>
+<div class="key">
+<div class="note"><p>力必成對出現，必有施力者與受力者。</p><p>畫力圖時逐一確認每個力的施力者。</p></div>
+<p><strong>定義</strong>：力是物體與物體之間的<strong>交互作用</strong>，可使物體的運動狀態（速度的大小或方向）改變，或使物體形變。</p>
+<ul>
+<li>力是<strong>向量</strong>，須同時說明大小、方向與作用點（力的三要素）。合力以向量加法求得，不可直接把大小相加。</li>
+<li>SI 單位：<strong>牛頓（N）</strong>，<span class="box">1 N = 1 kg·m/s²</span>，即使質量 1 kg 的物體產生 <span class="m">1\ \mathrm{m/s^2}</span> 加速度所需的淨力。</li>
+<li>重量單位：公斤重（kgw），<span class="m">1\ \mathrm{kgw} \approx 9.8\ \mathrm{N}</span>（以標準重力加速度 <span class="m">g_n = 9.80665\ \mathrm{m/s^2}</span> 定義時，<span class="m">1\ \mathrm{kgw} = 9.80665\ \mathrm{N}</span>）。kgw 不屬於 SI。</li>
+<li>每一個力都有<strong>施力者</strong>與<strong>受力者</strong>；找不到施力者的「力」必定不存在。<span class="hand">先找施力者</span></li>
+</ul>
+</div>
+<table class="t"><thead><tr><th>力</th><th>類別</th><th>方向</th><th>大小如何決定</th><th>微觀來源</th></tr></thead><tbody>
+<tr><td>重力（重量）</td><td>超距力（場力）</td><td>鉛直向下（指向地心）</td><td><span class="m">W = mg</span></td><td>萬有引力（重力交互作用）</td></tr>
+<tr><td>正向力</td><td>接觸力</td><td>垂直接觸面，指向受力物體</td><td>由運動狀態決定（約束力）</td><td>電磁交互作用</td></tr>
+<tr><td>靜摩擦力</td><td>接觸力</td><td>平行接觸面，與「相對滑動趨勢」相反</td><td>由運動狀態決定，<span class="m">0 \le f_s \le \mu_s N</span></td><td>電磁交互作用</td></tr>
+<tr><td>動摩擦力</td><td>接觸力</td><td>平行接觸面，與「相對滑動方向」相反</td><td><span class="m">f_k = \mu_k N</span></td><td>電磁交互作用</td></tr>
+<tr><td>張力</td><td>接觸力</td><td>沿繩，背離受力物體（繩只能拉）</td><td>由運動狀態決定</td><td>電磁交互作用</td></tr>
+<tr><td>彈力</td><td>接觸力</td><td>指向恢復原長的方向</td><td>虎克定律 <span class="m">F = kx</span>（彈性限度內）</td><td>電磁交互作用</td></tr>
+</tbody></table>
+<div class="warn">
+<p><strong>注意</strong>：正向力、摩擦力、張力、彈力在巨觀上分屬不同名稱，微觀上都是原子、分子間<strong>電磁交互作用</strong>的總效果（四種基本交互作用見 P5）。日常尺度中，除了重力以外的力幾乎都屬電磁交互作用。</p>
+<p><strong>注意</strong>：力不是物體「帶著走」的東西。拋出的球離手後，手已不再施力；球在空中只受重力（與空氣阻力）。<em>「球向上飛是因為還帶著手給的力」</em>為典型迷思。</p>
+</div>
+<h4>力的分解</h4>
+<p>力可沿任意兩個互相垂直的方向分解，分力的作用效果與原力相同。斜面問題常沿「平行斜面」與「垂直斜面」分解重力：</p>
+<div class="formula" data-t="斜面上重力的分解"><div class="mb">W_{\parallel} = mg\sin\theta, \qquad W_{\perp} = mg\cos\theta</div><p><span class="m">W_{\parallel}</span>：沿斜面向下的分力（N）　<span class="m">W_{\perp}</span>：垂直斜面、壓向斜面的分力（N）　θ：斜面傾角</p></div>
+<figure class="fig"><svg viewBox="0 0 420 230" width="420"><defs><marker id="P3-s1b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2f6fb5"/></marker><marker id="P3-s1g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2e8b57"/></marker><marker id="P3-s1r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2410c"/></marker></defs>
+<polygon points="40,210 380,210 380,14" fill="#e2e8f0" stroke="#1f2a44" stroke-width="2"/>
+<path d="M80,210 A40,40 0 0,0 74.6,190" fill="none" stroke="#1f2a44" stroke-width="1.5"/>
+<text x="88" y="203" font-size="15" fill="#1f2a44">θ</text>
+<polygon points="184,126.9 236,96.9 218,65.7 166,95.7" fill="#cfe3f8" stroke="#2f6fb5" stroke-width="2"/>
+<line x1="162" y1="118.8" x2="201" y2="186.3" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="5,4"/>
+<line x1="240" y1="163.8" x2="201" y2="186.3" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="5,4"/>
+<line x1="201" y1="96.3" x2="201" y2="184" stroke="#2e8b57" stroke-width="2.5" marker-end="url(#P3-s1g)"/>
+<line x1="201" y1="96.3" x2="164" y2="117.6" stroke="#c2410c" stroke-width="2" marker-end="url(#P3-s1r)"/>
+<line x1="201" y1="96.3" x2="239" y2="162" stroke="#c2410c" stroke-width="2" marker-end="url(#P3-s1r)"/>
+<line x1="201" y1="96.3" x2="163" y2="30.8" stroke="#2f6fb5" stroke-width="2.5" marker-end="url(#P3-s1b)"/>
+<circle cx="201" cy="96.3" r="3" fill="#1f2a44"/>
+<text x="208" y="200" font-size="14" fill="#2e8b57">mg</text>
+<text x="96" y="114" font-size="14" fill="#c2410c">mg sinθ</text>
+<text x="246" y="170" font-size="14" fill="#c2410c">mg cosθ</text>
+<text x="128" y="30" font-size="14" fill="#2f6fb5">N</text>
+<path d="M201,140 A44,44 0 0,0 223,134.4" fill="none" stroke="#1f2a44" stroke-width="1"/>
+<text x="208" y="155" font-size="13" fill="#1f2a44">θ</text>
+<text x="14" y="80" font-size="14" fill="#d64545" transform="rotate(-4 14 80)">兩分力取代 mg，不重複畫</text>
+</svg><figcaption>圖 P3-1　光滑斜面上物體的重力分解：沿斜面分力 mg sinθ，垂直斜面分力 mg cosθ；正向力 N 與 mg cosθ 等大反向</figcaption></figure>
+<div class="tip">
+<p><strong>深究　力可分解的依據</strong>：牛頓第二定律是向量方程式，<span class="m">\sum\vec{F} = m\vec{a}</span> 可拆成互相獨立的分量式 <span class="m">\sum F_x = ma_x</span>、<span class="m">\sum F_y = ma_y</span>。座標軸的選法以「加速度落在某一軸上」最省事：斜面上物體沿斜面運動，故取平行斜面為 x 軸，垂直斜面方向的加速度為零，立即得到 <span class="m">N = mg\cos\theta</span>（無其他垂直斜面的力時）。圖中重力與垂直斜面方向的夾角等於斜面傾角 θ，理由是兩角的兩邊分別互相垂直。</p>
+</div>
+
+<div class="exam"><p>學測常見考法：辨認各接觸力的微觀來源同屬<strong>電磁交互作用</strong>；判斷力圖中是否多畫「拋力」「下滑力」或漏畫摩擦力。</p></div>
+
+<h3>二、牛頓第一運動定律：慣性定律</h3>
+<h4>觀念的演進</h4>
+<table class="t"><thead><tr><th>人物</th><th>主要主張</th><th>評析</th></tr></thead><tbody>
+<tr><td>亞里斯多德（Aristotle，前 384–前 322）</td><td>天然運動（重物趨向地心）與受迫運動之分；受迫運動須有推動者持續作用，推動停止則運動停止</td><td>符合日常經驗（摩擦普遍存在），但無法解釋拋出物離手後繼續前進</td></tr>
+<tr><td>伽利略（Galileo Galilei，1564–1642）</td><td>斜面思想實驗：無摩擦時，球由一斜面滾下後會沿另一斜面升到原高度；另一斜面放平，球將永遠運動下去（見 P2）。相關論述見於 1638 年《兩門新科學》</td><td>首次指出「維持運動不需要力，改變運動才需要力」；其「慣性」多指沿地表的水平運動，學界常稱為受限的慣性觀</td></tr>
+<tr><td>笛卡兒（René Descartes，1596–1650）</td><td>1644 年《哲學原理》：物體若不受影響，保持其狀態；運動的物體傾向沿<strong>直線</strong>繼續運動</td><td>明確提出直線慣性</td></tr>
+<tr><td>牛頓（Isaac Newton，1642–1727）</td><td>1687 年《自然哲學的數學原理》列出三大運動定律，第一定律即慣性定律</td><td>與第二、第三定律及萬有引力結合成完整力學體系</td></tr>
+</tbody></table>
+<p class="eg"><span class="en">牛頓生卒年依當時英國通行的儒略曆為 1642 年 12 月 25 日至 1727 年 3 月；換算為格里曆則生於 1643 年 1 月 4 日。</span><span class="zh">補充：各書所載 1642 或 1643 的差異來自曆法換算；本書依臺灣高中課本通行寫法記為 1642–1727。</span></p>
+<div class="key">
+<p><strong>定律</strong>：物體不受外力，或所受外力的<span class="circle">合力為零</span>時，靜止者恆保持靜止，運動者恆沿直線作<strong>等速度運動</strong>。</p>
+<ul>
+<li><strong>慣性</strong>：物體維持原有運動狀態（速度）的性質。一切物體都有慣性，與是否受力、是否運動、速度大小無關。</li>
+<li><strong>質量是慣性大小的量度</strong>：質量越大，改變其速度越困難。<span class="hand">與速度大小無關</span></li>
+<li>「合力為零」與「速度不變」互為充要條件：靜止與等速度直線運動都屬於<strong>力平衡</strong>狀態。</li>
+<li>等速率圓周運動速度方向不斷改變，合力不為零，不屬於平衡狀態。</li>
+</ul>
+</div>
+<h4>慣性現象的判讀</h4>
+<ul>
+<li>公車突然煞車：乘客腳底隨車廂減速，上半身因慣性維持原速度，故相對車廂向前傾；公車突然起動則向後仰。</li>
+<li>抽桌布：迅速抽出時摩擦力作用時間極短，杯子的速度改變量很小，故幾乎留在原處（亦可用衝量說明，見第九節）。</li>
+<li>拍打衣服除塵、甩乾溼手、錘頭鬆脫時將錘柄向下撞擊地面使錘頭套緊。</li>
+<li>太空中物體雖「失重」，仍有慣性：推動太空站內的大型儀器仍須施力，質量越大越難推動。</li>
+</ul>
+<div class="exam"><p>學測常以公車起動與煞車、抽桌布、太空中的物體考慣性；或以史料敘述考亞里斯多德、伽利略、牛頓觀點的差異：<em>「運動需要力來維持」屬亞里斯多德的觀點</em>。</p></div>
+<h4>慣性參考座標</h4>
+<div class="key">
+<div class="note"><p>判斷方法：參考座標本身有無加速度（含轉動）。</p><p>有加速度者為非慣性座標，牛頓定律不能直接使用。</p></div>
+<p><strong>定義</strong>：慣性定律成立的參考座標稱為<strong>慣性參考座標</strong>（慣性座標系）。相對於某一慣性座標作等速度運動的座標也是慣性座標；作加速度運動（含轉動）的座標為<strong>非慣性座標</strong>。</p>
+<ul>
+<li>牛頓運動定律只在慣性座標中直接成立。</li>
+<li>地面因地球自轉與公轉並非嚴格的慣性座標，但在一般實驗的尺度與時間內可視為慣性座標。</li>
+<li>加速中的車廂、起動或煞車中的電梯、轉彎中的汽車都是非慣性座標。</li>
+</ul>
+</div>
+<figure class="fig"><svg viewBox="0 0 560 220" width="560"><defs><marker id="P3-s2b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2f6fb5"/></marker><marker id="P3-s2g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2e8b57"/></marker><marker id="P3-s2r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2410c"/></marker></defs>
+<line x1="10" y1="186" x2="340" y2="186" stroke="#1f2a44" stroke-width="2"/>
+<rect x="20" y="50" width="300" height="110" fill="#e2e8f0" stroke="#1f2a44" stroke-width="2"/>
+<circle cx="70" cy="170" r="15" fill="#94a3b8" stroke="#1f2a44" stroke-width="2"/>
+<circle cx="270" cy="170" r="15" fill="#94a3b8" stroke="#1f2a44" stroke-width="2"/>
+<line x1="170" y1="52" x2="170" y2="140" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="5,4"/>
+<line x1="170" y1="52" x2="136.2" y2="124.5" stroke="#1f2a44" stroke-width="1.8"/>
+<circle cx="136.2" cy="124.5" r="9" fill="#d9772b" stroke="#1f2a44" stroke-width="1.5"/>
+<text x="150" y="98" font-size="14" fill="#1f2a44">θ</text>
+<line x1="200" y1="30" x2="280" y2="30" stroke="#c2410c" stroke-width="2.5" marker-end="url(#P3-s2r)"/>
+<text x="210" y="22" font-size="14" fill="#c2410c">車廂加速度 a</text>
+<line x1="410" y1="20" x2="410" y2="200" stroke="#94a3b8" stroke-width="1"/>
+<line x1="450" y1="110" x2="450" y2="192" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4,4"/>
+<line x1="450" y1="110" x2="487" y2="31" stroke="#2f6fb5" stroke-width="2.5" marker-end="url(#P3-s2b)"/>
+<line x1="450" y1="110" x2="450" y2="190" stroke="#2e8b57" stroke-width="2.5" marker-end="url(#P3-s2g)"/>
+<line x1="450" y1="110" x2="486" y2="110" stroke="#c2410c" stroke-width="2.5" stroke-dasharray="6,3" marker-end="url(#P3-s2r)"/>
+<circle cx="450" cy="110" r="5" fill="#d9772b" stroke="#1f2a44"/>
+<text x="492" y="40" font-size="14" fill="#2f6fb5">T</text>
+<text x="458" y="200" font-size="14" fill="#2e8b57">mg</text>
+<text x="490" y="115" font-size="14" fill="#c2410c">合力 ma</text>
+<text x="430" y="16" font-size="13" fill="#1f2a44">小球的受力</text>
+<text x="120" y="212" font-size="14" fill="#d64545" transform="rotate(-3 120 212)">合力向前 = 加速度方向</text>
+</svg><figcaption>圖 P3-2　向右加速的車廂內，懸吊小球的細繩向後偏 θ 角。地面（慣性座標）觀察：張力 T 與重力 mg 的合力水平向右，提供小球與車廂相同的加速度，<span class="m">a = g\tan\theta</span></figcaption></figure>
+<div class="formula" data-t="加速車廂中的懸吊物"><div class="mb">a = g\tan\theta</div><p>θ：細繩偏離鉛直線的角度；細繩偏向後方，加速度向前。適用於細繩相對車廂靜止時。</p></div>
+<div class="warn">
+<p><strong>辨析</strong>：車內乘客看小球靜止，卻見繩子偏斜，似乎合力不為零而小球不動，與慣性定律矛盾；原因是車廂為非慣性座標。以地面為參考座標分析即無矛盾。</p>
+<p><strong>注意</strong>：<em>「慣性力」不是真實的交互作用</em>，沒有施力者，也沒有反作用力。高中必修題目一律以地面為參考座標，以真實的力列式。</p>
+</div>
+<div class="tip">
+<p><strong>深究　第一定律與第二定律的關係</strong>：僅就數學形式，<span class="m">\sum\vec{F}=0 \Rightarrow \vec{a}=0</span> 確實可由第二定律得到。第一定律另有一層作用：它<strong>界定了慣性座標</strong>，即「不受力的物體作等速度運動」的那些座標，第二定律必須在這種座標中使用。</p>
+<p><strong>深究　地面偏離慣性座標的程度</strong>：赤道上的物體隨地球自轉作圓周運動，向心加速度 <span class="m">a = R\omega^2 \approx (6.38\times10^{6}\ \mathrm{m})(7.29\times10^{-5}\ \mathrm{rad/s})^2 \approx 0.034\ \mathrm{m/s^2}</span>，約為 g 的 0.34%。這是赤道地表的有效重力加速度（約 <span class="m">9.780\ \mathrm{m/s^2}</span>）小於兩極（約 <span class="m">9.832\ \mathrm{m/s^2}</span>）的原因之一，另一原因是地球赤道半徑較大。大尺度的大氣與海洋運動須考慮地球自轉造成的科氏力（見 E8）。</p>
+<p><strong>深究　非慣性座標中的假想力（進階）</strong>：在加速度為 <span class="m">\vec{a}_0</span> 的座標中，若在每個物體上加一個 <span class="m">-m\vec{a}_0</span> 的假想力，即可照常使用牛頓定律。圖 P3-2 中，車上觀察者在小球上加上向後的 <span class="m">ma</span>，三力平衡，同樣得 <span class="m">\tan\theta = a/g</span>。此法到大學力學課程才系統使用。</p>
+</div>
+
+<h3>三、牛頓第二運動定律</h3>
+<div class="key">
+<div class="note"><p>F 是<strong>合力</strong>，不是其中某一個力。</p><p>a 與合力同向，與速度方向無關。</p></div>
+<p><strong>定律</strong>：物體所受淨力（合力）等於其質量與加速度的乘積，加速度方向與淨力方向相同。</p>
+<div class="formula" data-t="牛頓第二運動定律"><div class="mb">\sum\vec{F} = \vec{F}_{\mathrm{net}} = m\vec{a}</div><p><span class="m">\sum\vec{F}</span>：物體所受外力的合力（N）　m：質量（kg）　<span class="m">\vec{a}</span>：加速度（m/s²）</p></div>
+<ul>
+<li><strong>同向性</strong>：加速度與淨力<span class="circle">同方向</span>；速度方向可與淨力方向不同（拋體、減速運動）。</li>
+<li><strong>瞬時性</strong>：淨力改變的瞬間，加速度隨之改變；速度則須經一段時間才改變（速度不會突變）。</li>
+<li><strong>獨立性</strong>：各方向分量各自成立。</li>
+<li><strong>對象</strong>：<span class="m">\sum\vec{F}</span> 只計入「作用在該物體上」的外力；把多個物體視為一個系統時，系統內物體間的力互相抵消（第三定律），只計外力，m 取系統總質量。</li>
+<li>F 一定時 <span class="m">a \propto \dfrac{1}{m}</span>；m 一定時 <span class="m">a \propto F</span>。</li>
+</ul>
+</div>
+<figure class="fig half"><svg viewBox="0 0 300 220" width="300"><defs><marker id="P3-s3k" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f2a44"/></marker></defs>
+<line x1="40" y1="190" x2="285" y2="190" stroke="#1f2a44" stroke-width="1.8" marker-end="url(#P3-s3k)"/>
+<line x1="40" y1="190" x2="40" y2="15" stroke="#1f2a44" stroke-width="1.8" marker-end="url(#P3-s3k)"/>
+<line x1="40" y1="190" x2="240" y2="40" stroke="#2f6fb5" stroke-width="2.5"/>
+<line x1="40" y1="190" x2="280" y2="100" stroke="#d9772b" stroke-width="2.5"/>
+<text x="210" y="40" font-size="14" fill="#2f6fb5">質量 m</text>
+<text x="230" y="92" font-size="14" fill="#d9772b">質量 2m</text>
+<text x="250" y="210" font-size="14" fill="#1f2a44">淨力 F</text>
+<text x="48" y="22" font-size="14" fill="#1f2a44">加速度 a</text>
+<text x="26" y="205" font-size="13" fill="#1f2a44">0</text>
+</svg><figcaption>圖 P3-3　質量固定時 a 與 F 成正比；斜率 = 1/m</figcaption></figure><figure class="fig half"><svg viewBox="0 0 300 220" width="300"><defs><marker id="P3-s4k" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f2a44"/></marker></defs>
+<line x1="40" y1="190" x2="285" y2="190" stroke="#1f2a44" stroke-width="1.8" marker-end="url(#P3-s4k)"/>
+<line x1="40" y1="190" x2="40" y2="15" stroke="#1f2a44" stroke-width="1.8" marker-end="url(#P3-s4k)"/>
+<line x1="40" y1="190" x2="260" y2="50" stroke="#2f6fb5" stroke-width="2.5"/>
+<text x="150" y="105" font-size="14" fill="#2f6fb5">斜率 = F</text>
+<text x="244" y="210" font-size="14" fill="#1f2a44">1/m</text>
+<text x="48" y="22" font-size="14" fill="#1f2a44">加速度 a</text>
+<text x="26" y="205" font-size="13" fill="#1f2a44">0</text>
+</svg><figcaption>圖 P3-4　淨力固定時 a 與 1/m 成正比（a 對 m 作圖則為雙曲線）</figcaption></figure>
+<div class="mnem"><p>先畫力圖、再分方向、合力等於 ma</p></div>
+<h4>質量與重量</h4>
+<table class="t"><thead><tr><th>項目</th><th>質量 m</th><th>重量 W</th></tr></thead><tbody>
+<tr><td>意義</td><td>物體慣性大小的量度（慣性質量）</td><td>物體所受的重力</td></tr>
+<tr><td>性質</td><td>純量</td><td>向量（鉛直向下）</td></tr>
+<tr><td>SI 單位</td><td>kg（基本量）</td><td>N</td></tr>
+<tr><td>隨地點改變</td><td>不變</td><td>隨 g 改變（緯度、高度、星球）</td></tr>
+<tr><td>測量工具</td><td>等臂天平（比較重力，兩邊 g 相同而消去）</td><td>彈簧秤、電子秤（實測力，再依 g 換算顯示「公斤」）</td></tr>
+</tbody></table>
+<p><span class="box">質量不隨地點改變，重量隨 g 改變</span><span class="hand">月球上：m 不變，W 約 1/6</span></p>
+<h4>探究：驗證第二定律</h4>
+<ul>
+<li>裝置：低摩擦軌道上的力學台車，以細繩跨過滑輪連接懸掛砝碼，以打點計時器、光電閘或運動感測器測加速度。</li>
+<li>探討 a 與 F：<strong>操作變因</strong>為拉力（砝碼重），<strong>控制變因</strong>為系統總質量。為使總質量固定，從台車上取下砝碼掛到繩端，而不是另外加砝碼。</li>
+<li>探討 a 與 m：拉力固定，改變台車上的砝碼；以 a 對 1/m 作圖得過原點直線（線性化，見 X2）。</li>
+<li>若軌道有摩擦，a–F 圖為不過原點的直線，橫軸截距約為摩擦力；可將軌道略微傾斜使重力沿軌道分力抵消摩擦（平衡摩擦）。</li>
+</ul>
+<div class="exam"><p>學測常見考法：由 v–t 圖斜率判斷合力方向（斜率為負表示合力指向負方向，<em>不代表物體向負方向運動</em>）；由 a–F、a–1/m 圖的斜率求質量或合力；探究實驗中辨認操作、控制與應變變因。</p></div>
+<div class="warn">
+<p><strong>注意</strong>：<em>物體運動方向不一定是淨力方向</em>。鉛直上拋的球在最高點速度為零，淨力仍為 mg 向下，加速度仍為 g 向下。</p>
+<p><strong>注意</strong>：<span class="m">\vec{F}=m\vec{a}</span> 中的 F 是淨力。「ma」不是一個力，畫受力圖時不可另外畫一個「ma」的箭頭。</p>
+</div>
+<div class="tip">
+<p><strong>深究　牛頓原文與 F = ma 的由來</strong>：《原理》的第二定律原文為拉丁文 Mutationem motus proportionalem esse vi motrici impressae（運動的改變與所施的動力成正比，且沿該力的直線方向發生）。牛頓的「運動量」定義為質量與速度的乘積，即今日的<strong>動量</strong> <span class="m">p = mv</span>。以現代寫法，第二定律最接近</p>
+<div class="mb">\vec{F}_{\mathrm{net}} = \frac{\Delta\vec{p}}{\Delta t}</div>
+<p>質量不變時，<span class="m">\Delta\vec{p}/\Delta t = m\,\Delta\vec{v}/\Delta t = m\vec{a}</span>。《原理》書中並未寫出 F = ma 這一方程式；一般認為歐拉（Leonhard Euler，1707–1783）約在 1750 年以微分方程式的形式寫出今日通行的 F = ma。</p>
+<p><strong>深究　慣性質量與重力質量（進階）</strong>：F = ma 中的 m 衡量「難以加速」的程度（慣性質量）；W = mg 中的 m 衡量「受地球吸引」的強弱（重力質量）。兩者在極高精密度的實驗中相等，因此不同物體在同一地點自由落下的加速度相同。愛因斯坦把這一事實提升為等效原理，作為廣義相對論的出發點。</p>
+<p><strong>補充</strong>：2019 年 5 月 20 日起，SI 的公斤改以固定普朗克常數 <span class="m">h = 6.62607015\times10^{-34}\ \mathrm{J\cdot s}</span> 定義，不再依賴國際公斤原器；牛頓為導出單位，隨之由 h、光速 c 與銫原子頻率定義。</p>
+</div>
+
+<h3>四、牛頓第三運動定律</h3>
+<div class="key">
+<p><strong>定律</strong>：甲物體對乙物體施力時，乙物體必同時對甲物體施一力，兩力大小相等、方向相反，且作用在同一直線上。</p>
+<div class="formula" data-t="牛頓第三運動定律"><div class="mb">\vec{F}_{\mathrm{AB}} = -\vec{F}_{\mathrm{BA}}</div><p><span class="m">\vec{F}_{\mathrm{AB}}</span>：A 施於 B 的力　<span class="m">\vec{F}_{\mathrm{BA}}</span>：B 施於 A 的力；負號表示方向相反</p></div>
+<ul>
+<li><strong>同時</strong>產生、同時消失，無先後之分（「作用」與「反作用」的命名可互換）。</li>
+<li>作用在<span class="circle">不同物體</span>上，故不能互相抵消；各自對其受力者產生效果。</li>
+<li><strong>性質相同</strong>：重力的反作用力是重力（萬有引力），正向力的反作用力是正向力，摩擦力的反作用力是摩擦力。</li>
+<li>與物體的運動狀態無關：加速、等速、靜止時都成立。</li>
+</ul>
+</div>
+<table class="t"><thead><tr><th>比較</th><th>作用力與反作用力</th><th>一對平衡力</th></tr></thead><tbody>
+<tr><td>作用對象</td><td>兩個不同物體</td><td>同一物體</td></tr>
+<tr><td>力的性質</td><td>必相同</td><td>可不同（如重力與正向力）</td></tr>
+<tr><td>能否抵消</td><td>不能（作用在不同物體）</td><td>合力為零</td></tr>
+<tr><td>成立條件</td><td>恆成立</td><td>僅在該物體加速度為零（該方向）時</td></tr>
+<tr><td>一方消失時</td><td>另一方同時消失</td><td>另一方不一定消失</td></tr>
+</tbody></table>
+<figure class="fig"><svg viewBox="0 0 520 240" width="520"><defs><marker id="P3-s5b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2f6fb5"/></marker><marker id="P3-s5g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2e8b57"/></marker></defs>
+<rect x="95" y="70" width="70" height="30" fill="#fbdcbd" stroke="#1f2a44" stroke-width="1.8"/>
+<text x="118" y="91" font-size="14" fill="#1f2a44">書</text>
+<line x1="130" y1="70" x2="130" y2="24" stroke="#2f6fb5" stroke-width="2.5" marker-end="url(#P3-s5b)"/>
+<line x1="130" y1="100" x2="130" y2="148" stroke="#2e8b57" stroke-width="2.5" marker-end="url(#P3-s5g)"/>
+<text x="138" y="36" font-size="13" fill="#2f6fb5">N（桌→書）</text>
+<text x="138" y="146" font-size="13" fill="#2e8b57">W（地球→書）</text>
+<rect x="230" y="100" width="140" height="12" fill="#e2e8f0" stroke="#1f2a44" stroke-width="1.8"/>
+<line x1="245" y1="112" x2="245" y2="180" stroke="#1f2a44" stroke-width="3"/>
+<line x1="355" y1="112" x2="355" y2="180" stroke="#1f2a44" stroke-width="3"/>
+<text x="285" y="132" font-size="14" fill="#1f2a44">桌</text>
+<line x1="300" y1="52" x2="300" y2="97" stroke="#2f6fb5" stroke-width="2.5" marker-end="url(#P3-s5b)"/>
+<text x="308" y="66" font-size="13" fill="#2f6fb5">N′（書→桌）</text>
+<path d="M360,240 C400,208 460,198 520,198 L520,240 Z" fill="#c9ebd7" stroke="#2e8b57" stroke-width="2"/>
+<text x="452" y="228" font-size="14" fill="#1f2a44">地球</text>
+<line x1="470" y1="198" x2="470" y2="152" stroke="#2e8b57" stroke-width="2.5" marker-end="url(#P3-s5g)"/>
+<text x="400" y="142" font-size="13" fill="#2e8b57">W′（書→地球）</text>
+<text x="20" y="200" font-size="13" fill="#2f6fb5">藍：一對正向力（N 與 N′）</text>
+<text x="20" y="222" font-size="13" fill="#2e8b57">綠：一對重力（W 與 W′）</text>
+<text x="20" y="178" font-size="14" fill="#d64545" transform="rotate(-3 20 178)">N 與 W 作用在同一物體</text>
+</svg><figcaption>圖 P3-5　書靜置於桌面：作用在書上的 N 與 W 是一對平衡力；N 與 N′、W 與 W′ 才是作用力與反作用力（分離畫法，示意圖，未依比例）</figcaption></figure>
+<div class="mnem"><p>反作用力：換主詞、換受詞、換方向（「A 對 B」改成「B 對 A」）</p></div>
+<h4>實例</h4>
+<ul>
+<li><strong>走路、跑步</strong>：腳向後推地面（靜摩擦），地面對腳施向前的摩擦力，使人前進。</li>
+<li><strong>游泳</strong>：手向後推水，水向前推手。</li>
+<li><strong>直升機</strong>：旋翼把空氣向下推，空氣把旋翼向上推。</li>
+<li><strong>火箭</strong>：火箭把燃氣向後噴出，燃氣對火箭施向前的推力；推力不需要「推空氣」或「推地面」，真空中照樣可用。</li>
+<li><strong>拔河</strong>：繩子兩端對兩隊的拉力（理想繩）大小相等；勝負取決於地面對各隊的摩擦力大小，即各隊所受外力的合力。</li>
+</ul>
+<div class="exam"><p>學測常見考法：在書、桌、地球或人、地面、車的情境中找出「一對作用力與反作用力」與「一對平衡力」；<em>重力的反作用力是物體對地球的引力，不是正向力</em>。</p></div>
+<div class="tip">
+<p><strong>深究　馬車問題</strong>：馬拉車的力與車拉馬的力等大反向，車仍能前進，原因是兩力作用在不同物體上。判斷車的運動只看「作用在車上的力」：馬拉車的力大於地面對車的阻力，車便加速。判斷馬的運動只看「作用在馬上的力」：地面對馬蹄向前的靜摩擦力大於車拉馬的力，馬便加速。若把馬與車視為一個系統，馬車間的拉力為內力而抵消，系統加速度由外力（地面對馬的摩擦力減去地面對車的阻力）決定。</p>
+<p><strong>深究　第三定律與動量守恆（進階）</strong>：兩物體交互作用時，任一時刻所受的力等大反向，作用時間相同，故兩者動量的變化量等大反向，總動量不變。若無外力，系統總動量守恆；此為碰撞、爆炸、火箭推進的分析基礎（加深加廣選修）。</p>
+</div>
+
+<h3>五、重力、正向力與視重</h3>
+<h4>重力</h4>
+<ul>
+<li>地表附近 <span class="m">W = mg</span>，方向鉛直向下。正文取 <span class="m">g = 9.8\ \mathrm{m/s^2}</span>；國際標準重力加速度 <span class="m">g_n = 9.80665\ \mathrm{m/s^2}</span>（定義值）。</li>
+<li>g 隨地點略有不同：海平面赤道約 <span class="m">9.780\ \mathrm{m/s^2}</span>，兩極約 <span class="m">9.832\ \mathrm{m/s^2}</span>；高度增加則 g 減小（萬有引力與距離平方成反比，見 P4）。</li>
+<li>月球表面的重力加速度約為地表的 1/6，同一物體在月球上質量不變、重量約為地表的 1/6。</li>
+</ul>
+<h4>正向力</h4>
+<div class="key">
+<p><strong>定義</strong>：兩物體互相擠壓時，接觸面因微小形變而產生、垂直於接觸面的力。</p>
+<ul>
+<li>方向：<strong>垂直接觸面</strong>，指向受力物體（推離接觸面）。</li>
+<li>大小：<strong>由物體的運動狀態決定</strong><span class="hand">不一定等於 mg</span>，須由垂直接觸面方向的力平衡或第二定律求出；<em>不必等於重量</em>。</li>
+<li>兩物體即將分離時，正向力為零；正向力不能為負（接觸面只能推、不能拉）。</li>
+</ul>
+</div>
+<table class="t"><thead><tr><th>情境（質量 m）</th><th>正向力 N</th></tr></thead><tbody>
+<tr><td>靜置水平面</td><td><span class="m">N = mg</span></td></tr>
+<tr><td>水平面上，另以力 F 鉛直向下壓</td><td><span class="m">N = mg + F</span></td></tr>
+<tr><td>水平面上，以力 F 沿仰角 θ 斜向上拉</td><td><span class="m">N = mg - F\sin\theta</span>（<span class="m">F\sin\theta \le mg</span> 時）</td></tr>
+<tr><td>水平面上，以力 F 沿俯角 θ 斜向下推</td><td><span class="m">N = mg + F\sin\theta</span></td></tr>
+<tr><td>靜置或沿傾角 θ 的斜面滑動（無其他垂直斜面的力）</td><td><span class="m">N = mg\cos\theta</span></td></tr>
+<tr><td>電梯中，電梯加速度 a 向上</td><td><span class="m">N = m(g + a)</span></td></tr>
+<tr><td>電梯中，電梯加速度 a 向下（<span class="m">a \le g</span>）</td><td><span class="m">N = m(g - a)</span></td></tr>
+<tr><td>以力 F 水平壓在鉛直牆面上</td><td><span class="m">N = F</span>（與重量無關）</td></tr>
+</tbody></table>
+<h4>視重與電梯</h4>
+<div class="key">
+<div class="note"><p>視重只看<strong>加速度</strong>方向。</p><p>速度向上或向下都可能變重或變輕。</p></div>
+<p><strong>定義</strong>：<strong>視重</strong>指磅秤（或彈簧秤）的讀數，等於秤對物體的支持力（或拉力）的大小；<strong>真重</strong>（實重）指物體所受重力 mg。</p>
+<ul>
+<li>加速度向上（向上加速或向下減速）：<span class="m">N - mg = ma \Rightarrow N = m(g+a) &gt; mg</span>，視重增加（超重）。</li>
+<li>加速度向下（向下加速或向上減速）：<span class="m">mg - N = ma \Rightarrow N = m(g-a) &lt; mg</span>，視重減少。</li>
+<li>加速度為零（靜止或等速，不論向上或向下）：<span class="m">N = mg</span>。</li>
+<li>自由落下（<span class="m">a = g</span> 向下）：<span class="m">N = 0</span>，稱為<strong>失重</strong>（完全失重）。</li>
+</ul>
+</div>
+<div class="formula" data-t="電梯中的視重"><div class="mb">N = m(g + a)\quad(\vec{a}\uparrow),\qquad N = m(g - a)\quad(\vec{a}\downarrow)</div><p>N：視重（磅秤讀數，N）　a：電梯加速度量值（m/s²）　自由落下時 a = g，N = 0</p></div>
+<div class="mnem"><p>a 向上變重，a 向下變輕；看 a 不看 v</p></div>
+<figure class="fig"><svg viewBox="0 0 560 230" width="560"><defs><marker id="P3-s6b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2f6fb5"/></marker><marker id="P3-s6g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2e8b57"/></marker><marker id="P3-s6r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2410c"/></marker></defs>
+<rect x="70" y="90" width="40" height="40" fill="#fbdcbd" stroke="#1f2a44" stroke-width="1.8"/>
+<line x1="90" y1="90" x2="90" y2="33" stroke="#2f6fb5" stroke-width="2.5" marker-end="url(#P3-s6b)"/>
+<line x1="90" y1="130" x2="90" y2="188" stroke="#2e8b57" stroke-width="2.5" marker-end="url(#P3-s6g)"/>
+<text x="98" y="48" font-size="14" fill="#2f6fb5">N</text>
+<text x="98" y="182" font-size="14" fill="#2e8b57">mg</text>
+<text x="30" y="214" font-size="13" fill="#1f2a44">a = 0：N = mg</text>
+<rect x="260" y="90" width="40" height="40" fill="#fbdcbd" stroke="#1f2a44" stroke-width="1.8"/>
+<line x1="280" y1="90" x2="280" y2="13" stroke="#2f6fb5" stroke-width="2.5" marker-end="url(#P3-s6b)"/>
+<line x1="280" y1="130" x2="280" y2="188" stroke="#2e8b57" stroke-width="2.5" marker-end="url(#P3-s6g)"/>
+<line x1="330" y1="140" x2="330" y2="93" stroke="#c2410c" stroke-width="2.5" marker-end="url(#P3-s6r)"/>
+<text x="288" y="30" font-size="14" fill="#2f6fb5">N</text>
+<text x="288" y="182" font-size="14" fill="#2e8b57">mg</text>
+<text x="338" y="120" font-size="14" fill="#c2410c">a</text>
+<text x="200" y="214" font-size="13" fill="#1f2a44">a 向上：N &gt; mg（視重增加）</text>
+<rect x="450" y="90" width="40" height="40" fill="#fbdcbd" stroke="#1f2a44" stroke-width="1.8"/>
+<line x1="470" y1="90" x2="470" y2="53" stroke="#2f6fb5" stroke-width="2.5" marker-end="url(#P3-s6b)"/>
+<line x1="470" y1="130" x2="470" y2="188" stroke="#2e8b57" stroke-width="2.5" marker-end="url(#P3-s6g)"/>
+<line x1="520" y1="93" x2="520" y2="140" stroke="#c2410c" stroke-width="2.5" marker-end="url(#P3-s6r)"/>
+<text x="478" y="68" font-size="14" fill="#2f6fb5">N</text>
+<text x="478" y="182" font-size="14" fill="#2e8b57">mg</text>
+<text x="528" y="120" font-size="14" fill="#c2410c">a</text>
+<text x="392" y="214" font-size="13" fill="#1f2a44">a 向下：N &lt; mg（視重減少）</text>
+</svg><figcaption>圖 P3-6　電梯中站在磅秤上的人的受力：箭頭長度表示力的相對大小，視重由加速度方向決定，與速度方向無關</figcaption></figure>
+<table class="t"><thead><tr><th>電梯運動情形</th><th>加速度方向</th><th>視重與真重</th></tr></thead><tbody>
+<tr><td>靜止、等速上升、等速下降</td><td>無</td><td>視重 = 真重</td></tr>
+<tr><td>向上起動（加速上升）</td><td>向上</td><td>視重 &gt; 真重</td></tr>
+<tr><td>上升中將停止（減速上升）</td><td>向下</td><td>視重 &lt; 真重</td></tr>
+<tr><td>向下起動（加速下降）</td><td>向下</td><td>視重 &lt; 真重</td></tr>
+<tr><td>下降中將停止（減速下降）</td><td>向上</td><td>視重 &gt; 真重</td></tr>
+<tr><td>纜繩斷裂自由落下</td><td>向下，量值 g</td><td>視重 = 0</td></tr>
+</tbody></table>
+<div class="warn">
+<p><strong>注意</strong>：<em>失重時重力並未消失</em>。國際太空站軌道高度約 400 km，該處重力加速度約 <span class="m">8.7\ \mathrm{m/s^2}</span>，約為地表的 89%。太空人飄浮，是因為太空人與太空站一起以相同加速度「自由落下」（繞地球運轉），彼此間沒有擠壓，正向力為零。</p>
+<p><strong>注意</strong>：電子秤以測得的力除以預設的 g 顯示「公斤」，在加速中的電梯裡顯示的數值會改變；物體的質量並未改變。</p>
+</div>
+<div class="exam"><p>學測常見考法：給出電梯中磅秤讀數對時間的圖，判斷各時段的加速度方向、運動情形與位移；或判斷「減速上升」與「加速下降」的視重相同。</p></div>
+<div class="tip">
+<p><strong>深究　等效重力</strong>：在加速度 <span class="m">\vec{a}</span> 的電梯內，一切力學現象如同處於重力加速度 <span class="m">\vec{g}_{\mathrm{eff}} = \vec{g} - \vec{a}</span> 的環境（向上為正時，加速度向上則 <span class="m">g_{\mathrm{eff}} = g + a</span>）。因此電梯內的單擺週期、物體落下時間、液體壓力都會隨之改變；自由落下時 <span class="m">g_{\mathrm{eff}} = 0</span>，單擺不擺動、水中的氣泡不上浮。此即等效原理的力學版本（進階）。</p>
+</div>
+
+<h3>六、摩擦力</h3>
+<div class="key">
+<div class="note"><p>靜摩擦力由力平衡決定，上限為 μ<sub>s</sub>N。</p><p>動摩擦力才用公式 μ<sub>k</sub>N 直接計算。</p></div>
+<p><strong>定義</strong>：兩接觸面間有相對滑動或相對滑動趨勢時，沿接觸面產生、阻礙<span class="circle">相對</span>滑動的力。</p>
+<ul>
+<li><strong>靜摩擦力</strong>：兩面相對靜止但有滑動趨勢時出現；大小<strong>隨外力而變</strong>，由力平衡（或第二定律）決定，方向與相對滑動趨勢相反。</li>
+<li><strong>最大靜摩擦力</strong>：靜摩擦力的上限，<span class="m">f_{s,\max} = \mu_s N</span>；外力超過此值，物體開始相對滑動。</li>
+<li><strong>動摩擦力</strong>：兩面相對滑動時出現，<span class="m">f_k = \mu_k N</span>；在一般速率範圍內近似為定值，方向與相對滑動方向相反。</li>
+<li><span class="m">\mu_s</span>、<span class="m">\mu_k</span> 分別為靜摩擦係數與動摩擦係數，無單位，由兩接觸面的材料與表面狀況決定；通常 <span class="m">\mu_k &lt; \mu_s</span>。</li>
+<li>乾燥表面上，摩擦力與正向力成正比，與<strong>表觀接觸面積</strong>大致無關（阿蒙頓定律）。</li>
+</ul>
+</div>
+<div class="formula" data-t="摩擦力"><div class="mb">0 \le f_s \le \mu_s N, \qquad f_k = \mu_k N</div><p><span class="m">f_s</span>：靜摩擦力　<span class="m">f_k</span>：動摩擦力　N：正向力（N）　<span class="m">\mu_s</span>、<span class="m">\mu_k</span>：靜、動摩擦係數（無單位）</p></div>
+<figure class="fig"><svg viewBox="0 0 420 240" width="420"><defs><marker id="P3-s7k" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f2a44"/></marker></defs>
+<line x1="50" y1="200" x2="405" y2="200" stroke="#1f2a44" stroke-width="1.8" marker-end="url(#P3-s7k)"/>
+<line x1="50" y1="200" x2="50" y2="18" stroke="#1f2a44" stroke-width="1.8" marker-end="url(#P3-s7k)"/>
+<line x1="50" y1="200" x2="230" y2="60" stroke="#2f6fb5" stroke-width="2.8"/>
+<line x1="230" y1="60" x2="230" y2="100" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,3"/>
+<line x1="230" y1="100" x2="395" y2="100" stroke="#c2410c" stroke-width="2.8"/>
+<line x1="50" y1="60" x2="230" y2="60" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4,4"/>
+<line x1="50" y1="100" x2="230" y2="100" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4,4"/>
+<line x1="230" y1="100" x2="230" y2="200" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4,4"/>
+<circle cx="230" cy="60" r="4" fill="#2f6fb5"/>
+<text x="6" y="65" font-size="13" fill="#2f6fb5">μ<tspan baseline-shift="sub" font-size="10">s</tspan>N</text>
+<text x="6" y="105" font-size="13" fill="#c2410c">μ<tspan baseline-shift="sub" font-size="10">k</tspan>N</text>
+<text x="100" y="170" font-size="13" fill="#2f6fb5">靜止：f = F</text>
+<text x="100" y="188" font-size="13" fill="#2f6fb5">（靜摩擦，斜率 1）</text>
+<text x="262" y="90" font-size="13" fill="#c2410c">滑動：f = μ<tspan baseline-shift="sub" font-size="10">k</tspan>N</text>
+<text x="200" y="218" font-size="13" fill="#1f2a44">開始滑動</text>
+<text x="330" y="222" font-size="14" fill="#1f2a44">水平外力 F</text>
+<text x="58" y="24" font-size="14" fill="#1f2a44">摩擦力 f</text>
+<text x="250" y="45" font-size="14" fill="#d64545" transform="rotate(-4 250 45)">起動後摩擦力突降</text>
+</svg><figcaption>圖 P3-7　水平外力 F 由零緩慢增加時，水平面上物體所受摩擦力 f 的變化（示意圖）</figcaption></figure>
+<table class="t"><thead><tr><th>接觸面（常見參考值）</th><th><span class="m">\mu_s</span></th><th><span class="m">\mu_k</span></th></tr></thead><tbody>
+<tr><td>橡膠－乾燥混凝土</td><td>1.0</td><td>0.7</td></tr>
+<tr><td>橡膠－潮溼混凝土</td><td>0.7</td><td>0.5</td></tr>
+<tr><td>木－木</td><td>0.5</td><td>0.3</td></tr>
+<tr><td>鋼－鋼（乾燥）</td><td>0.6</td><td>0.3</td></tr>
+<tr><td>鋼－鋼（上油）</td><td>0.05</td><td>0.03</td></tr>
+<tr><td>鐵氟龍－鋼</td><td>0.04</td><td>0.04</td></tr>
+<tr><td>冰－冰（約 0 °C）</td><td>0.1</td><td>0.03</td></tr>
+<tr><td>關節（滑液潤滑）</td><td>0.016</td><td>0.015</td></tr>
+</tbody></table>
+<p>注意：表中數值為大學普通物理教材常用的代表值，實際數值隨表面清潔度、溫度、溼度可有相當差異；冰面的摩擦係數受溫度影響尤大。題目中的摩擦係數一律以題幹所給為準。</p>
+<div class="exam"><p>學測常見考法：給 f–F 圖讀出最大靜摩擦力與動摩擦力；推不動的物體所受靜摩擦力等於推力（<em>不是 μ<sub>s</sub>N</em>）；改變接觸面積後摩擦力是否改變。</p></div>
+<h4>摩擦力的方向判斷</h4>
+<ul>
+<li>以「<strong>相對</strong>於接觸面」判斷，不以地面為準。<span class="hand">看相對滑動</span>放到等速運轉輸送帶上的箱子，一開始相對皮帶向後滑，所受動摩擦力<strong>向前</strong>，使箱子加速；達到皮帶速度後若皮帶水平等速，摩擦力為零。</li>
+<li>靜摩擦力的方向由「若無摩擦，物體將往哪裡滑」判斷。例：靜置斜面的木塊若無摩擦將下滑，故靜摩擦力沿斜面向上。</li>
+<li>摩擦力可以是動力：人走路、汽車驅動輪、輸送帶帶動貨物、手握杯子不使其下滑。</li>
+</ul>
+<figure class="fig"><svg viewBox="0 0 460 200" width="460"><defs><marker id="P3-s8b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2f6fb5"/></marker><marker id="P3-s8k" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f2a44"/></marker><marker id="P3-s8r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2410c"/></marker></defs>
+<line x1="10" y1="160" x2="450" y2="160" stroke="#1f2a44" stroke-width="2"/>
+<circle cx="130" cy="100" r="60" fill="#e2e8f0" stroke="#1f2a44" stroke-width="3"/>
+<circle cx="130" cy="100" r="8" fill="#1f2a44"/>
+<path d="M95,62 A52,52 0 0,1 172,70" fill="none" stroke="#7a5cc2" stroke-width="2" marker-end="url(#P3-s8k)"/>
+<text x="110" y="30" font-size="13" fill="#7a5cc2">驅動輪轉動</text>
+<line x1="130" y1="160" x2="205" y2="160" stroke="#c2410c" stroke-width="3" marker-end="url(#P3-s8r)"/>
+<text x="140" y="194" font-size="13" fill="#c2410c">地面→輪：向前</text>
+<line x1="130" y1="176" x2="62" y2="176" stroke="#94a3b8" stroke-width="3" marker-end="url(#P3-s8k)"/>
+<text x="4" y="194" font-size="13" fill="#1f2a44">輪→地面：向後</text>
+<rect x="290" y="140" width="90" height="20" rx="6" fill="#fbdcbd" stroke="#1f2a44" stroke-width="1.8"/>
+<line x1="305" y1="140" x2="272" y2="58" stroke="#1f2a44" stroke-width="6"/>
+<line x1="335" y1="160" x2="408" y2="160" stroke="#c2410c" stroke-width="3" marker-end="url(#P3-s8r)"/>
+<text x="346" y="132" font-size="13" fill="#c2410c">地面→鞋：向前</text>
+<line x1="335" y1="176" x2="268" y2="176" stroke="#94a3b8" stroke-width="3" marker-end="url(#P3-s8k)"/>
+<text x="262" y="194" font-size="13" fill="#1f2a44">鞋→地面：向後</text>
+<line x1="400" y1="40" x2="445" y2="40" stroke="#2f6fb5" stroke-width="2" marker-end="url(#P3-s8b)"/>
+<text x="380" y="30" font-size="13" fill="#2f6fb5">前進方向</text>
+</svg><figcaption>圖 P3-8　驅動輪與起步的腳：接觸點相對地面有向後滑的趨勢，地面施以向前的靜摩擦力（輪胎不打滑、鞋底不滑動時）；兩對箭頭各為一對作用力與反作用力</figcaption></figure>
+<div class="warn">
+<p><strong>注意</strong>：<em>靜摩擦力不一定等於 μ<sub>s</sub>N</em>。只有在「即將滑動」的臨界狀態才等於最大靜摩擦力；其餘情形須由力平衡求出。</p>
+<p><strong>注意</strong>：滾動而不打滑的車輪，接觸點瞬間相對地面靜止，屬<strong>靜摩擦</strong>。緊急煞車時車輪鎖死而滑行，改為動摩擦，因 <span class="m">\mu_k &lt; \mu_s</span>，可提供的最大減速度較小，且滑動中的輪胎無法有效轉向；防鎖死煞車系統（ABS）使車輪在臨界附近反覆鬆放，以維持靜摩擦。</p>
+<p><strong>注意</strong>：滾動阻力（滾動摩擦）來自輪胎與路面的形變，通常遠小於滑動摩擦（進階）。</p>
+</div>
+<figure class="fig"><svg viewBox="0 0 420 165" width="420">
+<polygon points="30,20 390,20 390,80 360,85 330,92 300,82 270,86 230,92 200,80 170,84 140,79 100,92 70,83 30,80" fill="#cfe3f8" stroke="#2f6fb5" stroke-width="1.8"/>
+<polygon points="30,104 60,98 100,92 130,101 170,97 200,103 230,92 260,100 300,96 330,92 360,102 390,99 390,140 30,140" fill="#fbdcbd" stroke="#d9772b" stroke-width="1.8"/>
+<circle cx="100" cy="92" r="7" fill="none" stroke="#c2410c" stroke-width="2"/>
+<circle cx="230" cy="92" r="7" fill="none" stroke="#c2410c" stroke-width="2"/>
+<circle cx="330" cy="92" r="7" fill="none" stroke="#c2410c" stroke-width="2"/>
+<text x="150" y="45" font-size="14" fill="#1f2a44">上方物體</text>
+<text x="160" y="128" font-size="14" fill="#1f2a44">下方物體</text>
+<text x="120" y="160" font-size="13" fill="#c2410c">紅圈：真實接觸點</text>
+</svg><figcaption>圖 P3-9　粗糙表面的微觀放大：兩面只在凸起處接觸，真實接觸面積遠小於表觀接觸面積（示意圖，未依比例）</figcaption></figure>
+<div class="tip">
+<p><strong>深究　摩擦定律的歷史</strong>：達文西（Leonardo da Vinci，1452–1519）的手稿已記載摩擦力與接觸面積無關、與負重成正比，但生前未發表。阿蒙頓（Guillaume Amontons）於 1699 年重新提出並發表，後世稱阿蒙頓摩擦定律：(1) 摩擦力與正向力成正比；(2) 摩擦力與表觀接觸面積無關。庫侖（Charles-Augustin de Coulomb，1736–1806）以系統實驗驗證，並指出動摩擦力與滑動速率大致無關，因 1781 年的摩擦研究獲巴黎科學院獎。</p>
+<p><strong>深究　摩擦力與接觸面積無關的原因</strong>：20 世紀中葉，包登（F. P. Bowden）與泰伯（D. Tabor）提出真實接觸面積的解釋。表面在微觀下凹凸不平，只在凸點處接觸（圖 P3-9），凸點承受極大壓力而塑性變形，直到真實接觸面積 <span class="m">A_r</span> 恰足以支撐負重：<span class="m">A_r \approx N/p_0</span>（<span class="m">p_0</span> 為材料的降伏壓力）。摩擦力約為剪斷這些接點所需的力 <span class="m">f \approx s A_r</span>（s 為剪切強度），故</p>
+<div class="mb">f \approx s\,\frac{N}{p_0} \;\Rightarrow\; \mu \approx \frac{s}{p_0}</div>
+<p>表觀面積加倍時，每單位面積的壓力減半，真實接觸面積不變，摩擦力亦不變。此模型可說明阿蒙頓定律，但並非所有情形都適用（例如極光滑而清潔的表面黏附顯著、潤滑面、奈米尺度接觸）；摩擦學（tribology）至今仍是活躍的研究領域。</p>
+<p><strong>補充　流體阻力</strong>：物體在空氣或水中運動受到的阻力與速率有關（低速近似與 v 成正比，高速近似與 v<sup>2</sup> 成正比），與固體間的動摩擦不同。落下的物體速率增加使阻力增加，當阻力等於重力時以終端速度等速落下（見 P2）。</p>
+</div>
+
+<div class="mnem"><p>摩擦方向：先假設沒有摩擦，看它往哪裡滑，摩擦就朝反方向</p></div>
+
+<h3>七、張力與彈力</h3>
+<h4>張力</h4>
+<div class="key">
+<ul>
+<li>繩子受拉時對連接物體的拉力稱為<strong>張力</strong>；繩子只能拉、不能推，張力方向沿繩背離物體。</li>
+<li><strong>理想繩</strong>：質量可忽略、不可伸長。理想繩上各處張力相等（不論繩子是否加速，因為質量為零的一段繩，淨力必為零）。</li>
+<li><strong>理想滑輪</strong>：質量與摩擦可忽略，只改變繩子拉力的方向，繞過滑輪兩側的張力相等。</li>
+<li>有質量的繩子（進階）：繩加速或鉛直懸掛時，各處張力不同；鉛直懸掛的均勻繩，越上方張力越大。</li>
+</ul>
+</div>
+<h4>彈力與虎克定律</h4>
+<div class="key">
+<p><strong>定律</strong>（虎克定律）：在彈性限度（嚴格地說是比例限度）內，彈簧的彈力與其形變量成正比。</p>
+<div class="formula" data-t="虎克定律"><div class="mb">F = kx</div><p>F：彈力（N）　k：彈力常數（N/m）　x：形變量（m），為現長與原長之差</p></div>
+<ul>
+<li>x 為<strong>形變量</strong><span class="hand">不是彈簧長度</span>（伸長量或壓縮量），即「現長 − 原長」的大小，不是彈簧的長度。</li>
+<li>k 為<strong>彈力常數</strong>（力常數），單位 N/m，由彈簧材料、線徑、圈徑、圈數決定；k 越大越「硬」。</li>
+<li>彈力方向指向恢復原長的方向：伸長時向內拉、壓縮時向外推。向量形式 <span class="m">\vec{F} = -k\vec{x}</span>。</li>
+<li>F–x 圖：比例限度內為過原點的直線，<strong>斜率為 k</strong>。</li>
+</ul>
+</div>
+<figure class="fig"><svg viewBox="0 0 420 240" width="420"><defs><marker id="P3-s10k" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f2a44"/></marker></defs>
+<line x1="50" y1="200" x2="405" y2="200" stroke="#1f2a44" stroke-width="1.8" marker-end="url(#P3-s10k)"/>
+<line x1="50" y1="200" x2="50" y2="18" stroke="#1f2a44" stroke-width="1.8" marker-end="url(#P3-s10k)"/>
+<line x1="50" y1="200" x2="250" y2="80" stroke="#2f6fb5" stroke-width="2.8"/>
+<path d="M250,80 Q300,52 360,44" fill="none" stroke="#c2410c" stroke-width="2.8"/>
+<circle cx="250" cy="80" r="4.5" fill="#1f2a44"/>
+<text x="222" y="70" font-size="14" fill="#1f2a44">P（比例限度）</text>
+<line x1="130" y1="152" x2="190" y2="152" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="4,3"/>
+<line x1="190" y1="152" x2="190" y2="116" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="4,3"/>
+<text x="196" y="140" font-size="13" fill="#2f6fb5">斜率 = k</text>
+<text x="80" y="110" font-size="13" fill="#2f6fb5">遵守虎克定律</text>
+<text x="290" y="88" font-size="13" fill="#c2410c">不再成正比</text>
+<text x="300" y="222" font-size="14" fill="#1f2a44">形變量 x（m）</text>
+<text x="58" y="24" font-size="14" fill="#1f2a44">彈力 F（N）</text>
+<text x="36" y="214" font-size="13" fill="#1f2a44">0</text>
+</svg><figcaption>圖 P3-10　彈簧的彈力與形變量關係：OP 段為直線，斜率為彈力常數 k；超過比例限度後不再成正比，超過彈性限度後撤去外力也無法恢復原長</figcaption></figure>
+<ul>
+<li><strong>比例限度</strong>：F 與 x 成正比的上限。<strong>彈性限度</strong>：撤去外力後仍可完全恢復原狀的上限。超過彈性限度產生永久形變（塑性形變）。對多數金屬彈簧兩者接近，高中常不加區分。</li>
+<li><strong>彈簧秤讀數</strong>等於掛鉤端所受拉力（彈簧的張力）。彈簧秤兩端各以 10 N 向外拉，讀數為 <span class="box">10 N</span>，不是 20 N；固定一端於牆、另一端以 10 N 拉，讀數同為 10 N。</li>
+<li>理想彈簧（質量可忽略）兩端的力等大。</li>
+</ul>
+<div class="exam"><p>學測常見考法：由 F–x 圖斜率比較彈力常數；以「全長」代替「伸長量」的誘答；彈簧秤兩端受力的讀數；虎克定律實驗的數據處理與作圖（見 X2）。</p></div>
+<h4>彈簧的串聯與並聯（進階）</h4>
+<figure class="fig"><svg viewBox="0 0 420 215" width="420">
+<line x1="50" y1="20" x2="380" y2="20" stroke="#1f2a44" stroke-width="2.5"/>
+<line x1="60" y1="20" x2="50" y2="10" stroke="#1f2a44" stroke-width="1"/>
+<line x1="90" y1="20" x2="80" y2="10" stroke="#1f2a44" stroke-width="1"/>
+<line x1="120" y1="20" x2="110" y2="10" stroke="#1f2a44" stroke-width="1"/>
+<line x1="150" y1="20" x2="140" y2="10" stroke="#1f2a44" stroke-width="1"/>
+<line x1="270" y1="20" x2="260" y2="10" stroke="#1f2a44" stroke-width="1"/>
+<line x1="300" y1="20" x2="290" y2="10" stroke="#1f2a44" stroke-width="1"/>
+<line x1="330" y1="20" x2="320" y2="10" stroke="#1f2a44" stroke-width="1"/>
+<line x1="360" y1="20" x2="350" y2="10" stroke="#1f2a44" stroke-width="1"/>
+<polyline points="110,20 110,28 98,33 122,40 98,47 122,54 98,61 122,68 110,73 110,80" fill="none" stroke="#2f6fb5" stroke-width="2"/>
+<circle cx="110" cy="80" r="3" fill="#1f2a44"/>
+<polyline points="110,80 110,88 98,93 122,100 98,107 122,114 98,121 122,128 110,133 110,140" fill="none" stroke="#d9772b" stroke-width="2"/>
+<rect x="90" y="140" width="40" height="30" fill="#e2e8f0" stroke="#1f2a44" stroke-width="1.8"/>
+<text x="128" y="55" font-size="13" fill="#2f6fb5">k<tspan baseline-shift="sub" font-size="10">1</tspan></text>
+<text x="128" y="115" font-size="13" fill="#d9772b">k<tspan baseline-shift="sub" font-size="10">2</tspan></text>
+<text x="60" y="195" font-size="13" fill="#1f2a44">串聯：兩彈簧張力相同，</text>
+<text x="60" y="211" font-size="13" fill="#1f2a44">形變量相加</text>
+<polyline points="270,20 270,28 258,33 282,40 258,47 282,54 258,61 282,68 270,73 270,80" fill="none" stroke="#2f6fb5" stroke-width="2"/>
+<polyline points="330,20 330,28 318,33 342,40 318,47 342,54 318,61 342,68 330,73 330,80" fill="none" stroke="#d9772b" stroke-width="2"/>
+<line x1="255" y1="80" x2="345" y2="80" stroke="#1f2a44" stroke-width="4"/>
+<line x1="300" y1="80" x2="300" y2="100" stroke="#1f2a44" stroke-width="2"/>
+<rect x="280" y="100" width="40" height="30" fill="#e2e8f0" stroke="#1f2a44" stroke-width="1.8"/>
+<text x="240" y="55" font-size="13" fill="#2f6fb5">k<tspan baseline-shift="sub" font-size="10">1</tspan></text>
+<text x="348" y="55" font-size="13" fill="#d9772b">k<tspan baseline-shift="sub" font-size="10">2</tspan></text>
+<text x="240" y="195" font-size="13" fill="#1f2a44">並聯：兩彈簧形變量相同，</text>
+<text x="240" y="211" font-size="13" fill="#1f2a44">彈力相加</text>
+</svg><figcaption>圖 P3-11　彈簧的串聯與並聯（彈簧質量忽略；並聯時橫桿保持水平）</figcaption></figure>
+<div class="formula" data-t="彈簧的串聯與並聯（進階）"><div class="mb">\frac{1}{k_{\mathrm{s}}} = \frac{1}{k_1} + \frac{1}{k_2}, \qquad k_{\mathrm{p}} = k_1 + k_2</div><p><span class="m">k_{\mathrm{s}}</span>：串聯等效彈力常數　<span class="m">k_{\mathrm{p}}</span>：並聯等效彈力常數</p></div>
+<div class="mnem"><p>串聯變軟，並聯變硬</p></div>
+<ul>
+<li>推導（串聯）：張力同為 F，<span class="m">x = x_1 + x_2 = F/k_1 + F/k_2</span>，故 <span class="m">1/k = 1/k_1 + 1/k_2</span>。兩個相同彈簧串聯，<span class="m">k = k_1/2</span>。</li>
+<li>推導（並聯）：形變量同為 x，<span class="m">F = k_1 x + k_2 x</span>，故 <span class="m">k = k_1 + k_2</span>。</li>
+<li>彈簧剪成兩等段：每段在相同拉力下伸長量減半，彈力常數變為原來的 2 倍。</li>
+</ul>
+<div class="tip">
+<p><strong>深究　虎克定律的由來</strong>：虎克（Robert Hooke，1635–1703）於 1676 年在《太陽觀測鏡說明》書末以字謎 ceiiinosssttuv 發表此定律，1678 年在《論彈力》（Lectures de Potentia Restitutiva）中公布謎底 ut tensio, sic vis，意為「伸長如何，力亦如何」。以字謎先行發表是當時保護優先權的做法。</p>
+<p><strong>深究　彈力與形變成正比的微觀原因</strong>：固體中原子間的作用力在平衡位置附近可近似為線性：原子稍被拉開則受淨吸引、稍被擠近則受淨排斥，且淨力與偏離量近似成正比。巨觀的彈簧是大量原子「小彈簧」的串並聯組合，因此在小形變時呈線性；形變大時原子間作用力的非線性顯現，便超出比例限度。大學材料力學以楊氏模量描述材料本身的彈性（進階）。</p>
+</div>
+
+<h3>八、自由體圖與解題程序</h3>
+<div class="key">
+<p><strong>自由體圖</strong>（力圖）：把選定的物體單獨畫出，標示其所受的所有外力（大小、方向、作用點）。</p>
+<ol class="steps">
+<li><strong>選定對象</strong>：一個物體，或數個加速度相同的物體組成的系統。</li>
+<li><strong>先畫超距力</strong>：重力 mg（必有）；必要時加上電力、磁力。</li>
+<li><strong>再沿邊界找接觸</strong>：每一個接觸處至多有一個正向力與一個摩擦力；每一條連接的繩有一個張力；每一個連接的彈簧有一個彈力。</li>
+<li><strong>核對施力者</strong>：每個力都能說出「誰施的」。說不出施力者者刪除（如「慣性力」「衝力」「向前的運動力」）。</li>
+<li><strong>選座標軸</strong>：一軸沿加速度方向。</li>
+<li><strong>列方程</strong>：加速度方向 <span class="m">\sum F = ma</span>，垂直方向 <span class="m">\sum F = 0</span>；搭配 <span class="m">f_k = \mu_k N</span> 或靜摩擦的不等式求解。</li>
+<li><strong>檢查</strong>：單位、正負號、極端情形（如 θ = 0 或 90°、μ = 0）是否合理。</li>
+</ol>
+</div>
+<figure class="fig"><svg viewBox="0 0 420 230" width="420"><defs><marker id="P3-s12b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2f6fb5"/></marker><marker id="P3-s12g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2e8b57"/></marker><marker id="P3-s12k" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f2a44"/></marker><marker id="P3-s12r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2410c"/></marker></defs>
+<polygon points="40,210 380,210 380,14" fill="#e2e8f0" stroke="#1f2a44" stroke-width="2"/>
+<path d="M80,210 A40,40 0 0,0 74.6,190" fill="none" stroke="#1f2a44" stroke-width="1.5"/>
+<text x="88" y="203" font-size="15" fill="#1f2a44">θ</text>
+<polygon points="184,126.9 236,96.9 218,65.7 166,95.7" fill="#fbdcbd" stroke="#d9772b" stroke-width="2"/>
+<line x1="201" y1="96.3" x2="201" y2="184" stroke="#2e8b57" stroke-width="2.5" marker-end="url(#P3-s12g)"/>
+<line x1="201" y1="96.3" x2="168" y2="39" stroke="#2f6fb5" stroke-width="2.5" marker-end="url(#P3-s12b)"/>
+<line x1="201" y1="96.3" x2="268" y2="57.5" stroke="#7a5cc2" stroke-width="2.5" marker-end="url(#P3-s12k)"/>
+<line x1="201" y1="96.3" x2="164" y2="117.6" stroke="#c2410c" stroke-width="2.5" marker-end="url(#P3-s12r)"/>
+<circle cx="201" cy="96.3" r="3" fill="#1f2a44"/>
+<text x="208" y="196" font-size="14" fill="#2e8b57">mg（地球）</text>
+<text x="112" y="40" font-size="14" fill="#2f6fb5">N（斜面）</text>
+<text x="262" y="48" font-size="14" fill="#7a5cc2">T（繩）</text>
+<text x="92" y="134" font-size="14" fill="#c2410c">f<tspan baseline-shift="sub" font-size="10">k</tspan>（斜面）</text>
+<line x1="300" y1="190" x2="337" y2="168.5" stroke="#1f2a44" stroke-width="1.5" marker-end="url(#P3-s12k)"/>
+<line x1="300" y1="190" x2="279" y2="153" stroke="#1f2a44" stroke-width="1.5" marker-end="url(#P3-s12k)"/>
+<text x="340" y="170" font-size="13" fill="#1f2a44">x</text>
+<text x="268" y="152" font-size="13" fill="#1f2a44">y</text>
+</svg><figcaption>圖 P3-12　以平行斜面的繩將木塊沿粗糙斜面向上拉動時的自由體圖；括號內為施力者。取 x 軸沿斜面向上：<span class="m">T - mg\sin\theta - \mu_k mg\cos\theta = ma</span></figcaption></figure>
+<table class="t"><thead><tr><th>常見錯誤</th><th>正確處理</th></tr></thead><tbody>
+<tr><td>把物體施於別人的力畫進來（如「書對桌的壓力」畫在書上）</td><td>只畫「作用在對象上」的力</td></tr>
+<tr><td>多畫一個「ma」或「慣性力」</td><td>慣性座標中不存在；ma 是合力的結果</td></tr>
+<tr><td>把「下滑力」與 mg 同時畫出</td><td>mg sinθ 是 mg 的分力，不可重複計入</td></tr>
+<tr><td>斜面上自動寫 N = mg</td><td>由垂直斜面方向的力平衡求 N</td></tr>
+<tr><td>拋出後的球畫一個向上的「拋力」</td><td>離手後只有重力（與空氣阻力）</td></tr>
+<tr><td>靜摩擦力一律寫 μ<sub>s</sub>N</td><td>非臨界狀態由力平衡求得</td></tr>
+</tbody></table>
+
+<div class="exam"><p>學測常見考法：判斷某物體受力圖的正誤（多畫、漏畫、方向錯誤）；以力圖分析斜面、斜拉、壓牆等情境的正向力與摩擦力。</p></div>
+
+<h3>九、常見情境</h3>
+<h4>（一）斜面</h4>
+<div class="formula" data-t="粗糙斜面上的加速度"><div class="mb">a_{\downarrow} = g(\sin\theta - \mu_k\cos\theta),\qquad a_{\uparrow} = g(\sin\theta + \mu_k\cos\theta)</div><p><span class="m">a_{\downarrow}</span>：下滑時的加速度量值　<span class="m">a_{\uparrow}</span>：上滑時的加速度量值；兩者方向皆沿斜面向下　μ<sub>k</sub> = 0 時皆為 g sinθ</p></div>
+<table class="t"><thead><tr><th>情形（傾角 θ）</th><th>加速度（沿斜面）</th><th>說明</th></tr></thead><tbody>
+<tr><td>光滑斜面，上滑或下滑</td><td><span class="m">g\sin\theta</span>，沿斜面向下</td><td>與質量無關；上滑時減速、下滑時加速</td></tr>
+<tr><td>粗糙斜面，靜止</td><td>0</td><td><span class="m">f_s = mg\sin\theta</span>，條件 <span class="m">\tan\theta \le \mu_s</span></td></tr>
+<tr><td>粗糙斜面，下滑</td><td><span class="m">g(\sin\theta - \mu_k\cos\theta)</span>，向下</td><td>摩擦力沿斜面向上</td></tr>
+<tr><td>粗糙斜面，上滑</td><td><span class="m">g(\sin\theta + \mu_k\cos\theta)</span>，向下</td><td>摩擦力沿斜面向下，減速較快</td></tr>
+</tbody></table>
+<ul>
+<li><strong>起滑角（休止角）</strong>：緩慢增加斜面傾角，木塊恰開始下滑時的角度 <span class="m">\theta_c</span> 滿足 <span class="m">mg\sin\theta_c = \mu_s mg\cos\theta_c</span>，故 <span class="m">\mu_s = \tan\theta_c</span>，與質量無關。此為測量靜摩擦係數的常用方法。<span class="hand">起滑角 tanθ = μ<sub>s</sub></span></li>
+<li>木塊若能沿斜面等速下滑，則 <span class="m">\mu_k = \tan\theta</span>。</li>
+<li>上滑到最高點後是否下滑：比較 <span class="m">\tan\theta</span> 與 <span class="m">\mu_s</span>；<span class="m">\tan\theta \le \mu_s</span> 則停在斜面上。</li>
+</ul>
+<div class="exam"><p>學測常見考法：比較上滑與下滑的加速度或時間；由起滑角求靜摩擦係數；判斷質量改變時加速度是否改變（<em>斜面上的加速度與質量無關</em>）。</p></div>
+<h4>（二）連體運動（進階）</h4>
+<div class="key">
+<div class="note"><p>求加速度：系統法。</p><p>求內力（繩張力、接觸力）：隔離法，取受力較少的物體列式。</p></div>
+<ul>
+<li><strong>系統法</strong>：數個物體以相同加速度量值運動時，視為一個系統，只考慮外力，<span class="m">a = \dfrac{F_{\text{外,淨}}}{m_{\text{總}}}</span>。內力（物體間的推力、繩張力）互相抵消，不必求出。</li>
+<li><strong>隔離法</strong>：要求內力時，取單一物體畫自由體圖列式。</li>
+<li>水平光滑面上以 F 推並排的 A、B（F 作用於 A）：<span class="m">a = \dfrac{F}{m_A+m_B}</span>，A 推 B 的力 <span class="m">N_{AB} = m_B a = \dfrac{m_B}{m_A+m_B}F</span>。若兩物體與地面動摩擦係數相同，<span class="m">N_{AB}</span> 仍為此值（摩擦力的影響互相抵消）。</li>
+<li>阿特午機（George Atwood 於 1784 年著作中描述）：輕繩跨過理想滑輪連接 <span class="m">m_1 &gt; m_2</span>，</li>
+</ul>
+<div class="formula" data-t="阿特午機"><div class="mb">a = \frac{(m_1 - m_2)g}{m_1 + m_2}, \qquad T = \frac{2m_1 m_2 g}{m_1 + m_2}</div><p>a：兩物體加速度量值　T：繩張力　條件：輕繩、理想滑輪、<span class="m">m_1 &gt; m_2</span></p></div>
+<p>張力介於 <span class="m">m_2 g</span> 與 <span class="m">m_1 g</span> 之間；滑輪軸受力為 2T，小於 <span class="m">(m_1+m_2)g</span>（系統質心有向下的加速度）。阿特午機以兩重量差拖動總質量，使加速度遠小於 g 而便於測量，當年用於驗證等加速度運動規律。</p>
+</div>
+<figure class="fig half"><svg viewBox="0 0 300 180" width="300"><defs><marker id="P3-s13k" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f2a44"/></marker><marker id="P3-s13r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2410c"/></marker></defs>
+<line x1="5" y1="140" x2="295" y2="140" stroke="#1f2a44" stroke-width="2"/>
+<rect x="70" y="90" width="70" height="50" fill="#cfe3f8" stroke="#2f6fb5" stroke-width="1.8"/>
+<rect x="140" y="105" width="50" height="35" fill="#fbdcbd" stroke="#d9772b" stroke-width="1.8"/>
+<text x="92" y="120" font-size="14" fill="#1f2a44">A</text>
+<text x="158" y="128" font-size="14" fill="#1f2a44">B</text>
+<line x1="15" y1="115" x2="66" y2="115" stroke="#c2410c" stroke-width="2.5" marker-end="url(#P3-s13r)"/>
+<text x="30" y="106" font-size="14" fill="#c2410c">F</text>
+<line x1="200" y1="70" x2="250" y2="70" stroke="#1f2a44" stroke-width="1.5" marker-end="url(#P3-s13k)"/>
+<text x="210" y="62" font-size="13" fill="#1f2a44">a</text>
+<text x="40" y="165" font-size="13" fill="#1f2a44">光滑水平面：N<tspan baseline-shift="sub" font-size="10">AB</tspan> = m<tspan baseline-shift="sub" font-size="10">B</tspan>a</text>
+</svg><figcaption>圖 P3-13　水平推動並排木塊</figcaption></figure><figure class="fig half"><svg viewBox="0 0 300 220" width="300"><defs><marker id="P3-s14r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2410c"/></marker></defs>
+<line x1="100" y1="15" x2="200" y2="15" stroke="#1f2a44" stroke-width="3"/>
+<line x1="150" y1="15" x2="150" y2="38" stroke="#1f2a44" stroke-width="2"/>
+<circle cx="150" cy="55" r="18" fill="#e2e8f0" stroke="#1f2a44" stroke-width="2"/>
+<circle cx="150" cy="55" r="3" fill="#1f2a44"/>
+<line x1="132" y1="55" x2="132" y2="140" stroke="#1f2a44" stroke-width="1.5"/>
+<line x1="168" y1="55" x2="168" y2="110" stroke="#1f2a44" stroke-width="1.5"/>
+<rect x="114" y="140" width="36" height="38" fill="#cfe3f8" stroke="#2f6fb5" stroke-width="1.8"/>
+<rect x="152" y="110" width="32" height="32" fill="#fbdcbd" stroke="#d9772b" stroke-width="1.8"/>
+<text x="118" y="164" font-size="13" fill="#1f2a44">m<tspan baseline-shift="sub" font-size="10">1</tspan></text>
+<text x="156" y="131" font-size="13" fill="#1f2a44">m<tspan baseline-shift="sub" font-size="10">2</tspan></text>
+<text x="118" y="100" font-size="13" fill="#1f2a44">T</text>
+<text x="173" y="90" font-size="13" fill="#1f2a44">T</text>
+<line x1="98" y1="145" x2="98" y2="190" stroke="#c2410c" stroke-width="2" marker-end="url(#P3-s14r)"/>
+<text x="80" y="205" font-size="13" fill="#c2410c">a</text>
+<line x1="205" y1="150" x2="205" y2="108" stroke="#c2410c" stroke-width="2" marker-end="url(#P3-s14r)"/>
+<text x="212" y="130" font-size="13" fill="#c2410c">a</text>
+</svg><figcaption>圖 P3-14　阿特午機（m<sub>1</sub> &gt; m<sub>2</sub>）</figcaption></figure>
+<h4>（三）壓牆與斜拉</h4>
+<figure class="fig half"><svg viewBox="0 0 300 220" width="300"><defs><marker id="P3-s15b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2f6fb5"/></marker><marker id="P3-s15g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2e8b57"/></marker><marker id="P3-s15k" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f2a44"/></marker><marker id="P3-s15r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2410c"/></marker></defs>
+<rect x="230" y="10" width="20" height="200" fill="#e2e8f0" stroke="#1f2a44" stroke-width="1.8"/>
+<line x1="250" y1="30" x2="262" y2="20" stroke="#1f2a44" stroke-width="1"/><line x1="250" y1="70" x2="262" y2="60" stroke="#1f2a44" stroke-width="1"/><line x1="250" y1="110" x2="262" y2="100" stroke="#1f2a44" stroke-width="1"/><line x1="250" y1="150" x2="262" y2="140" stroke="#1f2a44" stroke-width="1"/><line x1="250" y1="190" x2="262" y2="180" stroke="#1f2a44" stroke-width="1"/>
+<rect x="180" y="85" width="50" height="50" fill="#fbdcbd" stroke="#d9772b" stroke-width="1.8"/>
+<line x1="100" y1="98" x2="178" y2="98" stroke="#7a5cc2" stroke-width="2.5" marker-end="url(#P3-s15k)"/>
+<line x1="180" y1="124" x2="125" y2="124" stroke="#2f6fb5" stroke-width="2.5" marker-end="url(#P3-s15b)"/>
+<line x1="205" y1="135" x2="205" y2="195" stroke="#2e8b57" stroke-width="2.5" marker-end="url(#P3-s15g)"/>
+<line x1="222" y1="85" x2="222" y2="28" stroke="#c2410c" stroke-width="2.5" marker-end="url(#P3-s15r)"/>
+<text x="110" y="90" font-size="14" fill="#7a5cc2">F</text>
+<text x="122" y="144" font-size="14" fill="#2f6fb5">N（牆）</text>
+<text x="176" y="205" font-size="14" fill="#2e8b57">mg</text>
+<text x="150" y="40" font-size="14" fill="#c2410c">f<tspan baseline-shift="sub" font-size="10">s</tspan>（牆）</text>
+</svg><figcaption>圖 P3-15　以水平力壓在牆上而靜止的木塊：N = F，f<sub>s</sub> = mg</figcaption></figure><figure class="fig half"><svg viewBox="0 0 300 220" width="300"><defs><marker id="P3-s16b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2f6fb5"/></marker><marker id="P3-s16g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2e8b57"/></marker><marker id="P3-s16k" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f2a44"/></marker><marker id="P3-s16r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2410c"/></marker></defs>
+<line x1="10" y1="170" x2="290" y2="170" stroke="#1f2a44" stroke-width="2"/>
+<rect x="90" y="120" width="70" height="50" fill="#cfe3f8" stroke="#2f6fb5" stroke-width="1.8"/>
+<line x1="125" y1="145" x2="215" y2="93" stroke="#7a5cc2" stroke-width="2.5" marker-end="url(#P3-s16k)"/>
+<line x1="125" y1="145" x2="215" y2="145" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="4,3"/>
+<path d="M165,145 A40,40 0 0,0 159.6,125" fill="none" stroke="#1f2a44" stroke-width="1.2"/>
+<text x="170" y="138" font-size="13" fill="#1f2a44">φ</text>
+<text x="220" y="92" font-size="14" fill="#7a5cc2">F</text>
+<line x1="88" y1="165" x2="40" y2="165" stroke="#c2410c" stroke-width="2.5" marker-end="url(#P3-s16r)"/>
+<text x="30" y="155" font-size="13" fill="#c2410c">f<tspan baseline-shift="sub" font-size="10">k</tspan> = μN</text>
+<line x1="125" y1="120" x2="125" y2="70" stroke="#2f6fb5" stroke-width="2.5" marker-end="url(#P3-s16b)"/>
+<text x="100" y="66" font-size="14" fill="#2f6fb5">N</text>
+<line x1="125" y1="170" x2="125" y2="212" stroke="#2e8b57" stroke-width="2.5" marker-end="url(#P3-s16g)"/>
+<text x="132" y="208" font-size="14" fill="#2e8b57">mg</text>
+</svg><figcaption>圖 P3-16　以仰角 φ 斜拉木箱：拉力的鉛直分量使正向力減小</figcaption></figure>
+<ul>
+<li><strong>壓牆</strong>：水平壓力 F 決定正向力 N = F；鉛直方向靜摩擦力與重力平衡，<span class="m">f_s = mg</span>，<em>與 F 的大小無關</em>（只要未滑動）。保持靜止的條件 <span class="m">\mu_s F \ge mg</span>，即 <span class="m">F \ge mg/\mu_s</span>。增加壓力只提高最大靜摩擦力，實際靜摩擦力不變。</li>
+<li><strong>斜拉</strong>：仰角 φ 的拉力 F 使 <span class="m">N = mg - F\sin\varphi</span>，摩擦力隨之減小；俯角推力則使 N 增加，較費力。推嬰兒車、拖行李箱時常見此差異。</li>
+</ul>
+<div class="tip">
+<p><strong>深究　最省力的拉力角度（進階）</strong>：以仰角 φ 的拉力使木箱等速滑動，水平方向 <span class="m">F\cos\varphi = \mu(mg - F\sin\varphi)</span>，得</p>
+<div class="mb">F = \frac{\mu mg}{\cos\varphi + \mu\sin\varphi}</div>
+<p>分母可寫成 <span class="m">\sqrt{1+\mu^2}\,\cos(\varphi - \alpha)</span>，其中 <span class="m">\tan\alpha = \mu</span>。分母最大時 F 最小，故 <span class="m">\tan\varphi = \mu</span> 時最省力，<span class="m">F_{\min} = \dfrac{\mu mg}{\sqrt{1+\mu^2}}</span>。例：<span class="m">\mu = 0.75</span> 時，最省力的仰角約 37°，<span class="m">F_{\min} = 0.6\,mg</span>，比水平拉（<span class="m">0.75\,mg</span>）省力 20%。此題型以三角函數疊合求極值，屬數學與物理的跨科應用。</p>
+</div>
+<div class="exam"><p>學測常見考法：壓牆的木塊增加壓力後摩擦力是否改變（<em>靜摩擦力仍等於 mg</em>）；斜拉與斜推哪一種情形的摩擦力較大。</p></div>
+<h4>（四）動量與衝量（進階，定性）</h4>
+<div class="key">
+<ul>
+<li><strong>動量</strong> <span class="m">\vec{p} = m\vec{v}</span>，向量，單位 <span class="m">\mathrm{kg\cdot m/s}</span>。</li>
+<li><strong>衝量</strong> <span class="m">\vec{J} = \vec{F}\Delta t</span>（F 為平均力），單位 <span class="m">\mathrm{N\cdot s}</span>（與 <span class="m">\mathrm{kg\cdot m/s}</span> 相同）；F–t 圖下的面積即衝量。</li>
+<li><strong>衝量－動量定理</strong><span class="hand blue">衝量與 Δp 同方向</span>：物體所受淨力的衝量等於其動量變化量，<span class="m">\vec{F}_{\mathrm{net}}\Delta t = \Delta\vec{p}</span>，為第二定律的另一種寫法。</li>
+<li>動量變化量固定時，<strong>延長作用時間可降低平均力</strong>：安全氣囊、汽車潰縮區、安全帽內襯、跳遠沙坑、落地屈膝、接球時手順勢後收。</li>
+<li>反之，要在短時間內得到大的平均力，則縮短作用時間：鐵鎚釘釘子、空手道擊破木板。</li>
+</ul>
+</div>
+<div class="formula" data-t="衝量與動量（進階）"><div class="mb">\vec{J} = \vec{F}\Delta t = \Delta\vec{p} = m\vec{v}_f - m\vec{v}_i</div><p>J：衝量（N·s）　F：平均淨力（N）　Δt：作用時間（s）　p：動量（kg·m/s）</p></div>
+<figure class="fig"><svg viewBox="0 0 420 230" width="420"><defs><marker id="P3-s17k" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f2a44"/></marker></defs>
+<line x1="50" y1="200" x2="405" y2="200" stroke="#1f2a44" stroke-width="1.8" marker-end="url(#P3-s17k)"/>
+<line x1="50" y1="200" x2="50" y2="18" stroke="#1f2a44" stroke-width="1.8" marker-end="url(#P3-s17k)"/>
+<path d="M60,200 C80,200 85,40 95,40 C105,40 110,200 130,200" fill="#fbdcbd" fill-opacity="0.6" stroke="#c2410c" stroke-width="2.5"/>
+<path d="M60,200 C110,200 120,144 160,144 C200,144 210,200 260,200" fill="#cfe3f8" fill-opacity="0.6" stroke="#2f6fb5" stroke-width="2.5"/>
+<text x="108" y="50" font-size="13" fill="#c2410c">硬地面：Δt 短，平均力大</text>
+<text x="190" y="138" font-size="13" fill="#2f6fb5">軟墊：Δt 長，平均力小</text>
+<text x="150" y="222" font-size="13" fill="#1f2a44">兩曲線下面積相等（衝量相同）</text>
+<text x="370" y="222" font-size="14" fill="#1f2a44">t</text>
+<text x="58" y="24" font-size="14" fill="#1f2a44">F</text>
+</svg><figcaption>圖 P3-17　同一顆蛋從相同高度落下並停止：動量變化量相同，衝量相同；作用時間越長，最大力與平均力越小（示意圖）</figcaption></figure>
+<div class="warn">
+<p><strong>注意</strong>：<em>安全氣囊不減少乘客的動量變化量</em>（由行駛速度變為零，變化量固定），減少的是平均力。</p>
+</div>
+<div class="exam"><p>學測多以生活情境考定性判斷：安全氣囊、潰縮區、落地屈膝的作用為「延長作用時間、降低平均力」，<em>動量變化量與衝量不變</em>。動量與衝量屬加深加廣選修內容。</p></div>
+
+<h3>例題精解</h3>
+<p>以下例題未特別註明者，重力加速度取 <span class="m">9.8\ \mathrm{m/s^2}</span>；題幹註明「取 10 m/s²」者依題幹。</p>
+
+<div class="example"><p><strong>例題 1　合力與加速度的方向</strong>　質量 1.0 kg 的物體置於光滑水平面，同時受水平向東 3.0 N 與水平向北 4.0 N 的力。求加速度的量值與方向。</p><div class="sol"><ol class="steps">
+<li>兩力互相垂直，合力 <span class="m">F = \sqrt{3.0^2 + 4.0^2} = 5.0\ \mathrm{N}</span>。</li>
+<li>方向：<span class="m">\tan\phi = 4.0/3.0</span>，<span class="m">\phi \approx 53^\circ</span>，即東偏北 53°。</li>
+<li><span class="m">a = F/m = 5.0\ \mathrm{m/s^2}</span>，方向與合力相同（東偏北 53°）。</li>
+</ol><p>陷阱：把兩力大小直接相加得 7.0 N；或誤以為物體沿較大的力（北方）運動。</p></div></div>
+
+<div class="example"><p><strong>例題 2　靜摩擦或動摩擦</strong>　質量 5.0 kg 的木箱靜置水平地面，<span class="m">\mu_s = 0.50</span>、<span class="m">\mu_k = 0.40</span>，取 <span class="m">g = 10\ \mathrm{m/s^2}</span>。分別以水平力 20 N 與 30 N 推木箱，求木箱所受摩擦力與加速度。</p><div class="sol"><ol class="steps">
+<li>正向力 <span class="m">N = mg = 50\ \mathrm{N}</span>；最大靜摩擦力 <span class="m">\mu_s N = 25\ \mathrm{N}</span>；動摩擦力 <span class="m">\mu_k N = 20\ \mathrm{N}</span>。</li>
+<li>推力 20 N &lt; 25 N：木箱不動，靜摩擦力 = 20 N（與推力等大反向），a = 0。</li>
+<li>推力 30 N &gt; 25 N：木箱滑動，摩擦力為動摩擦力 20 N，<span class="m">a = (30 - 20)/5.0 = 2.0\ \mathrm{m/s^2}</span>。</li>
+</ol><p>陷阱：推力 20 N 時把摩擦力寫成 <span class="m">\mu_s N = 25\ \mathrm{N}</span>；推力 30 N 時用 <span class="m">\mu_s</span> 計算摩擦力。</p></div></div>
+
+<div class="example"><p><strong>例題 3　由視重反推運動</strong>　質量 60 kg 的人站在電梯內的磅秤上，讀數為 480 N，取 <span class="m">g = 10\ \mathrm{m/s^2}</span>。求電梯加速度，並說明電梯可能的運動。</p><div class="sol"><ol class="steps">
+<li>以向上為正：<span class="m">N - mg = ma</span>，<span class="m">480 - 600 = 60a</span>，<span class="m">a = -2.0\ \mathrm{m/s^2}</span>。</li>
+<li>加速度量值 2.0 m/s²，方向向下。</li>
+<li>可能運動：向下加速（速率增加）或向上減速（速率減小）。</li>
+</ol><p>陷阱：由「視重減少」直接推論「電梯向下運動」；速度方向無法由視重決定。</p></div></div>
+
+<div class="example"><p><strong>例題 4　光滑斜面</strong>　質量 2.0 kg 的木塊由傾角 30° 的光滑斜面頂端靜止滑下。求加速度量值與斜面對木塊的正向力。</p><div class="sol"><ol class="steps">
+<li>沿斜面：<span class="m">mg\sin 30^\circ = ma</span>，<span class="m">a = 9.8 \times 0.50 = 4.9\ \mathrm{m/s^2}</span>。</li>
+<li>垂直斜面：<span class="m">N = mg\cos 30^\circ = 2.0 \times 9.8 \times 0.866 \approx 17.0\ \mathrm{N}</span>。</li>
+</ol><p>陷阱：把正向力寫成 mg = 19.6 N；或以為質量越大下滑越快（加速度與質量無關）。</p></div></div>
+
+<div class="example"><p><strong>例題 5　粗糙斜面：是否下滑</strong>　木塊置於傾角 30° 的斜面，<span class="m">\mu_s = 0.30</span>、<span class="m">\mu_k = 0.20</span>，由靜止釋放。判斷木塊是否下滑；若下滑，求加速度。</p><div class="sol"><ol class="steps">
+<li>判斷：<span class="m">\tan 30^\circ \approx 0.577 &gt; \mu_s = 0.30</span>，重力沿斜面分力大於最大靜摩擦力，木塊下滑。</li>
+<li>下滑時摩擦力沿斜面向上：<span class="m">a = g(\sin 30^\circ - \mu_k\cos 30^\circ) = 9.8(0.500 - 0.173) \approx 3.20\ \mathrm{m/s^2}</span>。</li>
+</ol><p>陷阱：未先判斷是否滑動即代公式；判斷時誤用 <span class="m">\mu_k</span>，計算加速度時誤用 <span class="m">\mu_s</span>。</p></div></div>
+
+<div class="example"><p><strong>例題 6　斜向拉力與正向力</strong>　質量 10 kg 的木箱在水平地面上向右滑動，受仰角 37° 斜向上、量值 50 N 的拉力，<span class="m">\mu_k = 0.20</span>，取 <span class="m">g = 10\ \mathrm{m/s^2}</span>，<span class="m">\sin 37^\circ = 0.6</span>、<span class="m">\cos 37^\circ = 0.8</span>。求加速度。</p><div class="sol"><ol class="steps">
+<li>鉛直方向平衡：<span class="m">N + 50\sin 37^\circ = mg</span>，<span class="m">N = 100 - 30 = 70\ \mathrm{N}</span>。</li>
+<li>動摩擦力 <span class="m">f_k = 0.20 \times 70 = 14\ \mathrm{N}</span>。</li>
+<li>水平方向：<span class="m">a = (50\cos 37^\circ - 14)/10 = (40 - 14)/10 = 2.6\ \mathrm{m/s^2}</span>，向右。</li>
+</ol><p>陷阱：正向力仍以 mg = 100 N 計算，得摩擦力 20 N、加速度 2.0 m/s²。</p></div></div>
+
+<div class="example"><p><strong>例題 7　並排木塊的接觸力（進階）</strong>　光滑水平面上並排質量 1.0 kg、2.0 kg、3.0 kg 的木塊甲、乙、丙，以 12 N 水平力推甲。求加速度及甲推乙、乙推丙的力。</p><div class="sol"><ol class="steps">
+<li>系統法：<span class="m">a = 12/(1.0+2.0+3.0) = 2.0\ \mathrm{m/s^2}</span>。</li>
+<li>乙丙視為一體：甲推乙的力 <span class="m">= (2.0+3.0)\times 2.0 = 10\ \mathrm{N}</span>。</li>
+<li>單看丙：乙推丙的力 <span class="m">= 3.0 \times 2.0 = 6.0\ \mathrm{N}</span>。</li>
+</ol><p>陷阱：以為推力 12 N 原封不動傳到最前方的木塊。接觸力只需使「其前方的物體」產生相同加速度。</p></div></div>
+
+<div class="example"><p><strong>例題 8　阿特午機（進階）</strong>　輕繩跨過理想滑輪，兩端懸掛 5.0 kg 與 3.0 kg 的物體，由靜止釋放。求加速度、繩張力與滑輪軸所受繩的拉力。</p><div class="sol"><ol class="steps">
+<li>系統法：<span class="m">a = \dfrac{(5.0-3.0)\times 9.8}{5.0+3.0} = 2.45\ \mathrm{m/s^2}</span>。</li>
+<li>隔離 3.0 kg 物體（向上加速）：<span class="m">T - 3.0 \times 9.8 = 3.0 \times 2.45</span>，<span class="m">T \approx 36.8\ \mathrm{N}</span>。驗算 5.0 kg：<span class="m">5.0(9.8 - 2.45) = 36.75\ \mathrm{N}</span>。</li>
+<li>滑輪軸受兩段繩向下的拉力 <span class="m">2T \approx 73.5\ \mathrm{N}</span>，小於兩物體總重 78.4 N。</li>
+</ol><p>陷阱：以為張力等於 5.0 kg 物體的重量 49 N，或等於兩物重的平均 39.2 N。</p></div></div>
+
+<div class="example"><p><strong>例題 9　電梯中的彈簧</strong>　彈力常數 200 N/m 的輕彈簧懸掛在電梯天花板，下端掛 2.0 kg 物體。電梯以 <span class="m">1.0\ \mathrm{m/s^2}</span> 的加速度向上加速時，求彈簧伸長量（物體相對電梯靜止）。</p><div class="sol"><ol class="steps">
+<li>物體加速度與電梯相同，向上 1.0 m/s²。</li>
+<li><span class="m">kx - mg = ma</span>，<span class="m">x = \dfrac{m(g+a)}{k} = \dfrac{2.0 \times 10.8}{200} = 0.108\ \mathrm{m} = 10.8\ \mathrm{cm}</span>。</li>
+</ol><p>陷阱：忽略電梯加速度，得 9.8 cm；或把 a 的正負號弄反。</p></div></div>
+
+<div class="example"><p><strong>例題 10　衝量與平均力（進階）</strong>　質量 0.15 kg 的棒球以 40 m/s 飛入手套後停止。若手套接觸時間分別為 0.10 s 與 0.020 s，求兩種情形下手套對球的平均力。</p><div class="sol"><ol class="steps">
+<li>動量變化量量值 <span class="m">\Delta p = 0.15 \times 40 = 6.0\ \mathrm{kg\cdot m/s}</span>，兩種情形相同。</li>
+<li><span class="m">F = \Delta p/\Delta t</span>：0.10 s 時 60 N；0.020 s 時 300 N；方向與球原速度相反。</li>
+<li>接球時手順勢後收，延長作用時間，平均力減小。</li>
+</ol><p>陷阱：以為手套使球的動量變化量減小；手套改變的是作用時間。</p></div></div>
+
+<div class="example"><p><strong>例題 11　輸送帶上的箱子（進階）</strong>　水平輸送帶以 2.0 m/s 等速運轉，將箱子輕放其上，箱子與皮帶的 <span class="m">\mu_k = 0.20</span>，取 <span class="m">g = 10\ \mathrm{m/s^2}</span>。求箱子與皮帶達到同速所需時間，以及這段時間內箱子相對皮帶滑動的距離。</p><div class="sol"><ol class="steps">
+<li>箱子相對皮帶向後滑，動摩擦力向前：<span class="m">a = \mu_k g = 2.0\ \mathrm{m/s^2}</span>。</li>
+<li>達到同速時間 <span class="m">t = 2.0/2.0 = 1.0\ \mathrm{s}</span>。</li>
+<li>箱子對地位移 <span class="m">\tfrac{1}{2}\times 2.0 \times 1.0^2 = 1.0\ \mathrm{m}</span>；皮帶位移 <span class="m">2.0 \times 1.0 = 2.0\ \mathrm{m}</span>；相對滑動距離 1.0 m（箱子相對皮帶向後）。</li>
+<li>同速後箱子不受摩擦力，隨皮帶等速前進。</li>
+</ol><p>陷阱：把摩擦力方向判為向後（以為摩擦力必與運動方向相反）；或以為同速後仍需摩擦力維持運動。</p></div></div>
+
+<div class="example"><p><strong>例題 12　加速度計的原理</strong>　沿直線行駛的車內懸吊小球，車以 <span class="m">3.0\ \mathrm{m/s^2}</span> 的加速度向前加速時，細繩偏離鉛直線的角度約為多少？若車改為等速行駛，細繩如何？</p><div class="sol"><ol class="steps">
+<li>地面座標中，小球加速度與車相同：<span class="m">T\sin\theta = ma</span>、<span class="m">T\cos\theta = mg</span>。</li>
+<li><span class="m">\tan\theta = a/g = 3.0/9.8 \approx 0.306</span>，<span class="m">\theta \approx 17^\circ</span>，細繩偏向車尾。</li>
+<li>等速行駛時 a = 0，細繩鉛直，與車速大小無關。</li>
+</ol><p>陷阱：以為車速越快偏角越大；偏角只反映加速度。減速時細繩偏向車頭。</p></div></div>
+
+<h3>迷思概念對照</h3>
+<p class="bad"><span class="mark">誤</span>物體運動須有力維持；不受力的物體終將停下。</p>
+<p class="good"><span class="mark">正</span>不受力（或合力為零）的物體保持等速度直線運動；日常物體停下是因摩擦力與空氣阻力。</p>
+<p class="bad"><span class="mark">誤</span>速度越大，慣性越大，所以高速的車較難停下。</p>
+<p class="good"><span class="mark">正</span>慣性只由質量決定。高速的車較難停下，是因為速度改變量大，在相同煞車力下所需時間與距離較長。</p>
+<p class="bad"><span class="mark">誤</span>物體運動方向就是所受合力的方向。</p>
+<p class="good"><span class="mark">正</span>合力方向決定<strong>加速度</strong>方向；上拋物體上升時速度向上、合力向下。</p>
+<p class="bad"><span class="mark">誤</span>作用力與反作用力等大反向，所以互相抵消。</p>
+<p class="good"><span class="mark">正</span>兩者作用在不同物體上，不能抵消；能抵消的是作用在同一物體上的平衡力。</p>
+<p class="bad"><span class="mark">誤</span>靜置桌面的書，重力與桌面的正向力是一對作用力與反作用力。</p>
+<p class="good"><span class="mark">正</span>兩者作用在同一物體上，是一對平衡力；重力的反作用力是書對地球的引力。</p>
+<p class="bad"><span class="mark">誤</span>大卡車撞小汽車時，卡車對汽車的力大於汽車對卡車的力。</p>
+<p class="good"><span class="mark">正</span>兩力等大反向；小汽車質量小，加速度大，因此受損與乘客傷害較嚴重。</p>
+<p class="bad"><span class="mark">誤</span>正向力等於物體的重量。</p>
+<p class="good"><span class="mark">正</span>正向力由運動狀態決定；斜面上為 mg cosθ，斜拉時小於 mg，電梯加速上升時大於 mg。</p>
+<p class="bad"><span class="mark">誤</span>靜摩擦力的大小為 μ<sub>s</sub>N。</p>
+<p class="good"><span class="mark">正</span>μ<sub>s</sub>N 是最大靜摩擦力；未達臨界時，靜摩擦力由力平衡決定，可為零到 μ<sub>s</sub>N 之間的任何值。</p>
+<p class="bad"><span class="mark">誤</span>摩擦力的方向一定與物體運動方向相反，只會阻礙運動。</p>
+<p class="good"><span class="mark">正</span>摩擦力阻礙兩接觸面的<strong>相對</strong>滑動；走路、驅動輪、輸送帶上的貨物所受摩擦力與運動方向相同。</p>
+<p class="bad"><span class="mark">誤</span>接觸面積越大，摩擦力越大。</p>
+<p class="good"><span class="mark">正</span>乾燥表面的摩擦力與表觀接觸面積大致無關，與正向力成正比。</p>
+<p class="bad"><span class="mark">誤</span>太空站裡的太空人不受重力，所以飄浮。</p>
+<p class="good"><span class="mark">正</span>太空站高度的重力加速度約為地表的 89%；太空人與太空站一起自由落下（繞地球運轉），正向力為零而呈失重。</p>
+<p class="bad"><span class="mark">誤</span>電梯向上運動時，人的視重一定大於體重。</p>
+<p class="good"><span class="mark">正</span>視重由加速度方向決定；等速上升時視重等於體重，減速上升時視重小於體重。</p>
+<p class="bad"><span class="mark">誤</span>彈簧秤兩端各以 10 N 拉，讀數為 20 N。</p>
+<p class="good"><span class="mark">正</span>讀數為 10 N。一端固定於牆上、另一端以 10 N 拉，牆對彈簧秤同樣施 10 N，兩種情形相同。</p>
+<p class="bad"><span class="mark">誤</span>火箭靠噴出的氣體推動空氣而前進，在真空中無法加速。</p>
+<p class="good"><span class="mark">正</span>火箭推動燃氣，燃氣對火箭施反作用力；與外界空氣無關，真空中照樣加速。</p>
+
+<h3>分級測驗</h3>
+<p>未特別註明者，重力加速度取 <span class="m">10\ \mathrm{m/s^2}</span>，<span class="m">\sin 37^\circ = 0.6</span>、<span class="m">\cos 37^\circ = 0.8</span>，繩與滑輪均為理想。</p>
+<h4 class="exset">基礎題（10 題）</h4>
+<div class="ex" id="P3-01"><span class="exid">P3-01</span>行駛中的公車突然煞車，站立而未握扶手的乘客身體向前傾。下列解釋何者最適當？
+<div class="opts"><span>(A) 煞車時有一向前的慣性力作用在乘客身上</span><span>(B) 乘客腳底隨車廂減速，上半身因慣性維持原速度，相對車廂前移</span><span>(C) 煞車瞬間乘客的慣性變大</span><span>(D) 車廂地板對乘客施一向前的摩擦力，使乘客前傾</span><span>(E) 乘客質量越小，前傾的程度必越明顯</span></div></div>
+<div class="ex" id="P3-02"><span class="exid">P3-02</span>下列何者與 1 牛頓等值？
+<div class="opts"><span>(A) 1 kg·m/s</span><span>(B) 1 g·cm/s²</span><span>(C) 1 kg·m²/s²</span><span>(D) 1 kg·m/s²</span><span>(E) 1 kgw</span></div></div>
+<div class="ex" id="P3-03"><span class="exid">P3-03</span>一本書靜置於水平桌面上。關於力的配對，下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 書所受重力與桌面對書的正向力是一對作用力與反作用力</span><span>(B) 書所受重力與桌面對書的正向力是一對平衡力</span><span>(C) 書對桌面的正向力與桌面對書的正向力是一對作用力與反作用力</span><span>(D) 書所受重力的反作用力是書對地球的引力</span><span>(E) 若以手向下壓書，桌面對書的正向力仍等於書的重量</span></div></div>
+<div class="ex" id="P3-04"><span class="exid">P3-04</span>太空人在地表的質量為 60 kg、重量約 588 N。到月球表面（重力加速度約為地表的 1/6）時，下列何者正確？
+<div class="opts"><span>(A) 質量 60 kg，重量約 98 N</span><span>(B) 質量 10 kg，重量約 98 N</span><span>(C) 質量 60 kg，重量約 588 N</span><span>(D) 質量 10 kg，重量約 588 N</span><span>(E) 質量與重量都變為零</span></div></div>
+<div class="ex" id="P3-05"><span class="exid">P3-05</span>重 200 N 的木箱靜置水平地面，<span class="m">\mu_s = 0.40</span>、<span class="m">\mu_k = 0.30</span>。以 60 N 水平力推木箱，木箱未動，木箱所受摩擦力量值為何？
+<div class="opts"><span>(A) 0</span><span>(B) 80 N</span><span>(C) 60 N</span><span>(D) 140 N</span><span>(E) 20 N</span></div></div>
+<div class="ex" id="P3-06"><span class="exid">P3-06</span>關於慣性與質量，下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 物體速度越大，慣性越大</span><span>(B) 質量是物體慣性大小的量度</span><span>(C) 處於失重狀態的物體仍具有慣性</span><span>(D) 物體不受外力時必定靜止</span><span>(E) 以相同淨力作用，質量越大的物體加速度越小</span></div></div>
+<div class="ex" id="P3-07"><span class="exid">P3-07</span>原長 20 cm 的輕彈簧懸掛 2.0 N 重物時全長 24 cm。在比例限度內改掛 5.0 N 重物，全長為何？
+<div class="opts"><span>(A) 10 cm</span><span>(B) 26 cm</span><span>(C) 50 cm</span><span>(D) 60 cm</span><span>(E) 30 cm</span></div></div>
+<div class="ex" id="P3-08"><span class="exid">P3-08</span>質量 2.0 kg 的物體置於光滑水平面，同時受向東 10 N 與向西 4.0 N 的水平力。物體的加速度為何？
+<div class="opts"><span>(A) 3.0 m/s²，向東</span><span>(B) 3.0 m/s²，向西</span><span>(C) 5.0 m/s²，向東</span><span>(D) 7.0 m/s²，向東</span><span>(E) 2.0 m/s²，向東</span></div></div>
+<div class="ex" id="P3-09"><span class="exid">P3-09</span>關於正向力，下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 正向力的方向必垂直於接觸面</span><span>(B) 正向力的大小必等於物體重量</span><span>(C) 物體靜置於斜面時，斜面對物體的正向力小於物重</span><span>(D) 正向力是原子間電磁交互作用的巨觀表現</span><span>(E) 物體所受正向力與其所受重力必為一對作用力與反作用力</span></div></div>
+<div class="ex" id="P3-10"><span class="exid">P3-10</span>質量 50 kg 的人站在電梯內的磅秤上。電梯以 2.0 m/s² 的加速度向上加速時，磅秤讀數為何？
+<div class="opts"><span>(A) 400 N</span><span>(B) 500 N</span><span>(C) 1000 N</span><span>(D) 600 N</span><span>(E) 700 N</span></div></div>
+
+<h4 class="exset">進階題（14 題）</h4>
+<div class="ex" id="P3-11"><span class="exid">P3-11</span>關於摩擦力，下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 靜摩擦力的大小隨外力而變，其最大值為 μ<sub>s</sub>N</span><span>(B) 動摩擦力的方向必與物體相對地面的運動方向相反</span><span>(C) 摩擦力必阻礙物體的運動，不能作為使物體加速的力</span><span>(D) 在一般乾燥接觸面，動摩擦係數通常小於靜摩擦係數</span><span>(E) 同一木塊分別平放與側放，在同一水平面上滑動時，所受動摩擦力大致相同</span></div></div>
+<div class="ex" id="P3-12"><span class="exid">P3-12</span>人在水平地面上由靜止起步向前加速，鞋底不打滑。地面對後腳鞋底的摩擦力方向與種類為何？
+<div class="opts"><span>(A) 向後，靜摩擦力</span><span>(B) 向前，動摩擦力</span><span>(C) 向後，動摩擦力</span><span>(D) 沒有摩擦力，人前進靠腿部肌肉的力</span><span>(E) 向前，靜摩擦力</span></div></div>
+<div class="ex" id="P3-13"><span class="exid">P3-13</span>馬拉著車在水平路面上由靜止向前加速。下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 馬拉車的力大於車拉馬的力，所以車能前進</span><span>(B) 馬拉車的力與車拉馬的力大小相等，作用在不同物體上</span><span>(C) 馬能向前加速，是因為地面對馬的向前摩擦力大於車拉馬的力</span><span>(D) 車能向前加速，是因為馬拉車的力大於地面與空氣對車的阻力</span><span>(E) 馬拉車的力與車拉馬的力是一對平衡力</span></div></div>
+<div class="ex" id="P3-14"><span class="exid">P3-14</span>質量 2.0 kg 的木塊靜止在傾角 37° 的粗糙斜面上。斜面對木塊的摩擦力量值與正向力量值依序為何？
+<div class="opts"><span>(A) 16 N；12 N</span><span>(B) 12 N；16 N</span><span>(C) 12 N；20 N</span><span>(D) 20 N；16 N</span><span>(E) 9.6 N；16 N</span></div></div>
+<div class="ex" id="P3-15"><span class="exid">P3-15</span>光滑水平面上並排木塊 A（3.0 kg）與 B（2.0 kg），以 20 N 水平力由左向右推 A，A 再推 B。下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 兩木塊的加速度為 4.0 m/s²</span><span>(B) A 對 B 的作用力為 8.0 N</span><span>(C) A 對 B 的作用力為 20 N，因為推力經 A 完整傳給 B</span><span>(D) 若改以 20 N 由右向左推 B，A、B 間的作用力變為 12 N</span><span>(E) 若地面改為粗糙，且兩木塊與地面的動摩擦係數相同，向右滑動時 A 對 B 的作用力仍為 8.0 N</span></div></div>
+<div class="ex" id="P3-16"><span class="exid">P3-16</span>以水平定力 F 拉動粗糙水平桌面上的木塊，每次都由靜止開始施力，測得加速度 a 與 F 的關係如圖（F ≤ 5.0 N 時木塊不動；虛線為實驗直線的延長）。下列敘述哪些正確？（多選）
+<figure class="fig"><svg viewBox="0 0 380 240" width="380"><defs><marker id="P3-s18k" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f2a44"/></marker></defs>
+<line x1="50" y1="200" x2="370" y2="200" stroke="#1f2a44" stroke-width="1.8" marker-end="url(#P3-s18k)"/>
+<line x1="50" y1="200" x2="50" y2="25" stroke="#1f2a44" stroke-width="1.8" marker-end="url(#P3-s18k)"/>
+<line x1="110" y1="200" x2="110" y2="205" stroke="#1f2a44"/><line x1="170" y1="200" x2="170" y2="205" stroke="#1f2a44"/><line x1="230" y1="200" x2="230" y2="205" stroke="#1f2a44"/><line x1="290" y1="200" x2="290" y2="205" stroke="#1f2a44"/><line x1="350" y1="200" x2="350" y2="205" stroke="#1f2a44"/>
+<text x="104" y="220" font-size="13" fill="#1f2a44">2</text><text x="164" y="220" font-size="13" fill="#1f2a44">4</text><text x="224" y="220" font-size="13" fill="#1f2a44">6</text><text x="284" y="220" font-size="13" fill="#1f2a44">8</text><text x="340" y="220" font-size="13" fill="#1f2a44">10</text>
+<line x1="45" y1="150" x2="50" y2="150" stroke="#1f2a44"/><line x1="45" y1="100" x2="50" y2="100" stroke="#1f2a44"/><line x1="45" y1="50" x2="50" y2="50" stroke="#1f2a44"/>
+<text x="32" y="155" font-size="13" fill="#1f2a44">1</text><text x="32" y="105" font-size="13" fill="#1f2a44">2</text><text x="32" y="55" font-size="13" fill="#1f2a44">3</text>
+<text x="36" y="214" font-size="13" fill="#1f2a44">0</text>
+<line x1="50" y1="150" x2="350" y2="150" stroke="#e2e8f0" stroke-width="1"/><line x1="50" y1="100" x2="350" y2="100" stroke="#e2e8f0" stroke-width="1"/><line x1="50" y1="50" x2="350" y2="50" stroke="#e2e8f0" stroke-width="1"/>
+<line x1="50" y1="200" x2="200" y2="200" stroke="#2f6fb5" stroke-width="4"/>
+<circle cx="200" cy="200" r="4" fill="#2f6fb5"/>
+<line x1="200" y1="175" x2="350" y2="50" stroke="#2f6fb5" stroke-width="2.8"/>
+<circle cx="200" cy="175" r="4" fill="#ffffff" stroke="#2f6fb5" stroke-width="2"/>
+<line x1="200" y1="175" x2="170" y2="200" stroke="#2f6fb5" stroke-width="1.5" stroke-dasharray="5,4"/>
+<text x="320" y="236" font-size="14" fill="#1f2a44">F（N）</text>
+<text x="58" y="30" font-size="14" fill="#1f2a44">a（m/s²）</text>
+</svg><figcaption>圖 P3-題1　加速度 a 與水平拉力 F 的關係</figcaption></figure>
+<div class="opts"><span>(A) 木塊質量為 2.0 kg</span><span>(B) 木塊滑動時所受動摩擦力為 4.0 N</span><span>(C) 木塊所受最大靜摩擦力為 4.0 N</span><span>(D) F = 3.0 N 時，木塊所受摩擦力為 3.0 N</span><span>(E) 木塊與桌面的動摩擦係數為 0.40</span></div></div>
+<div class="ex" id="P3-17"><span class="exid">P3-17</span>沿直線行駛的車內，天花板懸吊的小球相對車廂靜止，細繩向車尾方向偏離鉛直線 37°。車的加速度量值與方向為何？
+<div class="opts"><span>(A) 6.0 m/s²，向前</span><span>(B) 7.5 m/s²，向後</span><span>(C) 7.5 m/s²，向前</span><span>(D) 8.0 m/s²，向前</span><span>(E) 13 m/s²，向前</span></div></div>
+<div class="ex" id="P3-18"><span class="exid">P3-18</span>甲、乙為兩條相同的輕彈簧，彈力常數均為 k。下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 彈簧秤兩端各以 10 N 向外拉，彈簧秤讀數為 20 N</span><span>(B) 甲、乙串聯，等效彈力常數為 k/2</span><span>(C) 甲、乙並聯，等效彈力常數為 2k</span><span>(D) 將甲剪成等長兩段，每段的彈力常數為 k/2</span><span>(E) 超過比例限度後，彈力與形變量不再成正比</span></div></div>
+<div class="ex" id="P3-19"><span class="exid">P3-19</span>輕繩跨過固定的理想滑輪，兩端懸掛 3.0 kg 與 2.0 kg 的物體，由靜止釋放。兩物體的加速度量值與繩張力依序為何？
+<div class="opts"><span>(A) 2.0 m/s²；20 N</span><span>(B) 2.0 m/s²；30 N</span><span>(C) 5.0 m/s²；25 N</span><span>(D) 2.0 m/s²；24 N</span><span>(E) 10 m/s²；0</span></div></div>
+<div class="ex" id="P3-20"><span class="exid">P3-20</span>人站在電梯內的磅秤上。下列哪些情形中，磅秤讀數小於此人的體重？（多選）
+<div class="opts"><span>(A) 電梯等速上升</span><span>(B) 電梯上升且速率逐漸減小</span><span>(C) 電梯下降且速率逐漸增加</span><span>(D) 電梯下降且速率逐漸減小</span><span>(E) 電梯纜繩斷裂而自由落下</span></div></div>
+<div class="ex" id="P3-21"><span class="exid">P3-21</span>質量 10 kg 的木箱在水平地面上向右滑動，受仰角 37° 斜向右上、量值 50 N 的拉力，木箱與地面的動摩擦係數為 0.50。木箱的加速度量值為何？
+<div class="opts"><span>(A) 0</span><span>(B) 1.5 m/s²</span><span>(C) 0.50 m/s²</span><span>(D) 1.0 m/s²</span><span>(E) 4.0 m/s²</span></div></div>
+<div class="ex" id="P3-22"><span class="exid">P3-22</span>關於動量與衝量（進階），下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 安全氣囊延長撞擊的作用時間，使乘客所受平均力減小</span><span>(B) 安全氣囊使乘客在撞擊過程中的動量變化量減小</span><span>(C) 物體所受淨力的衝量等於其動量變化量</span><span>(D) 牛頓第二定律可寫成：淨力等於動量對時間的變化率</span><span>(E) 動量是純量，只有大小沒有方向</span></div></div>
+<div class="ex" id="P3-23"><span class="exid">P3-23</span>光滑水平桌面上 3.0 kg 的木塊以輕繩跨過桌緣的滑輪，連接懸空的 1.0 kg 物體，由靜止釋放。繩的張力為何？
+<div class="opts"><span>(A) 10 N</span><span>(B) 7.5 N</span><span>(C) 2.5 N</span><span>(D) 0</span><span>(E) 12.5 N</span></div></div>
+<div class="ex" id="P3-24"><span class="exid">P3-24</span>光滑水平軌道上，裝有磁鐵的甲車（質量 2m）與乙車（質量 m）互相吸引，由靜止同時釋放。下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 兩車所受磁力等大反向，所以兩車都不會移動</span><span>(B) 甲對乙的磁力與乙對甲的磁力量值相等</span><span>(C) 質量較大的甲對乙施力較大</span><span>(D) 任一時刻乙的加速度量值為甲的 2 倍</span><span>(E) 兩車接近時磁力增加，但兩車所受磁力的量值仍隨時相等</span></div></div>
+
+<h4 class="exset">挑戰題（5 題）</h4>
+<div class="ex" id="P3-25"><span class="exid">P3-25</span>傾角 37° 的斜面，木塊與斜面的 <span class="m">\mu_s = 0.30</span>、<span class="m">\mu_k = 0.25</span>。使木塊以某初速沿斜面向上滑，到最高點後再滑下。木塊上滑過程與下滑過程的加速度量值比為何？
+<div class="opts"><span>(A) 2 : 1</span><span>(B) 1 : 1</span><span>(C) 1 : 2</span><span>(D) 4 : 1</span><span>(E) 3 : 2</span></div></div>
+<div class="ex" id="P3-26"><span class="exid">P3-26</span>如圖，光滑水平地面上，木塊 A（1.0 kg）疊在木板 B（3.0 kg）上，A、B 間的靜摩擦係數為 0.30。以水平力 F = 8.0 N 向右拉 B，A 與 B 無相對滑動。下列敘述哪些正確？（多選）
+<figure class="fig"><svg viewBox="0 0 360 150" width="360"><defs><marker id="P3-s19r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2410c"/></marker></defs>
+<line x1="20" y1="120" x2="340" y2="120" stroke="#1f2a44" stroke-width="2"/>
+<rect x="80" y="85" width="160" height="35" fill="#cfe3f8" stroke="#2f6fb5" stroke-width="1.8"/>
+<rect x="130" y="50" width="60" height="35" fill="#fbdcbd" stroke="#d9772b" stroke-width="1.8"/>
+<text x="154" y="73" font-size="14" fill="#1f2a44">A</text>
+<text x="100" y="108" font-size="14" fill="#1f2a44">B</text>
+<line x1="240" y1="102" x2="310" y2="102" stroke="#c2410c" stroke-width="2.5" marker-end="url(#P3-s19r)"/>
+<text x="270" y="94" font-size="14" fill="#c2410c">F</text>
+<text x="120" y="140" font-size="13" fill="#1f2a44">光滑地面</text>
+</svg><figcaption>圖 P3-題2　疊放的木塊與木板</figcaption></figure>
+<div class="opts"><span>(A) A 所受摩擦力方向向右</span><span>(B) B 所受 A 的摩擦力量值為 2.0 N，方向向右</span><span>(C) A 所受摩擦力量值為 2.0 N</span><span>(D) 欲使 A、B 不發生相對滑動，F 最大為 12 N</span><span>(E) 地面光滑，所以 A、B 之間也沒有摩擦力</span></div></div>
+<div class="ex" id="P3-27"><span class="exid">P3-27</span>電梯天花板以彈簧秤懸吊 2.0 kg 的物體，物體相對電梯靜止，彈簧秤讀數為 16 N。電梯的運動可能為何？
+<div class="opts"><span>(A) 以 2.0 m/s² 的加速度向上加速</span><span>(B) 等速下降</span><span>(C) 向下運動且以 2.0 m/s² 的加速度減速</span><span>(D) 以 8.0 m/s² 的加速度向下加速</span><span>(E) 向上運動且以 2.0 m/s² 的加速度減速</span></div></div>
+<div class="ex" id="P3-28"><span class="exid">P3-28</span>水平輸送帶以等速率向右運轉，將箱子輕放（初速為零）於輸送帶上，箱子先相對輸送帶滑動，一段時間後與輸送帶同速。下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 剛放上時，箱子所受摩擦力向右</span><span>(B) 剛放上時，箱子所受摩擦力為靜摩擦力</span><span>(C) 箱子與輸送帶同速後，箱子不受摩擦力</span><span>(D) 箱子與輸送帶同速後，仍須受向右的靜摩擦力才能維持運動</span><span>(E) 剛放上時，摩擦力方向與箱子相對於輸送帶的滑動方向相反</span></div></div>
+<div class="ex" id="P3-29"><span class="exid">P3-29</span>以水平力 F 將 2.0 kg 的木塊壓在鉛直牆面上，木塊與牆的靜摩擦係數為 0.50。當 F = 60 N 時木塊靜止，此時牆對木塊的摩擦力量值為何？又欲使木塊保持靜止，F 至少須為多少？
+<div class="opts"><span>(A) 30 N；40 N</span><span>(B) 20 N；10 N</span><span>(C) 30 N；20 N</span><span>(D) 20 N；40 N</span><span>(E) 20 N；20 N</span></div></div>
+
+<h4 class="exset">題組（6 題）</h4>
+<p><strong>第 30–32 題為題組</strong></p>
+<p>質量 50 kg 的學生站在電梯內的測力板上，電梯於 t = 0 時由靜止開始運動，測力板讀數 N 與時間 t 的關係如圖。</p>
+<figure class="fig"><svg viewBox="0 0 420 230" width="420"><defs><marker id="P3-s20k" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f2a44"/></marker></defs>
+<line x1="60" y1="190" x2="405" y2="190" stroke="#1f2a44" stroke-width="1.8" marker-end="url(#P3-s20k)"/>
+<line x1="60" y1="190" x2="60" y2="15" stroke="#1f2a44" stroke-width="1.8" marker-end="url(#P3-s20k)"/>
+<line x1="60" y1="140" x2="380" y2="140" stroke="#e2e8f0"/><line x1="60" y1="90" x2="380" y2="90" stroke="#e2e8f0"/><line x1="60" y1="65" x2="380" y2="65" stroke="#e2e8f0"/><line x1="60" y1="40" x2="380" y2="40" stroke="#e2e8f0"/>
+<text x="26" y="145" font-size="13" fill="#1f2a44">200</text><text x="26" y="95" font-size="13" fill="#1f2a44">400</text><text x="26" y="70" font-size="13" fill="#1f2a44">500</text><text x="26" y="45" font-size="13" fill="#1f2a44">600</text>
+<text x="46" y="204" font-size="13" fill="#1f2a44">0</text>
+<line x1="124" y1="190" x2="124" y2="195" stroke="#1f2a44"/><line x1="188" y1="190" x2="188" y2="195" stroke="#1f2a44"/><line x1="252" y1="190" x2="252" y2="195" stroke="#1f2a44"/><line x1="316" y1="190" x2="316" y2="195" stroke="#1f2a44"/><line x1="380" y1="190" x2="380" y2="195" stroke="#1f2a44"/>
+<text x="120" y="208" font-size="13" fill="#1f2a44">2</text><text x="184" y="208" font-size="13" fill="#1f2a44">4</text><text x="248" y="208" font-size="13" fill="#1f2a44">6</text><text x="312" y="208" font-size="13" fill="#1f2a44">8</text><text x="372" y="208" font-size="13" fill="#1f2a44">10</text>
+<polyline points="60,40 124,40 124,65 316,65 316,90 380,90" fill="none" stroke="#2f6fb5" stroke-width="3"/>
+<text x="360" y="225" font-size="14" fill="#1f2a44">t（s）</text>
+<text x="68" y="22" font-size="14" fill="#1f2a44">N（N）</text>
+</svg><figcaption>圖 P3-題3　測力板讀數與時間的關係</figcaption></figure>
+<div class="ex" id="P3-30"><span class="exid">P3-30</span>0–2 s 間電梯的加速度為何？
+<div class="opts"><span>(A) 2.0 m/s²，向上</span><span>(B) 2.0 m/s²，向下</span><span>(C) 12 m/s²，向上</span><span>(D) 0</span><span>(E) 10 m/s²，向上</span></div></div>
+<div class="ex" id="P3-31"><span class="exid">P3-31</span>下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 2–8 s 間電梯靜止</span><span>(B) 2–8 s 間電梯以 4.0 m/s 等速上升</span><span>(C) 8–10 s 間電梯減速上升</span><span>(D) t = 10 s 時電梯速度為零</span><span>(E) 8–10 s 間學生的重量減為 400 N</span></div></div>
+<div class="ex" id="P3-32"><span class="exid">P3-32</span>0–10 s 間電梯的位移量值為何？
+<div class="opts"><span>(A) 24 m</span><span>(B) 28 m</span><span>(C) 32 m</span><span>(D) 36 m</span><span>(E) 40 m</span></div></div>
+
+<p><strong>第 33–35 題為題組</strong></p>
+<p>為測量木塊與木板間的摩擦係數，某生將木塊置於可調角度的木板上（如圖），緩慢增加傾角，測得木塊恰開始下滑時的傾角 θ<sub>c</sub> 滿足 tanθ<sub>c</sub> = 0.50（θ<sub>c</sub> 約 27°）。接著把傾角固定為 37°，以運動感測器測得木塊由靜止下滑的加速度為 2.8 m/s²。木塊質量 1.0 kg。</p>
+<figure class="fig"><svg viewBox="0 0 420 200" width="420">
+<line x1="20" y1="180" x2="400" y2="180" stroke="#1f2a44" stroke-width="2"/>
+<polygon points="40,180 360,180 360,172 40,172" fill="#e2e8f0" stroke="#1f2a44" stroke-width="1.2"/>
+<line x1="40" y1="172" x2="330" y2="27" stroke="#d9772b" stroke-width="8"/>
+<circle cx="40" cy="172" r="6" fill="#1f2a44"/>
+<line x1="300" y1="172" x2="300" y2="42" stroke="#94a3b8" stroke-width="3"/>
+<polygon points="170.6,102.2 210,82.6 200.2,62.9 160.8,82.5" fill="#cfe3f8" stroke="#2f6fb5" stroke-width="1.8"/>
+<path d="M120,172 A80,80 0 0,0 111.6,136.2" fill="none" stroke="#c2410c" stroke-width="2"/>
+<text x="128" y="160" font-size="15" fill="#c2410c">θ</text>
+<text x="315" y="120" font-size="13" fill="#1f2a44">可調支架</text>
+<text x="30" y="160" font-size="13" fill="#1f2a44">轉軸</text>
+<rect x="335" y="18" width="40" height="22" fill="#e2e8f0" stroke="#1f2a44" stroke-width="1.2"/>
+<text x="340" y="58" font-size="13" fill="#1f2a44">運動感測器</text>
+<text x="128" y="68" font-size="13" fill="#1f2a44">木塊</text>
+</svg><figcaption>圖 P3-題4　測量摩擦係數的可調斜面（示意圖，未依比例）</figcaption></figure>
+<div class="ex" id="P3-33"><span class="exid">P3-33</span>關於起滑角的測量，下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 由起滑角可得靜摩擦係數 μ<sub>s</sub> = tanθ<sub>c</sub> = 0.50</span><span>(B) 起滑角與木塊的質量無關</span><span>(C) 木塊恰開始下滑的瞬間，所受靜摩擦力達到最大值</span><span>(D) 若在木塊上加放砝碼，起滑角會變大</span><span>(E) 起滑角滿足 sinθ<sub>c</sub> = μ<sub>s</sub></span></div></div>
+<div class="ex" id="P3-34"><span class="exid">P3-34</span>由傾角 37° 時的數據，木塊與木板間的動摩擦係數為何？
+<div class="opts"><span>(A) 0.28</span><span>(B) 0.40</span><span>(C) 0.32</span><span>(D) 0.50</span><span>(E) 0.53</span></div></div>
+<div class="ex" id="P3-35"><span class="exid">P3-35</span>下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 傾角 37° 時，木塊所受正向力為 10 N</span><span>(B) 傾角 37° 時，木塊下滑所受摩擦力為 3.2 N</span><span>(C) 傾角調為 20° 時，原本靜止的木塊會自行下滑</span><span>(D) 傾角調為 20° 且木塊靜止時，所受摩擦力為 μ<sub>s</sub>mg cos20°</span><span>(E) 傾角 37° 時，若使木塊沿木板向上滑，上滑過程的加速度量值為 9.2 m/s²</span></div></div>
+
+<h4 class="exset">非選擇題（4 題）</h4>
+<div class="ex" id="P3-36"><span class="exid">P3-36</span>質量 m 的木塊靜置於傾角 θ 的粗糙斜面上，另以平行斜面向上的力 F 推木塊，木塊仍靜止。(1) 若 <span class="m">F &lt; mg\sin\theta</span>，畫出木塊的自由體圖，並寫出靜摩擦力的方向與量值。(2) 若 <span class="m">F &gt; mg\sin\theta</span> 且木塊仍靜止，靜摩擦力的方向與量值為何？
+<div class="lines" data-n="2"></div></div>
+<div class="ex" id="P3-37"><span class="exid">P3-37</span>如圖，水平桌面上的木塊 A（2.0 kg）以輕繩跨過桌緣的理想滑輪，連接懸空的物體 B（3.0 kg）。A 與桌面的動摩擦係數為 0.25，系統由靜止釋放。(1) 求系統的加速度量值。(2) 求繩的張力。(3) 若桌面改為光滑，繩的張力變大或變小？算出其值。
+<figure class="fig"><svg viewBox="0 0 360 220" width="360">
+<rect x="30" y="80" width="240" height="12" fill="#e2e8f0" stroke="#1f2a44" stroke-width="1.5"/>
+<line x1="55" y1="92" x2="55" y2="205" stroke="#1f2a44" stroke-width="4"/>
+<line x1="245" y1="92" x2="245" y2="205" stroke="#1f2a44" stroke-width="4"/>
+<line x1="268" y1="86" x2="282" y2="77" stroke="#1f2a44" stroke-width="2"/>
+<circle cx="282" cy="77" r="11" fill="#e2e8f0" stroke="#1f2a44" stroke-width="2"/>
+<rect x="120" y="52" width="60" height="28" fill="#cfe3f8" stroke="#2f6fb5" stroke-width="1.8"/>
+<text x="130" y="71" font-size="13" fill="#1f2a44">A 2.0 kg</text>
+<line x1="180" y1="66" x2="282" y2="66" stroke="#1f2a44" stroke-width="1.5"/>
+<line x1="293" y1="77" x2="293" y2="140" stroke="#1f2a44" stroke-width="1.5"/>
+<rect x="276" y="140" width="34" height="34" fill="#fbdcbd" stroke="#d9772b" stroke-width="1.8"/>
+<text x="286" y="162" font-size="13" fill="#1f2a44">B</text>
+<text x="316" y="162" font-size="13" fill="#1f2a44">3.0 kg</text>
+</svg><figcaption>圖 P3-題5　桌面上的木塊與懸掛物體</figcaption></figure>
+<div class="lines" data-n="2"></div></div>
+<div class="ex" id="P3-38"><span class="exid">P3-38</span>國際太空站在離地約 400 km 的軌道運轉，該處重力加速度約為地表的 89%，站內的太空人卻呈現飄浮。說明太空人飄浮的原因，並說明在站內以彈簧秤懸吊物體時讀數為何。
+<div class="lines" data-n="2"></div></div>
+<div class="ex" id="P3-39"><span class="exid">P3-39</span>（進階）質量 0.50 kg 的球以 10 m/s 水平垂直撞牆，以 8.0 m/s 反彈，與牆接觸 0.020 s。求球的動量變化量量值與牆對球的平均力量值，並說明平均力的方向。
+<div class="lines" data-n="2"></div></div>
+
+<h3>自我檢核</h3>
+<ul class="check">
+<li>能說明亞里斯多德、伽利略、笛卡兒、牛頓對「運動是否需要力維持」的觀點差異。</li>
+<li>能以慣性解釋公車煞車、抽桌布等現象，並說明質量是慣性的量度。</li>
+<li>能判斷一個參考座標是否為慣性座標，並在地面座標中分析加速車廂內的懸吊物。</li>
+<li>能由淨力求加速度，並說明加速度方向與淨力相同、與速度方向未必相同。</li>
+<li>能區分作用力與反作用力及一對平衡力，並在書、桌、地球情境中正確配對。</li>
+<li>能區分質量與重量，並說明 g 隨緯度、高度改變。</li>
+<li>能在水平面、斜面、斜拉、壓牆、電梯等情境中求出正向力，不預設 N = mg。</li>
+<li>能判斷靜摩擦或動摩擦，並以力平衡求靜摩擦力的方向與量值；能判讀 f–F 圖。</li>
+<li>能說明摩擦力可為動力（走路、驅動輪、輸送帶），並說明與接觸面積大致無關的原因。</li>
+<li>能運用虎克定律，區分形變量與長度，判讀 F–x 圖斜率與比例限度；能求彈簧串並聯的等效彈力常數（進階）。</li>
+<li>能依步驟畫出正確的自由體圖，不多畫慣性力、拋力、下滑力。</li>
+<li>能分析粗糙斜面上滑、下滑與靜止，並由起滑角求靜摩擦係數。</li>
+<li>能由視重或磅秤讀數對時間的圖，判斷電梯的加速度與可能運動。</li>
+<li>能以系統法與隔離法處理並排木塊、阿特午機、桌面與懸掛物等連體問題（進階）。</li>
+<li>能以衝量－動量定理說明安全氣囊、潰縮區、落地屈膝的作用（進階）。</li>
+</ul>
+</section>

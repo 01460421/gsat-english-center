@@ -1,0 +1,1071 @@
+<section class="unit" id="P6">
+<h2>P6　電流磁效應、電磁感應與電磁波</h2>
+<p>本單元範圍：直流電路基礎、電流的磁效應、電磁感應、發電機與變壓器、馬克士威方程式與電磁波、電磁波譜與用電安全。標「（進階）」者超出必修，供理解與銜接選修物理之用。</p>
+
+<h3>課綱對照與考點</h3>
+<table class="t"><thead><tr><th>課綱學習內容</th><th>敘述（摘要）</th><th>本單元小節</th><th>學測常見考法</th></tr></thead><tbody>
+<tr><td>PKc-Ⅴc-3</td><td>變動的磁場會產生電場，變動的電場會產生磁場</td><td>二、三、五</td><td>奧斯特實驗判讀；右手定則；冷次定律判斷感應電流方向；磁通量—時間圖轉換為電動勢—時間圖</td></tr>
+<tr><td>PKc-Ⅴc-4</td><td>電磁現象皆可由馬克士威方程式描述</td><td>五</td><td>四條方程式各自對應的實驗事實（定性）；電磁學統一的歷史</td></tr>
+<tr><td>PKc-Ⅴc-5</td><td>電磁場的擾動在空間中傳遞即為電磁波</td><td>五</td><td>電磁波為橫波、不需介質、真空中速率為 c；赫茲實驗；由 μ<sub>0</sub>、ε<sub>0</sub> 算出光速</td></tr>
+<tr><td>PKc-Ⅴc-6</td><td>電磁波由無線電波到伽瑪射線，應用廣泛</td><td>六</td><td>波譜排序；波長、頻率、光子能量比較；各波段的產生方式與應用；游離與非游離輻射</td></tr>
+<tr><td>PMc-Ⅴc-1</td><td>用電安全</td><td>一、七</td><td>短路、過載、漏電、接地的辨析；延長線額定電流計算；斷路器與漏電斷路器原理</td></tr>
+<tr><td>PMc-Ⅴc-2</td><td>電在生活中的應用</td><td>二、三、四</td><td>電動機、發電機、變壓器、電磁爐、無線充電、高壓輸電的原理</td></tr>
+<tr><td>PBa-Ⅴc-1</td><td>電場與磁場均具有能量；手機以電磁波傳遞能量</td><td>五、六</td><td>手機通訊的能量傳遞鏈；電磁波的波長與天線；電磁波能量的來源與去向</td></tr>
+</tbody></table>
+
+<h3>一、電流與電路基礎</h3>
+<div class="note"><p>電流方向＝正電荷移動方向。</p><p>金屬中真正在動的是電子，方向相反。</p></div>
+<h4>1. 電流</h4>
+<div class="formula" data-t="電流的定義"><div class="mb">I = \frac{\Delta Q}{\Delta t}</div><p>I：電流（A）　ΔQ：通過截面的電荷量（C）　Δt：時間（s）</p></div>
+<ul>
+<li><strong>定義</strong>：單位時間內通過導體某一截面的電荷量，單位安培（A），<span class="box">1 A = 1 C/s</span>。</li>
+<li><strong>電流方向</strong>：規定為正電荷流動的方向。金屬導線中實際移動的是自由電子，電子流方向與電流方向<span class="circle">相反</span>。<span class="hand">考題最愛問方向</span>電解液中正、負離子反向移動，兩者對電流的貢獻同向相加。</li>
+<li>2019 年國際單位制修訂後，安培以基本電荷 <span class="m">e = 1.602176634\times10^{-19}\ \mathrm{C}</span>（定義值）及秒定義；舊定義（兩平行導線間的作用力）已廢止。</li>
+<li>直流電（DC）：方向不隨時間改變，例如電池。交流電（AC）：方向與大小隨時間週期性改變，臺灣市電頻率 60 Hz。</li>
+</ul>
+<div class="tip"><p><strong>深究　電子漂移速率與訊號速率</strong></p>
+<p>導線中電流 <span class="m">I = nqv_dA</span>，n 為單位體積自由電子數，v<sub>d</sub> 為漂移速率。以銅（<span class="m">n \approx 8.5\times10^{28}\ \mathrm{m^{-3}}</span>）、截面積 <span class="m">1.0\ \mathrm{mm^2}</span>、電流 1.0 A 計：</p>
+<div class="mb">v_d = \frac{I}{neA} = \frac{1.0}{(8.5\times10^{28})(1.60\times10^{-19})(1.0\times10^{-6})} \approx 7.4\times10^{-5}\ \mathrm{m/s}</div>
+<p>電子平均每秒移動不到 0.1 mm，開關一按燈卻立即亮起：開關閉合時，電場沿導線以接近光速的速率建立，全線的自由電子幾乎同時開始漂移。訊號速率與電子漂移速率須區分。</p></div>
+
+<h4>2. 電壓、電阻與歐姆定律</h4>
+<ul>
+<li><strong>電壓（電位差）</strong>：單位電荷在兩點間移動時電力所作的功，<span class="m">\Delta V = \dfrac{W}{q}</span>，單位伏特（V），<span class="m">1\ \mathrm{V} = 1\ \mathrm{J/C}</span>。電池的<strong>電動勢</strong>指電池內非靜電力將單位正電荷由負極移到正極所作的功。</li>
+<li><strong>電阻</strong>：<span class="m">R = \dfrac{V}{I}</span>，單位歐姆（Ω）。均勻導線 <span class="m">R = \rho\dfrac{L}{A}</span>，ρ 為電阻率，與材料及溫度有關；銅在 20 °C 約 <span class="m">1.7\times10^{-8}\ \Omega\cdot\mathrm{m}</span>。</li>
+<li><strong>歐姆定律</strong>：溫度等條件不變時，金屬導體兩端電壓與電流成正比，R 為定值。</li>
+</ul>
+<div class="formula" data-t="歐姆定律與電阻定律"><div class="mb">V = IR,\qquad R = \rho\frac{L}{A}</div><p>V：電壓（V）　I：電流（A）　R：電阻（Ω）　ρ：電阻率（Ω·m）　L：長度（m）　A：截面積（m²）</p></div>
+<div class="warn"><p><span class="m">R = V/I</span> 是電阻的<strong>定義</strong>，對任何元件都成立；「R 為定值」才是歐姆定律的內容。鎢絲燈泡溫度升高時電阻變大，二極體正反向導電差異極大，兩者皆<em>不遵守</em>歐姆定律，但仍可用 V/I 算出該狀態下的電阻。</p></div>
+
+<figure class="fig"><svg viewBox="0 0 560 210" width="560">
+<defs>
+<marker id="P6-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2410c"/></marker>
+<marker id="P6-ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2f6fb5"/></marker>
+<marker id="P6-ak" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f2a44"/></marker>
+<marker id="P6-ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2e8b57"/></marker>
+</defs>
+<g stroke="#1f2a44" stroke-width="2" fill="none">
+<polyline points="40,60 40,170 230,170 230,60 170,60"/>
+<polyline points="40,60 60,60"/>
+<line x1="60" y1="45" x2="60" y2="75"/><line x1="72" y1="52" x2="72" y2="68" stroke-width="4"/>
+<polyline points="72,60 90,60"/>
+<rect x="90" y="50" width="34" height="20" fill="#cfe3f8"/>
+<polyline points="124,60 136,60"/>
+<rect x="136" y="50" width="34" height="20" fill="#cfe3f8"/>
+</g>
+<text x="107" y="42" font-size="14" text-anchor="middle">R₁</text>
+<text x="153" y="42" font-size="14" text-anchor="middle">R₂</text>
+<text x="66" y="95" font-size="13" text-anchor="middle">電池</text>
+<line x1="120" y1="185" x2="160" y2="185" stroke="#c2410c" stroke-width="2" marker-end="url(#P6-ar)"/>
+<text x="140" y="203" font-size="13" text-anchor="middle">I 處處相同</text>
+<text x="135" y="20" font-size="15" text-anchor="middle">串聯</text>
+<g stroke="#1f2a44" stroke-width="2" fill="none">
+<polyline points="320,105 320,60 500,60 500,180 320,180 320,135"/>
+<line x1="420" y1="60" x2="420" y2="180"/>
+</g>
+<g stroke="#1f2a44"><line x1="304" y1="112" x2="336" y2="112" stroke-width="2"/><line x1="311" y1="124" x2="329" y2="124" stroke-width="4"/><line x1="320" y1="105" x2="320" y2="112" stroke-width="2"/><line x1="320" y1="124" x2="320" y2="135" stroke-width="2"/></g>
+<rect x="410" y="100" width="20" height="40" fill="#cfe3f8" stroke="#1f2a44" stroke-width="2"/>
+<rect x="490" y="100" width="20" height="40" fill="#cfe3f8" stroke="#1f2a44" stroke-width="2"/>
+<text x="445" y="125" font-size="14">R₁</text>
+<text x="525" y="125" font-size="14">R₂</text>
+<text x="300" y="100" font-size="13" text-anchor="end">電池</text>
+<text x="420" y="20" font-size="15" text-anchor="middle">並聯</text>
+<text x="420" y="200" font-size="13" text-anchor="middle">各支路電壓相同</text>
+</svg><figcaption>圖 P6-1　串聯與並聯。串聯各電阻電流相同，電壓依電阻比例分配；並聯各支路電壓相同，電流依電阻反比分配。</figcaption></figure>
+
+<h4>3. 串聯、並聯與電功率</h4>
+<div class="formula" data-t="電功率"><div class="mb">P = IV = I^2R = \frac{V^2}{R},\qquad E = Pt</div><p>P：功率（W）　E：電能（J 或 kWh）　t：時間（s 或 h）</p></div>
+<table class="t"><thead><tr><th>項目</th><th>串聯</th><th>並聯</th></tr></thead><tbody>
+<tr><td>電流</td><td><span class="m">I = I_1 = I_2</span></td><td><span class="m">I = I_1 + I_2</span></td></tr>
+<tr><td>電壓</td><td><span class="m">V = V_1 + V_2</span></td><td><span class="m">V = V_1 = V_2</span></td></tr>
+<tr><td>等效電阻</td><td><span class="m">R = R_1 + R_2</span>（大於任一電阻）</td><td><span class="m">\dfrac{1}{R} = \dfrac{1}{R_1} + \dfrac{1}{R_2}</span>（小於任一電阻）</td></tr>
+<tr><td>功率分配</td><td><span class="m">P \propto R</span>（電阻大者耗電多）</td><td><span class="m">P \propto \dfrac{1}{R}</span>（電阻小者耗電多）</td></tr>
+<tr><td>實例</td><td>舊式聖誕燈串、保險絲與電器</td><td>家用插座與電器（各電器獨立開關、承受相同電壓）</td></tr>
+</tbody></table>
+<ul>
+<li><strong>電功率</strong>：見公式卡。後兩式只適用於電能全部轉為熱能的電阻性元件；馬達的 <span class="m">IV</span> 包含輸出的力學功率。<span class="hand">馬達不能用 V²/R</span></li>
+<li><strong>電能</strong>：<span class="m">E = Pt</span>。電費以「度」計，<span class="box">1 度 = 1 kWh = 3.6×10⁶ J</span>。</li>
+<li><strong>額定值</strong>：「110 V，1100 W」指在 110 V 下工作時消耗 1100 W；由此可求電阻 <span class="m">R = V^2/P = 11\ \Omega</span>（電阻視為定值時）。實際電壓不同時，功率依 <span class="m">V^2/R</span> 改變。</li>
+<li>臺灣住宅一般以單相 110 V 供電，冷氣、烘衣機等大功率電器另設 220 V 迴路；兩者頻率皆為 60 Hz。</li>
+</ul>
+
+<figure class="fig"><svg viewBox="0 0 460 260" width="460">
+<line x1="60" y1="220" x2="430" y2="220" stroke="#1f2a44" stroke-width="2" marker-end="url(#P6-ak)"/>
+<line x1="60" y1="220" x2="60" y2="20" stroke="#1f2a44" stroke-width="2" marker-end="url(#P6-ak)"/>
+<text x="425" y="245" font-size="14" text-anchor="end">電壓 V（V）</text>
+<text x="66" y="22" font-size="14">電流 I（A）</text>
+<line x1="60" y1="220" x2="380" y2="60" stroke="#2f6fb5" stroke-width="2.5"/>
+<text x="385" y="58" font-size="14">定值電阻（直線）</text>
+<path d="M60,220 Q160,110 400,95" stroke="#d9772b" stroke-width="2.5" fill="none"/>
+<text x="300" y="120" font-size="14">鎢絲燈泡</text>
+<path d="M60,220 L230,218 Q265,214 280,150 L300,40" stroke="#2e8b57" stroke-width="2.5" fill="none"/>
+<text x="305" y="40" font-size="14">二極體（正向）</text>
+<text x="70" y="250" font-size="13">0</text>
+</svg><figcaption>圖 P6-2　三種元件的 I–V 關係（示意圖，未依比例）。直線斜率為 1/R；燈泡曲線斜率漸減表示電阻隨溫度升高而增大。</figcaption></figure>
+
+<div class="exam"><p>學測常見考法：燈泡串並聯亮度比較、額定值換算電阻、I–V 圖判讀。陷阱：<em>串聯時額定功率小的燈泡較亮</em>；I–V 圖斜率為 1/R。</p></div>
+<div class="warn"><ul>
+<li>I–V 圖的斜率是 <span class="m">1/R</span>，V–I 圖的斜率才是 R；判讀前先看座標軸。</li>
+<li>曲線上某點的電阻為該點與原點連線斜率的倒數（<span class="m">V/I</span>），不是切線斜率的倒數。</li>
+<li>兩燈泡「110 V，100 W」與「110 V，25 W」串聯接 110 V 時，25 W 者電阻較大、分得功率較多而較亮（見例題 1）；並聯時則 100 W 者較亮。</li>
+</ul></div>
+
+<h3>二、電流的磁效應</h3>
+<div class="note"><p>磁場方向＝小磁針 N 極指向。</p><p>磁力線封閉；電力線不封閉。</p></div>
+<h4>1. 磁場與磁力線</h4>
+<ul>
+<li><strong>磁場方向</strong>：置於該處的小磁針 N 極所指方向。磁場量值單位為特斯拉（T），<span class="m">1\ \mathrm{T} = 1\ \mathrm{N/(A\cdot m)}</span>；地表的地磁場約 <span class="m">25</span>–<span class="m">65\ \mu\mathrm{T}</span>（<span class="m">2.5\times10^{-5}</span>–<span class="m">6.5\times10^{-5}\ \mathrm{T}</span>），依地點而異。</li>
+<li><strong>磁力線</strong>：切線方向為磁場方向，疏密表示磁場強弱；磁鐵外部由 N 極到 S 極，內部由 S 極回到 N 極，<strong>形成封閉曲線</strong>，任兩條不相交。<span class="hand">內部 S→N</span></li>
+<li>磁單極（單獨的 N 極或 S 極）至今未被觀測到；磁鐵切斷後每段仍有 N、S 兩極。電力線則起於正電荷、止於負電荷，<em>不封閉</em>。此差異即馬克士威方程式中電、磁兩條高斯定律的不同（見第五節）。</li>
+</ul>
+
+<h4>2. 奧斯特實驗（1820）</h4>
+<p>奧斯特（Hans Christian Ørsted，1777–1851；或譯厄斯特）於 1820 年 4 月演講時觀察到通電導線使附近磁針偏轉，經約三個月的後續實驗，於同年 7 月 21 日以拉丁文小冊公布結果，為電與磁有關的第一個公認實驗證據。</p>
+<figure class="fig"><svg viewBox="0 0 520 230" width="520">
+<rect x="0" y="0" width="520" height="230" fill="#ffffff"/>
+<line x1="60" y1="70" x2="460" y2="70" stroke="#d9772b" stroke-width="5"/>
+<line x1="200" y1="55" x2="300" y2="55" stroke="#c2410c" stroke-width="2" marker-end="url(#P6-ar)"/>
+<text x="250" y="45" font-size="14" text-anchor="middle">電流 I（由南向北）</text>
+<text x="40" y="75" font-size="14" text-anchor="end">南</text>
+<text x="470" y="75" font-size="14">北</text>
+<ellipse cx="250" cy="150" rx="70" ry="40" fill="#e2e8f0" stroke="#1f2a44" stroke-width="1.5"/>
+<line x1="200" y1="150" x2="300" y2="150" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5,4"/>
+<polygon points="250,150 290,128 282,138" fill="#c2410c"/>
+<polygon points="250,150 210,172 218,162" fill="#2f6fb5"/>
+<text x="300" y="122" font-size="13">N</text>
+<text x="330" y="160" font-size="13">虛線：通電前（指北）</text>
+<text x="330" y="180" font-size="13">實線：通電後偏轉</text>
+<line x1="250" y1="75" x2="250" y2="105" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3"/>
+<text x="140" y="215" font-size="13">磁針位於導線正下方；導線沿南北方向放置</text>
+</svg><figcaption>圖 P6-3　奧斯特實驗（示意圖，未依比例）。導線沿南北放置於磁針上方，電流由南向北時，磁針 N 極向西偏轉（俯視）。</figcaption></figure>
+<div class="key"><ul>
+<li>實驗設計：導線須<span class="circle">沿南北方向</span>放置。通電前磁針已沿南北方向；電流在導線正下方產生東西向的磁場，與地磁垂直，偏轉最明顯。導線沿東西放置時，正下方的電流磁場沿南北方向，與磁針同線，不產生偏轉力矩或偏轉不明顯。</li>
+<li>電流反向，磁針偏轉方向反向；磁針由導線下方移至上方，偏轉方向亦反向。</li>
+<li>電流愈大、磁針離導線愈近，偏轉角愈大；偏轉角由電流磁場與地磁水平分量的合成決定，<span class="m">\tan\theta = B_{\text{導線}}/B_{\text{地磁水平}}</span>，故偏轉角恆小於 90°。</li>
+</ul></div>
+<div class="tip"><p><strong>深究　奧斯特之前的猜測與實驗的關鍵</strong></p>
+<p>18 世紀已有雷擊使鐵器磁化、羅盤失準的紀錄，不少學者猜測電與磁有關，但多數實驗將導線垂直於磁針放置，期待磁針「順著電流方向」被推動，結果失敗。電流磁場環繞導線、方向與電流垂直，正是當時難以想像之處。奧斯特實驗的意義在於揭示一種<strong>非連心力</strong>：磁針所受力矩既不沿著指向導線的方向，也不沿電流方向。此一結果促使安培在數週內提出電流間的作用力，法拉第隨後以「力線」描述環繞的磁場。</p></div>
+
+<h4>3. 長直導線的磁場與右手定則</h4>
+<ul>
+<li>磁力線為以導線為圓心、位於垂直導線平面上的<strong>同心圓</strong>。</li>
+<li><strong>安培右手定則</strong>：右手握住導線，<span class="ul">拇指指向電流方向，其餘四指彎曲方向即磁力線環繞方向</span>。</li>
+<li>量值：與電流成正比，與距離成反比，<span class="m">B \propto \dfrac{I}{r}</span>。<span class="hand">距離加倍，B 減半</span></li>
+</ul>
+<div class="formula" data-t="長直導線的磁場（進階）"><div class="mb">B = \frac{\mu_0 I}{2\pi r}</div><p>B：磁場（T）　I：電流（A）　r：與導線的垂直距離（m）　μ<sub>0</sub>：真空磁導率，約 <span class="m">4\pi\times10^{-7}\ \mathrm{T\cdot m/A}</span>（2019 年起為量測值，2022 年 CODATA 值 <span class="m">1.25663706127\times10^{-6}\ \mathrm{N/A^2}</span>）</p></div>
+<figure class="fig"><svg viewBox="0 0 560 240" width="560">
+<line x1="140" y1="225" x2="140" y2="25" stroke="#d9772b" stroke-width="5" marker-end="url(#P6-ar)"/>
+<text x="150" y="30" font-size="14">I</text>
+<ellipse cx="140" cy="130" rx="40" ry="12" fill="none" stroke="#2f6fb5" stroke-width="2"/>
+<ellipse cx="140" cy="130" rx="75" ry="22" fill="none" stroke="#2f6fb5" stroke-width="2"/>
+<ellipse cx="140" cy="130" rx="110" ry="32" fill="none" stroke="#2f6fb5" stroke-width="2"/>
+<line x1="150" y1="142" x2="160" y2="141" stroke="#2f6fb5" stroke-width="2" marker-end="url(#P6-ab)"/>
+<line x1="160" y1="152" x2="175" y2="150" stroke="#2f6fb5" stroke-width="2" marker-end="url(#P6-ab)"/>
+<line x1="170" y1="162" x2="190" y2="159" stroke="#2f6fb5" stroke-width="2" marker-end="url(#P6-ab)"/>
+<text x="20" y="232" font-size="13">由上往下看為逆時針</text>
+<line x1="320" y1="120" x2="530" y2="120" stroke="#94a3b8" stroke-width="1"/>
+<line x1="425" y1="20" x2="425" y2="220" stroke="#94a3b8" stroke-width="1"/>
+<circle cx="425" cy="120" r="10" fill="#fbdcbd" stroke="#1f2a44" stroke-width="2"/>
+<circle cx="425" cy="120" r="3" fill="#1f2a44"/>
+<circle cx="425" cy="120" r="40" fill="none" stroke="#2f6fb5" stroke-width="2"/>
+<circle cx="425" cy="120" r="80" fill="none" stroke="#2f6fb5" stroke-width="2"/>
+<line x1="465" y1="125" x2="465" y2="112" stroke="#2f6fb5" stroke-width="2" marker-end="url(#P6-ab)"/>
+<line x1="505" y1="128" x2="505" y2="110" stroke="#2f6fb5" stroke-width="2" marker-end="url(#P6-ab)"/>
+<line x1="385" y1="115" x2="385" y2="128" stroke="#2f6fb5" stroke-width="2" marker-end="url(#P6-ab)"/>
+<text x="425" y="232" font-size="13" text-anchor="middle">⊙ 電流垂直紙面向外：逆時針</text>
+</svg><figcaption>圖 P6-4　長直導線的磁力線。左：立體示意；右：截面圖，⊙ 表示電流垂直紙面向外（⊗ 為向內）。磁力線間距愈往外愈大，表示 B 隨距離減弱。</figcaption></figure>
+
+<h4>4. 圓線圈與螺線管</h4>
+<ul>
+<li><strong>圓形線圈</strong>：中心處磁場垂直線圈平面；方向以右手判斷：四指沿電流方向彎曲，拇指指向中心磁場方向。（進階）中心 <span class="m">B = \dfrac{\mu_0 I}{2R}</span>。</li>
+<li><strong>螺線管</strong>：外部磁場分布與條形磁鐵相似。<strong>右手螺旋定則</strong>：四指沿電流繞行方向，拇指所指一端為 <span class="circle">N 極</span>。管內（遠離兩端處）近似均勻磁場，方向由 S 端指向 N 端。（進階）<span class="m">B = \mu_0 n I</span>，n 為單位長度匝數，與管的截面積無關。</li>
+<li><strong>電磁鐵</strong>：螺線管內加軟鐵心，鐵被磁化後使磁場增強數百至數千倍；斷電後磁性大致消失。應用：電鈴、繼電器、起重電磁鐵、磁浮列車、核磁共振造影（超導線圈）。</li>
+</ul>
+<figure class="fig"><svg viewBox="0 0 560 230" width="560">
+<path d="M120,115 C120,30 440,30 440,115" fill="none" stroke="#2f6fb5" stroke-width="1.8"/>
+<path d="M120,115 C120,200 440,200 440,115" fill="none" stroke="#2f6fb5" stroke-width="1.8"/>
+<path d="M150,115 C150,60 410,60 410,115" fill="none" stroke="#2f6fb5" stroke-width="1.8"/>
+<path d="M150,115 C150,170 410,170 410,115" fill="none" stroke="#2f6fb5" stroke-width="1.8"/>
+<rect x="190" y="90" width="180" height="50" fill="#e2e8f0" stroke="#1f2a44" stroke-width="1.5"/>
+<g stroke="#d9772b" stroke-width="3">
+<line x1="200" y1="88" x2="212" y2="142"/><line x1="222" y1="88" x2="234" y2="142"/><line x1="244" y1="88" x2="256" y2="142"/><line x1="266" y1="88" x2="278" y2="142"/><line x1="288" y1="88" x2="300" y2="142"/><line x1="310" y1="88" x2="322" y2="142"/><line x1="332" y1="88" x2="344" y2="142"/><line x1="354" y1="88" x2="366" y2="142"/>
+</g>
+<line x1="170" y1="115" x2="390" y2="115" stroke="#2f6fb5" stroke-width="2.5" marker-end="url(#P6-ab)"/>
+<line x1="400" y1="115" x2="470" y2="115" stroke="#2f6fb5" stroke-width="2" marker-end="url(#P6-ab)"/>
+<line x1="90" y1="115" x2="160" y2="115" stroke="#2f6fb5" stroke-width="2" marker-end="url(#P6-ab)"/>
+<text x="385" y="85" font-size="16">N</text>
+<text x="170" y="85" font-size="16">S</text>
+<line x1="378" y1="92" x2="388" y2="138" stroke="#c2410c" stroke-width="2.5" marker-end="url(#P6-ar)"/>
+<text x="395" y="150" font-size="13" fill="#d64545" transform="rotate(-4 395 150)">正面電流向下</text>
+<text x="280" y="220" font-size="13" text-anchor="middle">正面導線電流向下、背面向上（由右端看為逆時針）</text>
+</svg><figcaption>圖 P6-5　螺線管的磁場（示意圖，未依比例）。管內磁力線近乎平行且等距，方向由 S 端指向 N 端；管外分布與條形磁鐵相似。由 N 端看去，電流沿逆時針方向繞行。</figcaption></figure>
+<div class="mnem"><p>直導線：拇指電流、四指磁場；螺線管：四指電流、拇指 N 極。</p></div>
+<div class="warn"><ul>
+<li>「由某一端看去電流逆時針，該端為 N 極」是右手螺旋定則的等價說法；由 S 端看去則為順時針。</li>
+<li>螺線管內部磁場由 S 指向 N，與「磁力線由 N 到 S」不矛盾：後者只描述磁鐵或螺線管<em>外部</em>。</li>
+</ul></div>
+
+<h4>5. 電流間的交互作用：安培</h4>
+<ul>
+<li>安培（André-Marie Ampère，1775–1836）在得知奧斯特結果後數週內，於 1820 年 9 月向巴黎科學院報告兩通電導線之間的作用力。</li>
+<li>兩平行長直導線：<strong>電流同向相吸，反向相斥</strong>；<span class="hand">與電荷「同性相斥」相反</span>作用力量值與兩電流乘積成正比、與間距成反比，兩導線所受力大小相等、方向相反（牛頓第三定律）。</li>
+<li>判斷方法：先用右手定則求甲導線在乙處的磁場方向，再用「磁場對電流的作用力」（下一小節）求乙所受的力。</li>
+<li><strong>分子電流假說</strong>：安培主張磁鐵的磁性來自物質內部微小的環形電流。現代觀點：鐵磁性主要來自電子的自旋磁矩及其在磁區內的整齊排列，安培的構想方向正確，細節須以量子力學說明。</li>
+</ul>
+<figure class="fig half"><svg viewBox="0 0 300 200" width="300">
+<line x1="90" y1="185" x2="90" y2="20" stroke="#d9772b" stroke-width="4" marker-end="url(#P6-ar)"/>
+<line x1="210" y1="185" x2="210" y2="20" stroke="#d9772b" stroke-width="4" marker-end="url(#P6-ar)"/>
+<line x1="98" y1="110" x2="135" y2="110" stroke="#2e8b57" stroke-width="2.5" marker-end="url(#P6-ag)"/>
+<line x1="202" y1="110" x2="165" y2="110" stroke="#2e8b57" stroke-width="2.5" marker-end="url(#P6-ag)"/>
+<text x="150" y="98" font-size="14" text-anchor="middle">相吸</text>
+<text x="70" y="40" font-size="14">I₁</text>
+<text x="220" y="40" font-size="14">I₂</text>
+<text x="150" y="195" font-size="13" text-anchor="middle">電流同向</text>
+</svg><figcaption>圖 P6-6a　同向電流相吸</figcaption></figure><figure class="fig half"><svg viewBox="0 0 300 200" width="300">
+<line x1="90" y1="185" x2="90" y2="20" stroke="#d9772b" stroke-width="4" marker-end="url(#P6-ar)"/>
+<line x1="210" y1="20" x2="210" y2="185" stroke="#d9772b" stroke-width="4" marker-end="url(#P6-ar)"/>
+<line x1="82" y1="110" x2="45" y2="110" stroke="#2e8b57" stroke-width="2.5" marker-end="url(#P6-ag)"/>
+<line x1="218" y1="110" x2="255" y2="110" stroke="#2e8b57" stroke-width="2.5" marker-end="url(#P6-ag)"/>
+<text x="150" y="98" font-size="14" text-anchor="middle">相斥</text>
+<text x="70" y="40" font-size="14">I₁</text>
+<text x="220" y="40" font-size="14">I₂</text>
+<text x="150" y="195" font-size="13" text-anchor="middle">電流反向</text>
+</svg><figcaption>圖 P6-6b　反向電流相斥</figcaption></figure>
+<p>圖 P6-6 中綠色箭頭為各導線所受磁力，兩力大小相等、方向相反。</p>
+<div class="exam"><p>學測常見考法：奧斯特實驗的擺放方向與偏轉判斷；以右手定則判斷導線、線圈、螺線管的磁場方向；兩平行導線間的作用力與某點的合磁場。陷阱：<em>導線上方與下方磁場方向相反</em>；兩導線中點的合磁場須逐一判斷方向再相加。</p></div>
+
+<h4>6. 磁場對電流的作用與電動機（進階）</h4>
+<div class="formula" data-t="磁場對電流與運動電荷的力（進階）"><div class="mb">F = ILB\sin\theta,\qquad F = qvB\sin\theta</div><p>F：磁力（N）　I：電流（A）　L：導線在磁場中的長度（m）　B：磁場（T）　q：電荷（C）　v：速率（m/s）　θ：電流（或速度）與磁場的夾角</p></div>
+<ul>
+<li>載流導線在磁場中受力（公式卡），θ 為電流方向與磁場方向的夾角；電流與磁場<span class="circle">平行</span>時不受力，垂直時最大。</li>
+<li>方向：<strong>右手開掌定則</strong>：右手掌伸平，四指指向磁場方向，拇指指向電流方向，掌心面對的方向即為受力方向（與 <span class="m">\vec{F} = I\vec{L}\times\vec{B}</span> 一致）。運動電荷所受磁力 <span class="m">F = qvB\sin\theta</span>，方向垂直速度，磁力對電荷不作功。</li>
+<li><strong>直流電動機</strong>：線圈置於磁場中，兩側導線受力方向相反形成力矩而轉動；<strong>換向器（整流子）</strong>每轉半圈使線圈電流反向，維持同一轉向。能量轉換：電能 → 力學能。</li>
+<li>其他應用：揚聲器（音圈在永久磁鐵磁場中受力振動）、指針式電流計（線圈受力矩與游絲彈力矩平衡）。</li>
+</ul>
+<figure class="fig"><svg viewBox="0 0 520 230" width="520">
+<rect x="20" y="40" width="70" height="140" fill="#fbdcbd" stroke="#1f2a44" stroke-width="1.5"/>
+<rect x="430" y="40" width="70" height="140" fill="#cfe3f8" stroke="#1f2a44" stroke-width="1.5"/>
+<text x="55" y="118" font-size="20" text-anchor="middle">N</text>
+<text x="465" y="118" font-size="20" text-anchor="middle">S</text>
+<g stroke="#94a3b8" stroke-width="1.3" stroke-dasharray="6,4">
+<line x1="95" y1="70" x2="425" y2="70"/><line x1="95" y1="110" x2="425" y2="110"/><line x1="95" y1="150" x2="425" y2="150"/>
+</g>
+<text x="400" y="62" font-size="13">B</text>
+<polygon points="200,60 320,60 320,160 200,160" fill="none" stroke="#d9772b" stroke-width="4"/>
+<line x1="200" y1="150" x2="200" y2="80" stroke="#c2410c" stroke-width="2" marker-end="url(#P6-ar)"/>
+<line x1="320" y1="80" x2="320" y2="150" stroke="#c2410c" stroke-width="2" marker-end="url(#P6-ar)"/>
+<text x="180" y="105" font-size="13" text-anchor="end">I 向上</text>
+<text x="340" y="105" font-size="13">I 向下</text>
+<circle cx="200" cy="40" r="9" fill="#ffffff" stroke="#2e8b57" stroke-width="2"/><line x1="194" y1="34" x2="206" y2="46" stroke="#2e8b57" stroke-width="2"/><line x1="206" y1="34" x2="194" y2="46" stroke="#2e8b57" stroke-width="2"/>
+<circle cx="320" cy="40" r="9" fill="#ffffff" stroke="#2e8b57" stroke-width="2"/><circle cx="320" cy="40" r="3" fill="#2e8b57"/>
+<text x="200" y="24" font-size="13" text-anchor="middle">F 入紙</text>
+<text x="320" y="24" font-size="13" text-anchor="middle">F 出紙</text>
+<rect x="245" y="175" width="30" height="22" fill="#e2e8f0" stroke="#1f2a44" stroke-width="1.5"/>
+<line x1="260" y1="175" x2="260" y2="197" stroke="#1f2a44" stroke-width="2"/>
+<text x="260" y="218" font-size="13" text-anchor="middle">換向器</text>
+</svg><figcaption>圖 P6-7　直流電動機原理（示意圖，未依比例）。左邊導線電流向上，受力垂直紙面向內；右邊電流向下，受力向外，兩力形成力矩使線圈轉動；換向器每半圈改變電流方向。</figcaption></figure>
+<div class="tip"><p><strong>深究　由電流磁效應到「電磁統一」的第一步</strong></p>
+<p>電流磁效應表示「運動的電荷產生磁場」；磁場對電流的作用表示「運動的電荷受磁力」。同一個帶電體，對靜止的觀察者有磁場，對隨之運動的觀察者則無電流、無磁場，只有電場。電場與磁場的區分取決於參考系，這一點在愛因斯坦 1905 年的狹義相對論論文中成為核心論據；大學電磁學以勞侖茲力 <span class="m">\vec{F} = q(\vec{E} + \vec{v}\times\vec{B})</span> 統一描述兩者。</p></div>
+
+<h3>三、電磁感應</h3>
+<h4>1. 法拉第的發現（1831）</h4>
+<p>法拉第（Michael Faraday，1791–1867）認為既然電流能產生磁，磁也應能產生電。1831 年 8 月 29 日，他在鐵環兩側各繞一組線圈，一組接電池與開關，另一組接電流計，發現<strong>只有在開關接通或切斷的瞬間</strong>，電流計指針才偏轉，電流穩定時不偏轉。同年秋天又發現磁鐵插入或抽出線圈時產生電流，並製成以銅盤在磁鐵兩極間轉動而持續產生電流的裝置（法拉第圓盤），為發電機的雛形。成果於 1831 年 11 月 24 日在英國皇家學會宣讀。美國的亨利（Joseph Henry，1797–1878）約同時獨立觀察到電磁感應並研究自感，電感單位「亨利（H）」即以其命名。</p>
+<figure class="fig"><svg viewBox="0 0 540 230" width="540">
+<circle cx="270" cy="110" r="80" fill="none" stroke="#94a3b8" stroke-width="18"/>
+<g stroke="#d9772b" stroke-width="3">
+<line x1="180" y1="80" x2="205" y2="85"/><line x1="176" y1="96" x2="200" y2="100"/><line x1="175" y1="112" x2="198" y2="114"/><line x1="176" y1="128" x2="200" y2="128"/><line x1="180" y1="144" x2="204" y2="142"/>
+</g>
+<g stroke="#2f6fb5" stroke-width="3">
+<line x1="335" y1="85" x2="360" y2="80"/><line x1="340" y1="100" x2="364" y2="96"/><line x1="342" y1="114" x2="365" y2="112"/><line x1="340" y1="128" x2="364" y2="128"/><line x1="336" y1="142" x2="360" y2="144"/>
+</g>
+<polyline points="180,80 90,80 90,60" fill="none" stroke="#1f2a44" stroke-width="2"/>
+<polyline points="180,144 90,144 90,170" fill="none" stroke="#1f2a44" stroke-width="2"/>
+<line x1="75" y1="60" x2="105" y2="60" stroke="#1f2a44" stroke-width="2"/><line x1="82" y1="52" x2="98" y2="52" stroke="#1f2a44" stroke-width="4"/>
+<polyline points="90,52 90,30 40,30 40,170 60,170" fill="none" stroke="#1f2a44" stroke-width="2"/>
+<line x1="60" y1="170" x2="85" y2="160" stroke="#1f2a44" stroke-width="2"/>
+<circle cx="60" cy="170" r="3" fill="#1f2a44"/><circle cx="90" cy="170" r="3" fill="#1f2a44"/>
+<text x="60" y="195" font-size="13" text-anchor="middle">開關 S</text>
+<text x="118" y="52" font-size="13">電池</text>
+<polyline points="360,80 460,80 460,95" fill="none" stroke="#1f2a44" stroke-width="2"/>
+<polyline points="360,144 460,144 460,135" fill="none" stroke="#1f2a44" stroke-width="2"/>
+<circle cx="460" cy="115" r="20" fill="#ffffff" stroke="#1f2a44" stroke-width="2"/>
+<text x="460" y="121" font-size="16" text-anchor="middle">G</text>
+<text x="460" y="160" font-size="13" text-anchor="middle">電流計</text>
+<text x="190" y="215" font-size="13" text-anchor="middle">線圈 A（主線圈）</text>
+<text x="350" y="215" font-size="13" text-anchor="middle">線圈 B（副線圈）</text>
+<text x="270" y="115" font-size="13" text-anchor="middle">鐵環</text>
+</svg><figcaption>圖 P6-8　法拉第鐵環實驗（示意圖，未依比例）。僅在 S 接通或切斷的瞬間，線圈 B 中有短暫電流；此裝置也是第一個變壓器的原型。</figcaption></figure>
+
+<div class="note"><p>θ 是 B 與「法線」的夾角。</p><p>平面與 B 夾 30° → 法線與 B 夾 60°。</p></div>
+<h4>2. 磁通量</h4>
+<div class="formula" data-t="磁通量"><div class="mb">\Phi_B = BA\cos\theta</div><p>Φ<sub>B</sub>：磁通量（Wb）　B：磁場（T）　A：面積（m²）　θ：磁場與平面法線的夾角</p></div>
+<ul>
+<li><strong>定義</strong>：均勻磁場中通過某平面的磁力線量，單位韋伯（Wb），<span class="box">1 Wb = 1 T·m²</span>。</li>
+<li>直觀意義：穿過該面的磁力線條數（正比）。磁場垂直平面時最大（<span class="m">\Phi_B = BA</span>），平行平面時為零。</li>
+<li>磁通量有正負：須先選定面的法線方向；磁力線反向穿過時為負。N 匝線圈的總磁通量（磁通匝連數）為 <span class="m">N\Phi_B</span>。</li>
+</ul>
+<div class="warn"><p>題目若給「線圈平面與磁場夾 30°」，則法線與磁場夾 60°，<span class="m">\Phi_B = BA\cos60^\circ = BA\sin30^\circ</span>。夾角的基準是平面或法線，須先確認。</p></div>
+<p>改變磁通量的三種方式：改變 B（磁鐵靠近、電流變化）、改變面積 A（導體棒在導軌上滑動）、改變夾角 θ（線圈轉動，發電機）。</p>
+
+<h4>3. 法拉第電磁感應定律</h4>
+<p><strong>定律</strong>：通過線圈的磁通量發生變化時，線圈產生感應電動勢，其量值等於磁通量對時間的變化率乘以匝數。<span class="hand">看變化率，不看大小</span></p>
+<div class="formula" data-t="法拉第電磁感應定律"><div class="mb">\varepsilon = -N\frac{\Delta \Phi_B}{\Delta t}</div><p>ε：感應電動勢（V）　N：匝數　ΔΦ<sub>B</sub>／Δt：每匝磁通量的變化率（Wb/s）　負號：冷次定律</p></div>
+<div class="key">
+<ul>
+<li>負號表示感應電動勢所驅動的電流，其磁場反抗原磁通量的變化（冷次定律）；計算量值時取絕對值，方向另用冷次定律判斷。</li>
+<li>閉合電路才有感應電流：<span class="m">I = \varepsilon / R_{\text{總}}</span>；電路斷開時仍有感應電動勢，但無電流。</li>
+<li>感應電動勢取決於磁通量的<span class="circle">變化率</span>，與磁通量本身大小無關：磁通量為零的瞬間，變化率可能最大（發電機）。</li>
+<li>Φ–t 圖中，<strong>切線斜率</strong>的量值乘以 N 即感應電動勢量值；斜率正負改變，感應電流方向改變。</li>
+</ul></div>
+<figure class="fig"><svg viewBox="0 0 540 300" width="540">
+<line x1="60" y1="120" x2="510" y2="120" stroke="#1f2a44" stroke-width="1.8" marker-end="url(#P6-ak)"/>
+<line x1="60" y1="130" x2="60" y2="15" stroke="#1f2a44" stroke-width="1.8" marker-end="url(#P6-ak)"/>
+<text x="66" y="18" font-size="13">Φ（Wb）</text>
+<text x="505" y="138" font-size="13" text-anchor="end">t（s）</text>
+<polyline points="60,120 180,40 300,40 360,120 460,120" fill="none" stroke="#2f6fb5" stroke-width="2.5"/>
+<g stroke="#94a3b8" stroke-dasharray="4,4" stroke-width="1"><line x1="180" y1="40" x2="180" y2="280"/><line x1="300" y1="40" x2="300" y2="280"/><line x1="360" y1="120" x2="360" y2="280"/></g>
+<text x="180" y="135" font-size="12" text-anchor="middle">2</text><text x="300" y="135" font-size="12" text-anchor="middle">4</text><text x="360" y="135" font-size="12" text-anchor="middle">5</text>
+<line x1="60" y1="215" x2="510" y2="215" stroke="#1f2a44" stroke-width="1.8" marker-end="url(#P6-ak)"/>
+<line x1="60" y1="290" x2="60" y2="150" stroke="#1f2a44" stroke-width="1.8" marker-end="url(#P6-ak)"/>
+<text x="66" y="155" font-size="13">ε（V）</text>
+<text x="505" y="232" font-size="13" text-anchor="end">t（s）</text>
+<polyline points="60,245 180,245 180,215 300,215 300,155 360,155 360,215 460,215" fill="none" stroke="#c2410c" stroke-width="2.5"/>
+<text x="120" y="262" font-size="12" text-anchor="middle">斜率正 → ε 為負</text>
+<text x="330" y="148" font-size="12" text-anchor="middle">斜率負且陡</text>
+<text x="240" y="208" font-size="12" text-anchor="middle">Φ 不變 → ε = 0</text>
+</svg><figcaption>圖 P6-9　磁通量—時間圖與感應電動勢—時間圖的對應（ε 取 <span class="m">-N\Delta\Phi/\Delta t</span> 的符號）。4–5 s 段斜率量值為 0–2 s 段的 2 倍，故電動勢量值也為 2 倍且反號。</figcaption></figure>
+
+<h4>4. 冷次定律</h4>
+<div class="note"><p>反抗的是「變化」，不是原磁場本身。</p><p>冷次定律只管方向，量值由法拉第定律決定。</p></div>
+<p>冷次（Heinrich Lenz，1804–1865）於 1834 年提出：<strong>感應電流的方向，總是使它所產生的磁場反抗引起感應電流的磁通量<span class="circle">變化</span></strong>。</p>
+<div class="key"><p><strong>解題步驟</strong>（判斷感應電流方向）</p>
+<ol>
+<li>確認穿過線圈的原磁場方向。</li>
+<li>判斷磁通量增加或減少。</li>
+<li>增加則感應磁場與原磁場反向；減少則同向（「增反減同」）。</li>
+<li>以右手定則由感應磁場方向求線圈中電流方向。</li>
+</ol>
+<p>力的觀點：感應電流與磁鐵間的作用力總是反抗兩者的相對運動。磁鐵靠近時線圈排斥它，磁鐵遠離時線圈吸引它。</p></div>
+<div class="mnem"><p>磁通量：增反減同。相對運動：來拒去留。</p></div>
+<figure class="fig"><svg viewBox="0 0 540 250" width="540">
+<rect x="70" y="30" width="40" height="70" fill="#fbdcbd" stroke="#1f2a44" stroke-width="1.5"/>
+<rect x="70" y="100" width="40" height="0" stroke="#1f2a44"/>
+<rect x="70" y="30" width="40" height="35" fill="#cfe3f8" stroke="#1f2a44" stroke-width="1.5"/>
+<text x="90" y="53" font-size="15" text-anchor="middle">S</text>
+<text x="90" y="90" font-size="15" text-anchor="middle">N</text>
+<line x1="130" y1="40" x2="130" y2="90" stroke="#1f2a44" stroke-width="2" marker-end="url(#P6-ak)"/>
+<text x="138" y="70" font-size="13">靠近</text>
+<ellipse cx="90" cy="170" rx="60" ry="16" fill="none" stroke="#d9772b" stroke-width="4"/>
+<line x1="90" y1="105" x2="90" y2="200" stroke="#2f6fb5" stroke-width="2" marker-end="url(#P6-ab)"/>
+<text x="20" y="140" font-size="12">原磁場向下</text>
+<text x="20" y="155" font-size="12">Φ 增加</text>
+<line x1="170" y1="200" x2="170" y2="130" stroke="#2e8b57" stroke-width="2.5" marker-end="url(#P6-ag)"/>
+<text x="178" y="165" font-size="12">感應磁場向上</text>
+<line x1="60" y1="187" x2="100" y2="186" stroke="#c2410c" stroke-width="2" marker-end="url(#P6-ar)"/>
+<text x="90" y="225" font-size="12" text-anchor="middle">俯視：逆時針電流</text>
+<text x="90" y="243" font-size="12" text-anchor="middle">線圈上方為 N，排斥磁鐵</text>
+<rect x="340" y="30" width="40" height="70" fill="#fbdcbd" stroke="#1f2a44" stroke-width="1.5"/>
+<rect x="340" y="30" width="40" height="35" fill="#cfe3f8" stroke="#1f2a44" stroke-width="1.5"/>
+<text x="360" y="53" font-size="15" text-anchor="middle">S</text>
+<text x="360" y="90" font-size="15" text-anchor="middle">N</text>
+<line x1="400" y1="90" x2="400" y2="40" stroke="#1f2a44" stroke-width="2" marker-end="url(#P6-ak)"/>
+<text x="408" y="70" font-size="13">遠離</text>
+<ellipse cx="360" cy="170" rx="60" ry="16" fill="none" stroke="#d9772b" stroke-width="4"/>
+<line x1="360" y1="105" x2="360" y2="200" stroke="#2f6fb5" stroke-width="2" marker-end="url(#P6-ab)"/>
+<text x="290" y="140" font-size="12">原磁場向下</text>
+<text x="290" y="155" font-size="12">Φ 減少</text>
+<line x1="440" y1="130" x2="440" y2="200" stroke="#2e8b57" stroke-width="2.5" marker-end="url(#P6-ag)"/>
+<text x="448" y="165" font-size="12">感應磁場向下</text>
+<line x1="370" y1="187" x2="330" y2="186" stroke="#c2410c" stroke-width="2" marker-end="url(#P6-ar)"/>
+<text x="360" y="225" font-size="12" text-anchor="middle">俯視：順時針電流</text>
+<text x="360" y="243" font-size="12" text-anchor="middle">線圈上方為 S，吸引磁鐵</text>
+</svg><figcaption>圖 P6-10　冷次定律：N 極朝下的磁鐵靠近（左）與遠離（右）水平線圈（示意圖，未依比例）。紅色箭頭標示線圈前緣（靠讀者一側）的電流方向。</figcaption></figure>
+<div class="tip"><p><strong>深究　冷次定律是能量守恆的要求</strong></p>
+<p>假設感應電流的磁場「助長」磁通量變化：磁鐵靠近線圈時被線圈吸引而加速，磁通量變化更快，感應電流更大，吸引力更大……磁鐵的動能與線圈的焦耳熱將無中生有地持續增加，違反能量守恆。實際上感應電流必然反抗變化，推動磁鐵者須持續作功，此功轉為電能，再轉為電阻的熱能。因此法拉第定律中的負號並非人為規定，而是能量守恆的結果。</p></div>
+
+<h4>5. 動生電動勢與能量轉換（進階）</h4>
+<p>長度 L 的導體棒在均勻磁場 B 中，以速度 v 垂直切割磁力線（棒、速度、磁場三者互相垂直）：</p>
+<div class="mb">\varepsilon = \frac{\Delta\Phi_B}{\Delta t} = \frac{B\,(L\,v\Delta t)}{\Delta t} = BLv</div>
+<div class="formula" data-t="動生電動勢與電磁阻尼（進階）"><div class="mb">\varepsilon = BLv,\qquad I = \frac{BLv}{R},\qquad F = ILB = \frac{B^2L^2v}{R}</div><p>L：棒在磁場中的長度（m）　v：垂直切割磁力線的速率（m/s）　R：迴路總電阻（Ω）　F：棒所受磁力，方向與 v 相反</p></div>
+<figure class="fig"><svg viewBox="0 0 520 220" width="520">
+<g fill="#94a3b8"><circle cx="110" cy="50" r="2.5"/><circle cx="170" cy="50" r="2.5"/><circle cx="230" cy="50" r="2.5"/><circle cx="290" cy="50" r="2.5"/><circle cx="350" cy="50" r="2.5"/><circle cx="410" cy="50" r="2.5"/><circle cx="110" cy="110" r="2.5"/><circle cx="170" cy="110" r="2.5"/><circle cx="230" cy="110" r="2.5"/><circle cx="350" cy="110" r="2.5"/><circle cx="410" cy="110" r="2.5"/><circle cx="110" cy="170" r="2.5"/><circle cx="170" cy="170" r="2.5"/><circle cx="230" cy="170" r="2.5"/><circle cx="350" cy="170" r="2.5"/><circle cx="410" cy="170" r="2.5"/></g>
+<text x="440" y="40" font-size="13">B 出紙（⊙）</text>
+<line x1="60" y1="30" x2="470" y2="30" stroke="#1f2a44" stroke-width="3"/>
+<line x1="60" y1="190" x2="470" y2="190" stroke="#1f2a44" stroke-width="3"/>
+<line x1="60" y1="30" x2="60" y2="190" stroke="#1f2a44" stroke-width="3"/>
+<rect x="50" y="85" width="20" height="50" fill="#cfe3f8" stroke="#1f2a44" stroke-width="2"/>
+<text x="40" y="115" font-size="14" text-anchor="end">R</text>
+<line x1="300" y1="22" x2="300" y2="198" stroke="#d9772b" stroke-width="7"/>
+<line x1="310" y1="140" x2="370" y2="140" stroke="#1f2a44" stroke-width="2.5" marker-end="url(#P6-ak)"/>
+<text x="378" y="145" font-size="14">v</text>
+<line x1="290" y1="65" x2="290" y2="155" stroke="#c2410c" stroke-width="2" marker-end="url(#P6-ar)"/>
+<text x="280" y="105" font-size="13" text-anchor="end">I</text>
+<line x1="296" y1="95" x2="246" y2="95" stroke="#2e8b57" stroke-width="2.5" marker-end="url(#P6-ag)"/>
+<text x="240" y="88" font-size="13" text-anchor="end">磁力 F</text>
+<text x="315" y="215" font-size="13">導體棒長 L</text>
+</svg><figcaption>圖 P6-11　導體棒在導軌上向右滑動（示意圖，未依比例）。迴路面積增加、出紙的磁通量增加，感應電流在棒中向下（迴路順時針），棒所受磁力向左，反抗運動。</figcaption></figure>
+<ul>
+<li>感應電流 <span class="m">I = \dfrac{BLv}{R}</span>；棒受磁力 <span class="m">F = ILB = \dfrac{B^2L^2v}{R}</span>，方向與速度相反（電磁阻尼）。</li>
+<li>維持等速須施外力 <span class="m">F_{\text{外}} = \dfrac{B^2L^2v}{R}</span>；外力功率 <span class="m">F_{\text{外}}v = \dfrac{B^2L^2v^2}{R} = I^2R</span>，等於電阻的焦耳熱功率。力學能 → 電能 → 熱能，能量守恆。</li>
+<li>撤去外力後，棒在磁力作用下減速，速度愈小磁力愈小，最終停下；棒的初動能全部轉為熱。</li>
+</ul>
+<p>微觀解釋：棒中自由電子隨棒運動，受磁力 <span class="m">qvB</span> 沿棒方向移動，兩端累積電荷形成電位差；此即動生電動勢的來源。</p>
+
+<h4>6. 渦電流與電磁阻尼</h4>
+<ul>
+<li><strong>渦電流</strong>：塊狀導體處於變動的磁場中，或在磁場中運動時，導體內部產生的環狀感應電流。依冷次定律，渦電流反抗磁通量變化，產生阻尼力與焦耳熱。</li>
+<li>利用：<strong>電磁爐</strong>（線圈通以約 25–50 kHz 的交流電，在鐵質鍋底產生渦電流而發熱；鐵磁性鍋具效果佳，陶瓷、玻璃不導電無法加熱，鋁、銅鍋在一般機型效果差）、高鐵與捷運的渦電流煞車、磁鐵在銅管中緩慢下落、金屬探測器、電磁感應式煞車的體能訓練器材。</li>
+<li>防止：變壓器與馬達的鐵心以彼此絕緣的<span class="ul">薄矽鋼片疊合</span>，截斷渦電流的路徑，降低熱損失。</li>
+</ul>
+<div class="warn"><ul>
+<li>銅、鋁不是鐵磁性物質，靜止的磁鐵不吸銅管；磁鐵在銅管內下落變慢是渦電流的電磁阻尼，與「磁鐵吸引金屬」無關。</li>
+<li>電磁爐加熱的是鍋底，爐面玻璃本身不產生渦電流，其溫度來自鍋底的熱傳導。</li>
+</ul></div>
+
+<div class="exam"><p>學測常見考法：Φ–t 圖轉換為 ε–t 圖；磁鐵穿過線圈的電流方向與受力；磁鐵在銅管或鋁管中下落；線圈進出磁場區的電流—時間圖。陷阱：<em>線圈完全在均勻磁場內移動時無感應電流</em>；感應電流方向「增反減同」常被記成「一律反向」。</p></div>
+<h4>7. 感應電場：變動的磁場產生電場</h4>
+<ul>
+<li>法拉第定律的深層意義：變動的磁場在周圍空間產生<strong>感應電場</strong>，有無導線皆存在；放入導線時，感應電場推動自由電子形成感應電流。</li>
+<li>感應電場的電力線是<strong>封閉曲線</strong>，環繞變動的磁場；<span class="hand">與靜電場不同</span>靜電荷產生的電場電力線則起於正電荷、止於負電荷。感應電場沿封閉路徑繞一圈所作的功不為零，此即感應電動勢；靜電場繞一圈作功為零。</li>
+<li>課綱敘述「變動的磁場會產生電場」指此現象；與之對稱的「變動的電場會產生磁場」由馬克士威提出（第五節）。</li>
+</ul>
+
+<h4>8. 自感與互感（進階）</h4>
+<ul>
+<li><strong>互感</strong>：一線圈電流變化，使鄰近線圈的磁通量變化而產生感應電動勢，如法拉第鐵環、變壓器、無線充電。</li>
+<li><strong>自感</strong>：線圈本身電流變化時，自身磁通量變化產生反電動勢，反抗電流的變化。電路接通時電流漸增、切斷時開關處可能產生火花，即自感所致。</li>
+<li>電感 L 的定義：<span class="m">\varepsilon = -L\dfrac{\Delta I}{\Delta t}</span>，單位亨利（H）。</li>
+</ul>
+
+<h3>四、發電機、變壓器與輸電</h3>
+<h4>1. 交流發電機</h4>
+<ul>
+<li><strong>構造</strong>：線圈在磁場中轉動（或磁鐵在線圈中轉動），通過線圈的磁通量週期性變化而產生感應電動勢；以<strong>滑環</strong>與電刷將交流電引出。</li>
+<li><strong>能量轉換</strong>：力學能 → 電能。火力、核能、水力、風力、地熱發電皆以渦輪機或風車帶動發電機轉動，差別在推動轉子的能量來源；太陽光電（光伏效應）與燃料電池（化學反應）不經發電機。</li>
+<li>（進階）N 匝、面積 A 的線圈以角速度 ω 在均勻磁場 B 中轉動，<span class="m">\Phi_B = BA\cos\omega t</span>。</li>
+</ul>
+<div class="formula" data-t="交流發電機的電動勢（進階）"><div class="mb">\varepsilon = NBA\omega\sin\omega t,\qquad \varepsilon_{\max} = NBA\omega,\qquad f = \frac{\omega}{2\pi}</div><p>N：匝數　B：磁場（T）　A：線圈面積（m²）　ω：角速度（rad/s）　f：頻率（Hz）</p></div>
+<ul>
+<li>線圈平面<span class="circle">垂直</span>磁場時：磁通量最大，變化率為零，電動勢為零。線圈平面<strong>平行</strong>磁場時：磁通量為零，變化率最大，電動勢最大。</li>
+<li>轉速加倍：電動勢最大值與頻率皆加倍。<span class="hand">兩者一起變</span></li>
+<li>接上負載後線圈有電流，線圈受磁力形成反抗轉動的力矩；輸出電功率愈大，維持轉速所需的外力矩愈大。發電廠在用電尖峰時須投入更多燃料或水量，原因在此。</li>
+<li>直流發電機以換向器取代滑環，輸出方向不變但大小起伏的電流；與直流電動機構造相同、能量轉換方向相反。</li>
+</ul>
+<figure class="fig half"><svg viewBox="0 0 300 220" width="300">
+<rect x="10" y="50" width="50" height="110" fill="#fbdcbd" stroke="#1f2a44" stroke-width="1.5"/>
+<rect x="240" y="50" width="50" height="110" fill="#cfe3f8" stroke="#1f2a44" stroke-width="1.5"/>
+<text x="35" y="112" font-size="18" text-anchor="middle">N</text>
+<text x="265" y="112" font-size="18" text-anchor="middle">S</text>
+<polygon points="110,60 190,40 190,150 110,170" fill="none" stroke="#d9772b" stroke-width="4"/>
+<line x1="150" y1="20" x2="150" y2="190" stroke="#1f2a44" stroke-width="1.5" stroke-dasharray="5,4"/>
+<path d="M120,22 A30,10 0 0,0 180,22" fill="none" stroke="#2e8b57" stroke-width="2" marker-end="url(#P6-ag)"/>
+<text x="185" y="18" font-size="12">ω</text>
+<ellipse cx="135" cy="195" rx="10" ry="4" fill="#e2e8f0" stroke="#1f2a44"/>
+<ellipse cx="165" cy="205" rx="10" ry="4" fill="#e2e8f0" stroke="#1f2a44"/>
+<text x="230" y="210" font-size="12">滑環</text>
+<text x="150" y="105" font-size="12" text-anchor="middle">線圈</text>
+</svg><figcaption>圖 P6-12　交流發電機（示意圖，未依比例）</figcaption></figure><figure class="fig half"><svg viewBox="0 0 300 220" width="300">
+<line x1="30" y1="110" x2="290" y2="110" stroke="#1f2a44" stroke-width="1.5" marker-end="url(#P6-ak)"/>
+<line x1="30" y1="200" x2="30" y2="15" stroke="#1f2a44" stroke-width="1.5" marker-end="url(#P6-ak)"/>
+<text x="36" y="18" font-size="12">ε</text>
+<text x="285" y="128" font-size="12" text-anchor="end">t</text>
+<path d="M30,110 C55,30 80,30 90,40 C100,30 105,60 110,70" fill="none" stroke="none"/>
+<polyline fill="none" stroke="#c2410c" stroke-width="2.2" points="30,110 40,79 50,52 60,34 70,28 80,34 90,52 100,79 110,110 120,141 130,168 140,186 150,192 160,186 170,168 180,141 190,110 200,79 210,52 220,34 230,28 240,34 250,52 260,79 270,110"/>
+<polyline fill="none" stroke="#2f6fb5" stroke-width="1.8" stroke-dasharray="5,3" points="30,28 40,34 50,52 60,79 70,110 80,141 90,168 100,186 110,192 120,186 130,168 140,141 150,110 160,79 170,52 180,34 190,28 200,34 210,52 220,79 230,110 240,141 250,168 260,186 270,192"/>
+<text x="200" y="210" font-size="12">虛線：Φ（相差 1/4 週期）</text>
+<text x="76" y="22" font-size="12">ε<tspan baseline-shift="sub" font-size="9">max</tspan></text>
+</svg><figcaption>圖 P6-13　ε 與 Φ 隨時間變化。Φ 最大時 ε 為零。</figcaption></figure>
+
+<h4>2. 直流與交流：電流之戰</h4>
+<p>1880 年代，愛迪生（Thomas Edison，1847–1931）推廣低壓直流供電，輸電距離短；西屋公司（George Westinghouse）採用變壓器的交流系統，並於 1888 年取得特士拉（Nikola Tesla，1856–1943）的感應電動機專利。交流系統可用變壓器升壓輸送、降壓使用，由大型電廠供應廣大區域，19 世紀末逐漸成為主流。變壓器的發展：法拉第鐵環（1831）；高拉德與吉布斯的開放鐵心變壓器（1882）；匈牙利甘茨公司的閉合鐵心設計（1884–1885）；史坦利為西屋公司改良的商用變壓器（1886）。</p>
+<p>現代的高壓直流輸電（HVDC）以電力電子元件轉換交直流，適用於長距離與海底電纜，與一百多年前的「直流」技術條件不同。</p>
+
+<h4>3. 變壓器</h4>
+<figure class="fig"><svg viewBox="0 0 500 230" width="500">
+<path d="M150,40 L350,40 L350,190 L150,190 Z M180,70 L320,70 L320,160 L180,160 Z" fill="#e2e8f0" stroke="#1f2a44" stroke-width="1.5" fill-rule="evenodd"/>
+<g stroke="#d9772b" stroke-width="3"><line x1="140" y1="80" x2="190" y2="85"/><line x1="140" y1="95" x2="190" y2="100"/><line x1="140" y1="110" x2="190" y2="115"/><line x1="140" y1="125" x2="190" y2="130"/><line x1="140" y1="140" x2="190" y2="145"/></g>
+<g stroke="#2f6fb5" stroke-width="3"><line x1="310" y1="75" x2="360" y2="80"/><line x1="310" y1="87" x2="360" y2="92"/><line x1="310" y1="99" x2="360" y2="104"/><line x1="310" y1="111" x2="360" y2="116"/><line x1="310" y1="123" x2="360" y2="128"/><line x1="310" y1="135" x2="360" y2="140"/><line x1="310" y1="147" x2="360" y2="152"/></g>
+<polyline points="140,80 60,80" fill="none" stroke="#1f2a44" stroke-width="2"/><polyline points="140,145 60,145" fill="none" stroke="#1f2a44" stroke-width="2"/>
+<circle cx="60" cy="112" r="20" fill="#ffffff" stroke="#1f2a44" stroke-width="2"/>
+<path d="M48,112 Q54,100 60,112 T72,112" fill="none" stroke="#1f2a44" stroke-width="2"/>
+<line x1="60" y1="80" x2="60" y2="92" stroke="#1f2a44" stroke-width="2"/><line x1="60" y1="132" x2="60" y2="145" stroke="#1f2a44" stroke-width="2"/>
+<polyline points="360,75 440,75 440,95" fill="none" stroke="#1f2a44" stroke-width="2"/><polyline points="360,152 440,152 440,135" fill="none" stroke="#1f2a44" stroke-width="2"/>
+<rect x="430" y="95" width="20" height="40" fill="#cfe3f8" stroke="#1f2a44" stroke-width="2"/>
+<text x="460" y="120" font-size="13">負載</text>
+<text x="165" y="215" font-size="13" text-anchor="middle">原線圈 N₁、V₁</text>
+<text x="335" y="215" font-size="13" text-anchor="middle">副線圈 N₂、V₂</text>
+<text x="250" y="30" font-size="13" text-anchor="middle">疊片鐵心</text>
+<text x="25" y="70" font-size="12">交流電源</text>
+<path d="M200,55 L300,55" stroke="#2e8b57" stroke-width="2" marker-end="url(#P6-ag)"/>
+<text x="250" y="65" font-size="11" text-anchor="middle">變動磁通量</text>
+</svg><figcaption>圖 P6-14　變壓器（示意圖，未依比例）。原線圈的交流電在鐵心中產生變動磁通量，副線圈因互感產生交流電動勢；兩線圈之間沒有導線相連。</figcaption></figure>
+<div class="note"><p>電壓比＝匝數比；電流比＝匝數反比。</p><p>升壓必降流，功率不會變多。</p></div>
+<div class="formula" data-t="理想變壓器"><div class="mb">\frac{V_1}{V_2} = \frac{N_1}{N_2},\qquad V_1I_1 = V_2I_2,\qquad \frac{I_1}{I_2} = \frac{N_2}{N_1}</div><p>下標 1：原線圈　下標 2：副線圈　V：交流電壓（V）　I：電流（A）　N：匝數；理想變壓器無漏磁、無能量損耗，兩線圈每匝的磁通量變化率相同</p></div>
+<div class="key">
+<ul>
+<li><span class="m">N_2 &gt; N_1</span> 為升壓變壓器，電流降低；<span class="m">N_2 &lt; N_1</span> 為降壓變壓器。</li>
+<li>只適用於<span class="circle">交流電</span>（或變動電流）。原線圈接穩定直流時，鐵心磁通量不變，副線圈無感應電動勢；且原線圈只剩導線電阻，電流過大可能燒毀。</li>
+<li>變壓器不改變<strong>頻率</strong>，也不能「放大」功率：升壓必降流。</li>
+<li>副線圈的負載決定輸出電流，輸出功率再決定原線圈電流；副線圈開路時，理想變壓器原線圈電流趨近零。</li>
+<li>實際損耗：導線電阻的焦耳熱（銅損）、鐵心的渦電流與磁滯損耗（鐵損）、漏磁。配電變壓器效率約 98%–99%。</li>
+</ul></div>
+
+<h4>4. 高壓輸電</h4>
+<ul>
+<li>輸電線電阻 r、輸送功率 P、輸電電壓 V：線上電流 <span class="m">I = P/V</span>。</li>
+</ul>
+<div class="formula" data-t="輸電線損"><div class="mb">P_{\text{損}} = I^2 r = \left(\frac{P}{V}\right)^2 r \propto \frac{1}{V^2}</div><p>P：輸送功率（W）　V：輸電電壓（V）　I：線上電流（A）　r：輸電線電阻（Ω）</p></div>
+<ul>
+<li>輸送功率固定時，電壓提高為 n 倍，電流降為 1/n，線損降為 <span class="m">1/n^2</span>。<span class="hand">電壓 5 倍 → 線損 1/25</span></li>
+<li>臺灣電力系統（台電）：發電廠出口電壓經升壓後以 <strong>345 kV</strong> 超高壓輸電為骨幹，經一次變電所降為 161 kV、69 kV，供大型工業用戶並送往配電變電所；配電線路多為 22.8 kV、11.4 kV，再經桿上或地下配電變壓器降為 110 V／220 V 供一般用戶。</li>
+<li>台電公布 2024 年全系統線路損失率為 2.93%（淨發購電量中在輸配電過程損耗的比例）。</li>
+</ul>
+<figure class="fig"><svg viewBox="0 0 620 170" width="620">
+<rect x="10" y="60" width="70" height="50" fill="#fbdcbd" stroke="#1f2a44" stroke-width="1.5"/>
+<text x="45" y="90" font-size="13" text-anchor="middle">發電廠</text>
+<line x1="80" y1="85" x2="120" y2="85" stroke="#1f2a44" stroke-width="2"/>
+<circle cx="132" cy="85" r="12" fill="none" stroke="#1f2a44" stroke-width="2"/><circle cx="148" cy="85" r="12" fill="none" stroke="#1f2a44" stroke-width="2"/>
+<text x="140" y="125" font-size="12" text-anchor="middle">升壓</text>
+<line x1="160" y1="85" x2="290" y2="85" stroke="#c2410c" stroke-width="3"/>
+<text x="225" y="75" font-size="13" text-anchor="middle">345 kV</text>
+<circle cx="302" cy="85" r="12" fill="none" stroke="#1f2a44" stroke-width="2"/><circle cx="318" cy="85" r="12" fill="none" stroke="#1f2a44" stroke-width="2"/>
+<text x="310" y="125" font-size="12" text-anchor="middle">一次變電所</text>
+<line x1="330" y1="85" x2="420" y2="85" stroke="#d9772b" stroke-width="3"/>
+<text x="375" y="75" font-size="13" text-anchor="middle">161／69 kV</text>
+<circle cx="432" cy="85" r="12" fill="none" stroke="#1f2a44" stroke-width="2"/><circle cx="448" cy="85" r="12" fill="none" stroke="#1f2a44" stroke-width="2"/>
+<text x="440" y="125" font-size="12" text-anchor="middle">配電變電所</text>
+<line x1="460" y1="85" x2="520" y2="85" stroke="#2f6fb5" stroke-width="3"/>
+<text x="490" y="75" font-size="12" text-anchor="middle">22.8／11.4 kV</text>
+<circle cx="532" cy="85" r="10" fill="none" stroke="#1f2a44" stroke-width="2"/><circle cx="546" cy="85" r="10" fill="none" stroke="#1f2a44" stroke-width="2"/>
+<line x1="556" y1="85" x2="575" y2="85" stroke="#2e8b57" stroke-width="3"/>
+<polygon points="575,95 597,70 619,95" fill="#c9ebd7" stroke="#1f2a44" stroke-width="1.5"/>
+<rect x="580" y="95" width="34" height="25" fill="#c9ebd7" stroke="#1f2a44" stroke-width="1.5"/>
+<text x="597" y="140" font-size="12" text-anchor="middle">用戶</text>
+<text x="597" y="158" font-size="12" text-anchor="middle">110／220 V</text>
+</svg><figcaption>圖 P6-15　臺灣輸配電系統示意（示意圖，未依比例；兩個相切圓為變壓器符號）。</figcaption></figure>
+<div class="warn"><ul>
+<li>線損用 <span class="m">P = I^2r</span>，其中 I 為線上電流、r 為<strong>輸電線</strong>電阻。以 <span class="m">P = V^2/r</span> 計算而得出「電壓愈高損耗愈大」是常見錯誤：輸電電壓 V 是送電端對地（或兩線間）的電壓，並非落在輸電線電阻上的電壓降。</li>
+<li>高壓輸電的代價：絕緣要求高（礙子串長、鐵塔高）、需要變電所；輸電電壓並非愈高愈好。</li>
+</ul></div>
+
+<div class="exam"><p>學測常見考法：變壓器匝數比、電壓與電流計算；高壓輸電線損比例；發電機中磁通量與電動勢的相位；判斷各種電器是否應用電磁感應。陷阱：<em>變壓器接直流無輸出</em>；線損用 <span class="m">I^2r</span> 而非 <span class="m">V^2/r</span>。</p></div>
+<h4>5. 電磁感應的生活應用</h4>
+<table class="t"><thead><tr><th>應用</th><th>原理</th><th>補充</th></tr></thead><tbody>
+<tr><td>無線充電（Qi 規格）</td><td>充電座線圈通交流電，手機內線圈因互感產生電動勢</td><td>Qi 規格工作頻率約 105–205 kHz；兩線圈須靠近、對準，距離增加則耦合變差</td></tr>
+<tr><td>電磁爐</td><td>變動磁場在鍋底產生渦電流而發熱</td><td>工作頻率約 25–50 kHz；須使用鐵磁性鍋具</td></tr>
+<tr><td>電吉他拾音器</td><td>磁化的金屬弦振動，使線圈磁通量變化</td><td>尼龍弦不適用</td></tr>
+<tr><td>感應式卡片（悠遊卡等）</td><td>讀卡機的交變磁場使卡內線圈產生電動勢，供晶片運作並回傳資料</td><td>卡片本身無電池</td></tr>
+<tr><td>金屬探測器</td><td>金屬中的渦電流產生磁場，改變探測線圈的訊號</td><td>機場安檢、地雷探測</td></tr>
+<tr><td>動圈式麥克風</td><td>聲波使線圈在磁場中振動，產生電訊號</td><td>與揚聲器構造相同、能量轉換方向相反</td></tr>
+<tr><td>漏電斷路器</td><td>火線與中性線電流不相等時，環形鐵心中淨磁通量變化，感應線圈產生電動勢使開關跳脫</td><td>見第七節</td></tr>
+</tbody></table>
+
+<h3>五、馬克士威方程式與電磁波</h3>
+<div class="note"><p>電生磁：奧斯特（電流）＋馬克士威（變動電場）。</p><p>磁生電：法拉第（變動磁場）。</p></div>
+<h4>1. 馬克士威的統整</h4>
+<p>馬克士威（James Clerk Maxwell，1831–1879）以法拉第的「力線」與「場」的觀念為基礎，將電磁學數學化。約 1862 年，他由理論算出電磁擾動的傳播速率與當時測得的光速相近，推論光是電磁現象；1865 年發表〈電磁場的動力學理論〉，1873 年出版《電磁通論》。現今通用的四條向量形式方程式，由黑維塞（Oliver Heaviside）等人在 1880 年代整理而成。</p>
+<table class="t"><thead><tr><th>方程式</th><th>內容（定性）</th><th>對應的實驗事實</th></tr></thead><tbody>
+<tr><td>電場的高斯定律</td><td>電荷產生電場；穿出封閉曲面的電通量與面內淨電荷成正比</td><td>庫侖定律；電力線起於正電荷、止於負電荷</td></tr>
+<tr><td>磁場的高斯定律</td><td>穿出任何封閉曲面的淨磁通量為零</td><td>磁力線封閉；無磁單極</td></tr>
+<tr><td>法拉第定律</td><td><strong>變動的磁場產生電場</strong>（感應電場環繞變動的磁通量）</td><td>電磁感應；發電機、變壓器</td></tr>
+<tr><td>安培—馬克士威定律</td><td>電流與<strong>變動的電場</strong>產生磁場</td><td>奧斯特實驗、電流磁效應；「變動電場產生磁場」為馬克士威的理論推論，後由電磁波的存在證實</td></tr>
+</tbody></table>
+<div class="tip"><p><strong>深究　位移電流</strong></p>
+<p>電容器充電時，導線中有電流，兩極板之間卻沒有電荷流過。若只有「電流產生磁場」，則包圍導線的環路所圍曲面，若選擇穿過極板間的曲面，算出的磁場將為零，與選擇穿過導線的曲面互相矛盾。馬克士威補上一項：極板間<strong>變動的電場</strong>與電流一樣會產生磁場，稱為位移電流 <span class="m">\varepsilon_0\dfrac{\Delta\Phi_E}{\Delta t}</span>。補上此項後，方程式組對電與磁呈對稱：變動的磁場產生電場，變動的電場產生磁場，二者可互相維持而脫離電荷向外傳播，電磁波的預測由此而來。</p></div>
+
+<h4>2. 電磁波的產生與性質</h4>
+<figure class="fig"><svg viewBox="0 0 560 230" width="560">
+<line x1="40" y1="120" x2="530" y2="120" stroke="#1f2a44" stroke-width="1.8" marker-end="url(#P6-ak)"/>
+<text x="525" y="140" font-size="13" text-anchor="end">傳播方向</text>
+<polyline fill="none" stroke="#c2410c" stroke-width="2.2" points="40,120 60,82 80,51 100,32 120,29 140,41 160,66 180,101 200,139 220,174 240,199 260,211 280,208 300,190 320,161 340,124 360,86 380,54 400,33 420,28 440,39 460,63 480,97"/>
+<polyline fill="none" stroke="#2f6fb5" stroke-width="2.2" points="40,120 60,136 80,148 100,159 120,163 140,157 160,147 180,131 200,111 220,97 240,85 260,80 280,82 300,90 320,103 340,119 360,135 380,149 400,158 420,163 440,159 460,150 480,134"/>
+<text x="110" y="22" font-size="14">E（鉛直平面）</text>
+<text x="110" y="185" font-size="14">B（水平平面，斜視）</text>
+<g stroke="#94a3b8" stroke-width="1"><line x1="120" y1="29" x2="120" y2="163"/><line x1="420" y1="28" x2="420" y2="163"/></g>
+<text x="270" y="228" font-size="13" text-anchor="middle">真空中 E 與 B 同相、互相垂直，且皆垂直傳播方向</text>
+</svg><figcaption>圖 P6-16　平面電磁波的電場與磁場（示意圖，未依比例；磁場畫在斜視的水平面上，振幅已縮小）。<span class="m">\vec{E}\times\vec{B}</span> 的方向即傳播方向。</figcaption></figure>
+<ul>
+<li><strong>產生</strong>：<span class="circle">加速運動</span>的電荷輻射電磁波。天線中電子來回振盪（交流電），即持續加速的電荷。靜止電荷只有靜電場；等速運動的電荷有電場與磁場，但不輻射。</li>
+<li><strong>橫波</strong>：電場、磁場、傳播方向三者互相垂直；可發生偏振。</li>
+<li><strong>不需介質</strong>：可在真空中傳播；真空中所有頻率的電磁波速率皆為</li>
+</ul>
+<div class="formula" data-t="真空中的電磁波"><div class="mb">c = \frac{1}{\sqrt{\mu_0\varepsilon_0}} \approx 3.00\times10^{8}\ \mathrm{m/s},\qquad c = f\lambda,\qquad \frac{E}{B} = c</div><p>c：真空中光速，定義值 299792458 m/s　μ<sub>0</sub>：真空磁導率　ε<sub>0</sub>：真空電容率　f：頻率（Hz）　λ：波長（m）　E、B：電場（V/m）與磁場（T）量值</p></div>
+<ul>
+<li>波速、頻率、波長：<span class="m">c = f\lambda</span>；頻率由波源決定，進入介質時頻率不變，波速與波長變小。</li>
+<li>具有波的共同性質：反射、折射、干涉、繞射、偏振。</li>
+</ul>
+<div class="tip"><p><strong>深究　由兩個常數算出光速</strong></p>
+<p>以 2022 年 CODATA 值 <span class="m">\mu_0 = 1.25663706127\times10^{-6}\ \mathrm{N/A^2}</span>、<span class="m">\varepsilon_0 = 8.8541878188\times10^{-12}\ \mathrm{F/m}</span>：</p>
+<div class="mb">\mu_0\varepsilon_0 \approx 1.1127\times10^{-17}\ \mathrm{s^2/m^2},\qquad \frac{1}{\sqrt{\mu_0\varepsilon_0}} \approx 2.998\times10^{8}\ \mathrm{m/s}</div>
+<p>μ<sub>0</sub> 可由電流間的磁力測得，ε<sub>0</sub> 可由電荷間的靜電力測得，兩者都來自與光無關的桌上實驗。馬克士威時代以韋伯與柯爾勞施（1856）測得的電磁單位比值計算，所得數值與斐左、傅科的光速量測值相近，此一「巧合」成為「光是電磁波」的關鍵論據。現行國際單位制中光速為定義值，公尺由光速與秒定義。</p></div>
+
+<div class="exam"><p>學測常見考法：馬克士威方程式各條的定性意義；電磁波的產生條件與橫波性質；由 μ<sub>0</sub>、ε<sub>0</sub> 算光速；赫茲實驗與馬克士威預測的關係。陷阱：<em>預測者為馬克士威，實驗證實者為赫茲</em>；靜止或等速電荷不輻射電磁波。</p></div>
+<h4>3. 赫茲的實驗驗證</h4>
+<ul>
+<li>赫茲（Heinrich Hertz，1857–1894）自 1886 年起在德國卡斯魯爾以感應線圈使兩金屬球間產生高壓火花，火花放電形成高頻振盪電流，向外輻射電磁波；在數公尺外以一個留有小間隙的金屬環作為接收器，間隙處出現微小火花，即偵測到電磁波。1888 年發表成果。</li>
+<li>赫茲以金屬板反射電磁波形成駐波，量得波長，配合振盪頻率算出波速與光速相當；並證實電磁波可反射、折射、偏振，與光的行為一致。</li>
+<li>頻率單位赫茲（Hz）以其命名。赫茲本人並未預見實用價值；1901 年 12 月馬可尼（Guglielmo Marconi，1874–1937）宣稱完成橫越大西洋的無線電訊號接收（當時未經獨立證實），1909 年與布勞恩共獲諾貝爾物理獎。</li>
+</ul>
+
+<h4>4. 電磁場的能量與手機通訊</h4>
+<ul>
+<li>電場與磁場本身都<span class="ul">儲存能量</span>（課綱 PBa-Ⅴc-1）。<span class="hand">場本身就有能量</span>（進階）真空中單位體積的能量 <span class="m">u = \dfrac{1}{2}\varepsilon_0E^2 + \dfrac{B^2}{2\mu_0}</span>；電磁波中兩項相等。</li>
+<li>電磁波傳播時，能量隨波以光速傳遞；照射到物體時可被吸收（轉為熱能、使電子振盪），也帶有動量（輻射壓，太陽帆即利用此原理）。</li>
+<li><strong>手機通訊的能量鏈</strong>：電池的化學能 → 電路中的電能 → 天線內振盪電流 → 變動的電場與磁場互相感生，以電磁波向外傳遞能量與訊息 → 基地台天線中的電子受電場作用而振盪，產生微弱的交流電訊號 → 放大、解調得到訊息。下行方向（基地台到手機）同理。</li>
+<li>天線長度常與波長同一數量級（例如四分之一波長）。頻率愈高，波長愈短，天線可愈小，但繞射能力較差、穿透建築物的衰減較大，基地台須更密。</li>
+<li>臺灣 2019 年底至 2020 年初完成第一波 5G 頻譜競標，釋出 3.5 GHz（270 MHz 頻寬）、28 GHz（2500 MHz 頻寬）與 1800 MHz 頻段。3.5 GHz 的波長 <span class="m">\lambda = c/f \approx 8.6\ \mathrm{cm}</span>，28 GHz 約 1.1 cm（毫米波）。</li>
+</ul>
+<figure class="fig"><svg viewBox="0 0 560 200" width="560">
+<ellipse cx="140" cy="100" rx="70" ry="45" fill="none" stroke="#2f6fb5" stroke-width="2.2"/>
+<line x1="205" y1="110" x2="203" y2="92" stroke="#2f6fb5" stroke-width="2.2" marker-end="url(#P6-ab)"/>
+<line x1="140" y1="170" x2="140" y2="30" stroke="#c2410c" stroke-width="3" marker-end="url(#P6-ar)"/>
+<text x="148" y="40" font-size="13">變動的 E（增強中）</text>
+<text x="140" y="190" font-size="13" text-anchor="middle">產生環繞的 B</text>
+<ellipse cx="400" cy="100" rx="70" ry="45" fill="none" stroke="#c2410c" stroke-width="2.2"/>
+<line x1="335" y1="110" x2="337" y2="92" stroke="#c2410c" stroke-width="2.2" marker-end="url(#P6-ar)"/>
+<line x1="400" y1="170" x2="400" y2="30" stroke="#2f6fb5" stroke-width="3" marker-end="url(#P6-ab)"/>
+<text x="408" y="40" font-size="13">變動的 B（增強中）</text>
+<text x="400" y="190" font-size="13" text-anchor="middle">產生環繞的 E（方向反抗變化）</text>
+<line x1="230" y1="100" x2="310" y2="100" stroke="#1f2a44" stroke-width="2" marker-end="url(#P6-ak)"/>
+<line x1="310" y1="115" x2="230" y2="115" stroke="#1f2a44" stroke-width="2" marker-end="url(#P6-ak)"/>
+<text x="270" y="90" font-size="12" text-anchor="middle">互相感生</text>
+</svg><figcaption>圖 P6-17　變動的電場產生磁場（左，右手定則方向），變動的磁場產生電場（右，冷次定律方向，與左圖繞向相反）。二者交替感生，使電磁擾動向外傳播（示意圖）。</figcaption></figure>
+<div class="warn"><p>電磁波中「電場產生磁場、磁場再產生電場」不可理解為兩者輪流出現、此消彼長。真空中的平面電磁波，E 與 B 同時達到最大、同時為零（同相），能量隨波前進，並非在電場與磁場之間來回轉換；此點與 LC 振盪電路中能量在電容與電感間交替的情形不同。</p></div>
+
+<h3>六、電磁波譜與應用</h3>
+<div class="note"><p>由長波到短波：無、微、紅、可、紫、X、γ。</p><p>波長愈短 → 頻率愈高 → 光子能量愈大。</p></div>
+<p>電磁波依頻率（或波長）排列成<strong>電磁波譜</strong>。各波段在真空中速率相同，差別在頻率、波長與<span class="circle">光子能量</span>；光子能量 <span class="m">E = hf</span>（見 P11），頻率愈高，與物質的交互作用方式愈不同。<span class="hand">本質相同，只差頻率</span></p>
+<figure class="fig"><svg viewBox="0 0 620 210" width="620">
+<rect x="20" y="60" width="130" height="40" fill="#cfe3f8" stroke="#1f2a44" stroke-width="1"/>
+<rect x="150" y="60" width="80" height="40" fill="#c9ebd7" stroke="#1f2a44" stroke-width="1"/>
+<rect x="230" y="60" width="80" height="40" fill="#fbdcbd" stroke="#1f2a44" stroke-width="1"/>
+<rect x="310" y="60" width="24" height="40" fill="#e2e8f0" stroke="#1f2a44" stroke-width="1"/>
+<rect x="310" y="60" width="4" height="40" fill="#c2410c"/><rect x="314" y="60" width="4" height="40" fill="#d9772b"/><rect x="318" y="60" width="4" height="40" fill="#e8c547"/><rect x="322" y="60" width="4" height="40" fill="#2e8b57"/><rect x="326" y="60" width="4" height="40" fill="#2f6fb5"/><rect x="330" y="60" width="4" height="40" fill="#7a5cc2"/>
+<rect x="334" y="60" width="76" height="40" fill="#ddd1f5" stroke="#1f2a44" stroke-width="1"/>
+<rect x="410" y="60" width="90" height="40" fill="#e2e8f0" stroke="#1f2a44" stroke-width="1"/>
+<rect x="500" y="60" width="100" height="40" fill="#94a3b8" stroke="#1f2a44" stroke-width="1"/>
+<text x="85" y="85" font-size="13" text-anchor="middle">無線電波</text>
+<text x="190" y="85" font-size="13" text-anchor="middle">微波</text>
+<text x="270" y="85" font-size="13" text-anchor="middle">紅外線</text>
+<text x="322" y="52" font-size="12" text-anchor="middle">可見光</text>
+<text x="372" y="85" font-size="13" text-anchor="middle">紫外線</text>
+<text x="455" y="85" font-size="13" text-anchor="middle">X 射線</text>
+<text x="550" y="85" font-size="13" text-anchor="middle">γ 射線</text>
+<line x1="20" y1="130" x2="600" y2="130" stroke="#1f2a44" stroke-width="1.5" marker-end="url(#P6-ak)"/>
+<text x="600" y="148" font-size="13" text-anchor="end">頻率增加、光子能量增加 →</text>
+<line x1="600" y1="170" x2="20" y2="170" stroke="#1f2a44" stroke-width="1.5" marker-end="url(#P6-ak)"/>
+<text x="24" y="190" font-size="13">← 波長增加</text>
+<text x="150" y="122" font-size="11" text-anchor="middle">1 m</text>
+<text x="230" y="122" font-size="11" text-anchor="middle">1 mm</text>
+<text x="306" y="122" font-size="11" text-anchor="end">700 nm</text>
+<text x="340" y="122" font-size="11" text-anchor="start">380 nm</text>
+<text x="416" y="122" font-size="11" text-anchor="start">10 nm</text>
+<text x="500" y="122" font-size="11" text-anchor="middle">0.01 nm</text>
+<text x="440" y="30" font-size="13" fill="#d64545" transform="rotate(-3 440 30)">紫外線高頻段起具游離能力</text>
+</svg><figcaption>圖 P6-18　電磁波譜（示意圖，未依比例；各波段界線為慣用的約略值，並無嚴格分界）。</figcaption></figure>
+<table class="t"><thead><tr><th>波段</th><th>波長約略範圍</th><th>主要產生方式</th><th>應用</th><th>注意</th></tr></thead><tbody>
+<tr><td>無線電波</td><td>大於約 1 m（含調幅、調頻廣播、電視）</td><td>天線中的振盪電流</td><td>廣播、電視、無線通訊、天文電波觀測</td><td>長波可沿地表繞射，部分波段受電離層反射</td></tr>
+<tr><td>微波</td><td>約 1 mm–1 m</td><td>磁控管、電子振盪電路</td><td>行動通訊（4G、5G）、Wi-Fi、雷達、微波爐（約 2.45 GHz）、衛星通訊</td><td>可穿透雲層；宇宙微波背景輻射屬此波段</td></tr>
+<tr><td>紅外線</td><td>約 700 nm–1 mm</td><td>物體熱輻射、分子振動與轉動</td><td>紅外線熱像儀、遙控器、夜視、耳溫槍、光纖通訊（近紅外光）</td><td>常溫物體輻射以紅外線為主；溫室效應與紅外線吸收有關</td></tr>
+<tr><td>可見光</td><td>約 380–700 nm</td><td>高溫物體、原子中電子躍遷</td><td>照明、視覺、光學儀器</td><td>紅光波長最長、紫光最短</td></tr>
+<tr><td>紫外線</td><td>約 10–380 nm</td><td>太陽、汞燈、原子躍遷</td><td>殺菌、螢光檢測、促進皮膚合成維生素 D</td><td>過量造成曬傷、皮膚癌；臭氧層吸收大部分 UVB、UVC</td></tr>
+<tr><td>X 射線</td><td>約 0.01–10 nm</td><td>高速電子撞擊金屬靶（制動輻射）、內層電子躍遷</td><td>醫療影像、電腦斷層、安檢、晶體結構分析</td><td>游離輻射；大氣吸收，X 射線天文須在太空觀測</td></tr>
+<tr><td>γ 射線</td><td>小於約 0.01 nm</td><td>原子核衰變、核反應、宇宙高能現象</td><td>放射治療（如加馬刀）、醫療器材滅菌</td><td>游離輻射，穿透力強</td></tr>
+</tbody></table>
+<div class="warn"><ul>
+<li>X 射線與 γ 射線的波長範圍有重疊，習慣上依<strong>來源</strong>區分：原子核衰變放出者稱 γ 射線，電子過程產生者稱 X 射線。</li>
+<li><strong>游離輻射</strong>指光子（或粒子）能量足以將電子自原子或分子游離者，包括高頻紫外線、X 射線、γ 射線；無線電波、微波、紅外線、可見光屬<strong>非游離輻射</strong>，主要生物效應為熱效應。</li>
+<li>微波爐的 2.45 GHz <em>不是</em>水分子的「共振頻率」。此頻率為國際通用的工業、科學、醫療（ISM）頻段之一；水是極性分子，在交變電場中反覆轉向，與周圍分子碰撞而將電磁能轉為熱能。</li>
+</ul></div>
+<div class="exam"><p>學測常見考法：波譜排序（頻率、波長、光子能量）；由頻率算波長（<span class="m">\lambda = c/f</span>）；判斷某應用使用的波段；游離與非游離輻射的區分。陷阱：<em>真空中各波段速率相同</em>，「頻率高的電磁波跑得快」為誤。</p></div>
+<div class="tip"><p><strong>補充　行動通訊的電磁波與健康</strong></p>
+<ul>
+<li>手機與基地台使用的微波屬非游離輻射，光子能量遠低於打斷化學鍵所需，已確認的生物效應主要為熱效應；各國依國際準則訂定暴露上限。</li>
+<li>世界衛生組織轄下國際癌症研究機構（IARC）於 2011 年 5 月將射頻電磁場列為「2B 類：可能致癌」，主要依據為長期使用手機與神經膠質瘤風險的有限流行病學證據。分類等級描述的是<strong>證據強度</strong>，不表示風險大小。</li>
+<li>基地台與手機的距離：基地台功率較大但距離遠；手機貼近頭部，暴露量主要由手機決定。訊號不良時手機會提高發射功率。</li>
+</ul></div>
+
+<h3>七、用電安全</h3>
+<div class="note"><p>致命的是「流經心臟的電流」，電壓只是推手。</p><p>I = V／R：同樣 110 V，濕手 R 小，電流大。</p></div>
+<h4>1. 電流對人體的效應</h4>
+<p>人體受電擊的危害取決於<span class="circle">電流大小</span>、通電時間、電流路徑（是否經過心臟）與頻率。電壓需透過人體電阻才決定電流：<span class="m">I = V/R_{\text{人體}}</span>。<span class="hand">濕手觸電特別危險</span></p>
+<table class="t"><thead><tr><th>電流（50/60 Hz 交流，約略值）</th><th>效應</th></tr></thead><tbody>
+<tr><td>約 1 mA</td><td>開始有感覺（感知閾值）</td></tr>
+<tr><td>約 10 mA</td><td>肌肉收縮無法自行放手（擺脫閾值，因人而異）</td></tr>
+<tr><td>大於約 30 mA，持續約 1 s</td><td>經胸部時可能引起心室顫動，危及生命</td></tr>
+</tbody></table>
+<ul>
+<li>人體電阻：皮膚乾燥時可達 10<sup>5</sup> Ω 數量級；潮濕或破損時可降至約 1000 Ω。例：110 V、<span class="m">R = 1000\ \Omega</span> 時，<span class="m">I = 0.11\ \mathrm{A} = 110\ \mathrm{mA}</span>，已達致命範圍。</li>
+<li><strong>鳥站在單一條高壓線上</strong>不觸電：兩腳間導線極短、電阻極小，兩腳間電位差近乎零，流經鳥身的電流可忽略。若鳥同時碰觸兩條電位不同的導線，或一腳觸線、一翼碰到接地的電塔，則會觸電。</li>
+</ul>
+<h4>2. 常見的用電事故</h4>
+<table class="t"><thead><tr><th>名稱</th><th>意義</th><th>後果</th><th>防護</th></tr></thead><tbody>
+<tr><td>短路</td><td>火線與中性線（或火線與地）間未經負載直接以低電阻相接</td><td>電流瞬間極大，導線過熱起火</td><td>斷路器（無熔絲開關）、保險絲</td></tr>
+<tr><td>過載</td><td>同一迴路或延長線上電器總功率過大，電流超過額定</td><td>導線與插座長時間過熱、絕緣劣化起火</td><td>斷路器；計算總電流；不串接延長線</td></tr>
+<tr><td>漏電</td><td>電流經非預定路徑（外殼、人體、水）流入大地</td><td>人員觸電</td><td>接地、漏電斷路器</td></tr>
+<tr><td>接觸不良</td><td>插頭鬆動、氧化，接觸電阻變大</td><td>局部 <span class="m">I^2R</span> 發熱，插座焦黑</td><td>插頭插緊；定期檢查；清除積塵（積塵受潮可能「積汙導電」）</td></tr>
+</tbody></table>
+<div class="formula" data-t="延長線與迴路的總電流"><div class="mb">I_{\text{總}} = \frac{P_1 + P_2 + \cdots}{V}\ \le\ I_{\text{額定}}</div><p>家用電器為並聯，總電流為各電器電流之和；V：供電電壓（110 V 或 220 V）。例：15 A 延長線接 110 V，總功率上限 <span class="m">110\times15 = 1650\ \mathrm{W}</span>。</p></div>
+<h4>3. 保護裝置</h4>
+<ul>
+<li><strong>保險絲</strong>：低熔點合金，<span class="ul">串聯在火線上</span>；電流過大時因焦耳熱熔斷。熔斷後須更換同規格者，不可以銅絲代替。</li>
+<li><strong>斷路器（無熔絲開關）</strong>：電流過大時，以雙金屬片受熱彎曲（過載，延時跳脫）或電磁鐵吸引（短路，瞬時跳脫）使開關斷開；排除故障後可復歸重複使用。</li>
+<li><strong>漏電斷路器</strong>：比較流出（火線）與流回（中性線）的電流，兩者差值超過設定值即跳脫。高感度型額定感度電流在 30 mA 以下，高速型動作時間在 0.1 s 以下。浴室插座、電熱水器、靠近水槽的插座等潮濕場所的迴路依法須裝設。</li>
+<li><strong>接地</strong>：電器金屬外殼經三孔插座的接地腳以導線連到大地。外殼漏電時，電流經低電阻的接地線入地，外殼電位維持近於零，同時使漏電斷路器偵測到電流差而跳脫。正常使用時接地線<em>沒有</em>電流。</li>
+</ul>
+<figure class="fig"><svg viewBox="0 0 560 270" width="560">
+<circle cx="230" cy="115" r="55" fill="none" stroke="#94a3b8" stroke-width="16"/>
+<line x1="40" y1="100" x2="520" y2="100" stroke="#c2410c" stroke-width="3.5"/>
+<line x1="40" y1="130" x2="520" y2="130" stroke="#2f6fb5" stroke-width="3.5"/>
+<text x="30" y="96" font-size="13" text-anchor="end">火線</text>
+<text x="30" y="140" font-size="13" text-anchor="end">中性線</text>
+<line x1="400" y1="90" x2="460" y2="90" stroke="#c2410c" stroke-width="2" marker-end="url(#P6-ar)"/>
+<line x1="460" y1="142" x2="400" y2="142" stroke="#2f6fb5" stroke-width="2" marker-end="url(#P6-ab)"/>
+<text x="430" y="82" font-size="12" text-anchor="middle">I₁ 流出</text>
+<text x="430" y="160" font-size="12" text-anchor="middle">I₂ 流回</text>
+<g stroke="#d9772b" stroke-width="3"><line x1="270" y1="150" x2="290" y2="160"/><line x1="265" y1="160" x2="282" y2="172"/><line x1="258" y1="168" x2="272" y2="182"/></g>
+<polyline points="285,175 320,205 360,205" fill="none" stroke="#1f2a44" stroke-width="2"/>
+<rect x="360" y="192" width="70" height="28" fill="#fbdcbd" stroke="#1f2a44" stroke-width="1.5"/>
+<text x="395" y="211" font-size="12" text-anchor="middle">跳脫線圈</text>
+<text x="230" y="40" font-size="13" text-anchor="middle">環形鐵心（零相比流器）</text>
+<text x="60" y="258" font-size="13" fill="#d64545" transform="rotate(-2 60 258)">I₁ ≠ I₂ → 淨磁通量變化 → 感應電動勢 → 跳脫</text>
+</svg><figcaption>圖 P6-19　漏電斷路器原理（示意圖，未依比例）。正常時 I₁ = I₂，兩線電流產生的磁通量互相抵消；有漏電時差額電流使鐵心中出現交變磁通量，感應線圈產生電動勢而觸發跳脫。</figcaption></figure>
+<figure class="fig"><svg viewBox="0 0 560 230" width="560">
+<line x1="30" y1="50" x2="400" y2="50" stroke="#c2410c" stroke-width="3"/>
+<line x1="30" y1="90" x2="400" y2="90" stroke="#2f6fb5" stroke-width="3"/>
+<line x1="30" y1="130" x2="400" y2="130" stroke="#2e8b57" stroke-width="3" stroke-dasharray="8,4"/>
+<text x="25" y="46" font-size="13" text-anchor="end">火</text>
+<text x="25" y="86" font-size="13" text-anchor="end">中</text>
+<text x="25" y="126" font-size="13" text-anchor="end">地</text>
+<rect x="60" y="35" width="40" height="30" fill="#fbdcbd" stroke="#1f2a44" stroke-width="1.5"/>
+<text x="80" y="27" font-size="12" text-anchor="middle">斷路器</text>
+<line x1="180" y1="50" x2="180" y2="160" stroke="#1f2a44" stroke-width="1.5"/>
+<line x1="210" y1="90" x2="210" y2="160" stroke="#1f2a44" stroke-width="1.5"/>
+<rect x="160" y="160" width="70" height="40" fill="#cfe3f8" stroke="#1f2a44" stroke-width="1.5"/>
+<text x="195" y="185" font-size="12" text-anchor="middle">電器甲</text>
+<line x1="300" y1="50" x2="300" y2="160" stroke="#1f2a44" stroke-width="1.5"/>
+<line x1="330" y1="90" x2="330" y2="160" stroke="#1f2a44" stroke-width="1.5"/>
+<line x1="360" y1="130" x2="360" y2="160" stroke="#2e8b57" stroke-width="1.5"/>
+<rect x="280" y="160" width="100" height="40" fill="#e2e8f0" stroke="#1f2a44" stroke-width="2"/>
+<text x="330" y="185" font-size="12" text-anchor="middle">金屬外殼電器乙</text>
+<line x1="400" y1="130" x2="440" y2="130" stroke="#2e8b57" stroke-width="3"/>
+<line x1="440" y1="130" x2="440" y2="200" stroke="#2e8b57" stroke-width="3"/>
+<line x1="420" y1="200" x2="460" y2="200" stroke="#2e8b57" stroke-width="3"/><line x1="427" y1="208" x2="453" y2="208" stroke="#2e8b57" stroke-width="3"/><line x1="434" y1="216" x2="446" y2="216" stroke="#2e8b57" stroke-width="3"/>
+<text x="470" y="210" font-size="12">接地極</text>
+<text x="420" y="60" font-size="13" fill="#d64545" transform="rotate(-4 420 60)">各電器並聯</text>
+<text x="400" y="110" font-size="12">接地線平時無電流</text>
+</svg><figcaption>圖 P6-20　家用迴路與接地（示意圖，未依比例）。電器並聯於火線與中性線之間，斷路器串聯在迴路起點；金屬外殼另接接地線。</figcaption></figure>
+<div class="exam"><p>學測常見考法：由電器功率與電壓算總電流，判斷是否過載；區分短路、過載、漏電及對應的保護裝置；以電磁感應解釋漏電斷路器。陷阱：人同時碰觸火線與中性線（腳下絕緣）時，電流由火線流出、中性線流回，<em>兩線電流仍相等</em>，漏電斷路器不會跳脫，只有斷路器在電流極大時可能動作。</p></div>
+<div class="mnem"><p>短路：電流抄捷徑；過載：電器太多；漏電：電流跑去大地。</p></div>
+
+<h3>例題精解</h3>
+<div class="example"><p><strong>例題 1　串聯燈泡的亮度</strong>　甲燈泡標示「110 V，100 W」，乙燈泡標示「110 V，25 W」。將兩者串聯後接 110 V 電源，設電阻不隨溫度改變，求兩燈實際消耗的功率，並判斷何者較亮。</p><div class="sol"><ol class="steps">
+<li>由額定值求電阻：<span class="m">R_甲 = \dfrac{110^2}{100} = 121\ \Omega</span>，<span class="m">R_乙 = \dfrac{110^2}{25} = 484\ \Omega</span>。</li>
+<li>串聯電流：<span class="m">I = \dfrac{110}{121 + 484} = \dfrac{110}{605} \approx 0.182\ \mathrm{A}</span>。</li>
+<li>功率：<span class="m">P_甲 = I^2R_甲 \approx 4.0\ \mathrm{W}</span>，<span class="m">P_乙 = I^2R_乙 \approx 16.0\ \mathrm{W}</span>，乙較亮。</li>
+</ol><p>陷阱：額定功率大者不一定較亮。串聯時電流相同，<span class="m">P = I^2R</span>，電阻大（額定功率小）者較亮；並聯時電壓相同，<span class="m">P = V^2/R</span>，額定功率大者較亮。實際鎢絲電阻隨溫度改變，數值僅為近似。</p></div></div>
+
+<div class="example"><p><strong>例題 2　奧斯特實驗的定量分析（進階）</strong>　水平放置的羅盤上方 2.0 cm 處，有一沿南北方向的長直導線，通以由南向北的電流 I。設該地地磁水平分量為 <span class="m">3.0\times10^{-5}\ \mathrm{T}</span>，忽略導線粗細。(1) 磁針 N 極向何方偏轉？(2) 使磁針偏轉 45° 所需的電流為何？</p><div class="sol"><ol class="steps">
+<li>方向：右手拇指指向北，導線正下方的磁場指向西，故 N 極向<span class="circle">西</span>偏。</li>
+<li>偏轉 45° 時，導線在羅盤處的磁場等於地磁水平分量：<span class="m">\dfrac{\mu_0I}{2\pi r} = 3.0\times10^{-5}\ \mathrm{T}</span>。</li>
+<li><span class="m">I = \dfrac{2\pi r B}{\mu_0} = \dfrac{2\pi(0.020)(3.0\times10^{-5})}{4\pi\times10^{-7}} = 3.0\ \mathrm{A}</span>。</li>
+</ol><p>陷阱：磁針指向合磁場方向，偏轉角滿足 <span class="m">\tan\theta = B_{\text{導線}}/B_H</span>；電流加倍時偏轉角變為 <span class="m">\tan^{-1}2 \approx 63^\circ</span>，不是 90°。</p></div></div>
+
+<div class="example"><p><strong>例題 3　螺線管與磁鐵</strong>　一螺線管水平放置，由其右端看去，電流沿順時針方向繞行。將一條形磁鐵的 N 極由右方靠近螺線管右端。(1) 螺線管右端為何極？(2) 磁鐵受吸引或排斥？(3) 若在螺線管內插入軟鐵心，作用力如何變化？</p><div class="sol"><ol class="steps">
+<li>由右端看為順時針，依右手螺旋定則，拇指指向左，左端為 N 極、右端為 <strong>S 極</strong>。</li>
+<li>磁鐵 N 極靠近螺線管 S 極，互相<strong>吸引</strong>。</li>
+<li>軟鐵心被磁化，磁場增強，吸引力變大。</li>
+</ol><p>陷阱：「看去逆時針為 N 極」須確認是從哪一端看；從另一端看，繞行方向相反。</p></div></div>
+
+<div class="example"><p><strong>例題 4　跳環實驗</strong>　一鋁環套在直立的長鐵心上，鐵心下段繞有線圈，線圈經開關接直流電源。(1) 開關接通的瞬間，鋁環如何運動？(2) 電流穩定後，鋁環的狀態？(3) 若將鋁環切開一道缺口，再做一次，結果如何？</p><div class="sol"><ol class="steps">
+<li>接通瞬間，通過鋁環的磁通量由零迅速增加；依冷次定律，環中感應電流的磁場與線圈磁場反向，環與線圈互相<strong>排斥</strong>，鋁環向上跳起。</li>
+<li>電流穩定後磁通量不變，無感應電流，鋁環只受重力而落回。</li>
+<li>有缺口的環不構成閉合迴路，只有感應電動勢、沒有感應電流，因此不受磁力，<strong>不會跳起</strong>。</li>
+</ol><p>陷阱：鋁不是鐵磁性物質，靜止的磁場不吸引也不排斥鋁環；跳起完全是感應電流與磁場的交互作用。若線圈改接交流電，鋁環可持續懸浮於某高度（進階）。</p></div></div>
+
+<div class="example"><p><strong>例題 5　由 Φ–t 圖求感應電流與焦耳熱</strong>　50 匝線圈的總電阻 10 Ω，通過每匝線圈的磁通量如圖 P6-9：0–2 s 由 0 均勻增至 0.040 Wb，2–4 s 不變，4–5 s 均勻減為 0。求各時段的感應電流量值，以及 0–5 s 線圈產生的總熱能。</p><div class="sol"><ol class="steps">
+<li>0–2 s：<span class="m">\varepsilon = 50\times\dfrac{0.040}{2} = 1.0\ \mathrm{V}</span>，<span class="m">I = 0.10\ \mathrm{A}</span>。</li>
+<li>2–4 s：磁通量不變，<span class="m">\varepsilon = 0</span>，<span class="m">I = 0</span>。</li>
+<li>4–5 s：<span class="m">\varepsilon = 50\times\dfrac{0.040}{1} = 2.0\ \mathrm{V}</span>，<span class="m">I = 0.20\ \mathrm{A}</span>，方向與 0–2 s 相反。</li>
+<li>熱能：<span class="m">Q = (0.10)^2(10)(2) + (0.20)^2(10)(1) = 0.20 + 0.40 = 0.60\ \mathrm{J}</span>。</li>
+</ol><p>陷阱：2–4 s 磁通量最大，但電動勢為零；電動勢看斜率而非高度。</p></div></div>
+
+<div class="example"><p><strong>例題 6　導軌上的導體棒（進階）</strong>　圖 P6-11 中，B = 0.50 T，棒長 L = 0.40 m，迴路總電阻 0.60 Ω，棒以 3.0 m/s 等速向右滑動，摩擦不計。求感應電動勢、電流、維持等速所需外力，並驗證能量守恆。</p><div class="sol"><ol class="steps">
+<li><span class="m">\varepsilon = BLv = (0.50)(0.40)(3.0) = 0.60\ \mathrm{V}</span>，<span class="m">I = \dfrac{0.60}{0.60} = 1.0\ \mathrm{A}</span>。</li>
+<li>磁力 <span class="m">F = ILB = (1.0)(0.40)(0.50) = 0.20\ \mathrm{N}</span>，向左；等速時外力 0.20 N 向右。</li>
+<li>外力功率 <span class="m">Fv = 0.60\ \mathrm{W}</span>；焦耳熱功率 <span class="m">I^2R = 0.60\ \mathrm{W}</span>，兩者相等。</li>
+</ol><p>陷阱：等速運動合力為零，但仍須施力；外力抵消的是感應電流造成的磁阻力，不是「維持速度需要力」。</p></div></div>
+
+<div class="example"><p><strong>例題 7　交流發電機（進階）</strong>　100 匝矩形線圈面積 0.020 m²，在 0.50 T 的均勻磁場中以每秒 60 轉繞垂直磁場的軸轉動。求感應電動勢的最大值與頻率；若轉速減半，兩者各變為多少？</p><div class="sol"><ol class="steps">
+<li><span class="m">\omega = 2\pi f = 2\pi(60) \approx 377\ \mathrm{rad/s}</span>。</li>
+<li><span class="m">\varepsilon_{\max} = NBA\omega = (100)(0.50)(0.020)(377) \approx 377\ \mathrm{V}</span>，頻率 60 Hz。</li>
+<li>轉速減半：<span class="m">\varepsilon_{\max} \approx 188\ \mathrm{V}</span>，頻率 30 Hz。</li>
+</ol><p>陷阱：電動勢最大值與 ω 成正比，頻率也與 ω 成正比，兩者同時改變。</p></div></div>
+
+<div class="example"><p><strong>例題 8　變壓器</strong>　一理想變壓器將 220 V 交流電降為 11 V，供一個「11 V，22 W」的電器正常工作。原線圈 2000 匝。求副線圈匝數、副線圈電流與原線圈電流。</p><div class="sol"><ol class="steps">
+<li><span class="m">N_2 = N_1\dfrac{V_2}{V_1} = 2000\times\dfrac{11}{220} = 100</span> 匝。</li>
+<li><span class="m">I_2 = \dfrac{P}{V_2} = \dfrac{22}{11} = 2.0\ \mathrm{A}</span>。</li>
+<li><span class="m">I_1 = \dfrac{P}{V_1} = \dfrac{22}{220} = 0.10\ \mathrm{A}</span>，或 <span class="m">I_1 = I_2\dfrac{N_2}{N_1} = 0.10\ \mathrm{A}</span>。</li>
+</ol><p>陷阱：電流比與匝數比成<em>反比</em>；降壓變壓器的副線圈電流較大，副線圈導線通常較粗。</p></div></div>
+
+<div class="example"><p><strong>例題 9　高壓輸電的線損</strong>　某線路輸送 <span class="m">1.0\times10^{7}\ \mathrm{W}</span> 的電功率，輸電線總電阻 4.0 Ω。分別以 69 kV 與 345 kV 輸電，求線路損耗功率與其占輸送功率的百分比。</p><div class="sol"><ol class="steps">
+<li>69 kV：<span class="m">I = \dfrac{1.0\times10^7}{6.9\times10^4} \approx 145\ \mathrm{A}</span>，<span class="m">P_{\text{損}} = I^2r \approx 8.4\times10^{4}\ \mathrm{W}</span>，約 0.84%。</li>
+<li>345 kV：<span class="m">I \approx 29.0\ \mathrm{A}</span>，<span class="m">P_{\text{損}} \approx 3.4\times10^{3}\ \mathrm{W}</span>，約 0.034%。</li>
+<li>電壓提高為 5 倍，線損降為 <span class="m">1/25</span>。</li>
+</ol><p>陷阱：若誤用 <span class="m">V^2/r</span>，以 345 kV 代入得 <span class="m">3\times10^{10}\ \mathrm{W}</span>，超過輸送功率三千倍，明顯不合理。</p></div></div>
+
+<div class="example"><p><strong>例題 10　電磁波的波長、天線與場強</strong>　(1) 調頻廣播 100 MHz 與 5G 的 3.5 GHz 電磁波，在空氣中的波長各為何？(2) 以四分之一波長天線接收 3.5 GHz 訊號，天線長約多少？(3) 某處電磁波電場振幅為 3.0 V/m，磁場振幅為何？</p><div class="sol"><ol class="steps">
+<li><span class="m">\lambda = c/f</span>：100 MHz 為 3.0 m；3.5 GHz 為 <span class="m">\dfrac{3.00\times10^8}{3.5\times10^9} \approx 0.0857\ \mathrm{m} = 8.57\ \mathrm{cm}</span>。</li>
+<li>四分之一波長約 2.1 cm，可收納於手機機殼內。</li>
+<li><span class="m">B = \dfrac{E}{c} = \dfrac{3.0}{3.00\times10^8} = 1.0\times10^{-8}\ \mathrm{T}</span>，約為地磁場的千分之一以下。</li>
+</ol><p>陷阱：空氣中電磁波速率與真空中相差極小，計算時取 c；在水或玻璃中則須用該介質中的波速。</p></div></div>
+
+<div class="example"><p><strong>例題 11　迴路過載判斷</strong>　某廚房插座迴路為 110 V，斷路器額定電流 20 A。同時使用電熱水壺 1100 W、電鍋 800 W、微波爐 1300 W。(1) 總電流為何？斷路器是否跳脫？(2) 關掉哪一件電器後可在額定內使用？</p><div class="sol"><ol class="steps">
+<li>並聯總功率 3200 W，<span class="m">I = \dfrac{3200}{110} \approx 29.1\ \mathrm{A} &gt; 20\ \mathrm{A}</span>，過載，斷路器跳脫。</li>
+<li>須使總功率不超過 <span class="m">110\times20 = 2200\ \mathrm{W}</span>：關掉電熱水壺剩 2100 W（約 19.1 A），或關掉微波爐剩 1900 W（約 17.3 A），皆可；只關電鍋剩 2400 W，仍超過。</li>
+</ol><p>陷阱：電器功率標示為額定值，馬達類電器啟動瞬間電流可能更大；實務上宜保留餘裕。</p></div></div>
+
+<h3>迷思概念對照</h3>
+<p class="bad"><span class="mark">誤</span>電流是電子流動的方向。</p>
+<p class="good"><span class="mark">正</span>電流方向規定為正電荷流動方向；金屬中電子流與電流方向相反。</p>
+<p class="bad"><span class="mark">誤</span>電流在導線中以接近光速前進，所以電子跑得很快。</p>
+<p class="good"><span class="mark">正</span>電場（訊號）以接近光速傳遞；電子漂移速率約 10<sup>-4</sup> m/s 數量級。</p>
+<p class="bad"><span class="mark">誤</span>燈泡不遵守歐姆定律，所以不能用 R = V/I。</p>
+<p class="good"><span class="mark">正</span><span class="m">R = V/I</span> 為電阻的定義，任何狀態皆可計算；不遵守歐姆定律指 R 隨電壓或電流改變。</p>
+<p class="bad"><span class="mark">誤</span>磁力線由 N 極出發、到 S 極終止。</p>
+<p class="good"><span class="mark">正</span>磁力線為封閉曲線，在磁鐵（或螺線管）內部由 S 極回到 N 極，無起點與終點。</p>
+<p class="bad"><span class="mark">誤</span>兩條同向電流的導線，就像同性電荷一樣互相排斥。</p>
+<p class="good"><span class="mark">正</span>平行電流同向相吸、反向相斥，與靜電力的規律方向相反。</p>
+<p class="bad"><span class="mark">誤</span>磁通量愈大，感應電動勢愈大。</p>
+<p class="good"><span class="mark">正</span>感應電動勢與磁通量的<strong>變化率</strong>成正比；磁通量最大時變化率可能為零。</p>
+<p class="bad"><span class="mark">誤</span>感應電流的磁場一定與原磁場方向相反。</p>
+<p class="good"><span class="mark">正</span>感應磁場反抗的是磁通量的<strong>變化</strong>：磁通量增加時反向，減少時同向。</p>
+<p class="bad"><span class="mark">誤</span>磁鐵在銅管中下落變慢，是因為銅會被磁鐵吸引。</p>
+<p class="good"><span class="mark">正</span>銅非鐵磁性物質；下落變慢是管壁渦電流產生的電磁阻尼。</p>
+<p class="bad"><span class="mark">誤</span>變壓器可以把直流電升壓。</p>
+<p class="good"><span class="mark">正</span>穩定直流不產生變動磁通量，副線圈無感應電動勢；變壓器只適用於交流。</p>
+<p class="bad"><span class="mark">誤</span>由 <span class="m">P = V^2/R</span> 可知輸電電壓愈高，線路損耗愈大。</p>
+<p class="good"><span class="mark">正</span>線損為 <span class="m">I^2r</span>，I 為線上電流；輸送功率固定時，電壓愈高電流愈小，線損與電壓平方成反比。</p>
+<p class="bad"><span class="mark">誤</span>電磁波中電場與磁場輪流出現，電場最大時磁場為零。</p>
+<p class="good"><span class="mark">正</span>真空中的平面電磁波，電場與磁場同相，同時最大、同時為零。</p>
+<p class="bad"><span class="mark">誤</span>頻率愈高的電磁波，在真空中跑得愈快。</p>
+<p class="good"><span class="mark">正</span>真空中各頻率電磁波速率皆為 c；頻率高者波長短、光子能量大。</p>
+<p class="bad"><span class="mark">誤</span>手機與基地台的電磁波屬於游離輻射，會像 X 光一樣破壞 DNA。</p>
+<p class="good"><span class="mark">正</span>行動通訊使用微波，屬非游離輻射，光子能量不足以游離原子；已確認的生物效應主要為熱效應。</p>
+<p class="bad"><span class="mark">誤</span>電壓高才會觸電致命，110 V 很安全。</p>
+<p class="good"><span class="mark">正</span>危害取決於流經人體的電流與路徑；皮膚潮濕時 110 V 即可產生致命電流。</p>
+<p class="bad"><span class="mark">誤</span>接地線平時也在導電，所以三孔插頭比較耗電。</p>
+<p class="good"><span class="mark">正</span>正常使用時接地線無電流，只在外殼漏電時提供低電阻路徑。</p>
+
+<h3>分級測驗</h3>
+<h4 class="exset">基礎題（10 題）</h4>
+<div class="ex" id="P6-01"><span class="exid">P6-01</span>某金屬導線中，4.0 s 內有 <span class="m">5.0\times10^{19}</span> 個電子通過某一截面（<span class="m">e = 1.60\times10^{-19}\ \mathrm{C}</span>）。導線中電流的量值與方向為何？
+<div class="opts"><span>(A) 0.50 A，與電子運動方向相同</span><span>(B) 2.0 A，與電子運動方向相同</span><span>(C) 2.0 A，與電子運動方向相反</span><span>(D) 8.0 A，與電子運動方向相反</span><span>(E) 20 A，與電子運動方向相反</span></div></div>
+
+<div class="ex" id="P6-02"><span class="exid">P6-02</span>關於奧斯特實驗，下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 導線沿南北方向置於磁針正上方時，通電後偏轉最明顯</span><span>(B) 電流反向時，磁針偏轉方向隨之反向</span><span>(C) 將磁針由導線正下方移到正上方，偏轉方向不變</span><span>(D) 此實驗顯示電流會在周圍產生磁場</span><span>(E) 導線改沿東西方向置於磁針正上方，無論電流方向與大小為何，磁針皆維持原指向</span></div></div>
+
+<div class="ex" id="P6-03"><span class="exid">P6-03</span>一鉛直長直導線通以向上的電流。由正上方往下俯視，導線周圍水平面上的磁力線為下列何者？
+<div class="opts"><span>(A) 順時針方向的同心圓</span><span>(B) 由導線向外放射的直線</span><span>(C) 指向導線的直線</span><span>(D) 與導線平行、方向向上的直線</span><span>(E) 逆時針方向的同心圓</span></div></div>
+
+<div class="ex" id="P6-04"><span class="exid">P6-04</span>水平螺線管通以電流，由其左端看去，電流沿逆時針方向繞行。下列敘述何者正確？
+<div class="opts"><span>(A) 左端為 S 極，管內磁場向左</span><span>(B) 左端為 S 極，管內磁場向右</span><span>(C) 左端為 N 極，管內磁場向右</span><span>(D) 左端為 N 極，管內磁場向左</span><span>(E) 左端為 N 極，管內磁場為零</span></div></div>
+
+<div class="ex" id="P6-05"><span class="exid">P6-05</span>下列哪些情況中，閉合線圈會產生感應電流？（多選）
+<div class="opts"><span>(A) 條形磁鐵靜置於線圈中央</span><span>(B) 條形磁鐵插入線圈的過程</span><span>(C) 線圈與磁鐵以相同速度同向平移</span><span>(D) 線圈在範圍很大的均勻磁場中平移，全程未離開磁場</span><span>(E) 線圈在均勻磁場中，繞一條與磁場垂直的直徑轉動</span></div></div>
+
+<div class="ex" id="P6-06"><span class="exid">P6-06</span>100 匝的平面線圈，每匝面積 0.050 m²，置於 0.20 T 的均勻磁場中，線圈平面與磁場方向夾 30°。通過單匝線圈的磁通量為何？
+<div class="opts"><span>(A) <span class="m">5.0\times10^{-3}\ \mathrm{Wb}</span></span><span>(B) <span class="m">8.7\times10^{-3}\ \mathrm{Wb}</span></span><span>(C) <span class="m">1.0\times10^{-2}\ \mathrm{Wb}</span></span><span>(D) 0.50 Wb</span><span>(E) 0.87 Wb</span></div></div>
+
+<div class="ex" id="P6-07"><span class="exid">P6-07</span>理想變壓器原線圈 1100 匝，接 110 V 交流電。欲使副線圈輸出 11 V，副線圈應為多少匝？
+<div class="opts"><span>(A) 10</span><span>(B) 110</span><span>(C) 1100</span><span>(D) 11000</span><span>(E) 12100</span></div></div>
+
+<div class="ex" id="P6-08"><span class="exid">P6-08</span>下列各組電磁波，何者依頻率由低到高排列？
+<div class="opts"><span>(A) 微波、無線電波、紅外線、可見光、紫外線</span><span>(B) 無線電波、紅外線、微波、可見光、X 射線</span><span>(C) γ 射線、X 射線、紫外線、可見光、紅外線</span><span>(D) 無線電波、微波、紅外線、紫外線、X 射線</span><span>(E) 無線電波、微波、可見光、紅外線、γ 射線</span></div></div>
+
+<div class="ex" id="P6-09"><span class="exid">P6-09</span>關於電磁波，下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 真空中各種頻率的電磁波速率相同</span><span>(B) 電磁波為縱波</span><span>(C) 電磁波的傳播必須依靠介質</span><span>(D) 電場與磁場方向互相垂直，且皆垂直於傳播方向</span><span>(E) 電磁波能傳遞能量</span></div></div>
+
+<div class="ex" id="P6-10"><span class="exid">P6-10</span>一條額定電流 15 A 的延長線接在 110 V 插座上，同時使用電暖器 1200 W、吹風機 800 W、筆記型電腦 300 W。下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 總電流約 21 A，超過延長線額定</span><span>(B) 此情形稱為短路</span><span>(C) 過載時導線發熱增加，可能使絕緣劣化起火</span><span>(D) 漏電斷路器是專為偵測此情形而設計</span><span>(E) 關掉電暖器後，總電流約 10 A，在額定以內</span></div></div>
+
+<h4 class="exset">進階題（14 題）</h4>
+<div class="ex" id="P6-11"><span class="exid">P6-11</span>如圖，兩條垂直紙面的長直導線 A、B 相距 d，A 的電流垂直紙面向外，B 的電流垂直紙面向內，兩電流大小相等，M 為兩者連線的中點。下列敘述哪些正確？（多選）
+<figure class="fig"><svg viewBox="0 0 400 130" width="360">
+<line x1="40" y1="65" x2="360" y2="65" stroke="#94a3b8" stroke-width="1" stroke-dasharray="5,4"/>
+<circle cx="100" cy="65" r="14" fill="#fbdcbd" stroke="#1f2a44" stroke-width="2"/><circle cx="100" cy="65" r="4" fill="#1f2a44"/>
+<circle cx="300" cy="65" r="14" fill="#fbdcbd" stroke="#1f2a44" stroke-width="2"/>
+<line x1="290" y1="55" x2="310" y2="75" stroke="#1f2a44" stroke-width="2"/><line x1="310" y1="55" x2="290" y2="75" stroke="#1f2a44" stroke-width="2"/>
+<circle cx="200" cy="65" r="4" fill="#c2410c"/>
+<text x="100" y="35" font-size="15" text-anchor="middle">A</text>
+<text x="300" y="35" font-size="15" text-anchor="middle">B</text>
+<text x="200" y="50" font-size="15" text-anchor="middle">M</text>
+<line x1="100" y1="105" x2="300" y2="105" stroke="#1f2a44" stroke-width="1.2"/>
+<text x="200" y="122" font-size="14" text-anchor="middle">d</text>
+<text x="380" y="20" font-size="12" text-anchor="end">紙面上方 ↑</text>
+</svg><figcaption>圖 P6-題1</figcaption></figure>
+<div class="opts"><span>(A) M 處磁場方向朝紙面上方（圖中 ↑）</span><span>(B) M 處磁場為零</span><span>(C) 兩導線互相排斥</span><span>(D) 若 B 的電流改為向外，M 處磁場為零</span><span>(E) 若 B 的電流改為向外，兩導線互相排斥</span></div></div>
+
+<div class="ex" id="P6-12"><span class="exid">P6-12</span>N 極朝下的條形磁鐵，由水平閉合線圈正上方自由落下，穿過線圈後繼續下落。由上往下俯視，線圈中的感應電流方向依序為何？
+<div class="opts"><span>(A) 始終為順時針</span><span>(B) 始終為逆時針</span><span>(C) 先順時針，後逆時針</span><span>(D) 無感應電流，因磁鐵自由落下時不受其他外力</span><span>(E) 先逆時針，後順時針</span></div></div>
+
+<div class="ex" id="P6-13"><span class="exid">P6-13</span>將同一強力磁鐵分別由鉛直的長銅管與相同尺寸的塑膠管上端靜止釋放。下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 磁鐵在銅管中下落的時間較長</span><span>(B) 銅管對磁鐵的作用，是因為銅屬於鐵磁性物質而被磁化</span><span>(C) 在銅管中下落時，減少的力學能主要轉為銅管的熱能</span><span>(D) 若沿銅管長度方向切開一條細縫，下落時間會變短</span><span>(E) 銅管夠長時，磁鐵可能接近等速下落</span></div></div>
+
+<div class="ex" id="P6-14"><span class="exid">P6-14</span>200 匝線圈每匝面積 0.010 m²，總電阻 4.0 Ω，線圈平面垂直於均勻磁場。磁場在 0.050 s 內由 0.30 T 均勻減為 0.10 T，此期間線圈中感應電流的量值為何？
+<div class="opts"><span>(A) 0.010 A</span><span>(B) 0.040 A</span><span>(C) 0.50 A</span><span>(D) 2.0 A</span><span>(E) 3.0 A</span></div></div>
+
+<div class="ex" id="P6-15"><span class="exid">P6-15</span>一理想變壓器原線圈 500 匝、副線圈 2500 匝，原線圈接 220 V、60 Hz 交流電，原線圈電流為 5.0 A。下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 此為升壓變壓器</span><span>(B) 副線圈電流為 25 A</span><span>(C) 副線圈輸出功率為 1100 W</span><span>(D) 副線圈中交流電的頻率為 300 Hz</span><span>(E) 若原線圈改接 220 V 直流電，穩定後副線圈輸出 1100 V 直流電</span></div></div>
+
+<div class="ex" id="P6-16"><span class="exid">P6-16</span>經同一條輸電線輸送相同的電功率，若輸電電壓由 69 kV 提高為 345 kV，輸電線上損耗的功率變為原來的幾倍？
+<div class="opts"><span>(A) 1/25</span><span>(B) 1/5</span><span>(C) 不變</span><span>(D) 5</span><span>(E) 25</span></div></div>
+
+<div class="ex" id="P6-17"><span class="exid">P6-17</span>關於馬克士威的電磁理論與其驗證，下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 變動的電場會產生磁場</span><span>(B) 馬克士威以實驗量測電磁波速率，發現與光速相同</span><span>(C) 赫茲以實驗產生並偵測電磁波，證實其可反射、折射與偏振</span><span>(D) 靜止的點電荷周圍有電場，因此會持續輻射電磁波</span><span>(E) 由真空磁導率 μ<sub>0</sub> 與真空電容率 ε<sub>0</sub> 可算出電磁波在真空中的速率</span></div></div>
+
+<div class="ex" id="P6-18"><span class="exid">P6-18</span>臺灣 5G 網路使用的 3.5 GHz 電磁波，在空氣中的波長約為何？（<span class="m">c = 3.00\times10^{8}\ \mathrm{m/s}</span>）
+<div class="opts"><span>(A) 0.857 mm</span><span>(B) 8.57 mm</span><span>(C) 8.57 cm</span><span>(D) 85.7 cm</span><span>(E) 1.05 m</span></div></div>
+
+<div class="ex" id="P6-19"><span class="exid">P6-19</span>關於家庭用電的保護裝置，下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 保險絲或斷路器應串聯在火線上</span><span>(B) 漏電斷路器偵測的是火線與中性線電流的差值</span><span>(C) 正常使用時，接地線中有與火線相同的電流</span><span>(D) 金屬外殼接地後，外殼漏電時電流經接地線入地，可降低觸電危險並使漏電斷路器跳脫</span><span>(E) 手潮濕時人體電阻變大，觸電較不危險</span></div></div>
+
+<div class="ex" id="P6-20"><span class="exid">P6-20</span>20 匝線圈中，通過每匝的磁通量 Φ 隨時間 t 的變化如圖。下列敘述何者正確？
+<figure class="fig"><svg viewBox="0 0 440 200" width="400">
+<line x1="50" y1="100" x2="420" y2="100" stroke="#1f2a44" stroke-width="1.5" marker-end="url(#P6-ak)"/>
+<line x1="50" y1="185" x2="50" y2="15" stroke="#1f2a44" stroke-width="1.5" marker-end="url(#P6-ak)"/>
+<text x="56" y="18" font-size="13">Φ（Wb）</text>
+<text x="415" y="118" font-size="13" text-anchor="end">t（s）</text>
+<polyline points="50,100 100,40 250,40 400,160" fill="none" stroke="#2f6fb5" stroke-width="2.5"/>
+<g stroke="#94a3b8" stroke-dasharray="4,4" stroke-width="1"><line x1="100" y1="40" x2="100" y2="100"/><line x1="250" y1="40" x2="250" y2="100"/><line x1="400" y1="100" x2="400" y2="160"/><line x1="50" y1="40" x2="100" y2="40"/><line x1="50" y1="160" x2="400" y2="160"/></g>
+<text x="44" y="44" font-size="12" text-anchor="end">0.030</text>
+<text x="44" y="164" font-size="12" text-anchor="end">−0.030</text>
+<text x="100" y="115" font-size="12" text-anchor="middle">1</text>
+<text x="250" y="115" font-size="12" text-anchor="middle">4</text>
+<text x="400" y="95" font-size="12" text-anchor="middle">7</text>
+<text x="44" y="104" font-size="12" text-anchor="end">0</text>
+</svg><figcaption>圖 P6-題2</figcaption></figure>
+<div class="opts"><span>(A) 1–4 s 期間感應電動勢最大</span><span>(B) 0–1 s 期間感應電動勢量值為 0.030 V</span><span>(C) t = 5.5 s 時磁通量為零，感應電動勢也為零</span><span>(D) 4–7 s 期間，感應電流方向在 t = 5.5 s 時反轉</span><span>(E) 0–1 s 與 4–7 s 的感應電流方向相反，量值比為 3：2</span></div></div>
+
+<div class="ex" id="P6-21"><span class="exid">P6-21</span>關於電磁波的應用與性質，下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) X 射線能穿透軟組織而較難穿透骨骼，可用於醫療影像</span><span>(B) 紅外線熱像儀偵測的是物體本身發出的紅外線</span><span>(C) 微波爐以微波使食物中的水分子在交變電場中反覆轉向而生熱</span><span>(D) 可見光中，紅光的光子能量大於紫光</span><span>(E) 手機通訊所用的微波屬於游離輻射</span></div></div>
+
+<div class="ex" id="P6-22"><span class="exid">P6-22</span>一段鎳鉻合金線接在固定電壓的電源上，消耗功率為 P。將此線均勻拉長為原長的 2 倍（體積不變、電阻率不變），再接回同一電源，消耗功率變為 P 的幾倍？
+<div class="opts"><span>(A) 4 倍</span><span>(B) 2 倍</span><span>(C) 1/4 倍</span><span>(D) 1/2 倍</span><span>(E) 不變</span></div></div>
+
+<div class="ex" id="P6-23"><span class="exid">P6-23</span>交流發電機的線圈在均勻磁場中以固定角速度轉動，轉軸垂直磁場。下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 線圈平面與磁場垂直時，磁通量最大而感應電動勢為零</span><span>(B) 線圈平面與磁場平行時，感應電動勢量值最大</span><span>(C) 轉速加倍時，感應電動勢的最大值與頻率都加倍</span><span>(D) 發電機將電能轉換為力學能</span><span>(E) 接上負載後，維持相同轉速所需的外力矩比未接負載時小</span></div></div>
+
+<div class="ex" id="P6-24"><span class="exid">P6-24</span>長 0.50 m 的導體棒在兩平行光滑導軌上，以 5.0 m/s 等速垂直切割 0.40 T 的均勻磁場，導軌一端接 2.0 Ω 的電阻，其他電阻不計，棒、速度與磁場三者互相垂直。維持此等速運動所需的外力量值為何？
+<div class="opts"><span>(A) 0.050 N</span><span>(B) 0.10 N</span><span>(C) 0.20 N</span><span>(D) 0.50 N</span><span>(E) 1.0 N</span></div></div>
+
+<h4 class="exset">挑戰題（5 題）</h4>
+<div class="ex" id="P6-25"><span class="exid">P6-25</span>如圖，邊長 0.10 m 的單匝正方形線圈，電阻 0.50 Ω，以 0.50 m/s 等速向右通過寬 0.30 m、量值 0.20 T 的均勻磁場區（磁場垂直紙面向外），線圈平面始終垂直磁場。下列敘述哪些正確？（多選）
+<figure class="fig"><svg viewBox="0 0 440 180" width="400">
+<rect x="180" y="20" width="180" height="130" fill="#cfe3f8" stroke="#2f6fb5" stroke-width="1.5" stroke-dasharray="6,4"/>
+<g fill="#2f6fb5"><circle cx="200" cy="40" r="2.5"/><circle cx="240" cy="40" r="2.5"/><circle cx="280" cy="40" r="2.5"/><circle cx="320" cy="40" r="2.5"/><circle cx="200" cy="85" r="2.5"/><circle cx="240" cy="85" r="2.5"/><circle cx="280" cy="85" r="2.5"/><circle cx="320" cy="85" r="2.5"/><circle cx="200" cy="130" r="2.5"/><circle cx="240" cy="130" r="2.5"/><circle cx="280" cy="130" r="2.5"/><circle cx="320" cy="130" r="2.5"/></g>
+<rect x="60" y="55" width="60" height="60" fill="none" stroke="#d9772b" stroke-width="3.5"/>
+<line x1="125" y1="85" x2="165" y2="85" stroke="#1f2a44" stroke-width="2" marker-end="url(#P6-ak)"/>
+<text x="145" y="77" font-size="13" text-anchor="middle">v</text>
+<text x="90" y="135" font-size="12" text-anchor="middle">0.10 m</text>
+<line x1="180" y1="160" x2="360" y2="160" stroke="#1f2a44" stroke-width="1"/>
+<text x="270" y="175" font-size="12" text-anchor="middle">0.30 m</text>
+<text x="370" y="35" font-size="13">B ⊙</text>
+</svg><figcaption>圖 P6-題3</figcaption></figure>
+<div class="opts"><span>(A) 線圈進入磁場期間，感應電流為 0.020 A</span><span>(B) 線圈完全在磁場內時，仍有感應電流</span><span>(C) 進入與離開磁場時，感應電流方向相反</span><span>(D) 進入與離開磁場時，線圈所受磁力方向相反</span><span>(E) 線圈通過磁場區的全程中，產生的焦耳熱為 <span class="m">8.0\times10^{-5}\ \mathrm{J}</span></span></div></div>
+
+<div class="ex" id="P6-26"><span class="exid">P6-26</span>漏電斷路器以環形鐵心套住火線與中性線，鐵心上另繞感應線圈。某人赤腳站在乾燥木板上（與地絕緣），一手觸火線、一手觸中性線而受電擊，漏電斷路器未跳脫。最合理的解釋為何？
+<div class="opts"><span>(A) 人體電阻很大，電流太小而無法偵測</span><span>(B) 電流由火線流經人體再回到中性線，兩線電流仍相等，鐵心中淨磁通量不變</span><span>(C) 漏電斷路器只能偵測直流電</span><span>(D) 人體為絕緣體，不會有電流</span><span>(E) 中性線電位為零，因此中性線中沒有電流</span></div></div>
+
+<div class="ex" id="P6-27"><span class="exid">P6-27</span>已知 <span class="m">\mu_0 \approx 1.26\times10^{-6}\ \mathrm{N/A^2}</span>、<span class="m">\varepsilon_0 \approx 8.85\times10^{-12}\ \mathrm{C^2/(N\cdot m^2)}</span>。下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) <span class="m">1/\sqrt{\mu_0\varepsilon_0}</span> 約為 <span class="m">3.0\times10^{8}\ \mathrm{m/s}</span></span><span>(B) 此結果顯示真空中電磁波速率與頻率無關</span><span>(C) 真空中平面電磁波的電場量值與磁場量值之比 E/B 等於 c</span><span>(D) 電磁波傳播時，電場能量全部轉為磁場能量後電場消失，兩者交替出現</span><span>(E) 馬克士威方程式只預測可見光為電磁波</span></div></div>
+
+<div class="ex" id="P6-28"><span class="exid">P6-28</span>小型電廠以 11 kV 輸出 2.2 MW 的電功率，輸電線總電阻 5.0 Ω。若先以理想變壓器升壓至 110 kV 再輸送（輸出功率不變），輸電線上損耗的功率為何？
+<div class="opts"><span>(A) <span class="m">2.0\times10^{3}\ \mathrm{W}</span></span><span>(B) <span class="m">2.0\times10^{4}\ \mathrm{W}</span></span><span>(C) <span class="m">2.0\times10^{5}\ \mathrm{W}</span></span><span>(D) <span class="m">2.0\times10^{1}\ \mathrm{W}</span></span><span>(E) <span class="m">2.4\times10^{9}\ \mathrm{W}</span></span></div></div>
+
+<div class="ex" id="P6-29"><span class="exid">P6-29</span>如圖，線圈甲經開關 S 接直流電源，線圈乙接電流計 G，兩線圈共軸、靠近放置，且可沿軸自由移動。下列敘述哪些正確？（多選）
+<figure class="fig"><svg viewBox="0 0 440 170" width="400">
+<rect x="90" y="50" width="100" height="60" fill="none" stroke="#d9772b" stroke-width="0"/>
+<g stroke="#d9772b" stroke-width="3"><ellipse cx="110" cy="80" rx="10" ry="35" fill="none"/><ellipse cx="130" cy="80" rx="10" ry="35" fill="none"/><ellipse cx="150" cy="80" rx="10" ry="35" fill="none"/><ellipse cx="170" cy="80" rx="10" ry="35" fill="none"/></g>
+<g stroke="#2f6fb5" stroke-width="3"><ellipse cx="260" cy="80" rx="10" ry="35" fill="none"/><ellipse cx="280" cy="80" rx="10" ry="35" fill="none"/><ellipse cx="300" cy="80" rx="10" ry="35" fill="none"/><ellipse cx="320" cy="80" rx="10" ry="35" fill="none"/></g>
+<polyline points="110,115 110,145 60,145" fill="none" stroke="#1f2a44" stroke-width="2"/>
+<polyline points="170,115 170,145 130,145" fill="none" stroke="#1f2a44" stroke-width="2"/>
+<line x1="60" y1="135" x2="60" y2="155" stroke="#1f2a44" stroke-width="2"/><line x1="70" y1="139" x2="70" y2="151" stroke="#1f2a44" stroke-width="4"/>
+<line x1="70" y1="145" x2="95" y2="145" stroke="#1f2a44" stroke-width="2"/>
+<line x1="95" y1="145" x2="120" y2="133" stroke="#1f2a44" stroke-width="2"/>
+<circle cx="95" cy="145" r="3" fill="#1f2a44"/><circle cx="130" cy="145" r="3" fill="#1f2a44"/>
+<text x="112" y="165" font-size="13" text-anchor="middle">S</text>
+<polyline points="260,115 260,145 275,145" fill="none" stroke="#1f2a44" stroke-width="2"/>
+<polyline points="320,115 320,145 305,145" fill="none" stroke="#1f2a44" stroke-width="2"/>
+<circle cx="290" cy="145" r="15" fill="#ffffff" stroke="#1f2a44" stroke-width="2"/>
+<text x="290" y="150" font-size="14" text-anchor="middle">G</text>
+<text x="140" y="30" font-size="14" text-anchor="middle">甲</text>
+<text x="290" y="30" font-size="14" text-anchor="middle">乙</text>
+<line x1="40" y1="80" x2="400" y2="80" stroke="#94a3b8" stroke-width="1" stroke-dasharray="5,4"/>
+</svg><figcaption>圖 P6-題4</figcaption></figure>
+<div class="opts"><span>(A) S 閉合的瞬間，G 的指針偏轉</span><span>(B) S 閉合後保持不動，乙中持續有穩定電流</span><span>(C) S 閉合的瞬間，兩線圈互相排斥</span><span>(D) S 斷開的瞬間，兩線圈互相吸引</span><span>(E) S 閉合與斷開的瞬間，乙中電流方向相同</span></div></div>
+
+<h4 class="exset">題組（6 題）</h4>
+<p><strong>第 30–32 題為題組</strong></p>
+<p>電磁爐的面板下方有扁平線圈，通以頻率約 25–50 kHz 的交流電，在面板上方產生快速變動的磁場。置於面板上的鍋子若為鐵或不鏽鋼等鐵磁性材料，鍋底會產生強大的環狀感應電流，鍋底本身因此發熱，再將熱傳給食物。玻璃陶瓷面板不導電，本身不因磁場而發熱，使用後的溫熱主要來自鍋底傳回的熱。一般機型對鋁鍋、銅鍋加熱效果不佳，陶瓷鍋與玻璃鍋則無法加熱。</p>
+<div class="ex" id="P6-30"><span class="exid">P6-30</span>電磁爐使鍋子發熱的主要機制為何？
+<div class="opts"><span>(A) 線圈本身的電阻發熱，經面板傳導至鍋子</span><span>(B) 線圈發出微波，使食物中的水分子轉動生熱</span><span>(C) 交變磁場在鍋底產生渦電流，經鍋底電阻將電能轉為熱能</span><span>(D) 面板吸收紅外線後發熱</span><span>(E) 鍋子受磁力反覆振動，摩擦生熱</span></div></div>
+<div class="ex" id="P6-31"><span class="exid">P6-31</span>依文中原理，下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 陶瓷鍋不導電，無法形成渦電流，因此不能加熱</span><span>(B) 若線圈改通穩定直流電，加熱效果更好</span><span>(C) 其他條件不變而提高交流電頻率，鍋底的感應電動勢變大</span><span>(D) 面板玻璃也產生渦電流，是面板變熱的主要原因</span><span>(E) 電磁爐與變壓器都是依據電磁感應原理運作</span></div></div>
+<div class="ex" id="P6-32"><span class="exid">P6-32</span>某電磁爐輸入功率 1500 W，其中 84% 的能量被鍋內的水吸收。以此加熱 1.0 kg、25 °C 的水至 100 °C，約需多少時間？（水的比熱取 4200 J/(kg·°C)）
+<div class="opts"><span>(A) 210 s</span><span>(B) 250 s</span><span>(C) 300 s</span><span>(D) 357 s</span><span>(E) 420 s</span></div></div>
+
+<p><strong>第 33–35 題為題組</strong></p>
+<p>某生將一個 200 匝線圈水平固定，兩端接電壓感測器。讓一條形磁鐵 N 極朝下，由線圈正上方某高度靜止釋放，鉛直穿過線圈中心，記錄感應電動勢 ε 隨時間 t 的變化如圖（以俯視逆時針方向的電動勢為正）。</p>
+<figure class="fig"><svg viewBox="0 0 460 210" width="420">
+<line x1="40" y1="100" x2="440" y2="100" stroke="#1f2a44" stroke-width="1.5" marker-end="url(#P6-ak)"/>
+<line x1="40" y1="200" x2="40" y2="10" stroke="#1f2a44" stroke-width="1.5" marker-end="url(#P6-ak)"/>
+<text x="46" y="16" font-size="13">ε（V）</text>
+<text x="435" y="118" font-size="13" text-anchor="end">t</text>
+<path d="M60,100 C120,100 140,55 165,55 C190,55 200,100 215,100 C225,100 232,180 250,180 C268,180 272,100 290,100 L420,100" fill="none" stroke="#c2410c" stroke-width="2.5"/>
+<text x="165" y="45" font-size="12" text-anchor="middle">第一峰</text>
+<text x="250" y="198" font-size="12" text-anchor="middle">第二峰</text>
+<text x="215" y="92" font-size="12" text-anchor="middle">t₀</text>
+</svg><figcaption>圖 P6-題5　t₀ 為磁鐵中心通過線圈平面的時刻（示意圖）</figcaption></figure>
+<div class="ex" id="P6-33"><span class="exid">P6-33</span>第二峰的量值大於第一峰，最主要的原因為何？
+<div class="opts"><span>(A) 磁鐵離開線圈時速率較大，磁通量變化率較大</span><span>(B) 磁鐵的 S 極磁場比 N 極強</span><span>(C) 線圈電阻在實驗過程中變小</span><span>(D) 冷次定律使離開時的感應電流被放大</span><span>(E) 地磁場在磁鐵離開時與磁鐵磁場同向</span></div></div>
+<div class="ex" id="P6-34"><span class="exid">P6-34</span>依此實驗，下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 兩峰正負相反，因為通過線圈的磁通量先增後減</span><span>(B) 兩峰曲線與時間軸所圍面積的量值約略相等</span><span>(C) 磁鐵由更高處釋放，兩峰的峰值皆變大</span><span>(D) 改用 400 匝、其他條件相同的線圈，峰值約變為 2 倍</span><span>(E) 磁鐵中心通過線圈平面的瞬間（t₀），感應電動勢量值最大</span></div></div>
+<div class="ex" id="P6-35"><span class="exid">P6-35</span>若將磁鐵翻轉為 S 極朝下，由同一高度釋放，所得 ε–t 圖最可能為何？
+<div class="opts"><span>(A) 與原圖完全相同</span><span>(B) 只出現一個峰</span><span>(C) 正負號互換，且第一峰量值較大</span><span>(D) 正負號互換（先負後正），且第二峰量值仍較大</span><span>(E) 不產生訊號</span></div></div>
+
+<h4 class="exset">非選擇題（4 題）</h4>
+<div class="ex" id="P6-36"><span class="exid">P6-36</span>一長直導線垂直穿過水平紙面，電流垂直紙面向內，電流很大，地磁可忽略。在導線周圍距離相同的東、西、南、北四點各放一小磁針（紙面上方為北）。(1) 畫出導線周圍的磁力線並標示方向，標出四個磁針 N 極的指向。(2) 若電流加倍，同時將四個磁針移到距導線 2 倍遠處，各磁針所在處磁場量值如何變化？說明理由。
+<figure class="fig"><svg viewBox="0 0 260 200" width="240">
+<circle cx="130" cy="100" r="14" fill="#fbdcbd" stroke="#1f2a44" stroke-width="2"/>
+<line x1="120" y1="90" x2="140" y2="110" stroke="#1f2a44" stroke-width="2"/><line x1="140" y1="90" x2="120" y2="110" stroke="#1f2a44" stroke-width="2"/>
+<g fill="#2f6fb5"><circle cx="130" cy="30" r="4"/><circle cx="200" cy="100" r="4"/><circle cx="130" cy="170" r="4"/><circle cx="60" cy="100" r="4"/></g>
+<text x="130" y="18" font-size="13" text-anchor="middle">北</text><text x="215" y="105" font-size="13">東</text><text x="130" y="192" font-size="13" text-anchor="middle">南</text><text x="45" y="105" font-size="13" text-anchor="end">西</text>
+<text x="150" y="128" font-size="12">I（入紙）</text>
+</svg><figcaption>圖 P6-題6</figcaption></figure>
+<div class="lines" data-n="2"></div></div>
+<div class="ex" id="P6-37"><span class="exid">P6-37</span>某電熱水壺標示「110 V，1100 W」。(1) 正常使用時的電流與電阻各為何？(2) 每天使用 30 分鐘，30 天共耗電幾度？若每度電費以 4.0 元計，電費為何？(3) 若誤接 220 V 電源（設電阻不變），消耗功率變為多少？說明可能後果。
+<div class="lines" data-n="2"></div></div>
+<div class="ex" id="P6-38"><span class="exid">P6-38</span>(1) 說明電力公司以高電壓輸電的理由，並說明為何此做法需要使用交流電。(2) 鳥停在單一條高壓電線上不會觸電，說明理由；並舉出一種會使鳥觸電的情形。
+<div class="lines" data-n="2"></div></div>
+<div class="ex" id="P6-39"><span class="exid">P6-39</span>依「電場與磁場均具有能量」的觀點，依序說明手機發話時，能量由手機電池傳遞到基地台接收電路的過程（至少寫出四個環節，並指出何處涉及變動的電場產生磁場）。若手機以 3.5 GHz 發射，四分之一波長天線約長多少公分？
+<div class="lines" data-n="2"></div></div>
+
+<h3>自我檢核</h3>
+<ul class="check">
+<li>能區分電流方向與電子流方向，並說明電子漂移速率與訊號速率的差異。</li>
+<li>能用 <span class="m">R = \rho L/A</span>、串並聯關係與 <span class="m">P = IV = I^2R = V^2/R</span> 計算，並判斷燈泡串聯、並聯時的亮度。</li>
+<li>能說明奧斯特實驗中導線須沿南北放置的理由。</li>
+<li>能以右手定則判斷長直導線、圓線圈、螺線管的磁場方向，以及平行電流的相吸相斥。</li>
+<li>能寫出磁通量定義，並由 Φ–t 圖判斷感應電動勢的量值與正負。</li>
+<li>能以「增反減同」「來拒去留」判斷感應電流方向，並由能量守恆說明冷次定律。</li>
+<li>能說明渦電流的成因及電磁爐、電磁阻尼、疊片鐵心的原理。</li>
+<li>能說明發電機中磁通量與電動勢的相位關係，以及轉速對最大值與頻率的影響。</li>
+<li>能用匝數比計算理想變壓器的電壓與電流，並說明變壓器只適用交流電。</li>
+<li>能用 <span class="m">P_{\text{損}} = (P/V)^2r</span> 說明高壓輸電，並指出誤用 <span class="m">V^2/r</span> 的錯誤。</li>
+<li>能定性說明馬克士威方程式四條定律的內容與對應實驗，以及位移電流的意義。</li>
+<li>能說明電磁波的產生（加速電荷）、橫波性質、<span class="m">c = 1/\sqrt{\mu_0\varepsilon_0}</span> 與 <span class="m">E/B = c</span>，以及赫茲實驗的內容。</li>
+<li>能依頻率、波長、光子能量排列電磁波譜，說明各波段的產生方式、應用與游離性。</li>
+<li>能區分短路、過載、漏電，說明斷路器、漏電斷路器與接地的作用，並計算迴路總電流。</li>
+</ul>
+</section>

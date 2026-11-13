@@ -1,0 +1,1068 @@
+<section class="unit" id="P9">
+<h2>P9　能量的形式、轉換與熱</h2>
+<p>本單元範圍：功與功率、動能與位能、力學能守恆、能量的形式與尺度、溫度與克氏溫標、熱能與熱、比熱與熱平衡、理想氣體的內能、熱力學第一與第二定律、熱機與冷機、能量品質。質能互換與核能見 P10；電磁場的能量與電磁波見 P6；反應熱見 C7；氣體定律見 C4。</p>
+
+<h3>課綱對照與考點</h3>
+<table class="t"><thead><tr><th>課綱學習內容</th><th>本單元小節</th><th>學測常見考法</th></tr></thead><tbody>
+<tr><td>PBa-Ⅴc-2 不同形式的能量間可以轉換，且總能量守恆；能量的形式因觀察尺度的不同，而有不同的展現與說明</td><td>一、二、三、四</td><td>功的正負判斷；功能定理求速率、煞車距離；力學能守恆的條件；有摩擦時力學能減少量＝生熱；能量轉換鏈；巨觀「生熱」對應的微觀解釋</td></tr>
+<tr><td>PBb-Ⅴc-1 克氏溫標的意義及理想氣體的內能的簡單說明</td><td>五、六</td><td>攝氏與克氏換算；「溫度加倍」須用克氏溫度；分子平均動能與絕對溫度成正比；理想氣體內能只與溫度有關</td></tr>
+<tr><td>PBb-Ⅴc-2 實驗顯示：把功轉換成熱很容易，卻無法把熱完全轉換為功</td><td>八、九</td><td>熱力學第二定律的兩種敘述；熱機效率小於 1；冷氣機、冰箱的能量流向；第二類永動機</td></tr>
+<tr><td>PBb-Ⅴc-3 物體內的原子不斷在運動並交互作用，此交互作用能量與原子的動能合稱為熱能</td><td>六</td><td>熱能、溫度、熱三者辨析；相變時溫度不變而熱能增加</td></tr>
+<tr><td>PBb-Ⅴc-4 由於物體溫度的不同所造成的能量傳遞稱為熱</td><td>六、七</td><td>熱平衡計算（混合、比熱測定、含相變）；加熱曲線判讀</td></tr>
+<tr><td>PNc-Ⅴc-3 能量一樣的系統，作功的能力不一定相同</td><td>十</td><td>同樣能量、不同溫度的熱源可作的最大功比較；電能與力學能為高品質能量</td></tr>
+<tr><td>PNc-Ⅴc-4 雖然能量守恆，但能量一旦發生形式上的轉換，通常其作功效能會降低</td><td>四、九、十</td><td>發電廠能量流向與廢熱；「能量守恆為何仍須節約能源」；汽電共生、熱泵的意義</td></tr>
+</tbody></table>
+
+<h3>一、功與功率</h3>
+<div class="note"><p>功＝力 × 力方向上的位移。</p><p>只看「這個力」與「位移」，不管物體是否等速。</p></div>
+<p><strong>定義</strong>　定力 <span class="m">\vec{F}</span> 作用於物體，物體位移 <span class="m">\vec{d}</span>，兩者夾角 <span class="m">\theta</span>，力對物體所作的<strong>功</strong>：</p>
+<div class="formula" data-t="功"><div class="mb">W = Fd\cos\theta</div><p>F：力（N）　d：位移大小（m）　θ：力與位移的夾角　W：功（J）</p></div>
+<div class="key">
+<ul>
+<li>功為純量，單位焦耳：<span class="m">1\ \mathrm{J} = 1\ \mathrm{N\cdot m}</span>。</li>
+<li><span class="m">0^\circ \le \theta &lt; 90^\circ</span>：正功；<span class="m">\theta = 90^\circ</span>：<span class="circle">不作功</span>；<span class="m">90^\circ &lt; \theta \le 180^\circ</span>：負功。</li>
+<li>多力作用時，<strong>合力所作的功＝各力作功的代數和</strong>。<span class="hand blue no">功是純量，直接加減</span></li>
+</ul>
+</div>
+<div class="formula" data-t="功率"><div class="mb">P = \frac{W}{\Delta t} = Fv\cos\theta</div><p>P：功率（W）　W：功（J）　Δt：時間（s）　v：速率（m/s）；<span class="m">1\ \mathrm{W} = 1\ \mathrm{J/s}</span></p></div>
+<p>電費的「度」是能量單位，不是功率單位：<span class="box">1 度 = 1 kWh = 3.6×10⁶ J</span><span class="hand">kW 乘 h，不是 kW 除 h</span></p>
+
+<figure class="fig"><svg viewBox="0 0 440 180" width="440">
+<defs><marker id="P9-ar1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2410c"/></marker>
+<marker id="P9-ar1b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2f6fb5"/></marker></defs>
+<line x1="20" y1="130" x2="420" y2="130" stroke="#1f2a44" stroke-width="2"/>
+<rect x="110" y="80" width="80" height="50" fill="#cfe3f8" stroke="#1f2a44" stroke-width="1.5"/>
+<text x="150" y="110" font-size="14" text-anchor="middle">m</text>
+<line x1="190" y1="95" x2="290" y2="37" stroke="#c2410c" stroke-width="2.5" marker-end="url(#P9-ar1)"/>
+<text x="298" y="34" font-size="15" fill="#c2410c">F</text>
+<line x1="190" y1="95" x2="290" y2="95" stroke="#c2410c" stroke-width="1.5" stroke-dasharray="5,4"/>
+<line x1="290" y1="95" x2="290" y2="40" stroke="#c2410c" stroke-width="1.5" stroke-dasharray="5,4"/>
+<text x="300" y="100" font-size="14" fill="#c2410c">F cosθ</text>
+<text x="296" y="70" font-size="14" fill="#c2410c">F sinθ</text>
+<path d="M225,95 A35,35 0 0 0 220,77" fill="none" stroke="#1f2a44" stroke-width="1.2"/>
+<text x="230" y="88" font-size="14">θ</text>
+<line x1="110" y1="155" x2="330" y2="155" stroke="#2f6fb5" stroke-width="2" marker-end="url(#P9-ar1b)"/>
+<text x="220" y="173" font-size="14" text-anchor="middle" fill="#2f6fb5">位移 d</text>
+</svg><figcaption>圖 P9-1　斜向拉力作功：只有沿位移方向的分量 F cosθ 作功，垂直分量 F sinθ 不作功（但會改變正向力）</figcaption></figure>
+
+<h4>辨析：哪些力作功</h4>
+<ul>
+<li><strong>正向力</strong>：物體沿固定平面或斜面滑動時，正向力與位移垂直，不作功；電梯加速上升時，地板的正向力與位移同向，作正功。<em>「正向力永遠不作功」為錯誤推廣</em>。</li>
+<li><strong>摩擦力</strong>：動摩擦力對滑動物體作負功；<span class="circle">靜摩擦力</span>可作正功，例如卡車加速時，車斗上未滑動的貨物受向前的靜摩擦力，與位移同向。<em>「摩擦力必作負功」為錯誤推廣</em>。</li>
+<li><strong>重力</strong>：上升時作負功，下降時作正功；功的大小只與鉛直高度差有關，<span class="m">W_g = -mg\Delta h</span>。</li>
+<li><strong>等速圓周運動的向心力</strong>：恆與速度<span class="circle">垂直</span>，不作功，故動能不變。</li>
+<li>手提重物水平等速行走：手對物體的力鉛直向上、位移水平，對物體不作功；人體仍消耗化學能，那是肌肉收縮的生理過程，與力學上的功無關。</li>
+</ul>
+
+<h4>F–x 圖下的面積</h4>
+<p>力沿位移方向的分量 F 隨位置 x 改變時，<strong>F–x 圖與 x 軸所圍面積＝功</strong>（x 軸下方面積為負功）。定力為矩形面積；彈簧彈力 <span class="m">F = kx</span>（虎克定律）為三角形面積。</p>
+
+<figure class="fig"><svg viewBox="0 0 600 210" width="600"><g>
+<defs><marker id="P9-ar2a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f2a44"/></marker></defs>
+<line x1="40" y1="170" x2="280" y2="170" stroke="#1f2a44" stroke-width="1.5" marker-end="url(#P9-ar2a)"/>
+<line x1="40" y1="170" x2="40" y2="20" stroke="#1f2a44" stroke-width="1.5" marker-end="url(#P9-ar2a)"/>
+<rect x="40" y="70" width="180" height="100" fill="#cfe3f8" stroke="none"/>
+<line x1="40" y1="70" x2="250" y2="70" stroke="#2f6fb5" stroke-width="2.5"/>
+<text x="130" y="128" font-size="15" text-anchor="middle">W = Fd</text>
+<text x="30" y="75" font-size="14" text-anchor="end">F</text>
+<text x="220" y="188" font-size="14" text-anchor="middle">d</text>
+<line x1="220" y1="70" x2="220" y2="170" stroke="#1f2a44" stroke-dasharray="4,3"/>
+<text x="275" y="190" font-size="14" text-anchor="middle">x（m）</text>
+<text x="48" y="22" font-size="14">F（N）</text>
+<text x="150" y="205" font-size="14" text-anchor="middle">(a) 定力</text>
+</g><g transform="translate(300,0)">
+<defs><marker id="P9-ar2b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f2a44"/></marker></defs>
+<line x1="40" y1="170" x2="280" y2="170" stroke="#1f2a44" stroke-width="1.5" marker-end="url(#P9-ar2b)"/>
+<line x1="40" y1="170" x2="40" y2="20" stroke="#1f2a44" stroke-width="1.5" marker-end="url(#P9-ar2b)"/>
+<polygon points="40,170 210,60 210,170" fill="#c9ebd7" stroke="none"/>
+<line x1="40" y1="170" x2="245" y2="37" stroke="#2e8b57" stroke-width="2.5"/>
+<text x="160" y="150" font-size="14" text-anchor="middle">W = ½kx²</text>
+<line x1="40" y1="60" x2="210" y2="60" stroke="#1f2a44" stroke-dasharray="4,3"/>
+<text x="30" y="65" font-size="14" text-anchor="end">kx</text>
+<text x="210" y="188" font-size="14" text-anchor="middle">x</text>
+<text x="250" y="60" font-size="14" fill="#2e8b57">F = kx</text>
+<text x="275" y="190" font-size="14" text-anchor="middle">x（m）</text>
+<text x="48" y="22" font-size="14">F（N）</text>
+<text x="150" y="205" font-size="14" text-anchor="middle">(b) 彈簧的外力</text>
+</g></svg><figcaption>圖 P9-2　F–x 圖下的面積等於功：(a) 定力；(b) 將彈簧由原長緩慢拉長 x，外力作功 ½kx²</figcaption></figure>
+
+<div class="warn"><p><strong>易錯提醒</strong></p><ul>
+<li>功的正負表示能量轉移方向（力的施力者把能量交給物體，或由物體取走能量），不表示方向向左或向右。</li>
+<li>計算某一力的功時，只看「該力」與「位移」，與物體是否等速、是否還有其他力無關。</li>
+<li>功率 <span class="m">P = Fv</span> 中的 v 為瞬時速率時，得瞬時功率；以平均速度代入，得平均功率。</li>
+<li>汽車以固定功率爬坡時，速率愈小，牽引力愈大（<span class="m">F = P/v</span>），故上坡宜換低速檔。</li>
+</ul></div>
+<div class="exam"><p>學測常給情境（提水桶水平走、等速圓周運動、電梯、斜面）判斷某力<strong>作正功、負功或不作功</strong>；或由 F–x 圖面積求功。陷阱：把「施力」與「作功」混為一談，<em>有力、有位移，但兩者垂直時功為零</em>。</p></div>
+
+<div class="tip"><p><strong>深究　功與參考系</strong></p>
+<p>位移與參考系有關，故功也與參考系有關。等速行駛的列車上，乘客把行李推動 1 m：在車廂參考系中推力作功 Fd；在地面參考系中行李的位移較大，推力作的功也較大。兩參考系中動能的改變量也不同，但每一參考系中「合力作功＝動能變化」都成立。動能、功都是相對量；能量守恆是在同一慣性參考系中比較。</p></div>
+
+<h3>二、動能與功能定理</h3>
+<div class="formula" data-t="動能"><div class="mb">K = \frac{1}{2}mv^2</div><p>m：質量（kg）　v：速率（m/s）　K：動能（J）；純量，恆 <span class="m">\ge 0</span></p></div>
+<p><strong>功能定理</strong>：<span class="circle">合力</span>對物體所作的功等於物體動能的變化。<span class="hand">所有力的功都要算</span></p>
+<div class="formula" data-t="功能定理"><div class="mb">W_{\text{合}} = \Delta K = \frac{1}{2}mv^2 - \frac{1}{2}mv_0^2</div><p><span class="m">W_{\text{合}}</span>：合力的功＝各力作功的代數和（J）　<span class="m">v_0</span>、v：初、末速率</p></div>
+<div class="key">
+<ul><li>合力作正功，動能增加；作負功，動能減少；不作功（或合功為零），動能不變。</li>
+<li>適用於任何路徑、定力或變力；只需起點與終點的速率。</li></ul>
+</div>
+
+<div class="tip"><p><strong>深究　由牛頓第二定律推導功能定理</strong></p>
+<p>定力沿直線作用時，<span class="m">F = ma</span>，且等加速度運動滿足 <span class="m">v^2 = v_0^2 + 2ad</span>，故</p>
+<div class="mb">W = Fd = ma\cdot d = m\cdot\frac{v^2 - v_0^2}{2} = \frac{1}{2}mv^2 - \frac{1}{2}mv_0^2</div>
+<p>變力時，將路徑切成許多小段，每小段內力近似不變，各段的功相加即得同一結果（微積分寫成 <span class="m">W = \int F\,dx = \int mv\,dv</span>）。功能定理是牛頓第二定律對位移積分的結果，並非獨立的新定律；它把「力在一段距離上的累積效果」與「速率」直接連起來，不需求時間。</p></div>
+
+<h4>應用：煞車距離</h4>
+<p>車輛以速率 v 行駛，煞車時摩擦力 f 固定，滑行距離 d 滿足 <span class="m">-fd = 0 - \frac{1}{2}mv^2</span>，即</p>
+<div class="mb">d = \frac{mv^2}{2f}</div>
+<ul>
+<li>f 不變時，<strong>煞車距離與速率平方成正比</strong>：<span class="box">速率 2 倍 → 煞車距離 4 倍</span></li>
+<li>若摩擦力來自動摩擦 <span class="m">f = \mu_k mg</span>，則 <span class="m">d = \dfrac{v^2}{2\mu_k g}</span>，<span class="ul">與質量無關</span>。<span class="hand">大車小車同速，煞車距離相同</span></li>
+<li>實際停車距離＝反應距離（反應時間內等速前進，與 v 成正比）＋煞車距離（與 v² 成正比）。</li>
+</ul>
+
+<div class="warn"><p><strong>易錯提醒</strong>　功能定理中的 W 是「合力」或「所有力」的功總和。只算施力而漏掉摩擦力、重力的功，是計算題最常見的錯誤。動能是純量，<em>不能分解成分量相加減</em>。</p></div>
+<div class="exam"><p>學測常考「速率變為 n 倍，煞車距離、所需的功變為幾倍」的比例題，以及由 <span class="m">K = \frac{p^2}{2m}</span> 比較動量相同的兩物體動能（進階）。陷阱：<em>動能與速率成正比</em>的錯誤直覺。</p></div>
+
+<h3>三、位能與力學能守恆</h3>
+<div class="key">
+<p><strong>保守力</strong>：作功只與起點、終點有關，與路徑無關的力，例如重力、彈簧彈力、靜電力。沿封閉路徑繞一圈，保守力作功為零。摩擦力、空氣阻力的功與路徑有關，為非保守力。</p>
+<p><strong>位能</strong>：對保守力可定義位能 U，使保守力作功＝位能的減少量：</p>
+<div class="mb">W_{\text{保守}} = -\Delta U</div>
+<ul>
+<li><strong>重力位能</strong>（地表附近）：<span class="m">U_g = mgh</span>，h 為相對於所選參考面的高度；參考面可任選，<strong>只有位能差有物理意義</strong>。<span class="hand blue">參考面自選，差值不變</span></li>
+<li><strong>彈力位能</strong>（進階）：彈簧形變量 x 時 <span class="m">U_s = \dfrac{1}{2}kx^2</span>，以原長為零位能；伸長與壓縮同樣 x，位能相同。</li>
+<li>位能屬於「系統」：重力位能屬於物體–地球系統，彈力位能儲存於彈簧。</li>
+</ul>
+<p><strong>力學能</strong>：<span class="m">E = K + U</span>。</p>
+</div>
+<div class="formula" data-t="力學能守恆"><div class="mb">K_1 + U_1 = K_2 + U_2</div><p>條件：<span class="circle">只有保守力作功</span>（其他力不作功）。下標 1、2 為任意兩狀態</p></div>
+<div class="formula" data-t="有非保守力作功"><div class="mb">W_{\text{非保守}} = \Delta E = (K_2 + U_2) - (K_1 + U_1)</div><p>動摩擦力作負功，力學能減少；減少量＝摩擦生熱 <span class="m">f_k\cdot s</span>（s 為相對滑動的路徑長）</p></div>
+<div class="mnem"><p>只有重力、彈力作功 → 力學能守恆；摩擦一作功 → 少掉的變成熱</p></div>
+
+<figure class="fig"><svg viewBox="0 0 520 300" width="520">
+<line x1="200" y1="20" x2="320" y2="20" stroke="#1f2a44" stroke-width="3"/>
+<path d="M150.7,150.2 A170,170 0 0 0 369.3,150.2" fill="none" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="5,4"/>
+<line x1="260" y1="20" x2="150.7" y2="150.2" stroke="#1f2a44" stroke-width="1.5"/>
+<line x1="260" y1="20" x2="260" y2="190" stroke="#1f2a44" stroke-width="1.5"/>
+<line x1="260" y1="20" x2="369.3" y2="150.2" stroke="#1f2a44" stroke-width="1.5" stroke-dasharray="3,3"/>
+<circle cx="150.7" cy="150.2" r="10" fill="#2f6fb5"/>
+<circle cx="260" cy="190" r="10" fill="#2f6fb5"/>
+<circle cx="369.3" cy="150.2" r="10" fill="#cfe3f8" stroke="#2f6fb5"/>
+<text x="130" y="145" font-size="15" text-anchor="end">A</text>
+<text x="260" y="215" font-size="15" text-anchor="middle">O</text>
+<text x="390" y="145" font-size="15">B</text>
+<line x1="380" y1="150.2" x2="450" y2="150.2" stroke="#1f2a44" stroke-dasharray="4,3"/>
+<line x1="272" y1="190" x2="450" y2="190" stroke="#1f2a44" stroke-dasharray="4,3"/>
+<line x1="440" y1="150.2" x2="440" y2="190" stroke="#c2410c" stroke-width="1.5"/>
+<text x="448" y="175" font-size="14" fill="#c2410c">h</text>
+<g>
+<rect x="40" y="235" width="16" height="0.1" fill="#d9772b"/>
+<rect x="60" y="235" width="16" height="50" fill="#2f6fb5"/>
+<line x1="30" y1="285" x2="90" y2="285" stroke="#1f2a44"/>
+<text x="48" y="298" font-size="13" text-anchor="middle">K</text>
+<text x="68" y="298" font-size="13" text-anchor="middle">U</text>
+<text x="100" y="262" font-size="13">A 點</text>
+</g>
+<g>
+<rect x="240" y="235" width="16" height="50" fill="#d9772b"/>
+<line x1="230" y1="285" x2="290" y2="285" stroke="#1f2a44"/>
+<text x="248" y="298" font-size="13" text-anchor="middle">K</text>
+<text x="268" y="298" font-size="13" text-anchor="middle">U</text>
+<text x="300" y="262" font-size="13">O 點</text>
+</g>
+<g>
+<rect x="420" y="235" width="16" height="50" fill="#2f6fb5"/>
+<line x1="390" y1="285" x2="450" y2="285" stroke="#1f2a44"/>
+<text x="408" y="298" font-size="13" text-anchor="middle">K</text>
+<text x="428" y="298" font-size="13" text-anchor="middle">U</text>
+<text x="460" y="262" font-size="13">B 點</text>
+</g>
+</svg><figcaption>圖 P9-3　單擺的能量轉換（忽略空氣阻力，以最低點 O 為重力位能零點）：A、B 兩端點動能為零、位能最大；O 點位能為零、動能最大。示意圖，未依比例</figcaption></figure>
+
+<ul>
+<li>單擺的張力恆與速度垂直，不作功，只有重力作功，故力學能守恆：<span class="box">v = √(2gh)</span>，與擺錘質量、擺長無關（只與高度差有關）。</li>
+<li>物體沿任意形狀的光滑軌道滑下，正向力不作功，結果相同：<strong>到達某高度時的速率只由高度差決定，與路徑無關</strong>；但所需時間與路徑有關。<span class="hand">速率同，時間不同</span></li>
+</ul>
+
+<figure class="fig"><svg viewBox="0 0 440 250" width="440">
+<defs><marker id="P9-ar4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f2a44"/></marker></defs>
+<line x1="60" y1="210" x2="400" y2="210" stroke="#1f2a44" stroke-width="1.5" marker-end="url(#P9-ar4)"/>
+<line x1="60" y1="210" x2="60" y2="20" stroke="#1f2a44" stroke-width="1.5" marker-end="url(#P9-ar4)"/>
+<line x1="60" y1="50" x2="360" y2="50" stroke="#7a5cc2" stroke-width="2.5"/>
+<line x1="60" y1="210" x2="360" y2="50" stroke="#2f6fb5" stroke-width="2.5"/>
+<line x1="60" y1="50" x2="360" y2="210" stroke="#d9772b" stroke-width="2.5"/>
+<line x1="360" y1="50" x2="360" y2="210" stroke="#1f2a44" stroke-dasharray="4,3"/>
+<text x="365" y="45" font-size="14" fill="#7a5cc2">E = K + U</text>
+<text x="300" y="100" font-size="14" fill="#2f6fb5">U = mgh</text>
+<text x="96" y="100" font-size="14" fill="#d9772b">K = mg(H − h)</text>
+<text x="140" y="34" font-size="14" fill="#d64545" transform="rotate(-3 140 34)">兩斜線交於 h = H/2：K = U</text>
+<text x="360" y="228" font-size="14" text-anchor="middle">H</text>
+<text x="52" y="55" font-size="14" text-anchor="end">mgH</text>
+<text x="52" y="215" font-size="14" text-anchor="end">0</text>
+<text x="420" y="246" font-size="14" text-anchor="end">高度 h（m）</text>
+<text x="68" y="24" font-size="14">能量（J）</text>
+</svg><figcaption>圖 P9-4　自高度 H 靜止落下的物體（忽略空氣阻力）：重力位能、動能與高度成線性關係，力學能為水平線。以時間為橫軸時，U 與 K 則為拋物線</figcaption></figure>
+
+<div class="warn"><p><strong>易錯提醒</strong></p><ul>
+<li>K 對「高度」為直線，對「時間」為拋物線（<span class="m">h = H - \frac{1}{2}gt^2</span>）。圖表題須先看橫軸。</li>
+<li>落下到一半高度時 <span class="m">K = U</span>（以地面為零位能）；但所經時間為總時間的 <span class="m">1/\sqrt{2}</span> 倍，並非一半。</li>
+<li>「力學能守恆」的條件是非保守力不作功，並非「不受非保守力」。例如物體在等速運轉的水平輸送帶上隨帶移動，靜摩擦力為零或與位移垂直時，力學能不變。</li>
+<li>人推車上坡、電梯吊升，外力作正功，力學能增加；等速下降的電梯，張力作負功，力學能減少。</li>
+</ul></div>
+<div class="exam"><p>學測常以軌道、單擺、彈簧、雲霄飛車情境，問某點速率或能量比例；或給能量–高度圖、能量–時間圖判讀。陷阱：<em>軌道形狀不同，以為末速率不同</em>（光滑時只看高度差）；有摩擦時忘記扣生熱。</p></div>
+
+<figure class="fig"><svg viewBox="0 0 480 240" width="480">
+<line x1="20" y1="210" x2="470" y2="210" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4,3"/>
+<path d="M30,50 C90,50 110,210 170,210 C230,210 250,114 290,114 C330,114 350,170 390,170 L460,170" fill="none" stroke="#1f2a44" stroke-width="3"/>
+<circle cx="30" cy="42" r="8" fill="#c2410c"/>
+<text x="30" y="30" font-size="15" text-anchor="middle">A</text>
+<text x="170" y="230" font-size="15" text-anchor="middle">B</text>
+<text x="290" y="104" font-size="15" text-anchor="middle">C</text>
+<text x="425" y="160" font-size="15" text-anchor="middle">D</text>
+<line x1="30" y1="50" x2="30" y2="210" stroke="#2f6fb5" stroke-dasharray="3,3"/>
+<text x="38" y="135" font-size="14" fill="#2f6fb5">20 m</text>
+<line x1="290" y1="114" x2="290" y2="210" stroke="#2f6fb5" stroke-dasharray="3,3"/>
+<text x="298" y="165" font-size="14" fill="#2f6fb5">12 m</text>
+<line x1="440" y1="170" x2="440" y2="210" stroke="#2f6fb5" stroke-dasharray="3,3"/>
+<text x="446" y="195" font-size="14" fill="#2f6fb5">5 m</text>
+</svg><figcaption>圖 P9-5　軌道上各點高度（以 B 點所在水平面為零位能）。用於例題 2。示意圖，未依比例</figcaption></figure>
+
+<figure class="fig"><svg viewBox="0 0 440 250" width="440">
+<defs><marker id="P9-ar6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f2a44"/></marker></defs>
+<line x1="40" y1="200" x2="400" y2="200" stroke="#1f2a44" stroke-width="1.5" marker-end="url(#P9-ar6)"/>
+<line x1="210" y1="215" x2="210" y2="20" stroke="#1f2a44" stroke-width="1.5" marker-end="url(#P9-ar6)"/>
+<path d="M90,50 Q210,350 330,50" fill="none" stroke="#2f6fb5" stroke-width="2.5"/>
+<line x1="70" y1="50" x2="350" y2="50" stroke="#7a5cc2" stroke-width="2.5"/>
+<line x1="90" y1="50" x2="90" y2="200" stroke="#1f2a44" stroke-dasharray="4,3"/>
+<line x1="330" y1="50" x2="330" y2="200" stroke="#1f2a44" stroke-dasharray="4,3"/>
+<line x1="280" y1="50" x2="280" y2="200" stroke="#1f2a44" stroke-width="1"/>
+<line x1="286" y1="50" x2="286" y2="149" stroke="#d9772b" stroke-width="5"/>
+<line x1="286" y1="149" x2="286" y2="200" stroke="#2f6fb5" stroke-width="5"/>
+<text x="292" y="95" font-size="14" fill="#d9772b">K</text>
+<text x="292" y="180" font-size="14" fill="#2f6fb5">U</text>
+<text x="90" y="218" font-size="14" text-anchor="middle">−A</text>
+<text x="330" y="218" font-size="14" text-anchor="middle">A</text>
+<text x="280" y="218" font-size="14" text-anchor="middle">x</text>
+<text x="355" y="45" font-size="14" fill="#7a5cc2">E</text>
+<text x="128" y="115" font-size="14" fill="#2f6fb5">U = ½kx²</text>
+<text x="400" y="222" font-size="14" text-anchor="middle">位置 x（m）</text>
+<text x="218" y="24" font-size="14">能量（J）</text>
+</svg><figcaption>圖 P9-6　光滑水平面上的彈簧–木塊系統：位能曲線與力學能水平線所夾的高度為動能；E 線與 U 曲線交點（±A）為轉折點，木塊只能在 −A 與 A 之間運動</figcaption></figure>
+
+<h4>能量圖（U–x 圖）的判讀（進階）</h4>
+<ul>
+<li>任一位置的動能 <span class="m">K = E - U(x)</span>，<span class="m">K \ge 0</span> 的區域才是可到達的區域。</li>
+<li><span class="m">U = E</span> 處速率為零，為<strong>轉折點</strong>。<span class="hand blue">速度在此反向</span></li>
+<li>U–x 圖的斜率的負值等於保守力：<span class="m">F = -\dfrac{\Delta U}{\Delta x}</span>。U 的極小值為穩定平衡點（彈簧原長處），極大值為不穩定平衡點。</li>
+</ul>
+
+<div class="tip"><p><strong>深究　重力位能的一般式與脫離速率（進階，連結 P4）</strong></p>
+<p><span class="m">U = mgh</span> 只適用於高度遠小於地球半徑、g 可視為定值時。一般情形，質量 M、m 相距 r 的重力位能為 <span class="m">U = -\dfrac{GMm}{r}</span>（以無窮遠為零）。由地表 <span class="m">r = R</span> 上升到 <span class="m">R + h</span>：</p>
+<div class="mb">\Delta U = GMm\left(\frac{1}{R} - \frac{1}{R+h}\right) = \frac{GMmh}{R(R+h)} \approx \frac{GM}{R^2}mh = mgh \quad (h \ll R)</div>
+<p>令地表的動能恰足以使物體到達無窮遠且速率為零：<span class="m">\frac{1}{2}mv^2 - \frac{GMm}{R} = 0</span>，得脫離速率 <span class="m">v = \sqrt{2GM/R} = \sqrt{2gR}</span>。代入 <span class="m">g = 9.8\ \mathrm{m/s^2}</span>、<span class="m">R = 6.37\times10^{6}\ \mathrm{m}</span>，得約 <span class="m">11.2\ \mathrm{km/s}</span>。</p></div>
+
+<div class="tip"><p><strong>深究　位能為何屬於系統</strong></p>
+<p>「石頭的重力位能」是簡稱。石頭下落時地球也受石頭吸引而移動，只是地球質量極大，位移與速率可忽略，動能變化幾乎全由石頭承接，故習慣把位能記在石頭上。兩個質量相近的天體（如雙星）就必須把位能視為兩者共有，並同時計算兩者的動能。</p></div>
+
+<h3>四、能量的形式、轉換與尺度</h3>
+<div class="key">
+<p><strong>能量守恆定律</strong>：能量可在不同形式之間轉換，也可在物體之間轉移，但孤立系統的總能量不變。</p>
+<table class="t"><thead><tr><th>能量形式</th><th>巨觀描述</th><th>微觀本質</th></tr></thead><tbody>
+<tr><td>動能</td><td>物體整體運動</td><td>—</td></tr>
+<tr><td>重力位能</td><td>物體與地球的相對位置</td><td>重力交互作用</td></tr>
+<tr><td>彈力位能</td><td>彈簧、橡皮筋的形變</td><td>原子間距離改變，<strong>電磁交互作用</strong>的位能</td></tr>
+<tr><td>熱能</td><td>溫度、相態</td><td>原子、分子無規則運動的動能＋彼此交互作用的位能</td></tr>
+<tr><td>化學能</td><td>燃料、食物、電池</td><td>原子核與電子、電子與電子之間的<strong>電磁交互作用</strong>能量；化學反應為原子重新排列</td></tr>
+<tr><td>電磁能（光、電磁波）</td><td>光、無線電波、電流</td><td>電場與磁場的能量；光子（見 P6、P11）</td></tr>
+<tr><td>核能</td><td>核反應爐、太陽</td><td>原子核內<strong>強交互作用</strong>與電磁交互作用的能量（見 P10）</td></tr>
+<tr><td>質能</td><td>靜止物體</td><td><span class="m">E = mc^2</span>（見 P10）</td></tr>
+</tbody></table>
+</div>
+
+<div class="note"><p>化學能、彈力位能、熱能，追到原子尺度都是電磁交互作用的能量。</p><p>核能則牽涉強交互作用。</p></div>
+<h4>能量的形式因觀察尺度而異（PBa-Ⅴc-2）</h4>
+<ul>
+<li>木塊在桌面滑行而停止：巨觀上「動能消失、產生熱」；微觀上，木塊整體有序的動能轉為木塊與桌面原子無規則振動的動能與位能，總能量不變。</li>
+<li>彈簧的「彈力位能」與燃料的「化學能」，在原子尺度上都是電荷之間的電磁位能；巨觀上給予不同名稱，是因為形變與化學反應的表現方式不同。</li>
+<li>同一杯靜置的熱水：巨觀動能為零，微觀上分子仍高速運動，平均速率達數百 m/s。</li>
+<li>名稱是描述的方便；判斷能量是否守恆時，須把<span class="circle">所有尺度</span>的能量都計入。<span class="hand">「消失」的力學能多半變成熱能</span></li>
+</ul>
+
+<h4>能量的尺度</h4>
+<table class="t"><thead><tr><th>對象</th><th>能量或功率</th><th>備註</th></tr></thead><tbody>
+<tr><td>室溫（300 K）氣體分子的平均移動動能</td><td><span class="m">6.2\times10^{-21}\ \mathrm{J} \approx 0.04\ \mathrm{eV}</span></td><td><span class="m">\frac{3}{2}kT</span></td></tr>
+<tr><td>可見光光子（700–400 nm）</td><td>約 1.8–3.1 eV</td><td><span class="m">E = hc/\lambda</span>，見 P11</td></tr>
+<tr><td>氫分子的 H–H 鍵能</td><td>約 4.5 eV（每莫耳約 436 kJ）</td><td>化學反應的能量尺度為 eV</td></tr>
+<tr><td>一次鈾-235 核分裂</td><td>約 200 MeV</td><td>核反應的能量尺度為 MeV，見 P10</td></tr>
+<tr><td>2 kg 書本舉高 1 m</td><td>約 20 J</td><td><span class="m">mgh</span></td></tr>
+<tr><td>食物熱量 1 大卡（kcal）</td><td>4184 J</td><td>營養標示的「大卡」</td></tr>
+<tr><td>成人一日飲食約 2000 kcal</td><td><span class="m">8.4\times10^{6}\ \mathrm{J}</span>，平均功率約 100 W</td><td>除以 86400 s</td></tr>
+<tr><td>1 度電（1 kWh）</td><td><span class="m">3.6\times10^{6}\ \mathrm{J}</span></td><td></td></tr>
+<tr><td>太陽常數（地球大氣頂端）</td><td>約 <span class="m">1361\ \mathrm{W/m^2}</span></td><td>國際天文聯合會名義值</td></tr>
+<tr><td>太陽光度</td><td><span class="m">3.828\times10^{26}\ \mathrm{W}</span></td><td>國際天文聯合會名義值</td></tr>
+</tbody></table>
+<p>注意：<span class="box">1 eV = 1.602×10⁻¹⁹ J</span>，為一個電子通過 1 V 電位差所獲得的能量，適用於原子、分子尺度。熱化學卡定義為 <span class="m">1\ \mathrm{cal} = 4.184\ \mathrm{J}</span>（另有國際蒸汽表卡 4.1868 J）；高中題目常取 <span class="m">1\ \mathrm{cal} \approx 4.2\ \mathrm{J}</span>，依題目所給為準。</p>
+
+<h4>能量轉換鏈與效率</h4>
+<p>任一實際裝置的<strong>效率</strong>＝輸出的有用能量 ÷ 輸入的能量（或有用輸出功率 ÷ 輸入功率），恆小於 1；未成為有用輸出的部分最終大多成為環境中的低溫熱能。</p>
+<ul>
+<li><span class="ul">燃煤火力發電</span>：化學能 →（燃燒）熱能 →（鍋爐）蒸汽的熱能 →（汽輪機）力學能 →（發電機）電能。</li>
+<li>水力發電：水的重力位能 → 動能 → 渦輪的力學能 → 電能。</li>
+<li>人體：食物的化學能 → ATP 的化學能（見 B2）→ 肌肉作功與體溫的熱能。</li>
+<li>美國能源資訊署統計，2025 年燃煤機組的平均熱耗率為每度電 10647 Btu，換算熱效率約 32%；天然氣機組整體平均約 44%；大型複循環機組可略高於 60%。</li>
+<li>汽油小客車：依美國能源部資料，燃料能量最後用於推動車輛的比例約 12%–30%（隨行駛型態而異），其餘主要以熱的形式散失於引擎。</li>
+</ul>
+<div class="formula" data-t="效率"><div class="mb">\eta = \frac{E_{\text{有用輸出}}}{E_{\text{輸入}}} = \frac{P_{\text{有用輸出}}}{P_{\text{輸入}}} &lt; 1</div><p>多段轉換的總效率為各段效率的乘積：<span class="m">\eta = \eta_1\eta_2\eta_3\cdots</span></p></div>
+
+<figure class="fig"><svg viewBox="0 0 560 210" width="560">
+<polygon points="20,40 170,40 170,140 20,140" fill="#fbdcbd" stroke="#d9772b"/>
+<text x="95" y="85" font-size="15" text-anchor="middle">燃料化學能</text>
+<text x="95" y="108" font-size="15" text-anchor="middle">100</text>
+<rect x="170" y="40" width="110" height="100" fill="#e2e8f0" stroke="#94a3b8"/>
+<text x="225" y="85" font-size="15" text-anchor="middle">鍋爐、汽輪機</text>
+<text x="225" y="105" font-size="15" text-anchor="middle">發電機</text>
+<polygon points="280,40 440,40 470,56 440,72 280,72" fill="#cfe3f8" stroke="#2f6fb5"/>
+<text x="360" y="62" font-size="15" text-anchor="middle">電能 32</text>
+<path d="M280,72 L280,140 C330,140 360,150 380,190 L460,190 L460,124 L420,124 C380,124 360,106 330,90 C310,80 300,72 280,72 z" fill="#e2e8f0" stroke="#94a3b8"/>
+<text x="470" y="160" font-size="15">廢熱 68</text>
+<text x="470" y="180" font-size="13">（冷卻水、煙囪）</text>
+</svg><figcaption>圖 P9-7　燃煤火力發電的能量流向（以輸入 100 單位計，熱效率取 32%）：總能量守恆，但約三分之二成為排入環境的低溫熱。示意圖，箭頭寬度約略表示能量比例</figcaption></figure>
+
+<div class="tip"><p><strong>深究　能量守恆定律的確立</strong></p>
+<ul>
+<li>邁爾（Julius Robert Mayer，1814–1878）1842 年發表論文，提出各種「力」（今稱能量）可互相轉換而總量不變，並估算熱功當量。</li>
+<li>焦耳（James Prescott Joule，1818–1889）自 1840 年代起以電流生熱、落體攪水等實驗定量測量熱功當量（見六）。</li>
+<li>亥姆霍茲（Hermann von Helmholtz，1821–1894）1847 年發表〈論力的守恆〉，以數學形式把力學、熱、電、磁現象統一於能量守恆。</li>
+<li>早期所謂「力」（Kraft）兼指力與能量，「能量」一詞的現代用法於十九世紀中葉才確立。</li>
+</ul></div>
+
+<div class="exam"><p>學測常給一段能量轉換鏈（水力、風力、火力、太陽能、人體），問各階段的能量形式；或給輸入、輸出數據求效率、求廢熱。陷阱：<em>以為能量守恆就代表效率可達 100%</em>。</p></div>
+<h3>五、溫度與克氏溫標</h3>
+<div class="key">
+<ul>
+<li><strong>熱平衡</strong>：兩物體接觸後不再有淨熱量傳遞的狀態，此時兩者溫度相同。</li>
+<li><strong>熱力學第零定律</strong>：A 與 C 達熱平衡、B 與 C 達熱平衡，則 A 與 B 也達熱平衡。這是溫度計能夠使用的依據（溫度計即 C）。</li>
+<li><strong>攝氏溫標</strong>：一大氣壓下純水的冰點 0 °C、沸點 100 °C（歷史定義；現行定義以克氏溫標為準）。</li>
+<li><strong>克氏溫標</strong>（絕對溫標）：SI 基本量溫度的單位為克耳文 K。</li>
+</ul>
+</div>
+<div class="formula" data-t="溫標換算"><div class="mb">T(\mathrm{K}) = t(^\circ\mathrm{C}) + 273.15</div><p>T：克氏溫度（K）　t：攝氏溫度（°C）；計算題常取 273</p></div>
+<div class="key">
+<ul>
+<li>溫度「差」在兩溫標數值相同：<span class="box">ΔT（K）= Δt（°C）</span></li>
+<li><strong>絕對零度</strong> 0 K（−273.15 °C）是溫度的下限，只能<span class="circle">趨近</span>、無法達到（熱力學第三定律，進階）。</li>
+<li>寫法：「300 K」，不寫「300 °K」或「300 度 K」。</li>
+<li>2019 年起，SI 以固定<strong>波茲曼常數</strong> <span class="m">k = 1.380649\times10^{-23}\ \mathrm{J/K}</span>（精確值）定義克耳文；水的三相點溫度改為實驗量測值，約 273.16 K。</li>
+</ul>
+</div>
+
+<figure class="fig"><svg viewBox="0 0 460 300" width="460">
+<line x1="110" y1="30" x2="110" y2="270" stroke="#1f2a44" stroke-width="2"/>
+<line x1="240" y1="30" x2="240" y2="270" stroke="#1f2a44" stroke-width="2"/>
+<line x1="370" y1="30" x2="370" y2="270" stroke="#1f2a44" stroke-width="2"/>
+<text x="110" y="22" font-size="15" text-anchor="middle">克氏 K</text>
+<text x="240" y="22" font-size="15" text-anchor="middle">攝氏 °C</text>
+<text x="370" y="22" font-size="15" text-anchor="middle">華氏 °F</text>
+<line x1="60" y1="60" x2="420" y2="60" stroke="#c2410c" stroke-dasharray="5,4"/>
+<line x1="60" y1="120" x2="420" y2="120" stroke="#2f6fb5" stroke-dasharray="5,4"/>
+<line x1="60" y1="260" x2="420" y2="260" stroke="#1f2a44" stroke-dasharray="5,4"/>
+<text x="104" y="55" font-size="14" text-anchor="end">373.15</text>
+<text x="234" y="55" font-size="14" text-anchor="end">100</text>
+<text x="364" y="55" font-size="14" text-anchor="end">212</text>
+<text x="104" y="115" font-size="14" text-anchor="end">273.15</text>
+<text x="234" y="115" font-size="14" text-anchor="end">0</text>
+<text x="364" y="115" font-size="14" text-anchor="end">32</text>
+<text x="104" y="255" font-size="14" text-anchor="end">0</text>
+<text x="234" y="255" font-size="14" text-anchor="end">−273.15</text>
+<text x="364" y="255" font-size="14" text-anchor="end">−459.67</text>
+<text x="380" y="75" font-size="13" fill="#c2410c">水的沸點（1 atm）</text>
+<text x="380" y="135" font-size="13" fill="#2f6fb5">水的冰點（1 atm）</text>
+<text x="380" y="252" font-size="13">絕對零度</text>
+</svg><figcaption>圖 P9-8　三種溫標的對照（示意圖，未依比例）。華氏換算（進階）：t<sub>F</sub> = 1.8 t<sub>C</sub> + 32</figcaption></figure>
+
+<div class="mnem"><p>算倍數、代公式，先加 273；算溫差，不必加</p></div>
+<h4>為何需要克氏溫標</h4>
+<ul>
+<li><strong>定容氣體溫度計</strong>：一定量氣體體積固定時，壓力與攝氏溫度成線性關係；不同氣體、不同量的直線外插到壓力為零，都交於約 −273 °C（現值 −273.15 °C）。以此點為零點，壓力即與溫度成正比，<span class="m">P \propto T</span>。</li>
+<li>理想氣體方程式 <span class="m">PV = nRT</span>、分子平均動能 <span class="m">\frac{3}{2}kT</span>、熱機效率上限 <span class="m">1 - T_C/T_H</span> 中的 T 都必須用克氏溫度。</li>
+<li><strong>比較溫度的倍數</strong>只能用<span class="circle">克氏溫度</span>：20 °C 到 40 °C 並非「溫度加倍」，克氏溫度只由 293.15 K 變為 313.15 K（約 1.07 倍）。</li>
+</ul>
+
+<figure class="fig"><svg viewBox="0 0 470 260" width="470">
+<defs><marker id="P9-ar9" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f2a44"/></marker></defs>
+<line x1="40" y1="220" x2="455" y2="220" stroke="#1f2a44" stroke-width="1.5" marker-end="url(#P9-ar9)"/>
+<line x1="335" y1="230" x2="335" y2="30" stroke="#1f2a44" stroke-width="1.5" marker-end="url(#P9-ar9)"/>
+<line x1="75.5" y1="220" x2="287.5" y2="124.3" stroke="#c2410c" stroke-width="1.5" stroke-dasharray="5,4"/>
+<line x1="75.5" y1="220" x2="287.5" y2="154.2" stroke="#2f6fb5" stroke-width="1.5" stroke-dasharray="5,4"/>
+<line x1="75.5" y1="220" x2="287.5" y2="184.1" stroke="#2e8b57" stroke-width="1.5" stroke-dasharray="5,4"/>
+<line x1="287.5" y1="124.3" x2="430" y2="60" stroke="#c2410c" stroke-width="2.5"/>
+<line x1="287.5" y1="154.2" x2="430" y2="110" stroke="#2f6fb5" stroke-width="2.5"/>
+<line x1="287.5" y1="184.1" x2="430" y2="160" stroke="#2e8b57" stroke-width="2.5"/>
+<circle cx="75.5" cy="220" r="4" fill="#1f2a44"/>
+<text x="75.5" y="240" font-size="13" text-anchor="middle">−273.15</text>
+<text x="145" y="240" font-size="13" text-anchor="middle">−200</text>
+<text x="240" y="240" font-size="13" text-anchor="middle">−100</text>
+<text x="335" y="240" font-size="13" text-anchor="middle">0</text>
+<text x="430" y="240" font-size="13" text-anchor="middle">100</text>
+<line x1="145" y1="216" x2="145" y2="224" stroke="#1f2a44"/>
+<line x1="240" y1="216" x2="240" y2="224" stroke="#1f2a44"/>
+<line x1="430" y1="216" x2="430" y2="224" stroke="#1f2a44"/>
+<text x="440" y="256" font-size="14" text-anchor="end">溫度 t（°C）</text>
+<text x="343" y="34" font-size="14">壓力 P</text>
+<text x="100" y="120" font-size="13">虛線：外插</text>
+<text x="100" y="138" font-size="13">實線：可量測的範圍</text>
+</svg><figcaption>圖 P9-9　定容氣體溫度計：三條直線代表不同氣體量（或不同氣體），外插後都在 −273.15 °C 處壓力為零。示意圖</figcaption></figure>
+
+<div class="warn"><p><strong>易錯提醒</strong></p><ul>
+<li>「溫度由 27 °C 加熱到 54 °C，分子平均動能變為 2 倍」錯誤：<span class="m">\frac{327.15}{300.15} \approx 1.09</span> 倍。</li>
+<li>溫度差換算不加 273.15：<span class="m">\Delta T = 30\ \mathrm{K}</span> 即 <span class="m">\Delta t = 30\ ^\circ\mathrm{C}</span>。</li>
+<li>溫度是「狀態」的量度，與物體大小無關（強度性質）；熱能與物體的量有關（外延性質）。一桶溫水的熱能可大於一杯沸水。</li>
+</ul></div>
+<div class="exam"><p>學測常考「溫度變為幾倍」「分子平均動能變為幾倍」，須換成克氏溫度；或由定容氣體 P–t 圖外插求絕對零度。陷阱：<em>直接用攝氏溫度求比值</em>。</p></div>
+
+<div class="tip"><p><strong>深究　溫標的歷史</strong></p>
+<ul>
+<li>攝耳修斯（Anders Celsius，1701–1744）1742 年提出百分度溫標，原訂沸點為 0、冰點為 100；1745 年林奈將其倒置為今日形式（一說另有他人同時提出）。</li>
+<li>克耳文（William Thomson，1824–1907，1892 年受封為克耳文男爵）1848 年依卡諾的熱機理論提出與工作物質無關的絕對溫標。後來證明此溫標與理想氣體溫標一致。</li>
+<li>1954 年起以水的三相點 273.16 K 定義克耳文；2019 年 5 月 20 日新 SI 生效後，改以波茲曼常數的固定值定義，溫度由此與能量單位焦耳直接連結。</li>
+</ul></div>
+
+<h3>六、熱能、內能與熱</h3>
+<div class="key">
+<ul>
+<li><strong>熱能</strong>（PBb-Ⅴc-3）：物體內原子、分子無規則運動的<strong>動能</strong>與其間<strong>交互作用的位能</strong>的總和。</li>
+<li><strong>內能</strong> U：系統內部所有微觀能量的總和。高中熱學討論不涉及化學反應與核反應時，內能的變化即熱能的變化，兩詞常通用。</li>
+<li><strong>熱</strong>（PBb-Ⅴc-4）：<strong>因溫度不同而傳遞的能量</strong>，符號 Q，單位焦耳。熱是「過程量」，表示傳遞了多少能量；物體「含有」熱能，不「含有」熱。<span class="hand">熱＝傳遞中的能量</span></li>
+<li>改變內能的兩種方式：<strong>對系統作功</strong>（搓手、壓縮氣體）與<strong>傳熱</strong>（加熱、接觸低溫物體）。由末狀態無法判斷內能是由哪一種方式得來。<span class="hand blue">功與熱：兩條路，同一種能量</span></li>
+<li>熱傳遞的方式：傳導（相鄰粒子碰撞傳遞）、對流（流體整體流動攜帶）、輻射（電磁波，可在真空中傳遞）。</li>
+</ul>
+</div>
+
+<table class="t"><thead><tr><th>量</th><th>意義</th><th>性質</th><th>示例</th></tr></thead><tbody>
+<tr><td>溫度 T</td><td>分子平均移動動能的量度；決定熱的流向</td><td>狀態量；與量無關</td><td>沸水 373 K</td></tr>
+<tr><td>熱能（內能）U</td><td>微觀動能＋交互作用位能的總和</td><td>狀態量；與量成正比</td><td>0 °C 的水比同質量 0 °C 的冰多出熔化熱</td></tr>
+<tr><td>熱 Q</td><td>因溫度差而傳遞的能量</td><td>過程量</td><td>熱水把 1000 J 熱傳給冷水</td></tr>
+<tr><td>功 W</td><td>力作用造成的能量轉移</td><td>過程量</td><td>摩擦、壓縮氣體</td></tr>
+</tbody></table>
+
+<h4>熱的本質：熱質說到能量</h4>
+<ul>
+<li><strong>熱質說</strong>：十八世紀盛行，認為熱是一種無重量、守恆的流體（熱質），由熱物體流向冷物體。可解釋熱平衡與混合實驗。卡諾 1824 年的熱機理論最初即建立在熱質說上。</li>
+<li><strong>倫福德</strong>（Count Rumford，本名 Benjamin Thompson，1753–1814）1798 年報告：在慕尼黑以鈍鑽頭鑽砲管，只要持續鑽，摩擦就持續生熱，可使大量的水沸騰。孤立物體能「無限」供熱，難以用守恆的物質解釋，因而主張熱是運動的一種形式。當時的實驗誤差頗受爭議，熱質說並未因此立即被放棄。</li>
+<li><strong>焦耳</strong>：1845 年發表以落下重物帶動槳葉攪水的實驗，1850 年發表精密結果：使 1 磅水升高 1 °F 所需的功相當於 772 磅重物落下 1 英尺，換算約 4.15 J/cal，與現代值約差 1%。結論：一定量的功總是產生一定量的熱，<strong>熱與功是同一物理量（能量）的不同傳遞方式</strong>。<span class="hand">熱功當量 ≈ 4.2 J/cal</span></li>
+</ul>
+
+<figure class="fig"><svg viewBox="0 0 470 270" width="470">
+<rect x="150" y="110" width="170" height="130" fill="#e2e8f0" stroke="#1f2a44" stroke-width="2"/>
+<rect x="160" y="125" width="150" height="105" fill="#cfe3f8" stroke="#2f6fb5"/>
+<line x1="235" y1="40" x2="235" y2="220" stroke="#1f2a44" stroke-width="3"/>
+<rect x="195" y="150" width="80" height="10" fill="#94a3b8" stroke="#1f2a44"/>
+<rect x="195" y="185" width="80" height="10" fill="#94a3b8" stroke="#1f2a44"/>
+<rect x="160" y="168" width="20" height="8" fill="#1f2a44"/>
+<rect x="290" y="168" width="20" height="8" fill="#1f2a44"/>
+<line x1="235" y1="60" x2="80" y2="60" stroke="#1f2a44" stroke-width="1.5"/>
+<line x1="235" y1="70" x2="390" y2="70" stroke="#1f2a44" stroke-width="1.5"/>
+<circle cx="80" cy="72" r="12" fill="none" stroke="#1f2a44" stroke-width="2"/>
+<circle cx="390" cy="82" r="12" fill="none" stroke="#1f2a44" stroke-width="2"/>
+<line x1="68" y1="72" x2="68" y2="170" stroke="#1f2a44" stroke-width="1.5"/>
+<line x1="402" y1="82" x2="402" y2="150" stroke="#1f2a44" stroke-width="1.5"/>
+<rect x="52" y="170" width="32" height="40" fill="#fbdcbd" stroke="#d9772b"/>
+<rect x="386" y="150" width="32" height="40" fill="#fbdcbd" stroke="#d9772b"/>
+<text x="68" y="195" font-size="14" text-anchor="middle">m</text>
+<text x="402" y="175" font-size="14" text-anchor="middle">m</text>
+<line x1="290" y1="95" x2="290" y2="200" stroke="#c2410c" stroke-width="2"/>
+<circle cx="290" cy="205" r="5" fill="#c2410c"/>
+<text x="296" y="100" font-size="13" fill="#c2410c">溫度計</text>
+<text x="235" y="258" font-size="14" text-anchor="middle">隔熱容器內裝水，槳葉與固定擋板交錯</text>
+<text x="28" y="120" font-size="13">重物落下</text>
+<text x="420" y="120" font-size="13">重物落下</text>
+</svg><figcaption>圖 P9-10　焦耳實驗裝置示意：重物落下時繩子帶動轉軸，槳葉攪動水；重物減少的重力位能（扣除落地動能等損失）轉為水的熱能。示意圖，未依比例</figcaption></figure>
+
+<h4>溫度的微觀意義與理想氣體的內能（PBb-Ⅴc-1）</h4>
+<div class="formula" data-t="分子平均移動動能"><div class="mb">\overline{K} = \frac{1}{2}m\overline{v^2} = \frac{3}{2}kT</div><p>m：一個分子的質量（kg）　k：波茲曼常數 <span class="m">1.38\times10^{-23}\ \mathrm{J/K}</span>　T：克氏溫度（K）；與氣體種類無關</p></div>
+<div class="key">
+<ul>
+<li><strong>理想氣體</strong>：分子本身體積可忽略，除碰撞外分子間無交互作用，故<strong>無分子間位能</strong>，內能全為分子動能。</li>
+</ul>
+</div>
+<div class="formula" data-t="單原子理想氣體的內能"><div class="mb">U = N\cdot\frac{3}{2}kT = \frac{3}{2}nRT</div><p>適用：He、Ne、Ar 等單原子理想氣體</p></div>
+<div class="key">
+<ul>
+<li>N 為分子數，n 為莫耳數，<span class="m">R = N_A k = 8.31\ \mathrm{J/(mol\cdot K)}</span>。</li>
+<li><strong>一定量理想氣體的內能<span class="circle">只與溫度</span>有關</strong>，與壓力、體積無關；溫度不變則內能不變，<span class="m">\Delta U = \frac{3}{2}nR\Delta T</span>。</li>
+<li>雙原子分子（如 <span class="m">\ce{N2}</span>、<span class="m">\ce{O2}</span>）尚有轉動動能，常溫下 <span class="m">U = \frac{5}{2}nRT</span>（進階）。</li>
+</ul>
+</div>
+
+<figure class="fig"><svg viewBox="0 0 440 240" width="440">
+<defs><marker id="P9-ar11" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f2a44"/></marker></defs>
+<line x1="50" y1="200" x2="420" y2="200" stroke="#1f2a44" stroke-width="1.5" marker-end="url(#P9-ar11)"/>
+<line x1="50" y1="200" x2="50" y2="20" stroke="#1f2a44" stroke-width="1.5" marker-end="url(#P9-ar11)"/>
+<path d="M50,200 C90,195 105,40 140,40 C175,40 200,170 260,192 C300,198 340,200 400,200" fill="none" stroke="#2f6fb5" stroke-width="2.5"/>
+<path d="M50,200 C110,198 140,95 190,95 C240,95 280,170 340,190 C370,197 390,199 410,200" fill="none" stroke="#c2410c" stroke-width="2.5"/>
+<text x="145" y="32" font-size="14" fill="#2f6fb5">低溫 T₁</text>
+<text x="200" y="88" font-size="14" fill="#c2410c">高溫 T₂</text>
+<text x="415" y="222" font-size="14" text-anchor="end">分子速率 v（m/s）</text>
+<text x="58" y="22" font-size="14">分子數比例</text>
+</svg><figcaption>圖 P9-11　同一氣體在兩溫度下的分子速率分布（馬克士威分布，進階）：溫度較高時峰值右移、分布變寬，兩曲線下面積相同（總分子數相同）。示意圖</figcaption></figure>
+
+<div class="tip"><p><strong>深究　由分子碰撞推導 <span class="m">\overline{K} = \frac{3}{2}kT</span></strong></p>
+<p>邊長 L 的立方容器內有 N 個質量 m 的分子。一分子 x 方向速度分量 <span class="m">v_x</span>，與右壁彈性碰撞一次動量改變 <span class="m">2mv_x</span>，往返一次需時 <span class="m">2L/v_x</span>，故對右壁的平均力 <span class="m">\frac{2mv_x}{2L/v_x} = \frac{mv_x^2}{L}</span>。N 個分子合計，壓力</p>
+<div class="mb">P = \frac{F}{L^2} = \frac{Nm\overline{v_x^2}}{L^3} = \frac{Nm\overline{v^2}}{3V}\qquad\left(\overline{v_x^2} = \overline{v_y^2} = \overline{v_z^2} = \tfrac{1}{3}\overline{v^2}\right)</div>
+<p>故 <span class="m">PV = \frac{2}{3}N\cdot\frac{1}{2}m\overline{v^2}</span>。與實驗定律 <span class="m">PV = NkT</span> 比較，得 <span class="m">\frac{1}{2}m\overline{v^2} = \frac{3}{2}kT</span>。溫度是大量分子平均動能的量度，單一分子沒有「溫度」。</p>
+<p>方均根速率 <span class="m">v_{\mathrm{rms}} = \sqrt{\overline{v^2}} = \sqrt{\dfrac{3kT}{m}} = \sqrt{\dfrac{3RT}{M}}</span>（M 為莫耳質量，單位 kg/mol）。例：300 K 的 <span class="m">\ce{N2}</span>，<span class="m">M = 0.028\ \mathrm{kg/mol}</span>，<span class="m">v_{\mathrm{rms}} = \sqrt{3\times8.31\times300/0.028} \approx 517\ \mathrm{m/s}</span>。同溫下分子質量愈小，平均速率愈大，但<strong>平均移動動能相同</strong>。<span class="hand">輕的跑得快，動能一樣</span></p></div>
+
+<div class="warn"><p><strong>易錯提醒</strong></p><ul>
+<li>「溫度高的物體含熱多」錯誤：熱是傳遞中的能量；溫度高也不代表熱能多（還要看物質的量與種類）。</li>
+<li>熱的流向由溫度決定，與熱能多寡無關：一大桶 30 °C 的水熱能遠多於一小杯 80 °C 的水，兩者接觸時熱仍由 80 °C 的水流向 30 °C 的水。</li>
+<li>真實氣體與液體、固體有分子間位能，內能也與體積有關；「內能只由溫度決定」僅限理想氣體。</li>
+<li>0 °C 的水與 0 °C 的冰溫度相同、分子平均動能相同，但水的分子間位能較高，熱能較多。</li>
+</ul></div>
+<div class="exam"><p>學測常以敘述判斷「熱、溫度、熱能」的用語是否正確；或比較同溫的不同氣體分子的平均動能、平均速率。陷阱：<em>同溫的氫與氧，平均動能不同</em>（錯，平均動能相同、平均速率不同）。</p></div>
+
+<h3>七、比熱、熱容量與熱平衡</h3>
+<div class="note"><p>水：c ≈ 4.2 J/(g·K)＝1 cal/(g·°C)。</p><p>冰的比熱約為水的一半；水的熔化熱約 80 cal/g、汽化熱約 540 cal/g。</p></div>
+<div class="key">
+<ul>
+<li><strong>熱容量</strong> C：物體溫度升高 1 K 所需的熱，單位 J/K。</li>
+<li><strong>比熱</strong> c：單位質量的物質溫度升高 1 K 所需的熱，單位 <span class="m">\mathrm{J/(kg\cdot K)}</span>；物質的特性。<span class="m">C = mc</span>。</li>
+</ul>
+</div>
+<div class="formula" data-t="比熱與熱量"><div class="mb">Q = mc\Delta T = C\Delta T</div><p>Q：吸收的熱（J）　m：質量（kg）　c：比熱（J/(kg·K)）　ΔT：溫度變化（K）；限<span class="circle">無相變</span></p></div>
+<div class="formula" data-t="潛熱"><div class="mb">Q = mL</div><p>L：熔化熱 <span class="m">L_f</span> 或汽化熱 <span class="m">L_v</span>（J/kg）；相變時溫度不變，吸收的熱用於增加分子間位能</p></div>
+<div class="formula" data-t="熱平衡（孤立系統）"><div class="mb">\sum Q_{\text{放}} = \sum Q_{\text{吸}}</div><p>或寫成所有 Q（吸熱為正、放熱為負）總和為零</p></div>
+
+<table class="t"><thead><tr><th>物質</th><th>比熱 J/(kg·K)</th><th>備註</th></tr></thead><tbody>
+<tr><td>水（液態）</td><td>4186（題目常取 4200 或 1 cal/(g·°C)）</td><td>常見物質中比熱特別大</td></tr>
+<tr><td>冰（約 −10 °C）</td><td>約 2090</td><td>約為水的一半</td></tr>
+<tr><td>鋁</td><td>900</td><td></td></tr>
+<tr><td>鐵</td><td>約 450</td><td></td></tr>
+<tr><td>銅</td><td>385</td><td></td></tr>
+<tr><td>水的熔化熱（0 °C）</td><td><span class="m">3.34\times10^{5}\ \mathrm{J/kg}</span>（約 80 cal/g）</td><td>題目常取 <span class="m">3.36\times10^{5}</span></td></tr>
+<tr><td>水的汽化熱（100 °C）</td><td><span class="m">2.26\times10^{6}\ \mathrm{J/kg}</span>（約 540 cal/g）</td><td>溫度較低時汽化熱較大</td></tr>
+</tbody></table>
+
+<figure class="fig"><svg viewBox="0 0 470 260" width="470">
+<defs><marker id="P9-ar12" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f2a44"/></marker></defs>
+<line x1="50" y1="200" x2="450" y2="200" stroke="#1f2a44" stroke-width="1.5" marker-end="url(#P9-ar12)"/>
+<line x1="50" y1="230" x2="50" y2="20" stroke="#1f2a44" stroke-width="1.5" marker-end="url(#P9-ar12)"/>
+<line x1="50" y1="215" x2="70" y2="170" stroke="#2f6fb5" stroke-width="2.5"/>
+<line x1="70" y1="170" x2="170" y2="170" stroke="#7a5cc2" stroke-width="2.5"/>
+<line x1="170" y1="170" x2="250" y2="70" stroke="#2f6fb5" stroke-width="2.5"/>
+<line x1="250" y1="70" x2="430" y2="70" stroke="#7a5cc2" stroke-width="2.5"/>
+<line x1="50" y1="170" x2="70" y2="170" stroke="#1f2a44" stroke-dasharray="3,3"/>
+<line x1="50" y1="70" x2="250" y2="70" stroke="#1f2a44" stroke-dasharray="3,3"/>
+<text x="44" y="175" font-size="14" text-anchor="end">0</text>
+<text x="44" y="75" font-size="14" text-anchor="end">100</text>
+<text x="40" y="220" font-size="13" text-anchor="end">−20</text>
+<text x="76" y="192" font-size="13">冰升溫</text>
+<text x="120" y="160" font-size="13" text-anchor="middle">熔化（冰水共存）</text>
+<text x="222" y="130" font-size="13">水升溫</text>
+<text x="340" y="60" font-size="13" text-anchor="middle">沸騰（水與水蒸氣共存）</text>
+<text x="300" y="130" font-size="13" fill="#d64545" transform="rotate(-4 300 130)">斜率愈小 → 比熱愈大</text>
+<text x="445" y="222" font-size="14" text-anchor="end">吸收的熱 Q（或定功率加熱的時間）</text>
+<text x="58" y="22" font-size="14">溫度（°C）</text>
+</svg><figcaption>圖 P9-12　一大氣壓下冰持續吸熱的加熱曲線：斜線段斜率與比熱成反比（冰段較陡）；水平段長度與潛熱成正比（汽化段遠長於熔化段）。示意圖，未依比例</figcaption></figure>
+
+<figure class="fig"><svg viewBox="0 0 440 230" width="440">
+<defs><marker id="P9-ar13" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f2a44"/></marker></defs>
+<line x1="50" y1="200" x2="420" y2="200" stroke="#1f2a44" stroke-width="1.5" marker-end="url(#P9-ar13)"/>
+<line x1="50" y1="200" x2="50" y2="20" stroke="#1f2a44" stroke-width="1.5" marker-end="url(#P9-ar13)"/>
+<path d="M50,40 C120,95 200,118 400,120" fill="none" stroke="#c2410c" stroke-width="2.5"/>
+<path d="M50,180 C120,140 200,123 400,120" fill="none" stroke="#2f6fb5" stroke-width="2.5"/>
+<line x1="50" y1="120" x2="400" y2="120" stroke="#94a3b8" stroke-dasharray="4,3"/>
+<text x="44" y="125" font-size="14" text-anchor="end">T<tspan baseline-shift="sub" font-size="11">f</tspan></text>
+<text x="60" y="38" font-size="14" fill="#c2410c">高溫物體</text>
+<text x="60" y="195" font-size="14" fill="#2f6fb5">低溫物體</text>
+<text x="415" y="222" font-size="14" text-anchor="end">時間 t</text>
+<text x="58" y="22" font-size="14">溫度</text>
+</svg><figcaption>圖 P9-13　兩物體接觸後溫度隨時間變化：溫差愈小，傳熱愈慢，兩者趨近共同溫度 T<sub>f</sub>。熱容量較大者溫度變化較小（本圖高溫物體熱容量較小）</figcaption></figure>
+
+<h4>熱平衡計算步驟</h4>
+<ol class="steps">
+<li>列出各物體的質量、比熱、初溫；判斷誰放熱、誰吸熱。</li>
+<li>有冰或水蒸氣時，<strong>先判斷相變是否完成</strong>：<span class="hand no">最常漏掉的一步</span>計算高溫物體降到相變溫度所能放出的最大熱量，與完全相變所需熱量比較。</li>
+<li>列 <span class="m">Q_{\text{放}} = Q_{\text{吸}}</span>，解末溫；檢查末溫是否介於初溫之間。</li>
+<li>只有同一物質、無相變時，末溫為以「熱容量」加權的平均：<span class="m">T_f = \dfrac{C_1T_1 + C_2T_2}{C_1 + C_2}</span>。</li>
+</ol>
+
+<div class="warn"><p><strong>易錯提醒</strong></p><ul>
+<li>題目給的比熱若以 cal/(g·°C) 為單位，質量用 g、熱量得 cal；與 J 混用須換算。</li>
+<li>容器（量熱器）也會吸熱；題目給「水當量」時，視同多一份等效的水。</li>
+<li>混合後孤立系統的總內能不變，但無法自動分離回原來的溫度（第二定律，見九）。</li>
+<li>水的比熱大，同樣吸熱時升溫小：海洋溫差比陸地小，沿海地區日夜溫差較小，海陸風的成因與此有關（見 E8）。</li>
+</ul></div>
+<div class="exam"><p>學測常考混合求末溫、由實驗數據求比熱、加熱曲線判讀（斜率比→比熱比，水平段長→潛熱）；含冰的混合題須<strong>先判斷冰是否全部熔化</strong>。陷阱：<em>直接列式解出低於 0 °C 或高於初溫的末溫</em>。</p></div>
+
+<div class="tip"><p><strong>深究　金屬比熱的規律（杜隆–珀蒂定律，進階）</strong></p>
+<p>常溫下許多金屬的<strong>莫耳熱容量</strong>都接近 <span class="m">3R \approx 25\ \mathrm{J/(mol\cdot K)}</span>。以莫耳質量換算：鋁 <span class="m">25/0.027 \approx 9.2\times10^{2}</span>、銅 <span class="m">25/0.0635 \approx 3.9\times10^{2}\ \mathrm{J/(kg\cdot K)}</span>，與實驗值相符。微觀解釋：固體中每個原子在三個方向振動，每個方向的平均動能與平均位能各為 <span class="m">\frac{1}{2}kT</span>，每個原子平均能量 <span class="m">3kT</span>，故每莫耳 <span class="m">3RT</span>。比熱「以質量計」差異大，「以原子數計」接近相同；鉛的原子重，每公斤原子數少，故比熱小。低溫下此規律失效，需量子理論解釋（愛因斯坦 1907 年）。水的比熱大，則與分子間氫鍵吸收能量有關。</p></div>
+
+<h3>八、熱力學第一定律</h3>
+<div class="note"><p>第一定律＝把「熱」也算進去的能量守恆。</p><p>正負號先看題目怎麼定 W。</p></div>
+<p>系統內能的變化＝外界傳給系統的熱＋外界對系統所作的功。<span class="hand">熱與功都是能量轉移</span></p>
+<div class="formula" data-t="熱力學第一定律"><div class="mb">\Delta U = Q + W</div><p>ΔU：系統內能變化　Q：系統<span class="circle">吸收</span>的熱（放熱為負）　W：<span class="circle">外界對系統</span>作的功（系統對外作功為負）；單位皆為 J</p></div>
+<div class="key">
+<ul>
+<li>另一種常見寫法以 W 表示<strong>系統對外</strong>所作的功：<span class="m">\Delta U = Q - W</span>，即 <span class="m">Q = \Delta U + W</span>。物理內容相同，<em>作答依題目對 W 的定義</em>。</li>
+<li>氣體在定壓 P 下體積改變 ΔV，系統對外作功 <span class="m">P\Delta V</span>（進階）；一般過程中，系統對外作功＝P–V 圖曲線下的面積。</li>
+<li>內能是<strong>狀態函數</strong>，只由狀態決定；Q 與 W 與<span class="circle">過程</span>有關。</li>
+<li><strong>第一類永動機</strong>（不消耗能量而持續對外作功的機器）違反第一定律，不可能製成。</li>
+</ul>
+</div>
+
+<figure class="fig"><svg viewBox="0 0 600 230" width="600"><g>
+<defs><marker id="P9-ar14" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2410c"/></marker>
+<marker id="P9-ar14b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2f6fb5"/></marker></defs>
+<polyline points="70,40 70,180 230,180 230,40" fill="none" stroke="#1f2a44" stroke-width="3"/>
+<rect x="72" y="100" width="156" height="78" fill="#cfe3f8"/>
+<rect x="72" y="86" width="156" height="14" fill="#94a3b8" stroke="#1f2a44"/>
+<line x1="150" y1="86" x2="150" y2="30" stroke="#1f2a44" stroke-width="4"/>
+<line x1="200" y1="80" x2="200" y2="35" stroke="#2f6fb5" stroke-width="2.5" marker-end="url(#P9-ar14b)"/>
+<text x="238" y="50" font-size="13" fill="#2f6fb5">氣體</text><text x="238" y="67" font-size="13" fill="#2f6fb5">對外作功</text>
+<text x="150" y="145" font-size="15" text-anchor="middle">氣體 ΔU</text>
+<path d="M110,215 Q120,200 110,190 Q100,180 110,170" fill="none" stroke="#c2410c" stroke-width="2" marker-end="url(#P9-ar14)"/>
+<path d="M150,215 Q160,200 150,190 Q140,180 150,170" fill="none" stroke="#c2410c" stroke-width="2" marker-end="url(#P9-ar14)"/>
+<path d="M190,215 Q200,200 190,190 Q180,180 190,170" fill="none" stroke="#c2410c" stroke-width="2" marker-end="url(#P9-ar14)"/>
+<text x="240" y="205" font-size="14" fill="#c2410c">吸熱 Q</text>
+</g><g transform="translate(300,0)">
+<defs><marker id="P9-ar15" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f2a44"/></marker></defs>
+<line x1="40" y1="190" x2="285" y2="190" stroke="#1f2a44" stroke-width="1.5" marker-end="url(#P9-ar15)"/>
+<line x1="40" y1="190" x2="40" y2="20" stroke="#1f2a44" stroke-width="1.5" marker-end="url(#P9-ar15)"/>
+<rect x="90" y="80" width="140" height="110" fill="#c9ebd7"/>
+<line x1="90" y1="80" x2="230" y2="80" stroke="#2e8b57" stroke-width="2.5" marker-end="url(#P9-ar15)"/>
+<path d="M90,50 Q140,120 230,150" fill="none" stroke="#7a5cc2" stroke-width="2" stroke-dasharray="5,4"/>
+<text x="160" y="140" font-size="14" text-anchor="middle">面積 = PΔV</text>
+<text x="34" y="85" font-size="14" text-anchor="end">P</text>
+<line x1="90" y1="190" x2="90" y2="196" stroke="#1f2a44"/>
+<line x1="230" y1="190" x2="230" y2="196" stroke="#1f2a44"/>
+<text x="90" y="210" font-size="14" text-anchor="middle">V₁</text>
+<text x="230" y="210" font-size="14" text-anchor="middle">V₂</text>
+<text x="285" y="226" font-size="14" text-anchor="end">體積 V</text>
+<text x="48" y="22" font-size="14">壓力</text>
+<text x="200" y="40" font-size="13" fill="#7a5cc2">另一過程</text>
+</g></svg><figcaption>圖 P9-14　左：活塞汽缸中的氣體吸熱並推動活塞對外作功。右：定壓膨脹（綠線）對外作功等於矩形面積 PΔV；由同一初態到同一末態，循另一過程（紫色虛線）時面積不同，作功與吸熱也不同，但 ΔU 相同（進階）。示意圖</figcaption></figure>
+
+<table class="t"><thead><tr><th>過程（一定量理想氣體）</th><th>條件</th><th>第一定律的結果（<span class="m">\Delta U = Q + W</span>）</th><th>實例</th></tr></thead><tbody>
+<tr><td>定容加熱</td><td>W = 0</td><td><span class="m">\Delta U = Q</span>，吸熱全用於升溫</td><td>密閉鋼瓶受熱</td></tr>
+<tr><td>定壓膨脹</td><td>對外作功 PΔV</td><td>吸熱一部分升溫、一部分對外作功</td><td>活塞可自由移動的汽缸加熱</td></tr>
+<tr><td>等溫過程</td><td>ΔT = 0，ΔU = 0</td><td>Q = −W：等溫膨脹時吸熱全部對外作功</td><td>緩慢膨脹並與恆溫熱庫接觸</td></tr>
+<tr><td>絕熱壓縮</td><td>Q = 0，W &gt; 0</td><td>ΔU = W &gt; 0，<strong>溫度上升</strong></td><td>打氣筒變熱、柴油引擎壓縮點火</td></tr>
+<tr><td>絕熱膨脹</td><td>Q = 0，W &lt; 0</td><td>ΔU &lt; 0，<strong>溫度下降</strong></td><td>上升氣塊冷卻成雲（見 E7）、噴霧罐噴氣變冷</td></tr>
+<tr><td>自由膨脹（進階）</td><td>Q = 0，W = 0（向真空膨脹）</td><td>ΔU = 0，理想氣體溫度不變</td><td>隔熱容器中抽去隔板</td></tr>
+</tbody></table>
+
+<div class="warn"><p><strong>易錯提醒</strong></p><ul>
+<li>「等溫過程中氣體不吸熱也不放熱」錯誤：等溫膨脹須吸熱，等溫壓縮須放熱；不變的是內能。</li>
+<li>「絕熱」指 Q = 0，<em>溫度可以改變</em>；「等溫」指 ΔT = 0，<em>可以有熱傳遞</em>。</li>
+<li>摩擦生熱、攪拌生熱是以「功」增加內能，而非傳熱；焦耳實驗中水升溫，外界並未對水「加熱」。</li>
+</ul></div>
+<div class="exam"><p>學測常考打氣筒、噴霧罐、雲的形成等情境的定性判斷，或給 Q、W 求 ΔU 再判斷理想氣體溫度升降。陷阱：<em>W 的正負號定義與題目不同</em>、<em>把絕熱當成等溫</em>。</p></div>
+
+<h3>九、熱力學第二定律、熱機與冷機</h3>
+<div class="key">
+<p><strong>實驗事實</strong>（PBb-Ⅴc-2）：把功轉換成熱很容易，例如摩擦可將功<strong>完全</strong>轉為熱；但循環運作的機器無法把吸收的熱<strong>完全</strong>轉為功。</p>
+<ul>
+<li><strong>克耳文–普朗克敘述</strong>：不可能製造一部循環運作的熱機，只從單一熱源吸熱並將其完全轉為功，而不產生其他影響。</li>
+<li><strong>克勞修斯敘述</strong>：熱不可能自發地由低溫物體傳到高溫物體；要使熱由低溫流向高溫，外界必須作功。</li>
+<li>兩種敘述<strong>等價</strong>：違反其中之一的裝置，可與普通熱機或冷機組合成違反另一敘述的裝置。</li>
+<li><strong>第二類永動機</strong>（只從單一熱源，例如海水，吸熱並全部轉為功的機器）不違反能量守恆，但違反第二定律，不可能製成。<span class="hand">第一類違反第一定律，第二類違反第二定律</span></li>
+<li><strong>不可逆過程</strong>：摩擦生熱、熱由高溫傳到低溫、氣體自由膨脹、兩種氣體混合、墨水在水中擴散。這些過程自然發生，反向過程不會自然發生。</li>
+</ul>
+</div>
+<p class="eg"><span class="en">「能量守恆」只說明能量的總量不變；「第二定律」說明過程進行的<span class="ul">方向</span>。</span><span class="zh">兩者互補：符合第一定律的過程，不一定會自然發生。</span></p>
+
+<h4>熱機</h4>
+<p><strong>熱機</strong>：自高溫熱源吸熱 <span class="m">Q_H</span>，一部分轉為功 W，其餘 <span class="m">Q_C</span> 排給低溫熱源，循環運作的裝置。例：蒸汽機、汽輪機、汽油引擎、柴油引擎。每一循環內能回到原值，<span class="m">\Delta U = 0</span>，故 <span class="m">Q_H = W + Q_C</span>。</p>
+<div class="formula" data-t="熱機效率"><div class="mb">e = \frac{W}{Q_H} = \frac{Q_H - Q_C}{Q_H} = 1 - \frac{Q_C}{Q_H}</div><p><span class="m">Q_H</span>：自高溫熱源吸收的熱　<span class="m">Q_C</span>：排至低溫熱源的熱　W：每循環對外輸出的淨功（皆取正值）；因 <span class="m">Q_C &gt; 0</span>，恆有 <span class="m">e &lt; 1</span></p></div>
+<div class="formula" data-t="卡諾效率（理想熱機效率上限，進階）"><div class="mb">e_{\max} = 1 - \frac{T_C}{T_H}</div><p><span class="m">T_H</span>、<span class="m">T_C</span>：高、低溫熱源的<span class="circle">克氏溫度</span>；任何在此兩熱源間運作的熱機效率都不超過此值</p></div>
+
+<figure class="fig"><svg viewBox="0 0 600 260" width="600"><g>
+<defs><marker id="P9-ar16" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2410c"/></marker>
+<marker id="P9-ar16b" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2f6fb5"/></marker>
+<marker id="P9-ar16c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2e8b57"/></marker></defs>
+<rect x="40" y="15" width="180" height="40" fill="#fbdcbd" stroke="#d9772b"/>
+<text x="130" y="41" font-size="15" text-anchor="middle">高溫熱源 T<tspan baseline-shift="sub" font-size="11">H</tspan></text>
+<circle cx="130" cy="130" r="35" fill="#e2e8f0" stroke="#1f2a44" stroke-width="2"/>
+<text x="130" y="135" font-size="15" text-anchor="middle">熱機</text>
+<rect x="40" y="205" width="180" height="40" fill="#cfe3f8" stroke="#2f6fb5"/>
+<text x="130" y="231" font-size="15" text-anchor="middle">低溫熱源 T<tspan baseline-shift="sub" font-size="11">C</tspan></text>
+<line x1="130" y1="56" x2="130" y2="92" stroke="#c2410c" stroke-width="6" marker-end="url(#P9-ar16)"/>
+<text x="140" y="80" font-size="14" fill="#c2410c">Q<tspan baseline-shift="sub" font-size="11">H</tspan></text>
+<line x1="130" y1="166" x2="130" y2="202" stroke="#2f6fb5" stroke-width="4" marker-end="url(#P9-ar16b)"/>
+<text x="140" y="190" font-size="14" fill="#2f6fb5">Q<tspan baseline-shift="sub" font-size="11">C</tspan></text>
+<line x1="166" y1="130" x2="255" y2="130" stroke="#2e8b57" stroke-width="3" marker-end="url(#P9-ar16c)"/>
+<text x="210" y="120" font-size="14" fill="#2e8b57">W</text>
+<text x="200" y="165" font-size="13" fill="#d64545" transform="rotate(-4 200 165)">Q<tspan baseline-shift="sub" font-size="10">H</tspan> = W + Q<tspan baseline-shift="sub" font-size="10">C</tspan></text>
+</g><g transform="translate(300,0)">
+<defs><marker id="P9-ar17" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2410c"/></marker>
+<marker id="P9-ar17b" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2f6fb5"/></marker>
+<marker id="P9-ar17c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2e8b57"/></marker></defs>
+<rect x="40" y="15" width="180" height="40" fill="#fbdcbd" stroke="#d9772b"/>
+<text x="130" y="41" font-size="15" text-anchor="middle">高溫處（室外）</text>
+<circle cx="130" cy="130" r="35" fill="#e2e8f0" stroke="#1f2a44" stroke-width="2"/>
+<text x="130" y="135" font-size="15" text-anchor="middle">冷機</text>
+<rect x="40" y="205" width="180" height="40" fill="#cfe3f8" stroke="#2f6fb5"/>
+<text x="130" y="231" font-size="15" text-anchor="middle">低溫處（室內）</text>
+<line x1="130" y1="94" x2="130" y2="58" stroke="#c2410c" stroke-width="6" marker-end="url(#P9-ar17)"/>
+<text x="140" y="80" font-size="14" fill="#c2410c">Q<tspan baseline-shift="sub" font-size="11">H</tspan></text>
+<line x1="130" y1="203" x2="130" y2="168" stroke="#2f6fb5" stroke-width="4" marker-end="url(#P9-ar17b)"/>
+<text x="140" y="190" font-size="14" fill="#2f6fb5">Q<tspan baseline-shift="sub" font-size="11">C</tspan></text>
+<line x1="255" y1="130" x2="168" y2="130" stroke="#2e8b57" stroke-width="3" marker-end="url(#P9-ar17c)"/>
+<text x="210" y="120" font-size="14" fill="#2e8b57">W（電能）</text>
+<text x="196" y="165" font-size="13" fill="#d64545" transform="rotate(-4 196 165)">Q<tspan baseline-shift="sub" font-size="10">H</tspan> = Q<tspan baseline-shift="sub" font-size="10">C</tspan> + W</text>
+</g></svg><figcaption>圖 P9-15　左：熱機的能量流向，箭頭寬度示意能量多寡。右：冷機（冰箱、冷氣機、熱泵）的能量流向，外界作功 W 使熱由低溫處移到高溫處</figcaption></figure>
+
+<h4>冷機與熱泵</h4>
+<ul>
+<li><strong>冷機</strong>（冰箱、冷氣機）：消耗功 W，自低溫處吸熱 <span class="m">Q_C</span>，向高溫處放熱 <span class="m">Q_H = Q_C + W</span>。冷氣機排到室外的熱<strong>大於</strong>自室內移走的熱。<span class="hand blue">多出的就是耗電</span></li>
+<li><strong>性能係數</strong>（COP，進階）：冷氣 <span class="m">\mathrm{COP} = Q_C/W</span>；熱泵（供暖、熱泵熱水器）<span class="m">\mathrm{COP} = Q_H/W</span>。COP 可大於 1，與能量守恆不衝突：電能的作用是「搬運」熱，輸出的熱大多來自低溫環境。家用空氣源熱泵在溫和天候下 COP 常見約 3–4，室外愈冷愈低。</li>
+<li>在隔熱密閉的房間內打開冰箱門運轉，房間溫度最終<strong>上升</strong>：整體而言，電能 W 全部成為房間的熱能。</li>
+</ul>
+
+<h4>熱機效率實例</h4>
+<table class="t"><thead><tr><th>裝置</th><th>效率（約略）</th><th>說明</th></tr></thead><tbody>
+<tr><td>燃煤機組</td><td>約 32%</td><td>美國 2025 年平均熱耗率換算</td></tr>
+<tr><td>天然氣機組（整體平均）</td><td>約 44%</td><td>同上；含複循環與單循環</td></tr>
+<tr><td>大型天然氣複循環機組</td><td>可略高於 60%</td><td>燃氣輪機排氣再產生蒸汽推動汽輪機</td></tr>
+<tr><td>汽油車（燃料能量用於推動車輛）</td><td>約 12%–30%</td><td>引擎熱損失為主</td></tr>
+<tr><td>理想卡諾熱機（800 K 與 300 K 間）</td><td>62.5%</td><td>理論上限，實際熱機都低於此值</td></tr>
+</tbody></table>
+<div class="mnem"><p>熱機：吸熱 = 作功 + 排熱；冷機：排熱 = 吸熱 + 耗功</p></div>
+<div class="exam"><p>學測常考：熱機效率計算、判斷宣稱效率的裝置是否可能（與卡諾效率比較）、冷氣機與冰箱的能量流向、第二定律的敘述選擇題。陷阱：<em>卡諾效率代入攝氏溫度</em>；<em>以為冷氣機使能量消失</em>。</p></div>
+
+<div class="tip"><p><strong>深究　卡諾的論證與第二定律的形成</strong></p>
+<ul>
+<li>卡諾（Sadi Carnot，1796–1832）1824 年出版《論火的動力》，指出熱機必須在<strong>兩個不同溫度</strong>之間運作才能作功，效率上限只與兩熱源溫度有關，與工作物質無關。他當時採熱質說，以「熱質由高處落到低處」類比水車；此類比在熱質不守恆時失效，但結論在能量觀點下仍成立。</li>
+<li>克勞修斯（Rudolf Clausius，1822–1888）1850 年結合能量守恆與卡諾的結論，提出第二定律；1865 年命名「熵」，並總結：「宇宙的能量不變；宇宙的熵趨向最大值。」</li>
+<li>卡諾效率的論證：若有熱機 X 效率高於可逆熱機 R，令 R 反向運轉成冷機，由 X 供給所需的功，組合後的整體淨效果是「熱由低溫自動流到高溫」或「單一熱源吸熱全轉為功」，違反第二定律。故可逆熱機效率最高，且與工作物質無關。</li>
+<li>以理想氣體為工作物質計算可逆循環，得 <span class="m">Q_C/Q_H = T_C/T_H</span>，故 <span class="m">e_{\max} = 1 - T_C/T_H</span>；要提高效率，須提高高溫熱源溫度或降低排熱溫度。這是發電廠追求高溫高壓蒸汽、燃氣輪機追求高燃燒溫度的原因。</li>
+</ul></div>
+
+<div class="tip"><p><strong>深究　熵（進階）</strong></p>
+<p>可逆地在溫度 T 吸收熱 Q，系統的熵變化 <span class="m">\Delta S = Q/T</span>（單位 J/K）。熱 Q 由高溫 <span class="m">T_H</span> 直接傳到低溫 <span class="m">T_C</span>：</p>
+<div class="mb">\Delta S_{\text{總}} = -\frac{Q}{T_H} + \frac{Q}{T_C} &gt; 0\qquad (T_H &gt; T_C)</div>
+<p>第二定律的一般敘述：<strong>孤立系統的總熵不會減少</strong>；可逆過程不變，不可逆過程增加。微觀上，波茲曼（Ludwig Boltzmann，1844–1906）以 <span class="m">S = k\ln \Omega</span>（Ω 為同一巨觀狀態對應的微觀排列數）說明：自然過程朝「排列方式較多、機率較大」的巨觀狀態進行。氣體自由膨脹後，全部分子自動回到原來一半體積的機率極小（N 個分子約為 <span class="m">(1/2)^N</span>），故實際上不會發生。「熵＝亂度」是常見的通俗說法，嚴格意義是微觀狀態數的量度。</p></div>
+
+<h3>十、能量品質與作功能力</h3>
+<div class="note"><p>能源問題的核心是「品質」：可用的能量愈用愈少。</p><p>能量總量並未減少。</p></div>
+<div class="key">
+<ul>
+<li>PNc-Ⅴc-3：<strong>能量一樣的系統，作功的能力不一定相同</strong>。</li>
+<li>PNc-Ⅴc-4：能量守恆，但每經一次形式轉換，通常有一部分成為低溫熱能，<strong>作功效能降低</strong>（能量品質下降）。</li>
+<li>能量品質由高到低：<strong>電能、力學能</strong>（幾乎可完全轉為其他形式）→ 高溫熱能 → 低溫熱能 → 與環境同溫的熱能（無法作功）。</li>
+<li>熱能的作功能力取決於溫度：環境溫度 <span class="m">T_0</span> 下，溫度 T 的熱源放出熱 Q，最多可轉為功 <span class="m">Q(1 - T_0/T)</span>（進階，即以環境為低溫熱源的卡諾效率）。</li>
+</ul>
+</div>
+<div class="formula" data-t="熱的最大作功能力（進階）"><div class="mb">W_{\max} = Q\left(1 - \frac{T_0}{T}\right)</div><p>Q：溫度 T 的熱源所放出的熱　<span class="m">T_0</span>：環境溫度（K）；<span class="m">T = T_0</span> 時 <span class="m">W_{\max} = 0</span></p></div>
+
+<figure class="fig"><svg viewBox="0 0 560 250" width="560">
+<line x1="190" y1="20" x2="190" y2="215" stroke="#1f2a44" stroke-width="1.5"/>
+<line x1="190" y1="215" x2="510" y2="215" stroke="#1f2a44" stroke-width="1.5"/>
+<rect x="190" y="30" width="300" height="26" fill="#7a5cc2"/>
+<rect x="190" y="66" width="240" height="26" fill="#c2410c"/>
+<rect x="190" y="102" width="150" height="26" fill="#d9772b"/>
+<rect x="190" y="138" width="43" height="26" fill="#fbdcbd" stroke="#d9772b"/>
+<rect x="190" y="174" width="1" height="26" fill="#94a3b8"/>
+<text x="182" y="48" font-size="14" text-anchor="end">電能、力學能</text>
+<text x="182" y="84" font-size="14" text-anchor="end">1500 K 燃燒氣體的熱</text>
+<text x="182" y="120" font-size="14" text-anchor="end">600 K 蒸汽的熱</text>
+<text x="182" y="156" font-size="14" text-anchor="end">350 K 溫水的熱</text>
+<text x="182" y="192" font-size="14" text-anchor="end">300 K 環境的熱</text>
+<text x="498" y="48" font-size="14">100%</text>
+<text x="438" y="84" font-size="14">80%</text>
+<text x="348" y="120" font-size="14">50%</text>
+<text x="240" y="156" font-size="14">14%</text>
+<text x="198" y="192" font-size="14">0</text>
+<text x="350" y="240" font-size="14" text-anchor="middle">每 1 J 能量最多可轉為功的比例（環境 300 K）</text>
+</svg><figcaption>圖 P9-16　能量品質的階梯：同樣 1 J，形式與溫度不同，作功能力不同。熱的比例依 1 − T<sub>0</sub>/T 計算（理想上限）</figcaption></figure>
+
+<h4>應用與辨析</h4>
+<ul>
+<li><span class="box">節約能源＝節約能量品質</span><strong>為何能量守恆仍須節約能源</strong>：使用後能量並未消失，而是散成接近環境溫度的低溫熱能，無法再作有用的功。「耗能」實為耗掉能量的品質。</li>
+<li><strong>電熱器與熱泵</strong>：電熱器把高品質電能直接轉為低溫熱，能量全部成為熱但品質大幅下降；熱泵以同樣電能搬運環境熱，可供應數倍的熱。<span class="hand blue no">電能宜用於作功或搬熱</span></li>
+<li><strong>汽電共生、梯級利用</strong>：發電後的中溫廢熱再供工業製程或暖氣使用，提高燃料的整體利用率。</li>
+<li><strong>直接燃燒取暖與發電後用電取暖</strong>：發電廠效率約 30%–60%，電熱器取暖的燃料總利用率反而可能低於直接燃燒取暖；改用熱泵則可能較高（見非選擇題）。</li>
+<li><strong>生態系的能量流動</strong>（連結生物）：能量沿食物鏈逐級傳遞，每一階層大部分以熱散失，故能量流動為單向、不循環。</li>
+</ul>
+<div class="exam"><p>學測常以敘述題考「能量守恆」與「能量品質下降」的區別；或給兩個不同溫度、熱能相同的熱源，比較作功能力。陷阱：<em>「能量守恆，所以沒有能源危機」</em>、<em>「熱能多的系統作功能力一定大」</em>。</p></div>
+
+<h3>例題精解</h3>
+
+<div class="example"><p><strong>例題 1　斜拉力作功與功能定理</strong>　質量 10 kg 的箱子靜置於水平地面，以 50 N、仰角 37° 的拉力拉動 4.0 m。箱與地面的動摩擦係數 0.20，取 <span class="m">g = 10\ \mathrm{m/s^2}</span>，<span class="m">\sin37^\circ = 0.6</span>、<span class="m">\cos37^\circ = 0.8</span>。求各力作功與末速率。</p><div class="sol"><ol class="steps">
+<li>拉力作功 <span class="m">W_F = 50\times4.0\times0.8 = 160\ \mathrm{J}</span>。</li>
+<li>正向力 <span class="m">N = mg - F\sin37^\circ = 100 - 30 = 70\ \mathrm{N}</span>，摩擦力 <span class="m">f = 0.20\times70 = 14\ \mathrm{N}</span>，<span class="m">W_f = -14\times4.0 = -56\ \mathrm{J}</span>。</li>
+<li>重力、正向力與位移垂直，作功為零。合力作功 <span class="m">160 - 56 = 104\ \mathrm{J}</span>。</li>
+<li><span class="m">\frac{1}{2}(10)v^2 = 104</span>，<span class="m">v \approx 4.56\ \mathrm{m/s}</span>。</li>
+</ol><p>陷阱：正向力不等於 mg；拉力的鉛直分量使正向力減小，摩擦力隨之減小。</p></div></div>
+
+<div class="example"><p><strong>例題 2　軌道上的力學能</strong>　如圖 P9-5，質量 50 kg 的車自 A 點（高 20 m）靜止釋放，軌道光滑，取 <span class="m">g = 10\ \mathrm{m/s^2}</span>。求車在 B、C、D 的速率；若改為全程摩擦生熱 3000 J 後到達 D，D 點速率為何？</p><div class="sol"><ol class="steps">
+<li>光滑：<span class="m">v = \sqrt{2g\Delta h}</span>。B：<span class="m">\sqrt{2\times10\times20} = 20\ \mathrm{m/s}</span>；C：<span class="m">\sqrt{2\times10\times8} \approx 12.6\ \mathrm{m/s}</span>；D：<span class="m">\sqrt{2\times10\times15} \approx 17.3\ \mathrm{m/s}</span>。</li>
+<li>有摩擦：<span class="m">\frac{1}{2}(50)v^2 = 50\times10\times15 - 3000 = 4500</span>，<span class="m">v = \sqrt{180} \approx 13.4\ \mathrm{m/s}</span>。</li>
+</ol><p>陷阱：速率只與高度差有關，與軌道彎曲方式無關；質量在光滑情形可約去，有摩擦時生熱給的是能量，質量不能約去。</p></div></div>
+
+<div class="example"><p><strong>例題 3　F–x 圖求功</strong>　沿 x 方向作用於物體的力：x 由 0 到 2.0 m 時 F 由 0 均勻增為 10 N，x 由 2.0 m 到 5.0 m 時 F 固定為 10 N。質量 2.0 kg 的物體在光滑水平面上自 x = 0 靜止出發，求 x = 5.0 m 處的速率。</p><div class="sol"><ol class="steps">
+<li>面積：三角形 <span class="m">\frac{1}{2}\times2.0\times10 = 10\ \mathrm{J}</span>，矩形 <span class="m">3.0\times10 = 30\ \mathrm{J}</span>，合計 40 J。</li>
+<li><span class="m">\frac{1}{2}(2.0)v^2 = 40</span>，<span class="m">v = \sqrt{40} \approx 6.32\ \mathrm{m/s}</span>。</li>
+</ol><p>陷阱：變力不能以 <span class="m">F_{\text{末}}\times d</span> 計算。</p></div></div>
+
+<div class="example"><p><strong>例題 4　煞車距離比例</strong>　同一車輛在同一路面上分別以 36 km/h 與 72 km/h 行駛，駕駛反應時間 0.80 s，煞車時摩擦力相同。已知 36 km/h 時煞車距離 6.0 m，求 72 km/h 的總停車距離。</p><div class="sol"><ol class="steps">
+<li>72 km/h = 20 m/s。反應距離 <span class="m">20\times0.80 = 16\ \mathrm{m}</span>。</li>
+<li>煞車距離與 <span class="m">v^2</span> 成正比：<span class="m">6.0\times2^2 = 24\ \mathrm{m}</span>。</li>
+<li>總停車距離 <span class="m">16 + 24 = 40\ \mathrm{m}</span>。</li>
+</ol><p>陷阱：反應距離與 v 成正比、煞車距離與 v² 成正比，兩者不能一起乘 4。</p></div></div>
+
+<div class="example"><p><strong>例題 5　彈簧與摩擦（進階）</strong>　力常數 400 N/m 的彈簧壓縮 0.10 m，釋放後推出質量 0.50 kg 的木塊。木塊離開彈簧後在動摩擦係數 0.25 的水平面上滑行，彈簧所在區域光滑，取 <span class="m">g = 10\ \mathrm{m/s^2}</span>。求木塊滑行多遠停止。</p><div class="sol"><ol class="steps">
+<li>彈力位能 <span class="m">\frac{1}{2}(400)(0.10)^2 = 2.0\ \mathrm{J}</span>，全部轉為木塊動能。</li>
+<li>摩擦力 <span class="m">0.25\times0.50\times10 = 1.25\ \mathrm{N}</span>；<span class="m">1.25\times s = 2.0</span>，<span class="m">s = 1.6\ \mathrm{m}</span>。</li>
+</ol><p>陷阱：彈力位能是 <span class="m">\frac{1}{2}kx^2</span>，不是 <span class="m">kx^2</span> 或 <span class="m">\frac{1}{2}kx</span>。</p></div></div>
+
+<div class="example"><p><strong>例題 6　含冰的熱平衡</strong>　將 50 g、0 °C 的冰放入 200 g、40 °C 的水中（容器不吸熱、與外界隔熱）。水的比熱 4.2 J/(g·K)，冰的熔化熱 336 J/g。求末溫。</p><div class="sol"><ol class="steps">
+<li>判斷：冰完全熔化需 <span class="m">50\times336 = 16800\ \mathrm{J}</span>；水降到 0 °C 最多放出 <span class="m">200\times4.2\times40 = 33600\ \mathrm{J}</span> &gt; 16800 J，故冰全熔，末溫高於 0 °C。</li>
+<li>列式：<span class="m">200\times4.2\times(40 - T) = 16800 + 50\times4.2\times(T - 0)</span>。</li>
+<li><span class="m">33600 - 840T = 16800 + 210T</span>，<span class="m">T = 16\ ^\circ\mathrm{C}</span>。</li>
+</ol><p>陷阱：冰熔化成的 0 °C 水還要再升溫；漏掉 <span class="m">50\times4.2\times T</span> 會得 20 °C。</p></div></div>
+
+<div class="example"><p><strong>例題 7　理想氣體的內能與第一定律</strong>　1.0 mol 單原子理想氣體，在定容下由 300 K 加熱到 400 K，接著在定溫下膨脹並對外作功 500 J。<span class="m">R = 8.31\ \mathrm{J/(mol\cdot K)}</span>。求兩段過程的吸熱。</p><div class="sol"><ol class="steps">
+<li>定容：W = 0，<span class="m">Q_1 = \Delta U = \frac{3}{2}(1.0)(8.31)(100) \approx 1.25\times10^{3}\ \mathrm{J}</span>。</li>
+<li>定溫：ΔU = 0，氣體對外作功 500 J，即外界對氣體作功 −500 J，<span class="m">Q_2 = \Delta U - W = 0 - (-500) = 500\ \mathrm{J}</span>。</li>
+<li>總吸熱約 <span class="m">1.75\times10^{3}\ \mathrm{J}</span>；總內能增加 <span class="m">1.25\times10^{3}\ \mathrm{J}</span>。</li>
+</ol><p>陷阱：定溫膨脹時氣體仍須吸熱；內能只看溫度。</p></div></div>
+
+<div class="example"><p><strong>例題 8　熱機效率與廢熱</strong>　某汽油引擎輸出功率 30 kW，效率 25%。求每秒燃料提供的能量與排出的熱；若燃料熱值為 <span class="m">4.5\times10^{7}\ \mathrm{J/kg}</span>，行駛 1.0 h 消耗多少燃料？</p><div class="sol"><ol class="steps">
+<li>輸入功率 <span class="m">30/0.25 = 120\ \mathrm{kW}</span>，即每秒 <span class="m">1.2\times10^{5}\ \mathrm{J}</span>。</li>
+<li>排熱功率 <span class="m">120 - 30 = 90\ \mathrm{kW}</span>，每秒 <span class="m">9.0\times10^{4}\ \mathrm{J}</span>。</li>
+<li>1.0 h 燃料能量 <span class="m">1.2\times10^{5}\times3600 = 4.32\times10^{8}\ \mathrm{J}</span>，質量 <span class="m">4.32\times10^{8}/4.5\times10^{7} = 9.6\ \mathrm{kg}</span>。</li>
+</ol><p>陷阱：效率＝輸出／輸入，求輸入時要「除以」效率。</p></div></div>
+
+<div class="example"><p><strong>例題 9　判斷宣稱的熱機</strong>　某發明者宣稱其熱機在 227 °C 與 27 °C 兩熱源間運作，每循環吸熱 1000 J、輸出功 450 J。判斷是否可能。</p><div class="sol"><ol class="steps">
+<li>換成克氏溫度：<span class="m">T_H = 500\ \mathrm{K}</span>、<span class="m">T_C = 300\ \mathrm{K}</span>。</li>
+<li><span class="m">e_{\max} = 1 - 300/500 = 0.40</span>，宣稱效率 0.45 &gt; 0.40。</li>
+<li>違反第二定律，不可能；但未違反第一定律（450 J + 550 J = 1000 J）。</li>
+</ol><p>陷阱：以攝氏溫度計算得 <span class="m">1 - 27/227 \approx 0.88</span>，誤判為可能。</p></div></div>
+
+<div class="example"><p><strong>例題 10　能量品質比較（進階）</strong>　環境溫度 300 K。甲：<span class="m">1.0\times10^{6}\ \mathrm{J}</span> 的熱由 900 K 熱源提供；乙：<span class="m">2.0\times10^{6}\ \mathrm{J}</span> 的熱由 400 K 熱源提供。何者最多可作功較多？</p><div class="sol"><ol class="steps">
+<li>甲：<span class="m">1.0\times10^{6}\times(1 - 300/900) \approx 6.7\times10^{5}\ \mathrm{J}</span>。</li>
+<li>乙：<span class="m">2.0\times10^{6}\times(1 - 300/400) = 5.0\times10^{5}\ \mathrm{J}</span>。</li>
+<li>甲的熱較少，作功能力卻較大。</li>
+</ol><p>陷阱：以熱量多寡判斷作功能力。</p></div></div>
+
+<div class="example"><p><strong>例題 11　能量–時間圖判讀</strong>　自地面以 20 m/s 鉛直上拋 1.0 kg 小球，忽略空氣阻力，取 <span class="m">g = 10\ \mathrm{m/s^2}</span>。描述 0–4.0 s 內動能、重力位能對時間的圖形。</p><div class="sol"><ol class="steps">
+<li><span class="m">v = 20 - 10t</span>，<span class="m">K = \frac{1}{2}(1.0)(20 - 10t)^2</span>：開口向上的拋物線，t = 0 與 4.0 s 時為 200 J，t = 2.0 s 時為 0。</li>
+<li><span class="m">U = 200 - K</span>：開口向下的拋物線，t = 2.0 s 時最大 200 J（最高點 20 m）。</li>
+<li>兩曲線之和為 200 J 的水平線；在 <span class="m">t = 2 \pm \sqrt{2}\ \mathrm{s}</span> 時 K = U。</li>
+</ol><p>陷阱：K–t 圖不是直線；K = U 的時刻不是 1.0 s。</p></div></div>
+
+<h3>迷思概念對照</h3>
+<p class="bad"><span class="mark">誤</span>物體溫度愈高，所含的熱愈多。</p>
+<p class="good"><span class="mark">正</span>物體含有熱能（內能），不含有熱；熱是因溫差而傳遞的能量，只在過程中出現。</p>
+<p class="bad"><span class="mark">誤</span>溫度就是熱能的大小。</p>
+<p class="good"><span class="mark">正</span>溫度量度分子平均移動動能；熱能還與物質的量、相態、分子間位能有關。</p>
+<p class="bad"><span class="mark">誤</span>0 °C 的冰與同質量 0 °C 的水，熱能相同。</p>
+<p class="good"><span class="mark">正</span>兩者溫度相同，但水多了熔化時吸收的能量（分子間位能較高），熱能較多。</p>
+<p class="bad"><span class="mark">誤</span>正向力永遠不作功；摩擦力永遠作負功。</p>
+<p class="good"><span class="mark">正</span>加速上升電梯的正向力作正功；隨卡車加速的貨物，靜摩擦力作正功。</p>
+<p class="bad"><span class="mark">誤</span>有摩擦力存在，力學能就不守恆。</p>
+<p class="good"><span class="mark">正</span>判斷依據是非保守力是否「作功」；滾動不滑動的輪子，接觸點瞬間靜止，靜摩擦力不作功。</p>
+<p class="bad"><span class="mark">誤</span>力學能不守恆，表示能量守恆定律不成立。</p>
+<p class="good"><span class="mark">正</span>減少的力學能轉為熱能等其他形式，總能量仍守恆。</p>
+<p class="bad"><span class="mark">誤</span>溫度由 20 °C 升到 40 °C，分子平均動能加倍。</p>
+<p class="good"><span class="mark">正</span>平均動能與克氏溫度成正比，比值為 313.15/293.15 ≈ 1.07。</p>
+<p class="bad"><span class="mark">誤</span>同溫度的氫氣與氧氣，氫分子較輕，故平均動能較小。</p>
+<p class="good"><span class="mark">正</span>同溫度下平均移動動能相同；氫分子較輕，平均速率較大。</p>
+<p class="bad"><span class="mark">誤</span>理想氣體被壓縮，體積變小，內能一定增加。</p>
+<p class="good"><span class="mark">正</span>理想氣體內能只與溫度有關；等溫壓縮內能不變（放出的熱等於外界作的功）。</p>
+<p class="bad"><span class="mark">誤</span>改良技術、消除摩擦，熱機效率可達 100%。</p>
+<p class="good"><span class="mark">正</span>循環熱機必須向低溫熱源排熱，效率上限為 <span class="m">1 - T_C/T_H</span>，小於 1。</p>
+<p class="bad"><span class="mark">誤</span>冰箱、冷氣機使熱由低溫流向高溫，違反熱力學第二定律。</p>
+<p class="good"><span class="mark">正</span>第二定律禁止的是「自發」由低溫流向高溫；冷機消耗外界的功，不違反。</p>
+<p class="bad"><span class="mark">誤</span>夏天在密閉房間打開冰箱門，可使房間變涼。</p>
+<p class="good"><span class="mark">正</span>冰箱自房間吸熱又排回房間，另加上消耗的電能，房間溫度最終上升。</p>
+<p class="bad"><span class="mark">誤</span>能量守恆，所以不會有能源短缺。</p>
+<p class="good"><span class="mark">正</span>能量總量不變，但轉換後品質下降、作功能力減少；可用的高品質能源是有限的。</p>
+<p class="bad"><span class="mark">誤</span>物體吸熱，溫度必上升。</p>
+<p class="good"><span class="mark">正</span>相變時吸熱而溫度不變；等溫膨脹的氣體吸熱而溫度不變。</p>
+
+<h3>分級測驗</h3>
+<p>未特別註明時，取 <span class="m">g = 10\ \mathrm{m/s^2}</span>，水的比熱 <span class="m">4.2\times10^{3}\ \mathrm{J/(kg\cdot K)}</span>，<span class="m">R = 8.31\ \mathrm{J/(mol\cdot K)}</span>，忽略空氣阻力。</p>
+
+<h4 class="exset">基礎題（10 題）</h4>
+<div class="ex" id="P9-01"><span class="exid">P9-01</span>小明手提 5.0 kg 的水桶，沿水平走廊等速前進 10 m，水桶高度不變。下列敘述何者正確？
+<div class="opts"><span>(A) 手對水桶作正功 500 J</span><span>(B) 手對水桶作負功</span><span>(C) 重力對水桶作正功</span><span>(D) 水桶的動能逐漸增加</span><span>(E) 手對水桶不作功</span></div></div>
+
+<div class="ex" id="P9-02"><span class="exid">P9-02</span>質量 2.0 kg 的物體自 5.0 m 高處靜止落下，落地前瞬間的動能為多少焦耳？
+<div class="opts"><span>(A) 10</span><span>(B) 20</span><span>(C) 50</span><span>(D) 100</span><span>(E) 200</span></div></div>
+
+<div class="ex" id="P9-03"><span class="exid">P9-03</span>一定量的理想氣體，溫度由 27 °C 升高到 54 °C，其分子平均移動動能約變為原來的幾倍？
+<div class="opts"><span>(A) 1.09</span><span>(B) 1.50</span><span>(C) 2.00</span><span>(D) 2.18</span><span>(E) 不變</span></div></div>
+
+<div class="ex" id="P9-04"><span class="exid">P9-04</span>關於熱、溫度與熱能，下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 熱是由於溫度不同而傳遞的能量</span><span>(B) 物體溫度愈高，所含的熱愈多</span><span>(C) 溫度相同的兩物體互相接觸，兩者之間沒有淨熱量傳遞</span><span>(D) 熱能包含原子無規則運動的動能與原子間交互作用的能量</span><span>(E) 1 kg、0 °C 的水與 1 kg、0 °C 的冰，熱能相同</span></div></div>
+
+<div class="ex" id="P9-05"><span class="exid">P9-05</span>將 0.50 kg 的水由 20 °C 加熱到 80 °C，水需吸收多少熱量？
+<div class="opts"><span>(A) <span class="m">1.26\times10^{4}\ \mathrm{J}</span></span><span>(B) <span class="m">1.26\times10^{5}\ \mathrm{J}</span></span><span>(C) <span class="m">1.68\times10^{5}\ \mathrm{J}</span></span><span>(D) <span class="m">2.10\times10^{5}\ \mathrm{J}</span></span><span>(E) <span class="m">5.04\times10^{5}\ \mathrm{J}</span></span></div></div>
+
+<div class="ex" id="P9-06"><span class="exid">P9-06</span>下列各情形中，哪些物體（或物體與地球組成的系統）的力學能守恆？（多選）
+<div class="opts"><span>(A) 自由落下的石塊</span><span>(B) 在空氣中擺動、空氣阻力可忽略的單擺擺錘</span><span>(C) 沿光滑斜面下滑的木塊</span><span>(D) 在粗糙水平面上滑行而停止的木塊</span><span>(E) 搭乘等速上升電梯的乘客</span></div></div>
+
+<div class="ex" id="P9-07"><span class="exid">P9-07</span>一定量的理想氣體經歷下列過程，哪些過程中氣體的內能不變？（多選）
+<div class="opts"><span>(A) 等溫壓縮</span><span>(B) 定容加熱</span><span>(C) 在隔熱容器中向真空自由膨脹</span><span>(D) 絕熱壓縮</span><span>(E) 定壓膨脹</span></div></div>
+
+<div class="ex" id="P9-08"><span class="exid">P9-08</span>某熱機每一循環自高溫熱源吸熱 800 J，向低溫熱源排熱 600 J。此熱機的效率為何？
+<div class="opts"><span>(A) 12.5%</span><span>(B) 20%</span><span>(C) 25%</span><span>(D) 33%</span><span>(E) 75%</span></div></div>
+
+<div class="ex" id="P9-09"><span class="exid">P9-09</span>下列有關熱力學第二定律的敘述，哪些正確？（多選）
+<div class="opts"><span>(A) 摩擦可以把功完全轉換為熱</span><span>(B) 循環運作的熱機，可把自單一熱源吸收的熱完全轉為功</span><span>(C) 熱可以自發地由低溫物體流向高溫物體</span><span>(D) 冰箱可使熱由低溫處移到高溫處，但須消耗外界的功</span><span>(E) 符合能量守恆的過程不一定會自然發生</span></div></div>
+
+<div class="ex" id="P9-10"><span class="exid">P9-10</span>質量 60 kg 的學生以 6.0 s 爬上鉛直高度 3.0 m 的樓梯。只考慮克服重力，其平均功率約為多少？
+<div class="opts"><span>(A) 30 W</span><span>(B) 60 W</span><span>(C) 100 W</span><span>(D) 180 W</span><span>(E) 300 W</span></div></div>
+
+<h4 class="exset">進階題（14 題）</h4>
+<div class="ex" id="P9-11"><span class="exid">P9-11</span>質量 2.0 kg 的木塊受平行斜面的拉力，沿傾角 30° 的光滑斜面等速向上移動 4.0 m。下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 拉力作功 40 J</span><span>(B) 重力作功 −40 J</span><span>(C) 正向力作負功</span><span>(D) 合力作功為零</span><span>(E) 木塊（與地球）的力學能不變</span></div></div>
+
+<div class="ex" id="P9-12"><span class="exid">P9-12</span>汽車在水平路面緊急煞車，車輪鎖死滑行至停止，設滑行時路面對汽車的摩擦力大小固定為 f。下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 若初速率加倍，滑行距離成為 4 倍</span><span>(B) 滑行距離與初速率成正比</span><span>(C) 摩擦力對汽車作負功</span><span>(D) 汽車的動能主要轉為輪胎與路面的熱能</span><span>(E) 若初速率相同、汽車質量加倍而 f 不變，滑行距離成為 2 倍</span></div></div>
+
+<div class="ex" id="P9-13"><span class="exid">P9-13</span>光滑水平面上，力常數 200 N/m 的輕彈簧一端固定，另一端壓縮 0.10 m 後，以 0.050 kg 的小球抵住並靜止釋放。小球離開彈簧時的速率約為多少？
+<div class="opts"><span>(A) 2.0 m/s</span><span>(B) 4.5 m/s</span><span>(C) 6.3 m/s</span><span>(D) 8.9 m/s</span><span>(E) 20 m/s</span></div></div>
+
+<div class="ex" id="P9-14"><span class="exid">P9-14</span>單擺擺錘自比最低點高 h 的位置靜止釋放，空氣阻力可忽略。下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 擺錘在最低點的速率為 <span class="m">\sqrt{2gh}</span>，與擺錘質量無關</span><span>(B) 擺錘下降到比最低點高 h/2 處時，動能等於重力位能（以最低點為零位能）</span><span>(C) 擺線張力對擺錘作正功</span><span>(D) 擺錘擺至另一側的最高點，與釋放點等高</span><span>(E) 若擺長加倍而 h 不變，最低點速率加倍</span></div></div>
+
+<figure class="fig"><svg viewBox="0 0 440 200" width="440">
+<path d="M30,40 C80,40 100,180 160,180 C220,180 240,80 290,80 C340,80 360,150 420,150" fill="none" stroke="#1f2a44" stroke-width="3"/>
+<line x1="20" y1="180" x2="430" y2="180" stroke="#94a3b8" stroke-dasharray="4,3"/>
+<rect x="22" y="28" width="18" height="12" fill="#c2410c"/>
+<text x="31" y="20" font-size="15" text-anchor="middle">P</text>
+<text x="290" y="70" font-size="15" text-anchor="middle">Q</text>
+<line x1="30" y1="40" x2="30" y2="180" stroke="#2f6fb5" stroke-dasharray="3,3"/>
+<text x="38" y="120" font-size="14" fill="#2f6fb5">20 m</text>
+<line x1="290" y1="80" x2="290" y2="180" stroke="#2f6fb5" stroke-dasharray="3,3"/>
+<text x="298" y="135" font-size="14" fill="#2f6fb5">15 m</text>
+</svg><figcaption>圖 P9-題1　第 15 題的軌道（示意圖，未依比例）</figcaption></figure>
+<div class="ex" id="P9-15"><span class="exid">P9-15</span>如圖 P9-題1，質量 500 kg 的雲霄飛車自高 20 m 的 P 點靜止出發，到達高 15 m 的坡頂 Q 點時速率為 8.0 m/s。由 P 到 Q 的過程中，因摩擦與空氣阻力轉為熱能（及聲音）的能量約為多少？
+<div class="opts"><span>(A) <span class="m">9.0\times10^{3}\ \mathrm{J}</span></span><span>(B) <span class="m">1.6\times10^{4}\ \mathrm{J}</span></span><span>(C) <span class="m">2.5\times10^{4}\ \mathrm{J}</span></span><span>(D) <span class="m">7.5\times10^{4}\ \mathrm{J}</span></span><span>(E) <span class="m">9.1\times10^{4}\ \mathrm{J}</span></span></div></div>
+
+<div class="ex" id="P9-16"><span class="exid">P9-16</span>將 200 g、80 °C 的水與 300 g、20 °C 的水在隔熱容器中混合（容器不吸熱），達熱平衡後的溫度為何？
+<div class="opts"><span>(A) 32 °C</span><span>(B) 38 °C</span><span>(C) 40 °C</span><span>(D) 44 °C</span><span>(E) 50 °C</span></div></div>
+
+<div class="ex" id="P9-17"><span class="exid">P9-17</span>將 0.20 kg、100 °C 的金屬塊放入 0.40 kg、20 °C 的水中，達熱平衡時溫度為 24 °C。忽略容器吸熱與散熱，此金屬的比熱約為多少 J/(kg·K)？
+<div class="opts"><span>(A) <span class="m">2.2\times10^{2}</span></span><span>(B) <span class="m">4.4\times10^{2}</span></span><span>(C) <span class="m">8.8\times10^{2}</span></span><span>(D) <span class="m">1.1\times10^{3}</span></span><span>(E) <span class="m">4.2\times10^{3}</span></span></div></div>
+
+<div class="ex" id="P9-18"><span class="exid">P9-18</span>將 100 g、0 °C 的冰放入 200 g、30 °C 的水中，置於隔熱容器內（容器不吸熱）。冰的熔化熱 <span class="m">3.36\times10^{5}\ \mathrm{J/kg}</span>。達熱平衡後，下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 末溫為 0 °C</span><span>(B) 冰全部熔化</span><span>(C) 剩下 25 g 的冰</span><span>(D) 液態水的總質量為 275 g</span><span>(E) 混合後系統的總內能小於混合前</span></div></div>
+
+<div class="ex" id="P9-19"><span class="exid">P9-19</span>汽缸內的氣體吸收 500 J 的熱，同時推動活塞對外界作功 200 J。下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 氣體內能增加 300 J</span><span>(B) 若氣體為理想氣體，其溫度上升</span><span>(C) 若以 <span class="m">\Delta U = Q + W</span>（W 為外界對氣體作的功）表示，則 W = −200 J</span><span>(D) 氣體的體積增大</span><span>(E) 氣體內能增加 700 J</span></div></div>
+
+<div class="ex" id="P9-20"><span class="exid">P9-20</span>2.0 mol 的單原子理想氣體在定容下由 27 °C 加熱到 127 °C，需吸收多少熱？
+<div class="opts"><span>(A) <span class="m">8.31\times10^{2}\ \mathrm{J}</span></span><span>(B) <span class="m">1.66\times10^{3}\ \mathrm{J}</span></span><span>(C) <span class="m">2.49\times10^{3}\ \mathrm{J}</span></span><span>(D) <span class="m">4.16\times10^{3}\ \mathrm{J}</span></span><span>(E) <span class="m">7.48\times10^{3}\ \mathrm{J}</span></span></div></div>
+
+<div class="ex" id="P9-21"><span class="exid">P9-21</span>同溫度的氦氣（莫耳質量 4 g/mol）與氧氣（32 g/mol），均視為理想氣體。下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 兩者分子的平均移動動能相等</span><span>(B) 氦分子的方均根速率較大</span><span>(C) 氦分子的方均根速率約為氧分子的 2.8 倍</span><span>(D) 若克氏溫度加倍，方均根速率也加倍</span><span>(E) 依理想氣體的古典模型，溫度趨近 0 K 時，分子平均移動動能趨近零</span></div></div>
+
+<div class="ex" id="P9-22"><span class="exid">P9-22</span>一熱機在 527 °C 與 27 °C 的兩熱源之間運作，其效率的理論上限為何？
+<div class="opts"><span>(A) 5.1%</span><span>(B) 37.5%</span><span>(C) 50%</span><span>(D) 62.5%</span><span>(E) 94.9%</span></div></div>
+
+<div class="ex" id="P9-23"><span class="exid">P9-23</span>關於冰箱、冷氣機與熱泵，下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 在隔熱密閉的房間內打開冰箱門長時間運轉，房間溫度最終上升</span><span>(B) 冷氣機排到室外的熱，大於它從室內移走的熱</span><span>(C) 熱泵熱水器供給水的熱，可大於其消耗的電能</span><span>(D) 冰箱使熱由低溫處流向高溫處，違反熱力學第二定律</span><span>(E) 冷氣機自室內移走的熱與消耗電能的比值可大於 1</span></div></div>
+
+<div class="ex" id="P9-24"><span class="exid">P9-24</span>關於能量的形式與觀察尺度，下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 摩擦生熱，在微觀上是原子、分子無規則運動的動能與交互作用位能增加</span><span>(B) 燃料的化學能，在微觀上主要是原子核與電子之間電磁交互作用的能量</span><span>(C) 拉長彈簧所儲存的位能，在微觀上來自原子間的電磁交互作用</span><span>(D) 靜置於桌面的物體，熱能為零</span><span>(E) 物體整體平移的動能，屬於該物體熱能的一部分</span></div></div>
+
+<h4 class="exset">挑戰題（6 題）</h4>
+<figure class="fig"><svg viewBox="0 0 460 190" width="460">
+<polygon points="30,160 230,160 30,10" fill="#e2e8f0" stroke="#1f2a44" stroke-width="2"/>
+<line x1="230" y1="160" x2="440" y2="160" stroke="#1f2a44" stroke-width="2"/>
+<rect x="38" y="3" width="26" height="18" fill="#cfe3f8" stroke="#2f6fb5" transform="rotate(37 51 12)"/>
+<path d="M195,160 A35,35 0 0 0 202,139" fill="none" stroke="#1f2a44"/>
+<text x="180" y="150" font-size="14">37°</text>
+<text x="150" y="80" font-size="14">5.0 m</text>
+<text x="335" y="180" font-size="14" text-anchor="middle">粗糙水平面</text>
+</svg><figcaption>圖 P9-題2　第 25 題的斜面（示意圖，未依比例）</figcaption></figure>
+<div class="ex" id="P9-25"><span class="exid">P9-25</span>如圖 P9-題2，2.0 kg 的木塊自長 5.0 m、傾角 37° 的斜面頂端靜止下滑，斜面與其後的水平面動摩擦係數均為 0.25（<span class="m">\sin37^\circ = 0.6</span>，<span class="m">\cos37^\circ = 0.8</span>，轉角處速率不變）。下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 下滑過程重力作功 60 J</span><span>(B) 在斜面上摩擦生熱 20 J</span><span>(C) 到達斜面底端時速率約 6.3 m/s</span><span>(D) 在水平面上滑行 8.0 m 後停止</span><span>(E) 全程摩擦生熱共 40 J</span></div></div>
+
+<div class="ex" id="P9-26"><span class="exid">P9-26</span>一輕彈簧（力常數 60 N/m）鉛直立於地面。質量 0.20 kg 的小球自彈簧頂端正上方 0.40 m 處靜止落下，壓縮彈簧。彈簧的最大壓縮量為多少公尺？
+<div class="opts"><span>(A) 0.033</span><span>(B) 0.067</span><span>(C) 0.16</span><span>(D) 0.18</span><span>(E) 0.20</span></div></div>
+
+<div class="ex" id="P9-27"><span class="exid">P9-27</span>（進階）1200 J 的熱由 600 K 的大熱庫經金屬棒直接傳到 300 K 的大熱庫（兩熱庫溫度不變）。下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 高溫熱庫的熵減少 2.0 J/K</span><span>(B) 低溫熱庫的熵增加 4.0 J/K</span><span>(C) 兩熱庫的總熵增加 2.0 J/K</span><span>(D) 若改在兩熱庫之間運轉理想熱機，自高溫熱庫吸收同樣 1200 J，最多可作功 900 J</span><span>(E) 在環境溫度為 300 K 時，直接傳熱使原本可作的功損失了 600 J</span></div></div>
+
+<div class="ex" id="P9-28"><span class="exid">P9-28</span>熱容量未知的容器內裝 100 g、20 °C 的水，倒入 100 g、60 °C 的水，達熱平衡時為 36 °C。若改為在同一容器（內裝 100 g、20 °C 的水）中倒入 200 g、80 °C 的水，熱平衡溫度約為多少？（水的比熱 4.2 J/(g·K)，忽略散熱）
+<div class="opts"><span>(A) 50.0 °C</span><span>(B) 54.3 °C</span><span>(C) 56.0 °C</span><span>(D) 60.0 °C</span><span>(E) 62.5 °C</span></div></div>
+
+<div class="ex" id="P9-29"><span class="exid">P9-29</span>（進階）隔熱硬質容器以隔板分為兩半，左半裝理想氣體，右半為真空。抽去隔板後氣體充滿整個容器。下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 氣體對外不作功</span><span>(B) 過程中氣體與外界無熱傳遞</span><span>(C) 氣體內能不變，溫度不變</span><span>(D) 此過程不可逆，系統的熵增加</span><span>(E) 經過足夠長時間，氣體會自發地全部回到左半</span></div></div>
+
+<div class="ex" id="P9-30"><span class="exid">P9-30</span>某發電廠輸出電功率 1000 MW，熱效率 40%，廢熱全部由冷卻水帶走，冷卻水流量每秒 <span class="m">1.0\times10^{5}\ \mathrm{kg}</span>。冷卻水溫度升高約多少？
+<div class="opts"><span>(A) 1.4 °C</span><span>(B) 2.4 °C</span><span>(C) 3.6 °C</span><span>(D) 6.0 °C</span><span>(E) 8.6 °C</span></div></div>
+
+<h4 class="exset">題組（6 題）</h4>
+<p><strong>第 31–33 題為題組</strong></p>
+<p>某生仿照焦耳實驗（裝置如圖 P9-10）：兩個各 5.0 kg 的重物各以近乎等速緩慢下降 2.0 m 為一次，捲回後重複，共 20 次；隔熱容器內有 0.50 kg 的水。實驗後測得水溫升高 1.6 °C。取 <span class="m">g = 10\ \mathrm{m/s^2}</span>。</p>
+<div class="ex" id="P9-31"><span class="exid">P9-31</span>若重物減少的重力位能全部轉為水的熱能，水溫應升高約多少？
+<div class="opts"><span>(A) 0.095 °C</span><span>(B) 0.19 °C</span><span>(C) 0.95 °C</span><span>(D) 1.9 °C</span><span>(E) 3.8 °C</span></div></div>
+<div class="ex" id="P9-32"><span class="exid">P9-32</span>實測值低於上題理論值，下列哪些是合理的原因？（多選）
+<div class="opts"><span>(A) 容器與槳葉也吸收了熱</span><span>(B) 重物下降到底時仍具有少許動能，未轉為水的熱能</span><span>(C) 滑輪轉軸的摩擦生熱散失到空氣中</span><span>(D) 水被攪拌後比熱變小</span><span>(E) 水與容器仍向周圍散失少量熱</span></div></div>
+<div class="ex" id="P9-33"><span class="exid">P9-33</span>依實測結果，重物減少的重力位能約有多少比例成為水增加的熱能？
+<div class="opts"><span>(A) 84%</span><span>(B) 76%</span><span>(C) 42%</span><span>(D) 16%</span><span>(E) 119%</span></div></div>
+
+<p><strong>第 34–36 題為題組</strong></p>
+<p>以功率 420 W 的電熱器加熱 0.20 kg、−20 °C 的冰（一大氣壓），設電熱器放出的熱全部被冰或水吸收，溫度與時間的關係如圖 P9-題3。水的比熱 <span class="m">4.2\times10^{3}\ \mathrm{J/(kg\cdot K)}</span>，水的汽化熱 <span class="m">2.26\times10^{6}\ \mathrm{J/kg}</span>。</p>
+<figure class="fig"><svg viewBox="0 0 460 250" width="460">
+<defs><marker id="P9-ar18" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f2a44"/></marker></defs>
+<line x1="60" y1="200" x2="445" y2="200" stroke="#1f2a44" stroke-width="1.5" marker-end="url(#P9-ar18)"/>
+<line x1="60" y1="210" x2="60" y2="15" stroke="#1f2a44" stroke-width="1.5" marker-end="url(#P9-ar18)"/>
+<line x1="60" y1="172" x2="440" y2="172" stroke="#94a3b8" stroke-width="0.8" stroke-dasharray="3,3"/>
+<line x1="60" y1="32" x2="326" y2="32" stroke="#94a3b8" stroke-width="0.8" stroke-dasharray="3,3"/>
+<line x1="74" y1="172" x2="74" y2="200" stroke="#94a3b8" stroke-dasharray="3,3"/>
+<line x1="186" y1="172" x2="186" y2="200" stroke="#94a3b8" stroke-dasharray="3,3"/>
+<line x1="326" y1="32" x2="326" y2="200" stroke="#94a3b8" stroke-dasharray="3,3"/>
+<polyline points="60,200 74,172 186,172 326,32 420,32" fill="none" stroke="#c2410c" stroke-width="2.5"/>
+<text x="54" y="204" font-size="13" text-anchor="end">−20</text>
+<text x="54" y="176" font-size="13" text-anchor="end">0</text>
+<text x="54" y="36" font-size="13" text-anchor="end">100</text>
+<text x="60" y="218" font-size="13" text-anchor="middle">0</text>
+<text x="80" y="218" font-size="13" text-anchor="start">20</text>
+<text x="186" y="218" font-size="13" text-anchor="middle">180</text>
+<text x="326" y="218" font-size="13" text-anchor="middle">380</text>
+<text x="440" y="240" font-size="14" text-anchor="end">時間（s）</text>
+<text x="68" y="20" font-size="14">溫度（°C）</text>
+</svg><figcaption>圖 P9-題3　冰持續加熱的溫度–時間圖（380 s 後溫度維持 100 °C）</figcaption></figure>
+<div class="ex" id="P9-34"><span class="exid">P9-34</span>由圖可推得冰的比熱與水的比熱之比約為何？
+<div class="opts"><span>(A) 0.25</span><span>(B) 0.5</span><span>(C) 1</span><span>(D) 2</span><span>(E) 4</span></div></div>
+<div class="ex" id="P9-35"><span class="exid">P9-35</span>下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 20 s 到 180 s 之間溫度不變，但冰水系統的熱能持續增加</span><span>(B) 由圖可推得冰的熔化熱為 <span class="m">3.36\times10^{5}\ \mathrm{J/kg}</span></span><span>(C) 第 100 s 時，容器內冰與水共存</span><span>(D) 180 s 到 380 s 之間，水吸收的熱為 <span class="m">8.4\times10^{4}\ \mathrm{J}</span></span><span>(E) 若冰的質量加倍而加熱功率不變，0 到 20 s 那一段的斜率不變</span></div></div>
+<div class="ex" id="P9-36"><span class="exid">P9-36</span>自 380 s 起，約再經多久水才會全部汽化？
+<div class="opts"><span>(A) <span class="m">1.6\times10^{2}\ \mathrm{s}</span></span><span>(B) <span class="m">2.0\times10^{2}\ \mathrm{s}</span></span><span>(C) <span class="m">5.4\times10^{2}\ \mathrm{s}</span></span><span>(D) <span class="m">8.0\times10^{2}\ \mathrm{s}</span></span><span>(E) <span class="m">1.08\times10^{3}\ \mathrm{s}</span></span></div></div>
+
+<h4 class="exset">非選擇題（4 題）</h4>
+<div class="ex" id="P9-37"><span class="exid">P9-37</span>十八世紀的「熱質說」認為熱是一種不生不滅的流體。說明倫福德的鑽砲管觀察與焦耳的攪水實驗，各自如何與熱質說牴觸，並寫出焦耳實驗得到的結論。
+<div class="lines" data-n="2"></div></div>
+
+<div class="ex" id="P9-38"><span class="exid">P9-38</span>（進階）1.0 mol 單原子理想氣體在 <span class="m">1.0\times10^{5}\ \mathrm{Pa}</span> 的定壓下由 300 K 加熱到 400 K。求：(1) 氣體對外所作的功；(2) 內能變化；(3) 吸收的熱；(4) 若改在定容下由 300 K 加熱到 400 K，需吸熱多少，並說明為何兩者不同。
+<div class="lines" data-n="2"></div></div>
+
+<div class="ex" id="P9-39"><span class="exid">P9-39</span>小球自高 H 處靜止落下。(1) 忽略空氣阻力，以下落時間 t 為橫軸，畫出動能 K、重力位能 U（以地面為零）與力學能 E 的圖形並說明形狀；(2) 若空氣阻力不可忽略，且小球在落地前已達終端速度，說明終端速度階段 K、U、E 隨時間的變化，以及減少的力學能去向。
+<div class="lines" data-n="2"></div></div>
+
+<div class="ex" id="P9-40"><span class="exid">P9-40</span>冬季某住宅需供應 <span class="m">1.0\times10^{8}\ \mathrm{J}</span> 的熱。比較三種方式所需的燃料化學能：(1) 效率 90% 的燃氣暖爐；(2) 電熱器，電力來自熱效率 40% 的火力發電廠（忽略輸電損失）；(3) 性能係數（供熱／耗電）為 3.0 的熱泵，電力來源同 (2)。依「能量品質」說明結果。
+<div class="lines" data-n="2"></div></div>
+
+<h3>自我檢核</h3>
+<ul class="check">
+<li>能判斷正向力、摩擦力、重力、張力在各情境中作正功、負功或不作功。</li>
+<li>能由 F–x 圖面積求功，並用功能定理求速率與煞車距離。</li>
+<li>能說出力學能守恆的條件，並在有摩擦時以「力學能減少量＝生熱」列式。</li>
+<li>能判讀能量–高度圖、能量–時間圖、U–x 圖（轉折點）。</li>
+<li>能舉例說明同一現象在巨觀與微觀尺度的能量描述。</li>
+<li>能進行攝氏與克氏換算，並知道比較倍數時必須用克氏溫度。</li>
+<li>能區分溫度、熱能（內能）、熱、功四者。</li>
+<li>能寫出 <span class="m">\overline{K} = \frac{3}{2}kT</span> 與單原子理想氣體 <span class="m">U = \frac{3}{2}nRT</span>，並說明內能只與溫度有關的理由。</li>
+<li>能完成含相變的熱平衡計算，並先判斷相變是否完成。</li>
+<li>能以第一定律分析定容、定壓、等溫、絕熱過程，並注意 W 的正負號定義。</li>
+<li>能寫出第二定律的兩種敘述，判斷宣稱的熱機是否可能，說明冷氣機的能量流向。</li>
+<li>能說明「能量守恆」與「能量品質下降」的差別，比較不同溫度熱源的作功能力。</li>
+</ul>
+</section>

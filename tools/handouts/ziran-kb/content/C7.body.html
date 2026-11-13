@@ -1,0 +1,888 @@
+<section class="unit" id="C7">
+<h2>C7　反應熱與反應速率</h2>
+
+<h3>課綱對照與考點</h3>
+<table class="t"><thead><tr><th>課綱學習內容</th><th>本單元小節</th><th>學測常見考法</th></tr></thead><tbody>
+<tr><td>CBa-Ⅴc-1　化學反應發生後，產物的能量總和較反應物低者，為放熱反應；反之，則為吸熱反應。</td><td>一、二、三</td><td>由能量圖或 ΔH 正負判斷放熱、吸熱；熱化學反應式的係數、狀態與 ΔH 的對應；生活實例分類</td></tr>
+<tr><td>CBa-Ⅴc-2　能量轉換過程遵守能量守恆。</td><td>一、四</td><td>化學能與熱、光、電能的轉換；逆反應 ΔH 變號；赫斯定律（進階）的能量守恆依據；卡計熱量計算</td></tr>
+<tr><td>CJe-Ⅴc-2　物質的接觸面積大小對反應速率之影響。</td><td>五、六、七</td><td>粉末與塊狀的反應曲線判讀（初速與最終產量）；表面積計算；粉塵爆炸；以碰撞學說解釋</td></tr>
+<tr><td>（進階，選修化學）反應熱的種類、赫斯定律、鍵能</td><td>三、四</td><td>莫耳生成熱與莫耳燃燒熱的定義與計算；由已知反應組合求未知反應熱</td></tr>
+<tr><td>（進階，選修化學）反應速率定律、碰撞學說、活化能、催化劑</td><td>五、六、七</td><td>速率的表示與換算；濃度、溫度、催化劑的影響；位能圖中 E<sub>a</sub> 與 ΔH 的判讀</td></tr>
+</tbody></table>
+<p>必修課綱只列出放熱、吸熱、能量守恆與接觸面積三項；其餘內容屬選修化學，學測多以「情境＋圖表」方式融入題組，故一併收錄並標「（進階）」。</p>
+
+<h3>一、化學反應中的能量變化</h3>
+<h4>1. 系統與外界</h4>
+<div class="note"><p>ΔH 的正負一律從<strong>系統</strong>的角度看。</p><p>溫度計插在溶液裡，量到的是外界的溫度。</p></div>
+<ul>
+<li><strong>系統</strong>：研究的對象，通常指參與反應的物質。<strong>外界</strong>：系統以外的一切，例如容器、溶劑（水溶液反應中常把水視為外界的一部分）、空氣。</li>
+<li><strong>放熱反應</strong>：系統釋出熱量給外界，外界溫度上升。<strong>吸熱反應</strong>：系統由外界吸收熱量，外界溫度下降。</li>
+<li>溫度計測到的是外界（溶液）的溫度變化：溶液<span class="circle">變熱</span>表示反應放熱，溶液變冷表示反應吸熱。<span class="hand">冷敷包摸起來冷＝吸熱</span></li>
+</ul>
+
+<figure class="fig half"><svg viewBox="0 0 300 190" width="300">
+<defs><marker id="C7-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2410c"/></marker>
+<marker id="C7-ab" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2f6fb5"/></marker>
+<marker id="C7-ak" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f2a44"/></marker>
+<marker id="C7-ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2e8b57"/></marker></defs>
+<rect x="10" y="10" width="280" height="140" fill="#fbdcbd" stroke="#d9772b" stroke-width="1" rx="6"/>
+<text x="20" y="30" font-size="13" fill="#1f2a44">外界（溫度上升）</text>
+<rect x="95" y="55" width="110" height="60" fill="#cfe3f8" stroke="#2f6fb5" stroke-width="2" rx="4"/>
+<text x="150" y="80" font-size="14" text-anchor="middle" fill="#1f2a44">系統</text>
+<text x="150" y="100" font-size="13" text-anchor="middle" fill="#1f2a44">反應物 → 產物</text>
+<line x1="95" y1="85" x2="45" y2="85" stroke="#c2410c" stroke-width="2.5" marker-end="url(#C7-ar)"/>
+<line x1="205" y1="85" x2="255" y2="85" stroke="#c2410c" stroke-width="2.5" marker-end="url(#C7-ar)"/>
+<line x1="150" y1="115" x2="150" y2="142" stroke="#c2410c" stroke-width="2.5" marker-end="url(#C7-ar)"/>
+<text x="60" y="77" font-size="13" fill="#c2410c">熱</text>
+<text x="232" y="77" font-size="13" fill="#c2410c">熱</text>
+<text x="150" y="176" font-size="14" text-anchor="middle" fill="#1f2a44">放熱反應：ΔH &lt; 0</text>
+</svg><figcaption>圖 C7-1　放熱反應：熱由系統流向外界</figcaption></figure><figure class="fig half"><svg viewBox="0 0 300 190" width="300">
+<rect x="10" y="10" width="280" height="140" fill="#cfe3f8" stroke="#2f6fb5" stroke-width="1" rx="6"/>
+<text x="20" y="30" font-size="13" fill="#1f2a44">外界（溫度下降）</text>
+<rect x="95" y="55" width="110" height="60" fill="#fbdcbd" stroke="#d9772b" stroke-width="2" rx="4"/>
+<text x="150" y="80" font-size="14" text-anchor="middle" fill="#1f2a44">系統</text>
+<text x="150" y="100" font-size="13" text-anchor="middle" fill="#1f2a44">反應物 → 產物</text>
+<line x1="45" y1="85" x2="93" y2="85" stroke="#2f6fb5" stroke-width="2.5" marker-end="url(#C7-ab)"/>
+<line x1="255" y1="85" x2="207" y2="85" stroke="#2f6fb5" stroke-width="2.5" marker-end="url(#C7-ab)"/>
+<line x1="150" y1="142" x2="150" y2="117" stroke="#2f6fb5" stroke-width="2.5" marker-end="url(#C7-ab)"/>
+<text x="60" y="77" font-size="13" fill="#2f6fb5">熱</text>
+<text x="232" y="77" font-size="13" fill="#2f6fb5">熱</text>
+<text x="150" y="176" font-size="14" text-anchor="middle" fill="#1f2a44">吸熱反應：ΔH &gt; 0</text>
+</svg><figcaption>圖 C7-2　吸熱反應：熱由外界流入系統</figcaption></figure>
+
+<h4>2. 熱含量（焓）與反應熱</h4>
+<ul>
+<li>物質所含的能量（化學鍵的位能、粒子的動能等）稱為<strong>熱含量</strong>，又稱<strong>焓</strong>（enthalpy），符號 <span class="m">H</span>。熱含量的絕對值無法測得，只能測量變化量。</li>
+<li><strong>反應熱</strong>：定壓下反應所吸收或放出的熱量，等於熱含量的變化。</li>
+</ul>
+<div class="formula" data-t="反應熱"><div class="mb">\Delta H = H_{\text{產物}} - H_{\text{反應物}}</div><p><span class="m">\Delta H</span>：反應熱（kJ）　<span class="m">H</span>：熱含量（焓）；只能測變化量，不能測絕對值</p></div>
+<ul>
+<li><span class="m">\Delta H &lt; 0</span>：產物熱含量較低，為<strong>放熱反應</strong>；<span class="m">\Delta H &gt; 0</span>：產物熱含量較高，為<strong>吸熱反應</strong>。此即課綱 CBa-Ⅴc-1 的敘述。</li>
+<li>ΔH 的正負以<strong>系統</strong>為準。放熱時系統的能量減少，故為負值；外界得到的熱為正值。<span class="hand">負號＝系統失去能量</span></li>
+</ul>
+
+<figure class="fig half"><svg viewBox="0 0 300 220" width="300">
+<line x1="40" y1="200" x2="40" y2="22" stroke="#1f2a44" stroke-width="1.8" marker-end="url(#C7-ak)"/>
+<line x1="40" y1="200" x2="285" y2="200" stroke="#1f2a44" stroke-width="1.8"/>
+<text x="48" y="28" font-size="13" fill="#1f2a44">熱含量 H</text>
+<text x="165" y="216" font-size="13" text-anchor="middle" fill="#1f2a44">反應前 → 反應後</text>
+<line x1="60" y1="70" x2="140" y2="70" stroke="#2f6fb5" stroke-width="3"/>
+<text x="100" y="62" font-size="13" text-anchor="middle" fill="#1f2a44">反應物</text>
+<line x1="180" y1="160" x2="260" y2="160" stroke="#2e8b57" stroke-width="3"/>
+<text x="220" y="180" font-size="13" text-anchor="middle" fill="#1f2a44">產物</text>
+<line x1="140" y1="70" x2="235" y2="70" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4 3"/>
+<line x1="230" y1="72" x2="230" y2="156" stroke="#c2410c" stroke-width="2.2" marker-end="url(#C7-ar)"/>
+<text x="236" y="118" font-size="14" fill="#c2410c">ΔH &lt; 0</text>
+<text x="150" y="118" font-size="13" text-anchor="middle" fill="#1f2a44">放出熱量</text>
+</svg><figcaption>圖 C7-3　放熱反應的熱含量圖</figcaption></figure><figure class="fig half"><svg viewBox="0 0 300 220" width="300">
+<line x1="40" y1="200" x2="40" y2="22" stroke="#1f2a44" stroke-width="1.8" marker-end="url(#C7-ak)"/>
+<line x1="40" y1="200" x2="285" y2="200" stroke="#1f2a44" stroke-width="1.8"/>
+<text x="48" y="28" font-size="13" fill="#1f2a44">熱含量 H</text>
+<text x="165" y="216" font-size="13" text-anchor="middle" fill="#1f2a44">反應前 → 反應後</text>
+<line x1="60" y1="160" x2="140" y2="160" stroke="#2f6fb5" stroke-width="3"/>
+<text x="100" y="180" font-size="13" text-anchor="middle" fill="#1f2a44">反應物</text>
+<line x1="180" y1="70" x2="260" y2="70" stroke="#2e8b57" stroke-width="3"/>
+<text x="220" y="62" font-size="13" text-anchor="middle" fill="#1f2a44">產物</text>
+<line x1="140" y1="160" x2="235" y2="160" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4 3"/>
+<line x1="230" y1="158" x2="230" y2="74" stroke="#2f6fb5" stroke-width="2.2" marker-end="url(#C7-ab)"/>
+<text x="236" y="118" font-size="14" fill="#2f6fb5">ΔH &gt; 0</text>
+<text x="150" y="118" font-size="13" text-anchor="middle" fill="#1f2a44">吸收熱量</text>
+</svg><figcaption>圖 C7-4　吸熱反應的熱含量圖</figcaption></figure>
+
+<div class="key"><p><strong>常見放熱與吸熱變化</strong></p>
+<table class="t"><thead><tr><th>類別</th><th>放熱（ΔH &lt; 0）</th><th>吸熱（ΔH &gt; 0）</th></tr></thead><tbody>
+<tr><td>化學變化</td><td>燃燒；酸鹼中和；活潑金屬與酸或水反應；鐵生鏽（暖暖包）；鋁熱反應；細胞呼吸；多數化合反應</td><td>光合作用；電解水；碳酸鈣受熱分解；多數分解反應；<span class="m">\ce{N2 + O2 -> 2NO}</span>；八水合氫氧化鋇與氯化銨固體混合</td></tr>
+<tr><td>物理變化</td><td>凝結、凝固、凝華；氫氧化鈉固體溶於水；濃硫酸稀釋</td><td>熔化、汽化、昇華；硝酸銨溶於水（冷敷包）；氯化鈉溶於水（吸熱甚少）</td></tr>
+</tbody></table></div>
+
+<div class="warn"><ul>
+<li>「需要加熱才能進行」與「吸熱反應」無關。燃燒須先點火，卻是放熱反應；點火是為了越過活化能（見第七節）。</li>
+<li>「吸熱反應不能自然發生」不正確。八水合氫氧化鋇與氯化銨在室溫下混合即自發進行，燒杯外壁可結霜。反應能否自發還與亂度（熵）有關（進階，大學普通化學）。</li>
+<li>相變與溶解屬物理變化，但同樣有熱量變化；題目問「化學反應」時須排除。</li>
+</ul></div>
+<div class="exam"><p>學測常以生活情境（暖暖包、冷敷包、燃燒、光合作用、電解）要求分類放熱與吸熱，並混入<strong>物理變化</strong>（溶解、相變）；誘答多為「需加熱才能發生，故為吸熱」。</p></div>
+
+<h4>3. 能量從哪裡來：化學鍵</h4>
+<ul>
+<li><span class="box">斷鍵吸熱，成鍵放熱</span>。破壞化學鍵須輸入能量；原子結合成鍵時釋出能量。</li>
+<li>反應熱約等於「斷裂舊鍵吸收的總能量」減去「形成新鍵放出的總能量」。新鍵總強度大於舊鍵者放熱，反之吸熱。</li>
+<li>以燃燒為例：產物 <span class="m">\ce{CO2}</span> 中的 C＝O 鍵與 <span class="m">\ce{H2O}</span> 中的 O－H 鍵都很強，故碳氫化合物燃燒大量放熱。</li>
+</ul>
+
+<h4>4. 能量守恆（CBa-Ⅴc-2）</h4>
+<ul>
+<li>化學反應中能量不會無中生有，也不會消失，只在系統與外界之間轉移、或在不同形式間轉換：化學能可轉換為熱能（燃燒）、光能（螢光棒、燃燒的火焰）、電能（電池）、力學能（內燃機）。</li>
+<li>能量守恆的數量關係：<span class="m">H_{\text{反應物}} = H_{\text{產物}} + \text{放出的熱}</span>（放熱）；<span class="m">H_{\text{反應物}} + \text{吸收的熱} = H_{\text{產物}}</span>（吸熱）。</li>
+<li>推論一：<strong>逆反應的 ΔH 與正反應大小相等、符號相反</strong><span class="hand">逆寫必變號</span>。若生成 1 mol 水放熱 285.8 kJ，則分解 1 mol 液態水須吸熱 285.8 kJ。此關係早於能量守恆定律的正式提出，由拉瓦節（Antoine Lavoisier，1743–1794）與拉普拉斯（Pierre-Simon Laplace，1749–1827）在 1780 年代以冰卡計的量熱研究提出。</li>
+<li>推論二：赫斯定律（第四節）。</li>
+<li>化學能轉為電能或功時，一部分仍以熱散失；能量總量守恆，可利用的部分減少（與物理 P9 熱力學第二定律銜接）。</li>
+</ul>
+
+<div class="tip"><p><strong>深究　熱含量與內能（進階）</strong></p>
+<ul>
+<li>系統的內能 <span class="m">U</span> 是所有粒子動能與位能的總和。熱力學第一定律：<span class="m">\Delta U = q + w</span>（<span class="m">q</span> 為系統吸收的熱，<span class="m">w</span> 為外界對系統所作的功）。</li>
+<li>多數實驗在開放容器（定壓）中進行，反應若產生或消耗氣體，系統會推動大氣作功。為了讓「定壓下的熱量」直接對應一個狀態函數，定義 <span class="m">H = U + PV</span>，可證得定壓下 <span class="m">q_p = \Delta H</span>。</li>
+<li>定容的彈卡計測得的是 <span class="m">q_V = \Delta U</span>；兩者差 <span class="m">\Delta H - \Delta U = \Delta n_{\text{氣}} RT</span>。例如 25 °C 時 <span class="m">\ce{2H2(g) + O2(g) -> 2H2O(l)}</span>，<span class="m">\Delta n_{\text{氣}} = -3</span>，差值約 <span class="m">-3 \times 8.31 \times 298 \approx -7.4\ \mathrm{kJ}</span>，相對於 −571.6 kJ 約 1%。沒有氣體參與的反應，兩者幾乎相等。</li>
+</ul></div>
+
+<h3>二、熱化學反應式</h3>
+<div class="note"><p>四件事要對：狀態、係數、正負號、單位。</p><p>係數與 ΔH 同進退。</p></div>
+<p>標明反應熱的化學反應式稱為<strong>熱化學反應式</strong>（熱化學方程式）。</p>
+<div class="key"><p><strong>書寫規則</strong></p>
+<ol>
+<li><strong>標明狀態</strong>：(s)、(l)、(g)、(aq)。同一物質狀態不同，熱含量不同。</li>
+<li><strong>ΔH 寫在反應式右側</strong>，含正負號與單位 kJ；ΔH 對應的是「依反應式係數的莫耳數完全反應」。</li>
+<li><strong>係數加倍，ΔH 加倍</strong>；係數可為分數（例如要表示 1 mol 產物時）。</li>
+<li><strong>反應式逆寫，ΔH 變號</strong>。</li>
+<li>未註明時，通常指 25 °C、1 atm 下的數據。</li>
+<li>另一種寫法是把熱量當成反應式的一項：放熱寫在產物側，吸熱寫在反應物側，此時熱量不帶負號。</li>
+</ol></div>
+
+<p class="eg"><span class="en"><span class="m">\ce{2H2(g) + O2(g) -> 2H2O(l)}\quad \Delta H = -571.6\ \mathrm{kJ}</span></span><span class="zh">示例。等價寫法：<span class="m">\ce{2H2(g) + O2(g) -> 2H2O(l)} + 571.6\ \mathrm{kJ}</span></span></p>
+<p class="eg"><span class="en"><span class="m">\ce{H2(g) + 1/2O2(g) -> H2O(l)}\quad \Delta H = -285.8\ \mathrm{kJ}</span></span><span class="zh">示例。係數減半，ΔH 減半。</span></p>
+<p class="eg"><span class="en"><span class="m">\ce{H2O(l) -> H2(g) + 1/2O2(g)}\quad \Delta H = +285.8\ \mathrm{kJ}</span></span><span class="zh">示例。逆反應，ΔH 變號。</span></p>
+<p class="eg"><span class="en"><span class="m">\ce{H2(g) + 1/2O2(g) -> H2O(g)}\quad \Delta H = -241.8\ \mathrm{kJ}</span></span><span class="zh">示例。產物為水蒸氣，放熱較少；兩者相差 44.0 kJ，即 25 °C 時 1 mol 水的汽化熱。</span></p>
+
+<figure class="fig"><svg viewBox="0 0 460 250" width="460">
+<line x1="40" y1="236" x2="40" y2="20" stroke="#1f2a44" stroke-width="1.8" marker-end="url(#C7-ak)"/>
+<text x="48" y="22" font-size="13" fill="#1f2a44">H</text>
+<line x1="80" y1="40" x2="400" y2="40" stroke="#2f6fb5" stroke-width="3"/>
+<text x="90" y="33" font-size="14" fill="#1f2a44">H<tspan baseline-shift="sub" font-size="11">2</tspan>(g) + ½O<tspan baseline-shift="sub" font-size="11">2</tspan>(g)</text>
+<line x1="90" y1="192" x2="230" y2="192" stroke="#d9772b" stroke-width="3"/>
+<line x1="230" y1="192" x2="430" y2="192" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="160" y="212" font-size="14" text-anchor="middle" fill="#1f2a44">H<tspan baseline-shift="sub" font-size="11">2</tspan>O(g)</text>
+<line x1="250" y1="220" x2="430" y2="220" stroke="#2e8b57" stroke-width="3"/>
+<text x="340" y="242" font-size="14" text-anchor="middle" fill="#1f2a44">H<tspan baseline-shift="sub" font-size="11">2</tspan>O(l)</text>
+<line x1="130" y1="44" x2="130" y2="188" stroke="#c2410c" stroke-width="2" marker-end="url(#C7-ar)"/>
+<text x="138" y="120" font-size="14" fill="#c2410c">ΔH = −241.8 kJ</text>
+<line x1="290" y1="44" x2="290" y2="216" stroke="#c2410c" stroke-width="2" marker-end="url(#C7-ar)"/>
+<text x="298" y="130" font-size="14" fill="#c2410c">ΔH = −285.8 kJ</text>
+<line x1="415" y1="194" x2="415" y2="217" stroke="#2f6fb5" stroke-width="2" marker-end="url(#C7-ab)"/>
+<text x="408" y="183" font-size="13" text-anchor="end" fill="#2f6fb5">凝結 −44.0 kJ</text>
+</svg><figcaption>圖 C7-5　生成 1 mol 水蒸氣與液態水的熱含量變化（縱軸依比例，25 °C）</figcaption></figure>
+
+<h4>反應熱的計量</h4>
+<ul>
+<li>熱量與反應的莫耳數成正比：<span class="m">Q = n \times |\Delta H|</span>（<span class="m">n</span> 以反應式中某物質的莫耳數換算為「反應了幾份反應式」）。</li>
+<li>解題順序：質量或體積 → 莫耳數 → 依係數比換算 → 乘上每莫耳反應熱。</li>
+</ul>
+<div class="warn"><ul>
+<li>ΔH = −571.6 kJ 是「2 mol <span class="m">\ce{H2}</span> 與 1 mol <span class="m">\ce{O2}</span> 生成 2 mol 液態水」的熱量，生成 1 mol 水只放熱 285.8 kJ。</li>
+<li>反應熱的單位寫 kJ 或 kJ/mol 皆見於教材；寫 kJ/mol 時，「mol」指「每莫耳反應式」或「每莫耳指定物質」，須由上下文判斷。</li>
+<li>題目給的是水蒸氣還是液態水，要看清楚；燃燒熱數據的產物一般指液態水。</li>
+</ul></div>
+<div class="mnem"><p>斷鍵吸、成鍵放；逆寫變號，倍數同乘。</p></div>
+<div class="exam"><p>學測常給一條熱化學反應式，要求判斷「改寫後的式子」是否正確：係數減半、逆寫、狀態由 (l) 改 (g) 三種變形最常見；<em>改變狀態時 ΔH 不能照抄</em>。</p></div>
+
+<h3>三、反應熱的種類（進階）</h3>
+<h4>1. 莫耳生成熱</h4>
+<ul>
+<li><strong>定義</strong>：在標準狀態下，由<strong>最穩定的成分元素</strong>生成 <strong>1 mol</strong> 化合物時的反應熱，符號 <span class="m">\Delta H_f^\circ</span>。</li>
+<li><strong>元素最穩定狀態的生成熱為 0</strong>：例如 <span class="m">\ce{H2(g)}</span>、<span class="m">\ce{O2(g)}</span>、<span class="m">\ce{N2(g)}</span>、C（石墨）、<span class="m">\ce{Br2(l)}</span>、<span class="m">\ce{Hg(l)}</span>、<span class="m">\ce{Na(s)}</span>。同素異形體中較不穩定者不為 0：C（鑽石）+1.9 kJ/mol、<span class="m">\ce{O3(g)}</span> 為正值；<span class="m">\ce{Br2(g)}</span> 亦不為 0。</li>
+<li>生成熱可正可負；多數穩定化合物為負值。</li>
+<li>以生成熱計算反應熱（公式卡如下）。</li>
+</ul>
+<div class="formula" data-t="由生成熱求反應熱"><div class="mb">\Delta H_{\text{反應}} = \sum n\,\Delta H_f^\circ(\text{產物}) - \sum n\,\Delta H_f^\circ(\text{反應物})</div><p><span class="m">n</span>：反應式係數　<span class="m">\Delta H_f^\circ</span>：莫耳生成熱（kJ/mol）；元素最穩定狀態取 0</p></div>
+<table class="t"><thead><tr><th>物質</th><th>ΔH<sub>f</sub>°（kJ/mol）</th><th>物質</th><th>ΔH<sub>f</sub>°（kJ/mol）</th></tr></thead><tbody>
+<tr><td><span class="m">\ce{H2O(l)}</span></td><td>−285.8</td><td><span class="m">\ce{CH4(g)}</span></td><td>−74.8</td></tr>
+<tr><td><span class="m">\ce{H2O(g)}</span></td><td>−241.8</td><td><span class="m">\ce{C3H8(g)}</span></td><td>−103.8</td></tr>
+<tr><td><span class="m">\ce{CO2(g)}</span></td><td>−393.5</td><td><span class="m">\ce{C2H5OH(l)}</span></td><td>−277.6</td></tr>
+<tr><td><span class="m">\ce{CO(g)}</span></td><td>−110.5</td><td><span class="m">\ce{C6H12O6(s)}</span>（葡萄糖）</td><td>−1273.3</td></tr>
+<tr><td><span class="m">\ce{NH3(g)}</span></td><td>−45.9</td><td><span class="m">\ce{HCl(g)}</span></td><td>−92.3</td></tr>
+<tr><td><span class="m">\ce{NO(g)}</span></td><td>+90.3</td><td><span class="m">\ce{Al2O3(s)}</span></td><td>−1675.7</td></tr>
+<tr><td><span class="m">\ce{NO2(g)}</span></td><td>+33.2</td><td><span class="m">\ce{Fe2O3(s)}</span></td><td>−824.2</td></tr>
+</tbody></table>
+<p>注意：表列為 25 °C 的常用文獻值，不同資料庫末位可能相差 0.1–1 kJ/mol（例如乙醇另見 −276 kJ/mol）。考題以題目所給數據為準。</p>
+
+<h4>2. 莫耳燃燒熱</h4>
+<div class="note"><p>燃燒熱必為負；生成熱可正可負。</p><p>比熱值看「每克」，比莫耳數看「每莫耳」。</p></div>
+<ul>
+<li><strong>定義</strong>：1 mol 物質與氧<strong>完全燃燒</strong>時的反應熱，符號 <span class="m">\Delta H_c^\circ</span>，必為負值。完全燃燒指 C 變為 <span class="m">\ce{CO2(g)}</span>、H 變為 <span class="m">\ce{H2O(l)}</span>。</li>
+<li>重疊關係：<span class="m">\ce{H2}</span> 的燃燒熱 ＝ <span class="m">\ce{H2O(l)}</span> 的生成熱（−285.8 kJ/mol）；C（石墨）的燃燒熱 ＝ <span class="m">\ce{CO2(g)}</span> 的生成熱（−393.5 kJ/mol）。</li>
+<li>燃料評比常用<strong>每克燃燒熱</strong>（熱值）：</li>
+</ul>
+<table class="t"><thead><tr><th>燃料</th><th>莫耳質量（g/mol）</th><th>莫耳燃燒熱（kJ/mol）</th><th>每克放熱（kJ/g）</th></tr></thead><tbody>
+<tr><td>氫 <span class="m">\ce{H2}</span></td><td>2.016</td><td>−285.8</td><td>141.8</td></tr>
+<tr><td>甲烷 <span class="m">\ce{CH4}</span></td><td>16.04</td><td>−890.3</td><td>55.5</td></tr>
+<tr><td>丙烷 <span class="m">\ce{C3H8}</span></td><td>44.10</td><td>−2219.9</td><td>50.3</td></tr>
+<tr><td>石墨 C</td><td>12.01</td><td>−393.5</td><td>32.8</td></tr>
+<tr><td>乙醇 <span class="m">\ce{C2H5OH}</span></td><td>46.07</td><td>−1367.6</td><td>29.7</td></tr>
+<tr><td>葡萄糖 <span class="m">\ce{C6H12O6}</span></td><td>180.16</td><td>−2803</td><td>15.6</td></tr>
+</tbody></table>
+<ul>
+<li>判讀：每莫耳燃燒熱隨分子變大而增加（丙烷 &gt; 乙醇 &gt; 甲烷 &gt; 氫），每克燃燒熱的順序幾乎相反，氫最大。含氧燃料（乙醇、葡萄糖）分子中已有部分被氧化，每克放熱較少。</li>
+<li>氫的每克熱值最高，但常溫常壓下每升氣體所含能量低，儲存須高壓或液化；此為氫能應用的技術限制（能源議題見 C11）。</li>
+<li>營養學的「大卡（Cal）」即 kcal，<span class="box">1 cal = 4.184 J</span>。</li>
+</ul>
+<div class="exam"><p>燃料比較題須先確認比較基準：每莫耳、每克或每升氣體，排序可能完全相反。生成熱題常考「哪一個物質的生成熱為 0」，陷阱為 C（鑽石）、<span class="m">\ce{O3}</span>、<span class="m">\ce{Br2(g)}</span>。</p></div>
+
+<h4>3. 中和熱與溶解熱</h4>
+<ul>
+<li><strong>莫耳中和熱</strong>：酸與鹼中和生成 1 mol 水的反應熱。強酸與強鹼的稀溶液，實質反應皆為 <span class="m">\ce{H+(aq) + OH-(aq) -> H2O(l)}</span>，ΔH 約 −56 kJ（文獻值 −55.8 kJ），與酸鹼種類無關。</li>
+<li>弱酸或弱鹼參與時，數值通常較小，原因是弱電解質解離多為吸熱（少數例外，如氫氟酸）。</li>
+<li><strong>莫耳溶解熱</strong>：1 mol 溶質溶於大量溶劑的熱量變化。例：NaOH(s) 約 −44.5 kJ/mol（放熱）；<span class="m">\ce{NH4NO3(s)}</span> 約 +25.7 kJ/mol（吸熱，冷敷包）；NaCl(s) 約 +3.9 kJ/mol（吸熱甚少）。</li>
+<li>溶解熱的正負取決於「拆開溶質粒子所需能量」與「粒子被水分子包圍（水合）所放出能量」的相對大小。</li>
+<li>濃硫酸稀釋大量放熱，須<strong>將酸緩緩倒入水中</strong><span class="hand">酸入水</span>並攪拌，不可將水倒入濃酸，以免局部沸騰濺出。</li>
+</ul>
+
+<div class="tip"><p><strong>補充　暖暖包與冷敷包</strong></p>
+<ul>
+<li>拋棄式暖暖包：鐵粉在水、氧存在下氧化生成含水的氧化鐵，放熱。食鹽水作電解質加速鐵的氧化；蛭石保存水分；活性碳多孔，使空氣與水分易於接觸鐵粉。使用前以不透氣外袋隔絕氧氣。屬化學變化。</li>
+<li>拋棄式冷敷包：內袋水破裂後與硝酸銨（或尿素等）接觸溶解而吸熱。屬物理變化（溶解）。</li>
+<li>重複使用型暖暖包（醋酸鈉過飽和溶液）：按壓金屬片引發結晶，結晶放熱；加熱可使晶體再溶解，回到過飽和狀態（溶解度概念見 C6）。</li>
+</ul></div>
+
+<h3>四、赫斯定律、鍵能與卡計（進階）</h3>
+<h4>1. 赫斯定律</h4>
+<ul>
+<li><strong>定律</strong>：一個反應不論一步完成或分數步完成，只要始態與終態相同，總反應熱相同。又稱<strong>反應熱加成定律</strong>。</li>
+<li>由瑞士出生、在俄國聖彼得堡任教的化學家赫斯（Germain Henri Hess，1802–1850）於 1840 年發表。當時能量守恆定律尚未正式確立；赫斯定律後來被視為能量守恆在化學反應上的特例。</li>
+<li><strong>依據</strong>：熱含量 <span class="m">H</span> 是<strong>狀態函數</strong>，只與狀態有關，與<span class="circle">途徑</span>無關。<span class="hand">看起點與終點</span></li>
+<li><strong>用途</strong>：求不易直接測量的反應熱。例如碳不完全燃燒生成 CO 時必然混有 <span class="m">\ce{CO2}</span>，無法直接測得「C → CO」的反應熱。</li>
+</ul>
+
+<figure class="fig"><svg viewBox="0 0 460 250" width="460">
+<line x1="40" y1="240" x2="40" y2="20" stroke="#1f2a44" stroke-width="1.8" marker-end="url(#C7-ak)"/>
+<text x="48" y="22" font-size="13" fill="#1f2a44">H</text>
+<line x1="60" y1="40" x2="400" y2="40" stroke="#2f6fb5" stroke-width="3"/>
+<text x="70" y="33" font-size="14" fill="#1f2a44">C(s，石墨) + O<tspan baseline-shift="sub" font-size="11">2</tspan>(g)</text>
+<line x1="220" y1="90" x2="420" y2="90" stroke="#d9772b" stroke-width="3"/>
+<text x="214" y="95" font-size="14" text-anchor="end" fill="#1f2a44">CO(g) + ½O<tspan baseline-shift="sub" font-size="11">2</tspan>(g)</text>
+<line x1="60" y1="217" x2="420" y2="217" stroke="#2e8b57" stroke-width="3"/>
+<text x="70" y="236" font-size="14" fill="#1f2a44">CO<tspan baseline-shift="sub" font-size="11">2</tspan>(g)</text>
+<line x1="80" y1="44" x2="80" y2="213" stroke="#c2410c" stroke-width="2.2" marker-end="url(#C7-ar)"/>
+<text x="88" y="160" font-size="14" fill="#c2410c">ΔH = −393.5 kJ</text>
+<line x1="260" y1="44" x2="260" y2="86" stroke="#7a5cc2" stroke-width="2.2" marker-end="url(#C7-ak)"/>
+<text x="268" y="70" font-size="14" fill="#7a5cc2">ΔH<tspan baseline-shift="sub" font-size="11">1</tspan> = −110.5 kJ</text>
+<line x1="330" y1="94" x2="330" y2="213" stroke="#7a5cc2" stroke-width="2.2" marker-end="url(#C7-ak)"/>
+<text x="338" y="160" font-size="14" fill="#7a5cc2">ΔH<tspan baseline-shift="sub" font-size="11">2</tspan> = −283.0 kJ</text>
+</svg><figcaption>圖 C7-6　赫斯定律：石墨經 CO 燃燒成 CO<sub>2</sub> 與直接燃燒的反應熱相同（縱軸依比例）</figcaption></figure>
+
+<div class="mb">\begin{aligned} \ce{C(s) + O2(g) &amp;-> CO2(g)} &amp;\quad \Delta H &amp;= -393.5\ \mathrm{kJ}\\ \ce{CO2(g) &amp;-> CO(g) + 1/2O2(g)} &amp;\quad \Delta H &amp;= +283.0\ \mathrm{kJ}\\ \hline \ce{C(s) + 1/2O2(g) &amp;-> CO(g)} &amp;\quad \Delta H &amp;= -110.5\ \mathrm{kJ} \end{aligned}</div>
+
+<div class="key"><p><strong>組合反應式的步驟</strong></p>
+<ol>
+<li>找出目標反應式中只出現在某一個已知式的物質，依其位置（左或右）與係數決定該已知式是否逆寫、乘幾倍。</li>
+<li>逆寫則 ΔH 變號；乘 <span class="m">n</span> 倍則 ΔH 乘 <span class="m">n</span>。</li>
+<li>相加後消去兩側相同的物質（狀態須相同），檢查是否得到目標式，再將 ΔH 相加。</li>
+</ol></div>
+
+<h4>2. 平均鍵能</h4>
+<ul>
+<li><strong>鍵能</strong>：氣態分子中，斷裂 1 mol 某種化學鍵、生成氣態原子所需的能量，恆為正值。多原子分子中同類鍵的鍵能因環境而略有不同，表列為<strong>平均鍵能</strong>。</li>
+<li>估算反應熱（反應物與產物皆為氣態時適用）見公式卡。</li>
+</ul>
+<div class="formula" data-t="由鍵能估算反應熱"><div class="mb">\Delta H \approx \sum(\text{斷裂之鍵能}) - \sum(\text{生成之鍵能})</div><p>鍵能恆為正值（kJ/mol）；只適用於氣態物質；結果為估計值</p></div>
+<ul>
+<li>注意<em>減法順序與生成熱公式相反</em>：生成熱是「產物減反應物」，鍵能是「反應物（斷鍵）減產物（成鍵）」。</li>
+<li>由平均鍵能求得的值為估計值，與實測值可差數十 kJ。</li>
+</ul>
+<table class="t"><thead><tr><th>鍵</th><th>平均鍵能（kJ/mol）</th><th>鍵</th><th>平均鍵能（kJ/mol）</th></tr></thead><tbody>
+<tr><td>H－H</td><td>436</td><td>C－H</td><td>413</td></tr>
+<tr><td>Cl－Cl</td><td>242</td><td>O－H</td><td>463</td></tr>
+<tr><td>H－Cl</td><td>431</td><td>C＝O（<span class="m">\ce{CO2}</span> 中）</td><td>799</td></tr>
+<tr><td>O＝O</td><td>498</td><td>N≡N</td><td>945</td></tr>
+<tr><td>N－H</td><td>391</td><td>C－C</td><td>348</td></tr>
+</tbody></table>
+
+<figure class="fig"><svg viewBox="0 0 460 240" width="460">
+<line x1="30" y1="232" x2="30" y2="18" stroke="#1f2a44" stroke-width="1.8" marker-end="url(#C7-ak)"/>
+<text x="38" y="20" font-size="13" fill="#1f2a44">H</text>
+<line x1="150" y1="40" x2="330" y2="40" stroke="#7a5cc2" stroke-width="3"/>
+<text x="240" y="33" font-size="14" text-anchor="middle" fill="#1f2a44">2H(g) + 2Cl(g)</text>
+<line x1="45" y1="176" x2="180" y2="176" stroke="#2f6fb5" stroke-width="3"/>
+<text x="95" y="168" font-size="14" text-anchor="middle" fill="#1f2a44">H<tspan baseline-shift="sub" font-size="11">2</tspan>(g) + Cl<tspan baseline-shift="sub" font-size="11">2</tspan>(g)</text>
+<line x1="300" y1="213" x2="440" y2="213" stroke="#2e8b57" stroke-width="3"/>
+<text x="370" y="232" font-size="14" text-anchor="middle" fill="#1f2a44">2HCl(g)</text>
+<line x1="170" y1="172" x2="170" y2="44" stroke="#d9772b" stroke-width="2.2" marker-end="url(#C7-ak)"/>
+<text x="162" y="92" font-size="13" text-anchor="end" fill="#d9772b">斷鍵吸熱</text>
+<text x="162" y="110" font-size="13" text-anchor="end" fill="#d9772b">436 + 242</text>
+<text x="162" y="128" font-size="13" text-anchor="end" fill="#d9772b">= +678 kJ</text>
+<line x1="310" y1="44" x2="310" y2="209" stroke="#c2410c" stroke-width="2.2" marker-end="url(#C7-ar)"/>
+<text x="318" y="110" font-size="13" fill="#c2410c">成鍵放熱</text>
+<text x="318" y="128" font-size="13" fill="#c2410c">2 × 431 = −862 kJ</text>
+<line x1="182" y1="178" x2="296" y2="211" stroke="#2e8b57" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#C7-ag)"/>
+<text x="230" y="232" font-size="13" text-anchor="middle" fill="#2e8b57">ΔH ≈ −184 kJ</text>
+</svg><figcaption>圖 C7-7　以鍵能估算 H<sub>2</sub> + Cl<sub>2</sub> → 2HCl 的反應熱（實測 −184.6 kJ；示意圖，未依比例）</figcaption></figure>
+
+<h4>3. 卡計與熱量測量</h4>
+<ul>
+<li>熱量公式見公式卡。若卡計本身吸熱不可忽略，加上 <span class="m">C\Delta T</span>（<span class="m">C</span> 為卡計熱容量）。</li>
+</ul>
+<div class="formula" data-t="卡計熱量"><div class="mb">Q = m s \Delta T,\qquad \Delta H = -\frac{Q}{n}\ (\text{放熱})</div><p><span class="m">m</span>：溶液質量（g）　<span class="m">s</span>：比熱，水為 4.18 J/(g·°C)　<span class="m">\Delta T</span>：溫度變化（°C）　<span class="m">n</span>：反應的莫耳數</p></div>
+<ul>
+<li>反應放出的熱 ＝ 溶液與卡計吸收的熱（能量守恆）；求得 <span class="m">Q</span> 後除以莫耳數，並依放熱、吸熱加上正負號，得 ΔH。</li>
+<li>簡易卡計：兩個保麗龍杯疊用並加蓋，減少熱散失；用於中和熱、溶解熱等水溶液反應。燃燒熱以<strong>彈卡計</strong>（定容，鋼製反應室浸於水中）測量（進階）。</li>
+<li>誤差來源：熱散失（使測得放熱量偏小）、溶液比熱與密度近似為水、溫度未讀到最高點。</li>
+</ul>
+<div class="exam"><p>卡計題的陷阱：<span class="m">m</span> 要用<strong>溶液總質量</strong>（兩溶液相加），<span class="m">n</span> 要用<strong>限量試劑</strong>的莫耳數；溫度上升代表放熱，ΔH 取負號。赫斯定律題常給兩三條已知式，要求組合成目標式。</p></div>
+
+<figure class="fig"><svg viewBox="0 0 400 260" width="400">
+<polygon points="90,62 270,62 252,236 108,236" fill="#ffffff" stroke="#1f2a44" stroke-width="2"/>
+<polygon points="104,72 256,72 240,228 120,228" fill="#e2e8f0" stroke="#1f2a44" stroke-width="1.5"/>
+<polygon points="112,120 249,120 240,228 120,228" fill="#cfe3f8" stroke="none"/>
+<rect x="80" y="50" width="200" height="12" fill="#94a3b8" stroke="#1f2a44" stroke-width="1.5"/>
+<rect x="160" y="12" width="9" height="196" fill="#ffffff" stroke="#1f2a44" stroke-width="1.5"/>
+<line x1="164.5" y1="60" x2="164.5" y2="200" stroke="#c2410c" stroke-width="3"/>
+<circle cx="164.5" cy="208" r="7" fill="#c2410c" stroke="#1f2a44" stroke-width="1"/>
+<line x1="212" y1="16" x2="212" y2="206" stroke="#1f2a44" stroke-width="2.5"/>
+<ellipse cx="212" cy="206" rx="20" ry="4" fill="none" stroke="#1f2a44" stroke-width="2.5"/>
+<line x1="169" y1="30" x2="300" y2="30" stroke="#94a3b8" stroke-width="1"/>
+<text x="304" y="34" font-size="13" fill="#1f2a44">溫度計</text>
+<line x1="212" y1="40" x2="300" y2="56" stroke="#94a3b8" stroke-width="1"/>
+<text x="304" y="60" font-size="13" fill="#1f2a44">攪拌棒</text>
+<line x1="280" y1="56" x2="300" y2="82" stroke="#94a3b8" stroke-width="1"/>
+<text x="304" y="86" font-size="13" fill="#1f2a44">杯蓋</text>
+<line x1="262" y1="140" x2="300" y2="140" stroke="#94a3b8" stroke-width="1"/>
+<text x="304" y="144" font-size="13" fill="#1f2a44">保麗龍杯</text>
+<text x="304" y="162" font-size="13" fill="#1f2a44">（兩個疊用）</text>
+<line x1="230" y1="190" x2="300" y2="200" stroke="#94a3b8" stroke-width="1"/>
+<text x="304" y="204" font-size="13" fill="#1f2a44">反應溶液</text>
+</svg><figcaption>圖 C7-8　簡易卡計（示意圖，未依比例）</figcaption></figure>
+
+<div class="tip"><p><strong>深究　為什麼赫斯定律必然成立</strong></p>
+<ul>
+<li>假設同一始態到同一終態，途徑甲放熱 400 kJ、途徑乙放熱 390 kJ。沿甲正向進行、再沿乙逆向回到始態，系統復原，外界卻淨得 10 kJ；反覆循環即可無中生有地產生能量，違反能量守恆。故兩途徑反應熱必相等。</li>
+<li>同一論證說明：逆反應 ΔH 必與正反應變號；生成熱公式成立（可把任一反應想成「反應物先分解為元素，元素再組成產物」兩步）。</li>
+<li>以生成熱公式驗證甲烷燃燒熱：<span class="m">[-393.5 + 2(-285.8)] - (-74.8) = -890.3\ \mathrm{kJ}</span>，與表列燃燒熱一致。</li>
+<li>以鍵能估算甲烷燃燒：斷 4 個 C－H 與 2 個 O＝O，<span class="m">4(413) + 2(498) = 2648\ \mathrm{kJ}</span>；成 2 個 C＝O 與 4 個 O－H，<span class="m">2(799) + 4(463) = 3450\ \mathrm{kJ}</span>；<span class="m">\Delta H \approx -802\ \mathrm{kJ}</span>。此值對應產物為<em>水蒸氣</em>（鍵能法只適用氣態），與 <span class="m">-890.3 + 2(44.0) = -802.3\ \mathrm{kJ}</span> 吻合。</li>
+</ul></div>
+
+<h3>五、反應速率的定義與測量</h3>
+<h4>1. 定義與表示</h4>
+<div class="note"><p>速率一律取正值。</p><p>割線斜率＝平均速率；切線斜率＝瞬時速率。</p></div>
+<ul>
+<li><strong>反應速率</strong>：單位時間內反應物濃度的減少量或產物濃度的增加量。水溶液與氣體反應常用單位 M/s 或 M/min（mol/(L·s)）。</li>
+<li>反應物濃度隨時間減少，故以反應物表示時加負號，使速率為正值。</li>
+</ul>
+<div class="formula" data-t="反應速率"><div class="mb">a\,\ce{A} + b\,\ce{B} \longrightarrow c\,\ce{C} + d\,\ce{D}:\quad r = -\frac{1}{a}\frac{\Delta[\ce{A}]}{\Delta t} = -\frac{1}{b}\frac{\Delta[\ce{B}]}{\Delta t} = \frac{1}{c}\frac{\Delta[\ce{C}]}{\Delta t} = \frac{1}{d}\frac{\Delta[\ce{D}]}{\Delta t}</div><p><span class="m">[\ ]</span>：體積莫耳濃度（M）　<span class="m">\Delta t</span>：時間（s 或 min）　<span class="m">r</span>：單位 M/s 或 M/min</p></div>
+<ul>
+<li>各物質的消耗或生成速率之比 ＝ <span class="box">係數比</span>。例：<span class="m">\ce{N2 + 3H2 -> 2NH3}</span> 中，<span class="m">\ce{H2}</span> 的消耗速率是 <span class="m">\ce{NH3}</span> 生成速率的 <span class="m">3/2</span> 倍。</li>
+<li><strong>平均速率</strong>：一段時間內的濃度變化除以時間，即濃度－時間圖上兩點連線（割線）的斜率。<strong>瞬時速率</strong>：某時刻切線的斜率（取絕對值）。</li>
+<li>多數反應隨反應物消耗，速率逐漸減慢，曲線愈來愈平緩；終點時速率為 0（不可逆反應）或正逆速率相等（可逆反應，平衡）。</li>
+<li>固體與純液體的「濃度」視為定值，不用來表示速率；涉及固體時可改用質量或產生氣體的體積隨時間的變化。</li>
+</ul>
+<div class="exam"><p>學測常給濃度－時間或氣體體積－時間圖，問「哪一段速率最大」（看斜率最陡處，多為起始）、「何時反應結束」（曲線變水平）、或要求以係數比換算另一物質的速率。</p></div>
+
+<figure class="fig"><svg viewBox="0 0 460 260" width="460">
+<line x1="60" y1="220" x2="440" y2="220" stroke="#1f2a44" stroke-width="1.8" marker-end="url(#C7-ak)"/>
+<line x1="60" y1="220" x2="60" y2="22" stroke="#1f2a44" stroke-width="1.8" marker-end="url(#C7-ak)"/>
+<text x="440" y="256" font-size="13" text-anchor="end" fill="#1f2a44">時間 t（s）</text>
+<text x="68" y="24" font-size="13" fill="#1f2a44">濃度（M）</text>
+<line x1="132" y1="220" x2="132" y2="225" stroke="#1f2a44"/><line x1="204" y1="220" x2="204" y2="225" stroke="#1f2a44"/><line x1="276" y1="220" x2="276" y2="225" stroke="#1f2a44"/><line x1="348" y1="220" x2="348" y2="225" stroke="#1f2a44"/><line x1="420" y1="220" x2="420" y2="225" stroke="#1f2a44"/>
+<text x="60" y="238" font-size="13" text-anchor="middle" fill="#1f2a44">0</text><text x="132" y="238" font-size="13" text-anchor="middle" fill="#1f2a44">20</text><text x="204" y="238" font-size="13" text-anchor="middle" fill="#1f2a44">40</text><text x="276" y="238" font-size="13" text-anchor="middle" fill="#1f2a44">60</text><text x="348" y="238" font-size="13" text-anchor="middle" fill="#1f2a44">80</text><text x="420" y="238" font-size="13" text-anchor="middle" fill="#1f2a44">100</text>
+<line x1="55" y1="130" x2="60" y2="130" stroke="#1f2a44"/><line x1="55" y1="40" x2="60" y2="40" stroke="#1f2a44"/>
+<text x="50" y="134" font-size="13" text-anchor="end" fill="#1f2a44">0.5</text><text x="50" y="44" font-size="13" text-anchor="end" fill="#1f2a44">1.0</text>
+<polyline points="60.0,40.0 67.2,53.8 74.4,66.6 81.6,78.4 88.8,89.3 96.0,99.3 103.2,108.6 110.4,117.2 117.6,125.1 124.8,132.4 132.0,139.1 139.2,145.3 146.4,151.1 153.6,156.4 160.8,161.3 168.0,165.8 175.2,170.0 182.4,173.8 189.6,177.4 196.8,180.6 204.0,183.7 211.2,186.5 218.4,189.0 225.6,191.4 232.8,193.6 240.0,195.6 247.2,197.5 254.4,199.2 261.6,200.8 268.8,202.3 276.0,203.7 283.2,204.9 290.4,206.1 297.6,207.2 304.8,208.1 312.0,209.1 319.2,209.9 326.4,210.7 333.6,211.4 340.8,212.1 348.0,212.7 355.2,213.2 362.4,213.7 369.6,214.2 376.8,214.7 384.0,215.1 391.2,215.5 398.4,215.8 405.6,216.1 412.8,216.4 420.0,216.7" fill="none" stroke="#2f6fb5" stroke-width="2.5"/>
+<polyline points="60.0,220.0 67.2,206.2 74.4,193.4 81.6,181.6 88.8,170.7 96.0,160.7 103.2,151.4 110.4,142.8 117.6,134.9 124.8,127.6 132.0,120.9 139.2,114.7 146.4,108.9 153.6,103.6 160.8,98.7 168.0,94.2 175.2,90.0 182.4,86.2 189.6,82.6 196.8,79.4 204.0,76.3 211.2,73.5 218.4,71.0 225.6,68.6 232.8,66.4 240.0,64.4 247.2,62.5 254.4,60.8 261.6,59.2 268.8,57.7 276.0,56.3 283.2,55.1 290.4,53.9 297.6,52.8 304.8,51.9 312.0,50.9 319.2,50.1 326.4,49.3 333.6,48.6 340.8,47.9 348.0,47.3 355.2,46.8 362.4,46.3 369.6,45.8 376.8,45.3 384.0,44.9 391.2,44.5 398.4,44.2 405.6,43.9 412.8,43.6 420.0,43.3" fill="none" stroke="#2e8b57" stroke-width="2.5"/>
+<line x1="60" y1="74.4" x2="222" y2="220" stroke="#c2410c" stroke-width="1.8" stroke-dasharray="6 4"/>
+<circle cx="132" cy="139.1" r="4" fill="#c2410c"/>
+<text x="380" y="205" font-size="13" fill="#2f6fb5">反應物 A</text>
+<text x="300" y="78" font-size="13" fill="#2e8b57">產物 B</text>
+<text x="240" y="172" font-size="13" fill="#c2410c">t = 20 s 的切線：</text>
+<text x="240" y="190" font-size="13" fill="#c2410c">斜率絕對值 ＝ 瞬時速率</text>
+</svg><figcaption>圖 C7-9　反應 A → B 的濃度－時間圖：曲線逐漸平緩，表示速率隨時間減小</figcaption></figure>
+
+<h4>2. 測量方法</h4>
+<p>選擇一個「隨反應進行而改變、且容易連續測量」的性質。</p>
+<table class="t"><thead><tr><th>可測量的性質</th><th>適用情形</th><th>示例</th></tr></thead><tbody>
+<tr><td>產生氣體的體積</td><td>有氣體生成</td><td>大理石與鹽酸；鎂與鹽酸；過氧化氫分解（注射筒或排水集氣）</td></tr>
+<tr><td>系統質量的減少</td><td>氣體逸出</td><td>錐形瓶置於電子天平上，<span class="m">\ce{CO2}</span> 逸出使讀數下降</td></tr>
+<tr><td>顏色深淺</td><td>有色物質生成或消耗</td><td>過錳酸根紫色褪去；碘與澱粉呈藍黑色（碘鐘反應，進階）</td></tr>
+<tr><td>混濁程度</td><td>生成沉澱</td><td>硫代硫酸鈉與鹽酸生成硫，記錄瓶底「×」字被遮住的時間</td></tr>
+<tr><td>導電度、pH</td><td>離子種類或數量改變</td><td><span class="m">\ce{H+}</span> 被消耗時 pH 上升；離子總數改變時導電度改變</td></tr>
+<tr><td>壓力</td><td>定容下氣體莫耳數改變</td><td>密閉容器中氣體分解</td></tr>
+</tbody></table>
+
+<figure class="fig half"><svg viewBox="0 0 300 230" width="300">
+<rect x="40" y="178" width="220" height="32" fill="#e2e8f0" stroke="#1f2a44" stroke-width="1.5" rx="3"/>
+<rect x="110" y="186" width="80" height="17" fill="#ffffff" stroke="#1f2a44" stroke-width="1"/>
+<text x="150" y="199" font-size="13" text-anchor="middle" fill="#1f2a44">238.46 g</text>
+<rect x="135" y="70" width="30" height="32" fill="#ffffff" stroke="#1f2a44" stroke-width="1.5"/>
+<polygon points="135,102 165,102 215,176 85,176" fill="#ffffff" stroke="#1f2a44" stroke-width="1.5"/>
+<polygon points="111,140 189,140 215,176 85,176" fill="#cfe3f8" stroke="none"/>
+<circle cx="120" cy="165" r="6" fill="#94a3b8"/><circle cx="140" cy="168" r="5" fill="#94a3b8"/><circle cx="168" cy="166" r="6" fill="#94a3b8"/><circle cx="186" cy="169" r="5" fill="#94a3b8"/>
+<circle cx="132" cy="152" r="2.5" fill="none" stroke="#1f2a44"/><circle cx="160" cy="148" r="2.5" fill="none" stroke="#1f2a44"/><circle cx="150" cy="128" r="2.5" fill="none" stroke="#1f2a44"/>
+<ellipse cx="150" cy="66" rx="18" ry="9" fill="#ffffff" stroke="#1f2a44" stroke-width="1.5"/>
+<line x1="168" y1="62" x2="225" y2="40" stroke="#94a3b8" stroke-width="1"/>
+<text x="228" y="44" font-size="13" fill="#1f2a44">棉花</text>
+<line x1="200" y1="160" x2="236" y2="130" stroke="#94a3b8" stroke-width="1"/>
+<text x="232" y="112" font-size="13" fill="#1f2a44">大理石</text>
+<text x="232" y="126" font-size="13" fill="#1f2a44">＋鹽酸</text>
+<text x="40" y="226" font-size="13" fill="#1f2a44">電子天平：讀數隨 CO<tspan baseline-shift="sub" font-size="11">2</tspan> 逸出而減少</text>
+</svg><figcaption>圖 C7-10　測量質量減少（棉花可讓氣體逸出、擋住酸霧）</figcaption></figure><figure class="fig half"><svg viewBox="0 0 300 230" width="300">
+<rect x="58" y="80" width="28" height="28" fill="#ffffff" stroke="#1f2a44" stroke-width="1.5"/>
+<rect x="56" y="74" width="32" height="10" fill="#94a3b8" stroke="#1f2a44" stroke-width="1"/>
+<polygon points="58,108 86,108 128,180 16,180" fill="#ffffff" stroke="#1f2a44" stroke-width="1.5"/>
+<polygon points="38,145 106,145 128,180 16,180" fill="#cfe3f8" stroke="none"/>
+<polyline points="72,74 72,50 152,50" fill="none" stroke="#1f2a44" stroke-width="2.5"/>
+<rect x="150" y="38" width="120" height="24" fill="#ffffff" stroke="#1f2a44" stroke-width="1.5"/>
+<rect x="196" y="41" width="70" height="18" fill="#e2e8f0" stroke="#1f2a44" stroke-width="1"/>
+<line x1="266" y1="50" x2="292" y2="50" stroke="#1f2a44" stroke-width="2.5"/>
+<line x1="170" y1="38" x2="170" y2="45" stroke="#1f2a44"/><line x1="185" y1="38" x2="185" y2="45" stroke="#1f2a44"/><line x1="200" y1="38" x2="200" y2="45" stroke="#1f2a44"/><line x1="215" y1="38" x2="215" y2="45" stroke="#1f2a44"/><line x1="230" y1="38" x2="230" y2="45" stroke="#1f2a44"/><line x1="245" y1="38" x2="245" y2="45" stroke="#1f2a44"/>
+<line x1="230" y1="72" x2="270" y2="72" stroke="#c2410c" stroke-width="2" marker-end="url(#C7-ar)"/>
+<text x="210" y="92" font-size="13" text-anchor="middle" fill="#c2410c">活塞被推出</text>
+<text x="210" y="24" font-size="13" text-anchor="middle" fill="#1f2a44">注射筒（讀取氣體體積）</text>
+<text x="72" y="200" font-size="13" text-anchor="middle" fill="#1f2a44">反應物</text>
+<text x="150" y="150" font-size="13" fill="#1f2a44">每隔固定時間</text>
+<text x="150" y="168" font-size="13" fill="#1f2a44">記錄一次體積</text>
+</svg><figcaption>圖 C7-11　以注射筒收集氣體測量速率</figcaption></figure>
+
+<h3>六、影響反應速率的因素</h3>
+<div class="note"><p>五大因素：本性、濃度、溫度、接觸面積、催化劑。</p><p>每一項都要能用「碰撞」解釋（第七節）。</p></div>
+<h4>1. 反應物的本性</h4>
+<ul>
+<li>同條件下，不同物質的反應速率差異很大，由反應物本身的化學鍵與結構決定。</li>
+<li>水溶液中離子間的反應（如沉澱、酸鹼中和）多半極快，混合即完成；需要斷裂共價鍵的反應通常較慢，例如草酸根被過錳酸根氧化，室溫下紫色褪去緩慢，加熱後才明顯加快。</li>
+<li>金屬與水的反應：鈉與冷水劇烈反應，鎂與冷水幾乎不反應、與熱水緩慢反應，鐵與水在常溫下僅緩慢生鏽，反映金屬活性的差異（見 C9）。</li>
+</ul>
+
+<h4>2. 濃度（氣體則為分壓）</h4>
+<ul>
+<li>濃度愈大，單位體積內粒子數愈多，<strong>碰撞頻率</strong>愈高，速率愈快。</li>
+<li>氣體在定溫下加壓（壓縮體積），濃度增加，速率加快。木炭在純氧中燃燒比在空氣中劇烈（空氣中氧約佔 21%）。</li>
+<li>反應進行中反應物濃度下降，故速率隨時間減慢（圖 C7-9）。</li>
+<li>（進階）<strong>速率定律式</strong>：<span class="m">r = k[\ce{A}]^m[\ce{B}]^n</span>。<span class="m">k</span> 為速率常數，隨溫度與催化劑改變、與濃度無關；<span class="m">m</span>、<span class="m">n</span> 為反應級數，<em>須由實驗決定</em>，一般不等於反應式係數。</li>
+</ul>
+<div class="formula" data-t="速率定律式（進階）"><div class="mb">r = k[\ce{A}]^m[\ce{B}]^n</div><p><span class="m">k</span>：速率常數（受溫度、催化劑影響）　<span class="m">m,n</span>：反應級數，由初始速率實驗求得；<span class="m">m+n</span> 為總級數</p></div>
+<ol class="steps">
+<li>找兩組實驗，其中只有一種反應物濃度不同。</li>
+<li>比較速率倍數與濃度倍數：濃度變 2 倍，速率變 2 倍為一級，變 4 倍為二級，不變為零級。</li>
+<li>代入任一組數據求 <span class="m">k</span>，再推算其他條件下的速率。</li>
+</ol>
+
+<h4>3. 溫度</h4>
+<ul>
+<li>溫度升高，速率加快；放熱反應與吸熱反應皆然。</li>
+<li>經驗法則：室溫附近，許多反應<span class="ul">每升高 10 °C 速率約變為 2–3 倍</span>。此為粗略估計，只對活化能約 50 kJ/mol 量級的反應、室溫附近的溫度範圍大致適用。</li>
+<li>主要原因：溫度升高使動能 ≥ 活化能的分子<strong>比例</strong>大幅增加（圖 C7-12）；碰撞頻率雖也增加，但增幅很小。</li>
+<li>應用：冰箱冷藏延緩食物腐敗；快鍋（壓力鍋）提高水的沸點，縮短烹煮時間；酵素催化的反應另有最適溫度，過高使酵素變性（見 B2）。</li>
+</ul>
+<figure class="fig"><svg viewBox="0 0 470 260" width="470">
+<polygon points="245.0,220 245.0,170.2 248.3,171.5 251.5,172.8 254.8,174.1 258.0,175.4 261.2,176.6 264.5,177.8 267.8,179.0 271.0,180.1 274.2,181.3 277.5,182.3 280.8,183.4 284.0,184.4 287.2,185.5 290.5,186.4 293.8,187.4 297.0,188.3 300.2,189.2 303.5,190.1 306.8,191.0 310.0,191.8 313.2,192.7 316.5,193.4 319.8,194.2 323.0,195.0 326.2,195.7 329.5,196.4 332.8,197.1 336.0,197.8 339.2,198.5 342.5,199.1 345.8,199.7 349.0,200.3 352.2,200.9 355.5,201.5 358.8,202.0 362.0,202.6 365.3,203.1 368.5,203.6 371.8,204.1 375.0,204.6 378.3,205.0 381.5,205.5 384.8,205.9 388.0,206.4 391.2,206.8 394.5,207.2 397.8,207.6 401.0,208.0 404.2,208.3 407.5,208.7 410.8,209.0 414.0,209.4 417.2,209.7 420.5,210.0 423.8,210.3 427.0,210.6 430.3,210.9 433.5,211.2 436.8,211.5 440.0,211.7 440.0,220" fill="#fbdcbd" stroke="none"/>
+<polygon points="245.0,220 245.0,185.0 248.3,186.4 251.5,187.8 254.8,189.1 258.0,190.4 261.2,191.6 264.5,192.8 267.8,193.9 271.0,195.0 274.2,196.0 277.5,197.1 280.8,198.0 284.0,198.9 287.2,199.8 290.5,200.7 293.8,201.5 297.0,202.3 300.2,203.0 303.5,203.8 306.8,204.5 310.0,205.1 313.2,205.8 316.5,206.4 319.8,207.0 323.0,207.5 326.2,208.1 329.5,208.6 332.8,209.1 336.0,209.5 339.2,210.0 342.5,210.4 345.8,210.8 349.0,211.2 352.2,211.6 355.5,212.0 358.8,212.3 362.0,212.7 365.3,213.0 368.5,213.3 371.8,213.6 375.0,213.9 378.3,214.1 381.5,214.4 384.8,214.7 388.0,214.9 391.2,215.1 394.5,215.3 397.8,215.5 401.0,215.7 404.2,215.9 407.5,216.1 410.8,216.3 414.0,216.4 417.2,216.6 420.5,216.8 423.8,216.9 427.0,217.0 430.3,217.2 433.5,217.3 436.8,217.4 440.0,217.5 440.0,220" fill="#a9c9ec" stroke="none"/>
+<line x1="50" y1="220" x2="455" y2="220" stroke="#1f2a44" stroke-width="1.8" marker-end="url(#C7-ak)"/>
+<line x1="50" y1="220" x2="50" y2="22" stroke="#1f2a44" stroke-width="1.8" marker-end="url(#C7-ak)"/>
+<text x="452" y="244" font-size="13" text-anchor="end" fill="#1f2a44">分子動能 E</text>
+<text x="56" y="24" font-size="13" fill="#1f2a44">具有該動能的分子比例</text>
+<polyline points="50.0,220.0 53.2,133.6 56.5,103.8 59.8,84.6 63.0,71.3 66.2,61.8 69.5,55.2 72.8,50.6 76.0,47.8 79.2,46.2 82.5,45.8 85.8,46.2 89.0,47.3 92.2,49.0 95.5,51.2 98.8,53.8 102.0,56.7 105.2,59.9 108.5,63.3 111.8,66.9 115.0,70.6 118.2,74.3 121.5,78.2 124.8,82.1 128.0,86.0 131.2,89.9 134.5,93.8 137.8,97.6 141.0,101.5 144.2,105.3 147.5,109.0 150.8,112.7 154.0,116.3 157.2,119.8 160.5,123.2 163.8,126.6 167.0,129.9 170.2,133.1 173.5,136.3 176.8,139.3 180.0,142.3 183.3,145.1 186.5,147.9 189.8,150.6 193.0,153.2 196.2,155.8 199.5,158.2 202.8,160.6 206.0,162.9 209.2,165.1 212.5,167.3 215.8,169.4 219.0,171.4 222.3,173.3 225.5,175.1 228.8,176.9 232.0,178.7 235.2,180.3 238.5,181.9 241.8,183.5 245.0,185.0 248.3,186.4 251.5,187.8 254.8,189.1 258.0,190.4 261.2,191.6 264.5,192.8 267.8,193.9 271.0,195.0 274.2,196.0 277.5,197.1 280.8,198.0 284.0,198.9 287.2,199.8 290.5,200.7 293.8,201.5 297.0,202.3 300.2,203.0 303.5,203.8 306.8,204.5 310.0,205.1 313.2,205.8 316.5,206.4 319.8,207.0 323.0,207.5 326.2,208.1 329.5,208.6 332.8,209.1 336.0,209.5 339.2,210.0 342.5,210.4 345.8,210.8 349.0,211.2 352.2,211.6 355.5,212.0 358.8,212.3 362.0,212.7 365.3,213.0 368.5,213.3 371.8,213.6 375.0,213.9 378.3,214.1 381.5,214.4 384.8,214.7 388.0,214.9 391.2,215.1 394.5,215.3 397.8,215.5 401.0,215.7 404.2,215.9 407.5,216.1 410.8,216.3 414.0,216.4 417.2,216.6 420.5,216.8 423.8,216.9 427.0,217.0 430.3,217.2 433.5,217.3 436.8,217.4 440.0,217.5" fill="none" stroke="#2f6fb5" stroke-width="2.5"/>
+<polyline points="50.0,220.0 53.2,167.1 56.5,147.8 59.8,134.7 63.0,124.9 66.2,117.4 69.5,111.6 72.8,107.0 76.0,103.5 79.2,100.7 82.5,98.7 85.8,97.2 89.0,96.3 92.2,95.7 95.5,95.6 98.8,95.7 102.0,96.1 105.2,96.8 108.5,97.7 111.8,98.7 115.0,100.0 118.2,101.3 121.5,102.8 124.8,104.3 128.0,106.0 131.2,107.7 134.5,109.5 137.8,111.4 141.0,113.3 144.2,115.2 147.5,117.1 150.8,119.1 154.0,121.1 157.2,123.1 160.5,125.1 163.8,127.1 167.0,129.0 170.2,131.0 173.5,133.0 176.8,135.0 180.0,136.9 183.3,138.8 186.5,140.7 189.8,142.6 193.0,144.4 196.2,146.3 199.5,148.1 202.8,149.8 206.0,151.6 209.2,153.3 212.5,155.0 215.8,156.6 219.0,158.3 222.3,159.9 225.5,161.4 228.8,163.0 232.0,164.5 235.2,165.9 238.5,167.4 241.8,168.8 245.0,170.2 248.3,171.5 251.5,172.8 254.8,174.1 258.0,175.4 261.2,176.6 264.5,177.8 267.8,179.0 271.0,180.1 274.2,181.3 277.5,182.3 280.8,183.4 284.0,184.4 287.2,185.5 290.5,186.4 293.8,187.4 297.0,188.3 300.2,189.2 303.5,190.1 306.8,191.0 310.0,191.8 313.2,192.7 316.5,193.4 319.8,194.2 323.0,195.0 326.2,195.7 329.5,196.4 332.8,197.1 336.0,197.8 339.2,198.5 342.5,199.1 345.8,199.7 349.0,200.3 352.2,200.9 355.5,201.5 358.8,202.0 362.0,202.6 365.3,203.1 368.5,203.6 371.8,204.1 375.0,204.6 378.3,205.0 381.5,205.5 384.8,205.9 388.0,206.4 391.2,206.8 394.5,207.2 397.8,207.6 401.0,208.0 404.2,208.3 407.5,208.7 410.8,209.0 414.0,209.4 417.2,209.7 420.5,210.0 423.8,210.3 427.0,210.6 430.3,210.9 433.5,211.2 436.8,211.5 440.0,211.7" fill="none" stroke="#c2410c" stroke-width="2.5"/>
+<line x1="245" y1="220" x2="245" y2="60" stroke="#1f2a44" stroke-width="1.5" stroke-dasharray="5 4"/>
+<text x="245" y="54" font-size="14" text-anchor="middle" fill="#1f2a44">E<tspan baseline-shift="sub" font-size="11">a</tspan></text>
+<text x="96" y="40" font-size="14" fill="#2f6fb5">T<tspan baseline-shift="sub" font-size="11">1</tspan></text>
+<line x1="334" y1="102" x2="286" y2="182" stroke="#c2410c" stroke-width="1"/>
+<text x="330" y="96" font-size="14" fill="#c2410c">T<tspan baseline-shift="sub" font-size="11">2</tspan>（T<tspan baseline-shift="sub" font-size="11">2</tspan> &gt; T<tspan baseline-shift="sub" font-size="11">1</tspan>）</text>
+<line x1="352" y1="148" x2="318" y2="202" stroke="#d64545" stroke-width="1.5" marker-end="url(#C7-ar)"/>
+<text x="330" y="140" font-size="14" fill="#d64545" transform="rotate(-3 330 140)">陰影：E ≥ E<tspan baseline-shift="sub" font-size="11">a</tspan> 的分子</text>
+</svg><figcaption>圖 C7-12　兩溫度下分子動能的分布（馬克士威－波茲曼分布，示意圖）：曲線下總面積相同；T<sub>2</sub> 時動能 ≥ E<sub>a</sub> 的分子比例（陰影）依圖中參數約為 T<sub>1</sub> 時的 2 倍</figcaption></figure>
+
+
+<h4>4. 接觸面積（CJe-Ⅴc-2）</h4>
+<ul>
+<li><strong>異相反應</strong>（固體與液體、固體與氣體）只在<span class="circle">界面</span>上發生。固體分割得愈細，表面積愈大，單位時間內與另一反應物碰撞的機會愈多，速率愈快。</li>
+<li>勻相反應（反應物同為氣體或同在一溶液中）不涉及接觸面積。</li>
+<li>邊長 1 cm 的立方體表面積 6 cm²；切成邊長 0.5 cm 的 8 塊，總表面積 12 cm²；切成邊長 1 mm 的 1000 塊，總表面積 60 cm²。<span class="box">邊長縮為 1/n，總表面積變 n 倍</span>（總體積不變）。</li>
+<li><em>接觸面積只影響速率，不影響產物的最終量</em>；最終量由限量試劑決定（化學計量見 C5）。</li>
+<li>攪拌、振盪可使固體表面不斷接觸新鮮溶液，也有加快速率的作用。</li>
+</ul>
+
+<figure class="fig half"><svg viewBox="0 0 320 210" width="320">
+<rect x="30" y="80" width="80" height="80" fill="#cfe3f8" stroke="#1f2a44" stroke-width="1.2"/><polygon points="30,80 62.0,48.0 142.0,48.0 110,80" fill="#e2f0fc" stroke="#1f2a44" stroke-width="1.2"/><polygon points="110,80 142.0,48.0 142.0,128.0 110,160" fill="#a9c9ec" stroke="#1f2a44" stroke-width="1.2"/>
+<g transform="translate(-14 0)"><rect x="200.4" y="105.6" width="36" height="36" fill="#cfe3f8" stroke="#1f2a44" stroke-width="1.2"/><polygon points="200.4,105.6 214.8,91.1 250.8,91.1 236.4,105.6" fill="#e2f0fc" stroke="#1f2a44" stroke-width="1.2"/><polygon points="236.4,105.6 250.8,91.1 250.8,127.1 236.4,141.6" fill="#a9c9ec" stroke="#1f2a44" stroke-width="1.2"/><rect x="246.4" y="105.6" width="36" height="36" fill="#cfe3f8" stroke="#1f2a44" stroke-width="1.2"/><polygon points="246.4,105.6 260.8,91.1 296.7,91.1 282.4,105.6" fill="#e2f0fc" stroke="#1f2a44" stroke-width="1.2"/><polygon points="282.4,105.6 296.7,91.1 296.7,127.1 282.4,141.6" fill="#a9c9ec" stroke="#1f2a44" stroke-width="1.2"/><rect x="200.4" y="59.6" width="36" height="36" fill="#cfe3f8" stroke="#1f2a44" stroke-width="1.2"/><polygon points="200.4,59.6 214.8,45.2 250.8,45.2 236.4,59.6" fill="#e2f0fc" stroke="#1f2a44" stroke-width="1.2"/><polygon points="236.4,59.6 250.8,45.2 250.8,81.1 236.4,95.6" fill="#a9c9ec" stroke="#1f2a44" stroke-width="1.2"/><rect x="246.4" y="59.6" width="36" height="36" fill="#cfe3f8" stroke="#1f2a44" stroke-width="1.2"/><polygon points="246.4,59.6 260.8,45.2 296.7,45.2 282.4,59.6" fill="#e2f0fc" stroke="#1f2a44" stroke-width="1.2"/><polygon points="282.4,59.6 296.7,45.2 296.7,81.1 282.4,95.6" fill="#a9c9ec" stroke="#1f2a44" stroke-width="1.2"/><rect x="180" y="126" width="36" height="36" fill="#cfe3f8" stroke="#1f2a44" stroke-width="1.2"/><polygon points="180,126 194.4,111.6 230.4,111.6 216,126" fill="#e2f0fc" stroke="#1f2a44" stroke-width="1.2"/><polygon points="216,126 230.4,111.6 230.4,147.6 216,162" fill="#a9c9ec" stroke="#1f2a44" stroke-width="1.2"/><rect x="226" y="126" width="36" height="36" fill="#cfe3f8" stroke="#1f2a44" stroke-width="1.2"/><polygon points="226,126 240.4,111.6 276.4,111.6 262,126" fill="#e2f0fc" stroke="#1f2a44" stroke-width="1.2"/><polygon points="262,126 276.4,111.6 276.4,147.6 262,162" fill="#a9c9ec" stroke="#1f2a44" stroke-width="1.2"/><rect x="180" y="80" width="36" height="36" fill="#cfe3f8" stroke="#1f2a44" stroke-width="1.2"/><polygon points="180,80 194.4,65.6 230.4,65.6 216,80" fill="#e2f0fc" stroke="#1f2a44" stroke-width="1.2"/><polygon points="216,80 230.4,65.6 230.4,101.6 216,116" fill="#a9c9ec" stroke="#1f2a44" stroke-width="1.2"/><rect x="226" y="80" width="36" height="36" fill="#cfe3f8" stroke="#1f2a44" stroke-width="1.2"/><polygon points="226,80 240.4,65.6 276.4,65.6 262,80" fill="#e2f0fc" stroke="#1f2a44" stroke-width="1.2"/><polygon points="262,80 276.4,65.6 276.4,101.6 262,116" fill="#a9c9ec" stroke="#1f2a44" stroke-width="1.2"/></g>
+<line x1="146" y1="104" x2="162" y2="104" stroke="#c2410c" stroke-width="2" marker-end="url(#C7-ar)"/>
+<text x="86" y="186" font-size="13" text-anchor="middle" fill="#1f2a44">邊長 1 cm</text>
+<text x="86" y="203" font-size="13" text-anchor="middle" fill="#1f2a44">表面積 6 cm²</text>
+<text x="240" y="186" font-size="13" text-anchor="middle" fill="#1f2a44">8 塊，邊長 0.5 cm</text>
+<text x="240" y="203" font-size="13" text-anchor="middle" fill="#c2410c">總表面積 12 cm²</text>
+</svg><figcaption>圖 C7-13　分割固體使表面積增加（體積不變）</figcaption></figure><figure class="fig half"><svg viewBox="0 0 310 210" width="310">
+<line x1="50" y1="170" x2="298" y2="170" stroke="#1f2a44" stroke-width="1.8" marker-end="url(#C7-ak)"/>
+<line x1="50" y1="170" x2="50" y2="14" stroke="#1f2a44" stroke-width="1.8" marker-end="url(#C7-ak)"/>
+<text x="296" y="192" font-size="13" text-anchor="end" fill="#1f2a44">時間</text>
+<text x="56" y="18" font-size="13" fill="#1f2a44">CO<tspan baseline-shift="sub" font-size="11">2</tspan> 累積體積</text>
+<polyline points="50.0,170.0 58.0,138.7 66.0,115.2 74.0,97.5 82.0,84.2 90.0,74.2 98.0,66.7 106.0,61.1 114.0,56.8 122.0,53.6 130.0,51.2 138.0,49.4 146.0,48.1 154.0,47.1 162.0,46.3 170.0,45.7 178.0,45.3 186.0,45.0 194.0,44.7 202.0,44.6 210.0,44.4 218.0,44.3 226.0,44.2 234.0,44.2 242.0,44.1 250.0,44.1 258.0,44.1 266.0,44.1 274.0,44.0 282.0,44.0 290.0,44.0" fill="none" stroke="#c2410c" stroke-width="2.5"/>
+<polyline points="50.0,170.0 58.0,159.1 66.0,149.1 74.0,139.9 82.0,131.6 90.0,124.0 98.0,117.0 106.0,110.7 114.0,104.9 122.0,99.6 130.0,94.8 138.0,90.4 146.0,86.3 154.0,82.6 162.0,79.3 170.0,76.2 178.0,73.4 186.0,70.9 194.0,68.5 202.0,66.4 210.0,64.5 218.0,62.7 226.0,61.1 234.0,59.6 242.0,58.2 250.0,57.0 258.0,55.9 266.0,54.8 274.0,53.9 282.0,53.0 290.0,52.2" fill="none" stroke="#2f6fb5" stroke-width="2.5"/>
+<polyline points="50.0,170.0 58.0,154.3 66.0,142.6 74.0,133.7 82.0,127.1 90.0,122.1 98.0,118.3 106.0,115.5 114.0,113.4 122.0,111.8 130.0,110.6 138.0,109.7 146.0,109.0 154.0,108.5 162.0,108.2 170.0,107.9 178.0,107.7 186.0,107.5 194.0,107.4 202.0,107.3 210.0,107.2 218.0,107.2 226.0,107.1 234.0,107.1 242.0,107.1 250.0,107.0 258.0,107.0 266.0,107.0 274.0,107.0 282.0,107.0 290.0,107.0" fill="none" stroke="#2e8b57" stroke-width="2.2" stroke-dasharray="6 3"/>
+<text x="150" y="36" font-size="13" fill="#c2410c">粉末</text>
+<text x="226" y="84" font-size="13" fill="#2f6fb5">塊狀</text>
+<text x="160" y="128" font-size="13" fill="#2e8b57">粉末，質量減半</text>
+<text x="140" y="160" font-size="13" fill="#d64545" transform="rotate(-4 140 160)">初速看起點斜率</text>
+</svg><figcaption>圖 C7-14　等質量大理石與過量鹽酸：粉末初速大，CO<sub>2</sub> 總量相同（示意圖）</figcaption></figure>
+
+<div class="tip"><p><strong>補充　粉塵爆炸</strong></p>
+<ul>
+<li>可燃物（麵粉、澱粉、煤粉、木屑、金屬粉末）分散成粉塵懸浮於空氣中，與氧的接觸面積極大；遇火源時燃燒在極短時間內傳遍整團粉塵，產生的熱使氣體急速膨脹，形成爆炸。</li>
+<li>發生條件：可燃粉塵、粉塵濃度在爆炸範圍內、助燃的氧氣、點火源；在侷限空間中危害更大。</li>
+<li>2015 年 6 月 27 日新北市八仙樂園派對活動中，噴灑的彩色玉米澱粉粉塵遭舞臺燈具引燃，造成 15 人死亡、近 500 人受傷（依監察院調查報告）。</li>
+<li>防範：避免粉塵累積、通風與集塵、控制火源與靜電、不在密閉空間噴灑可燃粉末。</li>
+</ul></div>
+<div class="exam"><p>接觸面積是必修課綱明列的考點。學測常給「粉末與塊狀」的產氣曲線，問初速與最終產量；陷阱是誤以為粉末產生的氣體較多。若同時改變固體質量或酸量，須先判斷限量試劑再看最終量。</p></div>
+
+<h4>5. 催化劑</h4>
+<ul>
+<li><strong>定義</strong>：能改變反應速率，而本身在反應前後的質量與化學組成不變的物質。「催化」一詞由貝吉里斯（Jöns Jakob Berzelius，1779–1848）於 1835 年提出；奧士華（Wilhelm Ostwald，1853–1932）系統研究催化與反應速率，獲 1909 年諾貝爾化學獎。</li>
+<li><strong>作用原理</strong>：催化劑<strong>參與</strong>反應，提供另一條<span class="circle">活化能較低</span>的反應途徑，最後再生。</li>
+<li>催化劑同時降低正、逆反應的活化能，正、逆反應速率都加快，故<strong>不改變平衡狀態與產物的最終量</strong>，只縮短達到平衡（或完成反應）的時間。</li>
+<li><strong>不改變反應熱 ΔH</strong>（始態與終態相同）。</li>
+<li>一般所說的催化劑指加快反應者；減慢反應者稱<strong>抑制劑</strong>（如食品抗氧化劑），其作用多為消耗反應中間物或使催化劑失效，不是「提高活化能」。</li>
+</ul>
+<table class="t"><thead><tr><th>類型</th><th>說明</th><th>示例</th></tr></thead><tbody>
+<tr><td>勻相催化</td><td>催化劑與反應物同一相</td><td>碘離子催化過氧化氫分解；酸催化酯化反應</td></tr>
+<tr><td>非勻相催化</td><td>催化劑與反應物不同相，反應在固體表面進行</td><td>二氧化錳催化過氧化氫分解；哈柏法以鐵為主的催化劑合成氨；接觸法以 <span class="m">\ce{V2O5}</span> 將 <span class="m">\ce{SO2}</span> 氧化為 <span class="m">\ce{SO3}</span>；汽車觸媒轉化器（鉑、銠等貴金屬）</td></tr>
+<tr><td>生物催化</td><td>酵素，多為蛋白質；專一性高，有最適溫度與 pH</td><td>過氧化氫酶（肝臟、馬鈴薯）、澱粉酶</td></tr>
+</tbody></table>
+<ul>
+<li>非勻相催化劑常做成粉末、多孔或蜂巢狀結構，增加表面積；觸媒轉化器的蜂巢狀陶瓷載體即為一例。</li>
+<li>催化劑可能「中毒」：雜質吸附在表面占據活性位置，使催化效果下降（例如含鉛汽油會使觸媒轉化器失效）。</li>
+</ul>
+<div class="mb">\ce{2H2O2(aq) ->[MnO2] 2H2O(l) + O2(g)}\qquad \Delta H = -196.0\ \mathrm{kJ}</div>
+
+<figure class="fig"><svg viewBox="0 0 480 280" width="480">
+<line x1="50" y1="250" x2="468" y2="250" stroke="#1f2a44" stroke-width="1.8" marker-end="url(#C7-ak)"/>
+<line x1="50" y1="250" x2="50" y2="18" stroke="#1f2a44" stroke-width="1.8" marker-end="url(#C7-ak)"/>
+<text x="56" y="22" font-size="13" fill="#1f2a44">位能</text>
+<text x="466" y="272" font-size="13" text-anchor="end" fill="#1f2a44">反應進行（反應座標）</text>
+<path d="M60,150 L130,150 C180,150 200,60 240,60 C280,60 300,200 350,200 L450,200" fill="none" stroke="#2f6fb5" stroke-width="2.5"/>
+<path d="M130,150 C180,150 200,115 240,115 C280,115 300,200 350,200" fill="none" stroke="#2e8b57" stroke-width="2.5" stroke-dasharray="7 4"/>
+<line x1="150" y1="60" x2="240" y2="60" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4 3"/>
+<line x1="185" y1="115" x2="240" y2="115" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4 3"/>
+<line x1="240" y1="60" x2="330" y2="60" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4 3"/>
+<line x1="130" y1="150" x2="430" y2="150" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4 3"/>
+<line x1="155" y1="148" x2="155" y2="64" stroke="#2f6fb5" stroke-width="2" marker-end="url(#C7-ab)"/>
+<text x="148" y="110" font-size="14" text-anchor="end" fill="#2f6fb5">E<tspan baseline-shift="sub" font-size="11">a</tspan></text>
+<line x1="190" y1="148" x2="190" y2="119" stroke="#2e8b57" stroke-width="2" marker-end="url(#C7-ag)"/>
+<text x="196" y="140" font-size="14" fill="#2e8b57">E<tspan baseline-shift="sub" font-size="11">a</tspan>′</text>
+<line x1="325" y1="198" x2="325" y2="64" stroke="#7a5cc2" stroke-width="2" marker-end="url(#C7-ak)"/>
+<text x="332" y="112" font-size="14" fill="#7a5cc2">E<tspan baseline-shift="sub" font-size="11">a</tspan>(逆)</text>
+<line x1="420" y1="152" x2="420" y2="196" stroke="#c2410c" stroke-width="2" marker-end="url(#C7-ar)"/>
+<text x="428" y="180" font-size="14" fill="#c2410c">ΔH</text>
+<text x="240" y="50" font-size="13" text-anchor="middle" fill="#1f2a44">活化錯合物</text>
+<text x="95" y="170" font-size="13" text-anchor="middle" fill="#1f2a44">反應物</text>
+<text x="385" y="192" font-size="13" text-anchor="middle" fill="#1f2a44">產物</text>
+<line x1="350" y1="34" x2="380" y2="34" stroke="#2f6fb5" stroke-width="2.5"/>
+<text x="386" y="38" font-size="13" fill="#1f2a44">無催化劑</text>
+<line x1="350" y1="56" x2="380" y2="56" stroke="#2e8b57" stroke-width="2.5" stroke-dasharray="7 4"/>
+<text x="386" y="60" font-size="13" fill="#1f2a44">有催化劑</text>
+<text x="70" y="238" font-size="14" fill="#d64545" transform="rotate(-2 70 238)">ΔH 不變；正、逆反應的 E<tspan baseline-shift="sub" font-size="11">a</tspan> 降低相同的量</text>
+</svg><figcaption>圖 C7-15　放熱反應的位能圖：催化劑提供活化能較低的途徑（示意圖，未依比例）</figcaption></figure>
+
+<div class="warn"><ul>
+<li>催化劑<em>參與反應</em>，只是最後再生；「不參與反應」是錯誤敘述。</li>
+<li>催化劑不能使「不會發生的反應」發生，也不能提高平衡產率。</li>
+<li>催化劑對正、逆反應的活化能降低量相同，故 <span class="m">E_a - E_a(\text{逆}) = \Delta H</span> 不變。</li>
+</ul></div>
+
+<h3>七、碰撞學說與活化能</h3>
+<div class="note"><p>速率 ∝ 碰撞頻率 × 有效碰撞的比例。</p><p>濃度、面積改前者；溫度、催化劑主要改後者。</p></div>
+<h4>1. 碰撞學說</h4>
+<ul>
+<li>反應物粒子必須<strong>互相碰撞</strong>才可能反應。碰撞學說由德國化學家特勞茲（Max Trautz，1880–1960）於 1916 年、英國化學家路易士（William Cudmore McCullagh Lewis，1885–1956）於 1918 年分別獨立提出；兩人因第一次世界大戰而互不知對方的研究。</li>
+<li>能夠發生反應的碰撞稱為<strong>有效碰撞</strong>，須同時滿足：
+<ol>
+<li>碰撞粒子的動能總和 ≥ <strong>活化能</strong> <span class="m">E_a</span>；</li>
+<li>碰撞的<span class="circle">方位</span>適當，使要斷的鍵與要成的鍵所在原子相遇。</li>
+</ol></li>
+<li>室溫下氣體分子每秒碰撞的次數極多，若每次碰撞都反應，所有氣相反應都將瞬間完成；實際上絕大多數碰撞為無效碰撞。</li>
+</ul>
+
+<figure class="fig"><svg viewBox="0 0 520 210" width="520">
+<text x="10" y="22" font-size="14" fill="#2e8b57">有效碰撞：能量足夠、方位適當</text>
+<circle cx="50" cy="65" r="17" fill="#cfe3f8" stroke="#1f2a44" stroke-width="1.5"/><text x="50" y="70" font-size="14" text-anchor="middle" fill="#1f2a44">A</text>
+<circle cx="82" cy="65" r="17" fill="#e2e8f0" stroke="#1f2a44" stroke-width="1.5"/><text x="82" y="70" font-size="14" text-anchor="middle" fill="#1f2a44">B</text>
+<circle cx="165" cy="65" r="17" fill="#fbdcbd" stroke="#1f2a44" stroke-width="1.5"/><text x="165" y="70" font-size="14" text-anchor="middle" fill="#1f2a44">C</text>
+<line x1="144" y1="65" x2="106" y2="65" stroke="#c2410c" stroke-width="2" marker-end="url(#C7-ar)"/>
+<line x1="210" y1="65" x2="260" y2="65" stroke="#1f2a44" stroke-width="2" marker-end="url(#C7-ak)"/>
+<circle cx="310" cy="65" r="17" fill="#cfe3f8" stroke="#1f2a44" stroke-width="1.5"/><text x="310" y="70" font-size="14" text-anchor="middle" fill="#1f2a44">A</text>
+<circle cx="390" cy="65" r="17" fill="#e2e8f0" stroke="#1f2a44" stroke-width="1.5"/><text x="390" y="70" font-size="14" text-anchor="middle" fill="#1f2a44">B</text>
+<circle cx="422" cy="65" r="17" fill="#fbdcbd" stroke="#1f2a44" stroke-width="1.5"/><text x="422" y="70" font-size="14" text-anchor="middle" fill="#1f2a44">C</text>
+<text x="460" y="70" font-size="14" fill="#2e8b57">生成 B－C</text>
+<line x1="10" y1="105" x2="510" y2="105" stroke="#e2e8f0" stroke-width="1.5"/>
+<text x="10" y="130" font-size="14" fill="#c2410c">無效碰撞：方位不當（C 撞到 A 端）</text>
+<circle cx="82" cy="170" r="17" fill="#cfe3f8" stroke="#1f2a44" stroke-width="1.5"/><text x="82" y="175" font-size="14" text-anchor="middle" fill="#1f2a44">A</text>
+<circle cx="50" cy="170" r="17" fill="#e2e8f0" stroke="#1f2a44" stroke-width="1.5"/><text x="50" y="175" font-size="14" text-anchor="middle" fill="#1f2a44">B</text>
+<circle cx="165" cy="170" r="17" fill="#fbdcbd" stroke="#1f2a44" stroke-width="1.5"/><text x="165" y="175" font-size="14" text-anchor="middle" fill="#1f2a44">C</text>
+<line x1="144" y1="170" x2="106" y2="170" stroke="#c2410c" stroke-width="2" marker-end="url(#C7-ar)"/>
+<line x1="210" y1="170" x2="260" y2="170" stroke="#1f2a44" stroke-width="2" marker-end="url(#C7-ak)"/>
+<circle cx="322" cy="170" r="17" fill="#cfe3f8" stroke="#1f2a44" stroke-width="1.5"/><text x="322" y="175" font-size="14" text-anchor="middle" fill="#1f2a44">A</text>
+<circle cx="290" cy="170" r="17" fill="#e2e8f0" stroke="#1f2a44" stroke-width="1.5"/><text x="290" y="175" font-size="14" text-anchor="middle" fill="#1f2a44">B</text>
+<circle cx="420" cy="170" r="17" fill="#fbdcbd" stroke="#1f2a44" stroke-width="1.5"/><text x="420" y="175" font-size="14" text-anchor="middle" fill="#1f2a44">C</text>
+<line x1="442" y1="170" x2="480" y2="170" stroke="#1f2a44" stroke-width="2" marker-end="url(#C7-ak)"/>
+<text x="400" y="202" font-size="14" fill="#c2410c">彈開，未反應</text>
+</svg><figcaption>圖 C7-16　反應 A－B + C → A + B－C 的碰撞方位（示意圖）</figcaption></figure>
+
+<h4>2. 活化能與活化錯合物</h4>
+<ul>
+<li><strong>活化能</strong> <span class="m">E_a</span>：反應物轉變為產物所須越過的能量障礙，即反應物與<strong>活化錯合物</strong>（過渡狀態）的位能差。</li>
+<li>活化錯合物：位能圖最高點的不穩定原子組合，舊鍵部分斷裂、新鍵部分形成，壽命極短，無法分離。</li>
+<li>活化能愈大，同溫下能越過障礙的分子比例愈小，反應愈慢。活化能恆為正值。</li>
+<li>位能圖上的三個量之關係（圖 C7-15）：</li>
+</ul>
+<div class="formula" data-t="位能圖的關係"><div class="mb">\Delta H = E_a(\text{正}) - E_a(\text{逆})</div><p>放熱反應 <span class="m">E_a(\text{正}) &lt; E_a(\text{逆})</span>；吸熱反應 <span class="m">E_a(\text{正}) &gt; E_a(\text{逆})</span>，且 <span class="m">E_a(\text{正}) \ge \Delta H</span></p></div>
+<ul>
+<li>放熱反應仍可能很慢（活化能大），例如氫氣與氧氣在室溫混合可長期不反應，遇火花即爆炸。<span class="hand">放熱多≠反應快</span></li>
+<li>鑽石轉變為石墨為放熱（ΔH = −1.9 kJ/mol），但活化能極大，常溫下速率可忽略。ΔH 只說明「放熱或吸熱、多少」，不說明「快或慢」。</li>
+</ul>
+
+<h4>3. 以碰撞學說解釋各因素</h4>
+<table class="t"><thead><tr><th>因素</th><th>碰撞頻率</th><th>有效碰撞的比例</th><th>活化能</th><th>速率常數 k（進階）</th></tr></thead><tbody>
+<tr><td>增加濃度（或氣體分壓）</td><td>增加</td><td>不變</td><td>不變</td><td>不變</td></tr>
+<tr><td>增加接觸面積</td><td>增加（界面上）</td><td>不變</td><td>不變</td><td>不變</td></tr>
+<tr><td>升高溫度</td><td>略增</td><td><strong>大增</strong></td><td>不變</td><td>增加</td></tr>
+<tr><td>加入催化劑</td><td>不變</td><td><strong>大增</strong></td><td><strong>降低</strong>（改走新途徑）</td><td>增加</td></tr>
+</tbody></table>
+<div class="exam"><p>學測常以「哪一因素會改變活化能」或「升溫使速率加快的主因」命題。正解：只有催化劑改變活化能（實為改變途徑）；升溫的主因是<strong>動能足夠的分子比例增加</strong>，誘答為「碰撞次數增加」或「活化能降低」。</p></div>
+
+<div class="tip"><p><strong>深究　阿瑞尼斯方程式與「每升高 10 °C 加倍」（進階，大學普通化學）</strong></p>
+<ul>
+<li>1889 年阿瑞尼斯（Svante Arrhenius，1859–1927）在凡特何夫（Jacobus Henricus van 't Hoff，1852–1911）研究的基礎上，提出速率常數與溫度的關係，並引入活化能的概念：</li>
+</ul>
+<div class="mb">k = A\,e^{-E_a/RT},\qquad \ln\frac{k_2}{k_1} = \frac{E_a}{R}\left(\frac{1}{T_1} - \frac{1}{T_2}\right)</div>
+<ul>
+<li><span class="m">e^{-E_a/RT}</span> 近似於動能 ≥ <span class="m">E_a</span> 的碰撞所佔比例；<span class="m">A</span> 包含碰撞頻率與方位因素。</li>
+<li>試算 300 K → 310 K：碰撞頻率正比於 <span class="m">\sqrt{T}</span>，只增為 <span class="m">\sqrt{310/300} \approx 1.017</span> 倍；<span class="m">E_a = 50\ \mathrm{kJ/mol}</span> 時，<span class="m">k_2/k_1 = e^{(50000/8.31)(1/300 - 1/310)} \approx 1.9</span> 倍；<span class="m">E_a = 100\ \mathrm{kJ/mol}</span> 時約 3.6 倍。</li>
+<li>結論：溫度效應幾乎全部來自指數項；活化能愈大，對溫度愈敏感。298 K 附近「升高 10 °C 速率加倍」對應 <span class="m">E_a \approx 53\ \mathrm{kJ/mol}</span>，故此法則只是特定範圍的近似。</li>
+</ul></div>
+
+<div class="tip"><p><strong>深究　反應機構與速率決定步驟（進階）</strong></p>
+<ul>
+<li>多數反應由數個<strong>基本步驟</strong>組成，稱為反應機構。各步驟相加得總反應式；步驟中生成又被消耗者為<strong>中間產物</strong>（與催化劑相反：催化劑先被消耗、後再生）。</li>
+<li>最慢的步驟限制總速率，稱為<strong>速率決定步驟</strong>，總速率定律由此步驟決定。</li>
+<li>示例：<span class="m">\ce{NO2(g) + CO(g) -> NO(g) + CO2(g)}</span> 在約 500 K 以下，實驗測得 <span class="m">r = k[\ce{NO2}]^2</span>，與 CO 濃度無關。一般接受的機構為：</li>
+</ul>
+<div class="mb">\begin{aligned} &amp;\text{步驟 1（慢）：}\ \ce{NO2 + NO2 -> NO3 + NO}\\ &amp;\text{步驟 2（快）：}\ \ce{NO3 + CO -> NO2 + CO2} \end{aligned}</div>
+<ul>
+<li><span class="m">\ce{NO3}</span> 為中間產物。速率定律由慢步驟決定，故含 <span class="m">[\ce{NO2}]^2</span> 而不含 [CO]。由此可知速率定律的級數不能由總反應式係數推得。</li>
+</ul>
+<figure class="fig"><svg viewBox="0 0 480 250" width="480">
+<line x1="40" y1="230" x2="468" y2="230" stroke="#1f2a44" stroke-width="1.8" marker-end="url(#C7-ak)"/>
+<line x1="40" y1="230" x2="40" y2="18" stroke="#1f2a44" stroke-width="1.8" marker-end="url(#C7-ak)"/>
+<text x="46" y="22" font-size="13" fill="#1f2a44">位能</text>
+<text x="466" y="248" font-size="13" text-anchor="end" fill="#1f2a44">反應進行</text>
+<path d="M50,160 L90,160 C130,160 140,55 170,55 C200,55 210,130 240,130 C270,130 280,95 300,95 C320,95 340,195 380,195 L450,195" fill="none" stroke="#2f6fb5" stroke-width="2.5"/>
+<text x="170" y="45" font-size="13" text-anchor="middle" fill="#1f2a44">過渡狀態 1（最高）</text>
+<text x="300" y="85" font-size="13" text-anchor="middle" fill="#1f2a44">過渡狀態 2</text>
+<text x="240" y="152" font-size="13" text-anchor="middle" fill="#1f2a44">中間產物</text>
+<text x="240" y="168" font-size="13" text-anchor="middle" fill="#1f2a44">NO<tspan baseline-shift="sub" font-size="11">3</tspan> + NO + CO</text>
+<text x="70" y="182" font-size="13" text-anchor="middle" fill="#1f2a44">2NO<tspan baseline-shift="sub" font-size="11">2</tspan> + CO</text>
+<text x="415" y="215" font-size="13" text-anchor="middle" fill="#1f2a44">NO<tspan baseline-shift="sub" font-size="11">2</tspan> + NO + CO<tspan baseline-shift="sub" font-size="11">2</tspan></text>
+<line x1="90" y1="160" x2="120" y2="160" stroke="#94a3b8" stroke-dasharray="4 3"/>
+<line x1="110" y1="158" x2="110" y2="59" stroke="#c2410c" stroke-width="2" marker-end="url(#C7-ar)"/>
+<text x="104" y="110" font-size="13" text-anchor="end" fill="#c2410c">E<tspan baseline-shift="sub" font-size="11">a1</tspan></text>
+<text x="350" y="60" font-size="14" fill="#d64545" transform="rotate(-3 350 60)">第一步最慢＝速率決定步驟</text>
+</svg><figcaption>圖 C7-17　兩步驟反應的位能圖（示意圖，未依比例）</figcaption></figure>
+</div>
+
+<h3>例題精解</h3>
+
+<div class="example"><p><strong>例題 1　熱化學反應式的變形</strong>　已知 <span class="m">\ce{2CO(g) + O2(g) -> 2CO2(g)}\quad \Delta H = -566.0\ \mathrm{kJ}</span>。求 <span class="m">\ce{CO2(g) -> CO(g) + 1/2O2(g)}</span> 的 ΔH，並判斷其為放熱或吸熱。</p><div class="sol"><ol class="steps"><li>目標式為原式逆寫，ΔH 變號：+566.0 kJ。</li><li>係數為原式的 <span class="m">1/2</span>：<span class="m">\Delta H = +283.0\ \mathrm{kJ}</span>。</li><li>ΔH &gt; 0，為吸熱反應。</li></ol><p>陷阱：只變號未減半（+566.0 kJ），或只減半未變號（−283.0 kJ）。</p></div></div>
+
+<div class="example"><p><strong>例題 2　反應熱計量</strong>　丙烷燃燒 <span class="m">\ce{C3H8(g) + 5O2(g) -> 3CO2(g) + 4H2O(l)}\quad \Delta H = -2220\ \mathrm{kJ}</span>。燃燒 11.0 g 丙烷放熱多少？同時生成多少克水？（C = 12.0，H = 1.0，O = 16.0）</p><div class="sol"><ol class="steps"><li>丙烷莫耳質量 44.0 g/mol，<span class="m">n = 11.0/44.0 = 0.250\ \mathrm{mol}</span>。</li><li>放熱 <span class="m">0.250 \times 2220 = 555\ \mathrm{kJ}</span>。</li><li>水 <span class="m">0.250 \times 4 = 1.00\ \mathrm{mol}</span>，即 18.0 g。</li></ol><p>陷阱：把 −2220 kJ 當成「每莫耳氧」或「每莫耳水」的熱量。</p></div></div>
+
+<div class="example"><p><strong>例題 3　由生成熱求反應熱</strong>　利用本單元生成熱表，求鋁熱反應 <span class="m">\ce{2Al(s) + Fe2O3(s) -> Al2O3(s) + 2Fe(s)}</span> 的 ΔH。</p><div class="sol"><ol class="steps"><li>元素 Al(s)、Fe(s) 的生成熱為 0。</li><li><span class="m">\Delta H = (-1675.7) - (-824.2) = -851.5\ \mathrm{kJ}</span>。</li><li>每 2 mol 鋁放熱 851.5 kJ，可產生熔融的鐵，用於鐵軌焊接（鋁熱法，1893 年由德國化學家戈德施密特 Hans Goldschmidt 發現）。</li></ol><p>陷阱：把元素的生成熱代入非零值，或寫成「反應物減產物」。</p></div></div>
+
+<div class="example"><p><strong>例題 4　赫斯定律</strong>　已知 (1) <span class="m">\ce{C(s) + O2(g) -> CO2(g)}\ \Delta H_1 = -393.5\ \mathrm{kJ}</span>；(2) <span class="m">\ce{H2(g) + 1/2O2(g) -> H2O(l)}\ \Delta H_2 = -285.8\ \mathrm{kJ}</span>；(3) <span class="m">\ce{CH4(g) + 2O2(g) -> CO2(g) + 2H2O(l)}\ \Delta H_3 = -890.3\ \mathrm{kJ}</span>。求甲烷的莫耳生成熱。</p><div class="sol"><ol class="steps"><li>目標：<span class="m">\ce{C(s) + 2H2(g) -> CH4(g)}</span>。</li><li>C 只在 (1) 左側，取 (1)；<span class="m">\ce{H2}</span> 在 (2) 左側、係數 2，取 2×(2)；<span class="m">\ce{CH4}</span> 在 (3) 左側，目標在右，取 −(3)。</li><li><span class="m">\Delta H = -393.5 + 2(-285.8) - (-890.3) = -74.8\ \mathrm{kJ}</span>。</li></ol><p>陷阱：碳與氫直接化合時同時生成多種烴，故甲烷生成熱無法直接測量，只能間接求得。</p></div></div>
+
+<div class="example"><p><strong>例題 5　鍵能估算</strong>　由平均鍵能表估算 <span class="m">\ce{N2(g) + 3H2(g) -> 2NH3(g)}</span> 的 ΔH，並與生成熱表比較。</p><div class="sol"><ol class="steps"><li>斷鍵：1 個 N≡N 與 3 個 H－H，<span class="m">945 + 3(436) = 2253\ \mathrm{kJ}</span>。</li><li>成鍵：2 個 <span class="m">\ce{NH3}</span> 共 6 個 N－H，<span class="m">6(391) = 2346\ \mathrm{kJ}</span>。</li><li><span class="m">\Delta H \approx 2253 - 2346 = -93\ \mathrm{kJ}</span>；生成熱表為 <span class="m">2(-45.9) = -91.8\ \mathrm{kJ}</span>，兩者接近。</li></ol><p>陷阱：N－H 鍵數算成 3（只算 1 個氨分子）。</p></div></div>
+
+<div class="example"><p><strong>例題 6　卡計</strong>　將 2.00 g NaOH(s)（40.0 g/mol）溶於 100.0 g 水，溫度由 24.0 °C 升至 29.2 °C。溶液比熱以 4.18 J/(g·°C) 計，卡計吸熱忽略。求 NaOH 的莫耳溶解熱。</p><div class="sol"><ol class="steps"><li>溶液質量 102.0 g，<span class="m">Q = 102.0 \times 4.18 \times 5.2 = 2217\ \mathrm{J} \approx 2.22\ \mathrm{kJ}</span>。</li><li><span class="m">n = 2.00/40.0 = 0.0500\ \mathrm{mol}</span>。</li><li>溫度上升為放熱：<span class="m">\Delta H = -2.22/0.0500 \approx -44\ \mathrm{kJ/mol}</span>（文獻值約 −44.5 kJ/mol）。</li></ol><p>陷阱：質量只算水 100.0 g；或忘記加負號。</p></div></div>
+
+<div class="example"><p><strong>例題 7　速率換算</strong>　<span class="m">\ce{2N2O5(g) -> 4NO2(g) + O2(g)}</span>，某段時間內 <span class="m">\ce{N2O5}</span> 濃度由 0.80 M 降為 0.50 M，歷時 60 s。求此段 <span class="m">\ce{NO2}</span> 的平均生成速率與以反應式表示的平均速率 r。</p><div class="sol"><ol class="steps"><li><span class="m">\ce{N2O5}</span> 消耗速率 <span class="m">= 0.30/60 = 5.0\times10^{-3}\ \mathrm{M/s}</span>。</li><li><span class="m">\ce{NO2}</span> 生成速率為其 <span class="m">4/2 = 2</span> 倍：<span class="m">1.0\times10^{-2}\ \mathrm{M/s}</span>。</li><li><span class="m">r = \frac{1}{2}(5.0\times10^{-3}) = 2.5\times10^{-3}\ \mathrm{M/s}</span>。</li></ol><p>陷阱：直接用濃度 0.50 M 除以時間；或係數比倒置。</p></div></div>
+
+<div class="example"><p><strong>例題 8　初始速率法（進階）</strong>　反應 <span class="m">\ce{2NO(g) + O2(g) -> 2NO2(g)}</span> 在某溫度的數據：實驗一 [NO] = 0.010 M、[<span class="m">\ce{O2}</span>] = 0.010 M，初速 <span class="m">2.5\times10^{-5}\ \mathrm{M/s}</span>；實驗二 [NO] = 0.020 M、[<span class="m">\ce{O2}</span>] = 0.010 M，初速 <span class="m">1.0\times10^{-4}</span>；實驗三 [NO] = 0.010 M、[<span class="m">\ce{O2}</span>] = 0.020 M，初速 <span class="m">5.0\times10^{-5}</span>。求速率定律式與 k。</p><div class="sol"><ol class="steps"><li>一→二：[NO] 加倍，速率變 4 倍，對 NO 為二級。</li><li>一→三：[<span class="m">\ce{O2}</span>] 加倍，速率變 2 倍，對 <span class="m">\ce{O2}</span> 為一級。</li><li><span class="m">r = k[\ce{NO}]^2[\ce{O2}]</span>；<span class="m">k = 2.5\times10^{-5}/(0.010^2 \times 0.010) = 25\ \mathrm{M^{-2}\,s^{-1}}</span>。</li></ol><p>陷阱：此例級數恰與係數相同，屬巧合，不可推廣。</p></div></div>
+
+<div class="example"><p><strong>例題 9　位能圖判讀</strong>　某反應正反應活化能 85 kJ，逆反應活化能 125 kJ。加入催化劑後正反應活化能降為 50 kJ。求 ΔH 與加入催化劑後的逆反應活化能。</p><div class="sol"><ol class="steps"><li><span class="m">\Delta H = E_a(\text{正}) - E_a(\text{逆}) = 85 - 125 = -40\ \mathrm{kJ}</span>，放熱。</li><li>催化劑使活化能降低 35 kJ，逆反應同降 35 kJ：<span class="m">125 - 35 = 90\ \mathrm{kJ}</span>。</li><li>檢查：<span class="m">50 - 90 = -40\ \mathrm{kJ}</span>，ΔH 不變。</li></ol><p>陷阱：以為逆反應活化能不受催化劑影響。</p></div></div>
+
+<div class="example"><p><strong>例題 10　接觸面積與限量試劑</strong>　甲：1.00 g 塊狀 <span class="m">\ce{CaCO3}</span> 加入 50.0 mL 1.00 M HCl；乙：1.00 g 粉末 <span class="m">\ce{CaCO3}</span> 加入同量鹽酸；丙：3.00 g 粉末加入同量鹽酸。比較初速與最終生成的 <span class="m">\ce{CO2}</span> 莫耳數（<span class="m">\ce{CaCO3}</span> = 100 g/mol）。</p><div class="sol"><ol class="steps"><li>HCl 0.0500 mol，可反應 0.0250 mol <span class="m">\ce{CaCO3}</span>（2.50 g）。</li><li>甲、乙：<span class="m">\ce{CaCO3}</span> 0.0100 mol 為限量，<span class="m">\ce{CO2}</span> 皆 0.0100 mol；乙為粉末，初速較大。</li><li>丙：3.00 g 超過 2.50 g，HCl 為限量，<span class="m">\ce{CO2}</span> 0.0250 mol；初速大於乙（粉末總表面積較大）。</li></ol><p>陷阱：以為最終產量與固體質量成正比而忽略限量試劑。</p></div></div>
+
+<h3>迷思概念對照</h3>
+<p class="bad"><span class="mark">誤</span>需要加熱才能進行的反應是吸熱反應。</p>
+<p class="good"><span class="mark">正</span>加熱可能只是為了越過活化能；燃燒須點火，卻是放熱反應。判斷放熱吸熱只看 ΔH 的正負。</p>
+<p class="bad"><span class="mark">誤</span>吸熱反應不可能自然發生。</p>
+<p class="good"><span class="mark">正</span>八水合氫氧化鋇與氯化銨、硝酸銨溶解等吸熱過程在室溫下即可自發進行。</p>
+<p class="bad"><span class="mark">誤</span>放熱愈多的反應，進行得愈快。</p>
+<p class="good"><span class="mark">正</span>ΔH 與速率無直接關係；速率由活化能、溫度、濃度等決定。氫與氧室溫混合可長期不反應。</p>
+<p class="bad"><span class="mark">誤</span>放熱反應的 ΔH 為正，因為「放出」了熱量。</p>
+<p class="good"><span class="mark">正</span>ΔH 以系統為準，系統失去能量，ΔH 為負。</p>
+<p class="bad"><span class="mark">誤</span>2H<sub>2</sub> + O<sub>2</sub> → 2H<sub>2</sub>O 的 ΔH 不論水為液態或氣態都相同。</p>
+<p class="good"><span class="mark">正</span>產物狀態不同，熱含量不同；生成 2 mol 水蒸氣比生成 2 mol 液態水少放熱 88.0 kJ。</p>
+<p class="bad"><span class="mark">誤</span>所有元素的生成熱都是 0。</p>
+<p class="good"><span class="mark">正</span>只有元素在標準狀態下<strong>最穩定的形態</strong>為 0；鑽石、臭氧、溴蒸氣不為 0。</p>
+<p class="bad"><span class="mark">誤</span>催化劑不參與反應。</p>
+<p class="good"><span class="mark">正</span>催化劑參與反應、改變途徑，最後再生，故反應前後質量與組成不變。</p>
+<p class="bad"><span class="mark">誤</span>催化劑只加快正反應，可提高產物的產量。</p>
+<p class="good"><span class="mark">正</span>催化劑同等降低正、逆反應的活化能，不改變平衡與最終產量，也不改變 ΔH。</p>
+<p class="bad"><span class="mark">誤</span>升高溫度使速率加快，主要是因為分子碰撞次數增加。</p>
+<p class="good"><span class="mark">正</span>碰撞頻率增加很少（10 K 約 2%），主因是動能 ≥ 活化能的分子比例大增。</p>
+<p class="bad"><span class="mark">誤</span>升高溫度會降低活化能。</p>
+<p class="good"><span class="mark">正</span>活化能由反應途徑決定，溫度不改變活化能；改變的是能越過能障的分子比例。</p>
+<p class="bad"><span class="mark">誤</span>固體磨成粉末後，反應生成的產物較多。</p>
+<p class="good"><span class="mark">正</span>接觸面積只影響速率；產物總量由限量試劑決定。</p>
+<p class="bad"><span class="mark">誤</span>增加濃度使有效碰撞所佔的比例提高。</p>
+<p class="good"><span class="mark">正</span>增加濃度提高碰撞頻率，有效碰撞的「次數」增加，但「比例」不變。</p>
+<p class="bad"><span class="mark">誤</span>速率定律式的級數就是反應式的係數。</p>
+<p class="good"><span class="mark">正</span>級數須由實驗測定；只有基本步驟的級數才等於該步驟的係數。</p>
+<p class="bad"><span class="mark">誤</span>反應速率在整個反應過程中固定不變。</p>
+<p class="good"><span class="mark">正</span>反應物濃度逐漸減少，速率通常隨時間變慢，濃度－時間曲線愈來愈平緩。</p>
+
+<h3>分級測驗</h3>
+<h4 class="exset">基礎題（9 題）</h4>
+<div class="ex" id="C7-01"><span class="exid">C7-01</span>下列何者為吸熱的化學變化？
+<div class="opts"><span>(A) 天然氣燃燒</span><span>(B) 鹽酸與氫氧化鈉溶液中和</span><span>(C) 碳酸鈣受強熱分解為氧化鈣與二氧化碳</span><span>(D) 硝酸銨溶於水使溶液變冷</span><span>(E) 暖暖包中鐵粉的氧化</span></div></div>
+<div class="ex" id="C7-02"><span class="exid">C7-02</span>已知 <span class="m">\ce{2H2(g) + O2(g) -> 2H2O(l)}\ \ \Delta H = -571.6\ \mathrm{kJ}</span>。下列敘述何者正確？
+<div class="opts"><span>(A) 生成 1 mol 液態水放熱 571.6 kJ</span><span>(B) <span class="m">\ce{H2O(l) -> H2(g) + 1/2O2(g)}</span> 的 ΔH = +285.8 kJ</span><span>(C) <span class="m">\ce{2H2(g) + O2(g) -> 2H2O(g)}</span> 的 ΔH = −571.6 kJ</span><span>(D) 反應物的熱含量總和低於產物</span><span>(E) 此反應大量放熱，故氫與氧在室溫混合即迅速反應</span></div></div>
+<div class="ex" id="C7-03"><span class="exid">C7-03</span>關於放熱反應，下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 產物的熱含量總和小於反應物</span><span>(B) ΔH 為負值</span><span>(C) 必定不需加熱即可開始進行</span><span>(D) 在絕熱容器中進行時，容器內溫度上升</span><span>(E) 形成新鍵放出的總能量大於斷裂舊鍵吸收的總能量</span></div></div>
+<div class="ex" id="C7-04"><span class="exid">C7-04</span>取等質量的大理石，一份為塊狀、一份為粉末，同溫下分別加入等體積、等濃度且過量的鹽酸。下列敘述何者正確？
+<div class="opts"><span>(A) 粉末的初始速率較大，最終生成的 <span class="m">\ce{CO2}</span> 總量相同</span><span>(B) 粉末的初始速率較大，最終生成的 <span class="m">\ce{CO2}</span> 較多</span><span>(C) 塊狀的初始速率較大，最終生成的 <span class="m">\ce{CO2}</span> 總量相同</span><span>(D) 兩者初始速率相同，粉末較早反應完畢</span><span>(E) 粉末使反應的活化能降低，故反應較快</span></div></div>
+<div class="ex" id="C7-05"><span class="exid">C7-05</span>關於催化劑，下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 使反應熱的絕對值變小</span><span>(B) 不參與反應</span><span>(C) 提供活化能較低的反應途徑</span><span>(D) 使正、逆反應速率皆加快</span><span>(E) 可提高可逆反應達平衡時的產物量</span></div></div>
+<div class="ex" id="C7-06"><span class="exid">C7-06</span>反應 <span class="m">\ce{N2(g) + 3H2(g) -> 2NH3(g)}</span> 在某段時間內，<span class="m">\ce{NH3}</span> 的平均生成速率為 0.40 M/min，則同一段時間 <span class="m">\ce{H2}</span> 的平均消耗速率為多少 M/min？
+<div class="opts"><span>(A) 0.20</span><span>(B) 0.27</span><span>(C) 0.40</span><span>(D) 0.60</span><span>(E) 1.2</span></div></div>
+<div class="ex" id="C7-07"><span class="exid">C7-07</span>升高溫度通常使反應速率加快。下列哪些是升溫造成的變化？（多選）
+<div class="opts"><span>(A) 分子的平均動能增加</span><span>(B) 動能大於或等於活化能的分子所佔比例增加</span><span>(C) 反應的活化能降低</span><span>(D) 分子的碰撞頻率略為增加</span><span>(E) 反應熱的絕對值變大</span></div></div>
+<div class="ex" id="C7-08"><span class="exid">C7-08</span>某反應的位能圖如下圖（圖 C7-題1）。此反應的 ΔH 與正反應活化能 <span class="m">E_a</span> 分別為何？
+<figure class="fig"><svg viewBox="0 0 400 240" width="400">
+<line x1="50" y1="220" x2="390" y2="220" stroke="#1f2a44" stroke-width="1.8" marker-end="url(#C7-ak)"/>
+<line x1="50" y1="220" x2="50" y2="20" stroke="#1f2a44" stroke-width="1.8" marker-end="url(#C7-ak)"/>
+<text x="56" y="22" font-size="13" fill="#1f2a44">位能（kJ）</text>
+<text x="388" y="238" font-size="13" text-anchor="end" fill="#1f2a44">反應進行</text>
+<line x1="50" y1="58" x2="210" y2="58" stroke="#94a3b8" stroke-dasharray="4 3"/>
+<line x1="50" y1="112" x2="295" y2="112" stroke="#94a3b8" stroke-dasharray="4 3"/>
+<line x1="50" y1="175" x2="70" y2="175" stroke="#94a3b8" stroke-dasharray="4 3"/>
+<text x="44" y="62" font-size="13" text-anchor="end" fill="#1f2a44">180</text>
+<text x="44" y="116" font-size="13" text-anchor="end" fill="#1f2a44">120</text>
+<text x="44" y="179" font-size="13" text-anchor="end" fill="#1f2a44">50</text>
+<text x="44" y="224" font-size="13" text-anchor="end" fill="#1f2a44">0</text>
+<path d="M70,175 L120,175 C165,175 180,58 210,58 C240,58 255,112 295,112 L370,112" fill="none" stroke="#2f6fb5" stroke-width="2.5"/>
+<text x="95" y="195" font-size="13" text-anchor="middle" fill="#1f2a44">反應物</text>
+<text x="335" y="132" font-size="13" text-anchor="middle" fill="#1f2a44">產物</text>
+</svg><figcaption>圖 C7-題1</figcaption></figure>
+<div class="opts"><span>(A) ΔH = −70 kJ，E<sub>a</sub> = 130 kJ</span><span>(B) ΔH = +70 kJ，E<sub>a</sub> = 180 kJ</span><span>(C) ΔH = +130 kJ，E<sub>a</sub> = 60 kJ</span><span>(D) ΔH = −70 kJ，E<sub>a</sub> = 60 kJ</span><span>(E) ΔH = +70 kJ，E<sub>a</sub> = 130 kJ</span></div></div>
+<div class="ex" id="C7-09"><span class="exid">C7-09</span>下列生活現象或措施，哪些主要與反應物的接觸面積有關？（多選）
+<div class="opts"><span>(A) 劈細的木柴比整塊木頭容易點燃</span><span>(B) 食物放入冰箱較不易腐敗</span><span>(C) 麵粉廠須防範粉塵爆炸</span><span>(D) 細嚼慢嚥有助於消化</span><span>(E) 汽車觸媒轉化器的載體做成蜂巢狀多孔結構</span></div></div>
+
+<h4 class="exset">進階題（11 題）</h4>
+<div class="ex" id="C7-10"><span class="exid">C7-10</span>甲烷的莫耳燃燒熱為 −890 kJ/mol。燃燒 4.0 g 甲烷，放出的熱量有 50% 被 2.0 kg 的水吸收，水溫約升高多少 °C？（C = 12，H = 1.0；水的比熱 4.18 J/(g·°C)）
+<div class="opts"><span>(A) 3.3</span><span>(B) 6.7</span><span>(C) 13</span><span>(D) 27</span><span>(E) 53</span></div></div>
+<div class="ex" id="C7-11"><span class="exid">C7-11</span>已知 25 °C 時 <span class="m">\ce{H2O(l)}</span> 與 <span class="m">\ce{H2O(g)}</span> 的莫耳生成熱分別為 −285.8 kJ/mol 與 −241.8 kJ/mol。下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) <span class="m">\ce{H2O(l) -> H2O(g)}</span> 的 ΔH = +44.0 kJ</span><span>(B) 等量氫氣燃燒生成水蒸氣時，放熱較生成液態水少</span><span>(C) 莫耳生成熱與產物的狀態無關</span><span>(D) 1 mol <span class="m">\ce{H2O(g)}</span> 的熱含量高於 1 mol <span class="m">\ce{H2O(l)}</span></span><span>(E) <span class="m">\ce{H2O(g)}</span> 莫耳生成熱的代數值小於 <span class="m">\ce{H2O(l)}</span></span></div></div>
+<div class="ex" id="C7-12"><span class="exid">C7-12</span>已知 <span class="m">\ce{C(s) + O2(g) -> CO2(g)}\ \ \Delta H = -393.5\ \mathrm{kJ}</span>；<span class="m">\ce{CO(g) + 1/2O2(g) -> CO2(g)}\ \ \Delta H = -283.0\ \mathrm{kJ}</span>。則 <span class="m">\ce{2C(s) + O2(g) -> 2CO(g)}</span> 的 ΔH 為多少 kJ？
+<div class="opts"><span>(A) +221.0</span><span>(B) +110.5</span><span>(C) −110.5</span><span>(D) −221.0</span><span>(E) −676.5</span></div></div>
+<div class="ex" id="C7-13"><span class="exid">C7-13</span>已知平均鍵能：N≡N 945 kJ/mol、H－H 436 kJ/mol、N－H 391 kJ/mol。由 <span class="m">\ce{N2(g)}</span> 與 <span class="m">\ce{H2(g)}</span> 生成 1 mol <span class="m">\ce{NH3(g)}</span> 的反應熱約為多少 kJ？
+<div class="opts"><span>(A) −1173</span><span>(B) −93</span><span>(C) −47</span><span>(D) +47</span><span>(E) +93</span></div></div>
+<div class="ex" id="C7-14"><span class="exid">C7-14</span>以大理石與鹽酸反應 <span class="m">\ce{CaCO3(s) + 2HCl(aq) -> CaCl2(aq) + H2O(l) + CO2(g)}</span> 探討反應速率。下列哪些量隨時間的變化可用來追蹤反應的快慢？（多選）
+<div class="opts"><span>(A) 錐形瓶與內容物的總質量</span><span>(B) 以注射筒收集的 <span class="m">\ce{CO2}</span> 體積</span><span>(C) 溶液的 pH</span><span>(D) 溶液的導電度</span><span>(E) 溶液中 <span class="m">\ce{Cl-}</span> 的濃度</span></div></div>
+<div class="ex" id="C7-15"><span class="exid">C7-15</span>某反應在所探討的溫度範圍內，溫度每升高 10 °C，速率變為原來的 2 倍。20 °C 時反應進行到某一程度需時 80 min，若改在 50 °C 進行到同一程度，約需多少 min？
+<div class="opts"><span>(A) 2.7</span><span>(B) 10</span><span>(C) 16</span><span>(D) 27</span><span>(E) 40</span></div></div>
+<div class="ex" id="C7-16"><span class="exid">C7-16</span>某反應在有、無催化劑時的位能圖如下（圖 C7-題2，單位 kJ）。下列敘述哪些正確？（多選）
+<figure class="fig"><svg viewBox="0 0 420 250" width="420">
+<line x1="50" y1="230" x2="410" y2="230" stroke="#1f2a44" stroke-width="1.8" marker-end="url(#C7-ak)"/>
+<line x1="50" y1="230" x2="50" y2="18" stroke="#1f2a44" stroke-width="1.8" marker-end="url(#C7-ak)"/>
+<text x="56" y="20" font-size="13" fill="#1f2a44">位能（kJ）</text>
+<text x="408" y="248" font-size="13" text-anchor="end" fill="#1f2a44">反應進行</text>
+<line x1="50" y1="43" x2="210" y2="43" stroke="#94a3b8" stroke-dasharray="4 3"/>
+<line x1="50" y1="85.5" x2="210" y2="85.5" stroke="#94a3b8" stroke-dasharray="4 3"/>
+<line x1="50" y1="145" x2="70" y2="145" stroke="#94a3b8" stroke-dasharray="4 3"/>
+<line x1="50" y1="179" x2="300" y2="179" stroke="#94a3b8" stroke-dasharray="4 3"/>
+<text x="44" y="47" font-size="13" text-anchor="end" fill="#1f2a44">220</text>
+<text x="44" y="90" font-size="13" text-anchor="end" fill="#1f2a44">170</text>
+<text x="44" y="149" font-size="13" text-anchor="end" fill="#1f2a44">100</text>
+<text x="44" y="183" font-size="13" text-anchor="end" fill="#1f2a44">60</text>
+<path d="M70,145 L120,145 C165,145 180,43 210,43 C240,43 255,179 300,179 L380,179" fill="none" stroke="#2f6fb5" stroke-width="2.5"/>
+<path d="M120,145 C165,145 180,85.5 210,85.5 C240,85.5 255,179 300,179" fill="none" stroke="#2e8b57" stroke-width="2.5" stroke-dasharray="7 4"/>
+<text x="95" y="165" font-size="13" text-anchor="middle" fill="#1f2a44">反應物</text>
+<text x="345" y="200" font-size="13" text-anchor="middle" fill="#1f2a44">產物</text>
+<line x1="290" y1="40" x2="318" y2="40" stroke="#2f6fb5" stroke-width="2.5"/>
+<text x="324" y="44" font-size="13" fill="#1f2a44">無催化劑</text>
+<line x1="290" y1="62" x2="318" y2="62" stroke="#2e8b57" stroke-width="2.5" stroke-dasharray="7 4"/>
+<text x="324" y="66" font-size="13" fill="#1f2a44">有催化劑</text>
+</svg><figcaption>圖 C7-題2</figcaption></figure>
+<div class="opts"><span>(A) 加入催化劑後，正反應活化能為 70 kJ</span><span>(B) 加入催化劑後，逆反應活化能由 160 kJ 降為 110 kJ</span><span>(C) 加入催化劑前後，ΔH 皆為 −40 kJ</span><span>(D) 催化劑使正反應加快、逆反應減慢</span><span>(E) 加入催化劑可提高產物的平衡產率</span></div></div>
+<div class="ex" id="C7-17"><span class="exid">C7-17</span>（進階）反應 A + B → C 在定溫下的初始速率數據如下表。當 [A] = 0.30 M、[B] = 0.20 M 時，初始速率為多少 M/s？
+<table class="t"><thead><tr><th>實驗</th><th>[A]（M）</th><th>[B]（M）</th><th>初始速率（M/s）</th></tr></thead><tbody>
+<tr><td>一</td><td>0.10</td><td>0.10</td><td><span class="m">2.0\times10^{-3}</span></td></tr>
+<tr><td>二</td><td>0.20</td><td>0.10</td><td><span class="m">8.0\times10^{-3}</span></td></tr>
+<tr><td>三</td><td>0.10</td><td>0.30</td><td><span class="m">6.0\times10^{-3}</span></td></tr>
+</tbody></table>
+<div class="opts"><span>(A) <span class="m">6.0\times10^{-3}</span></span><span>(B) <span class="m">1.2\times10^{-2}</span></span><span>(C) <span class="m">1.8\times10^{-2}</span></span><span>(D) <span class="m">3.6\times10^{-2}</span></span><span>(E) <span class="m">1.1\times10^{-1}</span></span></div></div>
+<div class="ex" id="C7-18"><span class="exid">C7-18</span>依碰撞學說，下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 並非每一次碰撞都能發生反應</span><span>(B) 有效碰撞須同時具備足夠的能量與適當的方位</span><span>(C) 增加反應物濃度可提高有效碰撞佔總碰撞次數的比例</span><span>(D) 催化劑使活化能降低，故能越過能障的分子比例增加</span><span>(E) 同溫下，活化能愈大的反應，速率通常愈慢</span></div></div>
+<div class="ex" id="C7-19"><span class="exid">C7-19</span>四種燃料的莫耳燃燒熱與莫耳質量如下：<span class="m">\ce{H2}</span> −286 kJ/mol、2.0 g/mol；<span class="m">\ce{CH4}</span> −890 kJ/mol、16 g/mol；<span class="m">\ce{C3H8}</span> −2220 kJ/mol、44 g/mol；<span class="m">\ce{C2H5OH}</span> −1368 kJ/mol、46 g/mol。依「每克燃料完全燃燒放出的熱量」由大到小排列，何者正確？
+<div class="opts"><span>(A) <span class="m">\ce{C3H8} &gt; \ce{C2H5OH} &gt; \ce{CH4} &gt; \ce{H2}</span></span><span>(B) <span class="m">\ce{CH4} &gt; \ce{H2} &gt; \ce{C3H8} &gt; \ce{C2H5OH}</span></span><span>(C) <span class="m">\ce{H2} &gt; \ce{C3H8} &gt; \ce{CH4} &gt; \ce{C2H5OH}</span></span><span>(D) <span class="m">\ce{C2H5OH} &gt; \ce{C3H8} &gt; \ce{CH4} &gt; \ce{H2}</span></span><span>(E) <span class="m">\ce{H2} &gt; \ce{CH4} &gt; \ce{C3H8} &gt; \ce{C2H5OH}</span></span></div></div>
+<div class="ex" id="C7-20"><span class="exid">C7-20</span>下列關於莫耳生成熱（25 °C、1 atm）的敘述，哪些正確？（多選）
+<div class="opts"><span>(A) <span class="m">\ce{O2(g)}</span> 的莫耳生成熱為 0</span><span>(B) C（鑽石）的莫耳生成熱為 0</span><span>(C) <span class="m">\ce{O3(g)}</span> 的莫耳生成熱不為 0</span><span>(D) <span class="m">\ce{Br2(g)}</span> 的莫耳生成熱為 0</span><span>(E) 化合物的莫耳生成熱可為正值</span></div></div>
+
+<h4 class="exset">挑戰題（4 題）</h4>
+<div class="ex" id="C7-21"><span class="exid">C7-21</span>在簡易卡計中，將 25.0 °C 的 50.0 mL 1.00 M 鹽酸與 25.0 °C 的 50.0 mL 1.00 M 氫氧化鈉溶液混合，最高溫度為 31.7 °C。若改將 25.0 °C 的 100.0 mL 1.00 M 鹽酸與 25.0 °C 的 50.0 mL 1.00 M 氫氧化鈉溶液混合，溫度最多約上升多少 °C？（溶液密度皆以 1.00 g/mL、比熱皆以 4.18 J/(g·°C) 計，卡計吸熱與熱散失忽略）
+<div class="opts"><span>(A) 13.4</span><span>(B) 8.93</span><span>(C) 6.70</span><span>(D) 5.58</span><span>(E) 4.47</span></div></div>
+<div class="ex" id="C7-22"><span class="exid">C7-22</span>甲、乙兩反應的活化能分別為 50 kJ/mol 與 100 kJ/mol。溫度由 300 K 升至 310 K 時，已知碰撞頻率正比於 <span class="m">\sqrt{T}</span>，動能足以越過能障的碰撞比例正比於 <span class="m">e^{-E_a/RT}</span>；經計算，甲、乙兩反應的該比例分別變為原來的約 1.9 倍與 3.6 倍。下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 碰撞頻率僅增加約 2%</span><span>(B) 乙反應速率增加的倍數較甲大</span><span>(C) 因溫度變化相同，兩反應速率增加的倍數相同</span><span>(D) 「溫度每升高 10 °C 速率加倍」對所有反應皆成立</span><span>(E) 升溫使速率加快，主要是因為能量足夠的碰撞所佔比例增加</span></div></div>
+<div class="ex" id="C7-23"><span class="exid">C7-23</span>已知莫耳生成熱：<span class="m">\ce{C2H5OH(l)}</span> −277.6 kJ/mol、<span class="m">\ce{CO2(g)}</span> −393.5 kJ/mol、<span class="m">\ce{H2O(g)}</span> −241.8 kJ/mol。23.0 g 乙醇（46.0 g/mol）完全燃燒生成 <span class="m">\ce{CO2(g)}</span> 與 <span class="m">\ce{H2O(g)}</span>，約放熱多少 kJ？
+<div class="opts"><span>(A) 617</span><span>(B) 683</span><span>(C) 895</span><span>(D) 1235</span><span>(E) 1367</span></div></div>
+<div class="ex" id="C7-24"><span class="exid">C7-24</span>某氣相反應 <span class="m">\ce{A2 + 2B -> 2AB}</span> 的反應機構經研究為兩個基本步驟：步驟一（慢）<span class="m">\ce{A2 -> 2A}</span>；步驟二（快）<span class="m">\ce{A + B -> AB}</span>。下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 速率定律式為 <span class="m">r = k[\ce{A2}][\ce{B}]^2</span></span><span>(B) A 為中間產物</span><span>(C) 增加 B 的濃度，對總反應速率幾乎沒有影響</span><span>(D) 總反應是三個分子同時碰撞的基本反應</span><span>(E) 加入只能加快步驟二的催化劑，可使總反應速率明顯增加</span></div></div>
+
+<h4 class="exset">題組（6 題）</h4>
+<p><strong>第 25–27 題為題組</strong></p>
+<p>某生探討接觸面積對反應速率的影響。甲組取 2.00 g 塊狀大理石，乙組取 2.00 g 大理石粉末（皆視為純 <span class="m">\ce{CaCO3}</span>，式量 100），分別放入錐形瓶，各加入 25 °C 的 1.00 M 鹽酸 50.0 mL，瓶口以棉花輕塞，置於電子天平上，記錄質量損失隨時間的變化，結果如圖 C7-題3（虛線為兩曲線最終趨近之值）。假設逸出的氣體只有 <span class="m">\ce{CO2}</span>（44.0 g/mol），且溶液體積不變。</p>
+<figure class="fig"><svg viewBox="0 0 460 260" width="460">
+<line x1="60" y1="40" x2="60" y2="220" stroke="#e2e8f0" stroke-width="1"/><line x1="96" y1="40" x2="96" y2="220" stroke="#e2e8f0" stroke-width="1"/><line x1="132" y1="40" x2="132" y2="220" stroke="#e2e8f0" stroke-width="1"/><line x1="168" y1="40" x2="168" y2="220" stroke="#e2e8f0" stroke-width="1"/><line x1="204" y1="40" x2="204" y2="220" stroke="#e2e8f0" stroke-width="1"/><line x1="240" y1="40" x2="240" y2="220" stroke="#e2e8f0" stroke-width="1"/><line x1="276" y1="40" x2="276" y2="220" stroke="#e2e8f0" stroke-width="1"/><line x1="312" y1="40" x2="312" y2="220" stroke="#e2e8f0" stroke-width="1"/><line x1="348" y1="40" x2="348" y2="220" stroke="#e2e8f0" stroke-width="1"/><line x1="384" y1="40" x2="384" y2="220" stroke="#e2e8f0" stroke-width="1"/><line x1="420" y1="40" x2="420" y2="220" stroke="#e2e8f0" stroke-width="1"/><line x1="60" y1="220" x2="420" y2="220" stroke="#e2e8f0" stroke-width="1"/><line x1="60" y1="202" x2="420" y2="202" stroke="#e2e8f0" stroke-width="1"/><line x1="60" y1="184" x2="420" y2="184" stroke="#e2e8f0" stroke-width="1"/><line x1="60" y1="166" x2="420" y2="166" stroke="#e2e8f0" stroke-width="1"/><line x1="60" y1="148" x2="420" y2="148" stroke="#e2e8f0" stroke-width="1"/><line x1="60" y1="130" x2="420" y2="130" stroke="#e2e8f0" stroke-width="1"/><line x1="60" y1="112" x2="420" y2="112" stroke="#e2e8f0" stroke-width="1"/><line x1="60" y1="94" x2="420" y2="94" stroke="#e2e8f0" stroke-width="1"/><line x1="60" y1="76" x2="420" y2="76" stroke="#e2e8f0" stroke-width="1"/><line x1="60" y1="58" x2="420" y2="58" stroke="#e2e8f0" stroke-width="1"/><line x1="60" y1="40" x2="420" y2="40" stroke="#e2e8f0" stroke-width="1"/>
+<line x1="60" y1="220" x2="440" y2="220" stroke="#1f2a44" stroke-width="1.8" marker-end="url(#C7-ak)"/>
+<line x1="60" y1="220" x2="60" y2="24" stroke="#1f2a44" stroke-width="1.8" marker-end="url(#C7-ak)"/>
+<text x="60" y="238" font-size="13" text-anchor="middle" fill="#1f2a44">0</text><text x="132" y="238" font-size="13" text-anchor="middle" fill="#1f2a44">60</text><text x="204" y="238" font-size="13" text-anchor="middle" fill="#1f2a44">120</text><text x="276" y="238" font-size="13" text-anchor="middle" fill="#1f2a44">180</text><text x="348" y="238" font-size="13" text-anchor="middle" fill="#1f2a44">240</text><text x="420" y="238" font-size="13" text-anchor="middle" fill="#1f2a44">300</text><text x="54" y="224" font-size="13" text-anchor="end" fill="#1f2a44">0.0</text><text x="54" y="188" font-size="13" text-anchor="end" fill="#1f2a44">0.2</text><text x="54" y="152" font-size="13" text-anchor="end" fill="#1f2a44">0.4</text><text x="54" y="116" font-size="13" text-anchor="end" fill="#1f2a44">0.6</text><text x="54" y="80" font-size="13" text-anchor="end" fill="#1f2a44">0.8</text><text x="54" y="44" font-size="13" text-anchor="end" fill="#1f2a44">1.0</text>
+<text x="440" y="256" font-size="13" text-anchor="end" fill="#1f2a44">時間（s）</text>
+<text x="66" y="22" font-size="13" fill="#1f2a44">質量損失（g）</text>
+<line x1="60" y1="61.6" x2="420" y2="61.6" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="5 4"/>
+<polyline points="60.0,220.0 66.0,202.7 72.0,187.3 78.0,173.6 84.0,161.4 90.0,150.5 96.0,140.8 102.0,132.2 108.0,124.5 114.0,117.6 120.0,111.5 126.0,106.0 132.0,101.2 138.0,96.9 144.0,93.0 150.0,89.6 156.0,86.5 162.0,83.8 168.0,81.4 174.0,79.2 180.0,77.3 186.0,75.6 192.0,74.1 198.0,72.7 204.0,71.5 210.0,70.4 216.0,69.5 222.0,68.6 228.0,67.8 234.0,67.2 240.0,66.5 246.0,66.0 252.0,65.5 258.0,65.1 264.0,64.7 270.0,64.4 276.0,64.1 282.0,63.8 288.0,63.6 294.0,63.3 300.0,63.2 306.0,63.0 312.0,62.8 318.0,62.7 324.0,62.6 330.0,62.5 336.0,62.4 342.0,62.3 348.0,62.2 354.0,62.2 360.0,62.1 366.0,62.0 372.0,62.0 378.0,61.9 384.0,61.9 390.0,61.9 396.0,61.8 402.0,61.8 408.0,61.8 414.0,61.8 420.0,61.8" fill="none" stroke="#c2410c" stroke-width="2.5"/>
+<polyline points="60.0,220.0 72.0,203.3 84.0,188.4 96.0,175.1 108.0,163.2 120.0,152.5 132.0,142.9 144.0,134.4 156.0,126.7 168.0,119.9 180.0,113.7 192.0,108.3 204.0,103.4 216.0,99.0 228.0,95.0 240.0,91.5 252.0,88.4 264.0,85.6 276.0,83.0 288.0,80.8 300.0,78.8 312.0,77.0 324.0,75.3 336.0,73.9 348.0,72.6 360.0,71.4 372.0,70.4 384.0,69.5 396.0,68.7 408.0,67.9 420.0,67.3" fill="none" stroke="#2f6fb5" stroke-width="2.5"/>
+<line x1="132" y1="220" x2="132" y2="101.2" stroke="#c2410c" stroke-width="1" stroke-dasharray="3 3"/>
+<line x1="60" y1="101.2" x2="132" y2="101.2" stroke="#c2410c" stroke-width="1" stroke-dasharray="3 3"/>
+<circle cx="132" cy="101.2" r="3.5" fill="#c2410c"/>
+<text x="66" y="94" font-size="13" fill="#c2410c">(60, 0.66)</text>
+<text x="150" y="56" font-size="13" fill="#c2410c">乙（粉末）</text>
+<text x="300" y="112" font-size="13" fill="#2f6fb5">甲（塊狀）</text>
+</svg><figcaption>圖 C7-題3　甲、乙兩組錐形瓶的質量損失－時間圖</figcaption></figure>
+<div class="ex" id="C7-25"><span class="exid">C7-25</span>兩曲線最終趨近的質量損失約為多少克？
+<div class="opts"><span>(A) 0.22</span><span>(B) 0.44</span><span>(C) 0.88</span><span>(D) 1.10</span><span>(E) 1.76</span></div></div>
+<div class="ex" id="C7-26"><span class="exid">C7-26</span>下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 乙曲線起始的斜率較甲陡，表示乙的初始速率較大</span><span>(B) 甲最終的質量損失小於乙</span><span>(C) 若甲改用 2.00 M 鹽酸 50.0 mL，初始速率增加，最終質量損失不變</span><span>(D) 若乙改用 4.00 g 大理石粉末，最終質量損失為 1.76 g</span><span>(E) 瓶口塞棉花可減少酸霧與液滴逸出造成的額外質量損失</span></div></div>
+<div class="ex" id="C7-27"><span class="exid">C7-27</span>由圖，乙組在最初 60 s 內 HCl 的平均消耗速率約為多少 M/s？
+<div class="opts"><span>(A) 0.0050</span><span>(B) 0.0100</span><span>(C) 0.0150</span><span>(D) 0.0200</span><span>(E) 0.600</span></div></div>
+
+<p><strong>第 28–30 題為題組</strong></p>
+<p>過氧化氫在室溫下分解很慢：<span class="m">\ce{2H2O2(aq) -> 2H2O(l) + O2(g)}</span>。馬鈴薯含有過氧化氫酶，二氧化錳也能催化此反應。某生每次取 10.0 g、質量百分率 3.40% 的過氧化氫溶液，在不同溫度下分別加入 2.0 g 馬鈴薯泥或 0.05 g 二氧化錳粉末，記錄最初 60 s 產生的氧氣體積（均換算為 25 °C、1 atm），結果如下表。未加催化劑的對照組在各溫度 60 s 內產氣量均小於 1 mL。</p>
+<table class="t"><thead><tr><th>溫度（°C）</th><th>10</th><th>20</th><th>30</th><th>37</th><th>45</th><th>60</th></tr></thead><tbody>
+<tr><td>馬鈴薯泥組（mL）</td><td>8</td><td>14</td><td>22</td><td>27</td><td>18</td><td>3</td></tr>
+<tr><td>二氧化錳組（mL）</td><td>2</td><td>4</td><td>8</td><td>13</td><td>21</td><td>64</td></tr>
+</tbody></table>
+<p>（數據為教學用假設值。）</p>
+<div class="ex" id="C7-28"><span class="exid">C7-28</span>根據表中數據，下列推論哪些合理？（多選）
+<div class="opts"><span>(A) 馬鈴薯泥所含的酵素在 37 °C 附近催化效果最佳</span><span>(B) 60 °C 時馬鈴薯泥組產氣量大減，與酵素蛋白質受熱變性有關</span><span>(C) 二氧化錳組在 10–45 °C 間，溫度每升高約 10 °C，產氣量約變為 2 倍</span><span>(D) 在所有溫度下，馬鈴薯泥的催化效果均優於二氧化錳</span><span>(E) 因兩組催化劑的種類與用量不同，無法判斷各組產氣量隨溫度變化的趨勢</span></div></div>
+<div class="ex" id="C7-29"><span class="exid">C7-29</span>已知 <span class="m">\ce{H2O2(l)}</span> 與 <span class="m">\ce{H2O(l)}</span> 的莫耳生成熱分別為 −187.8 kJ/mol 與 −285.8 kJ/mol，溶解熱忽略。每次實驗所取的過氧化氫完全分解，約放熱多少 kJ？（<span class="m">\ce{H2O2}</span> = 34.0 g/mol）
+<div class="opts"><span>(A) 0.49</span><span>(B) 0.98</span><span>(C) 1.96</span><span>(D) 9.8</span><span>(E) 98</span></div></div>
+<div class="ex" id="C7-30"><span class="exid">C7-30</span>每次實驗所取的過氧化氫完全分解，最多可產生 25 °C、1 atm 的氧氣約多少 mL？（25 °C、1 atm 時氣體莫耳體積 24.5 L）
+<div class="opts"><span>(A) 123</span><span>(B) 245</span><span>(C) 368</span><span>(D) 490</span><span>(E) 61</span></div></div>
+
+<h4 class="exset">非選擇題（3 題）</h4>
+<div class="ex" id="C7-31"><span class="exid">C7-31</span>某放熱反應的 ΔH = −60 kJ，正反應活化能為 90 kJ；加入催化劑後，正反應活化能降為 40 kJ。(1) 在同一位能圖上畫出有、無催化劑的兩條曲線，標示反應物、產物、活化錯合物、兩個正反應活化能與 ΔH。(2) 求有、無催化劑時的逆反應活化能。
+<div class="lines" data-n="2"></div></div>
+<div class="ex" id="C7-32"><span class="exid">C7-32</span>已知莫耳燃燒熱：C（石墨）−393.5 kJ/mol、<span class="m">\ce{H2(g)}</span> −285.8 kJ/mol、<span class="m">\ce{C2H5OH(l)}</span> −1367.6 kJ/mol。(1) 寫出乙醇莫耳生成熱所對應的熱化學反應式。(2) 以赫斯定律求乙醇的莫耳生成熱（列出算式）。(3) 說明此生成熱為何不宜直接由實驗測量。
+<div class="lines" data-n="2"></div></div>
+<div class="ex" id="C7-33"><span class="exid">C7-33</span>(1) 一袋麵粉在空氣中不易燃燒，飛散在空氣中的麵粉粉塵遇火卻可能爆炸。以碰撞學說說明其原因。(2) 食物放入冰箱冷藏可延緩腐敗，以活化能與分子動能分布說明其原因。
+<div class="lines" data-n="2"></div></div>
+
+<h3>自我檢核</h3>
+<ul class="check">
+<li>能由 ΔH 的正負、熱含量圖或溫度變化判斷放熱與吸熱，並區分化學變化與物理變化。</li>
+<li>能說明「斷鍵吸熱、成鍵放熱」與能量守恆，並寫出逆反應的 ΔH。</li>
+<li>能正確書寫熱化學反應式（狀態、係數、正負號、單位），並做反應熱的計量。</li>
+<li>能說明莫耳生成熱、莫耳燃燒熱、中和熱、溶解熱的定義，並指出生成熱為 0 的物質。（進階）</li>
+<li>能以赫斯定律、生成熱或鍵能計算反應熱，並說明三種方法的適用條件。（進階）</li>
+<li>能以卡計數據計算反應熱，並指出質量與莫耳數的取法。</li>
+<li>能寫出反應速率的定義，依係數比換算，並由濃度－時間圖判讀平均速率與瞬時速率。</li>
+<li>能列出測量反應速率的方法，並依反應選擇合適的性質。</li>
+<li>能說明濃度、溫度、接觸面積、催化劑、反應物本性對速率的影響，並以碰撞學說解釋。</li>
+<li>能判讀粉末與塊狀的產氣曲線：初速不同、最終產量由限量試劑決定。</li>
+<li>能在位能圖上標示活化能、逆反應活化能、ΔH 與活化錯合物，並說明催化劑的作用。</li>
+<li>能說明升溫使速率加快的主因，以及「每升高 10 °C 加倍」的適用限制。（進階）</li>
+</ul>
+</section>

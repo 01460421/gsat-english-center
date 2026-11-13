@@ -1,0 +1,831 @@
+<section class="unit" id="C5">
+<h2>C5　化學反應與化學計量</h2>
+<p>本單元範圍：質量守恆定律與拉瓦節的定量實驗、化學反應式的意義與平衡、原子量與莫耳、氣體反應的體積關係、實驗式與分子式（含燃燒分析）、限量試劑與產率。氣體性質與 <span class="m">PV=nRT</span> 見 C4，溶液濃度見 C6，反應熱見 C7，氧化還原反應式的電子平衡見 C9。</p>
+
+<h3>課綱對照與考點</h3>
+<table class="t"><thead><tr><th>課綱學習內容</th><th>本單元對應小節</th><th>學測常見考法</th></tr></thead><tbody>
+<tr><td>CJa-Ⅴc-1　拉瓦節以定量分析方法，驗證質量守恆定律。</td><td>一</td><td>拉瓦節實驗的設計（密閉容器、稱量）；開放系統質量增減的解釋；燃素說與氧化說的對照；實驗數據判讀</td></tr>
+<tr><td>CJa-Ⅴc-2　化學反應僅為原子的重新排列組合，其個數不變，依此原則即可平衡化學反應方程式。</td><td>二</td><td>觀察法與代數法平衡；係數的意義（粒子數、莫耳數、氣體體積比）；離子反應式的電荷守恆；粒子模型圖判讀</td></tr>
+<tr><td>CJa-Ⅴc-3　莫耳與簡單的化學計量。</td><td>三、四、五、六</td><td>質量、莫耳數、粒子數、氣體體積互換；實驗式與分子式；燃燒分析；限量試劑、理論產量與產率；混合物與連續反應計算；生成量對加入量的圖形判讀</td></tr>
+</tbody></table>
+
+<h3>一、質量守恆定律與拉瓦節的定量實驗</h3>
+<h4>1. 定律與適用條件</h4>
+<div class="note"><p>必守恆：質量、各元素原子數、電荷</p><p>不一定守恆：分子數、莫耳數、氣體體積</p></div>
+<div class="key">
+<p><strong>質量守恆定律</strong>：化學反應前後，反應系統的<strong>總質量不變</strong>。<span class="hand">原子不增不減</span></p>
+<ul>
+<li>原因：化學反應只是原子重新排列組合，<strong>原子的種類與數目不變</strong>，每種原子的質量也不變。</li>
+<li>條件：須計入所有反應物與生成物，包括氣體。實驗驗證須在<span class="circle">密閉</span>系統中稱量，或另外收集逸出的氣體。</li>
+<li>物理變化（熔化、溶解、蒸發）同樣遵守質量守恆。</li>
+<li>適用範圍：化學反應伴隨的能量變化所對應的質量變化極小，以天平無法測得，化學計算中視為嚴格成立。核反應的質量變化須以 <span class="m">E=mc^2</span> 處理（見 P10）。</li>
+</ul>
+</div>
+
+<h4>2. 開放系統的質量變化</h4>
+<table class="t"><thead><tr><th>實驗</th><th>開口容器中的觀察</th><th>原因</th><th>密閉系統</th></tr></thead><tbody>
+<tr><td>鎂帶在空氣中燃燒</td><td>固體質量增加</td><td>結合空氣中的氧：<span class="m">\ce{2Mg + O2 -> 2MgO}</span></td><td>總質量不變</td></tr>
+<tr><td>鋼絲絨加熱生鏽</td><td>質量增加</td><td>鐵與氧結合</td><td>總質量不變</td></tr>
+<tr><td>蠟燭燃燒</td><td>蠟燭變輕</td><td>生成的 <span class="m">\ce{CO2}</span> 與水蒸氣逸散</td><td>總質量不變</td></tr>
+<tr><td>大理石與鹽酸</td><td>燒杯內質量減少</td><td><span class="m">\ce{CaCO3 + 2HCl -> CaCl2 + H2O + CO2 ^}</span>，氣體逸出</td><td>總質量不變</td></tr>
+<tr><td>碳酸氫鈉加熱</td><td>固體質量減少</td><td><span class="m">\ce{2NaHCO3 -> Na2CO3 + H2O + CO2}</span></td><td>總質量不變</td></tr>
+</tbody></table>
+<figure class="fig"><svg viewBox="0 0 560 250" width="560">
+<line x1="60" y1="210" x2="540" y2="210" stroke="#1f2a44" stroke-width="1.5"/>
+<line x1="60" y1="210" x2="60" y2="30" stroke="#1f2a44" stroke-width="1.5"/>
+<text x="30" y="120" font-size="13" text-anchor="middle" transform="rotate(-90 30 120)">稱得質量（相對值）</text>
+<line x1="60" y1="110" x2="540" y2="110" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4 3"/>
+<text x="536" y="104" font-size="12" text-anchor="end" fill="#64748b">反應前</text>
+<rect x="85" y="110" width="40" height="100" fill="#cfe3f8" stroke="#2f6fb5"/>
+<rect x="130" y="70" width="40" height="140" fill="#2f6fb5"/>
+<text x="128" y="230" font-size="13" text-anchor="middle">鎂帶燃燒（開口）</text>
+<rect x="210" y="110" width="40" height="100" fill="#cfe3f8" stroke="#2f6fb5"/>
+<rect x="255" y="150" width="40" height="60" fill="#2f6fb5"/>
+<text x="253" y="230" font-size="13" text-anchor="middle">蠟燭燃燒（開口）</text>
+<rect x="335" y="110" width="40" height="100" fill="#cfe3f8" stroke="#2f6fb5"/>
+<rect x="380" y="130" width="40" height="80" fill="#2f6fb5"/>
+<text x="378" y="230" font-size="13" text-anchor="middle">大理石＋鹽酸（開口）</text>
+<rect x="455" y="110" width="35" height="100" fill="#c9ebd7" stroke="#2e8b57"/>
+<rect x="495" y="110" width="35" height="100" fill="#2e8b57"/>
+<text x="493" y="230" font-size="13" text-anchor="middle">任一反應（密閉）</text>
+<rect x="80" y="36" width="14" height="12" fill="#cfe3f8" stroke="#2f6fb5"/>
+<text x="100" y="47" font-size="13">反應前</text>
+<rect x="160" y="36" width="14" height="12" fill="#2f6fb5"/>
+<text x="180" y="47" font-size="13">反應後</text>
+</svg><figcaption>圖 C5-1　開口容器與密閉系統中，反應前後稱得質量的比較（示意圖，未依比例）</figcaption></figure>
+<div class="warn">
+<p>注意：「燃燒後變重」或「燃燒後變輕」都不違反質量守恆，差異來自未被稱量的氣體。判讀題須先確認系統是否密閉、氣體是否計入。</p>
+<p>注意：反應前後守恆的是<strong>總質量與各元素原子數</strong>；<em>分子總數、總莫耳數、氣體總體積不一定守恆</em>。</p>
+</div>
+<div class="mnem"><p>質量、原子、電荷必守恆；分子、莫耳、體積看係數</p></div>
+<div class="exam"><p>學測常給開口容器反應前後的稱量數據，問是否違反質量守恆；作答須指出<strong>未被稱量的氣體</strong>，並說明密閉系統中總質量不變。</p></div>
+
+<h4>3. 拉瓦節的定量實驗</h4>
+<p>拉瓦節（Antoine-Laurent Lavoisier，1743–1794）以精密天平與密閉容器研究燃燒與煅燒，用定量數據推翻燃素說。</p>
+<table class="t"><thead><tr><th>年代</th><th>實驗或著作</th><th>要點</th></tr></thead><tbody>
+<tr><td>1772</td><td>磷、硫的燃燒</td><td>燃燒後產物比原物質重，推論燃燒時結合了空氣的一部分</td></tr>
+<tr><td>1774</td><td>錫、鉛在密閉容器中煅燒</td><td>加熱前後整個密閉容器的總質量不變；開啟後空氣衝入，總質量才增加。金屬增重來自與空氣結合</td></tr>
+<tr><td>1770 年代</td><td>汞的十二日煅燒（見圖 C5-2）</td><td>空氣體積減少，生成紅色汞灰（氧化汞）；再加熱汞灰得回汞與能助燃的氣體</td></tr>
+<tr><td>1783–1784</td><td>水的合成與分解</td><td>與梅斯尼耶（Jean-Baptiste Meusnier）以紅熱鐵管分解水蒸氣，證明水是化合物</td></tr>
+<tr><td>1789</td><td>《化學基本論述》（Traité élémentaire de chimie）</td><td>明確寫出質量守恆原則；列出元素表；採用新的化學命名法</td></tr>
+</tbody></table>
+<figure class="fig"><svg viewBox="0 0 560 270" width="560">
+<rect x="40" y="150" width="150" height="90" fill="#fbdcbd" stroke="#d9772b" stroke-width="1.5"/>
+<text x="115" y="230" font-size="13" text-anchor="middle">火爐</text>
+<path d="M85 205 Q95 185 105 205 Q115 180 125 205 Q135 188 145 205" fill="none" stroke="#c2410c" stroke-width="2"/>
+<circle cx="115" cy="140" r="38" fill="#e2e8f0" stroke="#1f2a44" stroke-width="1.5"/>
+<path d="M80 150 Q115 170 150 150 L150 156 Q115 176 80 156 z" fill="#94a3b8"/>
+<text x="115" y="138" font-size="13" text-anchor="middle">汞</text>
+<path d="M140 112 Q200 40 300 60 L400 60 L400 175" fill="none" stroke="#1f2a44" stroke-width="5"/>
+<path d="M140 112 Q200 40 300 60 L400 60 L400 175" fill="none" stroke="#e2e8f0" stroke-width="2.5"/>
+<rect x="320" y="180" width="200" height="60" fill="#e2e8f0" stroke="#1f2a44" stroke-width="1.5"/>
+<rect x="321" y="200" width="198" height="39" fill="#94a3b8"/>
+<path d="M360 230 L360 110 Q360 92 378 92 L432 92 Q450 92 450 110 L450 230" fill="none" stroke="#1f2a44" stroke-width="1.8"/>
+<rect x="361" y="168" width="88" height="62" fill="#94a3b8"/>
+<line x1="352" y1="168" x2="458" y2="168" stroke="#c2410c" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text x="462" y="166" font-size="12" fill="#c2410c">液面記號</text>
+<text x="420" y="130" font-size="13" text-anchor="middle">空氣</text>
+<text x="420" y="258" font-size="13" text-anchor="middle">汞槽</text>
+<text x="250" y="40" font-size="13" text-anchor="middle">曲頸瓶的長頸</text>
+<text x="115" y="96" font-size="13" text-anchor="middle">曲頸瓶</text>
+<text x="500" y="110" font-size="13" text-anchor="middle">鐘罩</text>
+<line x1="485" y1="114" x2="452" y2="125" stroke="#1f2a44" stroke-width="1"/>
+</svg><figcaption>圖 C5-2　拉瓦節汞煅燒實驗裝置（示意圖，未依比例）。曲頸瓶內的汞經長頸與鐘罩內空氣相通，鐘罩倒立於汞槽中；汞面升降反映氣體體積變化。</figcaption></figure>
+<div class="key">
+<p><strong>汞的十二日煅燒實驗數據</strong>（拉瓦節《化學基本論述》第三章所載，體積已換算至同溫同壓；單位為法國舊制）</p>
+<ul>
+<li>曲頸瓶內汞約 4 盎司，持續加熱 12 日，使汞接近沸點；第二天起液面出現紅色顆粒，數日後不再增加。</li>
+<li>瓶、頸與鐘罩內空氣：約 50 立方吋 → 42 至 43 立方吋，<strong>減少約六分之一</strong>。<span class="hand">課本常寫五分之一</span>剩餘氣體不能助燃、不能維持呼吸（主要為氮氣）。</li>
+<li>收集紅色物質（氧化汞）45 喱（grain），另行強熱：得汞 41.5 喱與氣體 7 至 8 立方吋，該氣體使燭火更明亮（氧氣）。</li>
+<li>將 42 立方吋剩餘氣體與 8 立方吋新得氣體混合，得到與原空氣性質相近的氣體：同時以分析與合成兩方向驗證空氣的組成。</li>
+</ul>
+</div>
+<div class="tip">
+<p><strong>深究　拉瓦節數據的現代檢驗</strong></p>
+<ul>
+<li>以現代原子量計算：<span class="m">\ce{HgO}</span> 中汞的質量分率 <span class="m">\frac{200.6}{216.6}=0.926</span>，45 喱氧化汞應含汞約 41.7 喱，與實測 41.5 喱相近；兩者差額約 3.5 喱即放出的氧。</li>
+<li>空氣中氧約占體積 21%，拉瓦節測得減少約六分之一（約 17%），顯示汞未將氧耗盡，或部分氣體與汞灰在收集時損失。拉瓦節本人在書中說明此實驗須重複多次，因難以在單次實驗中同時保全全部氣體與全部紅色顆粒。</li>
+<li>許多課本稱「減少約五分之一」，係以現代空氣組成概括；原始文獻所記為約六分之一。</li>
+<li>書中第十三章（論酒精發酵）寫道：在一切技藝與自然的操作中，無物被創造；<span class="ul">實驗前後物質的量相等</span>，元素的種類與數量不變，只有化合方式改變。此即質量守恆原則的經典陳述，並作為化學分析的前提。</li>
+</ul>
+</div>
+<div class="tip">
+<p><strong>深究　燃素說與氧化說</strong></p>
+<ul>
+<li>燃素說（史塔爾等，18 世紀）：可燃物含「燃素」，燃燒時燃素釋出。無法自然解釋金屬煅燒後增重，部分支持者甚至假設燃素具有負質量。</li>
+<li>拉瓦節的氧化說：燃燒與煅燒是物質與空氣中的氧結合。決定性的論證是<strong>定量</strong>：密閉容器總質量不變、空氣體積減少量與金屬增重相對應、汞灰分解可得回等量的氣體。</li>
+<li>普利士力（Joseph Priestley）與舍勒（Carl Wilhelm Scheele）較早製得氧氣，但普利士力終生以燃素說解釋；氧（oxygène）一詞由拉瓦節命名。</li>
+<li>先行者：羅蒙諾索夫（Mikhail Lomonosov，1711–1765）於 1748 年已表達類似的守恆觀念。</li>
+</ul>
+</div>
+<div class="tip">
+<p><strong>深究　質量守恆有多精確（進階）</strong></p>
+<ul>
+<li>20 世紀初，蘭多耳特（Hans Landolt）以倒 U 形密閉玻璃管進行多種溶液反應，反覆稱量；1908 年發表結論：先前觀察到的微小減重來自容器表面吸附水分的變化，在實驗精度內（相對變化約 <span class="m">10^{-7}</span> 量級）未見質量改變。</li>
+<li>依相對論，放熱反應的生成物質量略小於反應物。以 <span class="m">\ce{2H2(g) + O2(g) -> 2H2O(l)}</span> 為例，每生成 1 mol 液態水放熱約 286 kJ：</li>
+</ul>
+<div class="formula" data-t="反應熱對應的質量變化"><div class="mb">\Delta m=\frac{E}{c^2}=\frac{2.86\times10^{5}\ \mathrm{J}}{(3.00\times10^{8}\ \mathrm{m/s})^2}\approx3.2\times10^{-12}\ \mathrm{kg}</div><p><span class="m">E</span>：放出的能量（J）　<span class="m">c</span>：光速（m/s）　<span class="m">\Delta m</span>：質量減少量（kg）</p></div>
+<p>相對於 18 g 的反應物，比例約 <span class="m">2\times10^{-10}</span>，遠低於天平的偵測極限。核分裂的質量虧損比例約為 <span class="m">10^{-3}</span> 量級（見 P10），兩者差距六至七個數量級。</p>
+</div>
+<div class="warn">
+<p>注意：質量守恆與原子守恆是平衡反應式與化學計量的依據；<em>能量守恆另屬一事</em>（見 C7）。化學反應中原子核不變，故元素不會轉變為另一種元素。</p>
+</div>
+
+<h4>4. 相關的定量定律</h4>
+<table class="t"><thead><tr><th>定律</th><th>提出者與年代</th><th>內容</th><th>與本單元的關係</th></tr></thead><tbody>
+<tr><td>質量守恆定律</td><td>拉瓦節，1789 年專書明載</td><td>反應前後總質量不變</td><td>平衡反應式、計量計算</td></tr>
+<tr><td>定比定律</td><td>普魯斯特（Joseph Proust），1797</td><td>化合物的組成元素質量比一定</td><td>由組成百分率求實驗式</td></tr>
+<tr><td>倍比定律</td><td>道耳頓（John Dalton），1803–1804</td><td>兩元素生成多種化合物時，與固定質量甲元素化合的乙元素質量成簡單整數比</td><td>見 C1</td></tr>
+<tr><td>氣體化合體積定律</td><td>給呂薩克（Joseph Louis Gay-Lussac），1808</td><td>同溫同壓下，反應氣體與生成氣體體積成簡單整數比</td><td>見本單元四</td></tr>
+<tr><td>亞佛加厥定律</td><td>亞佛加厥（Amedeo Avogadro），1811</td><td>同溫同壓同體積的氣體含相同數目的分子</td><td>見本單元四</td></tr>
+</tbody></table>
+<p>補充：「化學計量」（stoichiometry）一詞由李希特（Jeremias Benjamin Richter）於 1792–1794 年的著作中提出，字源為希臘文「元素」與「測量」。</p>
+
+<h3>二、化學反應式及其平衡</h3>
+<h4>1. 化學反應式的寫法與意義</h4>
+<div class="key">
+<ul>
+<li>箭頭左側為反應物，右側為生成物；係數表示粒子數的比例，化學式的<span class="circle">下標</span><strong>不可為平衡而更改</strong>。<span class="hand">改下標＝換了物質</span></li>
+<li>狀態標示：(s) 固體、(l) 液體、(g) 氣體、(aq) 水溶液。</li>
+<li>條件寫在箭頭上下：加熱以 <span class="m">\Delta</span> 表示，催化劑寫化學式。例：<span class="m">\ce{2KClO3(s) ->[MnO2][$\Delta$] 2KCl(s) + 3O2(g)}</span>。</li>
+<li>可逆反應用 <span class="m">\ce{&lt;=&gt;}</span>，如 <span class="m">\ce{N2(g) + 3H2(g) &lt;=&gt; 2NH3(g)}</span>。</li>
+<li>平衡後的係數取<strong>最簡整數比</strong>；係數 1 省略不寫。</li>
+</ul>
+</div>
+<figure class="fig"><svg viewBox="0 0 600 190" width="600">
+<defs><marker id="C5-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2410c"/></marker></defs>
+<circle cx="50" cy="60" r="14" fill="#e2e8f0" stroke="#1f2a44"/><circle cx="76" cy="60" r="14" fill="#e2e8f0" stroke="#1f2a44"/>
+<circle cx="50" cy="120" r="14" fill="#e2e8f0" stroke="#1f2a44"/><circle cx="76" cy="120" r="14" fill="#e2e8f0" stroke="#1f2a44"/>
+<text x="120" y="96" font-size="18" text-anchor="middle">＋</text>
+<circle cx="160" cy="90" r="20" fill="#d9772b" stroke="#1f2a44"/><circle cx="198" cy="90" r="20" fill="#d9772b" stroke="#1f2a44"/>
+<line x1="245" y1="90" x2="320" y2="90" stroke="#c2410c" stroke-width="2.5" marker-end="url(#C5-ar)"/>
+<circle cx="390" cy="60" r="20" fill="#d9772b" stroke="#1f2a44"/><circle cx="366" cy="44" r="13" fill="#e2e8f0" stroke="#1f2a44"/><circle cx="414" cy="44" r="13" fill="#e2e8f0" stroke="#1f2a44"/>
+<circle cx="500" cy="120" r="20" fill="#d9772b" stroke="#1f2a44"/><circle cx="476" cy="104" r="13" fill="#e2e8f0" stroke="#1f2a44"/><circle cx="524" cy="104" r="13" fill="#e2e8f0" stroke="#1f2a44"/>
+<text x="63" y="165" font-size="14" text-anchor="middle">2 個 H<tspan baseline-shift="sub" font-size="11">2</tspan></text>
+<text x="179" y="165" font-size="14" text-anchor="middle">1 個 O<tspan baseline-shift="sub" font-size="11">2</tspan></text>
+<text x="445" y="165" font-size="14" text-anchor="middle">2 個 H<tspan baseline-shift="sub" font-size="11">2</tspan>O</text>
+<text x="282" y="76" font-size="13" text-anchor="middle">重新排列</text>
+<text x="300" y="185" font-size="13" text-anchor="middle">H 原子：4 → 4　O 原子：2 → 2　分子數：3 → 2</text>
+</svg><figcaption>圖 C5-3　2H<sub>2</sub> + O<sub>2</sub> → 2H<sub>2</sub>O 的粒子模型。灰色球代表 H 原子，橙色球代表 O 原子；原子數守恆，分子數不守恆。</figcaption></figure>
+
+<h4>2. 係數的意義</h4>
+<div class="note"><p>係數比 ＝ 粒子數比 ＝ 莫耳數比</p><p>同溫同壓的氣體才 ＝ 體積比</p><p>質量比要再乘莫耳質量</p></div>
+<table class="t"><thead><tr><th>以 <span class="m">\ce{N2(g) + 3H2(g) -> 2NH3(g)}</span> 為例</th><th><span class="m">\ce{N2}</span></th><th><span class="m">\ce{H2}</span></th><th><span class="m">\ce{NH3}</span></th></tr></thead><tbody>
+<tr><td>分子數比</td><td>1</td><td>3</td><td>2</td></tr>
+<tr><td>莫耳數比</td><td>1 mol</td><td>3 mol</td><td>2 mol</td></tr>
+<tr><td>同溫同壓氣體體積比</td><td>1 體積</td><td>3 體積</td><td>2 體積</td></tr>
+<tr><td>質量（<em>不等於係數比</em>）</td><td>28.0 g</td><td>6.0 g</td><td>34.0 g</td></tr>
+</tbody></table>
+<div class="warn">
+<p>注意：係數比等於粒子數比、莫耳數比；只有<strong>同溫同壓的氣體</strong>，係數比才等於體積比。液體、固體或不同狀況下的氣體不適用。</p>
+<p>注意：質量比須以「係數 × 莫耳質量」計算；上例 <span class="m">28.0+6.0=34.0</span>，質量守恆，但莫耳數 <span class="m">4\ \mathrm{mol}\to2\ \mathrm{mol}</span> 不守恆。</p>
+</div>
+
+<h4>3. 平衡方法</h4>
+<p><strong>觀察法</strong>（適用多數簡單反應）</p>
+<ol>
+<li>選組成最複雜的化學式，係數暫定為 1。</li>
+<li>依序平衡只出現在一種反應物與一種生成物中的元素；氫、氧通常最後平衡。</li>
+<li>原子團（如 <span class="m">\ce{SO4^2-}</span>、<span class="m">\ce{PO4^3-}</span>）在反應前後不變時，可視為一個整體。</li>
+<li>出現分數時，全部係數同乘分母，化為最簡整數。</li>
+</ol>
+<p class="eg"><span class="en">示例　<span class="m">\ce{C2H6 + O2 -> CO2 + H2O}</span></span><span class="zh">設 <span class="m">\ce{C2H6}</span> 為 1：C 得 <span class="m">\ce{CO2}</span> 為 2；H 得 <span class="m">\ce{H2O}</span> 為 3；右側 O 共 <span class="m">4+3=7</span>，<span class="m">\ce{O2}</span> 為 <span class="m">\frac{7}{2}</span>；全部乘 2：<span class="m">\ce{2C2H6 + 7O2 -> 4CO2 + 6H2O}</span>。</span></p>
+<p><strong>燃燒反應通式</strong>：含 C、H、O 的化合物完全燃燒，</p>
+<div class="formula" data-t="燃燒反應通式"><div class="mb">\ce{C_xH_yO_z} + \left(x+\frac{y}{4}-\frac{z}{2}\right)\ce{O2} \longrightarrow x\,\ce{CO2} + \frac{y}{2}\,\ce{H2O}</div><p><span class="m">x,\ y,\ z</span>：分子中 C、H、O 的原子數；烴類 <span class="m">z=0</span>。由此直接求耗氧量與產物量。</p></div>
+<p><strong>代數法</strong>（未定係數法，適用觀察法不易處理者）</p>
+<ol>
+<li>各化學式的係數設為 <span class="m">a,\ b,\ c,\dots</span>。</li>
+<li>每種元素列一條原子數相等的方程式；離子反應另列電荷相等的方程式。</li>
+<li>令某一係數為 1，解聯立方程式，再化為最簡整數。</li>
+</ol>
+<p class="eg"><span class="en">示例　<span class="m">a\,\ce{Cu} + b\,\ce{HNO3} \to c\,\ce{Cu(NO3)2} + d\,\ce{NO} + e\,\ce{H2O}</span>（稀硝酸）</span><span class="zh">Cu：<span class="m">a=c</span>；H：<span class="m">b=2e</span>；N：<span class="m">b=2c+d</span>；O：<span class="m">3b=6c+d+e</span>。令 <span class="m">c=3</span>，由 N 與 O 兩式消去 <span class="m">b</span> 可得 <span class="m">d=2,\ b=8,\ e=4</span>：<span class="m">\ce{3Cu + 8HNO3 -> 3Cu(NO3)2 + 2NO + 4H2O}</span>。</span></p>
+<div class="exam"><p>學測常以粒子模型圖考平衡與係數：先數各種原子在反應前後的個數，再找出未反應而留下的分子；圖中多餘的分子不可算入係數。</p></div>
+<h4>4. 離子反應式（進階）</h4>
+<ul>
+<li>只寫出實際參與反應的離子與物質；不參與的離子稱為<strong>旁觀離子</strong>。</li>
+<li>須同時滿足<strong>原子守恆與電荷守恆</strong>。<span class="hand blue">兩側電荷要先算</span>例：<span class="m">\ce{2Fe^3+ + Cu -> 2Fe^2+ + Cu^2+}</span>，左側電荷 +6，右側 <span class="m">+4+2=+6</span>。</li>
+<li>沉澱反應：<span class="m">\ce{Ag+(aq) + Cl-(aq) -> AgCl(s)}</span>；硝酸根、鈉離子等為旁觀離子。</li>
+</ul>
+<div class="warn">
+<p>易錯：<span class="m">\ce{Fe^3+ + Cu -> Fe^2+ + Cu^2+}</span> 原子已平衡，但電荷左 +3、右 +4，<em>未平衡</em>。</p>
+<p>易錯：把 <span class="m">\ce{H2O2}</span> 寫成 <span class="m">\ce{H2O}</span>，或把 <span class="m">\ce{O2}</span> 拆成 2O 來湊係數，都是改動了物質本身。</p>
+</div>
+<div class="tip">
+<p><strong>深究　原子守恆不一定能決定唯一的係數</strong></p>
+<p>代數法的本質是解齊次線性方程組。若獨立方程式數目比未知數少 1，解在比例上唯一；若少 2 以上，會有無限多組都滿足原子守恆的係數。例：過錳酸鉀在硫酸中氧化過氧化氫，下列兩式原子皆平衡：</p>
+<div class="mb">\begin{aligned}\ce{2KMnO4 + 5H2O2 + 3H2SO4} &amp;\ce{-> K2SO4 + 2MnSO4 + 5O2 + 8H2O}\\ \ce{2KMnO4 + H2O2 + 3H2SO4} &amp;\ce{-> K2SO4 + 2MnSO4 + 3O2 + 4H2O}\end{aligned}</div>
+<p>兩式的氧化數升降總和都為零（原子與電荷平衡的反應式必然如此），單靠氧化數也無法區分。決定性的條件來自反應的化學事實：<span class="m">\ce{H2O2}</span> 為還原劑，每個 <span class="m">\ce{H2O2}</span> 失 2 個電子生成 1 個 <span class="m">\ce{O2}</span>，過錳酸根中的氧進入水中。加上 <span class="m">n(\ce{O2})=n(\ce{H2O2})</span> 這一條件，2 個 Mn 共得 10 個電子，需 5 個 <span class="m">\ce{H2O2}</span>，係數才唯一，即第一式。第二式須假設過錳酸根中 −2 價的氧被氧化成氧氣，不是實際的反應。氧化還原反應式以半反應法平衡，見 C9。</p>
+</div>
+
+<h3>三、原子量、分子量與莫耳</h3>
+<h4>1. 原子量與分子量</h4>
+<div class="key">
+<ul>
+<li><strong>原子量</strong>：以碳-12 原子質量定為 12 為標準的相對質量，無單位。一個碳-12 原子質量的 <span class="m">\frac{1}{12}</span> 稱為原子質量單位（amu，又稱道耳頓，符號 Da）：<span class="m">1\ \mathrm{amu}=1.66054\times10^{-27}\ \mathrm{kg}</span>。</li>
+<li>週期表所列原子量為依同位素天然豐度加權的<strong>平均原子量</strong>（見 C1），故多不為整數，如 Cl 為 35.45。</li>
+<li><strong>分子量</strong>：分子中各原子原子量的總和。如 <span class="m">\ce{H2O}</span>：<span class="m">2\times1.0+16.0=18.0</span>。</li>
+<li><strong>式量</strong>：離子化合物、金屬、網狀固體不以分子存在，以化學式所含原子的原子量總和表示。如 <span class="m">\ce{NaCl}</span> 式量 58.5。</li>
+</ul>
+</div>
+<table class="t"><thead><tr><th>元素</th><th>計算常用值</th><th>國際標準原子量（簡略值）</th><th>元素</th><th>計算常用值</th><th>國際標準原子量（簡略值）</th></tr></thead><tbody>
+<tr><td>H</td><td>1.0</td><td>1.0080</td><td>S</td><td>32.0（或 32.1）</td><td>32.06</td></tr>
+<tr><td>C</td><td>12.0</td><td>12.011</td><td>Cl</td><td>35.5</td><td>35.45</td></tr>
+<tr><td>N</td><td>14.0</td><td>14.007</td><td>K</td><td>39.0（或 39.1）</td><td>39.098</td></tr>
+<tr><td>O</td><td>16.0</td><td>15.999</td><td>Ca</td><td>40.0（或 40.1）</td><td>40.078</td></tr>
+<tr><td>Na</td><td>23.0</td><td>22.990</td><td>Fe</td><td>56.0（或 55.8）</td><td>55.845</td></tr>
+<tr><td>Mg</td><td>24.0（或 24.3）</td><td>24.305</td><td>Cu</td><td>63.5</td><td>63.546</td></tr>
+<tr><td>Al</td><td>27.0</td><td>26.982</td><td>Zn</td><td>65.4</td><td>65.38</td></tr>
+</tbody></table>
+<p>注意：試題會附原子量，計算一律依題目所給數值；不同題目給 Mg = 24 或 24.3 皆屬正常。</p>
+
+<h4>2. 莫耳</h4>
+<div class="note"><p>莫耳與「一打」同為計數用的集合單位：1 打 12 個，1 mol 為 <span class="m">6.02\times10^{23}</span> 個。</p><p>類比限制：莫耳是國際單位制的基本單位，且只用於微觀粒子。</p></div>
+<div class="key">
+<p><strong>定義</strong>（2019 年 5 月 20 日起施行的國際單位制）：1 莫耳（mol）恰含 <span class="m">6.02214076\times10^{23}</span> 個基本粒子。此數為<strong>亞佛加厥常數</strong> <span class="m">N_A=6.02214076\times10^{23}\ \mathrm{mol^{-1}}</span> 的固定數值，計算常取 <span class="box">6.02×10<sup>23</sup> mol<sup>−1</sup></span>。</p>
+<ul>
+<li>莫耳是物質的量（amount of substance）的單位，1971 年成為國際單位制第七個基本單位。</li>
+<li>基本粒子須指明：原子、分子、離子、電子或特定組合。「1 mol 氧」語意不清，應寫 1 mol O 原子或 1 mol <span class="m">\ce{O2}</span> 分子。</li>
+<li><strong>莫耳質量</strong> <span class="m">M</span>：1 mol 物質的質量，單位 g/mol，數值等於原子量、分子量或式量。</li>
+</ul>
+</div>
+<div class="formula" data-t="莫耳數的換算"><div class="mb">n=\frac{m}{M}=\frac{N}{N_A}\qquad(\text{氣體})\ n=\frac{V}{V_m}</div><p><span class="m">n</span>：莫耳數（mol）　<span class="m">m</span>：質量（g）　<span class="m">M</span>：莫耳質量（g/mol）　<span class="m">N</span>：粒子數　<span class="m">V_m</span>：氣體莫耳體積（L/mol）</p></div>
+<figure class="fig"><svg viewBox="0 0 600 270" width="600">
+<defs><marker id="C5-ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f2a44"/></marker></defs>
+<rect x="235" y="105" width="130" height="60" rx="10" fill="#cfe3f8" stroke="#2f6fb5" stroke-width="2"/>
+<text x="300" y="132" font-size="16" text-anchor="middle">莫耳數</text>
+<text x="300" y="153" font-size="15" text-anchor="middle" font-style="italic">n</text>
+<rect x="20" y="105" width="120" height="60" rx="10" fill="#fbdcbd" stroke="#d9772b" stroke-width="1.5"/>
+<text x="80" y="132" font-size="15" text-anchor="middle">質量</text><text x="80" y="153" font-size="14" text-anchor="middle">m（g）</text>
+<rect x="460" y="105" width="120" height="60" rx="10" fill="#c9ebd7" stroke="#2e8b57" stroke-width="1.5"/>
+<text x="520" y="132" font-size="15" text-anchor="middle">粒子數</text><text x="520" y="153" font-size="14" text-anchor="middle" font-style="italic">N</text>
+<rect x="230" y="10" width="140" height="56" rx="10" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5"/>
+<text x="300" y="34" font-size="15" text-anchor="middle">氣體體積</text><text x="300" y="55" font-size="13" text-anchor="middle">V（L，指定溫度壓力）</text>
+<rect x="230" y="205" width="140" height="56" rx="10" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5"/>
+<text x="300" y="229" font-size="15" text-anchor="middle">溶液</text><text x="300" y="250" font-size="13" text-anchor="middle">體積莫耳濃度 × 體積</text>
+<line x1="145" y1="125" x2="228" y2="125" stroke="#1f2a44" stroke-width="1.5" marker-end="url(#C5-ar2)"/>
+<line x1="230" y1="147" x2="147" y2="147" stroke="#1f2a44" stroke-width="1.5" marker-end="url(#C5-ar2)"/>
+<text x="187" y="118" font-size="13" text-anchor="middle">÷ M</text><text x="187" y="163" font-size="13" text-anchor="middle">× M</text>
+<line x1="370" y1="125" x2="453" y2="125" stroke="#1f2a44" stroke-width="1.5" marker-end="url(#C5-ar2)"/>
+<line x1="455" y1="147" x2="372" y2="147" stroke="#1f2a44" stroke-width="1.5" marker-end="url(#C5-ar2)"/>
+<text x="412" y="118" font-size="13" text-anchor="middle">× N<tspan baseline-shift="sub" font-size="10">A</tspan></text><text x="412" y="163" font-size="13" text-anchor="middle">÷ N<tspan baseline-shift="sub" font-size="10">A</tspan></text>
+<line x1="290" y1="100" x2="290" y2="70" stroke="#1f2a44" stroke-width="1.5" marker-end="url(#C5-ar2)"/>
+<line x1="310" y1="70" x2="310" y2="100" stroke="#1f2a44" stroke-width="1.5" marker-end="url(#C5-ar2)"/>
+<text x="282" y="90" font-size="13" text-anchor="end">× V<tspan baseline-shift="sub" font-size="10">m</tspan></text><text x="318" y="90" font-size="13">÷ V<tspan baseline-shift="sub" font-size="10">m</tspan></text>
+<line x1="300" y1="168" x2="300" y2="200" stroke="#1f2a44" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text x="308" y="190" font-size="12" fill="#64748b">見 C6</text>
+</svg><figcaption>圖 C5-4　質量、莫耳數、粒子數與氣體體積的換算。所有化學計量都經由莫耳數轉換。</figcaption></figure>
+<table class="t"><thead><tr><th>物質</th><th>莫耳質量（g/mol）</th><th>1 mol 所含粒子</th><th>注意</th></tr></thead><tbody>
+<tr><td><span class="m">\ce{H2O}</span></td><td>18.0</td><td><span class="m">N_A</span> 個分子；<span class="m">2N_A</span> 個 H 原子；<span class="m">3N_A</span> 個原子</td><td>液態水 1 mol 約 18 mL</td></tr>
+<tr><td><span class="m">\ce{O2}</span></td><td>32.0</td><td><span class="m">N_A</span> 個分子；<span class="m">2N_A</span> 個 O 原子</td><td>1 mol O 原子僅 16.0 g</td></tr>
+<tr><td><span class="m">\ce{NaCl}</span></td><td>58.5</td><td><span class="m">N_A</span> 個 <span class="m">\ce{Na+}</span> 與 <span class="m">N_A</span> 個 <span class="m">\ce{Cl-}</span></td><td>無 NaCl 分子；離子共 <span class="m">2N_A</span> 個</td></tr>
+<tr><td><span class="m">\ce{CaCl2}</span></td><td>111</td><td>離子共 <span class="m">3N_A</span> 個</td><td><span class="m">\ce{Cl-}</span> 為 2 mol</td></tr>
+<tr><td>電子</td><td>約 <span class="m">5.49\times10^{-4}</span></td><td><span class="m">N_A</span> 個電子</td><td>電量約 96500 C（法拉第常數）</td></tr>
+</tbody></table>
+<div class="warn">
+<p>易錯：單一分子的質量 <span class="m">=\frac{M}{N_A}</span>。<span class="m">\ce{H2O}</span> 分子質量 <span class="m">\frac{18.0}{6.02\times10^{23}}=2.99\times10^{-23}\ \mathrm{g}</span>；單位寫 kg 時再乘 <span class="m">10^{-3}</span>。</p>
+<p>易錯：比較「原子數最多」須先換成莫耳數，再乘以每個分子所含原子數；只比較質量或莫耳數會誤判。</p>
+</div>
+<div class="exam"><p>學測常考粒子數比較與單一粒子質量：先換莫耳數，再乘每單位所含的原子或離子數；離子化合物計離子數時，<span class="m">\ce{NH4+}</span>、<span class="m">\ce{SO4^2-}</span> 等多原子離子各算 1 個。</p></div>
+<div class="tip">
+<p><strong>深究　2019 年莫耳定義的改變</strong></p>
+<ul>
+<li>舊定義（1971–2019）：1 mol 為 0.012 kg 碳-12 所含的原子數。<span class="m">N_A</span> 為實驗測量值，帶有不確定度；碳-12 的莫耳質量恰為 12 g/mol。</li>
+<li>新定義：固定 <span class="m">N_A</span> 的數值，莫耳不再依賴公斤。代價是碳-12 的莫耳質量變為測量值，莫耳質量常數 <span class="m">M_u</span> 的 2022 年 CODATA 建議值為 <span class="m">1.00000000105\times10^{-3}\ \mathrm{kg/mol}</span>，與 1 g/mol 的相對差約 <span class="m">10^{-9}</span>，化學計算中完全可忽略。</li>
+<li>「莫耳質量的數值等於分子量」因此由嚴格相等變為極佳的近似。</li>
+</ul>
+</div>
+<div class="tip">
+<p><strong>深究　亞佛加厥數如何測量</strong></p>
+<ul>
+<li>1865 年，羅士密特（Josef Loschmidt）由氣體動力論估計單位體積氣體的分子數，為最早的估計之一。</li>
+<li>1909 年，裴蘭（Jean Perrin）以布朗運動實驗測得此數，並以亞佛加厥之名命名；裴蘭因證實原子與分子的實在性，獲 1926 年諾貝爾物理獎。</li>
+<li>電解法：法拉第常數 <span class="m">F</span>（1 mol 電子的電量）除以基本電荷 <span class="m">e</span>：<span class="m">N_A=\frac{F}{e}=\frac{96485\ \mathrm{C/mol}}{1.602\times10^{-19}\ \mathrm{C}}\approx6.02\times10^{23}\ \mathrm{mol^{-1}}</span>。</li>
+<li>X 光晶體密度法：以 X 光繞射測晶格常數 <span class="m">a</span>，再測密度 <span class="m">\rho</span> 與莫耳質量 <span class="m">M</span>。矽為鑽石型結構，每個立方晶胞含 8 個原子：</li>
+</ul>
+<div class="mb">N_A=\frac{8M}{\rho a^3}=\frac{8\times28.0855\ \mathrm{g/mol}}{2.329\ \mathrm{g/cm^3}\times(5.431\times10^{-8}\ \mathrm{cm})^3}\approx6.02\times10^{23}\ \mathrm{mol^{-1}}</div>
+<p>2019 年改制前，國際「亞佛加厥計畫」以高純度矽-28 單晶球進行此測量，所得 <span class="m">N_A</span> 是固定新定義數值的主要依據之一。</p>
+</div>
+
+<h3>四、亞佛加厥定律與氣體計量</h3>
+<h4>1. 從化合體積到分子概念</h4>
+<ul>
+<li>1808 年給呂薩克提出<strong>氣體化合體積定律</strong>：同溫同壓下，氫 2 體積與氧 1 體積化合生成水蒸氣 2 體積；氫 1 體積與氯 1 體積生成氯化氫 2 體積。</li>
+<li>依道耳頓原子說，若氫、氯皆以單一原子存在，1 體積氫與 1 體積氯只能生成 1 體積氯化氫，否則原子須分割。道耳頓因此質疑給呂薩克的數據。</li>
+<li>1811 年亞佛加厥提出：<span class="circle">同溫同壓</span>下，<strong>同體積的氣體含相同數目的分子</strong>，且氫、氧、氯等元素氣體為雙原子分子。<span class="hand">分子與原子分開</span>如此 <span class="m">\ce{H2 + Cl2 -> 2HCl}</span> 自然得到 1:1:2 的體積比。</li>
+<li>此假說長期未獲重視；1860 年卡爾斯魯厄國際化學會議上，坎尼乍羅（Stanislao Cannizzaro）以此假說整理出一致的原子量體系，才廣被接受。</li>
+</ul>
+<figure class="fig"><svg viewBox="0 0 600 250" width="600">
+<defs><marker id="C5-ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2410c"/></marker></defs>
+<text x="10" y="22" font-size="14" fill="#c2410c">道耳頓的看法（單原子）</text>
+<rect x="20" y="32" width="80" height="70" fill="none" stroke="#1f2a44"/><circle cx="60" cy="67" r="13" fill="#e2e8f0" stroke="#1f2a44"/>
+<text x="120" y="72" font-size="18" text-anchor="middle">＋</text>
+<rect x="140" y="32" width="80" height="70" fill="none" stroke="#1f2a44"/><circle cx="180" cy="67" r="15" fill="#2e8b57" stroke="#1f2a44"/>
+<line x1="235" y1="67" x2="285" y2="67" stroke="#c2410c" stroke-width="2" marker-end="url(#C5-ar3)"/>
+<rect x="300" y="32" width="80" height="70" fill="none" stroke="#1f2a44"/><circle cx="330" cy="67" r="13" fill="#e2e8f0" stroke="#1f2a44"/><circle cx="355" cy="67" r="15" fill="#2e8b57" stroke="#1f2a44"/>
+<rect x="390" y="32" width="80" height="70" fill="none" stroke="#94a3b8" stroke-dasharray="5 4"/><text x="430" y="72" font-size="13" text-anchor="middle" fill="#64748b">空</text>
+<text x="490" y="62" font-size="13">只得 1 體積，</text><text x="490" y="80" font-size="13">與實驗不符</text>
+<text x="10" y="138" font-size="14" fill="#2f6fb5">亞佛加厥的看法（雙原子分子）</text>
+<rect x="20" y="150" width="80" height="70" fill="none" stroke="#1f2a44"/><circle cx="48" cy="185" r="13" fill="#e2e8f0" stroke="#1f2a44"/><circle cx="72" cy="185" r="13" fill="#e2e8f0" stroke="#1f2a44"/>
+<text x="120" y="190" font-size="18" text-anchor="middle">＋</text>
+<rect x="140" y="150" width="80" height="70" fill="none" stroke="#1f2a44"/><circle cx="166" cy="185" r="15" fill="#2e8b57" stroke="#1f2a44"/><circle cx="194" cy="185" r="15" fill="#2e8b57" stroke="#1f2a44"/>
+<line x1="235" y1="185" x2="285" y2="185" stroke="#c2410c" stroke-width="2" marker-end="url(#C5-ar3)"/>
+<rect x="300" y="150" width="80" height="70" fill="none" stroke="#1f2a44"/><circle cx="330" cy="185" r="13" fill="#e2e8f0" stroke="#1f2a44"/><circle cx="355" cy="185" r="15" fill="#2e8b57" stroke="#1f2a44"/>
+<rect x="390" y="150" width="80" height="70" fill="none" stroke="#1f2a44"/><circle cx="420" cy="185" r="13" fill="#e2e8f0" stroke="#1f2a44"/><circle cx="445" cy="185" r="15" fill="#2e8b57" stroke="#1f2a44"/>
+<text x="490" y="180" font-size="13">得 2 體積，</text><text x="490" y="198" font-size="13">與實驗相符</text>
+<text x="60" y="240" font-size="13" text-anchor="middle">氫 1 體積</text><text x="180" y="240" font-size="13" text-anchor="middle">氯 1 體積</text><text x="385" y="240" font-size="13" text-anchor="middle">氯化氫</text>
+</svg><figcaption>圖 C5-5　氫與氯化合的體積關係。每一方框代表同溫同壓下的 1 體積，框內以 1 個粒子代表該體積中的分子數（示意圖）。</figcaption></figure>
+
+<h4>2. 莫耳體積</h4>
+<div class="mnem"><p>零度一大氣壓：二二點四；二十五度一大氣壓：二四點五（單位 L/mol）</p></div>
+<div class="key">
+<p>理想氣體在相同溫度、壓力下，1 mol 所占體積相同，與氣體種類無關。</p>
+<table class="t"><thead><tr><th>狀況</th><th>溫度與壓力</th><th>莫耳體積 <span class="m">V_m</span></th></tr></thead><tbody>
+<tr><td>高中課程所稱標準狀況（STP）</td><td>0 °C、1 atm</td><td>22.4 L/mol（精確值 22.414 L/mol）</td></tr>
+<tr><td>常溫常壓</td><td>25 °C、1 atm</td><td>24.5 L/mol</td></tr>
+<tr><td>現行 IUPAC 標準溫度與壓力</td><td>0 °C、100 kPa（1 bar）</td><td>22.7 L/mol（22.711 L/mol）</td></tr>
+</tbody></table>
+</div>
+<ul>
+<li>由 <span class="m">V_m=\frac{RT}{P}</span> 可得各狀況的莫耳體積：<span class="m">\frac{0.082\times298}{1}=24.4</span>，以更精確的 <span class="m">R=0.08206</span> 計算為 24.5 L/mol。</li>
+<li><strong>氣體密度與莫耳質量</strong>：見下方公式卡。0 °C、1 atm 下密度 1.25 g/L 的氣體，<span class="m">M=1.25\times22.4=28.0\ \mathrm{g/mol}</span>，可能為 <span class="m">\ce{N2}</span>、<span class="m">\ce{CO}</span> 或 <span class="m">\ce{C2H4}</span>。</li>
+<li><strong>相對密度</strong>：同溫同壓下兩氣體密度比等於莫耳質量比，<span class="m">\frac{\rho_1}{\rho_2}=\frac{M_1}{M_2}</span>。</li>
+</ul>
+<div class="formula" data-t="氣體密度與莫耳質量"><div class="mb">M=\rho\,V_m\qquad\frac{\rho_1}{\rho_2}=\frac{M_1}{M_2}</div><p><span class="m">\rho</span>：氣體密度（g/L）　<span class="m">V_m</span>：該溫度壓力下的莫耳體積（L/mol）　<span class="m">M</span>：莫耳質量（g/mol）</p></div>
+<div class="warn">
+<p>注意：22.4 L/mol 只適用於 0 °C、1 atm 的氣體。<em>液態水、固體在任何狀況都不能用莫耳體積換算</em>；25 °C 時水為液體，「22.4 L 水」的說法錯誤。</p>
+<p>注意：計算前先確認題目指定的溫度與壓力及所給的 <span class="m">V_m</span>。</p>
+</div>
+
+<h4>3. 氣體反應的體積計算</h4>
+<p>同溫同壓下，氣體的體積比等於莫耳數比，可直接以體積代替莫耳數計算，<span class="ul">不必換算成莫耳</span>。</p>
+<figure class="fig"><svg viewBox="0 0 600 230" width="600">
+<defs><marker id="C5-ar4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2410c"/></marker></defs>
+<rect x="30" y="40" width="70" height="140" fill="#cfe3f8" stroke="#2f6fb5"/><text x="65" y="115" font-size="14" text-anchor="middle">CH<tspan baseline-shift="sub" font-size="11">4</tspan></text><text x="65" y="200" font-size="13" text-anchor="middle">10 mL</text>
+<rect x="110" y="40" width="140" height="140" fill="#fbdcbd" stroke="#d9772b"/><text x="180" y="115" font-size="14" text-anchor="middle">O<tspan baseline-shift="sub" font-size="11">2</tspan></text><text x="180" y="200" font-size="13" text-anchor="middle">20 mL</text>
+<text x="140" y="28" font-size="13" text-anchor="middle">反應前　共 30 mL</text>
+<line x1="265" y1="110" x2="315" y2="110" stroke="#c2410c" stroke-width="2" marker-end="url(#C5-ar4)"/>
+<rect x="330" y="40" width="70" height="140" fill="#e2e8f0" stroke="#1f2a44"/><text x="365" y="115" font-size="14" text-anchor="middle">CO<tspan baseline-shift="sub" font-size="11">2</tspan></text><text x="365" y="200" font-size="13" text-anchor="middle">10 mL</text>
+<rect x="410" y="40" width="140" height="140" fill="#c9ebd7" stroke="#2e8b57" stroke-dasharray="5 4"/><text x="480" y="108" font-size="14" text-anchor="middle">H<tspan baseline-shift="sub" font-size="11">2</tspan>O(g)</text><text x="480" y="128" font-size="12" text-anchor="middle">（冷卻後凝結為液體）</text><text x="480" y="200" font-size="13" text-anchor="middle">20 mL</text>
+<text x="440" y="28" font-size="13" text-anchor="middle">反應後：120 °C 時 30 mL；室溫時約 10 mL</text>
+</svg><figcaption>圖 C5-6　CH<sub>4</sub> + 2O<sub>2</sub> → CO<sub>2</sub> + 2H<sub>2</sub>O 的體積關係（同溫同壓下測量；室溫時水為液體，體積可忽略）</figcaption></figure>
+<ul>
+<li>水的狀態決定反應後體積：高於 100 °C 測量時 <span class="m">\ce{H2O}</span> 計入氣體；冷卻至室溫時水凝結，體積可忽略（忽略水的飽和蒸氣壓）。</li>
+<li>「體積減少量」法：<span class="m">\ce{C_xH_y}</span> 完全燃燒且水凝結時，每體積烴使氣體減少 <span class="m">1+\frac{y}{4}</span> 體積；與 <span class="m">x</span> 無關。</li>
+<li>剩餘氣體的成分：通過 NaOH 溶液吸收 <span class="m">\ce{CO2}</span>，剩餘者為過量的 <span class="m">\ce{O2}</span>（或過量燃料）。</li>
+</ul>
+<div class="exam"><p>學測氣體計量多以同溫同壓的體積比命題：烴的燃燒、混合氣體組成、反應後體積變化。陷阱為<strong>水的狀態</strong>（室溫為液體）與剩餘氣體成分的兩種可能。</p></div>
+<div class="tip">
+<p><strong>深究　莫耳體積與氣體種類無關的原因</strong></p>
+<p>常溫常壓下，氣體分子平均間距約為分子直徑的 10 倍，分子本身體積不到總體積的千分之一；氣體體積主要由分子數、溫度與壓力決定。分子間吸引力與分子大小不可忽略時（高壓、低溫、易液化的氣體如 <span class="m">\ce{NH3}</span>、<span class="m">\ce{SO2}</span>），實際莫耳體積偏離理想值，見 C4 真實氣體。</p>
+</div>
+
+<h3>五、實驗式與分子式</h3>
+<h4>1. 各種化學式</h4>
+<table class="t"><thead><tr><th>名稱</th><th>表示內容</th><th>示例（乙酸）</th><th>注意</th></tr></thead><tbody>
+<tr><td>實驗式（簡式）</td><td>組成原子的最簡整數比</td><td><span class="m">\ce{CH2O}</span></td><td>由元素分析直接求得</td></tr>
+<tr><td>分子式</td><td>一個分子中各原子的實際數目</td><td><span class="m">\ce{C2H4O2}</span></td><td>為實驗式的整數倍；須另知分子量</td></tr>
+<tr><td>示性式</td><td>標出官能基</td><td><span class="m">\ce{CH3COOH}</span></td><td>見 C10</td></tr>
+<tr><td>結構式</td><td>原子的連接方式</td><td>畫出各鍵</td><td>同分異構物須以結構式區分</td></tr>
+</tbody></table>
+<ul>
+<li>實驗式相同、分子式不同：<span class="m">\ce{CH2O}</span>（甲醛）、<span class="m">\ce{C2H4O2}</span>（乙酸）、<span class="m">\ce{C6H12O6}</span>（葡萄糖）三者組成百分率相同；<span class="m">\ce{C2H2}</span> 與 <span class="m">\ce{C6H6}</span> 的實驗式都是 CH。</li>
+<li>分子式相同、結構不同：<span class="m">\ce{C2H6O}</span> 可為乙醇或甲醚（同分異構物）。</li>
+<li>離子化合物與網狀固體沒有分子，化學式即實驗式，如 <span class="m">\ce{NaCl}</span>、<span class="m">\ce{SiO2}</span>。</li>
+</ul>
+
+<h4>2. 由組成求實驗式</h4>
+<div class="key">
+<p><strong>解題步驟</strong></p>
+<ol>
+<li>質量百分率視為 100 g 樣品中各元素的質量。</li>
+<li>各元素質量除以原子量，得莫耳數。</li>
+<li>全部除以最小莫耳數。</li>
+<li>出現接近 .5、.33、.25 的小數時，同乘 2、3、4 化為整數；不可把 1.5 四捨五入成 2。<span class="hand">1.5 要乘 2</span></li>
+<li>由分子量 ÷ 實驗式式量 = 整數 <span class="m">n</span>，分子式 = （實驗式）<sub>n</sub>。</li>
+</ol>
+</div>
+<p class="eg"><span class="en">示例　某化合物含 C 85.7%、H 14.3%，分子量 56</span><span class="zh">C：<span class="m">\frac{85.7}{12.0}=7.14</span>；H：<span class="m">\frac{14.3}{1.0}=14.3</span>；比為 1:2，實驗式 <span class="m">\ce{CH2}</span>（式量 14）；<span class="m">n=\frac{56}{14}=4</span>，分子式 <span class="m">\ce{C4H8}</span>。</span></p>
+<div class="warn">
+<p>易錯：莫耳比 1 : 1.33 應乘 3 得 3:4（如 <span class="m">\ce{Fe3O4}</span>）；1 : 2.5 應乘 2 得 2:5（如 <span class="m">\ce{P2O5}</span> 的實驗式）。</p>
+<p>易錯：只知<span class="circle">組成百分率</span>，無法區分 <span class="m">\ce{CH2O}</span>、<span class="m">\ce{C2H4O2}</span>、<span class="m">\ce{C6H12O6}</span>，<em>必須另有分子量</em>（由氣體密度、蒸氣密度或質譜等測得）。</p>
+</div>
+
+<h4>3. 燃燒分析（進階）</h4>
+<div class="note"><p>無水 <span class="m">\ce{CaCl2}</span>：只吸水</p><p>NaOH：水與 <span class="m">\ce{CO2}</span> 都吸</p><p>CuO：把 CO 補氧化成 <span class="m">\ce{CO2}</span></p></div>
+<p>含 C、H（、O）的有機化合物在充足氧氣中完全燃燒，C 全部變為 <span class="m">\ce{CO2}</span>，H 全部變為 <span class="m">\ce{H2O}</span>，分別以吸收管吸收後稱重。</p>
+<figure class="fig"><svg viewBox="0 0 620 220" width="620">
+<defs><marker id="C5-ar5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f2a44"/></marker></defs>
+<text x="30" y="80" font-size="14" text-anchor="middle">O<tspan baseline-shift="sub" font-size="11">2</tspan></text>
+<line x1="15" y1="100" x2="58" y2="100" stroke="#1f2a44" stroke-width="1.5" marker-end="url(#C5-ar5)"/>
+<rect x="60" y="80" width="230" height="40" rx="6" fill="#e2e8f0" stroke="#1f2a44" stroke-width="1.5"/>
+<rect x="85" y="92" width="40" height="16" fill="#d9772b"/>
+<text x="105" y="140" font-size="13" text-anchor="middle">樣品</text>
+<rect x="160" y="88" width="110" height="24" fill="#1f2a44" opacity="0.75"/>
+<text x="215" y="140" font-size="13" text-anchor="middle">CuO（確保完全氧化）</text>
+<path d="M75 165 Q85 150 95 165 Q105 148 115 165 Q125 150 135 165 Q145 148 155 165 Q165 150 175 165 Q185 148 195 165 Q205 150 215 165 Q225 148 235 165 Q245 150 255 165 Q265 148 275 165" fill="none" stroke="#c2410c" stroke-width="2"/>
+<text x="175" y="185" font-size="13" text-anchor="middle">加熱爐</text>
+<line x1="290" y1="100" x2="333" y2="100" stroke="#1f2a44" stroke-width="1.5" marker-end="url(#C5-ar5)"/>
+<rect x="335" y="75" width="100" height="50" rx="8" fill="#cfe3f8" stroke="#2f6fb5" stroke-width="1.5"/>
+<text x="385" y="98" font-size="13" text-anchor="middle">甲管</text><text x="385" y="116" font-size="13" text-anchor="middle">CaCl<tspan baseline-shift="sub" font-size="10">2</tspan>（無水）</text>
+<text x="385" y="145" font-size="13" text-anchor="middle">吸收 H<tspan baseline-shift="sub" font-size="10">2</tspan>O</text>
+<line x1="435" y1="100" x2="473" y2="100" stroke="#1f2a44" stroke-width="1.5" marker-end="url(#C5-ar5)"/>
+<rect x="475" y="75" width="100" height="50" rx="8" fill="#c9ebd7" stroke="#2e8b57" stroke-width="1.5"/>
+<text x="525" y="98" font-size="13" text-anchor="middle">乙管</text><text x="525" y="116" font-size="13" text-anchor="middle">NaOH</text>
+<text x="525" y="145" font-size="13" text-anchor="middle">吸收 CO<tspan baseline-shift="sub" font-size="10">2</tspan></text>
+<line x1="575" y1="100" x2="612" y2="100" stroke="#1f2a44" stroke-width="1.5" marker-end="url(#C5-ar5)"/>
+<text x="460" y="40" font-size="13" text-anchor="middle">順序不可對調：NaOH 同時吸收 H<tspan baseline-shift="sub" font-size="10">2</tspan>O 與 CO<tspan baseline-shift="sub" font-size="10">2</tspan></text>
+</svg><figcaption>圖 C5-7　燃燒分析裝置（示意圖，未依比例）。吸收管反應前後的增重分別為生成的水與二氧化碳的質量。</figcaption></figure>
+<div class="formula" data-t="燃燒分析"><div class="mb">m_\mathrm{C}=m_{\ce{CO2}}\times\frac{12.0}{44.0}\qquad m_\mathrm{H}=m_{\ce{H2O}}\times\frac{2.0}{18.0}\qquad m_\mathrm{O}=m_\text{樣品}-m_\mathrm{C}-m_\mathrm{H}</div><p><span class="m">m_{\ce{CO2}}</span>：NaOH 管增重　<span class="m">m_{\ce{H2O}}</span>：<span class="m">\ce{CaCl2}</span> 管增重（單位皆為 g）</p></div>
+<div class="mnem"><p>先吸水、後吸碳；氧靠差減</p></div>
+<div class="key">
+<ul>
+<li>氧不能由吸收管求得（燃燒時另通入氧氣），以<strong>差減法</strong>求出。</li>
+<li>先吸水、後吸 <span class="m">\ce{CO2}</span>：無水 <span class="m">\ce{CaCl2}</span> 或過氯酸鎂只吸水；NaOH（或鹼石灰）會同時吸收水與 <span class="m">\ce{CO2}</span>。</li>
+<li>CuO 的作用：把不完全燃燒生成的 CO 氧化為 <span class="m">\ce{CO2}</span>。</li>
+</ul>
+</div>
+<div class="warn">
+<p>誤差分析：若部分碳以 <span class="circle">CO</span> 離開而未被吸收，<span class="m">m_\mathrm{C}</span> 偏低，差減求得的 <span class="m">m_\mathrm{O}</span> 偏高。若外界水氣進入甲管，<span class="m">m_\mathrm{H}</span> 偏高、<span class="m">m_\mathrm{O}</span> 偏低。若吸收管順序對調，乙管同時吸水，<span class="m">m_\mathrm{C}</span> 偏高、甲管幾乎不增重。</p>
+</div>
+<div class="tip">
+<p><strong>深究　燃燒分析的發展</strong></p>
+<ul>
+<li>拉瓦節已嘗試燃燒有機物並測量 <span class="m">\ce{CO2}</span> 與水；19 世紀初給呂薩克等以氧化劑燃燒樣品，以氣體體積測定碳。</li>
+<li>李比希（Justus von Liebig，1803–1873）於 1831 年發表「鉀球」（Kaliapparat）：五個玻璃球排成三角形，內裝氫氧化鉀溶液吸收 <span class="m">\ce{CO2}</span>，前接氯化鈣管吸水。改以<strong>稱重</strong>取代體積測量，大幅提高精確度，使有機化合物的組成分析成為例行工作。</li>
+<li>現代元素分析儀（CHN 分析儀）在高溫下燃燒數毫克樣品，以氣相層析分離 <span class="m">\ce{CO2}</span>、<span class="m">\ce{H2O}</span>、<span class="m">\ce{N2}</span>，再以熱導偵測器定量；原理仍為燃燒後測產物。分子量則多以質譜儀測定。</li>
+</ul>
+</div>
+
+<h4>4. 結晶水的測定</h4>
+<p>含結晶水的鹽（水合物）加熱至恆重，失去的質量即結晶水的質量，可求化學式中的 <span class="m">x</span>。</p>
+<div class="formula" data-t="結晶水數目"><div class="mb">x=\frac{n(\ce{H2O})}{n(\text{無水鹽})}=\frac{(m_\text{加熱前}-m_\text{加熱後})/18.0}{m_\text{加熱後}/M_\text{無水鹽}}</div><p><span class="m">m</span>：質量（g）　<span class="m">M_\text{無水鹽}</span>：無水鹽莫耳質量（g/mol）；須加熱至<span class="box">恆重</span></p></div>
+<figure class="fig"><svg viewBox="0 0 560 260" width="560">
+<line x1="70" y1="220" x2="530" y2="220" stroke="#1f2a44" stroke-width="1.5"/>
+<line x1="70" y1="220" x2="70" y2="20" stroke="#1f2a44" stroke-width="1.5"/>
+<text x="300" y="252" font-size="13" text-anchor="middle">溫度（°C，依序升高；示意）</text>
+<text x="22" y="120" font-size="13" text-anchor="middle" transform="rotate(-90 22 120)">剩餘固體質量（%）</text>
+<line x1="65" y1="40" x2="70" y2="40" stroke="#1f2a44"/><text x="60" y="44" font-size="12" text-anchor="end">100</text>
+<line x1="65" y1="76" x2="70" y2="76" stroke="#1f2a44"/><text x="60" y="80" font-size="12" text-anchor="end">85.6</text>
+<line x1="65" y1="112" x2="70" y2="112" stroke="#1f2a44"/><text x="60" y="116" font-size="12" text-anchor="end">71.2</text>
+<line x1="65" y1="130" x2="70" y2="130" stroke="#1f2a44"/><text x="60" y="134" font-size="12" text-anchor="end">63.9</text>
+<polyline points="70,40 150,40 175,76 245,76 270,112 360,112 390,130 520,130" fill="none" stroke="#2f6fb5" stroke-width="2.5"/>
+<line x1="70" y1="76" x2="175" y2="76" stroke="#94a3b8" stroke-dasharray="3 3"/>
+<line x1="70" y1="112" x2="270" y2="112" stroke="#94a3b8" stroke-dasharray="3 3"/>
+<line x1="70" y1="130" x2="390" y2="130" stroke="#94a3b8" stroke-dasharray="3 3"/>
+<text x="170" y="34" font-size="13" text-anchor="start">CuSO<tspan baseline-shift="sub" font-size="10">4</tspan>·5H<tspan baseline-shift="sub" font-size="10">2</tspan>O（藍）</text>
+<text x="215" y="68" font-size="13" text-anchor="middle">·3H<tspan baseline-shift="sub" font-size="10">2</tspan>O</text>
+<text x="315" y="104" font-size="13" text-anchor="middle">·H<tspan baseline-shift="sub" font-size="10">2</tspan>O</text>
+<text x="455" y="150" font-size="13" text-anchor="middle">CuSO<tspan baseline-shift="sub" font-size="10">4</tspan>（白）</text>
+</svg><figcaption>圖 C5-8　五水硫酸銅加熱時剩餘固體質量百分率的變化（示意圖；溫度軸未標刻度，各階段溫度依加熱速率與實驗條件而異）。以 Cu = 63.5、S = 32.0 計，249.5 → 213.5 → 177.5 → 159.5。</figcaption></figure>
+<div class="warn">
+<p>誤差分析：加熱不完全（仍含部分結晶水）→ 測得失水量偏少 → <span class="m">x</span> 偏低。加熱過度使無水鹽分解（如 <span class="m">\ce{CuSO4}</span> 高溫分解出 <span class="m">\ce{SO3}</span>）→ 殘餘質量偏低、表觀失水量偏多 → <span class="m">x</span> 偏高。冷卻時未置於乾燥器而吸回水氣 → <span class="m">x</span> 偏低。</p>
+</div>
+<div class="exam"><p>學測常考「組成百分率 → 實驗式 → 分子式」與燃燒分析數據計算，並以吸收管順序、CO 未被吸收、水合物加熱不完全等情境考<strong>誤差方向</strong>；作答先寫出受影響的測量量，再推到結果。</p></div>
+
+<h3>六、化學計量：限量試劑、產率與多步反應</h3>
+<h4>1. 基本步驟</h4>
+<div class="key">
+<ol>
+<li>寫出並平衡反應式。</li>
+<li>已知量（質量、體積、粒子數、溶液）換成莫耳數。</li>
+<li>依<strong>係數比</strong>求所求物質的莫耳數。</li>
+<li>莫耳數換回所求單位（質量、體積、粒子數）。</li>
+</ol>
+</div>
+<div class="formula" data-t="係數比關係"><div class="mb">\frac{n_\mathrm{A}}{a}=\frac{n_\mathrm{B}}{b}\qquad(a\mathrm{A}+\cdots\to b\mathrm{B}+\cdots)</div><p><span class="m">n</span>：莫耳數（mol）　<span class="m">a,\ b</span>：平衡反應式中的係數</p></div>
+<p class="eg"><span class="en">示例　完全燃燒 4.6 g 乙醇 <span class="m">\ce{C2H5OH}</span>，在 25 °C、1 atm 下生成 <span class="m">\ce{CO2}</span> 的體積</span><span class="zh"><span class="m">\ce{C2H5OH + 3O2 -> 2CO2 + 3H2O}</span>；<span class="m">n=\frac{4.6}{46.0}=0.10\ \mathrm{mol}</span>；<span class="m">\ce{CO2}</span> 為 0.20 mol；<span class="m">0.20\times24.5=4.9\ \mathrm{L}</span>。</span></p>
+
+<h4>2. 限量試劑</h4>
+<div class="key">
+<ul>
+<li><strong>限量試劑</strong>：反應中先耗盡的反應物，決定生成物的最大量；其餘為<strong>過量試劑</strong>。</li>
+<li>判斷法：各反應物的「莫耳數 ÷ 係數」，<span class="circle">商最小</span>者<strong>為限量試劑</strong>。<span class="hand">不看質量大小</span></li>
+<li>判斷依據是莫耳數與係數，<em>不是質量大小，也不是莫耳數大小</em>。</li>
+<li>所有生成量與消耗量都依限量試劑計算；過量試劑的剩餘量 = 原有量 − 消耗量。</li>
+</ul>
+</div>
+<figure class="fig"><svg viewBox="0 0 600 210" width="600">
+<defs><marker id="C5-ar6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#c2410c"/></marker></defs>
+<rect x="15" y="20" width="250" height="150" rx="8" fill="none" stroke="#1f2a44"/>
+<g fill="#2f6fb5" stroke="#1f2a44">
+<circle cx="45" cy="50" r="11"/><circle cx="66" cy="50" r="11"/>
+<circle cx="45" cy="100" r="11"/><circle cx="66" cy="100" r="11"/>
+<circle cx="45" cy="145" r="11"/><circle cx="66" cy="145" r="11"/>
+</g>
+<g fill="#e2e8f0" stroke="#1f2a44">
+<circle cx="120" cy="45" r="8"/><circle cx="136" cy="45" r="8"/><circle cx="185" cy="50" r="8"/><circle cx="201" cy="50" r="8"/>
+<circle cx="230" cy="80" r="8"/><circle cx="246" cy="80" r="8"/><circle cx="115" cy="95" r="8"/><circle cx="131" cy="95" r="8"/>
+<circle cx="170" cy="110" r="8"/><circle cx="186" cy="110" r="8"/><circle cx="120" cy="150" r="8"/><circle cx="136" cy="150" r="8"/>
+</g>
+<text x="140" y="192" font-size="13" text-anchor="middle">反應前：3 個 N<tspan baseline-shift="sub" font-size="10">2</tspan>、6 個 H<tspan baseline-shift="sub" font-size="10">2</tspan></text>
+<line x1="275" y1="95" x2="325" y2="95" stroke="#c2410c" stroke-width="2" marker-end="url(#C5-ar6)"/>
+<rect x="335" y="20" width="250" height="150" rx="8" fill="none" stroke="#1f2a44"/>
+<g stroke="#1f2a44">
+<circle cx="370" cy="55" r="11" fill="#2f6fb5"/><circle cx="356" cy="42" r="7" fill="#e2e8f0"/><circle cx="384" cy="42" r="7" fill="#e2e8f0"/><circle cx="370" cy="72" r="7" fill="#e2e8f0"/>
+<circle cx="440" cy="55" r="11" fill="#2f6fb5"/><circle cx="426" cy="42" r="7" fill="#e2e8f0"/><circle cx="454" cy="42" r="7" fill="#e2e8f0"/><circle cx="440" cy="72" r="7" fill="#e2e8f0"/>
+<circle cx="370" cy="125" r="11" fill="#2f6fb5"/><circle cx="356" cy="112" r="7" fill="#e2e8f0"/><circle cx="384" cy="112" r="7" fill="#e2e8f0"/><circle cx="370" cy="142" r="7" fill="#e2e8f0"/>
+<circle cx="440" cy="125" r="11" fill="#2f6fb5"/><circle cx="426" cy="112" r="7" fill="#e2e8f0"/><circle cx="454" cy="112" r="7" fill="#e2e8f0"/><circle cx="440" cy="142" r="7" fill="#e2e8f0"/>
+<circle cx="510" cy="60" r="11" fill="#2f6fb5"/><circle cx="531" cy="60" r="11" fill="#2f6fb5"/>
+</g>
+<text x="460" y="192" font-size="13" text-anchor="middle">反應後：4 個 NH<tspan baseline-shift="sub" font-size="10">3</tspan>、剩 1 個 N<tspan baseline-shift="sub" font-size="10">2</tspan></text>
+</svg><figcaption>圖 C5-9　N<sub>2</sub> + 3H<sub>2</sub> → 2NH<sub>3</sub> 的限量試劑粒子圖。藍球為 N 原子，灰球為 H 原子。<span class="m">\ce{N2}</span>：<span class="m">\frac{3}{1}=3</span>；<span class="m">\ce{H2}</span>：<span class="m">\frac{6}{3}=2</span>，商較小，<span class="m">\ce{H2}</span> 為限量試劑。6 個 <span class="m">\ce{H2}</span> 與 2 個 <span class="m">\ce{N2}</span> 反應生成 4 個 <span class="m">\ce{NH3}</span>，剩 1 個 <span class="m">\ce{N2}</span>。<span class="m">\ce{H2}</span> 分子數較多，仍為限量試劑。</figcaption></figure>
+
+<h4>3. 生成量與加入量的圖形</h4>
+<p>固定反應物 B 的量，逐次增加反應物 A，生成物的量先與 A 成正比，達計量點後不再增加。</p>
+<figure class="fig"><svg viewBox="0 0 520 250" width="520">
+<line x1="60" y1="210" x2="490" y2="210" stroke="#1f2a44" stroke-width="1.5"/>
+<line x1="60" y1="210" x2="60" y2="25" stroke="#1f2a44" stroke-width="1.5"/>
+<text x="360" y="242" font-size="13" text-anchor="middle">加入反應物 A 的莫耳數（mol）</text>
+<text x="20" y="140" font-size="13" text-anchor="middle" transform="rotate(-90 20 140)">生成物的莫耳數（mol）</text>
+<polyline points="60,210 250,80 480,80" fill="none" stroke="#2f6fb5" stroke-width="2.5"/>
+<line x1="250" y1="80" x2="250" y2="210" stroke="#94a3b8" stroke-dasharray="4 3"/>
+<line x1="60" y1="80" x2="250" y2="80" stroke="#94a3b8" stroke-dasharray="4 3"/>
+<circle cx="250" cy="80" r="4" fill="#c2410c"/>
+<text x="258" y="70" font-size="13" fill="#c2410c">計量點（恰好完全反應）</text>
+<text x="150" y="198" font-size="13" text-anchor="start">A 為限量試劑</text>
+<text x="68" y="104" font-size="12" text-anchor="start" fill="#64748b">斜率＝生成物係數÷A 係數</text>
+<text x="370" y="120" font-size="13" text-anchor="middle">B 為限量試劑（A 過量）</text>
+<text x="250" y="226" font-size="12" text-anchor="middle">n<tspan baseline-shift="sub" font-size="10">0</tspan></text>
+<text x="66" y="74" font-size="12" text-anchor="start">最大量</text>
+</svg><figcaption>圖 C5-10　固定 B、改變 A 時生成物量的變化。轉折點的橫坐標 <span class="m">n_0</span> 與 B 的莫耳數之比等於兩者係數比。</figcaption></figure>
+<ul>
+<li>轉折點前：生成量 ∝ A 的加入量，斜率由係數比決定（換成質量時另乘莫耳質量比）。</li>
+<li>轉折點：A 與 B 恰好依係數比完全反應，可由此反推 B 的量或係數比。</li>
+<li>轉折點後：水平線，高度由 B 決定。若改用不同的 B 量，水平線高度與轉折點位置同比例移動，<em>初段斜率不變</em>。</li>
+</ul>
+<div class="exam"><p>學測常給生成量對加入量的折線圖：考轉折點的意義（恰好完全反應）、由轉折點反推另一反應物的莫耳數或係數比，以及改變反應物量後圖形如何變化。</p></div>
+
+<h4>4. 理論產量、實際產量與產率</h4>
+<div class="formula" data-t="產率"><div class="mb">\text{產率}=\frac{\text{實際產量}}{\text{理論產量}}\times100\%</div><p>實際產量與理論產量須為同一物質、同一單位（g 或 mol）；理論產量依限量試劑計算。</p></div>
+<div class="key">
+<ul>
+<li>理論產量：依限量試劑完全反應計算的生成物量。</li>
+<li>產率低於 100% 的原因：反應未完全（可逆反應達平衡、時間不足）、副反應、分離純化時的損失。</li>
+<li>計算產率高於 100%：產物不純（含雜質、未乾燥的水分），不表示質量守恆不成立。</li>
+<li>多步反應：<span class="box">總產率 = 各步產率相乘</span>。三步各 90%，總產率 <span class="m">0.9^3=72.9\%</span>。</li>
+<li>純度：<span class="m">\text{純度}=\frac{\text{純物質質量}}{\text{樣品質量}}\times100\%</span>；雜質不參與反應時，只以純物質計算。</li>
+</ul>
+</div>
+<div class="warn">
+<p>易錯：產率須以<span class="circle">同一物質</span>的實際量與理論量相比（同為莫耳或同為質量）；以產物質量除以反應物質量所得比值不是產率。</p>
+</div>
+
+<h4>5. 多步反應與混合物</h4>
+<ul>
+<li><strong>連續反應</strong>：前一步的產物為下一步的反應物，可依各式係數連乘建立首尾物質的莫耳比，或把各式相加成總反應式（中間產物須消去）。<br>例：工業製硝酸（奧士華法）<span class="m">\ce{4NH3 + 5O2 -> 4NO + 6H2O}</span>，<span class="m">\ce{2NO + O2 -> 2NO2}</span>，<span class="m">\ce{3NO2 + H2O -> 2HNO3 + NO}</span>。若生成的 NO 全部回收再利用，總反應為 <span class="m">\ce{NH3 + 2O2 -> HNO3 + H2O}</span>，1 mol <span class="m">\ce{NH3}</span> 最多得 1 mol <span class="m">\ce{HNO3}</span>；不回收時只得 <span class="m">\frac{2}{3}</span> mol。</li>
+<li><strong>原子守恆法</strong>：不論中間經過幾步，某元素的原子總數不變。<span class="hand">多步題最快的解法</span>如 S 全部轉入 <span class="m">\ce{H2SO4}</span>：<span class="m">n(\ce{S})=n(\ce{H2SO4})</span>，不必寫出每一步。</li>
+<li><strong>混合物</strong>：設各成分莫耳數為未知數，依「總質量」與「生成物總量」列聯立方程式。例：Mg 與 Al 混合物與過量鹽酸反應，<span class="m">\ce{Mg + 2HCl -> MgCl2 + H2}</span>、<span class="m">\ce{2Al + 6HCl -> 2AlCl3 + 3H2}</span>，每 mol Mg 生成 1 mol <span class="m">\ce{H2}</span>，每 mol Al 生成 1.5 mol <span class="m">\ce{H2}</span>。</li>
+</ul>
+
+<h4>6. 連續變化法（進階）</h4>
+<div class="note"><p>最高點的莫耳比 ＝ 係數比</p><p>前提：兩溶液濃度相同、總體積固定</p><p>濃度不同時先換算成莫耳分率</p></div>
+<p>固定兩反應物溶液的濃度相同、總體積固定，改變兩者的體積比，測生成物的量（如沉澱高度、溫度上升、吸光度）。生成量最大處的體積比即反應的係數比。此法又稱約伯法（Job's method）。</p>
+<figure class="fig"><svg viewBox="0 0 520 250" width="520">
+<line x1="60" y1="210" x2="480" y2="210" stroke="#1f2a44" stroke-width="1.5"/>
+<line x1="60" y1="210" x2="60" y2="25" stroke="#1f2a44" stroke-width="1.5"/>
+<text x="270" y="244" font-size="13" text-anchor="middle">A 占兩反應物總莫耳數的分率</text>
+<text x="25" y="118" font-size="13" text-anchor="middle" transform="rotate(-90 25 118)">生成物的量（相對值）</text>
+<g font-size="12" text-anchor="middle"><text x="60" y="226">0</text><text x="165" y="226">0.25</text><text x="270" y="226">0.50</text><text x="375" y="226">0.75</text><text x="480" y="226">1</text></g>
+<g stroke="#1f2a44"><line x1="165" y1="210" x2="165" y2="214"/><line x1="270" y1="210" x2="270" y2="214"/><line x1="375" y1="210" x2="375" y2="214"/><line x1="340" y1="210" x2="340" y2="214"/></g>
+<polyline points="60,210 340,60 480,210" fill="none" stroke="#2f6fb5" stroke-width="2.5"/>
+<line x1="340" y1="60" x2="340" y2="210" stroke="#94a3b8" stroke-dasharray="4 3"/>
+<text x="340" y="50" font-size="13" text-anchor="middle" fill="#c2410c">最大值在 2/3 處 → A : B = 2 : 1</text>
+<text x="220" y="190" font-size="12" text-anchor="middle">A 不足</text><text x="385" y="190" font-size="12" text-anchor="middle">B 不足</text>
+</svg><figcaption>圖 C5-11　連續變化法示意（以 2A + B → 產物為例）。實驗數據在計量點附近多呈圓滑曲線，以兩側直線外插求交點。</figcaption></figure>
+<div class="tip">
+<p><strong>深究　為何最大值對應係數比</strong></p>
+<p>設兩溶液濃度皆為 <span class="m">c</span>、總體積 <span class="m">V</span>，A 的體積分率為 <span class="m">x</span>，反應為 <span class="m">a\mathrm{A}+b\mathrm{B}\to</span> 產物。A 不足時生成量 <span class="m">\propto\frac{cVx}{a}</span>，隨 <span class="m">x</span> 增加；B 不足時生成量 <span class="m">\propto\frac{cV(1-x)}{b}</span>，隨 <span class="m">x</span> 減少。兩直線交於 <span class="m">\frac{x}{a}=\frac{1-x}{b}</span>，即 <span class="m">x=\frac{a}{a+b}</span>。若兩溶液濃度不同，最大值位置會移動，須先換算成莫耳分率。實驗若以硝酸鉛與碘化鉀生成碘化鉛沉澱，鉛化合物有毒，廢液須集中回收。</p>
+</div>
+<h4>7. 計量題型總整理</h4>
+<table class="t"><thead><tr><th>題型</th><th>關鍵關係</th><th>常見陷阱</th></tr></thead><tbody>
+<tr><td>質量 ↔ 質量</td><td>質量 → 莫耳 → 係數比 → 莫耳 → 質量</td><td>直接用係數比當質量比</td></tr>
+<tr><td>氣體體積</td><td>同溫同壓：體積比 = 係數比</td><td>水的狀態；溫度壓力與 <span class="m">V_m</span> 不符</td></tr>
+<tr><td>限量試劑</td><td>莫耳數 ÷ 係數，取最小者</td><td>以質量或莫耳數大小判斷</td></tr>
+<tr><td>產率、純度</td><td>實際 ÷ 理論；純物質 ÷ 樣品</td><td>理論產量未扣雜質；以反應物質量相除</td></tr>
+<tr><td>多步反應</td><td>係數連乘或原子守恆；產率相乘</td><td>漏乘每分子所含原子數；回收與否</td></tr>
+<tr><td>混合物</td><td>總質量與總生成量列聯立方程式</td><td>不同金屬每莫耳產生的氫氣不同</td></tr>
+<tr><td>平均莫耳質量</td><td><span class="m">\bar{M}=\sum x_iM_i</span>（<span class="m">x_i</span> 為莫耳分率）</td><td>誤用質量分率加權</td></tr>
+<tr><td>總莫耳數變化</td><td>由反應前後氣體總量差反推反應量</td><td>忘記係數差（如合成氨每生成 2 mol 減少 2 mol）</td></tr>
+<tr><td>圖形判讀</td><td>轉折點 = 恰好完全反應；最大值 = 計量比</td><td>改變一反應物量時誤以為斜率改變</td></tr>
+</tbody></table>
+<div class="tip">
+<p><strong>深究　產率與轉化率</strong></p>
+<ul>
+<li><strong>轉化率</strong>：某反應物已反應的量 ÷ 起始量；<strong>產率</strong>：目標產物實際量 ÷ 理論量。</li>
+<li>無副反應時，以限量試劑計的轉化率等於產率；有副反應時，轉化率可很高而產率偏低，部分反應物變成了副產物。</li>
+<li>可逆反應達平衡時轉化率有上限（見選修化學平衡）。工業合成氨單程轉化率不高，未反應的 <span class="m">\ce{N2}</span>、<span class="m">\ce{H2}</span> 分離氨後循環再用，使原料的總利用率提高。</li>
+</ul>
+</div>
+<div class="tip">
+<p><strong>補充　原子經濟（銜接 C11）</strong></p>
+<p>原子經濟 = 目標產物的莫耳質量 ÷ 反應物（依係數）莫耳質量總和 × 100%，衡量反應物原子進入目標產物的比例，為綠色化學的指標之一。產率高的反應不一定原子經濟高：取代反應會產生副產物，加成反應可達 100%。</p>
+</div>
+
+<h3>例題精解</h3>
+<p>原子量：H 1.0、C 12.0、N 14.0、O 16.0、Mg 24.0、S 32.0、Ca 40.0、Fe 56.0；<span class="m">N_A=6.02\times10^{23}\ \mathrm{mol^{-1}}</span>。</p>
+
+<div class="example"><p>例題 1　2.4 g 鎂帶置於開口坩堝中完全燃燒成氧化鎂。求坩堝內固體增加的質量，並說明此結果與質量守恆定律的關係。</p><div class="sol"><ol class="steps"><li><span class="m">\ce{2Mg + O2 -> 2MgO}</span>；<span class="m">n(\ce{Mg})=\frac{2.4}{24.0}=0.10\ \mathrm{mol}</span>。</li><li><span class="m">n(\ce{MgO})=0.10\ \mathrm{mol}</span>，質量 <span class="m">0.10\times40.0=4.0\ \mathrm{g}</span>。</li><li>固體增加 <span class="m">4.0-2.4=1.6\ \mathrm{g}</span>，等於參與反應的氧氣質量（0.050 mol <span class="m">\ce{O2}</span>）。</li><li>反應物（Mg ＋ <span class="m">\ce{O2}</span>）總質量 4.0 g 等於生成物質量，質量守恆；固體增重是因為未稱量的氧氣進入了固體。</li></ol><p>陷阱：開口系統的增重或減重不能當作質量守恆不成立的證據。</p></div></div>
+
+<div class="example"><p>例題 2　平衡 <span class="m">\ce{FeS2 + O2 -> Fe2O3 + SO2}</span>（黃鐵礦焙燒），並求係數總和。</p><div class="sol"><ol class="steps"><li>設 <span class="m">\ce{Fe2O3}</span> 係數為 1，則 Fe：<span class="m">\ce{FeS2}</span> 為 2；S：<span class="m">\ce{SO2}</span> 為 4。</li><li>右側 O：<span class="m">3+8=11</span>，<span class="m">\ce{O2}</span> 為 <span class="m">\frac{11}{2}</span>。</li><li>全部乘 2：<span class="m">\ce{4FeS2 + 11O2 -> 2Fe2O3 + 8SO2}</span>。</li><li>係數總和 <span class="m">4+11+2+8=25</span>。</li></ol><p>陷阱：以 <span class="m">\ce{FeS2}</span> 為 1 開始會得 <span class="m">\ce{Fe2O3}</span> 為 <span class="m">\frac{1}{2}</span>，須記得最後化為最簡整數。</p></div></div>
+
+<div class="example"><p>例題 3　0.50 mol 硫酸銨 <span class="m">\ce{(NH4)2SO4}</span>：(1) 質量 (2) N 原子數 (3) 離子總數。</p><div class="sol"><ol class="steps"><li>式量 <span class="m">2\times18.0+96.0=132</span>；質量 <span class="m">0.50\times132=66\ \mathrm{g}</span>。</li><li>每單位含 2 個 N：<span class="m">1.0\ \mathrm{mol}</span>，即 <span class="m">6.02\times10^{23}</span> 個。</li><li>每單位含 2 個 <span class="m">\ce{NH4+}</span> 與 1 個 <span class="m">\ce{SO4^2-}</span>：離子 <span class="m">1.5\ \mathrm{mol}=9.03\times10^{23}</span> 個。</li></ol><p>陷阱：離子總數不是原子總數；1 個 <span class="m">\ce{NH4+}</span> 含 5 個原子，但算 1 個離子。</p></div></div>
+
+<div class="example"><p>例題 4　某烴含 C 82.8%、H 17.2%；在 25 °C、1 atm 下其蒸氣密度為 2.37 g/L（<span class="m">V_m=24.5\ \mathrm{L/mol}</span>）。求分子式。</p><div class="sol"><ol class="steps"><li>C：<span class="m">\frac{82.8}{12.0}=6.90</span>；H：<span class="m">\frac{17.2}{1.0}=17.2</span>；比 <span class="m">1:2.49</span>。</li><li>乘 2 得 <span class="m">2:4.98\approx2:5</span>，實驗式 <span class="m">\ce{C2H5}</span>（式量 29.0）。</li><li><span class="m">M=2.37\times24.5=58.1\ \mathrm{g/mol}</span>；<span class="m">n=\frac{58.1}{29.0}\approx2</span>。</li><li>分子式 <span class="m">\ce{C4H10}</span>。</li></ol><p>陷阱：1:2.49 若直接寫成 1:2 或 1:3，會得到錯誤的實驗式。</p></div></div>
+
+<div class="example"><p>例題 5　0.230 g 只含 C、H、O 的化合物完全燃燒，得 <span class="m">\ce{CO2}</span> 0.440 g 與 <span class="m">\ce{H2O}</span> 0.270 g。求實驗式。</p><div class="sol"><ol class="steps"><li>C：<span class="m">0.440\times\frac{12.0}{44.0}=0.120\ \mathrm{g}</span>（0.0100 mol）。</li><li>H：<span class="m">0.270\times\frac{2.0}{18.0}=0.0300\ \mathrm{g}</span>（0.0300 mol）。</li><li>O：<span class="m">0.230-0.120-0.0300=0.080\ \mathrm{g}</span>（0.00500 mol）。</li><li>C : H : O = 2 : 6 : 1，實驗式 <span class="m">\ce{C2H6O}</span>（式量 46）；此式中 H 已飽和（<span class="m">\ce{C_nH_{2n+2}O}</span>），分子式即 <span class="m">\ce{C2H6O}</span>，可能為乙醇或甲醚。</li></ol><p>陷阱：氧須由差減求得，不可把吸收管增重中的氧算入樣品；燃燒用的氧氣來自外加氧氣。</p></div></div>
+
+<div class="example"><p>例題 6　10.0 g 氫氣與 64.0 g 氧氣混合點燃，充分反應。求生成水的質量與剩餘氣體。</p><div class="sol"><ol class="steps"><li><span class="m">\ce{2H2 + O2 -> 2H2O}</span>；<span class="m">n(\ce{H2})=5.00</span>，<span class="m">n(\ce{O2})=2.00\ \mathrm{mol}</span>。</li><li>莫耳數 ÷ 係數：<span class="m">\ce{H2}</span> 為 2.50，<span class="m">\ce{O2}</span> 為 2.00，<span class="m">\ce{O2}</span> 為限量試劑。</li><li>生成 <span class="m">\ce{H2O}</span> 4.00 mol，<span class="m">4.00\times18.0=72.0\ \mathrm{g}</span>。</li><li>消耗 <span class="m">\ce{H2}</span> 4.00 mol，剩 1.00 mol（2.0 g）。檢查：<span class="m">10.0+64.0=72.0+2.0</span>。</li></ol><p>陷阱：氫氣質量較小卻是過量試劑；以質量大小判斷限量試劑必錯。</p></div></div>
+
+<div class="example"><p>例題 7　含 <span class="m">\ce{CaCO3}</span> 90.0% 的石灰石 50.0 g 強熱分解（雜質不分解），得氧化鈣 22.4 g。求產率。</p><div class="sol"><ol class="steps"><li><span class="m">\ce{CaCO3 -> CaO + CO2}</span>；純 <span class="m">\ce{CaCO3}</span> <span class="m">50.0\times0.900=45.0\ \mathrm{g}</span>，0.450 mol。</li><li>理論產量 <span class="m">0.450\times56.0=25.2\ \mathrm{g}</span>。</li><li>產率 <span class="m">\frac{22.4}{25.2}\times100\%=88.9\%</span>。</li></ol><p>陷阱：以樣品 50.0 g 全部當 <span class="m">\ce{CaCO3}</span> 計算，理論產量變成 28.0 g，產率誤為 80.0%。</p></div></div>
+
+<div class="example"><p>例題 8　同溫同壓下，30 mL 氫氣與氧氣的混合氣體點火完全反應，冷卻至室溫後剩氣體 3 mL。求原混合氣體的組成。</p><div class="sol"><ol class="steps"><li>反應掉的氣體 <span class="m">30-3=27\ \mathrm{mL}</span>，依 <span class="m">\ce{2H2 + O2 -> 2H2O(l)}</span>，其中 <span class="m">\ce{H2}</span> 18 mL、<span class="m">\ce{O2}</span> 9 mL。</li><li>剩餘 3 mL 若為 <span class="m">\ce{O2}</span>：<span class="m">\ce{H2}</span> 18 mL、<span class="m">\ce{O2}</span> 12 mL。</li><li>剩餘 3 mL 若為 <span class="m">\ce{H2}</span>：<span class="m">\ce{H2}</span> 21 mL、<span class="m">\ce{O2}</span> 9 mL。</li></ol><p>陷阱：剩餘氣體的成分未知時有兩組解；以帶火星的木條或再通入氧氣點火可區分。</p></div></div>
+
+<div class="example"><p>例題 9　某烴 <span class="m">\ce{C_xH_y}</span> 10 mL 與 60 mL 氧氣（過量）完全燃燒，冷卻至室溫後氣體為 45 mL，通過 NaOH 溶液後剩 25 mL。求分子式。</p><div class="sol"><ol class="steps"><li>NaOH 吸收 <span class="m">\ce{CO2}</span>：<span class="m">45-25=20\ \mathrm{mL}</span>，<span class="m">x=\frac{20}{10}=2</span>。</li><li>剩 25 mL 為過量 <span class="m">\ce{O2}</span>，耗氧 <span class="m">60-25=35\ \mathrm{mL}</span>；<span class="m">x+\frac{y}{4}=3.5</span>，<span class="m">y=6</span>。</li><li>檢查體積減少量：<span class="m">(10+60)-45=25=10\left(1+\frac{y}{4}\right)</span>，<span class="m">y=6</span> 相符。分子式 <span class="m">\ce{C2H6}</span>。</li></ol><p>陷阱：冷卻後水為液體，不計入氣體體積；若在 100 °C 以上測量則須計入。</p></div></div>
+
+<div class="example"><p>例題 10　以含 <span class="m">\ce{FeS2}</span> 60.0% 的黃鐵礦 1.00 公噸製硫酸，若硫的總利用率為 90.0%，可得 <span class="m">\ce{H2SO4}</span> 多少公斤？</p><div class="sol"><ol class="steps"><li>流程 <span class="m">\ce{FeS2 -> SO2 -> SO3 -> H2SO4}</span>，以 S 原子守恆：<span class="m">n(\ce{H2SO4})=2n(\ce{FeS2})</span>。</li><li><span class="m">\ce{FeS2}</span> 600 kg，<span class="m">\frac{600}{120}=5.00\ \mathrm{kmol}</span>；S 10.0 kmol。</li><li><span class="m">\ce{H2SO4}</span>：<span class="m">10.0\times0.900\times98.0=882\ \mathrm{kg}</span>。</li></ol><p>陷阱：漏乘 2（每個 <span class="m">\ce{FeS2}</span> 含 2 個 S）會得 441 kg。</p></div></div>
+
+<div class="example"><p>例題 11　同溫同壓下，<span class="m">\ce{N2}</span> 與 <span class="m">\ce{CO2}</span> 混合氣體的密度為氫氣的 18 倍。求兩氣體的體積比與 <span class="m">\ce{CO2}</span> 的質量百分率。</p><div class="sol"><ol class="steps"><li>密度比 = 莫耳質量比：<span class="m">\bar{M}=18\times2.0=36</span>。</li><li>設 <span class="m">\ce{N2}</span> 莫耳分率 <span class="m">x</span>：<span class="m">28x+44(1-x)=36</span>，<span class="m">x=0.50</span>；體積比 1:1。</li><li><span class="m">\ce{CO2}</span> 質量百分率 <span class="m">\frac{0.50\times44}{36}\times100\%=61.1\%</span>。</li></ol><p>陷阱：體積分率（莫耳分率）與質量分率不同；平均莫耳質量須以莫耳分率加權。</p></div></div>
+
+<div class="example"><p>例題 12　密閉容器中置入 1.00 mol <span class="m">\ce{N2}</span> 與 3.00 mol <span class="m">\ce{H2}</span>，在一定條件下反應，達平衡時氣體總量為 3.40 mol。求生成的氨與以 <span class="m">\ce{N2}</span> 計的產率。</p><div class="sol"><ol class="steps"><li>設 <span class="m">\ce{N2}</span> 反應 <span class="m">a</span> mol：<span class="m">\ce{N2}</span> 剩 <span class="m">1.00-a</span>，<span class="m">\ce{H2}</span> 剩 <span class="m">3.00-3a</span>，<span class="m">\ce{NH3}</span> 生成 <span class="m">2a</span>。</li><li>總量 <span class="m">4.00-2a=3.40</span>，<span class="m">a=0.30</span>；<span class="m">\ce{NH3}</span> 0.60 mol（10.2 g）。</li><li>理論 <span class="m">\ce{NH3}</span> 2.00 mol，產率 <span class="m">\frac{0.60}{2.00}=30\%</span>。</li></ol><p>陷阱：總量的減少量與氨的生成量不一定相等，須由係數差推得；合成氨每生成 2 mol 氨，總量減少 2 mol，本例兩者恰好相等，其他反應未必如此。</p></div></div>
+
+<h3>迷思概念對照</h3>
+<p class="bad"><span class="mark">誤</span>木炭燃燒後只剩少量灰燼，所以燃燒反應不遵守質量守恆。</p>
+<p class="good"><span class="mark">正</span>生成的 <span class="m">\ce{CO2}</span> 逸散未被稱量；在密閉系統中總質量不變。</p>
+<p class="bad"><span class="mark">誤</span>化學反應前後分子總數不變。</p>
+<p class="good"><span class="mark">正</span>守恆的是各元素的原子數；<span class="m">\ce{2H2 + O2 -> 2H2O}</span> 分子數由 3 變 2。</p>
+<p class="bad"><span class="mark">誤</span>平衡反應式時可以改變下標，如把 <span class="m">\ce{H2O}</span> 改成 <span class="m">\ce{H2O2}</span>。</p>
+<p class="good"><span class="mark">正</span>改下標就改變了物質；平衡只能調整係數。</p>
+<p class="bad"><span class="mark">誤</span>係數比就是質量比。</p>
+<p class="good"><span class="mark">正</span>係數比是粒子數比、莫耳數比，以及同溫同壓氣體的體積比；質量比須乘莫耳質量。</p>
+<p class="bad"><span class="mark">誤</span>1 mol 任何物質在標準狀況下都占 22.4 L。</p>
+<p class="good"><span class="mark">正</span>只限 0 °C、1 atm 的（理想）氣體；液體與固體的莫耳體積各不相同，1 mol 液態水約 18 mL。</p>
+<p class="bad"><span class="mark">誤</span>質量較小的反應物一定是限量試劑。</p>
+<p class="good"><span class="mark">正</span>比較「莫耳數 ÷ 係數」，商最小者為限量試劑。</p>
+<p class="bad"><span class="mark">誤</span>1 mol 氯化鈉含 <span class="m">6.02\times10^{23}</span> 個 NaCl 分子。</p>
+<p class="good"><span class="mark">正</span>氯化鈉為離子晶體，沒有分子；1 mol NaCl 含 <span class="m">\ce{Na+}</span>、<span class="m">\ce{Cl-}</span> 各 1 mol，58.5 稱為式量。</p>
+<p class="bad"><span class="mark">誤</span>原子量是一個原子的質量，單位為 g。</p>
+<p class="good"><span class="mark">正</span>原子量是以碳-12 = 12 為標準的相對質量，無單位；一個原子的質量是 <span class="m">\frac{M}{N_A}</span> g。</p>
+<p class="bad"><span class="mark">誤</span>實驗式相同的化合物就是同一種物質。</p>
+<p class="good"><span class="mark">正</span>甲醛、乙酸、葡萄糖實驗式都是 <span class="m">\ce{CH2O}</span>；分子式相同者也可能是同分異構物。</p>
+<p class="bad"><span class="mark">誤</span>產率超過 100% 表示反應產生了額外的物質。</p>
+<p class="good"><span class="mark">正</span>實際產量不可能超過理論產量；超過表示產物不純或未乾燥。</p>
+<p class="bad"><span class="mark">誤</span>燃燒分析中，樣品的氧含量等於吸收管所增重量中氧的總和。</p>
+<p class="good"><span class="mark">正</span><span class="m">\ce{CO2}</span> 與 <span class="m">\ce{H2O}</span> 中的氧大部分來自外加氧氣；樣品中的氧須以差減法求得。</p>
+<p class="bad"><span class="mark">誤</span>拉瓦節發現了氧氣，並以燃素說解釋燃燒。</p>
+<p class="good"><span class="mark">正</span>普利士力與舍勒較早製得氧氣；拉瓦節命名氧並提出氧化說，推翻燃素說。</p>
+<p class="bad"><span class="mark">誤</span>2019 年後亞佛加厥常數仍是實驗測得、帶有誤差的數值。</p>
+<p class="good"><span class="mark">正</span>現行國際單位制把 <span class="m">N_A</span> 定為 <span class="m">6.02214076\times10^{23}\ \mathrm{mol^{-1}}</span> 的固定值，沒有不確定度。</p>
+<p class="bad"><span class="mark">誤</span>同溫同壓下，等質量的氣體體積相同。</p>
+<p class="good"><span class="mark">正</span>同溫同壓下等<strong>莫耳數</strong>的氣體體積相同；等質量時，莫耳質量愈小者體積愈大。</p>
+
+<h3>分級測驗</h3>
+<p>除題目另有註明，原子量：H 1.0、C 12.0、N 14.0、O 16.0、Na 23.0、Mg 24.0、Al 27.0、P 31.0、S 32.0、Cl 35.5、K 39.0、Ca 40.0、Fe 56.0、Cu 63.5、Zn 65.4、Pb 207、Hg 200.6；<span class="m">N_A=6.02\times10^{23}\ \mathrm{mol^{-1}}</span>；氣體莫耳體積 0 °C、1 atm 為 22.4 L/mol，25 °C、1 atm 為 24.5 L/mol；<span class="m">R=0.082\ \mathrm{atm\cdot L/(mol\cdot K)}</span>。</p>
+
+<h4 class="exset">基礎題（10 題）</h4>
+<div class="ex" id="C5-01"><span class="exid">C5-01</span>關於拉瓦節與質量守恆定律，下列敘述何者正確？
+<div class="opts"><span>(A) 拉瓦節在開口容器中燃燒磷，發現產物質量等於磷的質量</span><span>(B) 拉瓦節將錫置於密閉容器中煅燒，加熱前後整個容器的總質量不變</span><span>(C) 質量守恆定律只適用於不產生氣體的反應</span><span>(D) 拉瓦節以燃素逸出解釋金屬煅燒後質量增加</span><span>(E) 化學反應前後分子總數必定不變</span></div></div>
+
+<div class="ex" id="C5-02"><span class="exid">C5-02</span>丙烷燃燒：<span class="m">a\,\ce{C3H8} + b\,\ce{O2} \to c\,\ce{CO2} + d\,\ce{H2O}</span>。以最簡整數平衡後，<span class="m">b+d</span> 為多少？
+<div class="opts"><span>(A) 5</span><span>(B) 6</span><span>(C) 7</span><span>(D) 8</span><span>(E) 9</span></div></div>
+
+<div class="ex" id="C5-03"><span class="exid">C5-03</span>關於 1 mol 的水，下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 含 <span class="m">6.02\times10^{23}</span> 個水分子</span><span>(B) 含 <span class="m">6.02\times10^{23}</span> 個原子</span><span>(C) 含 2 mol 氫原子</span><span>(D) 質量為 18.0 g</span><span>(E) 在 0 °C、1 atm 下體積約為 22.4 L</span></div></div>
+
+<div class="ex" id="C5-04"><span class="exid">C5-04</span>下列各物質中，何者所含的原子（含單原子離子）總數最多？
+<div class="opts"><span>(A) 1.0 g 氫氣</span><span>(B) 16 g 氧氣</span><span>(C) 9.0 g 水</span><span>(D) 0 °C、1 atm 下 11.2 L 甲烷</span><span>(E) 0.50 mol 氯化鈉中的離子</span></div></div>
+
+<div class="ex" id="C5-05"><span class="exid">C5-05</span>下列何者的實驗式與甲醛（<span class="m">\ce{HCHO}</span>）相同？
+<div class="opts"><span>(A) <span class="m">\ce{C6H12O6}</span></span><span>(B) <span class="m">\ce{C2H4}</span></span><span>(C) <span class="m">\ce{C2H6O}</span></span><span>(D) <span class="m">\ce{C2H2O4}</span></span><span>(E) <span class="m">\ce{C3H6O}</span></span></div></div>
+
+<div class="ex" id="C5-06"><span class="exid">C5-06</span>一個二氧化碳分子的質量約為多少？
+<div class="opts"><span>(A) <span class="m">7.31\times10^{-23}\ \mathrm{g}</span></span><span>(B) <span class="m">2.65\times10^{25}\ \mathrm{g}</span></span><span>(C) <span class="m">44.0\ \mathrm{g}</span></span><span>(D) <span class="m">1.37\times10^{-24}\ \mathrm{g}</span></span><span>(E) <span class="m">7.31\times10^{-26}\ \mathrm{g}</span></span></div></div>
+
+<div class="ex" id="C5-07"><span class="exid">C5-07</span>任何化學反應的平衡反應式，反應前後下列哪些量必定相等？（多選）
+<div class="opts"><span>(A) 總質量</span><span>(B) 各元素的原子總數</span><span>(C) 分子總數</span><span>(D) 物質的總莫耳數</span><span>(E) 離子反應式兩側的總電荷</span></div></div>
+
+<div class="ex" id="C5-08"><span class="exid">C5-08</span>4.4 g 二氧化碳在 25 °C、1 atm 下的體積約為多少升？
+<div class="opts"><span>(A) 0.245</span><span>(B) 1.12</span><span>(C) 2.24</span><span>(D) 2.45</span><span>(E) 4.90</span></div></div>
+
+<div class="ex" id="C5-09"><span class="exid">C5-09</span>關於反應 <span class="m">\ce{2CO(g) + O2(g) -> 2CO2(g)}</span>，下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 2 個 CO 分子與 1 個 <span class="m">\ce{O2}</span> 分子反應生成 2 個 <span class="m">\ce{CO2}</span> 分子</span><span>(B) 2 g CO 與 1 g <span class="m">\ce{O2}</span> 反應生成 2 g <span class="m">\ce{CO2}</span></span><span>(C) 同溫同壓下，20 mL CO 與 10 mL <span class="m">\ce{O2}</span> 恰好完全反應，生成 20 mL <span class="m">\ce{CO2}</span></span><span>(D) 反應前後氣體總莫耳數不變</span><span>(E) 56 g CO 與 32 g <span class="m">\ce{O2}</span> 恰好完全反應，生成 88 g <span class="m">\ce{CO2}</span></span></div></div>
+
+<div class="ex" id="C5-10"><span class="exid">C5-10</span>關於氯化鈉的化學式 NaCl 與其 58.5，下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 氯化鈉晶體由 NaCl 分子構成，分子量為 58.5</span><span>(B) NaCl 表示 <span class="m">\ce{Na+}</span> 與 <span class="m">\ce{Cl-}</span> 的數目比為 1:1，58.5 稱為式量</span><span>(C) 1 mol NaCl 含 <span class="m">6.02\times10^{23}</span> 個原子</span><span>(D) 58.5 g NaCl 含 <span class="m">\ce{Na+}</span> 與 <span class="m">\ce{Cl-}</span> 各 1 mol</span><span>(E) 原子量是以氫原子質量定為 1 所訂定的相對質量</span></div></div>
+
+<h4 class="exset">進階題（12 題）</h4>
+<div class="ex" id="C5-11"><span class="exid">C5-11</span>硝化甘油分解：<span class="m">a\,\ce{C3H5(NO3)3} \to b\,\ce{CO2} + c\,\ce{H2O} + d\,\ce{N2} + e\,\ce{O2}</span>。以最簡整數平衡後，<span class="m">a+b+c+d+e</span> 為多少？
+<div class="opts"><span>(A) 21</span><span>(B) 25</span><span>(C) 29</span><span>(D) 33</span><span>(E) 37</span></div></div>
+
+<div class="ex" id="C5-12"><span class="exid">C5-12</span>5.4 g 鋁與含 0.48 mol HCl 的鹽酸反應：<span class="m">\ce{2Al + 6HCl -> 2AlCl3 + 3H2}</span>。反應完全後，下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) HCl 為限量試劑</span><span>(B) 生成 <span class="m">\ce{H2}</span> 0.30 mol</span><span>(C) 生成的 <span class="m">\ce{H2}</span> 在 0 °C、1 atm 下約 5.38 L</span><span>(D) 剩餘鋁 1.08 g</span><span>(E) 生成 <span class="m">\ce{AlCl3}</span> 0.20 mol</span></div></div>
+
+<div class="ex" id="C5-13"><span class="exid">C5-13</span>以一氧化碳還原 320 kg 氧化鐵：<span class="m">\ce{Fe2O3 + 3CO -> 2Fe + 3CO2}</span>，實得鐵 190 kg。此反應的產率約為多少？
+<div class="opts"><span>(A) 59.4%</span><span>(B) 67.9%</span><span>(C) 75.0%</span><span>(D) 84.8%</span><span>(E) 94.4%</span></div></div>
+
+<div class="ex" id="C5-14"><span class="exid">C5-14</span>0.10 mol 某烴完全燃燒，生成 17.6 g <span class="m">\ce{CO2}</span> 與 9.0 g <span class="m">\ce{H2O}</span>。下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 分子式為 <span class="m">\ce{C4H10}</span></span><span>(B) 實驗式為 <span class="m">\ce{C2H5}</span></span><span>(C) 完全燃燒 0.10 mol 此烴需氧氣 0.65 mol</span><span>(D) 改燃燒 0.10 mol <span class="m">\ce{C4H8}</span>，生成 <span class="m">\ce{CO2}</span> 的質量與本題不同</span><span>(E) 0.10 mol 此烴的質量為 5.8 g</span></div></div>
+
+<div class="ex" id="C5-15"><span class="exid">C5-15</span>同溫同壓下，2 體積的雙原子分子氣體 <span class="m">\ce{X2}</span> 與 1 體積的雙原子分子氣體 <span class="m">\ce{Y2}</span> 恰好完全反應，只生成 2 體積的氣體 Z。Z 的分子式為何？
+<div class="opts"><span>(A) XY</span><span>(B) <span class="m">\ce{X2Y}</span></span><span>(C) <span class="m">\ce{XY2}</span></span><span>(D) <span class="m">\ce{X2Y2}</span></span><span>(E) <span class="m">\ce{X4Y2}</span></span></div></div>
+
+<div class="ex" id="C5-16"><span class="exid">C5-16</span>某化合物含 C 40.0%、H 6.7%、O 53.3%，分子量 180。下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 實驗式為 <span class="m">\ce{CH2O}</span></span><span>(B) 分子式為 <span class="m">\ce{C6H12O6}</span></span><span>(C) 只由組成百分率即可決定其分子式</span><span>(D) 甲醛與此化合物的組成百分率相同</span><span>(E) 18.0 g 此化合物含 <span class="m">6.02\times10^{23}</span> 個氫原子</span></div></div>
+
+<div class="ex" id="C5-17"><span class="exid">C5-17</span>在一定量的鹽酸中逐次加入鎂粉，測得生成氫氣的體積（0 °C、1 atm）與加入鎂質量的關係如下圖。此鹽酸中 HCl 的莫耳數為多少？
+<figure class="fig"><svg viewBox="0 0 440 240" width="400">
+<line x1="60" y1="200" x2="420" y2="200" stroke="#1f2a44" stroke-width="1.5"/>
+<line x1="60" y1="200" x2="60" y2="20" stroke="#1f2a44" stroke-width="1.5"/>
+<text x="240" y="234" font-size="13" text-anchor="middle">加入鎂的質量（g）</text>
+<text x="20" y="110" font-size="13" text-anchor="middle" transform="rotate(-90 20 110)">H<tspan baseline-shift="sub" font-size="10">2</tspan> 體積（L）</text>
+<g font-size="12" text-anchor="middle"><text x="60" y="216">0</text><text x="135" y="216">1.2</text><text x="210" y="216">2.4</text><text x="285" y="216">3.6</text><text x="360" y="216">4.8</text></g>
+<g stroke="#1f2a44"><line x1="135" y1="200" x2="135" y2="204"/><line x1="210" y1="200" x2="210" y2="204"/><line x1="285" y1="200" x2="285" y2="204"/><line x1="360" y1="200" x2="360" y2="204"/></g>
+<g font-size="12" text-anchor="end"><text x="54" y="146">1.12</text><text x="54" y="88">2.24</text></g>
+<g stroke="#1f2a44"><line x1="56" y1="142" x2="60" y2="142"/><line x1="56" y1="84" x2="60" y2="84"/></g>
+<polyline points="60,200 210,84 400,84" fill="none" stroke="#2f6fb5" stroke-width="2.5"/>
+<line x1="210" y1="84" x2="210" y2="200" stroke="#94a3b8" stroke-dasharray="4 3"/>
+<line x1="60" y1="84" x2="210" y2="84" stroke="#94a3b8" stroke-dasharray="4 3"/>
+</svg><figcaption>圖 C5-題17</figcaption></figure>
+<div class="opts"><span>(A) 0.050</span><span>(B) 0.10</span><span>(C) 0.20</span><span>(D) 0.40</span><span>(E) 條件不足，無法判斷</span></div></div>
+
+<div class="ex" id="C5-18"><span class="exid">C5-18</span>同溫同壓下，甲烷與乙烷的混合氣體 10 mL 與 26 mL 氧氣恰好完全燃燒。下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 混合氣體中甲烷為 6 mL</span><span>(B) 生成 <span class="m">\ce{CO2}</span> 20 mL</span><span>(C) 產物冷卻至室溫（水為液態）後，氣體總體積比反應前減少 22 mL</span><span>(D) 混合氣體中乙烷的莫耳分率為 0.6</span><span>(E) 若在 120 °C 下測量（水為氣態），反應後氣體總體積大於反應前</span></div></div>
+
+<div class="ex" id="C5-19"><span class="exid">C5-19</span>假設將原子量的標準改為「碳-12 原子的原子量定為 24」，並將 1 mol 改定義為 24 g 碳-12 所含的原子數。下列各量何者<em>不會</em>改變？
+<div class="opts"><span>(A) 氧的原子量</span><span>(B) 水的分子量</span><span>(C) 亞佛加厥數</span><span>(D) 1 mol 氧氣的質量</span><span>(E) 一個氧分子的實際質量</span></div></div>
+
+<div class="ex" id="C5-20"><span class="exid">C5-20</span>下列反應式哪些已同時達成原子平衡與電荷平衡？（多選）
+<div class="opts"><span>(A) <span class="m">\ce{Fe^3+ + Cu -> Fe^2+ + Cu^2+}</span></span><span>(B) <span class="m">\ce{2Fe^3+ + Cu -> 2Fe^2+ + Cu^2+}</span></span><span>(C) <span class="m">\ce{Zn + Ag+ -> Zn^2+ + Ag}</span></span><span>(D) <span class="m">\ce{CaCO3 + 2H+ -> Ca^2+ + H2O + CO2}</span></span><span>(E) <span class="m">\ce{2KClO3 -> 2KCl + 3O2}</span></span></div></div>
+
+<div class="ex" id="C5-21"><span class="exid">C5-21</span>取含雜質的大理石 10.0 g，加入過量鹽酸，以反應前後總質量差求得逸出的 <span class="m">\ce{CO2}</span> 為 3.52 g（雜質不與酸反應）。下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 樣品中 <span class="m">\ce{CaCO3}</span> 的純度為 80.0%</span><span>(B) 反應消耗 HCl 0.08 mol</span><span>(C) 若雜質實為 <span class="m">\ce{MgCO3}</span>（亦與酸反應放出 <span class="m">\ce{CO2}</span>），仍以 <span class="m">\ce{CaCO3}</span> 計算所得的純度會偏高</span><span>(D) 若部分 <span class="m">\ce{CO2}</span> 溶於溶液中未逸出，測得的純度會偏高</span><span>(E) 逸出的 <span class="m">\ce{CO2}</span> 在 0 °C、1 atm 下約 1.79 L</span></div></div>
+
+<div class="ex" id="C5-22"><span class="exid">C5-22</span>將 0.48 g 鎂帶置於坩堝中在空氣中加熱，若完全生成 MgO 應得 0.80 g，實際稱得產物 0.75 g。下列哪些可以解釋此結果？（多選）
+<div class="opts"><span>(A) 部分鎂未反應</span><span>(B) 部分鎂與空氣中的氮反應生成氮化鎂 <span class="m">\ce{Mg3N2}</span></span><span>(C) 燃燒時生成的氧化鎂微粒隨白煙逸散</span><span>(D) 產物冷卻時未置於乾燥器中，吸收了空氣中的水氣</span><span>(E) 產物增加的質量來自空氣中的氧，因此質量守恆定律在此不成立</span></div></div>
+
+<h4 class="exset">挑戰題（4 題）</h4>
+<div class="ex" id="C5-23"><span class="exid">C5-23</span>鎂與鋁的混合粉末 5.1 g 與過量鹽酸完全反應，共生成氫氣 0.25 mol。混合物中鎂的質量百分率約為多少？
+<div class="opts"><span>(A) 23.5%</span><span>(B) 35.3%</span><span>(C) 47.1%</span><span>(D) 52.9%</span><span>(E) 64.7%</span></div></div>
+
+<div class="ex" id="C5-24"><span class="exid">C5-24</span>工業上以氨製硝酸的三步反應為：<span class="m">\ce{4NH3 + 5O2 -> 4NO + 6H2O}</span>；<span class="m">\ce{2NO + O2 -> 2NO2}</span>；<span class="m">\ce{3NO2 + H2O -> 2HNO3 + NO}</span>。下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 第三步生成的 NO 不回收時，1.00 mol <span class="m">\ce{NH3}</span> 最多可得 0.667 mol <span class="m">\ce{HNO3}</span></span><span>(B) 若 NO 全部回收再利用，1.00 mol <span class="m">\ce{NH3}</span> 理論上最多可得 1.00 mol <span class="m">\ce{HNO3}</span></span><span>(C) 若第一步產率 95%、第二步 100%、第三步（含回收）90%，以 <span class="m">\ce{NH3}</span> 計的總產率為 85.5%</span><span>(D) 17.0 kg <span class="m">\ce{NH3}</span> 在 NO 全部回收的條件下完全轉化，可得 <span class="m">\ce{HNO3}</span> 42.0 kg</span><span>(E) 依第一步反應式，同溫同壓下 4 L <span class="m">\ce{NH3}</span> 與 5 L <span class="m">\ce{O2}</span> 完全反應，冷卻至室溫後得氣體產物 10 L</span></div></div>
+
+<div class="ex" id="C5-25"><span class="exid">C5-25</span>取硫酸鎂水合物 <span class="m">\ce{MgSO4*$x$H2O}</span> 2.46 g，加熱至恆重得無水硫酸鎂 1.20 g。下列敘述何者正確？
+<div class="opts"><span>(A) <span class="m">x=7</span>；若加熱不完全，測得的 <span class="m">x</span> 偏高</span><span>(B) <span class="m">x=7</span>；若加熱不完全，測得的 <span class="m">x</span> 偏低</span><span>(C) <span class="m">x=6</span>；若加熱不完全，測得的 <span class="m">x</span> 偏低</span><span>(D) <span class="m">x=5</span>；若冷卻時吸回水氣，測得的 <span class="m">x</span> 偏高</span><span>(E) <span class="m">x=7</span>；若加熱過度使部分硫酸鎂分解放出 <span class="m">\ce{SO3}</span>，測得的 <span class="m">x</span> 偏低</span></div></div>
+
+<div class="ex" id="C5-26"><span class="exid">C5-26</span>取 0.10 M 硝酸鉛溶液與 0.10 M 碘化鉀溶液，兩者總體積固定為 12 mL，改變碘化鉀溶液的體積，靜置後測碘化鉛沉澱的高度，結果如下圖。下列敘述哪些正確？（多選）
+<figure class="fig"><svg viewBox="0 0 440 240" width="400">
+<line x1="60" y1="200" x2="420" y2="200" stroke="#1f2a44" stroke-width="1.5"/>
+<line x1="60" y1="200" x2="60" y2="20" stroke="#1f2a44" stroke-width="1.5"/>
+<text x="240" y="234" font-size="13" text-anchor="middle">KI 溶液體積（mL）（其餘為 Pb(NO<tspan baseline-shift="sub" font-size="10">3</tspan>)<tspan baseline-shift="sub" font-size="10">2</tspan> 溶液）</text>
+<text x="20" y="110" font-size="13" text-anchor="middle" transform="rotate(-90 20 110)">沉澱高度（mm）</text>
+<g font-size="12" text-anchor="middle"><text x="60" y="216">0</text><text x="120" y="216">2</text><text x="180" y="216">4</text><text x="240" y="216">6</text><text x="300" y="216">8</text><text x="360" y="216">10</text><text x="420" y="216">12</text></g>
+<g stroke="#1f2a44"><line x1="120" y1="200" x2="120" y2="204"/><line x1="180" y1="200" x2="180" y2="204"/><line x1="240" y1="200" x2="240" y2="204"/><line x1="300" y1="200" x2="300" y2="204"/><line x1="360" y1="200" x2="360" y2="204"/></g>
+<g font-size="12" text-anchor="end"><text x="54" y="164">4</text><text x="54" y="124">8</text><text x="54" y="84">12</text></g>
+<g stroke="#1f2a44"><line x1="56" y1="160" x2="60" y2="160"/><line x1="56" y1="120" x2="60" y2="120"/><line x1="56" y1="80" x2="60" y2="80"/></g>
+<polyline points="60,200 300,80 420,200" fill="none" stroke="#2f6fb5" stroke-width="2.5"/>
+<g fill="#2f6fb5"><circle cx="120" cy="170" r="3.5"/><circle cx="180" cy="140" r="3.5"/><circle cx="240" cy="110" r="3.5"/><circle cx="300" cy="80" r="3.5"/><circle cx="360" cy="140" r="3.5"/></g>
+<line x1="300" y1="80" x2="300" y2="200" stroke="#94a3b8" stroke-dasharray="4 3"/>
+</svg><figcaption>圖 C5-題26</figcaption></figure>
+<div class="opts"><span>(A) 沉澱高度最大時，<span class="m">\ce{Pb^2+}</span> 與 <span class="m">\ce{I-}</span> 恰好完全反應</span><span>(B) 由圖可推知碘化鉛中 <span class="m">\ce{Pb^2+}</span> 與 <span class="m">\ce{I-}</span> 的數目比為 1:2</span><span>(C) KI 溶液為 4 mL 時，KI 為限量試劑</span><span>(D) KI 溶液為 10 mL 時，生成碘化鉛 0.10 mmol</span><span>(E) 若改用 0.20 M KI 與 0.10 M 硝酸鉛重做（總體積仍為 12 mL），沉澱最高點仍出現在 KI 8 mL 處</span></div></div>
+
+<h4 class="exset">題組（6 題）</h4>
+<p><strong>第 27–29 題為題組</strong></p>
+<p>拉瓦節將約 4 盎司的汞置於曲頸瓶中，瓶頸通入倒立於汞槽上的鐘罩（圖 C5-2），連續加熱 12 日。他記載：容器內空氣原約 50 立方吋，實驗結束時只剩 42 至 43 立方吋（已換算至同溫同壓），剩餘氣體不能助燃；汞面上生成的紅色物質共 45 喱。將這 45 喱紅色物質另置於小曲頸瓶中強熱，得到 41.5 喱汞與 7 至 8 立方吋氣體，此氣體使燭火燃燒得更明亮。（喱：舊制質量單位。）</p>
+<div class="ex" id="C5-27"><span class="exid">C5-27</span>以現代知識看，空氣中氧氣約占體積 21%，但拉瓦節的空氣只減少約六分之一。下列何者是最合理的解釋？
+<div class="opts"><span>(A) 汞的煅燒未將容器中的氧氣完全耗盡，或收集時有損失</span><span>(B) 當時的空氣中氧氣只占六分之一</span><span>(C) 生成的紅色物質中有一部分為氣體</span><span>(D) 空氣中的氮氣也與汞反應</span><span>(E) 煅燒過程中質量守恆定律不成立</span></div></div>
+<div class="ex" id="C5-28"><span class="exid">C5-28</span>依題文數據與現代原子量，下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 依質量守恆，紅色物質分解放出的氣體約為 3.5 喱</span><span>(B) 以 <span class="m">\ce{HgO}</span> 計算，45 喱紅色物質完全分解應得汞約 41.7 喱，與拉瓦節所得相近</span><span>(C) 反應 <span class="m">\ce{2HgO -> 2Hg + O2}</span> 中，生成汞與氧氣的莫耳數比為 1:1</span><span>(D) 只由題文的質量數據，不需任何原子量，即可確定紅色物質的化學式為 HgO</span><span>(E) 分解所得的氣體能使燭火更明亮，為氧氣</span></div></div>
+<div class="ex" id="C5-29"><span class="exid">C5-29</span>以現代方法重做：密閉容器中有 0 °C、1 atm 的空氣 0.500 L（氧氣占體積 21.0%）與過量的汞，加熱至氧氣完全耗盡，生成氧化汞（<span class="m">\ce{2Hg + O2 -> 2HgO}</span>）約多少克？
+<div class="opts"><span>(A) 0.150</span><span>(B) 1.02</span><span>(C) 2.03</span><span>(D) 4.06</span><span>(E) 9.67</span></div></div>
+
+<p><strong>第 30–32 題為題組</strong></p>
+<p>以圖 C5-7 的裝置分析一種只含 C、H、O 的化合物 X。取 X 0.900 g 完全燃燒，甲管（無水氯化鈣）增重 0.540 g，乙管（氫氧化鈉）增重 1.32 g。另取 X 0.150 g 完全汽化，在 127 °C、1 atm 下體積為 82.0 mL。</p>
+<div class="ex" id="C5-30"><span class="exid">C5-30</span>關於兩支吸收管的連接順序與理由，下列何者正確？
+<div class="opts"><span>(A) 先接 NaOH 管、後接 <span class="m">\ce{CaCl2}</span> 管，因 NaOH 只吸收 <span class="m">\ce{CO2}</span></span><span>(B) 先接 NaOH 管、後接 <span class="m">\ce{CaCl2}</span> 管，因 <span class="m">\ce{CaCl2}</span> 也會吸收 <span class="m">\ce{CO2}</span></span><span>(C) 順序無關，只要兩管增重總和不變即可</span><span>(D) 先接 <span class="m">\ce{CaCl2}</span> 管、後接 NaOH 管，因 <span class="m">\ce{CaCl2}</span> 會與 <span class="m">\ce{CO2}</span> 反應生成碳酸鈣</span><span>(E) 先接 <span class="m">\ce{CaCl2}</span> 管、後接 NaOH 管，因 NaOH 會同時吸收水與 <span class="m">\ce{CO2}</span></span></div></div>
+<div class="ex" id="C5-31"><span class="exid">C5-31</span>下列敘述哪些正確？（多選）
+<div class="opts"><span>(A) 乙管增重的 1.32 g 全部是樣品中碳的質量</span><span>(B) 樣品含氧 0.480 g，係以差減法求得</span><span>(C) X 的實驗式為 <span class="m">\ce{CH2O}</span></span><span>(D) 若已知 X 的分子量為 60，則分子式為 <span class="m">\ce{C3H6O3}</span></span><span>(E) 若燃燒管中氧化銅不足，致部分碳以 CO 離開而未被吸收，則測得的氧含量偏高</span></div></div>
+<div class="ex" id="C5-32"><span class="exid">C5-32</span>（非選擇題）(1) 由汽化數據求 X 的莫耳質量。(2) 寫出 X 的分子式。(3) 寫出 X 完全燃燒的平衡反應式，並求 0.900 g X 完全燃燒所需氧氣在 0 °C、1 atm 下的體積。
+<div class="lines" data-n="2"></div></div>
+
+<h4 class="exset">非選擇題（3 題）</h4>
+<div class="ex" id="C5-33"><span class="exid">C5-33</span>電爐法製白磷的反應為：<span class="m">a\,\ce{Ca3(PO4)2} + b\,\ce{SiO2} + c\,\ce{C} \to d\,\ce{CaSiO3} + e\,\ce{P4} + f\,\ce{CO}</span>。(1) 以代數法列出各元素的原子守恆式，求最簡整數係數。(2) 製得 1.24 kg 白磷，理論上需碳多少公斤？
+<div class="lines" data-n="2"></div></div>
+<div class="ex" id="C5-34"><span class="exid">C5-34</span>密閉容器中置入 28.0 g 氮氣與 8.0 g 氫氣進行 <span class="m">\ce{N2 + 3H2 &lt;=&gt; 2NH3}</span>，反應停止時得氨 6.8 g。(1) 指出限量試劑並求氨的理論產量。(2) 求產率。(3) 求反應停止時容器內氣體的總莫耳數。
+<div class="lines" data-n="2"></div></div>
+<div class="ex" id="C5-35"><span class="exid">C5-35</span>在含 HCl 0.20 mol 的鹽酸中逐次加入鋅粉，直到共加入 13.08 g：<span class="m">\ce{Zn + 2HCl -> ZnCl2 + H2}</span>。(1) 以橫軸為加入鋅的質量（g）、縱軸為生成氫氣的質量（g），描述圖形並標出轉折點坐標。(2) 若改用含 HCl 0.40 mol 的鹽酸重做，圖形有何改變？
+<div class="lines" data-n="2"></div></div>
+
+<h3>自我檢核</h3>
+<ul class="check">
+<li>能說明拉瓦節密閉容器煅燒與汞十二日實驗的設計，並解釋開口系統質量增減的原因。</li>
+<li>能區分反應前後守恆的量（質量、原子數、電荷）與不一定守恆的量（分子數、莫耳數、氣體體積）。</li>
+<li>能以觀察法與代數法平衡反應式，並寫出 <span class="m">\ce{C_xH_yO_z}</span> 燃燒的通式。</li>
+<li>能說明係數比在何種條件下等於體積比，並以體積直接計算氣體反應。</li>
+<li>能說出莫耳的現行定義與 <span class="m">N_A</span> 的固定值，並熟練質量、莫耳數、粒子數、氣體體積的換算。</li>
+<li>能區分分子量與式量，正確計算離子化合物所含的離子數。</li>
+<li>能由組成百分率求實驗式、由分子量求分子式，處理 1.5、1.33 等比值。</li>
+<li>能說明燃燒分析吸收管的順序、氧的差減法與各種誤差的影響方向。</li>
+<li>能以「莫耳數 ÷ 係數」判斷限量試劑，計算理論產量、產率、純度與多步反應總產率。</li>
+<li>能判讀生成量對加入量的折線圖與連續變化法圖形，由轉折點推求係數比或反應物的量。</li>
+</ul>
+</section>
