@@ -108,6 +108,7 @@ function math(html) {
   return html.replace(/<span class="m">([\s\S]*?)<\/span>/g, (_, s) => tex(s, false));
 }
 function lines(html) {
+  html = html.replace(/(<div class="(?:key|tip|warn)">\s*<p>)\s*(?:<strong>)?(?:重點整理|延伸補充|易錯提醒)(?:<\/strong>)?[：:　\s]*/g, '$1');
   html = html.replace(/<div class="example">(\s*)<p><strong>(例題\s*[0-9０-９]+)[：:　\s]*([^<]*)<\/strong>[：:　\s]*/g, (m, sp, n, ttl) => `<div class="example">${sp}<p class="exh"><span class="exn">${n}</span>${ttl ? `<strong>${ttl}</strong>　` : ''}`);
   html = math(optCols(html)).replace(/<img class="scan" src="img\/([A-Za-z0-9_\/.-]+)"/g, (m, p) => `<img class="scan" src="file://${ROOT}/img/${p}"`);
   for (const [a, b] of [['污染', '汙染'], ['佔', '占'], ['裏', '裡'], ['台灣', '臺灣'], ['溼', '濕']]) html = html.split(a).join(b);

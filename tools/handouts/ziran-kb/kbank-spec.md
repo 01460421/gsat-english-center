@@ -32,8 +32,8 @@
 
 ### 謄錄
 
-- 用 `pdftotext -layout` 取文字，再用 `pdftoppm -r 110 -f 頁 -l 頁 -png 檔 /tmp/claude-0/zhw/sci/tmp/K代號/p` 轉成圖，用 Read **逐頁看圖**對照，確保文字、數字、單位、上下標、選項完全正確。
-- 原題文字一字不改（明顯錯字可加註「原題如此」）；公式改用 `<span class="m">`，化學式用 `\ce{}`。
+- 用 `pdftotext -layout` 取文字，再用 `pdftoppm -r 110 -f 頁 -l 頁 -png 檔 /tmp/claude-0/zhw/sci/tmp/K代號/p` 轉成圖，用 Read **逐頁看圖**對照（掃描檔一律用 170 dpi 以上，小字與上下標看不清時局部放大重看），確保文字、數字、單位、上下標、選項完全正確。
+- 原題文字一字不改（明顯錯字可加註「原題如此」；原卷註明的出處如「取材自維基百科」照錄，檢查程式對 K 單元不擋網站名稱）；公式改用 `<span class="m">`，化學式用 `\ce{}`。
 - **圖**：原題的圖用裁切的圖片：`pdftoppm -r 220 -f 頁 -l 頁 -x X -y Y -W 寬 -H 高 -png -singlefile 檔 /tmp/claude-0/zhw/sci/kbank/img/K代號/q07`（座標以 220 dpi 計），裁切後用 Read 看是否完整、沒有切到題號或其他題的文字；在 HTML 用 `<img class="scan" src="img/K代號/q07.png" alt="">`（不要加 width，排版程式會自動依 220 dpi 換算成原卷大小）。表格能打字的就打成 `table.t`。
 - 題號照原卷（K07-01 對應原卷第 1 題）。題組照原卷順序。非選擇題照原卷，加 `<div class="lines" data-n="2"></div>`。
 - 若一份試卷題數太多（超過 50 題），仍全收。

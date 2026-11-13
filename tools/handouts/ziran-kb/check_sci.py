@@ -10,7 +10,7 @@ except FileNotFoundError: ans = ''
 errs = []
 TAGS = {'section', 'h2', 'h3', 'h4', 'p', 'ul', 'ol', 'li', 'strong', 'em', 'span', 'div', 'table', 'thead', 'tbody', 'tr', 'th', 'td', 'br', 'sub', 'sup', 'figure', 'figcaption', 'img'}
 SVG = {'svg', 'g', 'line', 'polyline', 'polygon', 'path', 'circle', 'ellipse', 'rect', 'text', 'tspan', 'defs', 'marker', 'title'}
-CLS = {'unit', 'en', 'zh', 'eg', 'key', 'tip', 'warn', 'bad', 'good', 'mark', 't', 'ex', 'exid', 'exset', 'opts', 'lines', 'check', 'ans-unit', 'ans', 'why', 'm', 'mb', 'fig', 'half', 'grp', 'hand', 'blue', 'up', 'no', 'circle', 'box', 'ul', 'note', 'formula', 'mnem', 'exam', 'steps', 'example', 'sol', 'scan', 'src', 'xsol', 'xa'}
+CLS = {'unit', 'en', 'zh', 'eg', 'key', 'tip', 'warn', 'bad', 'good', 'mark', 't', 'ex', 'exid', 'exset', 'opts', 'lines', 'check', 'ans-unit', 'ans', 'why', 'm', 'mb', 'fig', 'half', 'grp', 'hand', 'blue', 'up', 'no', 'circle', 'box', 'ul', 'note', 'formula', 'mnem', 'exam', 'steps', 'example', 'sol', 'scan', 'src', 'xsol', 'xa', 'sci'}
 VOID = {'br', 'img'}
 SVGVOID = set()
 class Chk(HTMLParser):
@@ -63,9 +63,9 @@ for i, q in enumerate(qs, 1):
     if q != f'{u}-{i:02d}': errs.append(f'題號不連續：第 {i} 題是 {q}'); break
 txt = re.sub(r'<svg[\s\S]*?</svg>', '', body + ans)
 txt = re.sub(r'<[^>]+>', '', txt)
-for w in ['大考中心', '本站', 'ChatGPT', '人工智慧生成', '語言模型']:
+for w in (['大考中心', '本站'] if u.startswith('K') else ['操作變因', '自變量', '因變量', '大考中心', '本站']) + [ 'ChatGPT', '人工智慧生成', '語言模型']:
     if w in txt: errs.append(f'不該出現的用語：{w}')
-for w in ['维基', '萌典', '維基百科', 'Wikipedia', 'wikipedia']:
+for w in ([] if u.startswith('K') else ['维基', '萌典', '維基百科', 'Wikipedia', 'wikipedia']):
     if w in txt: errs.append(f'正文不寫網站名稱：{w}')
 for a, b in [('台灣', '臺灣'), ('信息', '資訊'), ('質量數', None)]:
     pass
