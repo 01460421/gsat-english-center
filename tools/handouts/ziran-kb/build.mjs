@@ -83,9 +83,16 @@ const VOLS = {
   },
 };
 Object.assign(VOLS, KVOLS);
+const SERIES = process.env.SERIES || '';
+const SMETA = SERIES ? JSON.parse(readFileSync(`${ROOT}/${SERIES}.json`, 'utf8')) : null;
+if (SMETA) { for (const k of Object.keys(VOLS)) delete VOLS[k]; Object.assign(VOLS, SMETA.vols); }
+const ZHN = (n) => { const d = '〇一二三四五六七八九'; if (n <= 10) return n === 10 ? '十' : d[n]; if (n < 20) return '十' + d[n - 10]; return d[Math.floor(n / 10)] + '十' + (n % 10 ? d[n % 10] : ''); };
+const NVOL = Object.keys(VOLS).length;
+const KREF = SMETA ? SMETA.kref : '第六至八冊';
+const XREF = SMETA ? SMETA.xref : '第五冊';
 const DESC = JSON.parse(readFileSync(`${ROOT}/desc.json`, 'utf8'));
 
-const VOLARG = process.argv[2] && /^[1-8]$/.test(process.argv[2]) ? [Number(process.argv[2])] : [1, 2, 3, 4, 5, 6, 7, 8];
+const VOLARG = process.argv[2] && /^\d+$/.test(process.argv[2]) ? [Number(process.argv[2])] : Object.keys(VOLS).map(Number);
 const ONLY = process.argv[3] ? new Set(process.argv[3].split(',')) : null;
 const read = (f) => (existsSync(f) ? readFileSync(f, 'utf8') : null);
 
@@ -110,7 +117,7 @@ function math(html) {
 function lines(html) {
   html = html.replace(/(<div class="(?:key|tip|warn)">\s*<p>)\s*(?:<strong>)?(?:重點整理|延伸補充|易錯提醒)(?:<\/strong>)?[：:　\s]*/g, '$1');
   html = html.replace(/<div class="example">(\s*)<p><strong>(例題\s*[0-9０-９]+)[：:　\s]*([^<]*)<\/strong>[：:　\s]*/g, (m, sp, n, ttl) => `<div class="example">${sp}<p class="exh"><span class="exn">${n}</span>${ttl ? `<strong>${ttl}</strong>　` : ''}`);
-  html = math(optCols(html)).replace(/<img class="scan" src="img\/([A-Za-z0-9_\/.-]+)"/g, (m, p) => `<img class="scan" src="file://${ROOT}/img/${p}"`);
+  html = math(optCols(html)).replace(/<img class="scan" src="img\/([A-Za-z0-9_\/.-]+)"/g, (m, p) => `<img class="scan" src="file://${process.env.IMGDIR || (ROOT + "/img")}/${p}"`);
   for (const [a, b] of [['污染', '汙染'], ['佔', '占'], ['裏', '裡'], ['台灣', '臺灣'], ['溼', '濕']]) html = html.split(a).join(b);
   html = html.replace(/<tr>\s*<td>((?:<strong>)?[^<]{1,7}(?:<\/strong>)?)<\/td>/g, '<tr><td class="nw">$1</td>');
   return html.replace(/<div class="lines" data-n="(\d+)"\s*><\/div>/g, (_, n) => {
@@ -146,14 +153,14 @@ function coverHtml(V) {
 .note{position:absolute;left:35mm;top:166mm;width:122mm;font-size:14pt;line-height:2;color:#2456a6;}
 .stick{position:absolute;left:35mm;top:212mm;width:96mm;background:#fff3a8;padding:6mm 7mm;font-size:12.5pt;line-height:1.85;color:#3b3415;transform:rotate(-1.6deg);box-shadow:1mm 1.3mm 0 rgba(0,0,0,.12);}
 .stick b{font-weight:400;color:#c2410c;}
-.ft{position:absolute;left:35mm;bottom:17mm;font-size:13pt;color:#1f2a44;letter-spacing:.25em;}
+.ft{position:absolute;left:35mm;bottom:15mm;display:flex;align-items:center;gap:3.2mm;color:#1f2a44;}.ft .logo{width:13mm;height:13mm;}.ft .bn{font-size:15pt;letter-spacing:.32em;}.ft .be{font-family:"Inter",sans-serif;font-size:7.5pt;letter-spacing:.28em;color:#64748b;border-left:.3mm solid #94a3b8;padding-left:3mm;}
 </style></head><body><div class="c"><div class="bar">${[22, 62, 102, 142, 182, 222, 262].map((y) => `<i style="top:${y}mm"></i>`).join('')}</div>${tabs}
-<div class="kick"><b>${V.no}</b>${V.title}</div>
+<div class="kick"${(V.no + V.title).length > 16 ? ' style="font-size:13pt;letter-spacing:.16em"' : ''}><b>${V.no}</b>${V.title}</div>
 <div class="bk">${BOOK}</div>
 <div class="ti">${V.lines.map((l) => `<span>${l}</span>`).join('<br>')}</div>
 <div class="note">${V.blurb}</div>
-<div class="stick">範圍依<b>108 課綱</b>部定必修；<br>數據與史實逐條<b>查證</b>。<br>各單元附分級測驗與詳解。</div>
-<div class="ft">學測英文中心　編</div>
+<div class="stick">${V.tag === '科學班' ? '試題依各校公告<b>逐字謄錄</b>；<br>每題附<b>詳解</b>與單元對照。<br>答案依學校公告，逐題驗算。' : '範圍依<b>108 課綱</b>部定必修；<br>數據與史實逐條<b>查證</b>。<br>各單元附分級測驗與詳解。'}</div>
+<div class="ft"><svg class="logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="47" fill="#1f2a44"/><path d="M17 62 A33 33 0 0 1 83 62" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round"/><line x1="12" y1="70" x2="88" y2="70" stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity=".55"/><ellipse cx="50" cy="54" rx="27" ry="10.5" transform="rotate(-24 50 54)" fill="none" stroke="#f08a3c" stroke-width="4"/><circle cx="50" cy="54" r="6.5" fill="#f5c542"/><circle cx="74.5" cy="43" r="3.6" fill="#7fd1c7"/><path d="M68 22 L70 28 L76 30 L70 32 L68 38 L66 32 L60 30 L66 28 Z" fill="#f5c542"/></svg><span class="bn">穹理書房</span><span class="be">QIONGLI STUDIO</span></div>
 </div></body></html>`;
 }
 
@@ -162,7 +169,7 @@ function frontHtml(V, vol) {
   const volRows = Object.entries(VOLS).map(([k, v]) => `<tr><td>${v.no}　${v.title}</td><td>${v.parts.map((p) => p.title).join('、')}</td></tr>`).join('');
   return `<section class="front" style="${varsOf('intro')}">
 <h2 class="fh">編輯說明</h2>
-<p>《${BOOK}》供準備學測自然考科的高中生查閱與自修，程度定位為頂標與滿級分。全套八冊：</p>
+<p>《${BOOK}》供準備學測自然考科的高中生查閱與自修，程度定位為頂標與滿級分。全套${ZHN(NVOL)}冊：</p>
 <table class="t"><thead><tr><th style="width:38%">冊別</th><th>內容</th></tr></thead><tbody>${volRows}</tbody></table>
 <h3>範圍</h3>
 <ul>
@@ -174,12 +181,12 @@ function frontHtml(V, vol) {
 <li><strong>物理常數與數據</strong>：依國際單位制（SI）與國際科學數據委員會（CODATA）公布值；書中計算多取有效數字三位。</li>
 <li><strong>名詞</strong>：依國家教育研究院「樂詞網」學術名詞與臺灣高中教科書通行譯名；元素名稱依該院公布之中文名稱。</li>
 <li><strong>科學史與統計資料</strong>：年代、人物、事件、臺灣在地資料（地震、颱風、能源）逐條查核；各說不一者採高中課本通行之說，必要時註「一說」。</li>
-<li><strong>科學班入學考試題</strong>：第六至八冊與各單元「科學班入學考題精選」收錄各校公告之科學班甄選入學科學能力檢定試題，逐題註明學校、學年度與科目；答案依學校公告，未公告者為本書解。詳解、試卷分析與單元對照為本書撰寫。依著作權法第九條，依法令舉行之各類考試試題不得為著作權之標的。</li>
+<li><strong>科學班入學考試題</strong>：${KREF}與各單元「科學班入學考題精選」收錄各校公告之科學班甄選入學科學能力檢定試題，逐題註明學校、學年度與科目；答案依學校公告，未公告者為本書解。詳解、試卷分析與單元對照為本書撰寫。依著作權法第九條，依法令舉行之各類考試試題不得為著作權之標的。</li>
 <li>各單元查證所用的主要網站列於書末〈資料來源〉。</li>
 </ul>
 <h3>未收錄的內容</h3>
 <ul>
-<li>學測歷屆試題原題。各單元分級測驗與第五冊模擬試題均為自編。</li>
+<li>學測歷屆試題原題。各單元分級測驗與${XREF}模擬試題均為自編。</li>
 <li>補習班、出版社自編的模擬題與其詳解。</li>
 <li>出版社教科書與參考書的圖表與題目。書中圖片均為重新繪製的示意圖，未依比例者另註明。</li>
 </ul>
@@ -334,6 +341,13 @@ const browser = await chromium.launch();
 const page = await browser.newPage();
 for (const vol of VOLARG) {
   const V = VOLS[vol];
+  if (process.env.COVERONLY) {
+    await render(page, coverHtml(V), `${OUT}/cover${vol}.pdf`, null);
+    const tgt = (SERIES ? `${ROOT}/dist/${SERIES}/` : `${ROOT}/dist/`) + `${BOOK}_${V.no}_${V.title}.pdf`;
+    for (const t of [tgt, tgt.replace('/books30/', '/books30-final/')]) if (existsSync(t)) execFileSync('python3', ['-I', '/tmp/claude-0/zhw/sci/tools/swapcover.py', t, `${OUT}/cover${vol}.pdf`]);
+    console.log(`${V.no} 封面已更新`);
+    continue;
+  }
   missing = [];
   await render(page, coverHtml(V), `${OUT}/cover${vol}.pdf`, null);
   let found = {}, same = false;
@@ -343,7 +357,7 @@ for (const vol of VOLARG) {
     same = pass > 0 && JSON.stringify(f2) === JSON.stringify(found);
     found = f2;
   }
-  const FINAL = ONLY ? `${ROOT}/dist/sample_${ONLYARG}.pdf` : `${ROOT}/dist/${BOOK}_${V.no}_${V.title}.pdf`;
+  const FINAL = ONLY ? `${ROOT}/dist/sample_${ONLYARG}.pdf` : (SERIES ? `${ROOT}/dist/${SERIES}/${BOOK}_${V.no}_${V.title}.pdf` : `${ROOT}/dist/${BOOK}_${V.no}_${V.title}.pdf`);
   if (ONLY) copyFileSync(`${OUT}/body${vol}.pdf`, FINAL);
   else execFileSync('python3', [`${ROOT}/join.py`, `${OUT}/cover${vol}.pdf`, `${OUT}/body${vol}.pdf`, FINAL, `${BOOK} ${V.no} ${V.title}`]);
   const n = Number(execFileSync('pdfinfo', [`${OUT}/body${vol}.pdf`]).toString().match(/Pages:\s+(\d+)/)[1]);

@@ -761,6 +761,79 @@
 <div class="ex" id="P4-37"><span class="exid">P4-37</span>(1) 以圓軌道近似，由牛頓第二運動定律與萬有引力定律推導克卜勒第三定律，並說明為何繞同一中心天體運行者的 T²／r³ 相同。(2) 地球繞太陽的軌道半徑取 1.50×10¹¹ m、週期取 3.16×10⁷ s，求太陽質量。
 <div class="lines" data-n="2"></div></div>
 
+<!--KSEL-BEGIN-->
+<h3>科學班入學考題精選</h3>
+<p>以下選自各校科學班甄選入學「科學能力檢定」公告試題中與本單元相關的題目，題目照原卷謄錄，解析為本書撰寫。各校完整試卷與詳解見本套書「科學班入學考試題詳解」各冊（括號內為該處題號）。</p>
+<div class="ex"><p class="src">精選 1　嘉義高中 113 學年度（K48-14）</p>林同學從網路上找到了可以利用錐動擺來得知地球表面的重力加速度量值，所以他想親自進行實驗來驗證。已知錐動擺是利用一條細繩，一端固定於天花板，一端繫上物體 m，使 m 維持在同一水平高度作等速圓周運動，且這個物體的高度 h 會隨轉著物體作圓周運動之週期 T 改變，其關係式為
+<div class="mb">h=\frac{g}{4\pi^2}T^2</div>
+也就是說林同學只要藉由改變物體的旋轉週期 T，並測出對應的高度 h 就可以得到 g 值。林同學改變物體的旋轉週期 T 三次，並記錄對應的高度，結果如下。
+<img class="scan" src="img/K48/p14.png" alt="">
+<table class="t"><thead><tr><th>旋轉週期 T (s)</th><th>週期平方 T<sup>2</sup> (s<sup>2</sup>)</th><th>高度 h (cm)</th></tr></thead><tbody>
+<tr><td>1.62</td><td>2.62</td><td>58.3</td></tr><tr><td>1.48</td><td>2.19</td><td>48.9</td></tr><tr><td>1.37</td><td>1.88</td><td>41.3</td></tr></tbody></table>
+接下來林同學利用 excel 製作週期平方 T<sup>2</sup> (s<sup>2</sup>) 對高度 h (cm) 的關係圖之後，加入趨勢線得方程式為：
+<div class="mb">y=22.7x-1.08</div>
+請根據趨勢線的方程式，求出目前所在位置的重力加速度為＿＿(14)＿＿m/s<sup>2</sup>。（<strong>答案請四捨五入到小數點後一位</strong>）
+<div class="lines" data-n="1"></div></div>
+<div class="xsol"><p class="xa">答案：(14) 9.0</p>
+<ol class="steps"><li>趨勢線 <span class="m">y=22.7x-1.08</span> 中，<span class="m">x=T^2</span>（s²）、<span class="m">y=h</span>（cm），斜率 <span class="m">22.7\ \mathrm{cm/s^2}=0.227\ \mathrm{m/s^2}</span>。</li>
+<li>理論式 <span class="m">h=\dfrac{g}{4\pi^2}T^2</span>，斜率 <span class="m">=\dfrac{g}{4\pi^2}</span>：
+<div class="mb">g=4\pi^2\times0.227=39.48\times0.227\approx8.96\approx9.0\ \mathrm{m/s^2}</div></li>
+<li>截距 −1.08 cm 理論上應為 0，代表測量有小誤差（例如高度量測的起點）；用斜率求 g 可消除這類固定偏差的影響。</li></ol>
+<p><strong>考點</strong>：錐動擺、作圖求斜率、線性化　<strong>對應</strong>：P4、X2</p>
+<div class="tip"><p>深究　錐動擺：繩張力的鉛直分量平衡重力 <span class="m">T_s\cos\phi=mg</span>，水平分量提供向心力 <span class="m">T_s\sin\phi=m\dfrac{4\pi^2}{T^2}r</span>，相除得 <span class="m">\tan\phi=\dfrac{4\pi^2r}{gT^2}</span>；又 <span class="m">\tan\phi=r/h</span>，即得 <span class="m">h=\dfrac{gT^2}{4\pi^2}</span>，與繩長、質量無關。</p></div>
+<p class="bad"><span class="mark">誤</span>忘記把 cm 換成 m，得 <span class="m">g\approx896</span>。斜率帶單位，換算後才代入。</p></div>
+<div class="ex"><p class="src">精選 2　嘉義高中 110 學年度（K51-15）</p>某行星系統中有甲乙二顆衛星，假設甲乙二顆衛星公轉圓軌道在同一平面，且皆以逆時針方向繞太陽運轉，若兩衛星開始的位置在＋x 軸如圖所示，且甲乙二顆衛星的運行週期比為 3：5，則兩衛星第一次最接近應該是那一種情況？
+<img class="scan" src="img/K51/p15.png" alt=""></div>
+<div class="xsol"><p class="xa">答案：(E)</p>
+<ol class="steps"><li>週期短者軌道半徑小（克卜勒第三定律），甲在內圈。設甲週期 3T、乙週期 5T。</li>
+<li>兩者再度排成一直線（同側）時最接近：甲比乙多轉一圈，<span class="m">\left(\dfrac{1}{3T}-\dfrac{1}{5T}\right)t=1</span>，<span class="m">t=7.5T</span>。</li>
+<li>甲轉 <span class="m">7.5/3=2.5</span> 圈、乙轉 <span class="m">7.5/5=1.5</span> 圈，兩者都在 <span class="circle">−x 軸</span>上，即圖 (E)。</li></ol>
+<p><strong>考點</strong>：等速圓周運動的角速度、相對運動（會合週期）　<strong>對應</strong>：P4</p>
+<p class="bad"><span class="mark">誤</span>以甲轉一圈（3T）時乙的位置判斷。此時乙只轉 0.6 圈，兩者並未對齊。</p>
+<p>注意：題目稱「衛星繞太陽運轉」，原題如此；依題意視為繞同一中心天體運行。</p></div>
+<div class="ex"><p class="src">精選 3　彰化高中 110 學年度（K43-12）</p>地球表面重力加速度大小為 9.8 公尺/秒<sup>2</sup>，火星表面重力加速度大小為 3.92 公尺/秒<sup>2</sup>，月球表面重力加速度大小為 1.6 公尺/秒<sup>2</sup>。大力士甲在地球舉重成績為 250 公斤，大力士乙在火星舉重成績為 400 公斤，大力士丙在月球舉重成績為 1200 公斤，則三人的舉重能力大小關係為何？
+<div class="opts"><span>(A)甲＞丙＞乙</span><span>(B)丙＞乙＞甲</span><span>(C)乙＞甲＞丙</span><span>(D)甲＞乙＞丙</span><span>(E)丙＞甲＞乙。</span></div></div>
+<div class="xsol"><p class="xa">答案：(A)</p>
+<ol class="steps"><li>舉重能力＝能施出的最大力＝所舉物體的重量 mg（不是質量）。</li>
+<li>甲 <span class="m">250\times9.8=2450\ \mathrm{N}</span>；乙 <span class="m">400\times3.92=1568\ \mathrm{N}</span>；丙 <span class="m">1200\times1.6=1920\ \mathrm{N}</span>。</li>
+<li>甲＞丙＞乙。<span class="hand">比力，不比質量</span></li></ol>
+<p><strong>考點</strong>：質量與重量、各星球的重力加速度　<strong>對應</strong>：P4、P3</p></div>
+<div class="ex"><p class="src">精選 4　武陵高中 114 學年度（K37-04）</p>小武與小陵在水平的跑道上賽跑，他們是在同心圓裡不同半徑的圓跑道上比賽，小武與小陵的跑道半徑分別為 20 公尺與 30 公尺；兩人皆做逆時針方向的等速率圓周運動，小武與小陵的速率分別為 10 公尺／秒與 12 公尺／秒，全程不更改跑道，則小武與小陵每隔多久會離最近？（圓周率用 π 表示）
+<div class="opts"><span>(A) 10 秒</span><span>(B) 10π 秒</span><span>(C) 20 秒</span><span>(D) 20π 秒</span><span>(E) 30 秒。</span></div></div>
+<div class="xsol"><p class="xa">答案：(D)</p>
+<ol class="steps"><li>兩人在同一條半徑上（角位置相同）時距離最近，為 <span class="m">30-20=10\ \mathrm{m}</span>。</li>
+<li>角速度 <span class="m">\omega=\frac vR</span>：小武 <span class="m">\frac{10}{20}=0.5\ \mathrm{rad/s}</span>，小陵 <span class="m">\frac{12}{30}=0.4\ \mathrm{rad/s}</span>。</li>
+<li>相對角速度 <span class="m">0.1\ \mathrm{rad/s}</span>，小武每多轉一圈（<span class="m">2\pi</span>）兩人再度對齊：<span class="m">T=\dfrac{2\pi}{0.1}=20\pi\ \mathrm{s}</span>。</li></ol>
+<p><strong>考點</strong>：角速度與相對角速度（類似時鐘指針重合）　<strong>對應</strong>：P4（圓周運動）</p>
+<p class="bad"><span class="mark">誤</span>用線速率相減 <span class="m">12-10=2\ \mathrm{m/s}</span> 去追一圈。兩人跑道半徑不同，<em>比較的是角速度</em>：速率較大的小陵角速度反而較小。</p></div>
+<div class="ex"><p class="src">精選 5　臺中一中 114 學年度（K23-03）</p>地球的潮汐主要受潮汐力影響，而潮汐力又與日、月和地球之間萬有引力有關。農曆十五時日、地、月三者的排列如圖所示，已知太陽的質量約為 <span class="m">2\times10^{30}</span> 公斤，月球的質量約為 <span class="m">7.5\times10^{22}</span> 公斤，且太陽和地球之間的距離約為 1 億 5000 萬公里，月球和地球之間的距離約為 40 萬公里，請問日、地之間的萬有引力約為月、地之間的幾倍？
+<img class="scan" src="img/K23/p03.png" alt="">
+<div class="opts"><span>(A) 0.02</span><span>(B) 0.5</span><span>(C) 200</span><span>(D) 600</span><span>(E) 1500　倍。</span></div></div>
+<div class="xsol"><p class="xa">答案：(C)</p>
+<ol class="steps"><li>萬有引力 <span class="m">F=\dfrac{GMm}{r^2}</span>，地球質量 m 相同，比值只與 <span class="m">M/r^2</span> 有關。</li>
+<li><span class="m">\dfrac{F_{日}}{F_{月}}=\dfrac{M_{日}}{M_{月}}\left(\dfrac{r_{月}}{r_{日}}\right)^2=\dfrac{2\times10^{30}}{7.5\times10^{22}}\times\left(\dfrac{4\times10^{5}}{1.5\times10^{8}}\right)^2</span></li>
+<li><span class="m">=2.67\times10^{7}\times7.11\times10^{-6}\approx190</span>，約 200 倍。</li></ol>
+<div class="tip"><p>延伸：潮汐力是地球兩側所受引力的<strong>差</strong>，與 <span class="m">M/r^3</span> 成正比。同一組數據：<span class="m">\dfrac{M_{日}}{M_{月}}\left(\dfrac{r_{月}}{r_{日}}\right)^3\approx0.5</span>，太陽的潮汐作用只有月球的一半左右，所以潮汐主要由月球造成。選項 (B) 0.5 正是潮汐力之比，題目問的是<span class="circle">萬有引力</span>，不可混用。</p></div>
+<p><strong>考點</strong>：萬有引力定律的比例計算、潮汐力　<strong>對應</strong>：P4（潮汐現象見 E9）</p>
+<p class="bad"><span class="mark">誤</span>距離比忘了平方，得 <span class="m">2.67\times10^{7}\times2.67\times10^{-3}\approx7100</span>；或用潮汐力的三次方關係選 (B)。</p></div>
+<div class="ex"><p class="src">精選 6　臺南一中 108 學年度（K14-25）</p>右圖中，地球以橢圓軌道繞行太陽公轉而產生四季變化，下表是關於此現象的許多數據。若太陽質量為 M，地球質量為 m，問地球由春分繞行至冬至的過程，太陽引力對於地球作功多少?
+<img class="scan" src="img/K14/q25.png" alt="">
+<table class="t"><thead><tr><th>位置</th><th>春分</th><th>夏至</th><th>秋分</th><th>冬至</th></tr></thead><tbody>
+<tr><td>對應陽曆日期</td><td>3 月 21 日</td><td>6 月 22 日</td><td>9 月 23 日</td><td>12 月 22 日</td></tr>
+<tr><td>地球與太陽的距離</td><td>R<sub>1</sub></td><td>R<sub>2</sub></td><td>R<sub>3</sub></td><td>R<sub>4</sub></td></tr>
+<tr><td>陽光直射行為</td><td>直射赤道</td><td>直射北回歸線</td><td>直射赤道</td><td>直射南回歸線</td></tr>
+<tr><td>地球公轉切線速率</td><td>V<sub>1</sub></td><td>V<sub>2</sub></td><td>V<sub>3</sub></td><td>V<sub>4</sub></td></tr>
+</tbody></table>
+<div class="opts"><span>(A) <span class="m">\tfrac12m(v_1^2-v_4^2)</span></span><span>(B) <span class="m">\tfrac12m(v_4^2-v_1^2)</span></span><span>(C) <span class="m">\tfrac12m(v_1^2+v_4^2)</span></span><span>(D) <span class="m">\tfrac12M(v_1^2-v_4^2)</span></span><span>(E) <span class="m">\tfrac12M(v_4^2-v_1^2)</span></span></div></div>
+<div class="xsol"><p class="xa">參考答案：(B)</p>
+<ol class="steps"><li>太陽引力是地球所受的唯一（主要）外力，由<strong>功能定理</strong>：引力作功＝地球動能變化。</li>
+<li>春分速率 <span class="m">v_1</span>、冬至速率 <span class="m">v_4</span>：<span class="m">W=\tfrac12mv_4^2-\tfrac12mv_1^2</span>，(B)。</li>
+<li>(D)(E) 誤用太陽質量；(A) 正負顛倒；(C) 不是變化量。</li></ol>
+<div class="tip"><p>延伸　地球在 1 月初過近日點，冬至時距離較春分近（<span class="m">R_4&lt;R_1</span>），由克卜勒第二定律速率較快（<span class="m">v_4&gt;v_1</span>），此段引力作<span class="circle">正功</span>。亦可由位能算：<span class="m">W=-\Delta U=GMm\left(\tfrac1{R_4}-\tfrac1{R_1}\right)&gt;0</span>。北半球冬季反而離太陽較近，可見四季成因是地軸傾斜，不是日地距離。表中日期為常見的約略日期，實際逐年相差一兩天。</p></div>
+<p><strong>考點</strong>：功能定理、克卜勒第二定律、季節成因　<strong>對應</strong>：P4、P9、E2</p>
+<p class="bad"><span class="mark">誤</span>以為圓周運動中向心力不作功，所以公轉時引力都不作功。橢圓軌道上引力與速度不垂直，會作功。</p></div>
+<!--KSEL-END-->
+
 <h3>自我檢核</h3>
 <ul class="check">
 <li>能說出第谷、克卜勒、牛頓在行星運動研究中的貢獻，與 8 角分差異的意義。</li>
